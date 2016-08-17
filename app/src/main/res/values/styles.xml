@@ -1,0 +1,30 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- 使用 API Level 22编译，拿掉前缀 -->
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="ActivityImageTranslucentTheme" parent="AppTheme">
+        <item name="android:windowBackground">@mipmap/window_img_bg</item>
+    </style>
+
+    <style name="ActivityColorTranslucentTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+    </style>
+
+    <style name="orange_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/font_medium</item>
+        <item name="android:background">@drawable/orange_button_bg</item>
+    </style>
+</resources>
