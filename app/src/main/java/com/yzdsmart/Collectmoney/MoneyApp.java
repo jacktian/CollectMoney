@@ -3,6 +3,8 @@ package com.yzdsmart.Collectmoney;
 import android.app.Activity;
 import android.app.Application;
 
+import com.baidu.mapapi.SDKInitializer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class MoneyApp extends Application {
         super.onCreate();
         appContext = this;
         storedActivities = new ArrayList<Activity>();
+        SDKInitializer.initialize(this);
     }
 
     /**

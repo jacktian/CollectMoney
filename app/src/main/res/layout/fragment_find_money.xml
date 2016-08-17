@@ -10,10 +10,84 @@
         android:layout_height="match_parent"
         android:clickable="true" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/find_result_layout_height"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/find_result_layout_margin_bottom"
+        android:background="@color/colorPrimary">
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/coin_count_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/find_result_item_margin_left"
+                android:layout_marginTop="@dimen/find_result_item_margin_top"
+                android:text="@string/coin_count"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:id="@+id/coin_count_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/coin_count_title"
+                android:layout_toRightOf="@id/coin_count_title"
+                android:text="1000"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:id="@+id/distance_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/coin_count_title"
+                android:layout_below="@id/coin_count_title"
+                android:layout_marginTop="@dimen/find_result_item_margin_top"
+                android:text="@string/distance"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:id="@+id/distance_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/distance_title"
+                android:layout_toRightOf="@id/distance_title"
+                android:text="1000"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_medium" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/scanner_times_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/find_result_item_margin_left"
+                android:layout_marginTop="@dimen/find_result_item_margin_top"
+                android:text="@string/scanner_times"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:id="@+id/scanner_times_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/scanner_times_title"
+                android:layout_toRightOf="@id/scanner_times_title"
+                android:text="30"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_medium" />
+        </RelativeLayout>
+    </LinearLayout>
 </FrameLayout>

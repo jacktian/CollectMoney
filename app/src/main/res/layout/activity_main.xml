@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_toolbar_height" />
 
-
     <FrameLayout
         android:id="@+id/layout_frame"
         android:layout_width="match_parent"
@@ -19,7 +18,7 @@
         android:layout_marginTop="@dimen/common_toolbar_height"></FrameLayout>
 
     <RadioGroup
-        android:id="@+id/bottom_tab"
+        android:id="@+id/main_bottom_tab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_tab_height"
         android:layout_gravity="bottom"
@@ -29,12 +28,6 @@
             android:id="@+id/recommend_radio"
             style="@style/bottom_tab_item"
             android:text="@string/recommend" />
-
-        <RadioButton
-            android:id="@+id/search_radio"
-            style="@style/bottom_tab_item"
-            android:checked="true"
-            android:text="@string/find_money" />
 
         <RadioButton
             android:id="@+id/money_friend_radio"
