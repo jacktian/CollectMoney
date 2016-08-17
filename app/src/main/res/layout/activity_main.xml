@@ -17,21 +17,40 @@
         android:layout_marginBottom="@dimen/bottom_tab_height"
         android:layout_marginTop="@dimen/common_toolbar_height"></FrameLayout>
 
-    <RadioGroup
+    <com.yzdsmart.Collectmoney.views.CustomNestRadioGroup
         android:id="@+id/main_bottom_tab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_tab_height"
         android:layout_gravity="bottom"
+        android:background="@android:color/white"
         android:orientation="horizontal">
 
-        <RadioButton
-            android:id="@+id/recommend_radio"
-            style="@style/bottom_tab_item"
-            android:text="@string/recommend" />
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-        <RadioButton
-            android:id="@+id/money_friend_radio"
-            style="@style/bottom_tab_item"
-            android:text="@string/money_friendship" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/recommend_radio"
+                android:layout_width="@dimen/bottom_tab_width"
+                android:layout_height="@dimen/button_height"
+                android:layout_centerInParent="true"
+                android:background="@drawable/main_bottom_tab_button_recommend"
+                android:button="@null" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RadioButton
+                android:id="@+id/money_friend_radio"
+                android:layout_width="@dimen/bottom_tab_width"
+                android:layout_height="@dimen/button_height"
+                android:layout_centerInParent="true"
+                android:background="@drawable/main_bottom_tab_button_chat"
+                android:button="@null" />
+        </RelativeLayout>
+    </com.yzdsmart.Collectmoney.views.CustomNestRadioGroup>
 </android.support.design.widget.CoordinatorLayout>
