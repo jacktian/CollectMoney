@@ -5,7 +5,7 @@ import android.os.Handler;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.login.LoginActivity;
+import com.yzdsmart.Collectmoney.main.MainActivity;
 
 /**
  * Created by YZD on 2016/8/17.
@@ -21,7 +21,7 @@ public class SplashActivity extends BaseActivity {
         splashRunnable = new Runnable() {
             @Override
             public void run() {
-                openActivity(LoginActivity.class);
+                openActivity(MainActivity.class);
                 closeActivity();
             }
         };

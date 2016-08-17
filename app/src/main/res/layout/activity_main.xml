@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <include
+        layout="@layout/common_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_toolbar_height" />
+
+
+    <FrameLayout
+        android:id="@+id/layout_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/bottom_tab_height"></FrameLayout>
+
+    <RadioGroup
+        android:id="@+id/bottom_tab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_tab_height"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/recommend_radio"
+            style="@style/bottom_tab_item"
+            android:text="@string/recommend" />
+
+        <RadioButton
+            android:id="@+id/search_radio"
+            style="@style/bottom_tab_item"
+            android:checked="true"
+            android:text="@string/find_money" />
+
+        <RadioButton
+            android:id="@+id/money_friend_radio"
+            style="@style/bottom_tab_item"
+            android:text="@string/money_friendship" />
+    </RadioGroup>
+</android.support.design.widget.CoordinatorLayout>

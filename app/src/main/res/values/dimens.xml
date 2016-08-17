@@ -26,4 +26,10 @@
     <dimen name="common_user_info_layout_margin_top">52dp</dimen>
     <!--用户信息宽度-->
     <dimen name="common_user_info_layout_width">255dp</dimen>
+
+    <!--主界面-->
+    <dimen name="bottom_tab_height">54dp</dimen>
+
+    <!--找钱-->
+    <dimen name="find_result_layout_height">51dp</dimen>
 </resources>

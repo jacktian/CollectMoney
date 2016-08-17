@@ -26,11 +26,14 @@ public class RegisterForgetPasswordActivity extends BaseActivity {
     @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout, R.id.forget_pwd_link, R.id.new_user_link})
     List<View> hideViews;
     @Nullable
+    @BindView(R.id.title_left_operation)
+    ImageView titleLeftOpeIV;
+    @Nullable
     @BindView(R.id.center_title)
-    TextView centerTitle;
+    TextView centerTitleTV;
     @Nullable
     @BindView(R.id.user_name_icon)
-    ImageView userNameIcon;
+    ImageView userNameIconIV;
     @Nullable
     @BindView(R.id.login_register_confirm_button)
     Button registerButton;
@@ -41,21 +44,21 @@ public class RegisterForgetPasswordActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+
         opeType = getIntent().getExtras().getInt("opeType");
         switch (opeType) {
             case 0:
-                centerTitle.setText(getResources().getString(R.string.register));
+                centerTitleTV.setText(getResources().getString(R.string.register));
                 registerButton.setText(getResources().getString(R.string.register));
                 break;
             case 1:
-                centerTitle.setText(getResources().getString(R.string.forget_pwd));
+                centerTitleTV.setText(getResources().getString(R.string.forget_pwd));
                 registerButton.setText(getResources().getString(R.string.confirm));
                 break;
         }
-
-        ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-
-        userNameIcon.setImageDrawable(getResources().getDrawable(R.mipmap.mobile_icon));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        userNameIconIV.setImageDrawable(getResources().getDrawable(R.mipmap.mobile_icon));
     }
 
     @Override
