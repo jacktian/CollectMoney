@@ -34,12 +34,10 @@ public class QRScannerFragment extends BaseFragment {
     @BindView(R.id.center_title)
     TextView centerTitleTV;
 
-    private FragmentManager fm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fm = getFragmentManager();
     }
 
     @Override

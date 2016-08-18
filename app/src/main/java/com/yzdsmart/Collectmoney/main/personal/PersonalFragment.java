@@ -40,12 +40,10 @@ public class PersonalFragment extends BaseFragment {
     @BindView(R.id.left_title)
     TextView leftTitleTV;
 
-    private FragmentManager fm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fm = getFragmentManager();
     }
 
     @Override

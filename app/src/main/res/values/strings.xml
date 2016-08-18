@@ -19,9 +19,6 @@
     <string name="recommend">推荐</string>
     <string name="find_money">找钱</string>
     <string name="money_friendship">钱圈</string>
-    <string name="coin_count">币数 : </string>
-    <string name="scanner_times">扫描次数 : </string>
-    <string name="distance">距离(公里) : </string>
 
     <!--圈钱-->
     <string name="search">搜索</string>

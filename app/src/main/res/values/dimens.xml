@@ -2,6 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="three_grid_unit">24dp</dimen>
+    <dimen name="one_and_a_half_grid_unit">12dp</dimen>
 
     <!--字体大小-->
     <dimen name="font_medium">12sp</dimen>
@@ -36,11 +38,12 @@
     <dimen name="bottom_tab_width">48dp</dimen>
 
     <!--找钱-->
-    <dimen name="find_result_layout_height">51dp</dimen>
-    <dimen name="find_result_layout_margin_bottom">11dp</dimen>
-    <dimen name="find_result_item_margin_top">6dp</dimen>
-    <dimen name="find_result_item_margin_left">24dp</dimen>
 
     <!--钱圈-->
     <dimen name="search_filter_height">29dp</dimen>
+
+    <!--推荐-->
+    <dimen name="recommend_spinner_width">48dp</dimen>
+    <dimen name="recommend_spinner_height">26dp</dimen>
+    <dimen name="city_list_padding">6dp</dimen>
 </resources>

@@ -1,16 +1,19 @@
 package com.yzdsmart.Collectmoney.main.recommend;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.MainActivity;
+import com.yzdsmart.Collectmoney.views.spinner.BetterSpinner;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,18 +30,20 @@ public class RecommendFragment extends BaseFragment {
     @BindViews({R.id.title_left_operation_layout, R.id.left_title, R.id.center_title, R.id.title_right_operation})
     List<View> hideViews;
     @Nullable
-    @BindViews({R.id.title_right_operation_to_left, R.id.bubble_count})
+    @BindViews({R.id.title_right_operation_to_left, R.id.bubble_count, R.id.city_recommend_spinner})
     List<View> showViews;
+    @Nullable
+    @BindView(R.id.city_recommend_spinner)
+    BetterSpinner cityRecommendSpinner;
     @Nullable
     @BindView(R.id.title_right_operation_to_left)
     ImageView titleRightOpeTLIV;
 
-    private FragmentManager fm;
+    List<String> cityList = new LinkedList<>(Arrays.asList("常州", "无锡", "苏州"));
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fm = getFragmentManager();
     }
 
     @Override
@@ -53,6 +58,11 @@ public class RecommendFragment extends BaseFragment {
         ButterKnife.apply(hideViews, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
         ButterKnife.apply(showViews, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
         titleRightOpeTLIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.grey_mail_icon));
+//        cityRecommendSpinner.attachDataSource(cityList);
+        String[] CITIES = getResources().getStringArray(R.array.city_list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.spinner_list_item, CITIES);
+        cityRecommendSpinner.setAdapter(adapter);
     }
 
     @Override
