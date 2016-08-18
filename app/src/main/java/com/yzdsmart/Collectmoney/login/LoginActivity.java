@@ -2,6 +2,7 @@ package com.yzdsmart.Collectmoney.login;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -26,6 +27,9 @@ public class LoginActivity extends BaseActivity {
     @BindViews({R.id.toolbar_layout, R.id.user_count_down_layout, R.id.user_confirm_pwd_layout})
     List<View> hideViews;
     @Nullable
+    @BindView(R.id.toolBar)
+    Toolbar toolBar;
+    @Nullable
     @BindView(R.id.user_pwd)
     EditText userPasswordET;
 
@@ -34,6 +38,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+        toolBar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         userPasswordET.setImeOptions(EditorInfo.IME_ACTION_DONE);
     }
 

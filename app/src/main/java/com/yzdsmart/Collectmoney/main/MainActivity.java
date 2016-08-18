@@ -11,6 +11,8 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.find_money.FindMoneyFragment;
+import com.yzdsmart.Collectmoney.main.recommend.RecommendFragment;
+import com.yzdsmart.Collectmoney.money_friendship.MoneyFriendshipActivity;
 import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 
 import java.util.List;
@@ -74,6 +76,41 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
 
     @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
+        Fragment fragment;
+        switch (checkedId) {
+            case R.id.recommend_radio:
+                fragment = fm.findFragmentByTag("recommend");
+                if (null == fragment) {
+                    fragment = new RecommendFragment();
+                }
+                addOrShowFragment(fragment, "recommend");
+                break;
+            case R.id.money_friend_radio:
+                openActivity(MoneyFriendshipActivity.class);
+                group.clearCheck();
+                fragment = fm.findFragmentByTag("find");
+                if (null == fragment) {
+                    fragment = new FindMoneyFragment();
+                }
+                addOrShowFragment(fragment, "find");
+                break;
+        }
+    }
 
+    /**
+     * 添加或者显示碎片
+     *
+     * @param fragment
+     * @param tag
+     */
+    private void addOrShowFragment(Fragment fragment, String tag) {
+        FragmentTransaction ft = fm.beginTransaction();
+        if (!fragment.isAdded()) {
+            ft.hide(mCurrentFragment).add(R.id.layout_frame, fragment, tag);
+        } else {
+            ft.hide(mCurrentFragment).show(fragment);
+        }
+        ft.commit();
+        mCurrentFragment = fragment;
     }
 }

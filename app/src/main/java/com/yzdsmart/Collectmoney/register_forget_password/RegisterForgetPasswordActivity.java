@@ -2,6 +2,7 @@ package com.yzdsmart.Collectmoney.register_forget_password;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,6 +27,9 @@ public class RegisterForgetPasswordActivity extends BaseActivity {
     @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout, R.id.forget_pwd_link, R.id.new_user_link})
     List<View> hideViews;
     @Nullable
+    @BindView(R.id.toolBar)
+    Toolbar toolBar;
+    @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
     @Nullable
@@ -45,6 +49,7 @@ public class RegisterForgetPasswordActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+        toolBar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
         opeType = getIntent().getExtras().getInt("opeType");
         switch (opeType) {
