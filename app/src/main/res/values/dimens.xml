@@ -46,4 +46,7 @@
     <dimen name="recommend_spinner_width">48dp</dimen>
     <dimen name="recommend_spinner_height">26dp</dimen>
     <dimen name="city_list_padding">6dp</dimen>
+    <dimen name="recommend_list_item_height">127dp</dimen>
+    <dimen name="recommend_list_item_des_height">24dp</dimen>
+    <dimen name="recommend_list_item_des_padding">8dp</dimen>
 </resources>
