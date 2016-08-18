@@ -5,31 +5,24 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
+import android.view.KeyEvent;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.find_money.FindMoneyFragment;
 import com.yzdsmart.Collectmoney.main.recommend.RecommendFragment;
 import com.yzdsmart.Collectmoney.money_friendship.MoneyFriendshipActivity;
 import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 
-import java.util.List;
-
 import butterknife.BindView;
-import butterknife.BindViews;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Optional;
 
 /**
  * Created by YZD on 2016/8/17.
  */
 public class MainActivity extends BaseActivity implements CustomNestRadioGroup.OnCheckedChangeListener {
-    @Nullable
-    @BindViews({R.id.left_title, R.id.center_title})
-    List<View> hideViews;
+    //    @Nullable
+//    @BindViews({R.id.left_title, R.id.center_title})
+//    List<View> hideViews;
     @Nullable
     @BindView(R.id.main_bottom_tab)
     CustomNestRadioGroup mainBottomTab;
@@ -41,7 +34,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+//        ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
 
         fm = getFragmentManager();
 
@@ -55,17 +48,30 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         return R.layout.activity_main;
     }
 
-    @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.title_right_operation_layout})
-    void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.title_left_operation_layout:
-                break;
-            case R.id.title_right_operation_layout:
-                openActivity(LoginActivity.class);
-                break;
-        }
-    }
+//    @Optional
+//    @OnClick({R.id.title_left_operation_layout, R.id.title_right_operation_layout})
+//    void onClick(View view) {
+//        switch (view.getId()) {
+//            case R.id.title_left_operation_layout:
+//                if (mCurrentFragment instanceof FindMoneyFragment) {
+//                    Fragment fragment = fm.findFragmentByTag("personal");
+//                    if (null == fragment) {
+//                        fragment = new PersonalFragment();
+//                    }
+//                    addOrShowFragment(fragment, "personal");
+//                } else if (mCurrentFragment instanceof RecommendFragment) {
+//
+//                }
+//                break;
+//            case R.id.title_right_operation_layout:
+//                if (mCurrentFragment instanceof FindMoneyFragment) {
+//                    openActivity(LoginActivity.class);
+//                } else if (mCurrentFragment instanceof RecommendFragment) {
+//
+//                }
+//                break;
+//        }
+//    }
 
     private void initView() {
         FragmentTransaction ft = fm.beginTransaction();
@@ -88,11 +94,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
             case R.id.money_friend_radio:
                 openActivity(MoneyFriendshipActivity.class);
                 group.clearCheck();
-                fragment = fm.findFragmentByTag("find");
-                if (null == fragment) {
-                    fragment = new FindMoneyFragment();
-                }
-                addOrShowFragment(fragment, "find");
+                backToFindMoney();
                 break;
         }
     }
@@ -103,7 +105,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
      * @param fragment
      * @param tag
      */
-    private void addOrShowFragment(Fragment fragment, String tag) {
+    public void addOrShowFragment(Fragment fragment, String tag) {
         FragmentTransaction ft = fm.beginTransaction();
         if (!fragment.isAdded()) {
             ft.hide(mCurrentFragment).add(R.id.layout_frame, fragment, tag);
@@ -112,5 +114,29 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         }
         ft.commit();
         mCurrentFragment = fragment;
+    }
+
+    /**
+     * 返回到找钱页
+     */
+    public void backToFindMoney() {
+        Fragment fragment = fm.findFragmentByTag("find");
+        if (null == fragment) {
+            fragment = new FindMoneyFragment();
+        }
+        addOrShowFragment(fragment, "find");
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                if (!(mCurrentFragment instanceof FindMoneyFragment)) {
+                    backToFindMoney();
+                    mainBottomTab.clearCheck();
+                    return true;
+                }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

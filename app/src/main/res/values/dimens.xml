@@ -8,9 +8,13 @@
     <dimen name="font_small">10sp</dimen>
     <dimen name="font_large">14sp</dimen>
     <dimen name="font_xlarge">19sp</dimen>
+    <dimen name="font_xxsmall">8sp</dimen>
 
     <!--标题栏公共高度-->
     <dimen name="common_toolbar_height">52dp</dimen>
+    <dimen name="bubble_width">19dp</dimen>
+    <dimen name="left_title_margin_left">8dp</dimen>
+    <dimen name="right_ope_with_bubble_margin">3dp</dimen>
 
     <dimen name="button_height">31dp</dimen>
     <dimen name="button_radius">14dp</dimen>
@@ -36,4 +40,7 @@
     <dimen name="find_result_layout_margin_bottom">11dp</dimen>
     <dimen name="find_result_item_margin_top">6dp</dimen>
     <dimen name="find_result_item_margin_left">24dp</dimen>
+
+    <!--钱圈-->
+    <dimen name="search_filter_height">29dp</dimen>
 </resources>

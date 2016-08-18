@@ -1,9 +1,10 @@
-package com.yzdsmart.Collectmoney.main.recommend;
+package com.yzdsmart.Collectmoney.main.personal;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
@@ -19,22 +20,28 @@ import butterknife.OnClick;
 import butterknife.Optional;
 
 /**
- * Created by YZD on 2016/8/17.
+ * Created by YZD on 2016/8/18.
  */
-public class RecommendFragment extends BaseFragment {
+public class PersonalFragment extends BaseFragment {
     @Nullable
-    @BindViews({R.id.title_left_operation_layout, R.id.left_title, R.id.center_title, R.id.title_right_operation})
+    @BindViews({R.id.center_title, R.id.title_logo, R.id.title_right_operation})
     List<View> hideViews;
     @Nullable
     @BindViews({R.id.title_right_operation_to_left, R.id.bubble_count})
     List<View> showViews;
     @Nullable
+    @BindView(R.id.title_left_operation)
+    ImageView titleLeftOpeIV;
+    @Nullable
     @BindView(R.id.title_right_operation_to_left)
     ImageView titleRightOpeTLIV;
+    @Nullable
+    @BindView(R.id.left_title)
+    TextView leftTitleTV;
 
     @Override
     public int getLayoutResource() {
-        return R.layout.fragment_recommend;
+        return R.layout.fragment_personal;
     }
 
     @Override
@@ -43,26 +50,16 @@ public class RecommendFragment extends BaseFragment {
 
         ButterKnife.apply(hideViews, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
         ButterKnife.apply(showViews, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
+        titleLeftOpeIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.left_arrow));
         titleRightOpeTLIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.grey_mail_icon));
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        System.out.println("------RecommendFragment------------onResume----------------------");
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        System.out.println("------------------------------------RecommendFragment is hidden " + hidden);
+        leftTitleTV.setText(getActivity().getResources().getString(R.string.personal_find));
     }
 
     @Optional
-    @OnClick({R.id.title_right_operation_layout})
+    @OnClick({R.id.title_left_operation_layout})
     void onClick(View view) {
         switch (view.getId()) {
-            case R.id.title_right_operation_layout:
+            case R.id.title_left_operation_layout:
                 ((MainActivity) getActivity()).backToFindMoney();
                 break;
         }

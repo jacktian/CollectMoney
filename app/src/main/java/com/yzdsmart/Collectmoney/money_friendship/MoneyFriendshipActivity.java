@@ -21,11 +21,14 @@ import butterknife.Optional;
  */
 public class MoneyFriendshipActivity extends BaseActivity {
     @Nullable
-    @BindViews({R.id.left_title, R.id.center_title, R.id.title_right_operation_layout})
+    @BindViews({R.id.left_title, R.id.center_title})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
+    @Nullable
+    @BindView(R.id.title_right_operation)
+    ImageView titleRightOpeIV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,20 +36,24 @@ public class MoneyFriendshipActivity extends BaseActivity {
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
-    }
-
-    @Optional
-    @OnClick({R.id.title_left_operation_layout})
-    void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.title_left_operation_layout:
-                closeActivity();
-                break;
-        }
+        titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.user_add_icon));
     }
 
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_money_friendship;
     }
+
+    @Optional
+    @OnClick({R.id.title_left_operation_layout, R.id.title_right_operation_layout})
+    void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.title_left_operation_layout:
+                closeActivity();
+                break;
+            case R.id.title_right_operation_layout:
+                break;
+        }
+    }
+
 }

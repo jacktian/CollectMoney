@@ -5,17 +5,11 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <include
-        layout="@layout/common_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/common_toolbar_height" />
-
     <FrameLayout
         android:id="@+id/layout_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/bottom_tab_height"
-        android:layout_marginTop="@dimen/common_toolbar_height"></FrameLayout>
+        android:layout_marginBottom="@dimen/bottom_tab_height" />
 
     <com.yzdsmart.Collectmoney.views.CustomNestRadioGroup
         android:id="@+id/main_bottom_tab"

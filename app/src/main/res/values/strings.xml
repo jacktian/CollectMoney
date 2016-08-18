@@ -22,4 +22,13 @@
     <string name="coin_count">币数 : </string>
     <string name="scanner_times">扫描次数 : </string>
     <string name="distance">距离(公里) : </string>
+
+    <!--圈钱-->
+    <string name="search">搜索</string>
+
+    <!--个人中心-->
+    <string name="personal_find">我的搜搜</string>
+
+    <!--扫码-->
+    <string name="qr_scan">扫码</string>
 </resources>
