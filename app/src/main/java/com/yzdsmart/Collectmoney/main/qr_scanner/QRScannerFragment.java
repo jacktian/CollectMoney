@@ -1,5 +1,6 @@
 package com.yzdsmart.Collectmoney.main.qr_scanner;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -32,6 +33,14 @@ public class QRScannerFragment extends BaseFragment {
     @Nullable
     @BindView(R.id.center_title)
     TextView centerTitleTV;
+
+    private FragmentManager fm;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        fm = getFragmentManager();
+    }
 
     @Override
     public int getLayoutResource() {

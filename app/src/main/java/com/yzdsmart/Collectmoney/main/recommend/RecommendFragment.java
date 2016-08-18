@@ -1,5 +1,6 @@
 package com.yzdsmart.Collectmoney.main.recommend;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -31,6 +32,14 @@ public class RecommendFragment extends BaseFragment {
     @Nullable
     @BindView(R.id.title_right_operation_to_left)
     ImageView titleRightOpeTLIV;
+
+    private FragmentManager fm;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        fm = getFragmentManager();
+    }
 
     @Override
     public int getLayoutResource() {

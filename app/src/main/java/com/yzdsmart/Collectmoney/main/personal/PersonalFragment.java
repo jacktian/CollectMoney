@@ -1,5 +1,6 @@
 package com.yzdsmart.Collectmoney.main.personal;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -38,6 +39,14 @@ public class PersonalFragment extends BaseFragment {
     @Nullable
     @BindView(R.id.left_title)
     TextView leftTitleTV;
+
+    private FragmentManager fm;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        fm = getFragmentManager();
+    }
 
     @Override
     public int getLayoutResource() {

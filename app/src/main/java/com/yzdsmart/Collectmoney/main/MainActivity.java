@@ -20,9 +20,6 @@ import butterknife.BindView;
  * Created by YZD on 2016/8/17.
  */
 public class MainActivity extends BaseActivity implements CustomNestRadioGroup.OnCheckedChangeListener {
-    //    @Nullable
-//    @BindViews({R.id.left_title, R.id.center_title})
-//    List<View> hideViews;
     @Nullable
     @BindView(R.id.main_bottom_tab)
     CustomNestRadioGroup mainBottomTab;
@@ -33,8 +30,6 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
 
         fm = getFragmentManager();
 
@@ -48,31 +43,6 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         return R.layout.activity_main;
     }
 
-//    @Optional
-//    @OnClick({R.id.title_left_operation_layout, R.id.title_right_operation_layout})
-//    void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.title_left_operation_layout:
-//                if (mCurrentFragment instanceof FindMoneyFragment) {
-//                    Fragment fragment = fm.findFragmentByTag("personal");
-//                    if (null == fragment) {
-//                        fragment = new PersonalFragment();
-//                    }
-//                    addOrShowFragment(fragment, "personal");
-//                } else if (mCurrentFragment instanceof RecommendFragment) {
-//
-//                }
-//                break;
-//            case R.id.title_right_operation_layout:
-//                if (mCurrentFragment instanceof FindMoneyFragment) {
-//                    openActivity(LoginActivity.class);
-//                } else if (mCurrentFragment instanceof RecommendFragment) {
-//
-//                }
-//                break;
-//        }
-//    }
-
     private void initView() {
         FragmentTransaction ft = fm.beginTransaction();
         mCurrentFragment = new FindMoneyFragment();
@@ -83,7 +53,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
         Fragment fragment;
-        switch (checkedId) {
+        switch (group.getCheckedRadioButtonId()) {
             case R.id.recommend_radio:
                 fragment = fm.findFragmentByTag("recommend");
                 if (null == fragment) {
@@ -93,9 +63,21 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
                 break;
             case R.id.money_friend_radio:
                 openActivity(MoneyFriendshipActivity.class);
+                fragment = fm.findFragmentByTag("find");
+                if (null == fragment) {
+                    fragment = new FindMoneyFragment();
+                }
+                addOrShowFragment(fragment, "find");
                 group.clearCheck();
-                backToFindMoney();
                 break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!(mCurrentFragment instanceof FindMoneyFragment)) {
+            backToFindMoney();
         }
     }
 
@@ -120,6 +102,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
      * 返回到找钱页
      */
     public void backToFindMoney() {
+        mainBottomTab.clearCheck();
         Fragment fragment = fm.findFragmentByTag("find");
         if (null == fragment) {
             fragment = new FindMoneyFragment();
@@ -133,7 +116,6 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
             case KeyEvent.KEYCODE_BACK:
                 if (!(mCurrentFragment instanceof FindMoneyFragment)) {
                     backToFindMoney();
-                    mainBottomTab.clearCheck();
                     return true;
                 }
         }
