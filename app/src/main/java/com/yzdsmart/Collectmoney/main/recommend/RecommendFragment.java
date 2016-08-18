@@ -10,7 +10,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.MainActivity;
-import com.yzdsmart.Collectmoney.views.spinner.BetterSpinner;
+import com.yzdsmart.Collectmoney.views.BetterSpinner;
 
 import java.util.Arrays;
 import java.util.LinkedList;
