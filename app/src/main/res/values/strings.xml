@@ -25,7 +25,10 @@
 
     <!--个人中心-->
     <string name="personal_find">我的搜搜</string>
+    <string name="my_friend">我的好友</string>
+    <string name="qr_scan">扫一扫</string>
+    <string name="coin_total_count">币总数</string>
 
     <!--扫码-->
-    <string name="qr_scan">扫码</string>
+    <string name="qr_scan_title">扫码</string>
 </resources>

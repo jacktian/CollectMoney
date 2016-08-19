@@ -40,7 +40,6 @@ public class PersonalFragment extends BaseFragment {
     @BindView(R.id.left_title)
     TextView leftTitleTV;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

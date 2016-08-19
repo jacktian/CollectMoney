@@ -10,11 +10,11 @@
         android:scaleType="centerCrop" />
 
     <TextView
-        android:id="@+id/recommend_item_describe"
+        android:id="@+id/recommend_item_name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/recommend_list_item_des_height"
         android:layout_gravity="bottom"
-        android:background="@mipmap/recommend_list_item_des_bg"
+        android:background="@mipmap/recommend_list_item_name_bg"
         android:gravity="center_vertical|right"
         android:paddingRight="@dimen/recommend_list_item_des_padding"
         android:text="一站地"

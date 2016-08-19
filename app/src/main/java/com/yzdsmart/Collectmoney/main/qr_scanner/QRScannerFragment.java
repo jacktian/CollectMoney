@@ -51,7 +51,7 @@ public class QRScannerFragment extends BaseFragment {
 
         ButterKnife.apply(hideViews, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.left_arrow));
-        centerTitleTV.setText(getActivity().getResources().getString(R.string.qr_scan));
+        centerTitleTV.setText(getActivity().getResources().getString(R.string.qr_scan_title));
     }
 
     @Optional

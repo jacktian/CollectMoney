@@ -49,4 +49,7 @@
     <dimen name="recommend_list_item_height">127dp</dimen>
     <dimen name="recommend_list_item_des_height">24dp</dimen>
     <dimen name="recommend_list_item_des_padding">8dp</dimen>
+
+    <!--我的搜搜-->
+    <dimen name="user_avater_width">63dp</dimen>
 </resources>

@@ -2,6 +2,8 @@ package com.yzdsmart.Collectmoney.main.recommend;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -9,11 +11,11 @@ import android.widget.ImageView;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.bean.TouristAttraction;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.views.BetterSpinner;
 
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,12 +40,29 @@ public class RecommendFragment extends BaseFragment {
     @Nullable
     @BindView(R.id.title_right_operation_to_left)
     ImageView titleRightOpeTLIV;
+    @Nullable
+    @BindView(R.id.recommend_list)
+    RecyclerView recommendListRV;
 
-    List<String> cityList = new LinkedList<>(Arrays.asList("常州", "无锡", "苏州"));
+    private String[] cities;
+    private ArrayAdapter<String> citiesAdapter;
+
+    private LinearLayoutManager mLinearLayoutManager;
+    private List<TouristAttraction> touristAttractionList;
+    private RecommendAdapter recommendAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        cities = getResources().getStringArray(R.array.city_list);
+        citiesAdapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.cities_list_item, cities);
+
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        touristAttractionList = new ArrayList<TouristAttraction>();
+        recommendAdapter = new RecommendAdapter(getActivity());
+
+
     }
 
     @Override
@@ -58,11 +77,19 @@ public class RecommendFragment extends BaseFragment {
         ButterKnife.apply(hideViews, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
         ButterKnife.apply(showViews, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
         titleRightOpeTLIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.grey_mail_icon));
-//        cityRecommendSpinner.attachDataSource(cityList);
-        String[] CITIES = getResources().getStringArray(R.array.city_list);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.spinner_list_item, CITIES);
-        cityRecommendSpinner.setAdapter(adapter);
+
+        cityRecommendSpinner.setAdapter(citiesAdapter);
+
+        recommendListRV.setHasFixedSize(true);
+        recommendListRV.setLayoutManager(mLinearLayoutManager);
+        recommendListRV.setAdapter(recommendAdapter);
+
+        List<TouristAttraction> list = new ArrayList<TouristAttraction>();
+        list.add(new TouristAttraction("file:///android_asset/tourist_attractions_img.png", "武进假日酒店"));
+        list.add(new TouristAttraction("file:///android_asset/tourist_attractions_img.png", "常武购物中心"));
+        list.add(new TouristAttraction("file:///android_asset/tourist_attractions_img.png", "武进购物中心"));
+        list.add(new TouristAttraction("file:///android_asset/tourist_attractions_img.png", "武进武悦广场"));
+        recommendAdapter.appendList(list);
     }
 
     @Override
