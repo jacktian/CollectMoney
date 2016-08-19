@@ -95,13 +95,11 @@ public class RecommendFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("------RecommendFragment------------onResume----------------------");
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        System.out.println("------------------------------------RecommendFragment is hidden " + hidden);
     }
 
     @Optional

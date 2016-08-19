@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.main.qr_scanner;
+package com.yzdsmart.Collectmoney.qr_scan;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -12,9 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.main.MainActivity;
 
 import java.util.List;
 
@@ -26,9 +24,9 @@ import butterknife.Optional;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 
 /**
- * Created by YZD on 2016/8/18.
+ * Created by YZD on 2016/8/19.
  */
-public class QRScannerFragment extends BaseFragment implements QRCodeView.Delegate {
+public class QRScannerActivity extends BaseActivity implements QRCodeView.Delegate {
     @Nullable
     @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout})
     List<View> hideViews;
@@ -49,63 +47,44 @@ public class QRScannerFragment extends BaseFragment implements QRCodeView.Delega
     private static final long VIBRATE_DURATION = 200L;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        centerTitleTV.setText(getResources().getString(R.string.qr_scan_title));
+
         playBeep = true;
-        AudioManager audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         if (AudioManager.RINGER_MODE_NORMAL != audioManager.getRingerMode()) {
             playBeep = false;
         }
         initBeepSound();
         vibrate = true;
-    }
-
-    @Override
-    public int getLayoutResource() {
-        return R.layout.fragment_qr_scanner;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        ButterKnife.apply(hideViews, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.left_arrow));
-        centerTitleTV.setText(getActivity().getResources().getString(R.string.qr_scan_title));
-
         mQRCodeView.setDelegate(this);
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_qr_scanner;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("------------------------------------QRScannerFragment is hidden " + this.isHidden());
-//        if (!this.isHidden()) {
         mQRCodeView.startSpotAndShowRect();
-//        }
     }
 
     @Override
     public void onPause() {
-        super.onPause();
         mQRCodeView.stopSpotAndHiddenRect();
+        super.onPause();
     }
 
     @Override
-    public void onDestroyView() {
+    protected void onDestroy() {
         mQRCodeView.onDestroy();
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-//        System.out.println("------------------------------------QRScannerFragment is hidden " + hidden);
-        if (hidden) {
-            mQRCodeView.stopSpotAndHiddenRect();
-        } else {
-            mQRCodeView.startSpotAndShowRect();
-        }
+        super.onDestroy();
     }
 
     @Optional
@@ -113,27 +92,15 @@ public class QRScannerFragment extends BaseFragment implements QRCodeView.Delega
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
-                ((MainActivity) getActivity()).backToFindMoney();
+                closeActivity();
                 break;
         }
-    }
-
-    @Override
-    public void onScanQRCodeSuccess(String result) {
-        ((BaseActivity) getActivity()).showSnackbar(result);
-        playBeepSoundAndVibrate();
-        mQRCodeView.startSpot();
-    }
-
-    @Override
-    public void onScanQRCodeOpenCameraError() {
-
     }
 
     //初始化声音
     private void initBeepSound() {
         if (playBeep && null == mediaPlayer) {
-            getActivity().setVolumeControlStream(AudioManager.STREAM_MUSIC);
+            setVolumeControlStream(AudioManager.STREAM_MUSIC);
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setOnCompletionListener(beepListener);
@@ -158,7 +125,7 @@ public class QRScannerFragment extends BaseFragment implements QRCodeView.Delega
             mediaPlayer.start();
         }
         if (vibrate) {
-            Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(VIBRATE_DURATION);
         }
     }
@@ -172,4 +139,16 @@ public class QRScannerFragment extends BaseFragment implements QRCodeView.Delega
             mediaPlayer.seekTo(0);
         }
     };
+
+    @Override
+    public void onScanQRCodeSuccess(String result) {
+        showSnackbar(result);
+        playBeepSoundAndVibrate();
+        mQRCodeView.startSpot();
+    }
+
+    @Override
+    public void onScanQRCodeOpenCameraError() {
+
+    }
 }

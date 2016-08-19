@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -23,6 +24,9 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity extends AppCompatActivity {
     @Nullable
+    @BindView(R.id.toolBar)
+    protected Toolbar toolBar;
+    @Nullable
     @BindView(R.id.container)
     CoordinatorLayout container;
 
@@ -35,6 +39,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this);
         MoneyApp.getAppInstance().storeActivity(this);
+
+        if (null != toolBar) {
+            setSupportActionBar(toolBar);
+        }
     }
 
     //获取页面布局

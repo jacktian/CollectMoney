@@ -6,6 +6,7 @@
 
     <color name="white">#fafafa</color>
 
+    <color name="light_grey">#d9d9d9</color>
     <color name="grey">#878787</color>
     <color name="orange">#fc7d1c</color>
     <color name="orange_hover">#fb9547</color>

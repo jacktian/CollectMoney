@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -86,6 +87,17 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
 
         public void setAttractionImg(String attractionImg) {
             Glide.with(context).load(attractionImg).into(attractionImgIV);
+
+            ViewTreeObserver vto = attractionImgIV.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    attractionImgIV.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    attractionImgIV.getHeight();
+                    attractionImgIV.getWidth();
+                    System.out.println(attractionImgIV.getHeight() + "----------------" + attractionImgIV.getWidth());
+                }
+            });
         }
 
         public void setAttractionName(String attractionName) {

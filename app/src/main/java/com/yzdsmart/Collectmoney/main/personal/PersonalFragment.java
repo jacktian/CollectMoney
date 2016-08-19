@@ -1,6 +1,5 @@
 package com.yzdsmart.Collectmoney.main.personal;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;

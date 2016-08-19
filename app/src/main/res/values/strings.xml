@@ -28,6 +28,10 @@
     <string name="my_friend">我的好友</string>
     <string name="qr_scan">扫一扫</string>
     <string name="coin_total_count">币总数</string>
+    <string name="recommend_count_down">限时推荐</string>
+    <string name="recommend_daily">每日推荐</string>
+    <string name="focus_shop">关注店铺</string>
+    <string name="settings">设置</string>
 
     <!--扫码-->
     <string name="qr_scan_title">扫码</string>

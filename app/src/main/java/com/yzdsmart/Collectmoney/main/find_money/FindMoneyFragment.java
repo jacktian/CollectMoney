@@ -11,7 +11,7 @@ import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.main.personal.PersonalFragment;
-import com.yzdsmart.Collectmoney.main.qr_scanner.QRScannerFragment;
+import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 
 import java.util.List;
 
@@ -73,11 +73,12 @@ public class FindMoneyFragment extends BaseFragment {
                 ((MainActivity) getActivity()).addOrShowFragment(fragment, "personal");
                 break;
             case R.id.title_right_operation_layout:
-                fragment = fm.findFragmentByTag("qr_scan");
-                if (null == fragment) {
-                    fragment = new QRScannerFragment();
-                }
-                ((MainActivity) getActivity()).addOrShowFragment(fragment, "qr_scan");
+//                fragment = fm.findFragmentByTag("qr_scan");
+//                if (null == fragment) {
+//                    fragment = new QRScannerFragment();
+//                }
+//                ((MainActivity) getActivity()).addOrShowFragment(fragment, "qr_scan");
+                ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class);
                 break;
         }
     }
