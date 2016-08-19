@@ -10,6 +10,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.MainActivity;
+import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
 
 import java.util.List;
 
@@ -61,10 +62,14 @@ public class PersonalFragment extends BaseFragment {
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout})
+    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
+                ((MainActivity) getActivity()).backToFindMoney();
+                break;
+            case R.id.to_personal_detail:
+                ((BaseActivity) getActivity()).openActivity(PersonalFriendDetailActivity.class);
                 ((MainActivity) getActivity()).backToFindMoney();
                 break;
         }

@@ -106,6 +106,12 @@
             android:launchMode="singleTop"
             android:theme="@style/ActivityColorTranslucentTheme" />
 
+        <activity
+            android:name=".personal_friend_detail.PersonalFriendDetailActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityImageTranslucentTheme" />
+
         <!--定位服务-->
         <service
             android:name="com.baidu.location.f"
