@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by YZD on 2016/8/20.
  */
 public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.ViewHolder>{
-private Context context;
+    private Context context;
     private List<Friendship> friendshipList;
 
     public FriendshipAdapter(Context context) {
@@ -83,8 +83,12 @@ private Context context;
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.setUserNameTV(friendshipList.get(position).getUserName());
-        holder.setUserLevelTV(friendshipList.get(position).getUserLevel());
+        //一定要加这个判断  因为UltimateRecyclerView本身有加了头部和尾部  这个方法返回的是包括头部和尾部在内的
+        if (position < getItemCount() && (customHeaderView != null ? position <= friendshipList.size() : position < friendshipList.size()) && (customHeaderView != null ? position > 0 : true)) {
+            position  -= customHeaderView==null?0:1;
+            holder.setUserNameTV(friendshipList.get(position).getUserName());
+            holder.setUserLevelTV(friendshipList.get(position).getUserLevel());
+        }
     }
 
     @Override
@@ -99,21 +103,21 @@ private Context context;
 
     class  ViewHolder extends UltimateRecyclerviewViewHolder{
         @Nullable
-        @BindView(R.id.user_avater)
+        @BindView(R.id.friend_user_avater)
         CircleImageView userAvaterIV;
         @Nullable
-        @BindView(R.id.user_name)
+        @BindView(R.id.friend_user_name)
         TextView userNameTV;
         @Nullable
-        @BindView(R.id.user_level)
+        @BindView(R.id.friend_user_level)
         TextView userLevelTV;
         @Nullable
-        @BindView(R.id.user_diamond_count)
+        @BindView(R.id.friend_user_diamond_count)
         LinearLayout userDiamondCountLL;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this.itemView);
+            ButterKnife.bind(this,itemView);
         }
 
         public void setUserAvaterIV(String userAvaterUrl) {
