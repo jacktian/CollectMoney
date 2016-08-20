@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.personal_friend_detail;
+package com.yzdsmart.Collectmoney.listener;
 
 import android.support.design.widget.AppBarLayout;
 

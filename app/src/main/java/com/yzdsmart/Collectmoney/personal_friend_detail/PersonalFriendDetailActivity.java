@@ -3,12 +3,12 @@ package com.yzdsmart.Collectmoney.personal_friend_detail;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.listener.AppBarOffsetChangeListener;
 
 import java.util.List;
 
@@ -40,10 +40,10 @@ public class PersonalFriendDetailActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+
         appbarLayout.addOnOffsetChangedListener(new AppBarOffsetChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                Log.d("STATE", state.name());
                 if( state == State.EXPANDED ) {
                     //展开状态
                     titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
