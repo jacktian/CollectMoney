@@ -51,7 +51,7 @@
     <dimen name="recommend_list_item_des_padding">8dp</dimen>
 
     <!--我的搜搜-->
-    <dimen name="user_avater_width">63dp</dimen>
+    <dimen name="personal_user_avater_width">63dp</dimen>
     <dimen name="personal_item_panel_margin_top">20dp</dimen>
 
     <!--用户详情-->
@@ -59,4 +59,8 @@
     <dimen name="user_detail_item_layout_padding">38dp</dimen>
     <dimen name="user_detail_wealth_detail_margin">12dp</dimen>
     <dimen name="user_detail_chat_margin_top">90dp</dimen>
+
+    <!--钱圈-->
+    <dimen name="friendship_list_item_height">42dp</dimen>
+    <dimen name="friendship_list_item_avater_width">32dp</dimen>
 </resources>

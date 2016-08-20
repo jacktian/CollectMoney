@@ -45,4 +45,7 @@
     <string name="detail_more_info">查看更多</string>
     <string name="detail_send_msg">发送消息</string>
     <string name="detail_send_video">视频聊天</string>
+
+    <!--搜索新好友-->
+    <string name="future_search_new_friend">搜索新的朋友</string>
 </resources>

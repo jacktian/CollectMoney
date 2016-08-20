@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/friendship_list_item_height">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_avater"
+        android:src="@mipmap/user_avater"
+        android:layout_centerVertical="true"
+        android:scaleType="centerInside"
+        android:layout_width="@dimen/friendship_list_item_avater_width"
+        android:layout_height="@dimen/friendship_list_item_avater_width" />
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:textColor="@color/grey"
+        android:layout_toRightOf="@id/user_avater"
+        android:text="韩梅梅"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:textSize="@dimen/font_medium"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/user_level"
+        android:layout_width="wrap_content"
+        android:textColor="@color/grey"
+        android:layout_centerInParent="true"
+        android:text="等级：V2"
+        android:textSize="@dimen/font_medium"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/user_diamond_count"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@mipmap/diamond_pink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@mipmap/diamond_pink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</RelativeLayout>

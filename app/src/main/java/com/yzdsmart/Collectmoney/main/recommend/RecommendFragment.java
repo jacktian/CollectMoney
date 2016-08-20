@@ -61,8 +61,6 @@ public class RecommendFragment extends BaseFragment {
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         touristAttractionList = new ArrayList<TouristAttraction>();
         recommendAdapter = new RecommendAdapter(getActivity());
-
-
     }
 
     @Override
@@ -89,7 +87,8 @@ public class RecommendFragment extends BaseFragment {
         list.add(new TouristAttraction("file:///android_asset/tourist_attractions_img.png", "常武购物中心"));
         list.add(new TouristAttraction("file:///android_asset/tourist_attractions_img.png", "武进购物中心"));
         list.add(new TouristAttraction("file:///android_asset/tourist_attractions_img.png", "武进武悦广场"));
-        recommendAdapter.appendList(list);
+        touristAttractionList.addAll(list);
+        recommendAdapter.appendList(touristAttractionList);
     }
 
     @Override

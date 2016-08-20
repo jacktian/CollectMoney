@@ -30,8 +30,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/user_avater"
-                    android:layout_width="@dimen/user_avater_width"
-                    android:layout_height="@dimen/user_avater_width"
+                    android:layout_width="@dimen/personal_user_avater_width"
+                    android:layout_height="@dimen/personal_user_avater_width"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/user_avater" />
 
