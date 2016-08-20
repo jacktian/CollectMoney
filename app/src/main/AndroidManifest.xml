@@ -110,7 +110,7 @@
             android:name=".personal_friend_detail.PersonalFriendDetailActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"
-            android:theme="@style/ActivityImageTranslucentTheme" />
+            android:theme="@style/ActivityColorTranslucentTheme" />
 
         <!--定位服务-->
         <service

@@ -56,4 +56,7 @@
 
     <!--用户详情-->
     <dimen name="user_detail_avater_width">85dp</dimen>
+    <dimen name="user_detail_item_layout_padding">38dp</dimen>
+    <dimen name="user_detail_wealth_detail_margin">12dp</dimen>
+    <dimen name="user_detail_chat_margin_top">90dp</dimen>
 </resources>
