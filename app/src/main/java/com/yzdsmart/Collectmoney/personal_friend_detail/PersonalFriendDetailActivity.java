@@ -30,6 +30,7 @@ public class PersonalFriendDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+//        toolbar.getBackground().setAlpha(100);
     }
 
     @Override

@@ -117,12 +117,12 @@
 
                             <TextView
                                 android:id="@+id/user_account_money"
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
                                 android:ellipsize="marquee"
                                 android:singleLine="true"
-                                android:text="2000000000000000"
+                                android:maxWidth="38dp"
+                                android:text="20000000000000000"
                                 android:textColor="@color/orange"
                                 android:textIsSelectable="true"
                                 android:textSize="@dimen/font_medium" />

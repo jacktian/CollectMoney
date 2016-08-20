@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--ToolBar去除阴影-->
+    <style name="Widget.Design.AppBarLayout" parent="android:Widget">
+        <item name="elevation">0dp</item>
+    </style>
 
     <style name="ActivityImageTranslucentTheme" parent="AppTheme">
         <item name="android:windowBackground">@mipmap/window_img_bg</item>

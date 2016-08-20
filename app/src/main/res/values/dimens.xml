@@ -53,4 +53,7 @@
     <!--我的搜搜-->
     <dimen name="user_avater_width">63dp</dimen>
     <dimen name="personal_item_panel_margin_top">20dp</dimen>
+
+    <!--用户详情-->
+    <dimen name="user_detail_avater_width">85dp</dimen>
 </resources>
