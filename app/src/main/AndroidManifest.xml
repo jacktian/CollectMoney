@@ -118,6 +118,12 @@
             android:launchMode="singleTop"
             android:theme="@style/ActivityColorTranslucentTheme" />
 
+        <activity
+            android:name=".hotel.HotelActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
         <!--定位服务-->
         <service
             android:name="com.baidu.location.f"

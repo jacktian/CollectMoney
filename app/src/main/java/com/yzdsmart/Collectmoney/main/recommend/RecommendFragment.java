@@ -12,6 +12,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.TouristAttraction;
+import com.yzdsmart.Collectmoney.hotel.HotelActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.views.BetterSpinner;
 
@@ -61,6 +62,12 @@ public class RecommendFragment extends BaseFragment {
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         touristAttractionList = new ArrayList<TouristAttraction>();
         recommendAdapter = new RecommendAdapter(getActivity());
+        recommendAdapter.setOnItemClickListener(new RecommendAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ((BaseActivity) getActivity()).openActivity(HotelActivity.class);
+            }
+        });
     }
 
     @Override

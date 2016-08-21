@@ -9,12 +9,16 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.stuxuhai.jpinyin.PinyinException;
+import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.Friendship;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,31 +28,44 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by YZD on 2016/8/20.
  */
-public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.ViewHolder>{
+public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.ViewHolder> {
     private Context context;
     private List<Friendship> friendshipList;
 
     public FriendshipAdapter(Context context) {
         this.context = context;
-        friendshipList=new ArrayList<Friendship>();
+        friendshipList = new ArrayList<Friendship>();
     }
 
     /**
      * 添加数据
+     *
      * @param list
      */
-    public void appendList(List<Friendship> list){
-        if(null!=friendshipList){
+    public void appendList(List<Friendship> list) {
+        if (null != friendshipList) {
             friendshipList.addAll(list);
         }
+        //按首字母排序，最好从服务端获取时就排好序，减轻移动端压力
+        Collections.sort(friendshipList, new Comparator<Friendship>() {
+            @Override
+            public int compare(Friendship friendship, Friendship t1) {
+                try {
+                    return PinyinHelper.getShortPinyin(friendship.getUserName()).compareTo(PinyinHelper.getShortPinyin(t1.getUserName()));
+                } catch (PinyinException e) {
+                    e.printStackTrace();
+                }
+                return -1;
+            }
+        });
         notifyDataSetChanged();
     }
 
     /**
      * 清除数据
      */
-    public void clearList(){
-        if(null!=friendshipList){
+    public void clearList() {
+        if (null != friendshipList) {
             friendshipList.clear();
         }
         notifyDataSetChanged();
@@ -66,8 +83,8 @@ public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.Vie
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View itemView= LayoutInflater.from(context).inflate(R.layout.friendship_list_item,parent,false);
-        FriendshipAdapter.ViewHolder holder=new FriendshipAdapter.ViewHolder(itemView);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.friendship_friendfuture_list_item, parent, false);
+        FriendshipAdapter.ViewHolder holder = new FriendshipAdapter.ViewHolder(itemView);
         return holder;
     }
 
@@ -78,30 +95,52 @@ public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.Vie
 
     @Override
     public long generateHeaderId(int position) {
-        return 0;
+        if (getItem(position).length() > 0)
+            return getItem(position).charAt(0);
+        else return -1;
     }
+
+    public String getItem(int position) {
+        if (customHeaderView != null)
+            position--;
+        if (position < friendshipList.size())
+            try {
+                return PinyinHelper.getShortPinyin(friendshipList.get(position).getUserName());
+            } catch (PinyinException e) {
+                return "";
+            }
+        else return "";
+    }
+
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        //一定要加这个判断  因为UltimateRecyclerView本身有加了头部和尾部  这个方法返回的是包括头部和尾部在内的
-        if (position < getItemCount() && (customHeaderView != null ? position <= friendshipList.size() : position < friendshipList.size()) && (customHeaderView != null ? position > 0 : true)) {
-            position  -= customHeaderView==null?0:1;
-            holder.setUserNameTV(friendshipList.get(position).getUserName());
-            holder.setUserLevelTV(friendshipList.get(position).getUserLevel());
-        }
+//        //一定要加这个判断  因为UltimateRecyclerView本身有加了头部和尾部  这个方法返回的是包括头部和尾部在内的
+//        if (position < getItemCount() && (customHeaderView != null ? position <= friendshipList.size() : position < friendshipList.size()) && (customHeaderView != null ? position > 0 : true)) {
+//            position -= customHeaderView == null ? 0 : 1;
+        holder.setUserNameTV(friendshipList.get(position).getUserName());
+        holder.setUserLevelTV(friendshipList.get(position).getUserLevel());
+//        }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        return null;
+        View itemView = LayoutInflater.from(context).inflate(R.layout.money_friendship_stick_header, parent, false);
+        RecyclerView.ViewHolder holder = new FriendshipAdapter.StickHeaderViewHolder(itemView) {
+        };
+        return holder;
     }
 
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        try {
+            ((StickHeaderViewHolder) holder).setStickHeader(("" + PinyinHelper.getShortPinyin(friendshipList.get(position).getUserName()).charAt(0)).toUpperCase());
+        } catch (PinyinException e) {
+            e.printStackTrace();
+        }
     }
 
-    class  ViewHolder extends UltimateRecyclerviewViewHolder{
+    class ViewHolder extends UltimateRecyclerviewViewHolder {
         @Nullable
         @BindView(R.id.friend_user_avater)
         CircleImageView userAvaterIV;
@@ -117,7 +156,7 @@ public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.Vie
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         public void setUserAvaterIV(String userAvaterUrl) {
@@ -129,11 +168,26 @@ public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.Vie
         }
 
         public void setUserLevelTV(Integer userLevel) {
-           userLevelTV.setText("等级 : V"+userLevel);
+            userLevelTV.setText("等级 : V" + userLevel);
         }
 
-        public void setUserDiamondCountLL(Integer userLevel,Integer diamondCounts) {
+        public void setUserDiamondCountLL(Integer userLevel, Integer diamondCounts) {
 
+        }
+    }
+
+    class StickHeaderViewHolder extends RecyclerView.ViewHolder {
+        @Nullable
+        @BindView(R.id.stick_header)
+        TextView stickHeaderTV;
+
+        public StickHeaderViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        public void setStickHeader(String stickHeader) {
+            stickHeaderTV.setText(stickHeader);
         }
     }
 }

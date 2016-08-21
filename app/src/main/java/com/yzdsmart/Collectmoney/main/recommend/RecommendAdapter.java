@@ -27,6 +27,16 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
     private Context context;
     private List<TouristAttraction> touristAttractionList;
 
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    private OnItemClickListener mOnItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
+
     public RecommendAdapter(Context context) {
         this.context = context;
         touristAttractionList = new ArrayList<TouristAttraction>();
@@ -62,7 +72,17 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        // 如果设置了回调，则设置点击事件
+        if (null != mOnItemClickListener) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = holder.getLayoutPosition();
+                    mOnItemClickListener.onItemClick(holder.itemView, pos);
+                }
+            });
+        }
         holder.setAttractionImg(touristAttractionList.get(position).getAttractionImgUrl());
         holder.setAttractionName(touristAttractionList.get(position).getAttractionName());
     }

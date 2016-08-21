@@ -28,10 +28,10 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:background="@drawable/search_filter_bg"
             android:gravity="center"
-            android:singleLine="true"
-            android:inputType="text"
-            android:imeOptions="actionSearch"
             android:hint="@string/search"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:singleLine="true"
             android:textColor="@color/grey"
             android:textColorHint="@color/grey"
             android:textSize="@dimen/font_medium" />
