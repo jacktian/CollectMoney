@@ -2,10 +2,14 @@ package com.yzdsmart.Collectmoney.main.find_money;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -241,9 +245,29 @@ public class FindMoneyFragment extends BaseFragment {
                     .direction(0).latitude(bdLocation.getLatitude())
                     .longitude(bdLocation.getLongitude()).build();
             mBaiduMap.setMyLocationData(locData);
-            BitmapDescriptorFactory.fromResource(R.drawable.bmap_loc_icon);
-            MyLocationConfiguration configuration=new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL,true, BitmapDescriptorFactory.fromResource(R.mipmap.bmap_openmap_focuse_mark));
+
+            View locMarkerLayout=LayoutInflater.from(getActivity()).inflate(R.layout.bmap_loc_marker,null);
+            ImageView locMarker= (ImageView) locMarkerLayout.findViewById(R.id.loc_marker);
+            AnimationDrawable animationDrawable= (AnimationDrawable) locMarker.getDrawable();
+            animationDrawable.start();
+            locMarkerLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((BaseActivity)getActivity()).showSnackbar("哈哈");
+                }
+            });
+
+            MyLocationConfiguration configuration=new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL,true, BitmapDescriptorFactory.fromBitmap(getViewBitmap(locMarkerLayout)));
             mBaiduMap.setMyLocationConfigeration(configuration);
+
+//            MapViewLayoutParams mp = new MapViewLayoutParams.Builder()
+//                    .position(new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude()))
+//                    .width(Utils.dp2px(getActivity(),36))
+//                    .height(Utils.dp2px(getActivity(),87))
+//                    .layoutMode(MapViewLayoutParams.ELayoutMode.mapMode)//这一项必须指定。用.position就是mapMod，用.point就是absoluteMod。
+//                    .build();
+//            findMoneyMap.addView(locMarkerLayout,mp);
+//            findMoneyMap.refreshDrawableState();
             if (isFirstLoc) {
                 isFirstLoc = false;
                 LatLng ll = new LatLng(bdLocation.getLatitude(),
@@ -258,6 +282,20 @@ public class FindMoneyFragment extends BaseFragment {
                 qLocation = locLongitude + "," + locLatitude;
             }
         }
+    }
+
+    private Bitmap getViewBitmap(View addViewContent) {
+        addViewContent.setDrawingCacheEnabled(true);
+        addViewContent.measure(
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        addViewContent.layout(0, 0,
+                addViewContent.getMeasuredWidth(),
+                addViewContent.getMeasuredHeight());
+        addViewContent.buildDrawingCache();
+        Bitmap cacheBitmap = addViewContent.getDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
+        return bitmap;
     }
 
     /**

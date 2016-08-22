@@ -47,4 +47,16 @@ public class Utils {
         ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.net_unusable));
         return false;
     }
+
+    /**
+     * dp 转化为 px
+     *
+     * @param context context
+     * @param dpValue dpValue
+     * @return int
+     */
+    public static int dp2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
 }
