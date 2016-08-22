@@ -48,4 +48,8 @@
 
     <!--搜索新好友-->
     <string name="future_search_new_friend">搜索新的朋友</string>
+
+    <!--酒店详情-->
+    <string name="hotel">酒店</string>
+    <string name="hotel_detail">酒店详情</string>
 </resources>

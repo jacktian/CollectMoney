@@ -50,6 +50,10 @@
     <dimen name="recommend_list_item_des_height">24dp</dimen>
     <dimen name="recommend_list_item_des_padding">8dp</dimen>
 
+    <!--酒店详情-->
+    <dimen name="hotel_toggle_height">35dp</dimen>
+    <dimen name="hotel_toggle_button_width">74dp</dimen>
+
     <!--我的搜搜-->
     <dimen name="personal_user_avater_width">63dp</dimen>
     <dimen name="personal_item_panel_margin_top">20dp</dimen>

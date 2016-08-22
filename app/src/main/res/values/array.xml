@@ -5,9 +5,4 @@
         <item>无锡</item>
         <item>苏州</item>
     </array>
-
-    <array name="hotel_tab">
-        <item>酒店</item>
-        <item>详情</item>
-    </array>
 </resources>

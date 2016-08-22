@@ -10,23 +10,47 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_toolbar_height" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/common_toolbar_height"
+        android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_padding">
 
-        <android.support.design.widget.TabLayout
+        <RadioGroup
             android:id="@+id/hotel_info_toggle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="@dimen/hotel_toggle_height"
+            android:background="@drawable/hotel_toggle_bg"
+            android:orientation="horizontal">
 
-        </android.support.design.widget.TabLayout>
+            <RadioButton
+                android:id="@+id/toggle_hotel_info"
+                android:layout_width="@dimen/hotel_toggle_button_width"
+                android:layout_height="match_parent"
+                android:background="@drawable/hotel_toggle_button_info"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="@string/hotel"
+                android:textColor="@color/hotel_toggle_button"
+                android:textSize="@dimen/font_medium" />
 
-        <android.support.v4.view.ViewPager
+            <RadioButton
+                android:id="@+id/toggle_hotel_detail"
+                android:layout_width="@dimen/hotel_toggle_button_width"
+                android:layout_height="match_parent"
+                android:background="@drawable/hotel_toggle_button_detail"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/hotel_detail"
+                android:textColor="@color/hotel_toggle_button"
+                android:textSize="@dimen/font_medium" />
+        </RadioGroup>
+
+        <FrameLayout
             android:id="@+id/hotel_info_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/hotel_info_toggle"></android.support.v4.view.ViewPager>
-    </RelativeLayout>
+            android:layout_height="match_parent" />
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
