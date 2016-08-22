@@ -4,26 +4,23 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
-import com.baidu.mapapi.map.MyLocationConfiguration;
-import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.Overlay;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.PolylineOptions;
@@ -69,6 +66,9 @@ public class FindMoneyFragment extends BaseFragment {
     private LocationClient mLocClient;
     private boolean isFirstLoc = true; // 是否首次定位
     private MyLocationListener locListener = new MyLocationListener();
+    private Marker locMarker;
+    private ArrayList<BitmapDescriptor> locGifList ;
+
     //周边检索
     //检索到的位置列表信息
     List<Overlay> mOverlayList = null;
@@ -90,6 +90,11 @@ public class FindMoneyFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         fm = getFragmentManager();
         mOverlayList = new ArrayList<Overlay>();
+        locGifList = new ArrayList<BitmapDescriptor>();
+        locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker1));
+        locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker2));
+        locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker3));
+        locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker4));
     }
 
     @Override
@@ -182,6 +187,15 @@ public class FindMoneyFragment extends BaseFragment {
 
         // 开启定位图层
         mBaiduMap.setMyLocationEnabled(true);
+        mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                if(locMarker==marker){
+                    ((BaseActivity)getActivity()).showSnackbar("哈哈");
+                }
+                return true;
+            }
+        });
     }
 
     private void initLoc() {
@@ -239,35 +253,8 @@ public class FindMoneyFragment extends BaseFragment {
             if (null == bdLocation || null == findMoneyMap) {
                 return;
             }
-            MyLocationData locData = new MyLocationData.Builder()
-                    .accuracy(bdLocation.getRadius())
-                    // 此处设置开发者获取到的方向信息，顺时针0-360
-                    .direction(0).latitude(bdLocation.getLatitude())
-                    .longitude(bdLocation.getLongitude()).build();
-            mBaiduMap.setMyLocationData(locData);
-
-            View locMarkerLayout=LayoutInflater.from(getActivity()).inflate(R.layout.bmap_loc_marker,null);
-            ImageView locMarker= (ImageView) locMarkerLayout.findViewById(R.id.loc_marker);
-            AnimationDrawable animationDrawable= (AnimationDrawable) locMarker.getDrawable();
-            animationDrawable.start();
-            locMarkerLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ((BaseActivity)getActivity()).showSnackbar("哈哈");
-                }
-            });
-
-            MyLocationConfiguration configuration=new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL,true, BitmapDescriptorFactory.fromBitmap(getViewBitmap(locMarkerLayout)));
-            mBaiduMap.setMyLocationConfigeration(configuration);
-
-//            MapViewLayoutParams mp = new MapViewLayoutParams.Builder()
-//                    .position(new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude()))
-//                    .width(Utils.dp2px(getActivity(),36))
-//                    .height(Utils.dp2px(getActivity(),87))
-//                    .layoutMode(MapViewLayoutParams.ELayoutMode.mapMode)//这一项必须指定。用.position就是mapMod，用.point就是absoluteMod。
-//                    .build();
-//            findMoneyMap.addView(locMarkerLayout,mp);
-//            findMoneyMap.refreshDrawableState();
+            MarkerOptions locMO = new MarkerOptions().position(new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude())).icons(locGifList).zIndex(0).period(10);
+            locMarker = (Marker) (mBaiduMap.addOverlay(locMO));
             if (isFirstLoc) {
                 isFirstLoc = false;
                 LatLng ll = new LatLng(bdLocation.getLatitude(),
