@@ -68,7 +68,6 @@ public class FindMoneyFragment extends BaseFragment {
     private MyLocationListener locListener = new MyLocationListener();
     private Marker locMarker;
     private ArrayList<BitmapDescriptor> locGifList ;
-
     //周边检索
     //检索到的位置列表信息
     List<Overlay> mOverlayList = null;
