@@ -1,20 +1,22 @@
 package com.yzdsmart.Collectmoney.hotel;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 
+import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.hotel.hotel_detail.HotelDetailFragment;
-import com.yzdsmart.Collectmoney.hotel.hotel_info.HotelInfoFragment;
+import com.yzdsmart.Collectmoney.bean.HotelFollower;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,27 +42,50 @@ public class HotelActivity extends BaseActivity {
     @Nullable
     @BindView(R.id.hotel_info_toggle)
     RadioGroup hotelToggleRG;
+    @Nullable
+    @BindViews({R.id.hotel_base_info_layout, R.id.hotel_detail_introduction_layout})
+    List<View> toggleViews;
+    @Nullable
+    @BindView(R.id.hotel_user_list)
+    RecyclerView hotelUsersRV;
 
-    private FragmentManager fm;
-    private Fragment mCurrentFragment;
+    private LinearLayoutManager mLinearLayoutManager;
+    private Paint dividerPaint;
+    List<HotelFollower> hotelFollowerList;
+    private HotelFollowerAdapter hotelFollowerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fm = getFragmentManager();
+
+        hotelFollowerList = new ArrayList<HotelFollower>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.qr_code_icon));
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        dividerPaint = new Paint();
+        dividerPaint.setStrokeWidth(1);
+        dividerPaint.setColor(getResources().getColor(R.color.light_grey));
+        dividerPaint.setAntiAlias(true);
+        dividerPaint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
+        HorizontalDividerItemDecoration dividerItemDecoration = new HorizontalDividerItemDecoration.Builder(this).paint(dividerPaint).build();
 
-        initView();
-    }
+        hotelFollowerAdapter = new HotelFollowerAdapter(this);
+        hotelUsersRV.setHasFixedSize(true);
+        hotelUsersRV.setLayoutManager(mLinearLayoutManager);
+        hotelUsersRV.addItemDecoration(dividerItemDecoration);
+        hotelUsersRV.setAdapter(hotelFollowerAdapter);
 
-    private void initView() {
-        FragmentTransaction ft = fm.beginTransaction();
-        mCurrentFragment = new HotelInfoFragment();
-        ft.add(R.id.hotel_info_pager, mCurrentFragment, "info");
-        ft.commit();
+        List<HotelFollower> list = new ArrayList<HotelFollower>();
+        list.add(new HotelFollower("file:///android_asset/album_pic.png", "艾伦", 10, "08:23"));
+        list.add(new HotelFollower("file:///android_asset/album_pic.png", "嗣位", 22, "10:45"));
+        list.add(new HotelFollower("file:///android_asset/album_pic.png", "木樨", 13, "12:30"));
+        list.add(new HotelFollower("file:///android_asset/album_pic.png", "提姆", 41, "14:58"));
+        list.add(new HotelFollower("file:///android_asset/album_pic.png", "韩梅梅", 8, "23:08"));
+
+        hotelFollowerList.addAll(list);
+        hotelFollowerAdapter.appenList(hotelFollowerList);
     }
 
     @Override
@@ -81,39 +106,13 @@ public class HotelActivity extends BaseActivity {
     @Optional
     @OnCheckedChanged({R.id.toggle_hotel_info, R.id.toggle_hotel_detail})
     void onCheckedChanged(CompoundButton button, boolean changed) {
-        Fragment fragment;
         switch (button.getId()) {
             case R.id.toggle_hotel_info:
-                fragment = fm.findFragmentByTag("detail");
-                if (null == fragment) {
-                    fragment = new HotelDetailFragment();
-                }
-                addOrShowFragment(fragment, "detail");
+                ButterKnife.apply(toggleViews, BUTTERKNIFEVISIBLE);
                 break;
             case R.id.toggle_hotel_detail:
-                fragment = fm.findFragmentByTag("info");
-                if (null == fragment) {
-                    fragment = new HotelInfoFragment();
-                }
-                addOrShowFragment(fragment, "info");
+                ButterKnife.apply(toggleViews, BUTTERKNIFEGONE);
                 break;
         }
-    }
-
-    /**
-     * 添加或者显示碎片
-     *
-     * @param fragment
-     * @param tag
-     */
-    public void addOrShowFragment(Fragment fragment, String tag) {
-        FragmentTransaction ft = fm.beginTransaction();
-        if (!fragment.isAdded()) {
-            ft.hide(mCurrentFragment).add(R.id.hotel_info_pager, fragment, tag);
-        } else {
-            ft.hide(mCurrentFragment).show(fragment);
-        }
-        ft.commit();
-        mCurrentFragment = fragment;
     }
 }

@@ -53,6 +53,9 @@
     <!--酒店详情-->
     <dimen name="hotel_toggle_height">35dp</dimen>
     <dimen name="hotel_toggle_button_width">74dp</dimen>
+    <dimen name="hotel_detail_head_panel_height">196dp</dimen>
+    <dimen name="hotel_focus_detail_margin">12dp</dimen>
+    <dimen name="hotel_item_panel_margin_top">20dp</dimen>
 
     <!--我的搜搜-->
     <dimen name="personal_user_avater_width">63dp</dimen>
