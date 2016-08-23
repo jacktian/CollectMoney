@@ -24,7 +24,7 @@
                 android:layout_height="@dimen/recommend_spinner_height"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/city_select_bg"
+                android:background="@drawable/city_select_spinner"
                 android:gravity="center"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/font_medium"

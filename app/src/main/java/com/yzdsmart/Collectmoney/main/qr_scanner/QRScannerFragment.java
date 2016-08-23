@@ -74,6 +74,7 @@ public class QRScannerFragment extends BaseFragment implements QRCodeView.Delega
         centerTitleTV.setText(getActivity().getResources().getString(R.string.qr_scan_title));
 
         mQRCodeView.setDelegate(this);
+        mQRCodeView.startSpotAndShowRect();
     }
 
     @Override
@@ -81,7 +82,6 @@ public class QRScannerFragment extends BaseFragment implements QRCodeView.Delega
         super.onResume();
         System.out.println("------------------------------------QRScannerFragment is hidden " + this.isHidden());
 //        if (!this.isHidden()) {
-        mQRCodeView.startSpotAndShowRect();
 //        }
     }
 

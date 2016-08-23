@@ -46,7 +46,7 @@ import butterknife.Optional;
 /**
  * Created by YZD on 2016/8/17.
  */
-public class FindMoneyFragment extends BaseFragment {
+public class FindMoneyFragment extends BaseFragment implements FindMoneyContract.FindMoneyView {
     @Nullable
     @BindViews({R.id.left_title, R.id.center_title})
     List<View> hideViews;
@@ -67,33 +67,38 @@ public class FindMoneyFragment extends BaseFragment {
     private boolean isFirstLoc = true; // 是否首次定位
     private MyLocationListener locListener = new MyLocationListener();
     private Marker locMarker;
-    private ArrayList<BitmapDescriptor> locGifList ;
+    private ArrayList<BitmapDescriptor> locGifList;
     //周边检索
     //检索到的位置列表信息
     List<Overlay> mOverlayList = null;
     //周边检索参数
-    private static final String AK = "Gn9uWepicHfspoEPfyvb7DbQUDTNNNfY";//用户key
+    private static final String AK = "Gn9uWepicHfspoEPfyvb7DbQUDTNNNfY";//用户key 服务端
     private static final Integer GEO_TABLE_ID = 145243;//Geotable主键
     private static final String KEYWORD = "收钱";//检索关键字
     private static final Integer RADIUS = 1000;//检索范围
     private static final String SHA1 = "49:8A:3C:48:11:C8:89:B8:3E:61:BA:1B:03:C2:54:92:3E:FF:A0:D4";//SHA1码
     private static final String PACKAGE_NAME = "com.yzdsmart.Collectmoney";//包名
     private static final String M_CODE = SHA1 + ";" + PACKAGE_NAME;//手机查询码
-    private static final Integer PAGE_SIZE = 50;//分页数量
+    private static final Integer PAGE_SIZE = 5;//分页数量
     private Integer page_index = 0;//分页索引 当前页标，从0开始
     private String qLocation = "";//检索中心点
     private String filter = "";//检索条件
+
+    private FindMoneyContract.FindMoneyPresenter mPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fm = getFragmentManager();
         mOverlayList = new ArrayList<Overlay>();
+        //定位图标
         locGifList = new ArrayList<BitmapDescriptor>();
         locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker1));
         locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker2));
         locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker3));
         locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker4));
+
+        new FindMoneyPresenter(getActivity(), this);
     }
 
     @Override
@@ -124,9 +129,9 @@ public class FindMoneyFragment extends BaseFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(hidden){
+        if (hidden) {
             findMoneyMap.onPause();
-        }else {
+        } else {
             findMoneyMap.onResume();
         }
     }
@@ -143,8 +148,10 @@ public class FindMoneyFragment extends BaseFragment {
         mLocClient.stop();
         //关闭定位图层
         mBaiduMap.setMyLocationEnabled(false);
-        findMoneyMap.onDestroy();
-        findMoneyMap = null;
+        if (null != findMoneyMap) {
+            findMoneyMap.onDestroy();
+            findMoneyMap = null;
+        }
         super.onDestroy();
     }
 
@@ -184,13 +191,11 @@ public class FindMoneyFragment extends BaseFragment {
         MapStatusUpdate msu_cz = MapStatusUpdateFactory.newLatLng(GEO_DEFAULT_CITY);
         mBaiduMap.setMapStatus(msu_cz);
 
-        // 开启定位图层
-        mBaiduMap.setMyLocationEnabled(true);
         mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                if(locMarker==marker){
-                    ((BaseActivity)getActivity()).showSnackbar("哈哈");
+                if (locMarker == marker) {
+                    ((BaseActivity) getActivity()).showSnackbar("哈哈");
                 }
                 return true;
             }
@@ -244,6 +249,24 @@ public class FindMoneyFragment extends BaseFragment {
                 .newLatLngBounds(builder.build()));
     }
 
+    @Override
+    public void setPresenter(FindMoneyContract.FindMoneyPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void findMoneySuccess(List<MarkerOptions> optionsList) {
+        //先清除图层
+        // mBaiduMap.clear();
+        mOverlayList.clear();
+        for (MarkerOptions options : optionsList) {
+            // 在地图上添加Marker，并显示
+            mOverlayList.add(mBaiduMap.addOverlay(options));
+        }
+        //缩放地图，使所有Overlay都在合适的视野内 注： 该方法只对Marker类型的overlay有效
+        zoomToSpan();
+    }
+
     //定位监听器
     private class MyLocationListener implements BDLocationListener {
         // map view 销毁后不在处理新接收的位置
@@ -252,8 +275,9 @@ public class FindMoneyFragment extends BaseFragment {
             if (null == bdLocation || null == findMoneyMap) {
                 return;
             }
-            MarkerOptions locMO = new MarkerOptions().position(new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude())).icons(locGifList).zIndex(0).period(10);
-            locMarker = (Marker) (mBaiduMap.addOverlay(locMO));
+            MarkerOptions locMO = new MarkerOptions().position(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).icons(locGifList);
+            locMarker = (Marker) (mBaiduMap.addOverlay(locMO));//定位图标
+
             if (isFirstLoc) {
                 isFirstLoc = false;
                 LatLng ll = new LatLng(bdLocation.getLatitude(),
@@ -266,22 +290,9 @@ public class FindMoneyFragment extends BaseFragment {
                 locLatitude = bdLocation.getLatitude();
                 locLongitude = bdLocation.getLongitude();
                 qLocation = locLongitude + "," + locLatitude;
+                mPresenter.findMoney(AK, GEO_TABLE_ID, KEYWORD, qLocation, RADIUS, PAGE_SIZE, page_index, M_CODE, filter);
             }
         }
-    }
-
-    private Bitmap getViewBitmap(View addViewContent) {
-        addViewContent.setDrawingCacheEnabled(true);
-        addViewContent.measure(
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        addViewContent.layout(0, 0,
-                addViewContent.getMeasuredWidth(),
-                addViewContent.getMeasuredHeight());
-        addViewContent.buildDrawingCache();
-        Bitmap cacheBitmap = addViewContent.getDrawingCache();
-        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
-        return bitmap;
     }
 
     /**
