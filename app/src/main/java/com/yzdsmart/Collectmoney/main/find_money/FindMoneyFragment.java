@@ -290,6 +290,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 locLatitude = bdLocation.getLatitude();
                 locLongitude = bdLocation.getLongitude();
                 qLocation = locLongitude + "," + locLatitude;
+
                 mPresenter.findMoney(AK, GEO_TABLE_ID, KEYWORD, qLocation, RADIUS, PAGE_SIZE, page_index, M_CODE, filter);
             }
         }
