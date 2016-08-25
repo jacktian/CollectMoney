@@ -44,7 +44,6 @@ public class Utils {
                 }
             }
         }
-        ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.net_unusable));
         return false;
     }
 

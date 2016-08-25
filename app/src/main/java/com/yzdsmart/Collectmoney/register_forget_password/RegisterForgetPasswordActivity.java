@@ -17,12 +17,13 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
 import butterknife.Optional;
 
 /**
  * Created by YZD on 2016/8/17.
  */
-public class RegisterForgetPasswordActivity extends BaseActivity {
+public class RegisterForgetPasswordActivity extends BaseActivity implements RegisterForgetPasswordContract.RegisterForgetPasswordView {
     @Nullable
     @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout, R.id.forget_pwd_link, R.id.new_user_link})
     List<View> hideViews;
@@ -44,6 +45,8 @@ public class RegisterForgetPasswordActivity extends BaseActivity {
 
     private Integer opeType;//0 注册新用户 1 忘记密码
 
+    private RegisterForgetPasswordContract.RegisterForgetPasswordPresenter mPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,11 +67,19 @@ public class RegisterForgetPasswordActivity extends BaseActivity {
         }
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         userNameIconIV.setImageDrawable(getResources().getDrawable(R.mipmap.mobile_icon));
+
+        new RegisterForgetPasswordPresenter(this, this);
     }
 
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_register_forget_password;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mPresenter.unRegisterSubscribe();
     }
 
     @Optional
@@ -79,5 +90,25 @@ public class RegisterForgetPasswordActivity extends BaseActivity {
                 closeActivity();
                 break;
         }
+    }
+
+    @Optional
+    @OnFocusChange({R.id.user_name})
+    void onFocusChange(View view, boolean change) {
+        switch (view.getId()) {
+            case R.id.user_name:
+
+                break;
+        }
+    }
+
+    @Override
+    public void setPresenter(RegisterForgetPasswordContract.RegisterForgetPasswordPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void onIsUserExist() {
+
     }
 }
