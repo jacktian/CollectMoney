@@ -20,7 +20,7 @@ public class RegisterForgetPasswordModel {
      * @param telNum
      * @param listener
      */
-    void isUserExist(Integer telNum, final RequestListener listener) {
+    void isUserExist(String telNum, final RequestListener listener) {
         isUserExistSubscriber = new Subscriber<String>() {
             @Override
             public void onCompleted() {

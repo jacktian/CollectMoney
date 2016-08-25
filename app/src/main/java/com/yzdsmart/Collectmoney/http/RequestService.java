@@ -1,9 +1,6 @@
 package com.yzdsmart.Collectmoney.http;
 
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -12,7 +9,7 @@ import rx.Observable;
  */
 public interface RequestService {
     @GET(Url.IS_USER_EXIST)
-    Observable<String> isUserExist(@Query("tel") Integer telNum);
+    Observable<String> isUserExist(@Query("tel") String telNum);
 
 //    /**
 //     * @param userId

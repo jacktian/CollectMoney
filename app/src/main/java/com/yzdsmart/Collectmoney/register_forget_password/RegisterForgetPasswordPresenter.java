@@ -20,7 +20,7 @@ public class RegisterForgetPasswordPresenter implements RegisterForgetPasswordCo
     }
 
     @Override
-    public void isUserExist(Integer telNum) {
+    public void isUserExist(String telNum) {
         mModel.isUserExist(telNum, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

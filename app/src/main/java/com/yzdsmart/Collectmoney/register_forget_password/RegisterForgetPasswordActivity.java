@@ -5,11 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.utils.Utils;
 
 import java.util.List;
 
@@ -39,6 +41,9 @@ public class RegisterForgetPasswordActivity extends BaseActivity implements Regi
     @Nullable
     @BindView(R.id.user_name_icon)
     ImageView userNameIconIV;
+    @Nullable
+    @BindView(R.id.user_name)
+    EditText userNameET;
     @Nullable
     @BindView(R.id.login_register_confirm_button)
     Button registerButton;
@@ -94,11 +99,30 @@ public class RegisterForgetPasswordActivity extends BaseActivity implements Regi
 
     @Optional
     @OnFocusChange({R.id.user_name})
-    void onFocusChange(View view, boolean change) {
-        switch (view.getId()) {
-            case R.id.user_name:
-
-                break;
+    void onFocusChange(View view, boolean focus) {
+        if (!focus) {
+            switch (opeType) {
+                case 0:
+                    String userName = userNameET.getText().toString();
+                    switch (view.getId()) {
+                        case R.id.user_name:
+                            if (userName.trim().length() > 0) {
+                                if (Utils.checkMobile(userName)) {
+                                    if (Utils.isNetUsable(this)) {
+                                        mPresenter.isUserExist(userName);
+                                    } else {
+                                        showSnackbar(getResources().getString(R.string.net_unusable));
+                                    }
+                                } else {
+                                    userNameET.setError(getResources().getString(R.string.phone_num_error));
+                                }
+                            }
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

@@ -17,7 +17,7 @@ public interface RegisterForgetPasswordContract {
          *
          * @param telNum
          */
-        void isUserExist(Integer telNum);
+        void isUserExist(String telNum);
 
         void unRegisterSubscribe();
     }
