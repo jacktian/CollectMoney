@@ -2,6 +2,7 @@ package com.yzdsmart.Collectmoney.register_forget_password.set_password;
 
 import android.content.Context;
 
+import com.yzdsmart.Collectmoney.bean.RequestResponse;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 
 /**
@@ -24,7 +25,12 @@ public class SetPasswordPresenter implements SetPasswordContract.SetPasswordPres
         mModel.setPassword(userName, password, regCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-
+                RequestResponse response = (RequestResponse) result;
+                if ("OK".equals(response.getActionStatus())) {
+                    mView.onSetPassword(true, response.getErrorInfo());
+                } else if ("FAIL".equals(response.getActionStatus())) {
+                    mView.onSetPassword(false, response.getErrorInfo());
+                }
             }
 
             @Override

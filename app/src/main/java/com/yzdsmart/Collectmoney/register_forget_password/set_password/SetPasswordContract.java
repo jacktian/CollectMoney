@@ -8,7 +8,7 @@ import com.yzdsmart.Collectmoney.BaseView;
  */
 public interface SetPasswordContract {
     interface SetPasswordView extends BaseView<SetPasswordPresenter> {
-
+        void onSetPassword(boolean flag, String msg);
     }
 
     interface SetPasswordPresenter extends BasePresenter {

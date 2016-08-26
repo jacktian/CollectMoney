@@ -80,6 +80,8 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
                 confirmButton.setText(getResources().getString(R.string.confirm));
                 break;
         }
+
+        new SetPasswordPresenter(this, this);
     }
 
     @Override
@@ -135,5 +137,13 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
     @Override
     public void setPresenter(SetPasswordContract.SetPasswordPresenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void onSetPassword(boolean flag, String msg) {
+        if (!flag) {
+            showSnackbar(msg);
+            return;
+        }
     }
 }
