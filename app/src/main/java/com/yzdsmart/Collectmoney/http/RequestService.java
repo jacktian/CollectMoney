@@ -55,4 +55,16 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.USER + "?actioncode=000000")
     Observable<RequestResponse> setPassword(@Field("UserName") String userName, @Field("Password") String password, @Field("RegCode") String regCode);
+
+    /**
+     * 用户登录
+     *
+     * @param userName
+     * @param password
+     * @param loginCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.USER)
+    Observable<RequestResponse> userLogin(@Field("UserName") String userName, @Field("Password") String password, @Field("LoginCode") String loginCode);
 }

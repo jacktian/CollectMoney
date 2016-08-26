@@ -11,6 +11,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.register_forget_password.verify_phone.VerifyPhoneActivity;
+import com.yzdsmart.Collectmoney.utils.Utils;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ import butterknife.Optional;
 /**
  * Created by YZD on 2016/8/17.
  */
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements LoginContract.LoginView {
     @Nullable
     @BindViews({R.id.toolbar_layout, R.id.user_count_down_layout, R.id.user_confirm_pwd_layout})
     List<View> hideViews;
@@ -31,8 +32,13 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.toolBar)
     Toolbar toolBar;
     @Nullable
+    @BindView(R.id.user_name)
+    EditText userNameET;
+    @Nullable
     @BindView(R.id.user_pwd)
     EditText userPasswordET;
+
+    private LoginContract.LoginPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,8 @@ public class LoginActivity extends BaseActivity {
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         toolBar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         userPasswordET.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        new LoginPresenter(this, this);
     }
 
     @Override
@@ -64,8 +72,40 @@ public class LoginActivity extends BaseActivity {
                 openActivity(VerifyPhoneActivity.class, bundle, 0);
                 break;
             case R.id.login_register_confirm_button:
-                openActivity(QRScannerActivity.class);
+                if (!requiredVerify(userNameET)) {
+                    userNameET.setError(getResources().getString(R.string.input_phone_num));
+                    return;
+                }
+                if (!requiredVerify(userPasswordET)) {
+                    userPasswordET.setError(getResources().getString(R.string.input_pwd));
+                    return;
+                }
+                if (!Utils.isNetUsable(this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
+                mPresenter.userLogin(userNameET.getText().toString(), userPasswordET.getText().toString(), "000000");
                 break;
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mPresenter.unRegisterSubscribe();
+    }
+
+    @Override
+    public void setPresenter(LoginContract.LoginPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void onUserLogin(boolean flag, String msg) {
+        if (!flag) {
+            showSnackbar(msg);
+            return;
+        }
+        openActivity(QRScannerActivity.class);
     }
 }

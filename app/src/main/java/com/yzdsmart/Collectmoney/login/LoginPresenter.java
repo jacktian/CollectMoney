@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.register_forget_password.set_password;
+package com.yzdsmart.Collectmoney.login;
 
 import android.content.Context;
 
@@ -9,28 +9,28 @@ import com.yzdsmart.Collectmoney.http.RequestListener;
 /**
  * Created by YZD on 2016/8/26.
  */
-public class SetPasswordPresenter implements SetPasswordContract.SetPasswordPresenter {
+public class LoginPresenter implements LoginContract.LoginPresenter {
     private Context context;
-    private SetPasswordContract.SetPasswordView mView;
-    private SetPasswordModel mModel;
+    private LoginContract.LoginView mView;
+    private LoginModel mModel;
 
-    public SetPasswordPresenter(Context context, SetPasswordContract.SetPasswordView mView) {
+    public LoginPresenter(Context context, LoginContract.LoginView mView) {
         this.context = context;
         this.mView = mView;
-        mModel = new SetPasswordModel();
+        mModel = new LoginModel();
         mView.setPresenter(this);
     }
 
     @Override
-    public void setPassword(String userName, String password, String regCode) {
-        mModel.setPassword(userName, password, regCode, new RequestListener() {
+    public void userLogin(String userName, String password, String loginCode) {
+        mModel.userLogin(userName, password, loginCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RequestResponse response = (RequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
-                    mView.onSetPassword(true, response.getErrorInfo());
+                    mView.onUserLogin(true, response.getErrorInfo());
                 } else if ("FAIL".equals(response.getActionStatus())) {
-                    mView.onSetPassword(false, response.getErrorInfo());
+                    mView.onUserLogin(false, response.getErrorInfo());
                 }
             }
 
