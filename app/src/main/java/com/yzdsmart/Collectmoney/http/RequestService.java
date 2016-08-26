@@ -33,4 +33,26 @@ public interface RequestService {
     @POST(Url.SMS)
     Observable<RequestResponse> getVerifyCode(@Field("Tel") String telNum, @Field("CurrDate") String currDate);
 
+    /**
+     * 验证短信验证码
+     *
+     * @param telNum
+     * @param verifyCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.SMS + "?actioncode=000000")
+    Observable<RequestResponse> verifyVerifyCode(@Field("Tel") String telNum, @Field("Sms_Veri_Code") String verifyCode);
+
+    /**
+     * 用户注册/修改密码
+     *
+     * @param userName
+     * @param password
+     * @param regCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.USER + "?actioncode=000000")
+    Observable<RequestResponse> setPassword(@Field("UserName") String userName, @Field("Password") String password, @Field("RegCode") String regCode);
 }

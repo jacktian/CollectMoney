@@ -14,10 +14,11 @@
     <string name="login">登录</string>
     <string name="register">注册</string>
     <string name="confirm">确认</string>
-    <string name="phone_num_error">请输入正确的手机号码</string>
-    <string name="user_exist">手机号码已注册</string>
-    <string name="verify_tel_error">校验手机号码失败</string>
-    <string name="get_verify_code_error">获取短信验证码失败</string>
+    <string name="next_step">下一步</string>
+    <string name="user_exist">该手机号码已被注册!</string>
+    <string name="user_not_exist">该手机号码未注册!</string>
+    <string name="phone_num_error">请输入正确的手机号码!</string>
+    <string name="confirm_pwd_different">两次密码输入不一致!</string>
 
     <!--主界面-->
     <string name="recommend">推荐</string>

@@ -16,7 +16,7 @@ public interface RequestListener {
      *
      * @param err
      */
-    void onError(Object err);
+    void onError(String err);
 
     /**
      * 网络请求结束

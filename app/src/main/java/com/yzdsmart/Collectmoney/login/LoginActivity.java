@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
-import com.yzdsmart.Collectmoney.register_forget_password.RegisterForgetPasswordActivity;
+import com.yzdsmart.Collectmoney.register_forget_password.verify_phone.VerifyPhoneActivity;
 
 import java.util.List;
 
@@ -49,19 +49,19 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Optional
-    @OnClick({R.id.forget_pwd_link, R.id.new_user_link,R.id.login_register_confirm_button})
+    @OnClick({R.id.forget_pwd_link, R.id.new_user_link, R.id.login_register_confirm_button})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
             case R.id.forget_pwd_link:
                 bundle = new Bundle();
                 bundle.putInt("opeType", 1);
-                openActivity(RegisterForgetPasswordActivity.class, bundle, 0);
+                openActivity(VerifyPhoneActivity.class, bundle, 0);
                 break;
             case R.id.new_user_link:
                 bundle = new Bundle();
                 bundle.putInt("opeType", 0);
-                openActivity(RegisterForgetPasswordActivity.class, bundle, 0);
+                openActivity(VerifyPhoneActivity.class, bundle, 0);
                 break;
             case R.id.login_register_confirm_button:
                 openActivity(QRScannerActivity.class);
