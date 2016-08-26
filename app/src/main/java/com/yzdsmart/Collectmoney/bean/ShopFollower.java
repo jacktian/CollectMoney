@@ -3,16 +3,16 @@ package com.yzdsmart.Collectmoney.bean;
 /**
  * Created by YZD on 2016/8/22.
  */
-public class HotelFollower {
+public class ShopFollower {
     private String avaterUrl;
     private String userName;
     private Integer coins;
     private String time;
 
-    public HotelFollower() {
+    public ShopFollower() {
     }
 
-    public HotelFollower(String avaterUrl, String userName, Integer coins, String time) {
+    public ShopFollower(String avaterUrl, String userName, Integer coins, String time) {
         this.avaterUrl = avaterUrl;
         this.userName = userName;
         this.coins = coins;

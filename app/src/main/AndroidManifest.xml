@@ -131,7 +131,7 @@
             android:theme="@style/ActivityColorTranslucentTheme" />
 
         <activity
-            android:name=".hotel.HotelActivity"
+            android:name=".shop_details.ShopDetailsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"
             android:theme="@style/ActivityColorTranslucentTheme" />

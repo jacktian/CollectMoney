@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.hotel;
+package com.yzdsmart.Collectmoney.shop_details;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.HotelFollower;
+import com.yzdsmart.Collectmoney.bean.ShopFollower;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +21,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by YZD on 2016/8/22.
  */
-public class HotelFollowerAdapter extends RecyclerView.Adapter<HotelFollowerAdapter.ViewHolder> {
+public class ShopFollowerAdapter extends RecyclerView.Adapter<ShopFollowerAdapter.ViewHolder> {
     private Context context;
-    private List<HotelFollower> hotelFollowerList;
+    private List<ShopFollower> hotelFollowerList;
 
-    public HotelFollowerAdapter(Context context) {
+    public ShopFollowerAdapter(Context context) {
         this.context = context;
-        hotelFollowerList = new ArrayList<HotelFollower>();
+        hotelFollowerList = new ArrayList<ShopFollower>();
     }
 
     /**
@@ -35,7 +35,7 @@ public class HotelFollowerAdapter extends RecyclerView.Adapter<HotelFollowerAdap
      *
      * @param list
      */
-    public void appenList(List<HotelFollower> list) {
+    public void appenList(List<ShopFollower> list) {
         if (null != hotelFollowerList) {
             hotelFollowerList.addAll(list);
         }
@@ -55,7 +55,7 @@ public class HotelFollowerAdapter extends RecyclerView.Adapter<HotelFollowerAdap
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.hotel_follower_list_item, parent, false);
-        HotelFollowerAdapter.ViewHolder holder = new HotelFollowerAdapter.ViewHolder(itemView);
+        ShopFollowerAdapter.ViewHolder holder = new ShopFollowerAdapter.ViewHolder(itemView);
         return holder;
     }
 

@@ -2,7 +2,6 @@ package com.yzdsmart.Collectmoney.main.find_money;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,9 +29,11 @@ import com.baidu.mapapi.utils.DistanceUtil;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.bean.ShopParcelable;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.main.personal.PersonalFragment;
+import com.yzdsmart.Collectmoney.shop_details.ShopDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,18 +72,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     //周边检索
     //检索到的位置列表信息
     List<Overlay> mOverlayList = null;
-    //周边检索参数
-    private static final String AK = "Gn9uWepicHfspoEPfyvb7DbQUDTNNNfY";//用户key 服务端
-    private static final Integer GEO_TABLE_ID = 145243;//Geotable主键
-    private static final String KEYWORD = "收钱";//检索关键字
-    private static final Integer RADIUS = 1000;//检索范围
-    private static final String SHA1 = "49:8A:3C:48:11:C8:89:B8:3E:61:BA:1B:03:C2:54:92:3E:FF:A0:D4";//SHA1码
-    private static final String PACKAGE_NAME = "com.yzdsmart.Collectmoney";//包名
-    private static final String M_CODE = SHA1 + ";" + PACKAGE_NAME;//手机查询码
+    //周边商铺检索参数
     private static final Integer PAGE_SIZE = 5;//分页数量
     private Integer page_index = 0;//分页索引 当前页标，从0开始
     private String qLocation = "";//检索中心点
-    private String filter = "";//检索条件
 
     private FindMoneyContract.FindMoneyPresenter mPresenter;
 
@@ -196,6 +189,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             public boolean onMarkerClick(Marker marker) {
                 if (locMarker == marker) {
                     ((BaseActivity) getActivity()).showSnackbar("哈哈");
+                } else {
+                    ShopParcelable parcelable = marker.getExtraInfo().getParcelable("shop");
+                    Bundle bundle = new Bundle();
+                    bundle.putString("bazaCode", parcelable.getShop().getCode());
+                    ((BaseActivity) getActivity()).openActivity(ShopDetailsActivity.class, bundle, 0);
                 }
                 return true;
             }
@@ -255,7 +253,13 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     @Override
-    public void findMoneySuccess(List<MarkerOptions> optionsList) {
+    public void onStop() {
+        super.onStop();
+        mPresenter.unRegisterSubscribe();
+    }
+
+    @Override
+    public void onGetShopList(List<MarkerOptions> optionsList) {
         //先清除图层
         // mBaiduMap.clear();
         mOverlayList.clear();
@@ -291,7 +295,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 locLongitude = bdLocation.getLongitude();
                 qLocation = locLongitude + "," + locLatitude;
 
-//                mPresenter.findMoney(AK, GEO_TABLE_ID, KEYWORD, qLocation, RADIUS, PAGE_SIZE, page_index, M_CODE, filter);
+                mPresenter.getShopList("000000", qLocation, page_index, PAGE_SIZE);
             }
         }
     }

@@ -13,10 +13,14 @@ import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.MoneyApp;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.bean.Shop;
+import com.yzdsmart.Collectmoney.bean.ShopParcelable;
 import com.yzdsmart.Collectmoney.bean.map.GEOContents;
 import com.yzdsmart.Collectmoney.bean.map.POIContent;
+import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.listener.HttpRequestListener;
 
 import java.util.ArrayList;
@@ -29,10 +33,6 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
     private Context context;
     private FindMoneyContract.FindMoneyView mView;
     private FindMoneyModel mModel;
-    //周边检索
-    //检索到的位置列表信息
-    private List<GEOContents> poiGEOs = null;
-    private List<MarkerOptions> optionsList = null;
 
     public FindMoneyPresenter(Context context, FindMoneyContract.FindMoneyView mView) {
         this.context = context;
@@ -42,37 +42,33 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
     }
 
     @Override
-    public void findMoney(String ak, Integer geo_table_id, String keyWord, String qLocation, Integer radius, Integer pageSize, Integer pageIndex, String m_code, String filter) {
-        mModel.findMoney(ak, geo_table_id, keyWord, qLocation, radius, pageSize, pageIndex, m_code, filter, new HttpRequestListener() {
-
+    public void getShopList(String submitCode, String coor, Integer pageIndex, Integer pageSize) {
+        mModel.getShopList(submitCode, coor, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                POIContent poiContent = (POIContent) result;
-                if (0 == poiContent.getStatus()) {
-                    optionsList = new ArrayList<MarkerOptions>();
-                    poiGEOs = poiContent.getContents();
+                List<Shop> shopList = (List<Shop>) result;
+                if (null != shopList) {
                     // 构建MarkerOption，用于在地图上添加Marker
                     MarkerOptions options;
-                    ArrayList<BitmapDescriptor> markerGifList;
-                    for (int i = 0; i < poiGEOs.size(); i++) {
+                    List<MarkerOptions> optionsList = new ArrayList<MarkerOptions>();
+                    for (Shop shop : shopList) {
                         //给marker加上标签
                         Bundle bundle = new Bundle();
-                        bundle.putInt("index", i);
+                        ShopParcelable parcelable = new ShopParcelable(shop);
+                        bundle.putParcelable("shop", parcelable);
+                        String coor = shop.getCoor();
                         // 定义Maker坐标点
-                        LatLng point = new LatLng(poiGEOs.get(i).getLocation()[1], poiGEOs.get(i).getLocation()[0]);
-                        markerGifList = new ArrayList<BitmapDescriptor>();
-                        markerGifList.add(BitmapDescriptorFactory.fromBitmap(setNumToIcon((i + 1), 1)));
-                        markerGifList.add(BitmapDescriptorFactory.fromBitmap(setNumToIcon((i + 1), 2)));
-                        options = new MarkerOptions().position(point).extraInfo(bundle).icons(markerGifList);
+                        LatLng point = new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]));
+                        options = new MarkerOptions().position(point).extraInfo(bundle).icon(BitmapDescriptorFactory.fromBitmap(setNumToIcon(shop.getReleGold())));
                         optionsList.add(options);
                     }
-                    mView.findMoneySuccess(optionsList);
+                    mView.onGetShopList(optionsList);
                 }
             }
 
             @Override
-            public void onError(Object err) {
-
+            public void onError(String err) {
+                ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
@@ -91,28 +87,21 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
      * 往图片添加数字
      * 设置marker图标
      */
-    private Bitmap setNumToIcon(int num, int markerNum) {
-        BitmapDrawable bd = null;
-        switch (markerNum) {
-            case 1:
-                bd = (BitmapDrawable) MoneyApp.getAppInstance().getResources().getDrawable(R.mipmap.shop_marker_1);
-                break;
-            case 2:
-                bd = (BitmapDrawable) MoneyApp.getAppInstance().getResources().getDrawable(R.mipmap.shop_marker_2);
-                break;
-        }
+    private Bitmap setNumToIcon(int num) {
+        BitmapDrawable bd = (BitmapDrawable) MoneyApp.getAppInstance().getResources().getDrawable(
+                R.mipmap.icon_gcoding);
         Bitmap bitmap = bd.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(bitmap);
 
         Paint paint = new Paint();
-        paint.setColor(Color.RED);
+        paint.setColor(Color.WHITE);
         paint.setAntiAlias(true);
-        paint.setTextSize(18);
+        paint.setTextSize(20);
         float margin;
         int widthX = 11;
         int heightY = 0;
         if (num < 10) {
-            margin = bitmap.getWidth() / 1.5f;
+            margin = bitmap.getWidth() / 1.6f;
         } else {
             margin = bitmap.getWidth() / 2;
         }
@@ -123,17 +112,53 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
         return bitmap;
     }
 
-    private Bitmap getViewBitmap(View viewContent) {
-        viewContent.setDrawingCacheEnabled(true);
-        viewContent.measure(
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        viewContent.layout(0, 0,
-                viewContent.getMeasuredWidth(),
-                viewContent.getMeasuredHeight());
-        viewContent.buildDrawingCache();
-        Bitmap cacheBitmap = viewContent.getDrawingCache();
-        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
-        return bitmap;
-    }
+//    /**
+//     * 往图片添加数字
+//     * 设置marker图标
+//     */
+//    private Bitmap setNumToIcon(int num, int markerNum) {
+//        BitmapDrawable bd = null;
+//        switch (markerNum) {
+//            case 1:
+//                bd = (BitmapDrawable) MoneyApp.getAppInstance().getResources().getDrawable(R.mipmap.shop_marker_1);
+//                break;
+//            case 2:
+//                bd = (BitmapDrawable) MoneyApp.getAppInstance().getResources().getDrawable(R.mipmap.shop_marker_2);
+//                break;
+//        }
+//        Bitmap bitmap = bd.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
+//        Canvas canvas = new Canvas(bitmap);
+//
+//        Paint paint = new Paint();
+//        paint.setColor(Color.RED);
+//        paint.setAntiAlias(true);
+//        paint.setTextSize(18);
+//        float margin;
+//        int widthX = 11;
+//        int heightY = 0;
+//        if (num < 10) {
+//            margin = bitmap.getWidth() / 1.5f;
+//        } else {
+//            margin = bitmap.getWidth() / 2;
+//        }
+//        canvas.drawText(String.valueOf(num),
+//                (margin - widthX),
+//                ((bitmap.getHeight() / 2) + heightY), paint);
+//
+//        return bitmap;
+//    }
+//
+//    private Bitmap getViewBitmap(View viewContent) {
+//        viewContent.setDrawingCacheEnabled(true);
+//        viewContent.measure(
+//                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+//                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+//        viewContent.layout(0, 0,
+//                viewContent.getMeasuredWidth(),
+//                viewContent.getMeasuredHeight());
+//        viewContent.buildDrawingCache();
+//        Bitmap cacheBitmap = viewContent.getDrawingCache();
+//        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
+//        return bitmap;
+//    }
 }

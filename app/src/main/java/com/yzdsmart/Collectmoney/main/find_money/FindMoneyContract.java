@@ -12,28 +12,23 @@ import java.util.List;
 public class FindMoneyContract {
     interface FindMoneyView extends BaseView<FindMoneyPresenter> {
         /**
-         * 搜索附近商家成功，返回在地图上显示
+         * 获取周边商铺列表
          *
          * @param optionsList
          */
-        void findMoneySuccess(List<MarkerOptions> optionsList);
+        void onGetShopList(List<MarkerOptions> optionsList);
     }
 
     interface FindMoneyPresenter extends BasePresenter {
         /**
-         * 搜索附近商家
+         * 获取周边店铺
          *
-         * @param ak
-         * @param geo_table_id
-         * @param keyWord
-         * @param qLocation
-         * @param radius
-         * @param pageSize
+         * @param submitCode
+         * @param coor
          * @param pageIndex
-         * @param m_code
-         * @param filter
+         * @param pageSize
          */
-        void findMoney(String ak, Integer geo_table_id, String keyWord, String qLocation, Integer radius, Integer pageSize, Integer pageIndex, String m_code, String filter);
+        void getShopList(String submitCode, String coor, Integer pageIndex, Integer pageSize);
 
         /**
          * 取消网络请求
