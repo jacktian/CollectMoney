@@ -1,8 +1,10 @@
 package com.yzdsmart.Collectmoney.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.view.inputmethod.InputMethodManager;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
@@ -65,14 +67,13 @@ public class Utils {
     }
 
     /**
-     * dp 转化为 px
+     * 关闭键盘
      *
-     * @param context context
-     * @param dpValue dpValue
-     * @return int
+     * @param activity Activity
      */
-    public static int dp2px(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
+    public static void hideSoftInput(Activity activity) {
+        ((InputMethodManager) activity
+                .getSystemService(Context.INPUT_METHOD_SERVICE))
+                .toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }

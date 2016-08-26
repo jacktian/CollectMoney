@@ -8,7 +8,19 @@ import com.yzdsmart.Collectmoney.BaseView;
  */
 public interface RegisterForgetPasswordContract {
     interface RegisterForgetPasswordView extends BaseView<RegisterForgetPasswordPresenter> {
-        void onIsUserExist();
+        /**
+         * 判断手机号码是否已注册
+         *
+         * @param phoneUsable
+         */
+        void onIsUserExist(boolean phoneUsable);
+
+        /**
+         * 判断手机号码是否已注册
+         *
+         * @param phoneUsable
+         */
+        void onGetVerifyCodeUsable(boolean phoneUsable);
     }
 
     interface RegisterForgetPasswordPresenter extends BasePresenter {
@@ -18,6 +30,22 @@ public interface RegisterForgetPasswordContract {
          * @param telNum
          */
         void isUserExist(String telNum);
+
+        /**
+         * 手机号是否已注册
+         * 焦点在用户名输入框，点击获取验证码(注册页)
+         *
+         * @param telNum
+         */
+        void getVerifyCodeUsable(String telNum);
+
+        /**
+         * 获取短信验证码
+         *
+         * @param telNum
+         * @param currDate
+         */
+        void getVerifyCode(String telNum, String currDate);
 
         void unRegisterSubscribe();
     }

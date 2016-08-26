@@ -9,7 +9,7 @@ android {
         applicationId "com.yzdsmart.Collectmoney"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 1
+        versionCode 20
         versionName "1.0"
         multiDexEnabled true
     }
@@ -31,6 +31,7 @@ dependencies {
     compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     compile 'com.jakewharton:butterknife:8.2.1'
+    compile 'joda-time:joda-time:2.9.4'
     compile 'io.reactivex:rxandroid:1.2.1'
     // Because RxAndroid releases are few and far between, it is recommended you also explicitly depend on RxJava's latest version for bug fixes and new features.
     compile 'io.reactivex:rxjava:1.1.6'

@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.utils.IntentUtils;
@@ -138,6 +139,14 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    public boolean requiredVerify(EditText et) {
+        String str = et.getText().toString();
+        if (null != str && str.trim().length() > 0) {
+            return true;
+        }
+        return false;
     }
 
     @Override
