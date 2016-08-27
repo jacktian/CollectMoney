@@ -145,6 +145,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/hotel_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_above="@id/hotel_star_level_title"

@@ -1,33 +1,29 @@
 package com.yzdsmart.Collectmoney.bean;
 
 /**
- * Created by YZD on 2016/8/20.
- * 钱圈好友信息
+ * 用户等级和星级
+ * Created by YZD on 2016/8/27.
  */
-public class Friendship {
+public class User {
     private String C_Code;//用户内码
     private String C_UserCode;//用户名
     private String CName;//姓名
     private String TCAccount;//云通讯帐号
     private String NickName;//昵称
     private String ImageUrl;//头像
-    private String GroupName;//所在群组
-    private String Remark;//好友备注
     private Integer Gra;//等级
     private Integer Sta;//星级
 
-    public Friendship() {
+    public User() {
     }
 
-    public Friendship(String c_Code, String c_UserCode, String CName, String TCAccount, String nickName, String imageUrl, String groupName, String remark, Integer gra, Integer sta) {
+    public User(String c_Code, String c_UserCode, String CName, String TCAccount, String nickName, String imageUrl, Integer gra, Integer sta) {
         C_Code = c_Code;
         C_UserCode = c_UserCode;
         this.CName = CName;
         this.TCAccount = TCAccount;
         NickName = nickName;
         ImageUrl = imageUrl;
-        GroupName = groupName;
-        Remark = remark;
         Gra = gra;
         Sta = sta;
     }
@@ -80,22 +76,6 @@ public class Friendship {
         ImageUrl = imageUrl;
     }
 
-    public String getGroupName() {
-        return GroupName;
-    }
-
-    public void setGroupName(String groupName) {
-        GroupName = groupName;
-    }
-
-    public String getRemark() {
-        return Remark;
-    }
-
-    public void setRemark(String remark) {
-        Remark = remark;
-    }
-
     public Integer getGra() {
         return Gra;
     }
@@ -121,8 +101,6 @@ public class Friendship {
                 ", TCAccount:'" + TCAccount + '\'' +
                 ", NickName:'" + NickName + '\'' +
                 ", ImageUrl:'" + ImageUrl + '\'' +
-                ", GroupName:'" + GroupName + '\'' +
-                ", Remark:'" + Remark + '\'' +
                 ", Gra:" + Gra +
                 ", Sta:" + Sta +
                 '}';

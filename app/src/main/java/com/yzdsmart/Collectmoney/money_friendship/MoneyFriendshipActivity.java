@@ -14,6 +14,7 @@ import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalD
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.Friendship;
+import com.yzdsmart.Collectmoney.bean.User;
 import com.yzdsmart.Collectmoney.friend_future.FriendFutureActivity;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import butterknife.Optional;
 /**
  * Created by YZD on 2016/8/18.
  */
-public class MoneyFriendshipActivity extends BaseActivity {
+public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriendshipContract.MoneyFriendshipView {
     @Nullable
     @BindViews({R.id.left_title, R.id.center_title})
     List<View> hideViews;
@@ -41,6 +42,8 @@ public class MoneyFriendshipActivity extends BaseActivity {
     @Nullable
     @BindView(R.id.friend_profile_list)
     UltimateRecyclerView friendListRV;
+
+    private MoneyFriendshipContract.MoneyFriendshipPresenter mPresenter;
 
     private LinearLayoutManager mLinearLayoutManager;
     private List<Friendship> friendshipList;
@@ -55,6 +58,8 @@ public class MoneyFriendshipActivity extends BaseActivity {
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.user_add_icon));
+
+        new MoneyFriendshipPresenter(this, this);
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         dividerPaint = new Paint();
@@ -74,24 +79,26 @@ public class MoneyFriendshipActivity extends BaseActivity {
         friendListRV.addItemDecoration(headersDecor);
 
         List<Friendship> list = new ArrayList<Friendship>();
-        list.add(new Friendship("file:///android_asset/album_pic.png", "艾伦", 1, 2));
-        list.add(new Friendship("file:///android_asset/album_pic.png", "约翰", 2, 2));
-        list.add(new Friendship("file:///android_asset/album_pic.png", "比尔", 5, 1));
-        list.add(new Friendship("file:///android_asset/album_pic.png", "嗣位", 5, 1));
-        list.add(new Friendship("file:///android_asset/album_pic.png", "布朗", 3, 5));
-        list.add(new Friendship("file:///android_asset/album_pic.png", "韩梅梅", 2, 4));
-        list.add(new Friendship("file:///android_asset/album_pic.png", "汉斯", 3, 2));
-        list.add(new Friendship("file:///android_asset/album_pic.png", "沙漏", 3, 1));
-        list.add(new Friendship("file:///android_asset/album_pic.png", "轻语", 4, 3));
-        list.add(new Friendship("file:///android_asset/album_pic.png", "漂流瓶", 5, 5));
-        list.add(new Friendship("file:///android_asset/album_pic.png", "李明", 6, 2));
-        list.add(new Friendship("file:///android_asset/album_pic.png", "汤姆", 7, 3));
-        list.add(new Friendship("file:///android_asset/album_pic.png", "木樨", 5, 5));
-        list.add(new Friendship("file:///android_asset/album_pic.png", "杰克", 1, 2));
-        list.add(new Friendship("file:///android_asset/album_pic.png", "提姆", 4, 1));
+        list.add(new Friendship("", "", "", "", "艾伦", "file:///android_asset/album_pic.png",null,null,1, 2));
+        list.add(new Friendship("", "", "", "", "约翰", "file:///android_asset/album_pic.png", null,null,2, 2));
+        list.add(new Friendship("", "", "", "", "比尔", "file:///android_asset/album_pic.png",null,null, 5, 1));
+        list.add(new Friendship("", "", "", "", "嗣位", "file:///android_asset/album_pic.png",null,null, 5, 1));
+        list.add(new Friendship("", "", "", "", "布朗", "file:///android_asset/album_pic.png", null,null,3, 5));
+        list.add(new Friendship("", "", "", "", "韩梅梅", "file:///android_asset/album_pic.png",null,null, 2, 4));
+        list.add(new Friendship("", "", "", "", "汉斯", "file:///android_asset/album_pic.png", null,null,3, 2));
+        list.add(new Friendship("", "", "", "", "沙漏", "file:///android_asset/album_pic.png",null,null, 3, 1));
+        list.add(new Friendship("", "", "", "", "轻语", "file:///android_asset/album_pic.png",null,null, 4, 3));
+        list.add(new Friendship("", "", "", "", "漂流瓶", "file:///android_asset/album_pic.png",null,null, 5, 5));
+        list.add(new Friendship("", "", "", "", "李明", "file:///android_asset/album_pic.png",null,null, 6, 2));
+        list.add(new Friendship("", "", "", "", "汤姆", "file:///android_asset/album_pic.png",null,null, 7, 3));
+        list.add(new Friendship("", "", "", "", "木樨", "file:///android_asset/album_pic.png",null,null, 5, 5));
+        list.add(new Friendship("", "", "", "", "杰克", "file:///android_asset/album_pic.png",null,null, 1, 2));
+        list.add(new Friendship("", "", "", "", "提姆", "file:///android_asset/album_pic.png",null,null, 4, 1));
 
         friendshipList.addAll(list);
         friendshipAdapter.appendList(friendshipList);
+
+        mPresenter.getFriendsList("000000", "a9524621-6b74-42cc-b395-d7d521d5b4a4", 0l, 0, 0, 10);
     }
 
     @Override
@@ -112,4 +119,20 @@ public class MoneyFriendshipActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mPresenter.unRegisterSubscribe();
+    }
+
+    @Override
+    public void onGetFriendsList(List<Friendship> friends) {
+        System.out.println("----->" + friends);
+        friendshipAdapter.appendList(friends);
+    }
+
+    @Override
+    public void setPresenter(MoneyFriendshipContract.MoneyFriendshipPresenter presenter) {
+        mPresenter = presenter;
+    }
 }

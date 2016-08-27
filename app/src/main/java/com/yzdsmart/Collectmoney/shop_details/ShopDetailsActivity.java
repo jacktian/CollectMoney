@@ -9,10 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.bean.ShopDetails;
 import com.yzdsmart.Collectmoney.bean.ShopFollower;
 
 import java.util.ArrayList;
@@ -44,6 +46,21 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     @Nullable
     @BindView(R.id.hotel_user_list)
     RecyclerView hotelUsersRV;
+    @Nullable
+    @BindView(R.id.hotel_address)
+    TextView hotelAddressTV;
+    @Nullable
+    @BindView(R.id.hotel_name)
+    TextView hotelNameTV;
+    @Nullable
+    @BindView(R.id.focus_person_counts)
+    TextView focusPersonCountsTV;
+    @Nullable
+    @BindView(R.id.daily_coin_counts)
+    TextView dailyCoinCountsTV;
+    @Nullable
+    @BindView(R.id.visit_person_counts)
+    TextView visitPersonCountsTV;
 
     private String bazaCode;//商铺编码
 
@@ -81,6 +98,8 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         hotelUsersRV.setAdapter(hotelFollowerAdapter);
 
         new ShopDetailsPresenter(this, this);
+
+        mPresenter.getShopDetails("000000", bazaCode);
 
         List<ShopFollower> list = new ArrayList<ShopFollower>();
         list.add(new ShopFollower("file:///android_asset/album_pic.png", "艾伦", 10, "08:23"));
@@ -127,7 +146,11 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     }
 
     @Override
-    public void onGetShopDetails() {
-
+    public void onGetShopDetails(ShopDetails shopDetails) {
+        hotelNameTV.setText(shopDetails.getName());
+        hotelAddressTV.setText(shopDetails.getAddr());
+        focusPersonCountsTV.setText("" + shopDetails.getAtteNum());
+        dailyCoinCountsTV.setText("" + shopDetails.getTodayGlodNum());
+        visitPersonCountsTV.setText("" + shopDetails.getVisiNum());
     }
 }

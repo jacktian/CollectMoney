@@ -6,15 +6,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.Friendship;
+import com.yzdsmart.Collectmoney.bean.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,9 +52,9 @@ public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.Vie
         //按首字母排序，最好从服务端获取时就排好序，减轻移动端压力
         Collections.sort(friendshipList, new Comparator<Friendship>() {
             @Override
-            public int compare(Friendship friendship, Friendship t1) {
+            public int compare(Friendship user, Friendship t1) {
                 try {
-                    return PinyinHelper.getShortPinyin(friendship.getUserName()).compareTo(PinyinHelper.getShortPinyin(t1.getUserName()));
+                    return PinyinHelper.getShortPinyin(user.getNickName()).compareTo(PinyinHelper.getShortPinyin(t1.getNickName()));
                 } catch (PinyinException e) {
                     e.printStackTrace();
                 }
@@ -105,7 +108,7 @@ public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.Vie
             position--;
         if (position < friendshipList.size())
             try {
-                return PinyinHelper.getShortPinyin(friendshipList.get(position).getUserName());
+                return PinyinHelper.getShortPinyin(friendshipList.get(position).getNickName());
             } catch (PinyinException e) {
                 return "";
             }
@@ -118,8 +121,10 @@ public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.Vie
 //        //一定要加这个判断  因为UltimateRecyclerView本身有加了头部和尾部  这个方法返回的是包括头部和尾部在内的
 //        if (position < getItemCount() && (customHeaderView != null ? position <= friendshipList.size() : position < friendshipList.size()) && (customHeaderView != null ? position > 0 : true)) {
 //            position -= customHeaderView == null ? 0 : 1;
-        holder.setUserNameTV(friendshipList.get(position).getUserName());
-        holder.setUserLevelTV(friendshipList.get(position).getUserLevel());
+        holder.setUserAvaterIV(friendshipList.get(position).getImageUrl());
+        holder.setUserNameTV(friendshipList.get(position).getNickName());
+        holder.setUserLevelTV(friendshipList.get(position).getGra());
+        holder.setUserDiamondCountLayout(friendshipList.get(position).getGra(), friendshipList.get(position).getSta());
 //        }
     }
 
@@ -134,7 +139,7 @@ public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.Vie
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
         try {
-            ((StickHeaderViewHolder) holder).setStickHeader(("" + PinyinHelper.getShortPinyin(friendshipList.get(position).getUserName()).charAt(0)).toUpperCase());
+            ((StickHeaderViewHolder) holder).setStickHeader(("" + PinyinHelper.getShortPinyin(friendshipList.get(position).getNickName()).charAt(0)).toUpperCase());
         } catch (PinyinException e) {
             e.printStackTrace();
         }
@@ -152,7 +157,7 @@ public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.Vie
         TextView userLevelTV;
         @Nullable
         @BindView(R.id.friend_user_diamond_count)
-        LinearLayout userDiamondCountLL;
+        LinearLayout userDiamondCountLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -160,7 +165,7 @@ public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.Vie
         }
 
         public void setUserAvaterIV(String userAvaterUrl) {
-
+            Glide.with(context).load(userAvaterUrl).into(userAvaterIV);
         }
 
         public void setUserNameTV(String userName) {
@@ -171,8 +176,15 @@ public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.Vie
             userLevelTV.setText("等级 : V" + userLevel);
         }
 
-        public void setUserDiamondCountLL(Integer userLevel, Integer diamondCounts) {
-
+        public void setUserDiamondCountLayout(Integer userLevel, Integer diamondCounts) {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            ImageView diamond;
+            for (int i = 0; i < diamondCounts; i++) {
+                diamond = new ImageView(context);
+                diamond.setLayoutParams(params);
+                diamond.setImageDrawable(context.getResources().getDrawable(R.mipmap.diamond_pink));
+                userDiamondCountLayout.addView(diamond);
+            }
         }
     }
 

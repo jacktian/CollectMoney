@@ -1,6 +1,7 @@
 package com.yzdsmart.Collectmoney.bean;
 
 /**
+ * 商铺详细信息
  * Created by YZD on 2016/8/26.
  */
 public class ShopDetails {

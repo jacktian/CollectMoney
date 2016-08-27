@@ -84,7 +84,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.userLogin(userNameET.getText().toString(), userPasswordET.getText().toString(), "000000");
+                mPresenter.userLogin(userNameET.getText().toString(), userPasswordET.getText().toString(), "");
                 break;
         }
     }

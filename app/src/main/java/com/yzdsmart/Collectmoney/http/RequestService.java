@@ -1,8 +1,11 @@
 package com.yzdsmart.Collectmoney.http;
 
+import com.yzdsmart.Collectmoney.bean.FriendsRequestResponse;
+import com.yzdsmart.Collectmoney.bean.LoginRequestResponse;
 import com.yzdsmart.Collectmoney.bean.RequestResponse;
 import com.yzdsmart.Collectmoney.bean.Shop;
 import com.yzdsmart.Collectmoney.bean.ShopDetails;
+import com.yzdsmart.Collectmoney.bean.User;
 
 import java.util.List;
 
@@ -70,7 +73,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.USER)
-    Observable<RequestResponse> userLogin(@Field("UserName") String userName, @Field("Password") String password, @Field("LoginCode") String loginCode);
+    Observable<LoginRequestResponse> userLogin(@Field("UserName") String userName, @Field("Password") String password, @Field("LoginCode") String loginCode);
 
     /**
      * 获取周边商铺
@@ -95,4 +98,30 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.SHOPLIST + "?actioncode=000000")
     Observable<ShopDetails> getShopDetails(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode);
+
+    /**
+     * 获取以后等级和星级
+     *
+     * @param custcode
+     * @param submitcode
+     * @return
+     */
+    @GET(Url.CUST)
+    Observable<User> getUserGraSta(@Query("custcode") String custcode, @Query("submitcode") String submitcode);
+
+    /**
+     * 获取好友的列表(包括其等级和星级）
+     *
+     * @param submitCode
+     * @param custCode
+     * @param timeStampNow
+     * @param startIndex
+     * @param currentStandardSequence
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.FRIEND)
+    Observable<FriendsRequestResponse> getFriendsList(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("TimeStampNow") Long timeStampNow, @Field("StartIndex") Integer startIndex, @Field("CurrentStandardSequence") Integer currentStandardSequence, @Field("PageSize") Integer pageSize);
+
 }
