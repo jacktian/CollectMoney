@@ -72,7 +72,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         titleRightOpeTLIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.grey_mail_icon));
         leftTitleTV.setText(getActivity().getResources().getString(R.string.personal_find));
 
-        mPresenter.getUserGraSta("a9524621-6b74-42cc-b395-d7d521d5b4a4", "000000");
+        mPresenter.getCustLevel("a9524621-6b74-42cc-b395-d7d521d5b4a4", "000000");
     }
 
     @Optional
@@ -101,7 +101,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Override
-    public void onGetUserGraSta(Integer gra, Integer sta) {
+    public void onGetCustLevel(Integer gra, Integer sta) {
         userLevelIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.user_level_third));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         ImageView diamond;

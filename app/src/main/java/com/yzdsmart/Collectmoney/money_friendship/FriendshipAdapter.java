@@ -17,7 +17,6 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.Friendship;
-import com.yzdsmart.Collectmoney.bean.User;
 
 import java.util.ArrayList;
 import java.util.Collections;

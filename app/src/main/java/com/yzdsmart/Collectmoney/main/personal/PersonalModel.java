@@ -1,8 +1,8 @@
 package com.yzdsmart.Collectmoney.main.personal;
 
-import com.yzdsmart.Collectmoney.bean.User;
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -13,7 +13,7 @@ import rx.schedulers.Schedulers;
  */
 public class PersonalModel {
     //网络请求监听
-    private Subscriber<User> getCustLevelSubscriber;
+    private Subscriber<CustLevelRequestResponse> getCustLevelSubscriber;
 
     /**
      * 获取用户等级和星级
@@ -22,7 +22,7 @@ public class PersonalModel {
      * @param submitcode
      */
     void getCustLevel(String custcode, String submitcode, final RequestListener listener) {
-        getCustLevelSubscriber = new Subscriber<User>() {
+        getCustLevelSubscriber = new Subscriber<CustLevelRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -34,8 +34,8 @@ public class PersonalModel {
             }
 
             @Override
-            public void onNext(User userGraSta) {
-                listener.onSuccess(userGraSta);
+            public void onNext(CustLevelRequestResponse requestResponse) {
+                listener.onSuccess(requestResponse);
             }
         };
         RequestAdapter.getRequestService().getCustLevel(custcode, submitcode)

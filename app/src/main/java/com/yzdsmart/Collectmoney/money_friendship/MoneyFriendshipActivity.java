@@ -14,7 +14,6 @@ import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalD
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.Friendship;
-import com.yzdsmart.Collectmoney.bean.User;
 import com.yzdsmart.Collectmoney.friend_future.FriendFutureActivity;
 
 import java.util.ArrayList;

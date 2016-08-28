@@ -14,7 +14,7 @@ public interface PersonalContract {
          * @param gra
          * @param sta
          */
-        void onGetUserGraSta(Integer gra, Integer sta);
+        void onGetCustLevel(Integer gra, Integer sta);
     }
 
     interface PersonalPresenter extends BasePresenter {

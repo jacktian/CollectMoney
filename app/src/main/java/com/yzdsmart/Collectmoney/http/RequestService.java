@@ -6,7 +6,7 @@ import com.yzdsmart.Collectmoney.bean.LoginRequestResponse;
 import com.yzdsmart.Collectmoney.bean.RequestResponse;
 import com.yzdsmart.Collectmoney.bean.Shop;
 import com.yzdsmart.Collectmoney.bean.ShopDetails;
-import com.yzdsmart.Collectmoney.bean.User;
+import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
 
 import java.util.List;
 
@@ -62,7 +62,7 @@ public interface RequestService {
      * @return
      */
     @GET(Url.CUST)
-    Observable<User> getCustLevel(@Query("custcode") String custcode, @Query("submitcode") String submitcode);
+    Observable<CustLevelRequestResponse> getCustLevel(@Query("custcode") String custcode, @Query("submitcode") String submitcode);
 
     /**
      * 设置云通讯用户信息

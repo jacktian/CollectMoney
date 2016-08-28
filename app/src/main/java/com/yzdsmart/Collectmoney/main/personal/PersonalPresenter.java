@@ -3,8 +3,8 @@ package com.yzdsmart.Collectmoney.main.personal;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.bean.User;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
 
 /**
  * Created by YZD on 2016/8/27.
@@ -26,9 +26,9 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
         mModel.getCustLevel(custcode, submitcode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                User userGraSta = (User) result;
-                if (null != userGraSta) {
-                    mView.onGetUserGraSta(userGraSta.getGra(), userGraSta.getSta());
+                CustLevelRequestResponse response = (CustLevelRequestResponse) result;
+                if (null != response) {
+                    mView.onGetCustLevel(response.getGra(), response.getSta());
                 }
             }
 

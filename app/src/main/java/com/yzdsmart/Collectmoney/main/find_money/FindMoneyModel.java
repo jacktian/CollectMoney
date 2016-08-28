@@ -1,11 +1,8 @@
 package com.yzdsmart.Collectmoney.main.find_money;
 
 import com.yzdsmart.Collectmoney.bean.Shop;
-import com.yzdsmart.Collectmoney.bean.map.POIContent;
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.map.BaiduRequestAdapter;
-import com.yzdsmart.Collectmoney.listener.HttpRequestListener;
 
 import java.util.List;
 
