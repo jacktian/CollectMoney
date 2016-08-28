@@ -54,6 +54,47 @@ public interface RequestService {
     Observable<LoginRequestResponse> userLogin(@Field("UserName") String userName, @Field("Password") String password, @Field("LoginCode") String loginCode);
 
     /**
+     * 获取以后等级和星级
+     *
+     * @param custcode
+     * @param submitcode
+     * @return
+     */
+    @GET(Url.CUST)
+    Observable<User> getUserGraSta(@Query("custcode") String custcode, @Query("submitcode") String submitcode);
+
+    /**
+     * 设置云通讯用户信息
+     *
+     * @param actioncode
+     * @param submitCode
+     * @param tcAccount
+     * @param profile_Nick
+     * @param profile_Image
+     * @param profile_AllowType
+     * @param profile_SelfSignature
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.SETCUST)
+    Observable<RequestResponse> setTecentInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("TCAccount") String tcAccount, @Field("Profile_Nick") String profile_Nick, @Field("Profile_Image") String profile_Image, @Field("Profile_AllowType") String profile_AllowType, @Field("Profile_SelfSignature") String profile_SelfSignature);
+
+    /**
+     * 获取好友的列表(包括其等级和星级）
+     *
+     * @param submitCode
+     * @param custCode
+     * @param timeStampNow
+     * @param startIndex
+     * @param currentStandardSequence
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.FRIEND)
+    Observable<FriendsRequestResponse> getFriendsList(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("TimeStampNow") Long timeStampNow, @Field("StartIndex") Integer startIndex, @Field("CurrentStandardSequence") Integer currentStandardSequence, @Field("PageSize") Integer pageSize);
+
+    /**
      * 获取短信验证码
      *
      * @param telNum
@@ -110,30 +151,5 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.SETFOLLOW)
     Observable<RequestResponse> changeShopFollow(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode);
-
-    /**
-     * 获取以后等级和星级
-     *
-     * @param custcode
-     * @param submitcode
-     * @return
-     */
-    @GET(Url.CUST)
-    Observable<User> getUserGraSta(@Query("custcode") String custcode, @Query("submitcode") String submitcode);
-
-    /**
-     * 获取好友的列表(包括其等级和星级）
-     *
-     * @param submitCode
-     * @param custCode
-     * @param timeStampNow
-     * @param startIndex
-     * @param currentStandardSequence
-     * @param pageSize
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Url.FRIEND)
-    Observable<FriendsRequestResponse> getFriendsList(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("TimeStampNow") Long timeStampNow, @Field("StartIndex") Integer startIndex, @Field("CurrentStandardSequence") Integer currentStandardSequence, @Field("PageSize") Integer pageSize);
 
 }

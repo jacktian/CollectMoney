@@ -127,7 +127,6 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
 
     @Override
     public void onGetFriendsList(List<Friendship> friends) {
-        System.out.println("----->" + friends);
         friendshipAdapter.appendList(friends);
     }
 

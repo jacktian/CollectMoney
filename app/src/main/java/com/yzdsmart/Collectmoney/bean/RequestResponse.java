@@ -8,14 +8,16 @@ public class RequestResponse {
     private String ActionStatus;
     private Integer ErrorCode;
     private String ErrorInfo;
+    private String ErrorDisplay;
 
     public RequestResponse() {
     }
 
-    public RequestResponse(String actionStatus, Integer errorCode, String errorInfo) {
+    public RequestResponse(String actionStatus, Integer errorCode, String errorInfo, String errorDisplay) {
         ActionStatus = actionStatus;
         ErrorCode = errorCode;
         ErrorInfo = errorInfo;
+        ErrorDisplay = errorDisplay;
     }
 
     public String getActionStatus() {
@@ -42,12 +44,21 @@ public class RequestResponse {
         ErrorInfo = errorInfo;
     }
 
+    public String getErrorDisplay() {
+        return ErrorDisplay;
+    }
+
+    public void setErrorDisplay(String errorDisplay) {
+        ErrorDisplay = errorDisplay;
+    }
+
     @Override
     public String toString() {
         return "{" +
                 "ActionStatus:'" + ActionStatus + '\'' +
                 ", ErrorCode:" + ErrorCode +
                 ", ErrorInfo:'" + ErrorInfo + '\'' +
+                ", ErrorDisplay:'" + ErrorDisplay + '\'' +
                 '}';
     }
 }
