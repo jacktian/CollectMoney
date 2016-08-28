@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.bean.Expand;
 import com.yzdsmart.Collectmoney.bean.TouristAttraction;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
  */
 public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.ViewHolder> {
     private Context context;
-    private List<TouristAttraction> touristAttractionList;
+    private List<Expand> expandList;
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
@@ -39,7 +40,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
 
     public RecommendAdapter(Context context) {
         this.context = context;
-        touristAttractionList = new ArrayList<TouristAttraction>();
+        expandList = new ArrayList<Expand>();
     }
 
     /**
@@ -47,9 +48,9 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
      *
      * @param list
      */
-    public void appendList(List<TouristAttraction> list) {
-        if (null != touristAttractionList) {
-            touristAttractionList.addAll(list);
+    public void appendList(List<Expand> list) {
+        if (null != expandList) {
+            expandList.addAll(list);
         }
         notifyDataSetChanged();
     }
@@ -58,8 +59,8 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
      * 清除记录
      */
     public void clearList() {
-        if (null != touristAttractionList) {
-            touristAttractionList.clear();
+        if (null != expandList) {
+            expandList.clear();
         }
         notifyDataSetChanged();
     }
@@ -83,13 +84,13 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
                 }
             });
         }
-        holder.setAttractionImg(touristAttractionList.get(position).getAttractionImgUrl());
-        holder.setAttractionName(touristAttractionList.get(position).getAttractionName());
+        holder.setAttractionImg(expandList.get(position).getImageUrl());
+        holder.setAttractionName(expandList.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return touristAttractionList.size();
+        return expandList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

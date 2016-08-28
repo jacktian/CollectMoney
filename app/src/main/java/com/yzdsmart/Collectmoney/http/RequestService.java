@@ -186,7 +186,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.EXPAND)
-    Observable<Expand> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<List<Expand>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
      * 获取商铺关注者

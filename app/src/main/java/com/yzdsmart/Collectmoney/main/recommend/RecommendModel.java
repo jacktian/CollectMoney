@@ -4,6 +4,8 @@ import com.yzdsmart.Collectmoney.bean.Expand;
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 
+import java.util.List;
+
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -13,10 +15,10 @@ import rx.schedulers.Schedulers;
  */
 public class RecommendModel {
     //网络请求监听
-    private Subscriber<Expand> getExpandListSubscriber;
+    private Subscriber<List<Expand>> getExpandListSubscriber;
 
     void getExpandList(String submitCode, Integer pageIndex, Integer pageSize, final RequestListener listener) {
-        getExpandListSubscriber = new Subscriber<Expand>() {
+        getExpandListSubscriber = new Subscriber<List<Expand>>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -28,8 +30,8 @@ public class RecommendModel {
             }
 
             @Override
-            public void onNext(Expand expand) {
-                listener.onSuccess(expand);
+            public void onNext(List<Expand> expands) {
+                listener.onSuccess(expands);
             }
         };
         RequestAdapter.getRequestService().getExpandList(submitCode, pageIndex, pageSize)

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.bean.Expand;
 import com.yzdsmart.Collectmoney.bean.TouristAttraction;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.views.BetterSpinner;
@@ -27,7 +28,7 @@ import butterknife.Optional;
 /**
  * Created by YZD on 2016/8/17.
  */
-public class RecommendFragment extends BaseFragment {
+public class RecommendFragment extends BaseFragment implements RecommendContract.RecommendView {
     @Nullable
     @BindViews({R.id.title_left_operation_layout, R.id.left_title, R.id.center_title, R.id.title_right_operation})
     List<View> hideViews;
@@ -44,22 +45,29 @@ public class RecommendFragment extends BaseFragment {
     @BindView(R.id.recommend_list)
     RecyclerView recommendListRV;
 
+    private Integer pageIndex = 0;
+    private static final Integer PAGE_SIZE = 10;
+    private RecommendContract.RecommendPresenter mPresenter;
+
     private String[] cities;
     private ArrayAdapter<String> citiesAdapter;
 
     private LinearLayoutManager mLinearLayoutManager;
-    private List<TouristAttraction> touristAttractionList;
+    private List<Expand> expandList;
     private RecommendAdapter recommendAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        new RecommendPresenter(getActivity(), this);
+
         cities = getResources().getStringArray(R.array.city_list);
         citiesAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.cities_list_item, cities);
 
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        touristAttractionList = new ArrayList<TouristAttraction>();
+        expandList = new ArrayList<Expand>();
         recommendAdapter = new RecommendAdapter(getActivity());
     }
 
@@ -82,13 +90,7 @@ public class RecommendFragment extends BaseFragment {
         recommendListRV.setLayoutManager(mLinearLayoutManager);
         recommendListRV.setAdapter(recommendAdapter);
 
-        List<TouristAttraction> list = new ArrayList<TouristAttraction>();
-        list.add(new TouristAttraction("file:///android_asset/tourist_attractions_img.png", "武进假日酒店"));
-        list.add(new TouristAttraction("file:///android_asset/tourist_attractions_img.png", "常武购物中心"));
-        list.add(new TouristAttraction("file:///android_asset/tourist_attractions_img.png", "武进购物中心"));
-        list.add(new TouristAttraction("file:///android_asset/tourist_attractions_img.png", "武进武悦广场"));
-        touristAttractionList.addAll(list);
-        recommendAdapter.appendList(touristAttractionList);
+        mPresenter.getExpandList("000000", pageIndex, PAGE_SIZE);
     }
 
     @Override
@@ -109,5 +111,15 @@ public class RecommendFragment extends BaseFragment {
                 ((MainActivity) getActivity()).backToFindMoney();
                 break;
         }
+    }
+
+    @Override
+    public void setPresenter(RecommendContract.RecommendPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void onGetExpandList(List<Expand> expands) {
+        recommendAdapter.appendList(expands);
     }
 }

@@ -2,7 +2,10 @@ package com.yzdsmart.Collectmoney.main.recommend;
 
 import android.content.Context;
 
+import com.yzdsmart.Collectmoney.bean.Expand;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+
+import java.util.List;
 
 /**
  * Created by YZD on 2016/8/28.
@@ -24,7 +27,10 @@ public class RecommendPresenter implements RecommendContract.RecommendPresenter 
         mModel.getExpandList(submitCode, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-
+                List<Expand> expands = (List<Expand>) result;
+                if (null != expands) {
+                    mView.onGetExpandList(expands);
+                }
             }
 
             @Override
