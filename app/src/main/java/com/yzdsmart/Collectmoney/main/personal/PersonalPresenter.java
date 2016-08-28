@@ -22,8 +22,8 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
     }
 
     @Override
-    public void getUserGraSta(String custcode, String submitcode) {
-        mModel.getUserGraSta(custcode, submitcode, new RequestListener() {
+    public void getCustLevel(String custcode, String submitcode) {
+        mModel.getCustLevel(custcode, submitcode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 User userGraSta = (User) result;

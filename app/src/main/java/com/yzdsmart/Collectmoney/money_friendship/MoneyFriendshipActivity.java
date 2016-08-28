@@ -43,6 +43,11 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
     @BindView(R.id.friend_profile_list)
     UltimateRecyclerView friendListRV;
 
+    private Long timeStampNow = 0l;//上次拉取的时间戳，默认:0
+    private Integer startIndex = 0;//下页拉取的起始位置
+    private Integer currentStandardSequence = 0;//上次拉取标配关系链的Sequence, 默认:0
+    private static final Integer PAGE_SIZE = 10;//每页获取的数量
+
     private MoneyFriendshipContract.MoneyFriendshipPresenter mPresenter;
 
     private LinearLayoutManager mLinearLayoutManager;
@@ -79,26 +84,26 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
         friendListRV.addItemDecoration(headersDecor);
 
         List<Friendship> list = new ArrayList<Friendship>();
-        list.add(new Friendship("", "", "", "", "艾伦", "file:///android_asset/album_pic.png",null,null,1, 2));
-        list.add(new Friendship("", "", "", "", "约翰", "file:///android_asset/album_pic.png", null,null,2, 2));
-        list.add(new Friendship("", "", "", "", "比尔", "file:///android_asset/album_pic.png",null,null, 5, 1));
-        list.add(new Friendship("", "", "", "", "嗣位", "file:///android_asset/album_pic.png",null,null, 5, 1));
-        list.add(new Friendship("", "", "", "", "布朗", "file:///android_asset/album_pic.png", null,null,3, 5));
-        list.add(new Friendship("", "", "", "", "韩梅梅", "file:///android_asset/album_pic.png",null,null, 2, 4));
-        list.add(new Friendship("", "", "", "", "汉斯", "file:///android_asset/album_pic.png", null,null,3, 2));
-        list.add(new Friendship("", "", "", "", "沙漏", "file:///android_asset/album_pic.png",null,null, 3, 1));
-        list.add(new Friendship("", "", "", "", "轻语", "file:///android_asset/album_pic.png",null,null, 4, 3));
-        list.add(new Friendship("", "", "", "", "漂流瓶", "file:///android_asset/album_pic.png",null,null, 5, 5));
-        list.add(new Friendship("", "", "", "", "李明", "file:///android_asset/album_pic.png",null,null, 6, 2));
-        list.add(new Friendship("", "", "", "", "汤姆", "file:///android_asset/album_pic.png",null,null, 7, 3));
-        list.add(new Friendship("", "", "", "", "木樨", "file:///android_asset/album_pic.png",null,null, 5, 5));
-        list.add(new Friendship("", "", "", "", "杰克", "file:///android_asset/album_pic.png",null,null, 1, 2));
-        list.add(new Friendship("", "", "", "", "提姆", "file:///android_asset/album_pic.png",null,null, 4, 1));
+        list.add(new Friendship("", "", "", "", "艾伦", "file:///android_asset/album_pic.png", null, null, 1, 2));
+        list.add(new Friendship("", "", "", "", "约翰", "file:///android_asset/album_pic.png", null, null, 2, 2));
+        list.add(new Friendship("", "", "", "", "比尔", "file:///android_asset/album_pic.png", null, null, 5, 1));
+        list.add(new Friendship("", "", "", "", "嗣位", "file:///android_asset/album_pic.png", null, null, 5, 1));
+        list.add(new Friendship("", "", "", "", "布朗", "file:///android_asset/album_pic.png", null, null, 3, 5));
+        list.add(new Friendship("", "", "", "", "韩梅梅", "file:///android_asset/album_pic.png", null, null, 2, 4));
+        list.add(new Friendship("", "", "", "", "汉斯", "file:///android_asset/album_pic.png", null, null, 3, 2));
+        list.add(new Friendship("", "", "", "", "沙漏", "file:///android_asset/album_pic.png", null, null, 3, 1));
+        list.add(new Friendship("", "", "", "", "轻语", "file:///android_asset/album_pic.png", null, null, 4, 3));
+        list.add(new Friendship("", "", "", "", "漂流瓶", "file:///android_asset/album_pic.png", null, null, 5, 5));
+        list.add(new Friendship("", "", "", "", "李明", "file:///android_asset/album_pic.png", null, null, 6, 2));
+        list.add(new Friendship("", "", "", "", "汤姆", "file:///android_asset/album_pic.png", null, null, 7, 3));
+        list.add(new Friendship("", "", "", "", "木樨", "file:///android_asset/album_pic.png", null, null, 5, 5));
+        list.add(new Friendship("", "", "", "", "杰克", "file:///android_asset/album_pic.png", null, null, 1, 2));
+        list.add(new Friendship("", "", "", "", "提姆", "file:///android_asset/album_pic.png", null, null, 4, 1));
 
         friendshipList.addAll(list);
         friendshipAdapter.appendList(friendshipList);
 
-        mPresenter.getFriendsList("000000", "a9524621-6b74-42cc-b395-d7d521d5b4a4", 0l, 0, 0, 10);
+        mPresenter.getFriendsList("000000", "a9524621-6b74-42cc-b395-d7d521d5b4a4", timeStampNow, startIndex, currentStandardSequence, PAGE_SIZE);
     }
 
     @Override

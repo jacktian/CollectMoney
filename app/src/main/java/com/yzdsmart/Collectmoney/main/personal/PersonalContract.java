@@ -24,7 +24,7 @@ public interface PersonalContract {
          * @param custcode
          * @param submitcode
          */
-        void getUserGraSta(String custcode, String submitcode);
+        void getCustLevel(String custcode, String submitcode);
 
         void unRegisterSubscribe();
     }

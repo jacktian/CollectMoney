@@ -39,7 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResource());
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this);
-        MoneyApp.getAppInstance().storeActivity(this);
+        App.getAppInstance().storeActivity(this);
 
         if (null != toolBar) {
             setSupportActionBar(toolBar);
@@ -103,7 +103,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 关闭当前Activity
      */
     public void closeActivity() {
-        MoneyApp.getAppInstance().removeActivity(this);
+        App.getAppInstance().removeActivity(this);
         finish();
         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
     }

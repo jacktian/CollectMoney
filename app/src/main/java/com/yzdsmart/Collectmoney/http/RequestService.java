@@ -1,5 +1,6 @@
 package com.yzdsmart.Collectmoney.http;
 
+import com.yzdsmart.Collectmoney.bean.Expand;
 import com.yzdsmart.Collectmoney.bean.FriendsRequestResponse;
 import com.yzdsmart.Collectmoney.bean.LoginRequestResponse;
 import com.yzdsmart.Collectmoney.bean.RequestResponse;
@@ -54,14 +55,14 @@ public interface RequestService {
     Observable<LoginRequestResponse> userLogin(@Field("UserName") String userName, @Field("Password") String password, @Field("LoginCode") String loginCode);
 
     /**
-     * 获取以后等级和星级
+     * 获取用户等级和星级
      *
      * @param custcode
      * @param submitcode
      * @return
      */
     @GET(Url.CUST)
-    Observable<User> getUserGraSta(@Query("custcode") String custcode, @Query("submitcode") String submitcode);
+    Observable<User> getCustLevel(@Query("custcode") String custcode, @Query("submitcode") String submitcode);
 
     /**
      * 设置云通讯用户信息
@@ -77,7 +78,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SETCUST)
-    Observable<RequestResponse> setTecentInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("TCAccount") String tcAccount, @Field("Profile_Nick") String profile_Nick, @Field("Profile_Image") String profile_Image, @Field("Profile_AllowType") String profile_AllowType, @Field("Profile_SelfSignature") String profile_SelfSignature);
+    Observable<RequestResponse> setCustInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("TCAccount") String tcAccount, @Field("Profile_Nick") String profile_Nick, @Field("Profile_Image") String profile_Image, @Field("Profile_AllowType") String profile_AllowType, @Field("Profile_SelfSignature") String profile_SelfSignature);
 
     /**
      * 获取好友的列表(包括其等级和星级）
@@ -138,7 +139,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SHOPLIST)
-    Observable<ShopDetails> getShopDetails(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode);
+    Observable<ShopDetails> getShopInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode);
 
     /**
      * 设置对店铺关注
@@ -150,6 +151,33 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SETFOLLOW)
-    Observable<RequestResponse> changeShopFollow(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode);
+    Observable<RequestResponse> setFollow(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode);
+
+    /**
+     * 获取推荐列表
+     *
+     * @param submitCode
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.EXPAND)
+    Observable<Expand> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+
+    /**
+     * 获取商铺关注者
+     *
+     * @param action
+     * @param submitCode
+     * @param custCode
+     * @param bazaCode
+     * @param coor
+     * @param ip
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASK)
+    Observable<RequestResponse> getGoldFollow(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode, @Field("Coor") String coor, @Field("Ip") String ip);
 
 }

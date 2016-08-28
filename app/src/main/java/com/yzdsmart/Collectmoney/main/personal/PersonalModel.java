@@ -13,7 +13,7 @@ import rx.schedulers.Schedulers;
  */
 public class PersonalModel {
     //网络请求监听
-    private Subscriber<User> getUserGraStaSubscriber;
+    private Subscriber<User> getCustLevelSubscriber;
 
     /**
      * 获取用户等级和星级
@@ -21,8 +21,8 @@ public class PersonalModel {
      * @param custcode
      * @param submitcode
      */
-    void getUserGraSta(String custcode, String submitcode, final RequestListener listener) {
-        getUserGraStaSubscriber = new Subscriber<User>() {
+    void getCustLevel(String custcode, String submitcode, final RequestListener listener) {
+        getCustLevelSubscriber = new Subscriber<User>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -38,16 +38,16 @@ public class PersonalModel {
                 listener.onSuccess(userGraSta);
             }
         };
-        RequestAdapter.getRequestService().getUserGraSta(custcode, submitcode)
+        RequestAdapter.getRequestService().getCustLevel(custcode, submitcode)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
-                .subscribe(getUserGraStaSubscriber);
+                .subscribe(getCustLevelSubscriber);
     }
 
     void unRegisterSubscribe() {
         //解除引用关系，以避免内存泄露的发生
-        if (null != getUserGraStaSubscriber) {
-            getUserGraStaSubscriber.unsubscribe();
+        if (null != getCustLevelSubscriber) {
+            getCustLevelSubscriber.unsubscribe();
         }
     }
 }

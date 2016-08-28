@@ -103,7 +103,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
         new ShopDetailsPresenter(this, this);
 
-        mPresenter.getShopDetails("000000", "000000", bazaCode);
+        mPresenter.getShopInfo("000000", "000000", bazaCode);
 
         List<ShopFollower> list = new ArrayList<ShopFollower>();
         list.add(new ShopFollower("file:///android_asset/album_pic.png", "艾伦", 10, "08:23"));
@@ -129,7 +129,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 closeActivity();
                 break;
             case R.id.is_atte:
-                mPresenter.changeShopFollow(isAtte ? "56" : "66", "000000", "a9524621-6b74-42cc-b395-d7d521d5b4a4", bazaCode);
+                mPresenter.setFollow(isAtte ? "56" : "66", "000000", "a9524621-6b74-42cc-b395-d7d521d5b4a4", bazaCode);
                 break;
         }
     }
@@ -153,7 +153,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     }
 
     @Override
-    public void onGetShopDetails(ShopDetails shopDetails) {
+    public void onGetShopInfo(ShopDetails shopDetails) {
         hotelNameTV.setText(shopDetails.getName());
         hotelAddressTV.setText(shopDetails.getAddr());
         focusPersonCountsTV.setText("" + shopDetails.getAtteNum());
@@ -164,7 +164,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     }
 
     @Override
-    public void onChangeShopFollow(Boolean flag, String action, String msg) {
+    public void onSetFollow(Boolean flag, String action, String msg) {
         if (!flag) {
             showSnackbar(msg);
             return;

@@ -23,13 +23,13 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
     }
 
     @Override
-    public void getShopDetails(String actioncode,String submitCode, String bazaCode) {
-        mModel.getShopDetails(actioncode,submitCode, bazaCode, new RequestListener() {
+    public void getShopInfo(String actioncode,String submitCode, String bazaCode) {
+        mModel.getShopInfo(actioncode,submitCode, bazaCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ShopDetails shopDetails = (ShopDetails) result;
                 if (null != shopDetails) {
-                    mView.onGetShopDetails(shopDetails);
+                    mView.onGetShopInfo(shopDetails);
                 }
             }
 
@@ -46,15 +46,15 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
     }
 
     @Override
-    public void changeShopFollow(final String action, String submitCode, String custCode, String bazaCode) {
-        mModel.changeShopFollow(action, submitCode, custCode, bazaCode, new RequestListener() {
+    public void setFollow(final String action, String submitCode, String custCode, String bazaCode) {
+        mModel.setFollow(action, submitCode, custCode, bazaCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RequestResponse response = (RequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
-                    mView.onChangeShopFollow(true, action, response.getErrorInfo());
+                    mView.onSetFollow(true, action, response.getErrorInfo());
                 } else if ("FAIL".equals(response.getActionStatus())) {
-                    mView.onChangeShopFollow(false, action, response.getErrorInfo());
+                    mView.onSetFollow(false, action, response.getErrorInfo());
                 }
             }
 

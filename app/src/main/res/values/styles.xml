@@ -38,4 +38,8 @@
         <item name="android:textColor">@color/grey</item>
         <item name="android:textSize">@dimen/font_medium</item>
     </style>
+
+    <style name="tecent_maskDialog" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@color/tecent_colorMask</item>
+    </style>
 </resources>

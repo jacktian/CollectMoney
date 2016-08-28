@@ -7,21 +7,16 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.view.View;
 
-import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.MoneyApp;
+import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.Shop;
 import com.yzdsmart.Collectmoney.bean.ShopParcelable;
-import com.yzdsmart.Collectmoney.bean.map.GEOContents;
-import com.yzdsmart.Collectmoney.bean.map.POIContent;
 import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.listener.HttpRequestListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +83,7 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
      * 设置marker图标
      */
     private Bitmap setNumToIcon(int num) {
-        BitmapDrawable bd = (BitmapDrawable) MoneyApp.getAppInstance().getResources().getDrawable(
+        BitmapDrawable bd = (BitmapDrawable) App.getAppInstance().getResources().getDrawable(
                 R.mipmap.icon_gcoding);
         Bitmap bitmap = bd.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(bitmap);
@@ -120,10 +115,10 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
 //        BitmapDrawable bd = null;
 //        switch (markerNum) {
 //            case 1:
-//                bd = (BitmapDrawable) MoneyApp.getAppInstance().getResources().getDrawable(R.mipmap.shop_marker_1);
+//                bd = (BitmapDrawable) App.getAppInstance().getResources().getDrawable(R.mipmap.shop_marker_1);
 //                break;
 //            case 2:
-//                bd = (BitmapDrawable) MoneyApp.getAppInstance().getResources().getDrawable(R.mipmap.shop_marker_2);
+//                bd = (BitmapDrawable) App.getAppInstance().getResources().getDrawable(R.mipmap.shop_marker_2);
 //                break;
 //        }
 //        Bitmap bitmap = bd.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
