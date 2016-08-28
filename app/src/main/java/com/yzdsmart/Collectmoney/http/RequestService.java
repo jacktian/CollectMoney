@@ -65,6 +65,29 @@ public interface RequestService {
     Observable<CustLevelRequestResponse> getCustLevel(@Query("custcode") String custcode, @Query("submitcode") String submitcode);
 
     /**
+     * 获取用户信息
+     *
+     * @param submitCode
+     * @param custCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.CUST)
+    Observable<RequestResponse> getCustInfo(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode);
+
+    /**
+     * 获取用户详细信息
+     *
+     * @param actioncode
+     * @param submitCode
+     * @param custCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.CUST)
+    Observable<RequestResponse> getCustDetailInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode);
+
+    /**
      * 设置云通讯用户信息
      *
      * @param actioncode
@@ -179,5 +202,18 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.TASK)
     Observable<RequestResponse> getGoldFollow(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode, @Field("Coor") String coor, @Field("Ip") String ip);
+
+    /**
+     * 上传用户头像
+     *
+     * @param action
+     * @param fileName
+     * @param fileData
+     * @param tcAccount
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.FILEUPLOAD)
+    Observable<RequestResponse> saveFile(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("TCAccount") String tcAccount);
 
 }

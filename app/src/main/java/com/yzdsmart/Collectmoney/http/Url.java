@@ -15,8 +15,6 @@ public class Url {
     public static final String SETFOLLOW = "SetFollow";
     public static final String EXPAND = "Expand";
     public static final String TASK = "Task";
+    public static final String FILEUPLOAD = "FileUpload";
 
-    //百度地图检索
-    public static final String BAIDU_POI_URL = "http://api.map.baidu.com/geosearch/v3/";
-    public static final String BAIDU_POI_NEARBY = "nearby";
 }
