@@ -22,8 +22,8 @@ public class SetPasswordPresenter implements SetPasswordContract.SetPasswordPres
     }
 
     @Override
-    public void setPassword(String userName, String password, String regCode) {
-        mModel.setPassword(userName, password, regCode, new RequestListener() {
+    public void setPassword(String actioncode,String userName, String password, String regCode) {
+        mModel.setPassword(actioncode,userName, password, regCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RequestResponse response = (RequestResponse) result;

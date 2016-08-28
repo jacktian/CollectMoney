@@ -137,7 +137,7 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.verifyVerifyCode(userName, verifyCodeET.getText().toString());
+                mPresenter.verifyVerifyCode("000000",userName, verifyCodeET.getText().toString());
                 break;
         }
     }

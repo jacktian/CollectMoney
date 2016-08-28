@@ -30,6 +30,30 @@ public interface RequestService {
     Observable<RequestResponse> isUserExist(@Query("tel") String telNum);
 
     /**
+     * 用户注册/修改密码
+     *
+     * @param userName
+     * @param password
+     * @param regCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.USER)
+    Observable<RequestResponse> setPassword(@Query("actioncode") String actioncode, @Field("UserName") String userName, @Field("Password") String password, @Field("RegCode") String regCode);
+
+    /**
+     * 用户登录
+     *
+     * @param userName
+     * @param password
+     * @param loginCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.USER)
+    Observable<LoginRequestResponse> userLogin(@Field("UserName") String userName, @Field("Password") String password, @Field("LoginCode") String loginCode);
+
+    /**
      * 获取短信验证码
      *
      * @param telNum
@@ -48,32 +72,8 @@ public interface RequestService {
      * @return
      */
     @FormUrlEncoded
-    @POST(Url.SMS + "?actioncode=000000")
-    Observable<RequestResponse> verifyVerifyCode(@Field("Tel") String telNum, @Field("Sms_Veri_Code") String verifyCode);
-
-    /**
-     * 用户注册/修改密码
-     *
-     * @param userName
-     * @param password
-     * @param regCode
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Url.USER + "?actioncode=000000")
-    Observable<RequestResponse> setPassword(@Field("UserName") String userName, @Field("Password") String password, @Field("RegCode") String regCode);
-
-    /**
-     * 用户登录
-     *
-     * @param userName
-     * @param password
-     * @param loginCode
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Url.USER)
-    Observable<LoginRequestResponse> userLogin(@Field("UserName") String userName, @Field("Password") String password, @Field("LoginCode") String loginCode);
+    @POST(Url.SMS)
+    Observable<RequestResponse> verifyVerifyCode(@Query("actioncode") String actioncode, @Field("Tel") String telNum, @Field("Sms_Veri_Code") String verifyCode);
 
     /**
      * 获取周边商铺
@@ -96,8 +96,20 @@ public interface RequestService {
      * @return
      */
     @FormUrlEncoded
-    @POST(Url.SHOPLIST + "?actioncode=000000")
-    Observable<ShopDetails> getShopDetails(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode);
+    @POST(Url.SHOPLIST)
+    Observable<ShopDetails> getShopDetails(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode);
+
+    /**
+     * 设置对店铺关注
+     *
+     * @param submitCode
+     * @param custCode
+     * @param bazaCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.SETFOLLOW)
+    Observable<RequestResponse> changeShopFollow(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode);
 
     /**
      * 获取以后等级和星级

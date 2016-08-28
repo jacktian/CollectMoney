@@ -45,8 +45,8 @@ public class VerifyCodePresenter implements VerifyCodeContract.VerifyCodePresent
     }
 
     @Override
-    public void verifyVerifyCode(String telNum, String verifyCode) {
-        mModel.verifyVerifyCode(telNum, verifyCode, new RequestListener() {
+    public void verifyVerifyCode(String actioncode,String telNum, String verifyCode) {
+        mModel.verifyVerifyCode(actioncode,telNum, verifyCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RequestResponse response = (RequestResponse) result;

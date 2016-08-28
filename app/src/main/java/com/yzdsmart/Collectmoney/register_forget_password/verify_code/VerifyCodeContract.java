@@ -32,7 +32,7 @@ public interface VerifyCodeContract {
          * @param telNum
          * @param verifyCode
          */
-        void verifyVerifyCode(String telNum, String verifyCode);
+        void verifyVerifyCode(String actioncode,String telNum, String verifyCode);
 
         void unRegisterSubscribe();
     }

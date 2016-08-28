@@ -41,7 +41,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     @BindView(R.id.title_right_operation)
     ImageView titleRightOpeIV;
     @Nullable
-    @BindViews({R.id.hotel_base_info_layout, R.id.hotel_detail_introduction_layout})
+    @BindViews({R.id.hotel_base_info_layout})
     List<View> toggleViews;
     @Nullable
     @BindView(R.id.hotel_user_list)
@@ -61,8 +61,12 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     @Nullable
     @BindView(R.id.visit_person_counts)
     TextView visitPersonCountsTV;
+    @Nullable
+    @BindView(R.id.is_atte)
+    ImageView isAtteIV;
 
     private String bazaCode;//商铺编码
+    private Boolean isAtte = false;
 
     private LinearLayoutManager mLinearLayoutManager;
     private Paint dividerPaint;
@@ -99,7 +103,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
         new ShopDetailsPresenter(this, this);
 
-        mPresenter.getShopDetails("000000", bazaCode);
+        mPresenter.getShopDetails("000000", "000000", bazaCode);
 
         List<ShopFollower> list = new ArrayList<ShopFollower>();
         list.add(new ShopFollower("file:///android_asset/album_pic.png", "艾伦", 10, "08:23"));
@@ -118,11 +122,14 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout})
+    @OnClick({R.id.title_left_operation_layout, R.id.is_atte})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
+                break;
+            case R.id.is_atte:
+                mPresenter.changeShopFollow(isAtte ? "56" : "66", "000000", "a9524621-6b74-42cc-b395-d7d521d5b4a4", bazaCode);
                 break;
         }
     }
@@ -152,5 +159,17 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         focusPersonCountsTV.setText("" + shopDetails.getAtteNum());
         dailyCoinCountsTV.setText("" + shopDetails.getTodayGlodNum());
         visitPersonCountsTV.setText("" + shopDetails.getVisiNum());
+        isAtte = shopDetails.getAtte();
+        isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.heart_icon_white_checked) : getResources().getDrawable(R.mipmap.heart_icon_white));
+    }
+
+    @Override
+    public void onChangeShopFollow(Boolean flag, String action, String msg) {
+        if (!flag) {
+            showSnackbar(msg);
+            return;
+        }
+        isAtte = "56".equals(action) ? false : true;
+        isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.heart_icon_white_checked) : getResources().getDrawable(R.mipmap.heart_icon_white));
     }
 }

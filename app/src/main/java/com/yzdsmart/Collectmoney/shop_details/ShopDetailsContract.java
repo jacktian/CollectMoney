@@ -15,6 +15,12 @@ public interface ShopDetailsContract {
          * @param shopDetails
          */
         void onGetShopDetails(ShopDetails shopDetails);
+
+        /**
+         * @param flag
+         * @param action
+         */
+        void onChangeShopFollow(Boolean flag, String action, String msg);
     }
 
     interface ShopDetailsPresenter extends BasePresenter {
@@ -24,7 +30,17 @@ public interface ShopDetailsContract {
          * @param submitCode
          * @param bazaCode
          */
-        void getShopDetails(String submitCode, String bazaCode);
+        void getShopDetails(String actioncode, String submitCode, String bazaCode);
+
+        /**
+         * 设置对店铺关注
+         *
+         * @param action
+         * @param submitCode
+         * @param custCode
+         * @param bazaCode
+         */
+        void changeShopFollow(String action, String submitCode, String custCode, String bazaCode);
 
         void unRegisterSubscribe();
     }

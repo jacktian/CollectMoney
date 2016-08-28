@@ -9,6 +9,7 @@ public class Url {
     public static final String USER = "User";
     public static final String SMS = "Sms";
     public static final String SHOPLIST = "ShopList";
+    public static final String SETFOLLOW = "SetFollow";
     public static final String CUST = "Cust";
     public static final String FRIEND = "Friend";
 

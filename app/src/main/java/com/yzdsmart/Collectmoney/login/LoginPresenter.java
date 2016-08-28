@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.login;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.bean.LoginRequestResponse;
 import com.yzdsmart.Collectmoney.bean.RequestResponse;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 
@@ -26,7 +27,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
         mModel.userLogin(userName, password, loginCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                RequestResponse response = (RequestResponse) result;
+                LoginRequestResponse response = (LoginRequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
                     mView.onUserLogin(true, response.getErrorInfo());
                 } else if ("FAIL".equals(response.getActionStatus())) {

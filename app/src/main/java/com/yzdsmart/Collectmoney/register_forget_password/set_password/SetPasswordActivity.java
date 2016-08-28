@@ -114,7 +114,7 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.setPassword(userName, userPwdET.getText().toString(), "000000");
+                mPresenter.setPassword("000000",userName, userPwdET.getText().toString(), "000000");
                 break;
         }
     }

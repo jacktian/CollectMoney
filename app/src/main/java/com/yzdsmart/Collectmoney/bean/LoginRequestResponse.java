@@ -4,7 +4,7 @@ package com.yzdsmart.Collectmoney.bean;
  * Created by YZD on 2016/8/27.
  */
 public class LoginRequestResponse {
-    private TecentAccount tecentAccount;
+    private TecentAccount TCInfo;
     private String SubmitCode;
     private String ActionStatus;
     private Integer ErrorCode;
@@ -13,20 +13,12 @@ public class LoginRequestResponse {
     public LoginRequestResponse() {
     }
 
-    public LoginRequestResponse(TecentAccount tecentAccount, String submitCode, String actionStatus, Integer errorCode, String errorInfo) {
-        this.tecentAccount = tecentAccount;
+    public LoginRequestResponse(TecentAccount TCInfo, String submitCode, String actionStatus, Integer errorCode, String errorInfo) {
+        this.TCInfo = TCInfo;
         SubmitCode = submitCode;
         ActionStatus = actionStatus;
         ErrorCode = errorCode;
         ErrorInfo = errorInfo;
-    }
-
-    public TecentAccount getTecentAccount() {
-        return tecentAccount;
-    }
-
-    public void setTecentAccount(TecentAccount tecentAccount) {
-        this.tecentAccount = tecentAccount;
     }
 
     public String getSubmitCode() {
@@ -64,7 +56,7 @@ public class LoginRequestResponse {
     @Override
     public String toString() {
         return "{" +
-                "tecentAccount:" + tecentAccount +
+                "TCInfo:" + TCInfo +
                 ", SubmitCode:'" + SubmitCode + '\'' +
                 ", ActionStatus:'" + ActionStatus + '\'' +
                 ", ErrorCode:" + ErrorCode +

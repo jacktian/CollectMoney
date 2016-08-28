@@ -19,7 +19,7 @@ public interface SetPasswordContract {
          * @param password
          * @param regCode
          */
-        void setPassword(String userName, String password, String regCode);
+        void setPassword(String actioncode, String userName, String password, String regCode);
 
         void unRegisterSubscribe();
     }
