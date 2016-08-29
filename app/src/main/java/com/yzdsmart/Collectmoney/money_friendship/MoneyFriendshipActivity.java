@@ -15,6 +15,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.Friendship;
 import com.yzdsmart.Collectmoney.friend_future.FriendFutureActivity;
+import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +103,7 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
         friendshipList.addAll(list);
         friendshipAdapter.appendList(friendshipList);
 
-        mPresenter.getFriendsList("000000", "a9524621-6b74-42cc-b395-d7d521d5b4a4", timeStampNow, startIndex, currentStandardSequence, PAGE_SIZE);
+        mPresenter.getFriendsList("000000", SharedPreferencesUtils.getString(this, "cust_code", ""), timeStampNow, startIndex, currentStandardSequence, PAGE_SIZE);
     }
 
     @Override
