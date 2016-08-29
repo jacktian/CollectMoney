@@ -64,7 +64,7 @@
                             android:layout_weight="1"
                             android:ellipsize="marquee"
                             android:singleLine="true"
-                            android:text="韩梅梅"
+                            android:text=""
                             android:textColor="@color/grey"
                             android:textIsSelectable="true"
                             android:textSize="@dimen/font_medium" />
@@ -88,8 +88,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:layout_toRightOf="@id/level_title"
-                                android:src="@mipmap/user_level_third" />
+                                android:layout_toRightOf="@id/level_title" />
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -120,9 +119,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
-                                android:maxWidth="38dp"
                                 android:singleLine="true"
-                                android:text="20000000000000000"
+                                android:text="0"
                                 android:textColor="@color/orange"
                                 android:textIsSelectable="true"
                                 android:textSize="@dimen/font_medium" />
@@ -145,10 +143,6 @@
                             android:layout_weight="1"
                             android:orientation="horizontal">
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@mipmap/diamond_pink" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

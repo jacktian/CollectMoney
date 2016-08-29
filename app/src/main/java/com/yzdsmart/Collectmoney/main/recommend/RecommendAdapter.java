@@ -12,8 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.Expand;
-import com.yzdsmart.Collectmoney.bean.TouristAttraction;
+import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ import butterknife.ButterKnife;
  */
 public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.ViewHolder> {
     private Context context;
-    private List<Expand> expandList;
+    private List<ExpandListRequestResponse> expandList;
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
@@ -40,7 +39,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
 
     public RecommendAdapter(Context context) {
         this.context = context;
-        expandList = new ArrayList<Expand>();
+        expandList = new ArrayList<ExpandListRequestResponse>();
     }
 
     /**
@@ -48,7 +47,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
      *
      * @param list
      */
-    public void appendList(List<Expand> list) {
+    public void appendList(List<ExpandListRequestResponse> list) {
         if (null != expandList) {
             expandList.addAll(list);
         }

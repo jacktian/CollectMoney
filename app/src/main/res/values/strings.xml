@@ -55,12 +55,11 @@
     <string name="future_search_new_friend">搜索新的朋友</string>
 
     <!--酒店详情-->
-    <string name="hotel">酒店</string>
-    <string name="hotel_detail">酒店详情</string>
-    <string name="hotel_focus_person_counts">关注人数</string>
-    <string name="hotel_daily_coins">今日币数</string>
-    <string name="hotel_visit_person_counts">访问人数</string>
-    <string name="hotel_more_followers">查看更多</string>
+    <string name="shop_detail">详情</string>
+    <string name="shop_focus_person_counts">关注人数</string>
+    <string name="shop_daily_coins">今日币数</string>
+    <string name="shop_visit_person_counts">访问人数</string>
+    <string name="shop_more_followers">查看更多</string>
 
     <!-- 腾讯聊天 -->
     <!--message-->

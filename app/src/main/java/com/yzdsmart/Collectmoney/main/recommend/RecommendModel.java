@@ -1,8 +1,8 @@
 package com.yzdsmart.Collectmoney.main.recommend;
 
-import com.yzdsmart.Collectmoney.bean.Expand;
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
 
 import java.util.List;
 
@@ -15,10 +15,10 @@ import rx.schedulers.Schedulers;
  */
 public class RecommendModel {
     //网络请求监听
-    private Subscriber<List<Expand>> getExpandListSubscriber;
+    private Subscriber<List<ExpandListRequestResponse>> getExpandListSubscriber;
 
     void getExpandList(String submitCode, Integer pageIndex, Integer pageSize, final RequestListener listener) {
-        getExpandListSubscriber = new Subscriber<List<Expand>>() {
+        getExpandListSubscriber = new Subscriber<List<ExpandListRequestResponse>>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -30,7 +30,7 @@ public class RecommendModel {
             }
 
             @Override
-            public void onNext(List<Expand> expands) {
+            public void onNext(List<ExpandListRequestResponse> expands) {
                 listener.onSuccess(expands);
             }
         };

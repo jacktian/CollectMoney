@@ -11,8 +11,7 @@ import android.widget.ImageView;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.Expand;
-import com.yzdsmart.Collectmoney.bean.TouristAttraction;
+import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.views.BetterSpinner;
 
@@ -53,7 +52,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     private ArrayAdapter<String> citiesAdapter;
 
     private LinearLayoutManager mLinearLayoutManager;
-    private List<Expand> expandList;
+    private List<ExpandListRequestResponse> expandList;
     private RecommendAdapter recommendAdapter;
 
     @Override
@@ -67,7 +66,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
                 R.layout.cities_list_item, cities);
 
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        expandList = new ArrayList<Expand>();
+        expandList = new ArrayList<ExpandListRequestResponse>();
         recommendAdapter = new RecommendAdapter(getActivity());
     }
 
@@ -119,7 +118,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     }
 
     @Override
-    public void onGetExpandList(List<Expand> expands) {
+    public void onGetExpandList(List<ExpandListRequestResponse> expands) {
         recommendAdapter.appendList(expands);
     }
 }

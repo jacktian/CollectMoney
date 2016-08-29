@@ -106,6 +106,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
             showSnackbar(msg);
             return;
         }
-        openActivity(QRScannerActivity.class);
+        closeActivity();
     }
 }

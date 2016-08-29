@@ -7,15 +7,15 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.ShopDetails;
 import com.yzdsmart.Collectmoney.bean.ShopFollower;
+import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
+import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.Optional;
 
@@ -40,9 +39,6 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     @Nullable
     @BindView(R.id.title_right_operation)
     ImageView titleRightOpeIV;
-    @Nullable
-    @BindViews({R.id.hotel_base_info_layout})
-    List<View> toggleViews;
     @Nullable
     @BindView(R.id.hotel_user_list)
     RecyclerView hotelUsersRV;
@@ -103,7 +99,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
         new ShopDetailsPresenter(this, this);
 
-        mPresenter.getShopInfo("000000", "000000", bazaCode);
+        mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
 
         List<ShopFollower> list = new ArrayList<ShopFollower>();
         list.add(new ShopFollower("file:///android_asset/album_pic.png", "艾伦", 10, "08:23"));
@@ -129,20 +125,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 closeActivity();
                 break;
             case R.id.is_atte:
-                mPresenter.setFollow(isAtte ? "56" : "66", "000000", "a9524621-6b74-42cc-b395-d7d521d5b4a4", bazaCode);
-                break;
-        }
-    }
-
-    @Optional
-    @OnCheckedChanged({R.id.toggle_hotel_info, R.id.toggle_hotel_detail})
-    void onCheckedChanged(CompoundButton button, boolean changed) {
-        switch (button.getId()) {
-            case R.id.toggle_hotel_info:
-                ButterKnife.apply(toggleViews, BUTTERKNIFEVISIBLE);
-                break;
-            case R.id.toggle_hotel_detail:
-                ButterKnife.apply(toggleViews, BUTTERKNIFEGONE);
+                mPresenter.setFollow(isAtte ? "56" : "66", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), bazaCode);
                 break;
         }
     }
@@ -153,7 +136,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     }
 
     @Override
-    public void onGetShopInfo(ShopDetails shopDetails) {
+    public void onGetShopInfo(ShopInfoRequestResponse shopDetails) {
         hotelNameTV.setText(shopDetails.getName());
         hotelAddressTV.setText(shopDetails.getAddr());
         focusPersonCountsTV.setText("" + shopDetails.getAtteNum());

@@ -7,6 +7,7 @@ import com.yzdsmart.Collectmoney.bean.TecentAccount;
  */
 public class LoginRequestResponse {
     private TecentAccount TCInfo;
+    private String CustCode;
     private String SubmitCode;
     private String ActionStatus;
     private Integer ErrorCode;
@@ -15,12 +16,29 @@ public class LoginRequestResponse {
     public LoginRequestResponse() {
     }
 
-    public LoginRequestResponse(TecentAccount TCInfo, String submitCode, String actionStatus, Integer errorCode, String errorInfo) {
+    public LoginRequestResponse(TecentAccount TCInfo, String custCode, String submitCode, String actionStatus, Integer errorCode, String errorInfo) {
         this.TCInfo = TCInfo;
+        CustCode = custCode;
         SubmitCode = submitCode;
         ActionStatus = actionStatus;
         ErrorCode = errorCode;
         ErrorInfo = errorInfo;
+    }
+
+    public String getCustCode() {
+        return CustCode;
+    }
+
+    public void setCustCode(String custCode) {
+        CustCode = custCode;
+    }
+
+    public TecentAccount getTCInfo() {
+        return TCInfo;
+    }
+
+    public void setTCInfo(TecentAccount TCInfo) {
+        this.TCInfo = TCInfo;
     }
 
     public String getSubmitCode() {
@@ -59,6 +77,7 @@ public class LoginRequestResponse {
     public String toString() {
         return "{" +
                 "TCInfo:" + TCInfo +
+                ", CustCode:'" + CustCode + '\'' +
                 ", SubmitCode:'" + SubmitCode + '\'' +
                 ", ActionStatus:'" + ActionStatus + '\'' +
                 ", ErrorCode:" + ErrorCode +

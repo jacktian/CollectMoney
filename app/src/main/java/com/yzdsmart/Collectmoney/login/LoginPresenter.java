@@ -3,9 +3,9 @@ package com.yzdsmart.Collectmoney.login;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.bean.LoginRequestResponse;
-import com.yzdsmart.Collectmoney.bean.RequestResponse;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
+import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 /**
  * Created by YZD on 2016/8/26.
@@ -29,6 +29,9 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
             public void onSuccess(Object result) {
                 LoginRequestResponse response = (LoginRequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
+                    SharedPreferencesUtils.setString(context, "cust_code", response.getCustCode());
+                    SharedPreferencesUtils.setString(context, "im_account", response.getTCInfo().getTCAccount());
+                    SharedPreferencesUtils.setString(context, "im_password", response.getTCInfo().getTCPassword());
                     mView.onUserLogin(true, response.getErrorInfo());
                 } else if ("FAIL".equals(response.getActionStatus())) {
                     mView.onUserLogin(false, response.getErrorInfo());

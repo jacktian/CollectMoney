@@ -1,8 +1,8 @@
 package com.yzdsmart.Collectmoney.money_friendship;
 
-import com.yzdsmart.Collectmoney.bean.FriendsRequestResponse;
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.FriendsRequestResponse;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

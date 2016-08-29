@@ -247,6 +247,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/name_qr_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/personal_item_panel_margin_top"
@@ -461,6 +462,7 @@
                 android:textSize="@dimen/font_medium" />
 
             <RelativeLayout
+                android:id="@+id/im_ope_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

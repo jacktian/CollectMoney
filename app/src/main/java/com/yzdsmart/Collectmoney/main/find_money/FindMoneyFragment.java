@@ -29,11 +29,12 @@ import com.baidu.mapapi.utils.DistanceUtil;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.ShopParcelable;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.main.personal.PersonalFragment;
+import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.shop_details.ShopDetailsActivity;
+import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         fm = getFragmentManager();
         mOverlayList = new ArrayList<Overlay>();
         //定位图标
@@ -110,7 +112,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         //定位初始化
         initLoc();
         //路径描线
-        initRoute();
+//        initRoute();
     }
 
     @Override
@@ -151,6 +153,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Optional
     @OnClick({R.id.title_left_operation_layout, R.id.title_right_operation_layout})
     void onClick(View view) {
+        if (null ==  SharedPreferencesUtils.getString(getActivity(), "cust_code", "") ||  SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
+            ((BaseActivity) getActivity()).openActivity(LoginActivity.class);
+            return;
+        }
         Fragment fragment;
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
@@ -161,12 +167,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 ((MainActivity) getActivity()).addOrShowFragment(fragment, "personal");
                 break;
             case R.id.title_right_operation_layout:
-//                fragment = fm.findFragmentByTag("qr_scan");
-//                if (null == fragment) {
-//                    fragment = new QRScannerFragment();
-//                }
-//                ((MainActivity) getActivity()).addOrShowFragment(fragment, "qr_scan");
-                ((BaseActivity) getActivity()).openActivity(LoginActivity.class);
+                ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class);
                 break;
         }
     }
@@ -187,12 +188,15 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+                if (null ==  SharedPreferencesUtils.getString(getActivity(), "cust_code", "") ||  SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
+                    ((BaseActivity) getActivity()).openActivity(LoginActivity.class);
+                    return true;
+                }
                 if (locMarker == marker) {
                     ((BaseActivity) getActivity()).showSnackbar("哈哈");
                 } else {
-                    ShopParcelable parcelable = marker.getExtraInfo().getParcelable("shop");
                     Bundle bundle = new Bundle();
-                    bundle.putString("bazaCode", parcelable.getShop().getCode());
+                    bundle.putString("bazaCode", marker.getExtraInfo().getString("bazaCode"));
                     ((BaseActivity) getActivity()).openActivity(ShopDetailsActivity.class, bundle, 0);
                 }
                 return true;
@@ -209,7 +213,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); //返回的定位结果是百度经纬度,默认值gcj02
-        option.setScanSpan(1000);//设置发起定位请求的间隔时间为1000ms
+        option.setScanSpan(5000);//设置发起定位请求的间隔时间为1000ms
         mLocClient.setLocOption(option);
         mLocClient.start();
     }
@@ -278,6 +282,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         public void onReceiveLocation(BDLocation bdLocation) {
             if (null == bdLocation || null == findMoneyMap) {
                 return;
+            }
+            if (null != locMarker) {
+                locMarker.remove();
+                locMarker = null;
             }
             MarkerOptions locMO = new MarkerOptions().position(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).icons(locGifList);
             locMarker = (Marker) (mBaiduMap.addOverlay(locMO));//定位图标

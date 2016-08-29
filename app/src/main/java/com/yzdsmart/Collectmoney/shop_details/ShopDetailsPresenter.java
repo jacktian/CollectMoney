@@ -3,9 +3,9 @@ package com.yzdsmart.Collectmoney.shop_details;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.bean.RequestResponse;
-import com.yzdsmart.Collectmoney.bean.ShopDetails;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.RequestResponse;
+import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 
 /**
  * Created by YZD on 2016/8/26.
@@ -23,13 +23,13 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
     }
 
     @Override
-    public void getShopInfo(String actioncode,String submitCode, String bazaCode) {
-        mModel.getShopInfo(actioncode,submitCode, bazaCode, new RequestListener() {
+    public void getShopInfo(String actioncode, String submitCode, String bazaCode,String custCode) {
+        mModel.getShopInfo(actioncode, submitCode, bazaCode,custCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                ShopDetails shopDetails = (ShopDetails) result;
-                if (null != shopDetails) {
-                    mView.onGetShopInfo(shopDetails);
+                ShopInfoRequestResponse shopInfo = (ShopInfoRequestResponse) result;
+                if (null != shopInfo) {
+                    mView.onGetShopInfo(shopInfo);
                 }
             }
 

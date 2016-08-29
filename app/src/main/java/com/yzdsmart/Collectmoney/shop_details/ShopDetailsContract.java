@@ -2,7 +2,7 @@ package com.yzdsmart.Collectmoney.shop_details;
 
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.bean.ShopDetails;
+import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 
 /**
  * Created by YZD on 2016/8/26.
@@ -14,7 +14,7 @@ public interface ShopDetailsContract {
          *
          * @param shopDetails
          */
-        void onGetShopInfo(ShopDetails shopDetails);
+        void onGetShopInfo(ShopInfoRequestResponse shopDetails);
 
         /**
          * @param flag
@@ -30,7 +30,7 @@ public interface ShopDetailsContract {
          * @param submitCode
          * @param bazaCode
          */
-        void getShopInfo(String actioncode, String submitCode, String bazaCode);
+        void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode);
 
         /**
          * 设置对店铺关注

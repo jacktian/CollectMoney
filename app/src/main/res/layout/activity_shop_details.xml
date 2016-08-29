@@ -19,36 +19,21 @@
         android:paddingRight="@dimen/activity_horizontal_padding"
         android:paddingTop="@dimen/activity_vertical_padding">
 
-        <RadioGroup
-            android:id="@+id/hotel_info_toggle"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/hotel_toggle_height"
-            android:background="@drawable/hotel_toggle_bg"
-            android:orientation="horizontal">
+            android:layout_height="@dimen/shop_detail_head_height"
+            android:background="@drawable/shop_head_bg">
 
-            <RadioButton
-                android:id="@+id/toggle_hotel_info"
-                android:layout_width="@dimen/hotel_toggle_button_width"
+            <TextView
+                android:layout_width="@dimen/shop_detail_head_width"
                 android:layout_height="match_parent"
-                android:background="@drawable/hotel_toggle_button_info"
-                android:button="@null"
-                android:checked="true"
+                android:background="@mipmap/shop_detail_head_button_info"
                 android:gravity="center"
-                android:text="@string/hotel"
-                android:textColor="@color/hotel_toggle_button"
+                android:text="@string/shop_detail"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/font_medium" />
+        </RelativeLayout>
 
-            <RadioButton
-                android:id="@+id/toggle_hotel_detail"
-                android:layout_width="@dimen/hotel_toggle_button_width"
-                android:layout_height="match_parent"
-                android:background="@drawable/hotel_toggle_button_detail"
-                android:button="@null"
-                android:gravity="center"
-                android:text="@string/hotel_detail"
-                android:textColor="@color/hotel_toggle_button"
-                android:textSize="@dimen/font_medium" />
-        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,7 +42,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/hotel_detail_head_panel_height">
+                android:layout_height="@dimen/shop_detail_head_panel_height">
 
                 <ImageView
                     android:id="@+id/hotel_image"
@@ -74,8 +59,7 @@
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_padding"
-                    android:visibility="gone">
+                    android:paddingTop="@dimen/activity_vertical_padding">
 
                     <ImageView
                         android:id="@+id/taxi_line"
@@ -122,27 +106,27 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/hotel_star_level_white" />
+                            android:src="@mipmap/shop_star_level_white" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/hotel_star_level_white" />
+                            android:src="@mipmap/shop_star_level_white" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/hotel_star_level_white" />
+                            android:src="@mipmap/shop_star_level_white" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/hotel_star_level_white" />
+                            android:src="@mipmap/shop_star_level_white" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/hotel_star_level_white" />
+                            android:src="@mipmap/shop_star_level_white" />
                     </LinearLayout>
 
                     <TextView
@@ -173,8 +157,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/hotel_item_panel_margin_top"
-                    android:background="@drawable/hotel_focus_panel_bg"
+                    android:layout_marginTop="@dimen/shop_item_panel_margin_top"
+                    android:background="@drawable/shop_focus_panel_bg"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingLeft="@dimen/user_detail_item_layout_padding"
@@ -190,7 +174,7 @@
                             android:id="@+id/focus_person_counts"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/hotel_focus_detail_margin"
+                            android:layout_marginLeft="@dimen/shop_focus_detail_margin"
                             android:ellipsize="marquee"
                             android:singleLine="true"
                             android:text="40"
@@ -202,7 +186,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/focus_person_counts"
-                            android:text="@string/hotel_focus_person_counts"
+                            android:text="@string/shop_focus_person_counts"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_medium" />
 
@@ -230,7 +214,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/daily_coin_counts"
                             android:layout_centerHorizontal="true"
-                            android:text="@string/hotel_daily_coins"
+                            android:text="@string/shop_daily_coins"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_medium" />
 
@@ -246,7 +230,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/hotel_focus_detail_margin"
+                            android:layout_marginRight="@dimen/shop_focus_detail_margin"
                             android:ellipsize="marquee"
                             android:singleLine="true"
                             android:text="25"
@@ -260,7 +244,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_below="@id/visit_person_counts"
-                            android:text="@string/hotel_visit_person_counts"
+                            android:text="@string/shop_visit_person_counts"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_medium" />
                     </RelativeLayout>
@@ -270,7 +254,7 @@
                     android:id="@+id/hotel_detail_introduction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/hotel_item_panel_margin_top"
+                    android:layout_marginTop="@dimen/shop_item_panel_margin_top"
                     android:text="常州香格里拉大酒店是常州武进首家真正的豪华国际五星级酒店。毗邻“淹城”春秋乐园、天目湖和南山竹海等景区，是商务会奖、拓展旅游和休闲下榻的佳选。常州香格里拉将以完备的设施，产品和服务，尤其是在餐饮方面具独特的品质，真诚热情和关怀，为来常州的商务人士，本地企业家和各地旅游人士提供豪华至尊的礼遇和好的体验。"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/font_small" />
@@ -279,8 +263,8 @@
                     android:id="@+id/hotel_user_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/hotel_item_panel_margin_top"
-                    android:background="@drawable/hotel_focus_panel_bg" />
+                    android:layout_marginTop="@dimen/shop_item_panel_margin_top"
+                    android:background="@drawable/shop_focus_panel_bg" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -288,7 +272,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/activity_vertical_padding"
                     android:drawableBottom="@mipmap/double_down_arrow"
-                    android:text="@string/hotel_more_followers"
+                    android:text="@string/shop_more_followers"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/font_medium" />
             </LinearLayout>

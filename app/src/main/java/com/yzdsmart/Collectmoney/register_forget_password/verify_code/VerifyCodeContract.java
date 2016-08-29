@@ -14,7 +14,7 @@ public interface VerifyCodeContract {
          * @param flag
          * @param msg
          */
-        void onVerifyVerifyCode(boolean flag, String msg);
+        void onValidateVerifyCode(boolean flag, String msg);
     }
 
     interface VerifyCodePresenter extends BasePresenter {
@@ -32,7 +32,7 @@ public interface VerifyCodeContract {
          * @param telNum
          * @param verifyCode
          */
-        void verifyVerifyCode(String actioncode,String telNum, String verifyCode);
+        void validateVerifyCode(String actioncode,String telNum, String verifyCode);
 
         void unRegisterSubscribe();
     }

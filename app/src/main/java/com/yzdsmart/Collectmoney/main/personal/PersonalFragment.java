@@ -13,6 +13,7 @@ import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
+import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.List;
 
@@ -72,20 +73,31 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         titleRightOpeTLIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.grey_mail_icon));
         leftTitleTV.setText(getActivity().getResources().getString(R.string.personal_find));
 
-        mPresenter.getCustLevel("a9524621-6b74-42cc-b395-d7d521d5b4a4", "000000");
+        mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
     }
 
     @Optional
     @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail})
     void onClick(View view) {
+        Bundle bundle;
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 ((MainActivity) getActivity()).backToFindMoney();
                 break;
             case R.id.to_personal_detail:
-                ((BaseActivity) getActivity()).openActivity(PersonalFriendDetailActivity.class);
+                bundle = new Bundle();
+                bundle.putInt("type", 0);//0 个人 1 好友
+                ((BaseActivity) getActivity()).openActivity(PersonalFriendDetailActivity.class, bundle, 0);
                 ((MainActivity) getActivity()).backToFindMoney();
                 break;
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
         }
     }
 
@@ -102,6 +114,8 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
 
     @Override
     public void onGetCustLevel(Integer gra, Integer sta) {
+        userLevelIV.setImageDrawable(null);
+        diamondCountLayout.removeAllViews();
         userLevelIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.user_level_third));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         ImageView diamond;

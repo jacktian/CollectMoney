@@ -1,9 +1,8 @@
 package com.yzdsmart.Collectmoney.login;
 
-import com.yzdsmart.Collectmoney.bean.LoginRequestResponse;
-import com.yzdsmart.Collectmoney.bean.RequestResponse;
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

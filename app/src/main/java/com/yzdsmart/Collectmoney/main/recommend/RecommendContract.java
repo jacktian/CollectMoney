@@ -2,7 +2,7 @@ package com.yzdsmart.Collectmoney.main.recommend;
 
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.bean.Expand;
+import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface RecommendContract {
          *
          * @param expands
          */
-        void onGetExpandList(List<Expand> expands);
+        void onGetExpandList(List<ExpandListRequestResponse> expands);
     }
 
     interface RecommendPresenter extends BasePresenter {

@@ -3,8 +3,8 @@ package com.yzdsmart.Collectmoney.register_forget_password.verify_code;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.bean.RequestResponse;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 
 /**
  * Created by YZD on 2016/8/26.
@@ -45,15 +45,15 @@ public class VerifyCodePresenter implements VerifyCodeContract.VerifyCodePresent
     }
 
     @Override
-    public void verifyVerifyCode(String actioncode,String telNum, String verifyCode) {
-        mModel.verifyVerifyCode(actioncode,telNum, verifyCode, new RequestListener() {
+    public void validateVerifyCode(String actioncode, String telNum, String verifyCode) {
+        mModel.validateVerifyCode(actioncode, telNum, verifyCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RequestResponse response = (RequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
-                    mView.onVerifyVerifyCode(true, response.getErrorInfo());
+                    mView.onValidateVerifyCode(true, response.getErrorInfo());
                 } else if ("FAIL".equals(response.getActionStatus())) {
-                    mView.onVerifyVerifyCode(false, response.getErrorInfo());
+                    mView.onValidateVerifyCode(false, response.getErrorInfo());
                 }
             }
 

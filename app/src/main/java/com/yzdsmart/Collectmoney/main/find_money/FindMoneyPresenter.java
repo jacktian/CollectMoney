@@ -11,12 +11,11 @@ import android.os.Bundle;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
-import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.App;
+import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.Shop;
-import com.yzdsmart.Collectmoney.bean.ShopParcelable;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.ShopListRequestResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,16 +40,15 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
         mModel.getShopList(submitCode, coor, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                List<Shop> shopList = (List<Shop>) result;
+                List<ShopListRequestResponse> shopList = (List<ShopListRequestResponse>) result;
                 if (null != shopList) {
                     // 构建MarkerOption，用于在地图上添加Marker
                     MarkerOptions options;
                     List<MarkerOptions> optionsList = new ArrayList<MarkerOptions>();
-                    for (Shop shop : shopList) {
+                    for (ShopListRequestResponse shop : shopList) {
                         //给marker加上标签
                         Bundle bundle = new Bundle();
-                        ShopParcelable parcelable = new ShopParcelable(shop);
-                        bundle.putParcelable("shop", parcelable);
+                        bundle.putString("bazaCode", shop.getCode());
                         String coor = shop.getCoor();
                         // 定义Maker坐标点
                         LatLng point = new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]));

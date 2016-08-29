@@ -9,9 +9,11 @@ import android.view.KeyEvent;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.find_money.FindMoneyFragment;
 import com.yzdsmart.Collectmoney.main.recommend.RecommendFragment;
 import com.yzdsmart.Collectmoney.money_friendship.MoneyFriendshipActivity;
+import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 
 import butterknife.BindView;
@@ -62,6 +64,11 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
                 addOrShowFragment(fragment, "recommend");
                 break;
             case R.id.money_friend_radio:
+                String cust_code = SharedPreferencesUtils.getString(this, "cust_code", "");
+                if (null == cust_code || cust_code.trim().length() <= 0) {
+                    openActivity(LoginActivity.class);
+                    return;
+                }
                 openActivity(MoneyFriendshipActivity.class);
                 fragment = fm.findFragmentByTag("find");
                 if (null == fragment) {

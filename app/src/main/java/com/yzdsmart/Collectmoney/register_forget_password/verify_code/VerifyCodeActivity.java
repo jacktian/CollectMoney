@@ -137,7 +137,7 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.verifyVerifyCode("000000",userName, verifyCodeET.getText().toString());
+                mPresenter.validateVerifyCode("000000",userName, verifyCodeET.getText().toString());
                 break;
         }
     }
@@ -160,7 +160,7 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
     }
 
     @Override
-    public void onVerifyVerifyCode(boolean flag, String msg) {
+    public void onValidateVerifyCode(boolean flag, String msg) {
         if (!flag) {
             showSnackbar(msg);
             return;

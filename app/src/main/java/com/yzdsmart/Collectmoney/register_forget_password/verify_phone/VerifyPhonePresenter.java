@@ -3,8 +3,8 @@ package com.yzdsmart.Collectmoney.register_forget_password.verify_phone;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.bean.RequestResponse;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 
 /**
  * Created by YZD on 2016/8/26.

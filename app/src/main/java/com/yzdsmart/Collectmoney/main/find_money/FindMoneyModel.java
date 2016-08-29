@@ -1,8 +1,8 @@
 package com.yzdsmart.Collectmoney.main.find_money;
 
-import com.yzdsmart.Collectmoney.bean.Shop;
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.ShopListRequestResponse;
 
 import java.util.List;
 
@@ -15,10 +15,10 @@ import rx.schedulers.Schedulers;
  */
 public class FindMoneyModel {
     //获取周边标注信息观察者，与被观察者绑定进行监听
-    private Subscriber<List<Shop>> getShopListSubscriber;
+    private Subscriber<List<ShopListRequestResponse>> getShopListSubscriber;
 
     void getShopList(String submitCode, String coor, Integer pageIndex, Integer pageSize, final RequestListener listener) {
-        getShopListSubscriber = new Subscriber<List<Shop>>() {
+        getShopListSubscriber = new Subscriber<List<ShopListRequestResponse>>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -30,7 +30,7 @@ public class FindMoneyModel {
             }
 
             @Override
-            public void onNext(List<Shop> shops) {
+            public void onNext(List<ShopListRequestResponse> shops) {
                 listener.onSuccess(shops);
             }
         };

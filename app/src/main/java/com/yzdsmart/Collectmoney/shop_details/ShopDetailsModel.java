@@ -1,9 +1,9 @@
 package com.yzdsmart.Collectmoney.shop_details;
 
-import com.yzdsmart.Collectmoney.bean.RequestResponse;
-import com.yzdsmart.Collectmoney.bean.ShopDetails;
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.RequestResponse;
+import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -14,11 +14,11 @@ import rx.schedulers.Schedulers;
  */
 public class ShopDetailsModel {
     //网络请求监听
-    private Subscriber<ShopDetails> getShopInfoSubscriber;
+    private Subscriber<ShopInfoRequestResponse> getShopInfoSubscriber;
     private Subscriber<RequestResponse> setFollowSubscriber;
 
-    void getShopInfo(String actioncode, String submitCode, String bazaCode, final RequestListener listener) {
-        getShopInfoSubscriber = new Subscriber<ShopDetails>() {
+    void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode, final RequestListener listener) {
+        getShopInfoSubscriber = new Subscriber<ShopInfoRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -30,11 +30,11 @@ public class ShopDetailsModel {
             }
 
             @Override
-            public void onNext(ShopDetails shopDetails) {
-                listener.onSuccess(shopDetails);
+            public void onNext(ShopInfoRequestResponse shopInfo) {
+                listener.onSuccess(shopInfo);
             }
         };
-        RequestAdapter.getRequestService().getShopInfo(actioncode, submitCode, bazaCode)
+        RequestAdapter.getRequestService().getShopInfo(actioncode, submitCode, bazaCode, custCode)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getShopInfoSubscriber);

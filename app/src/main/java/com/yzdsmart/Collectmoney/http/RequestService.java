@@ -1,12 +1,14 @@
 package com.yzdsmart.Collectmoney.http;
 
-import com.yzdsmart.Collectmoney.bean.Expand;
-import com.yzdsmart.Collectmoney.bean.FriendsRequestResponse;
-import com.yzdsmart.Collectmoney.bean.LoginRequestResponse;
-import com.yzdsmart.Collectmoney.bean.RequestResponse;
-import com.yzdsmart.Collectmoney.bean.Shop;
-import com.yzdsmart.Collectmoney.bean.ShopDetails;
+import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.FriendsRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.RequestResponse;
+import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.ShopListRequestResponse;
 
 import java.util.List;
 
@@ -73,7 +75,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.CUST)
-    Observable<RequestResponse> getCustInfo(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode);
+    Observable<CustInfoRequestResponse> getCustInfo(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode);
 
     /**
      * 获取用户详细信息
@@ -85,7 +87,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.CUST)
-    Observable<RequestResponse> getCustDetailInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode);
+    Observable<CustDetailInfoRequestResponse> getCustDetailInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode);
 
     /**
      * 设置云通讯用户信息
@@ -138,7 +140,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SMS)
-    Observable<RequestResponse> verifyVerifyCode(@Query("actioncode") String actioncode, @Field("Tel") String telNum, @Field("Sms_Veri_Code") String verifyCode);
+    Observable<RequestResponse> validateVerifyCode(@Query("actioncode") String actioncode, @Field("Tel") String telNum, @Field("Sms_Veri_Code") String verifyCode);
 
     /**
      * 获取周边商铺
@@ -151,18 +153,19 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SHOPLIST)
-    Observable<List<Shop>> getShopList(@Field("SubmitCode") String submitCode, @Field("Coor") String coor, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<List<ShopListRequestResponse>> getShopList(@Field("SubmitCode") String submitCode, @Field("Coor") String coor, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
      * 获取商铺详情
      *
      * @param submitCode
      * @param bazaCode
+     * @param custCode
      * @return
      */
     @FormUrlEncoded
     @POST(Url.SHOPLIST)
-    Observable<ShopDetails> getShopInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode);
+    Observable<ShopInfoRequestResponse> getShopInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("CustCode") String custCode);
 
     /**
      * 设置对店铺关注
@@ -186,7 +189,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.EXPAND)
-    Observable<List<Expand>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
      * 获取商铺关注者
