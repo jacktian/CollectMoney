@@ -111,11 +111,11 @@
                 android:src="@mipmap/toolbar_image_bg" />
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_avater"
                 android:layout_width="@dimen/user_detail_avater_width"
                 android:layout_height="@dimen/user_detail_avater_width"
                 android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/user_avater" />
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
         <android.support.design.widget.AppBarLayout
@@ -203,7 +203,7 @@
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
                     android:paddingTop="@dimen/activity_horizontal_padding"
-                    android:text="韩梅梅"
+                    android:text=""
                     android:textColor="@color/grey"
                     android:textSize="@dimen/font_large" />
 
@@ -215,7 +215,7 @@
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
                     android:paddingTop="@dimen/activity_horizontal_padding"
-                    android:text="江苏\t\t常州"
+                    android:text=""
                     android:textColor="@color/orange"
                     android:textSize="@dimen/font_medium" />
 
@@ -229,20 +229,6 @@
                     android:orientation="horizontal"
                     android:paddingTop="@dimen/activity_horizontal_padding">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/diamond_pink" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/diamond_pink" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/diamond_pink" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -316,7 +302,7 @@
                             android:layout_marginLeft="@dimen/user_detail_wealth_detail_margin"
                             android:ellipsize="marquee"
                             android:singleLine="true"
-                            android:text="40"
+                            android:text=""
                             android:textColor="@color/orange"
                             android:textIsSelectable="true"
                             android:textSize="@dimen/font_xlarge" />
@@ -343,7 +329,7 @@
                             android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
                             android:singleLine="true"
-                            android:text="2200"
+                            android:text=""
                             android:textColor="@color/orange"
                             android:textIsSelectable="true"
                             android:textSize="@dimen/font_xlarge" />
@@ -372,7 +358,7 @@
                             android:layout_marginRight="@dimen/user_detail_wealth_detail_margin"
                             android:ellipsize="marquee"
                             android:singleLine="true"
-                            android:text="25"
+                            android:text=""
                             android:textColor="@color/orange"
                             android:textIsSelectable="true"
                             android:textSize="@dimen/font_xlarge" />

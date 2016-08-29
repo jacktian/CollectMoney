@@ -4,12 +4,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.listener.AppBarOffsetChangeListener;
+import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.List;
 
@@ -18,11 +24,12 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by YZD on 2016/8/19.
  */
-public class PersonalFriendDetailActivity extends BaseActivity {
+public class PersonalFriendDetailActivity extends BaseActivity implements PersonalFriendDetailContract.PersonalFriendDetailView {
     @Nullable
     @BindViews({R.id.left_title, R.id.center_title, R.id.title_logo})
     List<View> hideViews;
@@ -41,14 +48,42 @@ public class PersonalFriendDetailActivity extends BaseActivity {
     @Nullable
     @BindView(R.id.im_ope_layout)
     RelativeLayout imOpeLayout;
+    @Nullable
+    @BindView(R.id.user_avater)
+    CircleImageView userAvaterIV;
+    @Nullable
+    @BindView(R.id.user_name)
+    TextView userNameTV;
+    @Nullable
+    @BindView(R.id.user_address)
+    TextView userAddressTV;
+    @Nullable
+    @BindView(R.id.user_level)
+    LinearLayout userLevelLayout;
+    @Nullable
+    @BindView(R.id.user_account)
+    TextView userAccountTV;
+    @Nullable
+    @BindView(R.id.change_money_times)
+    TextView changeMoneyTimesTV;
+    @Nullable
+    @BindView(R.id.coin_counts)
+    TextView coinCountsTV;
+    @Nullable
+    @BindView(R.id.get_from_friend_counts)
+    TextView getFriendCountsTV;
 
     private Integer type;//0 个人 1 好友
+    private String friend_c_code;
+
+    private PersonalFriendDetailContract.PersonalFriendDetailPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         type = getIntent().getExtras().getInt("type");
+        friend_c_code = getIntent().getExtras().getString("cust_code");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
 
@@ -74,10 +109,21 @@ public class PersonalFriendDetailActivity extends BaseActivity {
                     titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.menu_icon));
                 } else {
                     //中间状态
-
                 }
             }
         });
+
+        new PersonalFriendDetailPresenter(this, this);
+
+        switch (type) {
+            case 0:
+                mPresenter.getCustLevel(SharedPreferencesUtils.getString(this, "cust_code", ""), "000000");
+                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
+                break;
+            case 1:
+                mPresenter.getCustInfo("000000", friend_c_code);
+                break;
+        }
     }
 
     @Override
@@ -93,5 +139,39 @@ public class PersonalFriendDetailActivity extends BaseActivity {
                 closeActivity();
                 break;
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onGetCustLevel(Integer gra, Integer sta) {
+        userLevelLayout.removeAllViews();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ImageView diamond;
+        for (int i = 0; i < 3; i++) {
+            diamond = new ImageView(this);
+            diamond.setLayoutParams(params);
+            diamond.setImageDrawable(getResources().getDrawable(R.mipmap.diamond_pink));
+            userLevelLayout.addView(diamond);
+        }
+    }
+
+    @Override
+    public void onGetCustInfo(CustInfoRequestResponse response) {
+        Glide.with(this).load(response.getImageUrl()).placeholder(getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
+        userNameTV.setText("".equals(response.getCName()) ? response.getC_UserCode() : response.getCName());
+        userAddressTV.setText(response.getArea());
+        userAccountTV.setText(response.getC_UserCode());
+        changeMoneyTimesTV.setText("" + response.getOperNum());
+        coinCountsTV.setText("" + response.getGoldNum());
+        getFriendCountsTV.setText("" + response.getFriendNum());
+    }
+
+    @Override
+    public void setPresenter(PersonalFriendDetailContract.PersonalFriendDetailPresenter presenter) {
+        mPresenter = presenter;
     }
 }
