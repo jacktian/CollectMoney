@@ -126,6 +126,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         super.onHiddenChanged(hidden);
         if (hidden) {
             findMoneyMap.onPause();
+            mPresenter.unRegisterSubscribe();
         } else {
             findMoneyMap.onResume();
         }
@@ -153,7 +154,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Optional
     @OnClick({R.id.title_left_operation_layout, R.id.title_right_operation_layout})
     void onClick(View view) {
-        if (null ==  SharedPreferencesUtils.getString(getActivity(), "cust_code", "") ||  SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
+        if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
             ((BaseActivity) getActivity()).openActivity(LoginActivity.class);
             return;
         }
@@ -188,7 +189,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                if (null ==  SharedPreferencesUtils.getString(getActivity(), "cust_code", "") ||  SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
+                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
                     ((BaseActivity) getActivity()).openActivity(LoginActivity.class);
                     return true;
                 }

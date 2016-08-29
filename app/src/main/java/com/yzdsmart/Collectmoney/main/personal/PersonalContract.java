@@ -15,6 +15,14 @@ public interface PersonalContract {
          * @param sta
          */
         void onGetCustLevel(Integer gra, Integer sta);
+
+        /**
+         * 获取用户信息
+         *
+         * @param name
+         * @param headUel
+         */
+        void onGetCustInfo(String name, String headUel);
     }
 
     interface PersonalPresenter extends BasePresenter {
@@ -25,6 +33,14 @@ public interface PersonalContract {
          * @param submitcode
          */
         void getCustLevel(String custcode, String submitcode);
+
+        /**
+         * 获取用户信息
+         *
+         * @param submitcode
+         * @param custCode
+         */
+        void getCustInfo(String submitcode, String custCode);
 
         void unRegisterSubscribe();
     }

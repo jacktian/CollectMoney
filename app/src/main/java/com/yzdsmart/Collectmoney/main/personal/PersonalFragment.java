@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
@@ -22,6 +23,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by YZD on 2016/8/18.
@@ -42,6 +44,12 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @Nullable
     @BindView(R.id.left_title)
     TextView leftTitleTV;
+    @Nullable
+    @BindView(R.id.user_name)
+    TextView userNameTV;
+    @Nullable
+    @BindView(R.id.user_avater)
+    CircleImageView userAvaterIV;
     @Nullable
     @BindView(R.id.user_level)
     ImageView userLevelIV;
@@ -74,6 +82,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         leftTitleTV.setText(getActivity().getResources().getString(R.string.personal_find));
 
         mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
+        mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
     }
 
     @Optional
@@ -98,6 +107,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         super.onHiddenChanged(hidden);
         if (!hidden) {
             mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
+            mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+        } else {
+            mPresenter.unRegisterSubscribe();
         }
     }
 
@@ -125,5 +137,11 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
             diamond.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.diamond_pink));
             diamondCountLayout.addView(diamond);
         }
+    }
+
+    @Override
+    public void onGetCustInfo(String name, String headUel) {
+        userNameTV.setText(name);
+        Glide.with(this).load(headUel).placeholder(getActivity().getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
     }
 }

@@ -32,8 +32,7 @@
                     android:id="@+id/user_avater"
                     android:layout_width="@dimen/personal_user_avater_width"
                     android:layout_height="@dimen/personal_user_avater_width"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/user_avater" />
+                    android:layout_centerVertical="true" />
 
                 <ImageView
                     android:id="@+id/to_personal_detail"
