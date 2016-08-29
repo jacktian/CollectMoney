@@ -10,36 +10,62 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_toolbar_height" />
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/layout_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/common_toolbar_height"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical">
+        android:layout_marginBottom="@dimen/bottom_tab_height"
+        android:layout_marginTop="@dimen/common_toolbar_height" />
 
-        <EditText
-            android:id="@+id/search_filter"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/search_filter_height"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@drawable/search_filter_bg"
-            android:gravity="center"
-            android:hint="@string/search"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textColor="@color/grey"
-            android:textColorHint="@color/grey"
-            android:textSize="@dimen/font_medium" />
+    <com.yzdsmart.Collectmoney.views.CustomNestRadioGroup
+        android:id="@+id/im_bottom_tab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_tab_height"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
 
-        <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
-            android:id="@+id/friend_profile_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
+            <RadioButton
+                android:id="@+id/conversation_radio"
+                android:layout_width="@dimen/bottom_tab_width"
+                android:layout_height="@dimen/button_height"
+                android:layout_centerInParent="true"
+                android:background="@drawable/main_bottom_tab_button_chat"
+                android:button="@null"
+                android:checked="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RadioButton
+                android:id="@+id/friend_list_radio"
+                android:layout_width="@dimen/bottom_tab_width"
+                android:layout_height="@dimen/button_height"
+                android:layout_centerInParent="true"
+                android:background="@drawable/main_bottom_tab_button_chat"
+                android:button="@null" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RadioButton
+                android:id="@+id/group_list_radio"
+                android:layout_width="@dimen/bottom_tab_width"
+                android:layout_height="@dimen/button_height"
+                android:layout_centerInParent="true"
+                android:background="@drawable/main_bottom_tab_button_chat"
+                android:button="@null" />
+        </RelativeLayout>
+    </com.yzdsmart.Collectmoney.views.CustomNestRadioGroup>
 </android.support.design.widget.CoordinatorLayout>
