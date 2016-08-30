@@ -1,13 +1,19 @@
 package com.yzdsmart.Collectmoney.money_friendship;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.tencent.TIMConversation;
@@ -109,13 +115,42 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
                 closeActivity();
                 break;
             case R.id.title_right_operation_layout:
-                if(mCurrentFragment instanceof FriendListFragment){
+                if (mCurrentFragment instanceof FriendListFragment) {
                     openActivity(FriendFutureActivity.class);
-                }else{
-
+                } else {
+                    showMoveDialog(this);
                 }
                 break;
         }
+    }
+
+    private Dialog inviteDialog;
+    private TextView joinGroup, createGroup;
+
+    private void showMoveDialog(Context context) {
+        inviteDialog = new Dialog(context, R.style.tecent_dialog);
+        inviteDialog.setContentView(R.layout.tecent_contact_more);
+        joinGroup = (TextView) inviteDialog.findViewById(R.id.join_group);
+        createGroup = (TextView) inviteDialog.findViewById(R.id.create_group);
+        joinGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                openActivity(ManageFriendGroupActivity.class);
+                inviteDialog.dismiss();
+            }
+        });
+        createGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                openActivity(ManageFriendGroupActivity.class);
+                inviteDialog.dismiss();
+            }
+        });
+        Window window = inviteDialog.getWindow();
+        window.setGravity(Gravity.TOP | Gravity.RIGHT);
+        WindowManager.LayoutParams lp = window.getAttributes();
+        window.setAttributes(lp);
+        inviteDialog.show();
     }
 
     @Override

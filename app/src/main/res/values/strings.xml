@@ -94,6 +94,9 @@
     <string name="discuss_group">讨论组</string>
     <string name="chat_room">聊天室</string>
     <string name="default_group_name">默认分组</string>
+    <string name="create_group">创建群组</string>
+    <string name="join_group">添加群组</string>
+    <string name="search_group_hint">搜索ID或名称</string>
     <!-- conversation fragment -->
     <string name="personal">个人</string>
     <string name="group">群组</string>
