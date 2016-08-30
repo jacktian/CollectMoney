@@ -6,10 +6,13 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.FriendsRequestResponse;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * Created by YZD on 2016/8/27.
  */
-public class MoneyFriendshipPresenter implements MoneyFriendshipContract.MoneyFriendshipPresenter {
+public class MoneyFriendshipPresenter implements MoneyFriendshipContract.MoneyFriendshipPresenter, Observer {
     private Context context;
     private MoneyFriendshipContract.MoneyFriendshipView mView;
     private MoneyFriendshipModel mModel;
@@ -22,30 +25,17 @@ public class MoneyFriendshipPresenter implements MoneyFriendshipContract.MoneyFr
     }
 
     @Override
-    public void getFriendsList(String submitCode, String custCode, Long timeStampNow, Integer startIndex, Integer currentStandardSequence, Integer pageSize) {
-        mModel.getFriendsList(submitCode, custCode, timeStampNow, startIndex, currentStandardSequence, pageSize, new RequestListener() {
-            @Override
-            public void onSuccess(Object result) {
-                FriendsRequestResponse response = (FriendsRequestResponse) result;
-                if (null != response.getFriends()) {
-                    mView.onGetFriendsList(response.getFriends());
-                }
-            }
+    public void unRegisterObserver() {
 
-            @Override
-            public void onError(String err) {
-                ((BaseActivity) context).showSnackbar(err);
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
     }
 
     @Override
     public void unRegisterSubscribe() {
         mModel.unRegisterSubscribe();
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+
     }
 }

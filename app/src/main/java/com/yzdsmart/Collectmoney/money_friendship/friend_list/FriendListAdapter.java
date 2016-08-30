@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.money_friendship;
+package com.yzdsmart.Collectmoney.money_friendship.friend_list;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -30,11 +30,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by YZD on 2016/8/20.
  */
-public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.ViewHolder> {
+public class FriendListAdapter extends UltimateViewAdapter<FriendListAdapter.ViewHolder> {
     private Context context;
     private List<Friendship> friendshipList;
 
-    public FriendshipAdapter(Context context) {
+    public FriendListAdapter(Context context) {
         this.context = context;
         friendshipList = new ArrayList<Friendship>();
     }
@@ -86,7 +86,7 @@ public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.Vie
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.friendship_friendfuture_list_item, parent, false);
-        FriendshipAdapter.ViewHolder holder = new FriendshipAdapter.ViewHolder(itemView);
+        FriendListAdapter.ViewHolder holder = new FriendListAdapter.ViewHolder(itemView);
         return holder;
     }
 
@@ -130,7 +130,7 @@ public class FriendshipAdapter extends UltimateViewAdapter<FriendshipAdapter.Vie
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.money_friendship_stick_header, parent, false);
-        RecyclerView.ViewHolder holder = new FriendshipAdapter.StickHeaderViewHolder(itemView) {
+        RecyclerView.ViewHolder holder = new FriendListAdapter.StickHeaderViewHolder(itemView) {
         };
         return holder;
     }

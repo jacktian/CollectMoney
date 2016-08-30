@@ -11,26 +11,11 @@ import java.util.List;
  */
 public interface MoneyFriendshipContract {
     interface MoneyFriendshipView extends BaseView<MoneyFriendshipPresenter> {
-        /**
-         * 获取好友列表
-         *
-         * @param friends
-         */
-        void onGetFriendsList(List<Friendship> friends);
+
     }
 
     interface MoneyFriendshipPresenter extends BasePresenter {
-        /**
-         * 获取好友列表
-         *
-         * @param submitCode
-         * @param custCode
-         * @param timeStampNow
-         * @param startIndex
-         * @param currentStandardSequence
-         * @param pageSize
-         */
-        void getFriendsList(String submitCode, String custCode, Long timeStampNow, Integer startIndex, Integer currentStandardSequence, Integer pageSize);
+        void unRegisterObserver();
 
         void unRegisterSubscribe();
     }

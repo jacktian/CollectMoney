@@ -64,8 +64,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
                 addOrShowFragment(fragment, "recommend");
                 break;
             case R.id.money_friend_radio:
-                String cust_code = SharedPreferencesUtils.getString(this, "cust_code", "");
-                if (null == cust_code || cust_code.trim().length() <= 0) {
+                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
                     openActivity(LoginActivity.class);
                     return;
                 }
