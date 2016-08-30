@@ -27,6 +27,7 @@ import com.yzdsmart.Collectmoney.friend_future.FriendFutureActivity;
 import com.yzdsmart.Collectmoney.money_friendship.conversation.ConversationFragment;
 import com.yzdsmart.Collectmoney.money_friendship.friend_list.FriendListFragment;
 import com.yzdsmart.Collectmoney.money_friendship.group_list.GroupListFragment;
+import com.yzdsmart.Collectmoney.money_friendship.group_list.SearchGroupActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.Conversation;
 import com.yzdsmart.Collectmoney.tecent_im.bean.CustomMessage;
 import com.yzdsmart.Collectmoney.tecent_im.bean.GroupManageConversation;
@@ -135,7 +136,7 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
         joinGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                openActivity(ManageFriendGroupActivity.class);
+                openActivity(SearchGroupActivity.class);
                 inviteDialog.dismiss();
             }
         });
