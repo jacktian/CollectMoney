@@ -166,7 +166,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     public void imSDKLoginSuccess() {
         //退到后台发送通知
         //初始化程序后台后消息推送
-        PushUtil.getInstance();
+//        PushUtil.getInstance();
     }
 
     @Override

@@ -17,7 +17,6 @@ import com.tencent.TIMGroupPendencyItem;
 import com.tencent.TIMMessage;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.Friendship;
 import com.yzdsmart.Collectmoney.friend_future.FriendFutureActivity;
 import com.yzdsmart.Collectmoney.money_friendship.conversation.ConversationFragment;
 import com.yzdsmart.Collectmoney.money_friendship.friend_list.FriendListFragment;
@@ -110,7 +109,11 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
                 closeActivity();
                 break;
             case R.id.title_right_operation_layout:
-                openActivity(FriendFutureActivity.class);
+                if(mCurrentFragment instanceof FriendListFragment){
+                    openActivity(FriendFutureActivity.class);
+                }else{
+
+                }
                 break;
         }
     }
