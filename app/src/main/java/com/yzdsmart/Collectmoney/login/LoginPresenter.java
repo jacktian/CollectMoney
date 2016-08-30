@@ -24,11 +24,6 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
         this.mView = mView;
         mModel = new LoginModel();
         mView.setPresenter(this);
-
-        //初始化IMSDK
-        InitBusiness.start(App.getAppInstance(), TIMLogLevel.DEBUG.ordinal());
-        //初始化TLS
-        TlsBusiness.init(App.getAppInstance());
     }
 
     @Override

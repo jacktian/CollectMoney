@@ -138,6 +138,13 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         addOrShowFragment(fragment, "find");
     }
 
+    public void getShopListNearByMarket(String location) {
+        Fragment fragment = fm.findFragmentByTag("find");
+        if (null != fragment) {
+            ((FindMoneyFragment) fragment).getShopListNearByMarket(location);
+        }
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {

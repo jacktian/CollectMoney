@@ -68,6 +68,13 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         expandList = new ArrayList<ExpandListRequestResponse>();
         recommendAdapter = new RecommendAdapter(getActivity());
+        recommendAdapter.setOnItemClickListener(new RecommendAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ((MainActivity) getActivity()).backToFindMoney();
+                ((MainActivity) getActivity()).getShopListNearByMarket(expandList.get(position).getCoor());
+            }
+        });
     }
 
     @Override
@@ -119,6 +126,8 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 
     @Override
     public void onGetExpandList(List<ExpandListRequestResponse> expands) {
-        recommendAdapter.appendList(expands);
+        expandList.clear();
+        expandList.addAll(expands);
+        recommendAdapter.appendList(expandList);
     }
 }

@@ -10,6 +10,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.tencent.TIMConversation;
+import com.tencent.TIMConversationType;
+import com.tencent.TIMGroupCacheInfo;
+import com.tencent.TIMGroupPendencyItem;
+import com.tencent.TIMMessage;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.Friendship;
@@ -17,8 +22,16 @@ import com.yzdsmart.Collectmoney.friend_future.FriendFutureActivity;
 import com.yzdsmart.Collectmoney.money_friendship.conversation.ConversationFragment;
 import com.yzdsmart.Collectmoney.money_friendship.friend_list.FriendListFragment;
 import com.yzdsmart.Collectmoney.money_friendship.group_list.GroupListFragment;
+import com.yzdsmart.Collectmoney.tecent_im.bean.Conversation;
+import com.yzdsmart.Collectmoney.tecent_im.bean.CustomMessage;
+import com.yzdsmart.Collectmoney.tecent_im.bean.GroupManageConversation;
+import com.yzdsmart.Collectmoney.tecent_im.bean.MessageFactory;
+import com.yzdsmart.Collectmoney.tecent_im.bean.NormalConversation;
 import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,9 +68,13 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
 
     private MoneyFriendshipContract.MoneyFriendshipPresenter mPresenter;
 
+    private List<Conversation> conversationList;
+    private GroupManageConversation groupManageConversation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        conversationList = new LinkedList<>();
 
         fm = getFragmentManager();
 
@@ -69,6 +86,8 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
         new MoneyFriendshipPresenter(this, this);
 
         initView();
+
+        mPresenter.getConversation();
     }
 
     private void initView() {
@@ -160,5 +179,126 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
         }
         ft.commit();
         mCurrentFragment = fragment;
+    }
+
+    /**
+     * 初始化界面或刷新界面
+     *
+     * @param conversationList
+     */
+    @Override
+    public void initView(List<TIMConversation> conversationList) {
+        this.conversationList.clear();
+        for (TIMConversation item : conversationList) {
+            switch (item.getType()) {
+                case C2C:
+                case Group:
+                    this.conversationList.add(new NormalConversation(item));
+                    break;
+            }
+        }
+    }
+
+    /**
+     * 更新最新消息显示
+     *
+     * @param message 最后一条消息
+     */
+    @Override
+    public void updateConversation(TIMMessage message) {
+        if (null == message) {
+            Fragment chatFragment = fm.findFragmentByTag("conversation");
+            if (null != chatFragment) {
+                ((ConversationFragment) chatFragment).updateConversions(conversationList);
+            }
+            return;
+        }
+        if (message.getConversation().getType() == TIMConversationType.System) {
+            mPresenter.getGroupManageLastMessage();
+            return;
+        }
+        if (MessageFactory.getMessage(message) instanceof CustomMessage) return;
+        NormalConversation conversation = new NormalConversation(message.getConversation());
+        Iterator<Conversation> iterator = conversationList.iterator();
+        while (iterator.hasNext()) {
+            Conversation c = iterator.next();
+            if (conversation.equals(c)) {
+                conversation = (NormalConversation) c;
+                iterator.remove();
+                break;
+            }
+        }
+        conversation.setLastMessage(MessageFactory.getMessage(message));
+        conversationList.add(conversation);
+        Collections.sort(conversationList);
+        refreshConversation();
+    }
+
+    /**
+     * 获取群管理最后一条系统消息的回调
+     *
+     * @param message     最后一条消息
+     * @param unreadCount 未读数
+     */
+    @Override
+    public void onGetGroupManageLastMessage(TIMGroupPendencyItem message, long unreadCount) {
+        if (null == groupManageConversation) {
+            groupManageConversation = new GroupManageConversation(message);
+            conversationList.add(groupManageConversation);
+        } else {
+            groupManageConversation.setLastMessage(message);
+        }
+        groupManageConversation.setUnreadCount(unreadCount);
+        Collections.sort(conversationList);
+        refreshConversation();
+    }
+
+    /**
+     * 删除会话
+     *
+     * @param identify
+     */
+    @Override
+    public void removeConversation(String identify) {
+        Iterator<Conversation> iterator = conversationList.iterator();
+        while (iterator.hasNext()) {
+            Conversation conversation = iterator.next();
+            if (conversation.getIdentify() != null && conversation.getIdentify().equals(identify)) {
+                iterator.remove();
+                refreshConversation();
+                return;
+            }
+        }
+    }
+
+    /**
+     * 更新群信息
+     *
+     * @param info
+     */
+    @Override
+    public void updateGroupInfo(TIMGroupCacheInfo info) {
+        for (Conversation conversation : conversationList) {
+            if (conversation.getIdentify() != null && conversation.getIdentify().equals(info.getGroupInfo().getGroupId())) {
+                String name = info.getGroupInfo().getGroupName();
+                if (name.equals("")) {
+                    name = info.getGroupInfo().getGroupId();
+                }
+                conversation.setName(name);
+                refreshConversation();
+                return;
+            }
+        }
+    }
+
+    /**
+     * 刷新
+     */
+    @Override
+    public void refreshConversation() {
+        Fragment chatFragment = fm.findFragmentByTag("conversation");
+        if (null != chatFragment) {
+            ((ConversationFragment) chatFragment).updateConversions(conversationList);
+        }
     }
 }

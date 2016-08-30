@@ -13,8 +13,11 @@ import android.text.style.ImageSpan;
 import android.util.TypedValue;
 import android.widget.TextView;
 
+import com.tencent.TIMElem;
+import com.tencent.TIMElemType;
 import com.tencent.TIMFaceElem;
 import com.tencent.TIMMessage;
+import com.tencent.TIMMessageDraft;
 import com.tencent.TIMTextElem;
 import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.tecent_im.adapters.ChatAdapter;
@@ -23,12 +26,13 @@ import com.yzdsmart.Collectmoney.tecent_im.utils.EmoticonUtil;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 文本消息数据
  */
 public class TextMessage extends Message {
-
     public TextMessage(TIMMessage message) {
         this.message = message;
     }
@@ -38,6 +42,13 @@ public class TextMessage extends Message {
         TIMTextElem elem = new TIMTextElem();
         elem.setText(s);
         message.addElement(elem);
+    }
+
+    public TextMessage(TIMMessageDraft draft) {
+        message = new TIMMessage();
+        for (TIMElem elem : draft.getElems()) {
+            message.addElement(elem);
+        }
     }
 
     public TextMessage(Editable s) {
@@ -69,6 +80,7 @@ public class TextMessage extends Message {
 
     }
 
+
     /**
      * 在聊天界面显示消息
      *
@@ -82,39 +94,14 @@ public class TextMessage extends Message {
         TextView tv = new TextView(App.getAppInstance());
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         tv.setTextColor(isSelf() ? Color.WHITE : Color.BLACK);
-        SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
+        List<TIMElem> elems = new ArrayList<>();
         for (int i = 0; i < message.getElementCount(); ++i) {
-            switch (message.getElement(i).getType()) {
-                case Face:
-                    TIMFaceElem faceElem = (TIMFaceElem) message.getElement(i);
-                    int startIndex = stringBuilder.length();
-                    try {
-                        AssetManager am = context.getAssets();
-                        InputStream is = am.open(String.format("emoticon/%d.gif", faceElem.getIndex()));
-                        if (is == null) continue;
-                        Bitmap bitmap = BitmapFactory.decodeStream(is);
-                        Matrix matrix = new Matrix();
-                        int width = bitmap.getWidth();
-                        int height = bitmap.getHeight();
-                        matrix.postScale(2, 2);
-                        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
-                                width, height, matrix, true);
-                        ImageSpan span = new ImageSpan(context, resizedBitmap, ImageSpan.ALIGN_BASELINE);
-                        stringBuilder.append(String.valueOf(faceElem.getIndex()));
-                        stringBuilder.setSpan(span, startIndex, startIndex + getNumLength(faceElem.getIndex()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        is.close();
-                    } catch (IOException e) {
-
-                    }
-                    break;
-                case Text:
-                    TIMTextElem textElem = (TIMTextElem) message.getElement(i);
-                    stringBuilder.append(textElem.getText());
-                    hasText = true;
-                    break;
+            elems.add(message.getElement(i));
+            if (message.getElement(i).getType() == TIMElemType.Text) {
+                hasText = true;
             }
-
         }
+        SpannableStringBuilder stringBuilder = getString(elems, context);
         if (!hasText) {
             stringBuilder.insert(0, " ");
         }
@@ -156,8 +143,44 @@ public class TextMessage extends Message {
 
     }
 
-    private int getNumLength(int n) {
+    private static int getNumLength(int n) {
         return String.valueOf(n).length();
     }
 
+
+    public static SpannableStringBuilder getString(List<TIMElem> elems, Context context) {
+        SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
+        for (int i = 0; i < elems.size(); ++i) {
+            switch (elems.get(i).getType()) {
+                case Face:
+                    TIMFaceElem faceElem = (TIMFaceElem) elems.get(i);
+                    int startIndex = stringBuilder.length();
+                    try {
+                        AssetManager am = context.getAssets();
+                        InputStream is = am.open(String.format("emoticon/%d.gif", faceElem.getIndex()));
+                        if (is == null) continue;
+                        Bitmap bitmap = BitmapFactory.decodeStream(is);
+                        Matrix matrix = new Matrix();
+                        int width = bitmap.getWidth();
+                        int height = bitmap.getHeight();
+                        matrix.postScale(2, 2);
+                        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
+                                width, height, matrix, true);
+                        ImageSpan span = new ImageSpan(context, resizedBitmap, ImageSpan.ALIGN_BASELINE);
+                        stringBuilder.append(String.valueOf(faceElem.getIndex()));
+                        stringBuilder.setSpan(span, startIndex, startIndex + getNumLength(faceElem.getIndex()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        is.close();
+                    } catch (IOException e) {
+
+                    }
+                    break;
+                case Text:
+                    TIMTextElem textElem = (TIMTextElem) elems.get(i);
+                    stringBuilder.append(textElem.getText());
+                    break;
+            }
+
+        }
+        return stringBuilder;
+    }
 }

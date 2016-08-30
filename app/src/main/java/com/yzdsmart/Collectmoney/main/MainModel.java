@@ -23,8 +23,6 @@ public class MainModel {
      * @param listener
      */
     void chatLogin(String userName, String password, TLSPwdLoginListener listener) {
-        System.out.println(userName + "----------------" + password + "----------------" + tlsService);
-
         tlsService.TLSPwdLogin(userName, password, listener);
     }
 }

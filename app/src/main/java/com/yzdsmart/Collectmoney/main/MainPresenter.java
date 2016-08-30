@@ -3,13 +3,18 @@ package com.yzdsmart.Collectmoney.main;
 import android.content.Context;
 
 import com.tencent.TIMCallBack;
+import com.tencent.TIMGroupCacheInfo;
+import com.tencent.TIMLogLevel;
 import com.tencent.TIMManager;
+import com.tencent.TIMMessage;
 import com.tencent.TIMUserStatusListener;
+import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.tecent_im.bean.FriendshipInfo;
 import com.yzdsmart.Collectmoney.tecent_im.bean.GroupInfo;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
+import com.yzdsmart.Collectmoney.tecent_im.business.InitBusiness;
 import com.yzdsmart.Collectmoney.tecent_im.business.LoginBusiness;
 import com.yzdsmart.Collectmoney.tecent_im.event.FriendshipEvent;
 import com.yzdsmart.Collectmoney.tecent_im.event.GroupEvent;
@@ -39,11 +44,16 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
         this.mView = mView;
         mModel = new MainModel(tlsService);
         mView.setPresenter(this);
+
+        //初始化IMSDK
+        InitBusiness.start(App.getAppInstance(), TIMLogLevel.DEBUG.ordinal());
+        //初始化TLS
+        TlsBusiness.init(App.getAppInstance());
     }
 
     @Override
     public void chatLogin(String im_name, String im_pwd) {
-        mModel.chatLogin(im_name, im_name, new TLSPwdLoginListener() {
+        mModel.chatLogin(im_name, im_pwd, new TLSPwdLoginListener() {
             @Override
             public void OnPwdLoginSuccess(TLSUserInfo tlsUserInfo) {
                 TLSService.getInstance().setLastErrno(0);
@@ -109,8 +119,31 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
     }
 
     @Override
-    public void update(Observable observable, Object o) {
+    public void update(Observable observable, Object data) {
+        if (observable instanceof MessageEvent) {
+            TIMMessage msg = (TIMMessage) data;
+        } else if (observable instanceof FriendshipEvent) {
+            FriendshipEvent.NotifyCmd fcmd = (FriendshipEvent.NotifyCmd) data;
+            switch (fcmd.type) {
+                case ADD_REQ:
+                    break;
+                case ADD:
+                case REFRESH:
+                case DEL:
+                    break;
+            }
+        } else if (observable instanceof GroupEvent) {
+            GroupEvent.NotifyCmd gcmd = (GroupEvent.NotifyCmd) data;
+            switch (gcmd.type) {
+                case UPDATE:
+                case ADD:
+                    break;
+                case DEL:
+                    break;
+            }
+        } else if (observable instanceof RefreshEvent) {
 
+        }
     }
 
     @Override

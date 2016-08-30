@@ -131,6 +131,30 @@
             android:theme="@style/ActivityColorTranslucentTheme" />
 
         <activity
+            android:name=".chat.ChatActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
+            android:name=".chat.image_preview.ImagePreviewActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
+            android:name=".chat.image_view.ImageViewActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
+            android:name=".chat.video_view.VideoViewActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
             android:name=".shop_details.ShopDetailsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"

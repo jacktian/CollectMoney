@@ -5,4 +5,36 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+    <include
+        layout="@layout/common_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_toolbar_height" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/common_toolbar_height">
+
+        <com.yzdsmart.Collectmoney.tecent_im.views.ChatInput
+            android:id="@+id/input_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/input_panel"
+            android:divider="@null">
+
+        </ListView>
+
+        <com.yzdsmart.Collectmoney.tecent_im.views.VoiceSendingView
+            android:id="@+id/voice_sending"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
