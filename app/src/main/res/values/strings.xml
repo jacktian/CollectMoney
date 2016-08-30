@@ -19,6 +19,7 @@
     <string name="user_not_exist">该手机号码未注册!</string>
     <string name="phone_num_error">请输入正确的手机号码!</string>
     <string name="confirm_pwd_different">两次密码输入不一致!</string>
+    <string name="login_error">用户登录异常!</string>
 
     <!--主界面-->
     <string name="recommend">推荐</string>
@@ -62,6 +63,8 @@
     <string name="shop_more_followers">查看更多</string>
 
     <!-- 腾讯聊天 -->
+    <string name="logout_warning">您的账号在其他设备登录,请重新登陆!</string>
+    <string name="user_sig_warning">您的账号票据过期,请重新登陆!</string>
     <!--message-->
     <string name="summary_image">[图片]</string>
     <string name="summary_voice">[语音]</string>

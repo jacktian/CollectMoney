@@ -13,6 +13,8 @@ import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.find_money.FindMoneyFragment;
 import com.yzdsmart.Collectmoney.main.recommend.RecommendFragment;
 import com.yzdsmart.Collectmoney.money_friendship.MoneyFriendshipActivity;
+import com.yzdsmart.Collectmoney.tecent_im.service.TLSService;
+import com.yzdsmart.Collectmoney.tecent_im.utils.PushUtil;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 
@@ -21,13 +23,17 @@ import butterknife.BindView;
 /**
  * Created by YZD on 2016/8/17.
  */
-public class MainActivity extends BaseActivity implements CustomNestRadioGroup.OnCheckedChangeListener {
+public class MainActivity extends BaseActivity implements CustomNestRadioGroup.OnCheckedChangeListener, MainContract.MainView {
     @Nullable
     @BindView(R.id.main_bottom_tab)
     CustomNestRadioGroup mainBottomTab;
 
     private FragmentManager fm;
     private Fragment mCurrentFragment;
+
+    private MainContract.MainPresenter mPresenter;
+
+    private TLSService tlsService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,16 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         initView();
 
         mainBottomTab.setOnCheckedChangeListener(this);
+
+        tlsService = TLSService.getInstance();
+
+        new MainPresenter(this, this, tlsService);
+
+        if (SharedPreferencesUtils.getString(this, "im_account", "").length() > 0 && SharedPreferencesUtils.getString(this, "im_password", "").length() > 0) {
+            String im_name = SharedPreferencesUtils.getString(this, "im_account", "");
+            String im_pwd = SharedPreferencesUtils.getString(this, "im_password", "");
+            mPresenter.chatLogin(im_name, im_pwd);
+        }
     }
 
     @Override
@@ -87,6 +103,12 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        mPresenter.unRegisterObserver();
+        super.onDestroy();
+    }
+
     /**
      * 添加或者显示碎片
      *
@@ -126,5 +148,22 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
                 }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void chatLoginSuccess() {
+        mPresenter.imSDKLogin();
+    }
+
+    @Override
+    public void imSDKLoginSuccess() {
+        //退到后台发送通知
+        //初始化程序后台后消息推送
+        PushUtil.getInstance();
+    }
+
+    @Override
+    public void setPresenter(MainContract.MainPresenter presenter) {
+        mPresenter = presenter;
     }
 }

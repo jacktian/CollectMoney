@@ -5,6 +5,12 @@ import android.app.Application;
 import android.support.multidex.MultiDexApplication;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.tencent.TIMGroupReceiveMessageOpt;
+import com.tencent.TIMManager;
+import com.tencent.TIMOfflinePushListener;
+import com.tencent.TIMOfflinePushNotification;
+import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.qalsdk.sdk.MsfSdkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +29,20 @@ public class App extends MultiDexApplication {
         appContext = this;
         storedActivities = new ArrayList<Activity>();
         SDKInitializer.initialize(this);
+        //云通信离线消息推送，只能在主进程进行离线推送监听器注册
+        if (MsfSdkUtils.isMainProcess(this)) {
+            // 设置离线推送监听器
+            TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
+                @Override
+                public void handleNotification(TIMOfflinePushNotification timOfflinePushNotification) {
+                    if (timOfflinePushNotification.getGroupReceiveMsgOpt() == TIMGroupReceiveMessageOpt.ReceiveAndNotify) {
+                        //消息被设置为需要提醒
+                        timOfflinePushNotification.doNotify(getApplicationContext(), R.mipmap.notification_bell);
+                    }
+                }
+            });
+        }
+        CrashReport.initCrashReport(this);
     }
 
     /**

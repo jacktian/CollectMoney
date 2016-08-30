@@ -2,9 +2,13 @@ package com.yzdsmart.Collectmoney.login;
 
 import android.content.Context;
 
+import com.tencent.TIMLogLevel;
+import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
+import com.yzdsmart.Collectmoney.tecent_im.business.InitBusiness;
+import com.yzdsmart.Collectmoney.tecent_im.service.TlsBusiness;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 /**
@@ -20,6 +24,11 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
         this.mView = mView;
         mModel = new LoginModel();
         mView.setPresenter(this);
+
+        //初始化IMSDK
+        InitBusiness.start(App.getAppInstance(), TIMLogLevel.DEBUG.ordinal());
+        //初始化TLS
+        TlsBusiness.init(App.getAppInstance());
     }
 
     @Override
