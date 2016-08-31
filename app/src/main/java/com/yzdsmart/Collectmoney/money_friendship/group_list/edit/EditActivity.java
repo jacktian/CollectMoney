@@ -3,21 +3,48 @@ package com.yzdsmart.Collectmoney.money_friendship.group_list.edit;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tencent.TIMCallBack;
+import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
 
 /**
  * 修改文本页面
  */
-public class EditActivity extends Activity implements TIMCallBack {
+public class EditActivity extends BaseActivity implements TIMCallBack {
+    @Nullable
+    @BindViews({R.id.left_title, R.id.title_logo})
+    List<View> hideViews;
+    @Nullable
+    @BindView(R.id.title_left_operation)
+    ImageView titleLeftOpeIV;
+    @Nullable
+    @BindView(R.id.title_right_operation)
+    ImageView titleRightOpeIV;
+    @Nullable
+    @BindView(R.id.center_title)
+    TextView centerTitleTV;
+    @Nullable
+    @BindView(R.id.title_left_operation_layout)
+    FrameLayout titleLeftOpeLayout;
+    @Nullable
+    @BindView(R.id.title_right_operation_layout)
+    FrameLayout titleRightOpeLayout;
 
     private static EditInterface editAction;
     public final static String RETURN_EXTRA = "result";
@@ -104,8 +131,12 @@ public class EditActivity extends Activity implements TIMCallBack {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit);
-        getIntent().getStringExtra("title");
+
+        ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+        centerTitleTV.setText(getIntent().getStringExtra("title"));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.confirm_icon));
+
         input = (EditText) findViewById(R.id.editContent);
         if (defaultString != null) {
             input.setText(defaultString);
@@ -114,16 +145,25 @@ public class EditActivity extends Activity implements TIMCallBack {
         if (lenLimit != 0) {
             input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(lenLimit)});
         }
-        TextView title = (TextView) findViewById(R.id.center_title);
-        title.setText(getIntent().getStringExtra("title"));
-        FrameLayout rightOpe = (FrameLayout) findViewById(R.id.title_right_operation_layout);
-        rightOpe.setOnClickListener(new View.OnClickListener() {
+
+        titleLeftOpeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeActivity();
+            }
+        });
+        titleRightOpeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editAction.onEdit(input.getText().toString(), EditActivity.this);
             }
         });
 
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_edit;
     }
 
     @Override

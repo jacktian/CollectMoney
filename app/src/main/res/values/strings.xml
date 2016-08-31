@@ -123,6 +123,14 @@
     <string name="chat_setting_quit_succ">退出群成功</string>
     <string name="group_member_already">已经是群成员</string>
     <string name="send_success">发送成功</string>
+    <string name="create_group_fail">创建群失败</string>
+    <string name="create_group_fail_because_wording">创建失败，群名含有敏感词</string>
+    <string name="create_group_succeed">创建群成功</string>
+    <string name="create_group_need_name">请输入群名称</string>
+    <string name="people">人</string>
+    <string name="choose_need_one">至少选择一个联系人</string>
+    <string name="subtitle_create_group_name">群名称</string>
+    <string name="btn_add_member">添加群成员</string>
     <!-- conversation fragment -->
     <string name="personal">个人</string>
     <string name="group">群组</string>

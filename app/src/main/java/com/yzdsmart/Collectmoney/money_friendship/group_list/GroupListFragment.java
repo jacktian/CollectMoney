@@ -3,14 +3,18 @@ package com.yzdsmart.Collectmoney.money_friendship.group_list;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tencent.TIMGroupCacheInfo;
+import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.money_friendship.group_list.profile.GroupProfileActivity;
 import com.yzdsmart.Collectmoney.tecent_im.adapters.ProfileSummaryAdapter;
 import com.yzdsmart.Collectmoney.tecent_im.bean.GroupInfo;
 import com.yzdsmart.Collectmoney.tecent_im.bean.GroupProfile;
@@ -64,12 +68,19 @@ public class GroupListFragment extends BaseFragment implements GroupListContract
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bundle bundle = new Bundle();
+                bundle.putString("identify", showList.get(i).getIdentify());
+                ((BaseActivity) getActivity()).openActivity(GroupProfileActivity.class, bundle, 0);
+            }
+        });
     }
 
     @Optional
     @OnEditorAction({R.id.search_filter})
     boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
-        System.out.println("--------------" + view.getId());
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             if ("".equals(searchFilterET.getText().toString())) {
                 showList.clear();

@@ -229,25 +229,25 @@ public class GroupProfileActivity extends BaseActivity implements GroupProfileCo
                 intent.putExtra("type", type);
                 startActivity(intent);
                 break;
-            case R.id.addOpt:
-                final String[] stringList = allowTypeContent.keySet().toArray(new String[allowTypeContent.size()]);
-                new ListPickerDialog().show(stringList, getSupportFragmentManager(), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, final int which) {
-                        TIMGroupManager.getInstance().modifyGroupAddOpt(identify, allowTypeContent.get(stringList[which]), new TIMCallBack() {
-                            @Override
-                            public void onError(int i, String s) {
-                                Toast.makeText(GroupProfileActivity.this, getString(R.string.chat_setting_change_err), Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onSuccess() {
-                                LineControllerView opt = (LineControllerView) findViewById(R.id.addOpt);
-                                opt.setContent(stringList[which]);
-                            }
-                        });
-                    }
-                });
+            case R.id.addOpt://默认任何人可以加入群
+//                final String[] stringList = allowTypeContent.keySet().toArray(new String[allowTypeContent.size()]);
+//                new ListPickerDialog().show(stringList, getSupportFragmentManager(), new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, final int which) {
+//                        TIMGroupManager.getInstance().modifyGroupAddOpt(identify, allowTypeContent.get(stringList[which]), new TIMCallBack() {
+//                            @Override
+//                            public void onError(int i, String s) {
+//                                Toast.makeText(GroupProfileActivity.this, getString(R.string.chat_setting_change_err), Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                            @Override
+//                            public void onSuccess() {
+//                                LineControllerView opt = (LineControllerView) findViewById(R.id.addOpt);
+//                                opt.setContent(stringList[which]);
+//                            }
+//                        });
+//                    }
+//                });
                 break;
             case R.id.nameText:
                 name.setOnClickListener(new View.OnClickListener() {
@@ -273,7 +273,6 @@ public class GroupProfileActivity extends BaseActivity implements GroupProfileCo
                                 TIMGroupManager.getInstance().modifyGroupIntroduction(identify, text, callBack);
                             }
                         }, 20);
-
                     }
                 });
                 break;
