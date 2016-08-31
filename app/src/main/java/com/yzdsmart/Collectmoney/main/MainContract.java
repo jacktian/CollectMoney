@@ -17,6 +17,11 @@ public interface MainContract {
          * im sdk登录成功
          */
         void imSDKLoginSuccess();
+
+        /**
+         * 腾讯云通信下线
+         */
+        void onIMOffline();
     }
 
     interface MainPresenter extends BasePresenter {

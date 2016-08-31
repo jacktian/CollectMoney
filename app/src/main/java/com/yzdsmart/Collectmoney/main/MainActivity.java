@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 
+import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
@@ -167,6 +168,12 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         //退到后台发送通知
         //初始化程序后台后消息推送
 //        PushUtil.getInstance();
+    }
+
+    @Override
+    public void onIMOffline() {
+        App.getAppInstance().exitApp();
+        openActivity(MainActivity.class);
     }
 
     @Override

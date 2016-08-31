@@ -1,6 +1,7 @@
 package com.yzdsmart.Collectmoney.money_friendship.friend_list;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,8 +16,10 @@ import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
+import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.Friendship;
+import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -116,7 +119,7 @@ public class FriendListAdapter extends UltimateViewAdapter<FriendListAdapter.Vie
 
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 //        //一定要加这个判断  因为UltimateRecyclerView本身有加了头部和尾部  这个方法返回的是包括头部和尾部在内的
 //        if (position < getItemCount() && (customHeaderView != null ? position <= friendshipList.size() : position < friendshipList.size()) && (customHeaderView != null ? position > 0 : true)) {
 //            position -= customHeaderView == null ? 0 : 1;
@@ -125,6 +128,15 @@ public class FriendListAdapter extends UltimateViewAdapter<FriendListAdapter.Vie
         holder.setUserLevelTV(friendshipList.get(position).getGra());
         holder.setUserDiamondCountLayout(friendshipList.get(position).getGra(), friendshipList.get(position).getSta());
 //        }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", 1);
+                bundle.putString("cust_code", friendshipList.get(position).getC_Code());
+                ((BaseActivity) context).openActivity(PersonalFriendDetailActivity.class, bundle, 0);
+            }
+        });
     }
 
     @Override

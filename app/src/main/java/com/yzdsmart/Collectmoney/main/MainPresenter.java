@@ -1,6 +1,7 @@
 package com.yzdsmart.Collectmoney.main;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 
 import com.tencent.TIMCallBack;
 import com.tencent.TIMGroupCacheInfo;
@@ -23,6 +24,7 @@ import com.yzdsmart.Collectmoney.tecent_im.event.RefreshEvent;
 import com.yzdsmart.Collectmoney.tecent_im.service.TLSService;
 import com.yzdsmart.Collectmoney.tecent_im.service.TlsBusiness;
 import com.yzdsmart.Collectmoney.tecent_im.utils.PushUtil;
+import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -152,9 +154,15 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
             case 6208:
                 //离线状态下被其他终端踢下线
                 System.out.println("--------------------------------" + context.getResources().getString(R.string.kick_logout));
+                unRegisterObserver();
+                SharedPreferencesUtils.clear(context, PreferenceManager.getDefaultSharedPreferences(context));
+                mView.onIMOffline();
                 break;
             default:
                 System.out.println("--------------------------------" + context.getResources().getString(R.string.login_error));
+                unRegisterObserver();
+                SharedPreferencesUtils.clear(context, PreferenceManager.getDefaultSharedPreferences(context));
+                mView.onIMOffline();
                 break;
         }
     }
@@ -176,6 +184,8 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
                 //别的设备登录,强行退出
                 ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.logout_warning));
                 unRegisterObserver();
+                SharedPreferencesUtils.clear(context, PreferenceManager.getDefaultSharedPreferences(context));
+                mView.onIMOffline();
             }
 
             @Override
@@ -183,6 +193,8 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
                 //票据过期，需要重新登录
                 ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.user_sig_warning));
                 unRegisterObserver();
+                SharedPreferencesUtils.clear(context, PreferenceManager.getDefaultSharedPreferences(context));
+                mView.onIMOffline();
             }
         });
         mView.imSDKLoginSuccess();
