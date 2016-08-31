@@ -38,6 +38,8 @@
     <string name="recommend_daily">每日推荐</string>
     <string name="focus_shop">关注店铺</string>
     <string name="settings">设置</string>
+    <string name="take_photo">拍照</string>
+    <string name="galley_select">相册选取</string>
 
     <!--扫码-->
     <string name="qr_scan_title">扫码</string>

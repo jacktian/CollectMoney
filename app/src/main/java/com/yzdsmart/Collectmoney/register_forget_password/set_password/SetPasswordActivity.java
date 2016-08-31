@@ -9,8 +9,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.utils.Utils;
 
 import org.joda.time.DateTime;
@@ -55,6 +57,8 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
 
     private Integer opeType;//0 注册 1 忘记密码
     private String userName;
+    private static final String REG_ACTION_CODE = "1688";
+    private static final String FIND_PWD_ACTION_CODE = "1656";
 
     private SetPasswordContract.SetPasswordPresenter mPresenter;
 
@@ -114,7 +118,14 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.setPassword("000000",userName, userPwdET.getText().toString(), "000000");
+                switch (opeType) {
+                    case 0:
+                        mPresenter.setPassword(REG_ACTION_CODE, userName, userPwdET.getText().toString(), Utils.md5(REG_ACTION_CODE + "yzd" + userName));
+                        break;
+                    case 1:
+                        mPresenter.setPassword(FIND_PWD_ACTION_CODE, userName, userPwdET.getText().toString(), Utils.md5(FIND_PWD_ACTION_CODE + "yzd" + userName));
+                        break;
+                }
                 break;
         }
     }
@@ -145,5 +156,7 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
             showSnackbar(msg);
             return;
         }
+        App.getAppInstance().exitApp();
+        openActivity(MainActivity.class);
     }
 }

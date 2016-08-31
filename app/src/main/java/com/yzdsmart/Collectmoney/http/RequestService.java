@@ -9,6 +9,7 @@ import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopListRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.UploadFileRequestResponse;
 
 import java.util.List;
 
@@ -217,6 +218,6 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.FILEUPLOAD)
-    Observable<RequestResponse> saveFile(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("TCAccount") String tcAccount);
+    Observable<UploadFileRequestResponse> saveFile(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("TCAccount") String tcAccount);
 
 }

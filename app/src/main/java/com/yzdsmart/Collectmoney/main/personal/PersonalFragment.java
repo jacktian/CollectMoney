@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -86,7 +87,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail})
+    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -98,6 +99,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
                 bundle.putInt("type", 0);//0 个人 1 好友
                 ((BaseActivity) getActivity()).openActivity(PersonalFriendDetailActivity.class, bundle, 0);
                 ((MainActivity) getActivity()).backToFindMoney();
+                break;
+            case R.id.user_avater:
+                ((BaseActivity) getActivity()).openActivity(ImageCropActivity.class);
                 break;
         }
     }

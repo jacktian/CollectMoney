@@ -9,6 +9,8 @@ import android.view.inputmethod.InputMethodManager;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Pattern;
 
 /**
@@ -75,5 +77,38 @@ public class Utils {
         ((InputMethodManager) activity
                 .getSystemService(Context.INPUT_METHOD_SERVICE))
                 .toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+
+    /**
+     * MD5加密
+     *
+     * @param plainText 需要加密的字符串
+     * @return 加密后字符串
+     */
+    public static String md5(String plainText) {
+        String result = "";
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(plainText.getBytes());
+            byte b[] = md.digest();
+
+            int i;
+
+            StringBuffer buf = new StringBuffer("");
+            for (int offset = 0; offset < b.length; offset++) {
+                i = b[offset];
+                if (i < 0)
+                    i += 256;
+                if (i < 16)
+                    buf.append("0");
+                buf.append(Integer.toHexString(i));
+            }
+            result = buf.toString().toLowerCase();// 32位的加密（转成小写）
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
