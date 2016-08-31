@@ -1,5 +1,7 @@
 package com.yzdsmart.Collectmoney.http.response;
 
+import java.util.List;
+
 /**
  * Created by YZD on 2016/8/28.
  */
@@ -16,11 +18,12 @@ public class ShopInfoRequestResponse {
     private Integer AtteNum;//关注人次
     private Integer TodayGlodNum;//今日金币数量
     private Integer VisiNum;//访问总人次
+    private List<String> ImageLists;
 
     public ShopInfoRequestResponse() {
     }
 
-    public ShopInfoRequestResponse(String code, String name, String pers, String tel, String addr, String remark, String coor, Boolean isAtte, Integer atteNum, Integer todayGlodNum, Integer visiNum) {
+    public ShopInfoRequestResponse(String code, String name, String pers, String tel, String addr, String remark, String coor, Boolean isAtte, Integer atteNum, Integer todayGlodNum, Integer visiNum, List<String> imageLists) {
         Code = code;
         Name = name;
         Pers = pers;
@@ -32,6 +35,7 @@ public class ShopInfoRequestResponse {
         AtteNum = atteNum;
         TodayGlodNum = todayGlodNum;
         VisiNum = visiNum;
+        ImageLists = imageLists;
     }
 
     public String getCode() {
@@ -122,6 +126,14 @@ public class ShopInfoRequestResponse {
         VisiNum = visiNum;
     }
 
+    public List<String> getImageLists() {
+        return ImageLists;
+    }
+
+    public void setImageLists(List<String> imageLists) {
+        ImageLists = imageLists;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -136,6 +148,7 @@ public class ShopInfoRequestResponse {
                 ", AtteNum:" + AtteNum +
                 ", TodayGlodNum:" + TodayGlodNum +
                 ", VisiNum:" + VisiNum +
+                ", ImageLists:" + ImageLists +
                 '}';
     }
 }

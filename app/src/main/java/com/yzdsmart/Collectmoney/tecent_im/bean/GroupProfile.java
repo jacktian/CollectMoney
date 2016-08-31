@@ -1,6 +1,7 @@
 package com.yzdsmart.Collectmoney.tecent_im.bean;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.tencent.TIMGroupBasicSelfInfo;
 import com.tencent.TIMGroupCacheInfo;
@@ -8,6 +9,7 @@ import com.tencent.TIMGroupDetailInfo;
 import com.tencent.TIMGroupMemberRoleType;
 import com.tencent.TIMGroupReceiveMessageOpt;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.money_friendship.group_list.profile.GroupProfileActivity;
 
 /**
  * 群资料
@@ -92,9 +94,8 @@ public class GroupProfile implements ProfileSummary {
      */
     @Override
     public void onClick(Context context) {
-        System.out.println("--------------identify----------------->" + profile.getGroupId());
-//        Intent intent = new Intent(context, GroupProfileActivity.class);
-//        intent.putExtra("identify", profile.getGroupId());
-//        context.startActivity(intent);
+        Intent intent = new Intent(context, GroupProfileActivity.class);
+        intent.putExtra("identify", profile.getGroupId());
+        context.startActivity(intent);
     }
 }

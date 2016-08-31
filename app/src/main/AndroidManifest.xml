@@ -161,6 +161,24 @@
             android:theme="@style/ActivityColorTranslucentTheme" />
 
         <activity
+            android:name=".money_friendship.group_list.profile.GroupProfileActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
+            android:name=".money_friendship.group_list.edit.EditActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
+            android:name=".money_friendship.group_list.apply.ApplyGroupActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
             android:name=".shop_details.ShopDetailsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"

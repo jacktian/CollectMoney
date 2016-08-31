@@ -2,9 +2,11 @@ package com.yzdsmart.Collectmoney.money_friendship.group_list;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.tencent.TIMGroupCacheInfo;
 import com.yzdsmart.Collectmoney.BaseFragment;
@@ -19,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnFocusChange;
+import butterknife.OnEditorAction;
 import butterknife.Optional;
 
 /**
@@ -65,26 +67,25 @@ public class GroupListFragment extends BaseFragment implements GroupListContract
     }
 
     @Optional
-    @OnFocusChange({R.id.search_filter})
-    void onFocusChange(View view, boolean focus) {
-        if (!focus) {
-            switch (view.getId()) {
-                case R.id.search_filter:
-                    if ("".equals(searchFilterET.getText().toString())) {
-                        showList.clear();
-                        showList.addAll(list);
-                    } else {
-                        showList.clear();
-                        for (ProfileSummary summary : list) {
-                            if (summary.getName().contains(searchFilterET.getText().toString())) {
-                                showList.add(summary);
-                            }
-                        }
+    @OnEditorAction({R.id.search_filter})
+    boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
+        System.out.println("--------------" + view.getId());
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            if ("".equals(searchFilterET.getText().toString())) {
+                showList.clear();
+                showList.addAll(list);
+            } else {
+                showList.clear();
+                for (ProfileSummary summary : list) {
+                    if (summary.getName().contains(searchFilterET.getText().toString())) {
+                        showList.add(summary);
                     }
-                    adapter.notifyDataSetChanged();
-                    break;
+                }
             }
+            adapter.notifyDataSetChanged();
+            return true;
         }
+        return false;
     }
 
     @Override

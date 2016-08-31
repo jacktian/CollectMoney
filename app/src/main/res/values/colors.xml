@@ -23,4 +23,10 @@
     <color name="tecent_panel_black">#25272A</color>
     <!--蒙版-->
     <color name="tecent_colorMask">#66000000</color>
+    <color name="tecent_btn_red">#D63F41</color>
+    <color name="tecent_btn_red_hover">#E8484B</color>
+    <color name="tecent_btn_blue">#0F73CB</color>
+    <color name="tecent_btn_blue_hover">#1E86E4</color>
+    <color name="tecent_btn_text">#FFFFFF</color>
+    <color name="tecent_btn_text_hover">#CCFFFFFF</color>
 </resources>

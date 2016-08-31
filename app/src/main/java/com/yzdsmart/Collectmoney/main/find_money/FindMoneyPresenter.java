@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
+import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
@@ -27,12 +28,14 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
     private Context context;
     private FindMoneyContract.FindMoneyView mView;
     private FindMoneyModel mModel;
+    private ArrayList<BitmapDescriptor> coinGif;
 
     public FindMoneyPresenter(Context context, FindMoneyContract.FindMoneyView mView) {
         this.context = context;
         this.mView = mView;
         mModel = new FindMoneyModel();
         mView.setPresenter(this);
+        coinGif = new ArrayList<BitmapDescriptor>();
     }
 
     @Override
@@ -40,6 +43,12 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
         mModel.getShopList(submitCode, coor, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
+                coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_1));
+                coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_2));
+                coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_3));
+                coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_4));
+                coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_5));
+                coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_6));
                 List<ShopListRequestResponse> shopList = (List<ShopListRequestResponse>) result;
                 if (null != shopList) {
                     // 构建MarkerOption，用于在地图上添加Marker
@@ -52,7 +61,8 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
                         String coor = shop.getCoor();
                         // 定义Maker坐标点
                         LatLng point = new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]));
-                        options = new MarkerOptions().position(point).extraInfo(bundle).icon(BitmapDescriptorFactory.fromBitmap(setNumToIcon(shop.getReleGold())));
+//                        options = new MarkerOptions().position(point).extraInfo(bundle).icon(BitmapDescriptorFactory.fromBitmap(setNumToIcon(shop.getReleGold())));
+                        options = new MarkerOptions().position(point).extraInfo(bundle).icons(coinGif);
                         optionsList.add(options);
                     }
                     mView.onGetShopList(optionsList);

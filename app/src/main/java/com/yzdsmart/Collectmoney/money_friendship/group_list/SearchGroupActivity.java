@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tencent.TIMGroupDetailInfo;
+import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.tecent_im.adapters.ProfileSummaryAdapter;
 import com.yzdsmart.Collectmoney.tecent_im.bean.GroupProfile;
@@ -18,7 +19,7 @@ import com.yzdsmart.Collectmoney.tecent_im.bean.ProfileSummary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchGroupActivity extends Activity implements View.OnKeyListener, SearchGroupContract.SearchGroupView {
+public class SearchGroupActivity extends BaseActivity implements View.OnKeyListener, SearchGroupContract.SearchGroupView {
 
     private List<ProfileSummary> list = new ArrayList<>();
     private ProfileSummaryAdapter adapter;
@@ -30,7 +31,6 @@ public class SearchGroupActivity extends Activity implements View.OnKeyListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_group);
         searchInput = (EditText) findViewById(R.id.inputSearch);
         listView = (ListView) findViewById(R.id.list);
         adapter = new ProfileSummaryAdapter(this, R.layout.tecent_item_profile_summary, list);
@@ -53,6 +53,11 @@ public class SearchGroupActivity extends Activity implements View.OnKeyListener,
         });
 
         searchInput.setOnKeyListener(this);
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_search_group;
     }
 
     @Override
