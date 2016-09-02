@@ -1,25 +1,25 @@
 package com.yzdsmart.Collectmoney.add_friend;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.tencent.TIMFriendAddResponse;
-import com.tencent.TIMFriendResponseType;
-import com.tencent.TIMFriendResult;
+import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMFriendshipProxy;
-import com.tencent.TIMFutureFriendType;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.chat.ChatActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.ProfileSummary;
 
 import java.util.ArrayList;
@@ -124,6 +124,9 @@ public class AddFriendAdapter extends RecyclerView.Adapter<AddFriendAdapter.View
         @BindViews({R.id.friend_future_operation})
         List<View> showViews;
         @Nullable
+        @BindView(R.id.friend_item_layout)
+        RelativeLayout friendItemLayout;
+        @Nullable
         @BindView(R.id.friend_user_avater)
         CircleImageView userAvaterIV;
         @Nullable
@@ -159,9 +162,21 @@ public class AddFriendAdapter extends RecyclerView.Adapter<AddFriendAdapter.View
         }
 
         @Optional
-        @OnClick({R.id.friend_future_operation})
-        void onClick(View view) {
-
+        @OnClick({R.id.friend_future_operation, R.id.friend_item_layout})
+        void onClick(final View view) {
+            switch (view.getId()) {
+                case R.id.friend_future_operation:
+                    ((AddFriendActivity) context).applyAddFriend(summary.getIdentify());
+                    break;
+                case R.id.friend_item_layout:
+                    if (isFriend) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("identify", summary.getIdentify());
+                        bundle.putSerializable("type", TIMConversationType.C2C);
+                        ((BaseActivity) context).openActivity(ChatActivity.class, bundle, 0);
+                    }
+                    break;
+            }
         }
     }
 }

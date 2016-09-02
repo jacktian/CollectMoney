@@ -1,5 +1,6 @@
 package com.yzdsmart.Collectmoney.add_friend;
 
+import android.content.DialogInterface;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -14,14 +15,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
+import com.tencent.TIMFriendResult;
+import com.tencent.TIMFriendStatus;
 import com.tencent.TIMUserProfile;
+import com.tencent.TIMValueCallBack;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.tecent_im.bean.FriendProfile;
 import com.yzdsmart.Collectmoney.tecent_im.bean.ProfileSummary;
+import com.yzdsmart.Collectmoney.tecent_im.views.NotifyDialog;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -90,6 +96,12 @@ public class AddFriendActivity extends BaseActivity implements AddFriendContract
         return R.layout.activity_add_friend;
     }
 
+    @Override
+    protected void onDestroy() {
+        mPresenter.unRegisterObserver();
+        super.onDestroy();
+    }
+
     @Optional
     @OnClick({R.id.title_left_operation_layout})
     void onClick(View view) {
@@ -132,10 +144,63 @@ public class AddFriendActivity extends BaseActivity implements AddFriendContract
         addFriendAdapter.appendList(profileSummaryList);
     }
 
+    @Override
+    public void refreshProfileList() {
+        addFriendAdapter.notifyDataSetChanged();
+    }
+
     private boolean needAdd(String id) {
         for (ProfileSummary item : profileSummaryList) {
             if (item.getIdentify().equals(id)) return false;
         }
         return true;
+    }
+
+    public interface OnApplyAddFriendListener {
+        void callBack(TIMFriendStatus status);
+    }
+
+    public void applyAddFriend(final String identify) {
+        mPresenter.applyAddFriend(identify, new OnApplyAddFriendListener() {
+            @Override
+            public void callBack(TIMFriendStatus status) {
+                switch (status) {
+                    case TIM_ADD_FRIEND_STATUS_PENDING:
+                        showSnackbar(getResources().getString(R.string.add_friend_succeed));
+                        break;
+                    case TIM_FRIEND_STATUS_SUCC:
+                        showSnackbar(getResources().getString(R.string.add_friend_added));
+                        break;
+                    case TIM_ADD_FRIEND_STATUS_FRIEND_SIDE_FORBID_ADD:
+                        showSnackbar(getResources().getString(R.string.add_friend_refuse_all));
+                        break;
+                    case TIM_ADD_FRIEND_STATUS_IN_OTHER_SIDE_BLACK_LIST:
+                        showSnackbar(getResources().getString(R.string.add_friend_to_blacklist));
+                        break;
+                    case TIM_ADD_FRIEND_STATUS_IN_SELF_BLACK_LIST:
+                        NotifyDialog dialog = new NotifyDialog();
+                        dialog.show(getString(R.string.add_friend_del_black_list), getFragmentManager(), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mPresenter.delBlackList(Collections.singletonList(identify), new TIMValueCallBack<List<TIMFriendResult>>() {
+                                    @Override
+                                    public void onError(int i, String s) {
+                                        showSnackbar(getResources().getString(R.string.add_friend_del_black_err));
+                                    }
+
+                                    @Override
+                                    public void onSuccess(List<TIMFriendResult> timFriendResults) {
+                                        showSnackbar(getResources().getString(R.string.add_friend_del_black_succ));
+                                    }
+                                });
+                            }
+                        });
+                        break;
+                    default:
+                        showSnackbar(getResources().getString(R.string.add_friend_error));
+                        break;
+                }
+            }
+        });
     }
 }
