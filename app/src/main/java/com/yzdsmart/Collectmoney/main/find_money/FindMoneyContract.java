@@ -31,6 +31,26 @@ public class FindMoneyContract {
         void getShopList(String submitCode, String coor, Integer pageIndex, Integer pageSize);
 
         /**
+         * 上传坐标
+         *
+         * @param submitCode
+         * @param custCode
+         * @param coor
+         */
+        void uploadCoor(String submitCode, String custCode, String coor);
+
+        /**
+         * 获取当前用户周边用户
+         *
+         * @param submitCode
+         * @param custCode
+         * @param coor
+         * @param pageIndex
+         * @param pageSize
+         */
+        void getPersonBearby(String submitCode, String custCode, String coor, Integer pageIndex, Integer pageSize);
+
+        /**
          * 取消网络请求
          */
         void unRegisterSubscribe();

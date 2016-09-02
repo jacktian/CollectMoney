@@ -81,6 +81,15 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
     private Marker marketMarker;//商场Marker
 
+    //定位频率
+    private static final Integer LOCTIME = 5000;//毫秒
+    //上传坐标时间间隔次数
+    private Integer uploadCounts = 0;
+
+    //获取当前用户周边用户
+    private static final Integer personPageSize = 10;
+    private Integer personPageIndex = 0;
+
     private FindMoneyContract.FindMoneyPresenter mPresenter;
 
     @Override
@@ -201,6 +210,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                         marketMarker.remove();
                         marketMarker = null;
                     }
+                    searchType = 0;
                     mPresenter.getShopList("000000", qLocation, page_index, PAGE_SIZE);
                 } else if (marketMarker == marker) {
 
@@ -223,7 +233,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); //返回的定位结果是百度经纬度,默认值gcj02
-        option.setScanSpan(5000);//设置发起定位请求的间隔时间为1000ms
+        option.setScanSpan(LOCTIME);//设置发起定位请求的间隔时间为1000ms
         mLocClient.setLocOption(option);
         mLocClient.start();
     }
@@ -276,6 +286,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     public void onGetShopList(List<MarkerOptions> optionsList) {
         //先清除图层
         // mBaiduMap.clear();
+        for (Overlay overlay : mOverlayList) {
+            overlay.remove();
+        }
         mOverlayList.clear();
         for (MarkerOptions options : optionsList) {
             // 在地图上添加Marker，并显示
@@ -305,6 +318,17 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             locLongitude = bdLocation.getLongitude();
             qLocation = locLongitude + "," + locLatitude;
 
+            if (null != SharedPreferencesUtils.getString(getActivity(), "cust_code", "") && SharedPreferencesUtils.getString(getActivity(), "cust_code", "").length() > 0) {
+                if (uploadCounts == 600) {
+                    mPresenter.uploadCoor("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), qLocation);
+                    uploadCounts = 0;
+                } else {
+                    if (!isFirstLoc) {
+                        uploadCounts++;
+                    }
+                }
+            }
+
             if (isFirstLoc) {
                 isFirstLoc = false;
                 LatLng ll = new LatLng(bdLocation.getLatitude(),
@@ -315,6 +339,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
                 searchType = 0;
                 mPresenter.getShopList("000000", qLocation, page_index, PAGE_SIZE);
+
+                if (null != SharedPreferencesUtils.getString(getActivity(), "cust_code", "") && SharedPreferencesUtils.getString(getActivity(), "cust_code", "").length() > 0) {
+                    mPresenter.getPersonBearby("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), qLocation, personPageIndex, personPageSize);
+                }
             }
         }
     }

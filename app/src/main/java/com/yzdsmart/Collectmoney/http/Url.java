@@ -16,5 +16,7 @@ public class Url {
     public static final String EXPAND = "Expand";
     public static final String TASK = "Task";
     public static final String FILEUPLOAD = "FileUpload";
+    public static final String BASE = "Base";
+    public static final String PERSON = "Person";
 
 }

@@ -74,8 +74,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/taxi_line"
                         android:layout_marginRight="@dimen/activity_horizontal_padding"
-                        android:layout_toLeftOf="@id/taxi_line"
-                        android:src="@mipmap/heart_icon_white" />
+                        android:layout_toLeftOf="@id/taxi_line" />
 
                     <TextView
                         android:id="@+id/hotel_address"
@@ -177,7 +176,7 @@
                             android:layout_marginLeft="@dimen/shop_focus_detail_margin"
                             android:ellipsize="marquee"
                             android:singleLine="true"
-                            android:text="40"
+                            android:text=""
                             android:textColor="@color/orange"
                             android:textIsSelectable="true"
                             android:textSize="@dimen/font_xlarge" />
@@ -204,7 +203,7 @@
                             android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
                             android:singleLine="true"
-                            android:text="2200"
+                            android:text=""
                             android:textColor="@color/orange"
                             android:textIsSelectable="true"
                             android:textSize="@dimen/font_xlarge" />
@@ -233,7 +232,7 @@
                             android:layout_marginRight="@dimen/shop_focus_detail_margin"
                             android:ellipsize="marquee"
                             android:singleLine="true"
-                            android:text="25"
+                            android:text=""
                             android:textColor="@color/orange"
                             android:textIsSelectable="true"
                             android:textSize="@dimen/font_xlarge" />

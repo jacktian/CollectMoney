@@ -82,6 +82,46 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
     }
 
     @Override
+    public void uploadCoor(String submitCode, String custCode, String coor) {
+        mModel.uploadCoor(submitCode, custCode, coor, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+
+            }
+
+            @Override
+            public void onError(String err) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void getPersonBearby(String submitCode, String custCode, String coor, Integer pageIndex, Integer pageSize) {
+        mModel.getPersonBearby(submitCode, custCode, coor, pageIndex, pageSize, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+
+            }
+
+            @Override
+            public void onError(String err) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
     public void unRegisterSubscribe() {
         mModel.unRegisterSubscribe();
     }

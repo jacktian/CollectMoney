@@ -6,6 +6,7 @@ import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.FriendsRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.PersonRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopListRequestResponse;
@@ -219,5 +220,31 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.FILEUPLOAD)
     Observable<UploadFileRequestResponse> saveFile(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("TCAccount") String tcAccount);
+
+    /**
+     * 上传坐标
+     *
+     * @param submitCode
+     * @param custCode
+     * @param coor
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.BASE)
+    Observable<RequestResponse> uploadCoor(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("Coor") String coor);
+
+    /**
+     * 获取当前用户周边用户
+     *
+     * @param submitCode
+     * @param custCode
+     * @param coor
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.PERSON)
+    Observable<PersonRequestResponse> getPersonBearby(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("Coor") String coor, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
 }
