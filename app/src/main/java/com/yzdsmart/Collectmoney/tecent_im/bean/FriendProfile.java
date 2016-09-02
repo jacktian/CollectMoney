@@ -67,15 +67,6 @@ public class FriendProfile implements ProfileSummary {
         Bundle bundle = new Bundle();
         bundle.putString("identify", profile.getIdentifier());
         bundle.putSerializable("type", TIMConversationType.C2C);
-//        ((BaseActivity) context).openActivity(ChatActivity.class, bundle, 0);
-//        if (FriendshipInfo.getInstance().isFriend(profile.getIdentifier())){
-//            ProfileActivity.navToProfile(context, profile.getIdentifier());
-//        }else{
-//            Intent person = new Intent(context,AddFriendActivity.class);
-//            person.putExtra("id",profile.getIdentifier());
-//            person.putExtra("name",getName());
-//            context.startActivity(person);
-//        }
     }
 
     public boolean isSelected() {

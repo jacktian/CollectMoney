@@ -133,6 +133,7 @@ public class FriendListAdapter extends UltimateViewAdapter<FriendListAdapter.Vie
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("type", 1);
+                bundle.putString("user_code", friendshipList.get(position).getC_UserCode());
                 bundle.putString("cust_code", friendshipList.get(position).getC_Code());
                 ((BaseActivity) context).openActivity(PersonalFriendDetailActivity.class, bundle, 0);
             }

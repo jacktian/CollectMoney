@@ -78,6 +78,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
 
     private Integer type;//0 个人 1 好友
     private String friend_c_code;
+    private String friend_identify;
 
     private PersonalFriendDetailContract.PersonalFriendDetailPresenter mPresenter;
 
@@ -87,6 +88,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
 
         type = getIntent().getExtras().getInt("type");
         friend_c_code = getIntent().getExtras().getString("cust_code");
+        friend_identify = "yzd" + getIntent().getExtras().getString("user_code");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
 

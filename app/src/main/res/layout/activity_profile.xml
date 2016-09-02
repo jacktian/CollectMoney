@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <include
+        layout="@layout/common_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_toolbar_height" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/common_toolbar_height"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avatar"
+                android:layout_width="115dp"
+                android:layout_height="115dp"
+                android:layout_marginTop="20dp"
+                android:src="@mipmap/tecent_head_other" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/tecent_text_gray1"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+            android:id="@+id/id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:name="@string/profile_id" />
+
+        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+            android:id="@+id/remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:canNav="true"
+            app:name="@string/profile_remark" />
+
+        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+            android:id="@+id/blackList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:isSwitch="true"
+            app:name="@string/profile_black" />
+
+        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+            android:id="@+id/group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            app:canNav="true"
+            app:isBottom="true"
+            app:name="@string/profile_now_group" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/btnDel"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/tecent_bg_negative_btn"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="@string/profile_del"
+                android:textColor="@color/tecent_text_btn"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/btnChat"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/tecent_bg_positive_btn"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="@string/profile_chat"
+                android:textColor="@color/tecent_text_btn"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -26,6 +26,9 @@ import com.tencent.TIMMessageStatus;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.chat.image_preview.ImagePreviewActivity;
+import com.yzdsmart.Collectmoney.money_friendship.friend_list.add.AddFriendActivity;
+import com.yzdsmart.Collectmoney.money_friendship.friend_list.profile.ProfileActivity;
+import com.yzdsmart.Collectmoney.money_friendship.group_list.profile.GroupProfileActivity;
 import com.yzdsmart.Collectmoney.tecent_im.adapters.ChatAdapter;
 import com.yzdsmart.Collectmoney.tecent_im.bean.CustomMessage;
 import com.yzdsmart.Collectmoney.tecent_im.bean.FileMessage;
@@ -153,9 +156,9 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
                     titleRightOpeLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-//                            Intent intent = new Intent(ChatActivity.this, ProfileActivity.class);
-//                            intent.putExtra("identify", identify);
-//                            startActivity(intent);
+                            Intent intent = new Intent(ChatActivity.this, ProfileActivity.class);
+                            intent.putExtra("identify", identify);
+                            startActivity(intent);
                         }
                     });
                     FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
@@ -164,10 +167,10 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
                     titleRightOpeLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-//                            Intent person = new Intent(ChatActivity.this, AddFriendActivity.class);
-//                            person.putExtra("id", identify);
-//                            person.putExtra("name", identify);
-//                            startActivity(person);
+                            Intent person = new Intent(ChatActivity.this,AddFriendActivity.class);
+                            person.putExtra("id", identify);
+                            person.putExtra("name", identify);
+                            startActivity(person);
                         }
                     });
                     centerTitleTV.setText(titleStr = identify);
@@ -178,9 +181,9 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
                 titleRightOpeLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent intent = new Intent(ChatActivity.this, GroupProfileActivity.class);
-//                        intent.putExtra("identify", identify);
-//                        startActivity(intent);
+                        Intent intent = new Intent(ChatActivity.this, GroupProfileActivity.class);
+                        intent.putExtra("identify", identify);
+                        startActivity(intent);
                     }
                 });
                 centerTitleTV.setText(GroupInfo.getInstance().getGroupName(identify));

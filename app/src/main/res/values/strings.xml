@@ -180,6 +180,27 @@
     <string name="search_account_hint">输入您要搜索的账号</string>
     <string name="search_result_hint">搜索结果</string>
     <string name="add_friend">添加</string>
+    <!-- profile activity -->
+    <string name="profile_detail">详细资料</string>
+    <string name="profile_back">返回</string>
+    <string name="profile_id">账号</string>
+    <string name="profile_remark">备注名</string>
+    <string name="profile_black">加入黑名单</string>
+    <string name="profile_remark_edit">修改备注</string>
+    <string name="profile_del">删除好友</string>
+    <string name="profile_group">添加分组</string>
+    <string name="profile_now_group">所在分组</string>
+    <string name="profile_del_succeed">删除好友成功</string>
+    <string name="profile_del_fail">删除好友失败</string>
+    <string name="profile_black_succ">加入黑名单成功</string>
+    <string name="change_group_error">修改分组失败</string>
+    <!-- Add newfriend activity -->
+    <string name="title_addfri">添加好友</string>
+    <string name="add_detail_ID">帐号ID</string>
+    <string name="add_detail_name">备注名</string>
+    <string name="add_detail_group">分组</string>
+    <string name="add_detail_message">附加消息</string>
+    <string name="add_friend_send">发送添加好友请求</string>
     <string name="add_friend_succeed">请求已发送</string>
     <string name="add_friend_added">已添加好友</string>
     <string name="add_friend_refuse_all">对方拒绝添加任何人为好友</string>

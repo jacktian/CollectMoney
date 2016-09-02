@@ -131,7 +131,19 @@
             android:theme="@style/ActivityColorTranslucentTheme" />
 
         <activity
-            android:name=".add_friend.AddFriendActivity"
+            android:name=".search_friend.SearchFriendActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
+            android:name=".money_friendship.friend_list.profile.ProfileActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
+            android:name=".money_friendship.friend_list.add.AddFriendActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"
             android:theme="@style/ActivityColorTranslucentTheme" />

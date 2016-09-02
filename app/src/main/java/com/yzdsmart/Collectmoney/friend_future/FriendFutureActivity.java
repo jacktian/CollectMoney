@@ -14,7 +14,7 @@ import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalD
 import com.tencent.TIMFriendFutureItem;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.add_friend.AddFriendActivity;
+import com.yzdsmart.Collectmoney.search_friend.SearchFriendActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.FriendFuture;
 
 import java.util.ArrayList;
@@ -105,7 +105,7 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
                 closeActivity();
                 break;
             case R.id.title_right_operation_layout:
-                openActivity(AddFriendActivity.class);
+                openActivity(SearchFriendActivity.class);
                 break;
         }
     }

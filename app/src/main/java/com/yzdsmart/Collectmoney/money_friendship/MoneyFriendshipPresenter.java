@@ -127,11 +127,9 @@ public class MoneyFriendshipPresenter implements MoneyFriendshipContract.MoneyFr
         } else if (observable instanceof FriendshipEvent) {
             FriendshipEvent.NotifyCmd fcmd = (FriendshipEvent.NotifyCmd) data;
             switch (fcmd.type) {
-                case ADD_REQ:
-                    break;
-                case ADD:
                 case REFRESH:
                 case DEL:
+                    mView.refreshConversation();
                     break;
             }
         } else if (observable instanceof GroupEvent) {
