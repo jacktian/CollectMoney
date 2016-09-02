@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.friend_future;
+package com.yzdsmart.Collectmoney.add_friend;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -14,12 +14,13 @@ import com.tencent.TIMFriendAddResponse;
 import com.tencent.TIMFriendResponseType;
 import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendshipManager;
+import com.tencent.TIMFriendshipProxy;
 import com.tencent.TIMFutureFriendType;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.tecent_im.bean.FriendFuture;
+import com.yzdsmart.Collectmoney.tecent_im.bean.ProfileSummary;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,16 +34,17 @@ import butterknife.Optional;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Created by YZD on 2016/8/21.
+ * Created by YZD on 2016/9/2.
  */
-public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapter.ViewHolder> {
+public class AddFriendAdapter extends RecyclerView.Adapter<AddFriendAdapter.ViewHolder> {
     private Context context;
-    private List<FriendFuture> friendFutureList;
-    private FriendFuture future;
+    private List<ProfileSummary> profileSummaryList;
+    private ProfileSummary summary;
+    private boolean isFriend = false;
 
-    public FriendFutureAdapter(Context context) {
+    public AddFriendAdapter(Context context) {
         this.context = context;
-        friendFutureList = new ArrayList<FriendFuture>();
+        profileSummaryList = new ArrayList<ProfileSummary>();
     }
 
     /**
@@ -50,9 +52,9 @@ public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapte
      *
      * @param list
      */
-    public void appendList(List<FriendFuture> list) {
-        if (null != friendFutureList) {
-            friendFutureList.addAll(list);
+    public void appendList(List<ProfileSummary> list) {
+        if (null != profileSummaryList) {
+            profileSummaryList.addAll(list);
         }
         notifyDataSetChanged();
     }
@@ -61,8 +63,8 @@ public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapte
      * 清除列表
      */
     public void clearList() {
-        if (null != friendFutureList) {
-            friendFutureList.clear();
+        if (null != profileSummaryList) {
+            profileSummaryList.clear();
         }
         notifyDataSetChanged();
     }
@@ -70,16 +72,17 @@ public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.friendship_friendfuture_list_item, parent, false);
-        FriendFutureAdapter.ViewHolder holder = new FriendFutureAdapter.ViewHolder(itemView);
+        AddFriendAdapter.ViewHolder holder = new AddFriendAdapter.ViewHolder(itemView);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        future = friendFutureList.get(position);
-        holder.setUserNameTV(future.getName());
+        isFriend = false;
+        summary = profileSummaryList.get(position);
+        holder.setUserNameTV(summary.getName());
         //获取用户资料
-        TIMFriendshipManager.getInstance().getUsersProfile(Collections.singletonList(future.getIdentify()), new TIMValueCallBack<List<TIMUserProfile>>() {
+        TIMFriendshipManager.getInstance().getUsersProfile(Collections.singletonList(summary.getIdentify()), new TIMValueCallBack<List<TIMUserProfile>>() {
             @Override
             public void onError(int code, String desc) {
                 //错误码code和错误描述desc，可用于定位请求失败原因
@@ -94,12 +97,23 @@ public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapte
                 }
             }
         });
-        holder.setFriendFutureBtn(future.getType());
+        List<TIMUserProfile> profiles = TIMFriendshipProxy.getInstance().getFriends();
+        for (TIMUserProfile profile : profiles) {
+            if (summary.getIdentify().equals(profile.getIdentifier())) {
+                isFriend = true;
+                break;
+            }
+        }
+        if (isFriend) {
+            holder.setFriendFutureBtn(false);
+        } else {
+            holder.setFriendFutureBtn(true);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return friendFutureList.size();
+        return profileSummaryList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -139,41 +153,15 @@ public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapte
             userNameTV.setText(userName);
         }
 
-        public void setFriendFutureBtn(TIMFutureFriendType type) {
-            switch (type) {
-                case TIM_FUTURE_FRIEND_PENDENCY_IN_TYPE:
-                    friendFutureBtn.setEnabled(true);
-                    friendFutureBtn.setText(context.getResources().getString(R.string.accept_friend));
-                    break;
-                case TIM_FUTURE_FRIEND_PENDENCY_OUT_TYPE:
-                    friendFutureBtn.setEnabled(false);
-                    friendFutureBtn.setText(context.getResources().getString(R.string.wait_accept_friend));
-                    break;
-                case TIM_FUTURE_FRIEND_DECIDE_TYPE:
-                    friendFutureBtn.setEnabled(false);
-                    friendFutureBtn.setText(context.getResources().getString(R.string.already_accept_friend));
-                    break;
-            }
+        public void setFriendFutureBtn(boolean show) {
+            friendFutureBtn.setText(context.getResources().getString(R.string.add_friend));
+            friendFutureBtn.setVisibility(show ? View.VISIBLE : View.GONE);
         }
 
         @Optional
         @OnClick({R.id.friend_future_operation})
         void onClick(View view) {
-            TIMFriendAddResponse response = new TIMFriendAddResponse();
-            response.setIdentifier(future.getIdentify());
-            response.setType(TIMFriendResponseType.AgreeAndAdd);
-            TIMFriendshipManager.getInstance().addFriendResponse(response, new TIMValueCallBack<TIMFriendResult>() {
-                @Override
-                public void onError(int i, String s) {
 
-                }
-
-                @Override
-                public void onSuccess(TIMFriendResult timFriendResult) {
-                    future.setType(TIMFutureFriendType.TIM_FUTURE_FRIEND_DECIDE_TYPE);
-                    notifyDataSetChanged();
-                }
-            });
         }
     }
 }

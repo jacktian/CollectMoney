@@ -11,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
+import com.tencent.TIMFriendFutureItem;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.FriendFuture;
+import com.yzdsmart.Collectmoney.add_friend.AddFriendActivity;
+import com.yzdsmart.Collectmoney.tecent_im.bean.FriendFuture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +29,16 @@ import butterknife.Optional;
 /**
  * Created by YZD on 2016/8/20.
  */
-public class FriendFutureActivity extends BaseActivity {
+public class FriendFutureActivity extends BaseActivity implements FriendFutureContract.FriendFutureView {
     @Nullable
-    @BindViews({R.id.center_title, R.id.title_right_operation_layout})
+    @BindViews({R.id.center_title})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
+    @Nullable
+    @BindView(R.id.title_right_operation)
+    ImageView titleRightOpeIV;
     @Nullable
     @BindView(R.id.left_title)
     TextView leftTitleTV;
@@ -41,10 +46,15 @@ public class FriendFutureActivity extends BaseActivity {
     @BindView(R.id.friend_future_list)
     RecyclerView friendFutureRV;
 
+    private final int PAGE_SIZE = 20;
+    private long pendSeq, decideSeq, recommendSeq;
+
     private LinearLayoutManager mLinearLayoutManager;
     private List<FriendFuture> friendFutureList;
     private FriendFutureAdapter friendFutureAdapter;
     private Paint dividerPaint;
+
+    private FriendFutureContract.FriendFuturePresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +65,9 @@ public class FriendFutureActivity extends BaseActivity {
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         leftTitleTV.setText(getResources().getString(R.string.future_search_new_friend));
+        titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.user_add_icon));
+
+        new FriendFuturePresenter(this, this);
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         dividerPaint = new Paint();
@@ -70,15 +83,7 @@ public class FriendFutureActivity extends BaseActivity {
         friendFutureRV.addItemDecoration(dividerItemDecoration);
         friendFutureRV.setAdapter(friendFutureAdapter);
 
-        List<FriendFuture> list = new ArrayList<FriendFuture>();
-        list.add(new FriendFuture("file:///android_asset/album_pic.png", "艾伦", 1));
-        list.add(new FriendFuture("file:///android_asset/album_pic.png", "嗣位", 0));
-        list.add(new FriendFuture("file:///android_asset/album_pic.png", "木樨", 0));
-        list.add(new FriendFuture("file:///android_asset/album_pic.png", "提姆", 1));
-        list.add(new FriendFuture("file:///android_asset/album_pic.png", "韩梅梅", 0));
-
-        friendFutureList.addAll(list);
-        friendFutureAdapter.appenList(friendFutureList);
+        mPresenter.getFutureFriends(PAGE_SIZE, pendSeq, decideSeq, recommendSeq);
     }
 
     @Override
@@ -86,13 +91,47 @@ public class FriendFutureActivity extends BaseActivity {
         return R.layout.activity_friend_future;
     }
 
+    @Override
+    protected void onDestroy() {
+        mPresenter.unRegisterObserver();
+        super.onDestroy();
+    }
+
     @Optional
-    @OnClick({R.id.title_left_operation_layout})
+    @OnClick({R.id.title_left_operation_layout, R.id.title_right_operation_layout})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
                 break;
+            case R.id.title_right_operation_layout:
+                openActivity(AddFriendActivity.class);
+                break;
         }
+    }
+
+    @Override
+    public void onGetFutureFriends(List<TIMFriendFutureItem> futureItems, long p, long d, long r) {
+        pendSeq = p;
+        decideSeq = d;
+        recommendSeq = r;
+        if (null != futureItems && 0 < futureItems.size()) {
+            friendFutureList.clear();
+            for (TIMFriendFutureItem item : futureItems) {
+                friendFutureList.add(new FriendFuture(item));
+            }
+            friendFutureAdapter.appendList(friendFutureList);
+        }
+    }
+
+    @Override
+    public void refreshFriendFuture() {
+        friendFutureAdapter.clearList();
+        mPresenter.getFutureFriends(PAGE_SIZE, pendSeq, decideSeq, recommendSeq);
+    }
+
+    @Override
+    public void setPresenter(FriendFutureContract.FriendFuturePresenter presenter) {
+        mPresenter = presenter;
     }
 }

@@ -131,6 +131,12 @@
             android:theme="@style/ActivityColorTranslucentTheme" />
 
         <activity
+            android:name=".add_friend.AddFriendActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
             android:name=".chat.ChatActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"

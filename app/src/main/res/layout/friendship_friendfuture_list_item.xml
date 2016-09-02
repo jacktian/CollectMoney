@@ -49,7 +49,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:background="@drawable/friend_future_button"
-        android:text="邀请"
+        android:text=""
         android:textColor="@color/friend_future_button"
         android:textSize="@dimen/font_medium"
         android:visibility="gone" />
