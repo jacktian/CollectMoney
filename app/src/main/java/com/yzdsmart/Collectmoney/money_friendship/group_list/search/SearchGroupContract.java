@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.money_friendship.group_list;
+package com.yzdsmart.Collectmoney.money_friendship.group_list.search;
 
 import com.tencent.TIMGroupDetailInfo;
 import com.yzdsmart.Collectmoney.BasePresenter;

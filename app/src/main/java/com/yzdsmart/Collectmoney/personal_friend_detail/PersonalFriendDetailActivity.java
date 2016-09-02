@@ -11,6 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
@@ -161,7 +164,12 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
 
     @Override
     public void onGetCustInfo(CustInfoRequestResponse response) {
-        Glide.with(this).load(response.getImageUrl()).placeholder(getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
+        Glide.with(this).load(response.getImageUrl()).placeholder(getResources().getDrawable(R.mipmap.user_avater)).into(new SimpleTarget<GlideDrawable>() {
+            @Override
+            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                userAvaterIV.setImageDrawable(resource);
+            }
+        });
         userNameTV.setText("".equals(response.getCName()) ? response.getC_UserCode() : response.getCName());
         userAddressTV.setText(response.getArea());
         userAccountTV.setText(response.getC_UserCode());

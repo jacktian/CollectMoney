@@ -15,6 +15,8 @@ import com.yzdsmart.Collectmoney.tecent_im.bean.Message;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * 聊天界面adapter
  */
@@ -54,6 +56,8 @@ public class ChatAdapter extends ArrayAdapter<Message> {
             viewHolder.sender = (TextView) view.findViewById(R.id.sender);
             viewHolder.rightDesc = (TextView) view.findViewById(R.id.rightDesc);
             viewHolder.systemMessage = (TextView) view.findViewById(R.id.systemMessage);
+            viewHolder.leftAvatar = (CircleImageView) view.findViewById(R.id.leftAvatar);
+            viewHolder.rightAvatar = (CircleImageView) view.findViewById(R.id.rightAvatar);
             view.setTag(viewHolder);
         }
         final Message data = getItem(position);
@@ -72,5 +76,7 @@ public class ChatAdapter extends ArrayAdapter<Message> {
         public TextView sender;
         public TextView systemMessage;
         public TextView rightDesc;
+        public CircleImageView leftAvatar;
+        public CircleImageView rightAvatar;
     }
 }

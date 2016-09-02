@@ -155,7 +155,7 @@
             android:theme="@style/ActivityColorTranslucentTheme" />
 
         <activity
-            android:name=".money_friendship.group_list.SearchGroupActivity"
+            android:name=".money_friendship.group_list.search.SearchGroupActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"
             android:theme="@style/ActivityColorTranslucentTheme" />

@@ -4,11 +4,24 @@ import android.content.Context;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.tencent.TIMConversationType;
+import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMMessage;
 import com.tencent.TIMMessageStatus;
+import com.tencent.TIMUserProfile;
+import com.tencent.TIMValueCallBack;
+import com.yzdsmart.Collectmoney.App;
+import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.chat.ChatActivity;
 import com.yzdsmart.Collectmoney.tecent_im.adapters.ChatAdapter;
 import com.yzdsmart.Collectmoney.tecent_im.utils.TimeUtil;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 消息数据基类
@@ -44,13 +57,29 @@ public abstract class Message {
      *
      * @param viewHolder 界面样式
      */
-    public RelativeLayout getBubbleView(ChatAdapter.ViewHolder viewHolder) {
+    public RelativeLayout getBubbleView(final ChatAdapter.ViewHolder viewHolder) {
         viewHolder.systemMessage.setVisibility(hasTime ? View.VISIBLE : View.GONE);
         viewHolder.systemMessage.setText(TimeUtil.getChatTimeStr(message.timestamp()));
         showDesc(viewHolder);
         if (message.isSelf()) {
             viewHolder.leftPanel.setVisibility(View.GONE);
             viewHolder.rightPanel.setVisibility(View.VISIBLE);
+            //获取自己的资料
+            TIMFriendshipManager.getInstance().getSelfProfile(new TIMValueCallBack<TIMUserProfile>() {
+                @Override
+                public void onError(int code, String desc) {
+                    //错误码code和错误描述desc，可用于定位请求失败原因
+                    //错误码code列表请参见错误码表
+                    //getApplicationContext解决You cannot start a load for a destroyed activity 最好不要在非主线程里面使用Glide加载图片
+                    Glide.with(App.getAppInstance()).load(App.getAppInstance().getResources().getDrawable(R.mipmap.tecent_head_me)).into(viewHolder.rightAvatar);
+                }
+
+                @Override
+                public void onSuccess(TIMUserProfile result) {
+                    //getApplicationContext解决You cannot start a load for a destroyed activity 最好不要在非主线程里面使用Glide加载图片
+                    Glide.with(App.getAppInstance()).load(result.getFaceUrl()).error(App.getAppInstance().getResources().getDrawable(R.mipmap.tecent_head_me)).into(viewHolder.rightAvatar);
+                }
+            });
             return viewHolder.rightMessage;
         } else {
             viewHolder.leftPanel.setVisibility(View.VISIBLE);
@@ -68,6 +97,24 @@ public abstract class Message {
             } else {
                 viewHolder.sender.setVisibility(View.GONE);
             }
+            //获取用户资料
+            TIMFriendshipManager.getInstance().getUsersProfile(Collections.singletonList(message.getSender()), new TIMValueCallBack<List<TIMUserProfile>>() {
+                @Override
+                public void onError(int code, String desc) {
+                    //错误码code和错误描述desc，可用于定位请求失败原因
+                    //错误码code列表请参见错误码表
+                    //getApplicationContext解决You cannot start a load for a destroyed activity 最好不要在非主线程里面使用Glide加载图片
+                    Glide.with(App.getAppInstance()).load(App.getAppInstance().getResources().getDrawable(R.mipmap.tecent_head_other)).into(viewHolder.leftAvatar);
+                }
+
+                @Override
+                public void onSuccess(List<TIMUserProfile> result) {
+                    for (TIMUserProfile res : result) {
+                        //getApplicationContext解决You cannot start a load for a destroyed activity 最好不要在非主线程里面使用Glide加载图片
+                        Glide.with(App.getAppInstance()).load(res.getFaceUrl()).error(App.getAppInstance().getResources().getDrawable(R.mipmap.tecent_head_other)).into(viewHolder.leftAvatar);
+                    }
+                }
+            });
             return viewHolder.leftMessage;
         }
     }

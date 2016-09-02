@@ -10,8 +10,7 @@
         android:id="@+id/friend_user_avater"
         android:layout_width="@dimen/friendship_list_item_avater_width"
         android:layout_height="@dimen/friendship_list_item_avater_width"
-        android:layout_centerVertical="true"
-        android:src="@mipmap/user_avater" />
+        android:layout_centerVertical="true" />
 
     <TextView
         android:id="@+id/friend_user_name"
@@ -20,7 +19,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_toRightOf="@id/friend_user_avater"
-        android:text="韩梅梅"
+        android:text=""
         android:textColor="@color/grey"
         android:textSize="@dimen/font_medium" />
 
@@ -29,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="等级：V2"
+        android:text=""
         android:textColor="@color/grey"
         android:textSize="@dimen/font_medium" />
 
@@ -41,15 +40,6 @@
         android:layout_centerVertical="true"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/diamond_pink" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/diamond_pink" />
     </LinearLayout>
 
     <Button

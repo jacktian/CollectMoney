@@ -33,8 +33,7 @@
                 android:id="@+id/leftAvatar"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_alignParentLeft="true"
-                android:src="@mipmap/tecent_head_other" />
+                android:layout_alignParentLeft="true" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -81,8 +80,7 @@
                 android:id="@+id/rightAvatar"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/tecent_head_me" />
+                android:layout_alignParentRight="true" />
 
             <RelativeLayout
                 android:id="@+id/rightMessage"

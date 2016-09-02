@@ -13,6 +13,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.chat.ChatActivity;
+import com.yzdsmart.Collectmoney.tecent_im.adapters.ConversationAdapter;
 import com.yzdsmart.Collectmoney.tecent_im.bean.Conversation;
 
 import java.util.LinkedList;

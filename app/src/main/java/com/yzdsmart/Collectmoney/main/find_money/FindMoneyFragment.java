@@ -77,7 +77,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private static final Integer PAGE_SIZE = 5;//分页数量
     private Integer page_index = 0;//分页索引 当前页标，从0开始
     private String qLocation = "";//检索中心点
-    private Integer searchType = 0;//0 定位获取商铺列表 1 搜索商场附近商铺列表
+    private Integer searchType = 0;//0 定位获取商铺列表 1 搜索商场附近商铺列表 2 扫码
+
+    private Marker marketMarker;//商场Marker
 
     private FindMoneyContract.FindMoneyPresenter mPresenter;
 
@@ -195,7 +197,13 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                     return true;
                 }
                 if (locMarker == marker) {
-                    ((BaseActivity) getActivity()).showSnackbar("哈哈");
+                    if (null != marketMarker) {
+                        marketMarker.remove();
+                        marketMarker = null;
+                    }
+                    mPresenter.getShopList("000000", qLocation, page_index, PAGE_SIZE);
+                } else if (marketMarker == marker) {
+
                 } else {
                     Bundle bundle = new Bundle();
                     bundle.putString("bazaCode", marker.getExtraInfo().getString("bazaCode"));
@@ -292,6 +300,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             MarkerOptions locMO = new MarkerOptions().position(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).icons(locGifList);
             locMarker = (Marker) (mBaiduMap.addOverlay(locMO));//定位图标
 
+            //获取当前位置坐标
+            locLatitude = bdLocation.getLatitude();
+            locLongitude = bdLocation.getLongitude();
+            qLocation = locLongitude + "," + locLatitude;
+
             if (isFirstLoc) {
                 isFirstLoc = false;
                 LatLng ll = new LatLng(bdLocation.getLatitude(),
@@ -299,11 +312,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 MapStatus.Builder builder = new MapStatus.Builder();
                 builder.target(ll).zoom(18.0f);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-
-                //获取当前位置坐标
-                locLatitude = bdLocation.getLatitude();
-                locLongitude = bdLocation.getLongitude();
-                qLocation = locLongitude + "," + locLatitude;
 
                 searchType = 0;
                 mPresenter.getShopList("000000", qLocation, page_index, PAGE_SIZE);
@@ -314,6 +322,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     public void getShopListNearByMarket(String location) {
         searchType = 1;
         page_index = 0;
+        if (null != marketMarker) {
+            marketMarker.remove();
+            marketMarker = null;
+        }
+        MarkerOptions marketMO = new MarkerOptions().position(new LatLng(Double.valueOf(location.split(",")[1]), Double.valueOf(location.split(",")[0]))).icon(BitmapDescriptorFactory.fromResource(R.mipmap.market_icon));
+        marketMarker = (Marker) (mBaiduMap.addOverlay(marketMO));//定位图标
         mPresenter.getShopList("000000", location, page_index, PAGE_SIZE);
     }
 

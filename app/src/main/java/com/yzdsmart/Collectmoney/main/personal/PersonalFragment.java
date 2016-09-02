@@ -9,6 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
@@ -146,6 +149,11 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @Override
     public void onGetCustInfo(String name, String headUel) {
         userNameTV.setText(name);
-        Glide.with(this).load(headUel).placeholder(getActivity().getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
+        Glide.with(this).load(headUel).placeholder(getActivity().getResources().getDrawable(R.mipmap.user_avater)).into(new SimpleTarget<GlideDrawable>() {//解决有的图片第一次加载的时候只显示占位图，第二次才显示正常的图片呢
+            @Override
+            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                userAvaterIV.setImageDrawable(resource);
+            }
+        });
     }
 }

@@ -1,6 +1,5 @@
-package com.yzdsmart.Collectmoney.money_friendship.group_list;
+package com.yzdsmart.Collectmoney.money_friendship.group_list.search;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;

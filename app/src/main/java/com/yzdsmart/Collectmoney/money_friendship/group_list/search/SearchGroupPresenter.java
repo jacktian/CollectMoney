@@ -1,7 +1,6 @@
-package com.yzdsmart.Collectmoney.money_friendship.group_list;
+package com.yzdsmart.Collectmoney.money_friendship.group_list.search;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupSearchSucc;

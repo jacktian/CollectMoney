@@ -102,6 +102,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         messageList = new ArrayList<>();
         identify = getIntent().getStringExtra("identify");
         type = (TIMConversationType) getIntent().getSerializableExtra("type");
