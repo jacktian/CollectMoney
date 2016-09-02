@@ -151,7 +151,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
         registerForContextMenu(listView);
         switch (type) {
             case C2C:
-                titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.drawable.tecent_btn_person));
+                titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.personal_head_icon));
                 if (FriendshipInfo.getInstance().isFriend(identify)) {
                     titleRightOpeLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -167,7 +167,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
                     titleRightOpeLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent person = new Intent(ChatActivity.this,AddFriendActivity.class);
+                            Intent person = new Intent(ChatActivity.this, AddFriendActivity.class);
                             person.putExtra("id", identify);
                             person.putExtra("name", identify);
                             startActivity(person);
@@ -177,7 +177,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
                 }
                 break;
             case Group:
-                titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.drawable.tecent_btn_group));
+                titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.group_head_icon));
                 titleRightOpeLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
