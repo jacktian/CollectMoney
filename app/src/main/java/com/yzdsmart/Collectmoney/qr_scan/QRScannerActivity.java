@@ -1,5 +1,6 @@
 package com.yzdsmart.Collectmoney.qr_scan;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.utils.Utils;
 
 import java.util.List;
 
@@ -26,7 +28,7 @@ import cn.bingoogolapple.qrcode.core.QRCodeView;
 /**
  * Created by YZD on 2016/8/19.
  */
-public class QRScannerActivity extends BaseActivity implements QRCodeView.Delegate {
+public class QRScannerActivity extends BaseActivity implements QRCodeView.Delegate, QRScannerContract.QRScannerView {
     @Nullable
     @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout})
     List<View> hideViews;
@@ -40,11 +42,15 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     @BindView(R.id.qr_code_view)
     QRCodeView mQRCodeView;
 
+    private static final String GET_COIN_ACTION_CODE = "88";
+
     private MediaPlayer mediaPlayer;
     private boolean playBeep;
     private static final float BEEP_VOLUME = 0.10f;
     private boolean vibrate;
     private static final long VIBRATE_DURATION = 200L;
+
+    private QRScannerContract.QRScannerPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,8 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         centerTitleTV.setText(getResources().getString(R.string.qr_scan_title));
+
+        new QRScannerPresenter(this, this);
 
         playBeep = true;
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -82,8 +90,15 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        mPresenter.unRegisterSubscribe();
+    }
+
+    @Override
     protected void onDestroy() {
         mQRCodeView.onDestroy();
+        mediaPlayer.release();
         super.onDestroy();
     }
 
@@ -142,13 +157,28 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     @Override
     public void onScanQRCodeSuccess(String result) {
-        showSnackbar(result);
         playBeepSoundAndVibrate();
-        mQRCodeView.startSpot();
+        mPresenter.getCoins(GET_COIN_ACTION_CODE, result, Utils.getLocalIpAddress());
     }
 
     @Override
     public void onScanQRCodeOpenCameraError() {
+        mQRCodeView.startSpot();
+    }
 
+    @Override
+    public void setPresenter(QRScannerContract.QRScannerPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void onGetCoins(boolean flag, String msg, Integer counts) {
+        if (!flag) {
+            showSnackbar(msg);
+            mQRCodeView.startSpot();
+            return;
+        }
+        showSnackbar("获得金币数：" + counts);
+        mQRCodeView.startSpot();
     }
 }

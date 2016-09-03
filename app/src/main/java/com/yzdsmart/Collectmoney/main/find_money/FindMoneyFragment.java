@@ -56,6 +56,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @BindView(R.id.find_money_map)
     MapView findMoneyMap;
 
+    private static final Integer REQUEST_LOGIN_CODE = 1000;
+
     private FragmentManager fm;
 
     private BaiduMap mBaiduMap = null;
@@ -167,7 +169,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @OnClick({R.id.title_left_operation_layout, R.id.title_right_operation_layout})
     void onClick(View view) {
         if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-            ((BaseActivity) getActivity()).openActivity(LoginActivity.class);
+            ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
             return;
         }
         Fragment fragment;
@@ -202,7 +204,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             @Override
             public boolean onMarkerClick(Marker marker) {
                 if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-                    ((BaseActivity) getActivity()).openActivity(LoginActivity.class);
+                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
                     return true;
                 }
                 if (locMarker == marker) {
@@ -318,6 +320,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             locLongitude = bdLocation.getLongitude();
             qLocation = locLongitude + "," + locLatitude;
 
+            SharedPreferencesUtils.setString(getActivity(), "qLocation", qLocation);
+
             if (null != SharedPreferencesUtils.getString(getActivity(), "cust_code", "") && SharedPreferencesUtils.getString(getActivity(), "cust_code", "").length() > 0) {
                 if (uploadCounts == 600) {
                     mPresenter.uploadCoor("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), qLocation);
@@ -337,12 +341,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 builder.target(ll).zoom(18.0f);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
 
-                searchType = 0;
-                mPresenter.getShopList("000000", qLocation, page_index, PAGE_SIZE);
-
-                if (null != SharedPreferencesUtils.getString(getActivity(), "cust_code", "") && SharedPreferencesUtils.getString(getActivity(), "cust_code", "").length() > 0) {
-                    mPresenter.getPersonBearby("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), qLocation, personPageIndex, personPageSize);
-                }
+//                searchType = 0;
+//                mPresenter.getShopList("000000", qLocation, page_index, PAGE_SIZE);
+//
+//                if (null != SharedPreferencesUtils.getString(getActivity(), "cust_code", "") && SharedPreferencesUtils.getString(getActivity(), "cust_code", "").length() > 0) {
+//                    mPresenter.getPersonBearby("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), qLocation, personPageIndex, personPageSize);
+//                }
             }
         }
     }

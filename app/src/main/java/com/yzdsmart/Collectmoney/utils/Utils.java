@@ -4,13 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Enumeration;
 import java.util.regex.Pattern;
 
 /**
@@ -121,5 +128,22 @@ public class Utils {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static String getLocalIpAddress() {
+        try {
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress()) {
+                        return inetAddress.getHostAddress().toString();
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+
+        }
+        return null;
     }
 }

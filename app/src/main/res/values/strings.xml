@@ -45,6 +45,7 @@
 
     <!--扫码-->
     <string name="qr_scan_title">扫码</string>
+    <string name="get_coins_error">获取金币失败,请重新扫码获取!</string>
 
     <!--用户详情-->
     <string name="detail_user_name">用户名 : </string>

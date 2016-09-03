@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.main;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
@@ -36,6 +37,8 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
 
     private TLSService tlsService;
 
+    private static final Integer REQUEST_LOGIN_CODE = 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +53,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
 
         new MainPresenter(this, this, tlsService);
 
-        if (SharedPreferencesUtils.getString(this, "im_account", "").length() > 0 && SharedPreferencesUtils.getString(this, "im_password", "").length() > 0) {
-            String im_name = SharedPreferencesUtils.getString(this, "im_account", "");
-            String im_pwd = SharedPreferencesUtils.getString(this, "im_password", "");
-            mPresenter.chatLogin(im_name, im_pwd);
-        }
+        imLogin();
     }
 
     @Override
@@ -82,7 +81,8 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
                 break;
             case R.id.money_friend_radio:
                 if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
-                    openActivity(LoginActivity.class);
+                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    group.clearCheck();
                     return;
                 }
                 openActivity(MoneyFriendshipActivity.class);
@@ -93,6 +93,14 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
                 addOrShowFragment(fragment, "find");
                 group.clearCheck();
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
+            imLogin();
         }
     }
 
@@ -179,5 +187,13 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     @Override
     public void setPresenter(MainContract.MainPresenter presenter) {
         mPresenter = presenter;
+    }
+
+    private void imLogin() {
+        if (SharedPreferencesUtils.getString(this, "im_account", "").length() > 0 && SharedPreferencesUtils.getString(this, "im_password", "").length() > 0) {
+            String im_name = SharedPreferencesUtils.getString(this, "im_account", "");
+            String im_pwd = SharedPreferencesUtils.getString(this, "im_password", "");
+            mPresenter.chatLogin(im_name, im_pwd);
+        }
     }
 }

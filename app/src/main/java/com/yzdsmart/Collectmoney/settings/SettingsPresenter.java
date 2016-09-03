@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
 
 /**
  * Created by YZD on 2016/9/3.
@@ -25,7 +26,10 @@ public class SettingsPresenter implements SettingsContract.SettingsPresenter {
         mModel.getCustDetailInfo(actioncode, submitCode, custCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-
+                CustDetailInfoRequestResponse response = (CustDetailInfoRequestResponse) result;
+                if (null != response) {
+                    mView.onGetCustDetailInfo(response);
+                }
             }
 
             @Override

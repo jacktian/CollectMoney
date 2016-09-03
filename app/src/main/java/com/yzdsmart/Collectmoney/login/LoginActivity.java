@@ -106,6 +106,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
             showSnackbar(msg);
             return;
         }
+        setResult(RESULT_OK);
         closeActivity();
     }
 }

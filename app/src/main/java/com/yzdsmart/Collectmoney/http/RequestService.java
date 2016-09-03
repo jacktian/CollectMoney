@@ -5,6 +5,7 @@ import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.FriendsRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.GetCoinRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.PersonRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
@@ -206,7 +207,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.TASK)
-    Observable<RequestResponse> getGoldFollow(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode, @Field("Coor") String coor, @Field("Ip") String ip);
+    Observable<GetCoinRequestResponse> getGoldCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode, @Field("Coor") String coor, @Field("Ip") String ip);
 
     /**
      * 上传用户头像
