@@ -40,6 +40,8 @@
     <string name="settings">设置</string>
     <string name="take_photo">拍照</string>
     <string name="galley_select">相册选取</string>
+    <string name="buy_coin">购买金币</string>
+    <string name="publishing_tasks">发布任务</string>
 
     <!--扫码-->
     <string name="qr_scan_title">扫码</string>
@@ -53,6 +55,15 @@
     <string name="detail_more_info">查看更多</string>
     <string name="detail_send_msg">发送消息</string>
     <string name="detail_send_video">视频聊天</string>
+
+    <!--设置-->
+    <string name="setting_person_name">姓\t名:</string>
+    <string name="setting_person_gender">性\t别:</string>
+    <string name="setting_person_phone">手机号:</string>
+    <string name="setting_person_age">年\t龄:</string>
+    <string name="setting_person_area">省市区:</string>
+    <string name="setting_person_address">住\t址:</string>
+    <string name="setting_logout">退出登录</string>
 
     <!--搜索新好友-->
     <string name="future_search_new_friend">搜索新的朋友</string>

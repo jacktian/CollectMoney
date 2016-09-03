@@ -54,6 +54,8 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
                 String name;
                 if (null != requestResponse.getCName() && !"".equals(requestResponse.getCName())) {
                     name = requestResponse.getCName();
+                } else if (null != requestResponse.getNickName() && !"".equals(requestResponse.getNickName())) {
+                    name = requestResponse.getNickName();
                 } else {
                     name = requestResponse.getC_UserCode();
                 }

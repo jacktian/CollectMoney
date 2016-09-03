@@ -18,7 +18,9 @@ import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
+import com.yzdsmart.Collectmoney.settings.SettingsActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
+import com.yzdsmart.Collectmoney.utils.Utils;
 
 import java.util.List;
 
@@ -90,7 +92,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater})
+    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -105,6 +107,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
                 break;
             case R.id.user_avater:
                 ((BaseActivity) getActivity()).openActivity(ImageCropActivity.class);
+                break;
+            case R.id.to_settings:
+                ((BaseActivity) getActivity()).openActivity(SettingsActivity.class);
                 break;
         }
     }
@@ -135,10 +140,10 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     public void onGetCustLevel(Integer gra, Integer sta) {
         userLevelIV.setImageDrawable(null);
         diamondCountLayout.removeAllViews();
-        userLevelIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.user_level_third));
+        userLevelIV.setImageDrawable(getActivity().getResources().getDrawable(Utils.getMipmapId(getActivity(), "vip" + gra)));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         ImageView diamond;
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < sta; i++) {
             diamond = new ImageView(getActivity());
             diamond.setLayoutParams(params);
             diamond.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.diamond_pink));

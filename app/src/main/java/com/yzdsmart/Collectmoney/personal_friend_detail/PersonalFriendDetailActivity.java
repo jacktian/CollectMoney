@@ -156,7 +156,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         userLevelLayout.removeAllViews();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         ImageView diamond;
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < sta; i++) {
             diamond = new ImageView(this);
             diamond.setLayoutParams(params);
             diamond.setImageDrawable(getResources().getDrawable(R.mipmap.diamond_pink));
@@ -172,6 +172,14 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 userAvaterIV.setImageDrawable(resource);
             }
         });
+        if (null != response.getCName() && !"".equals(response.getCName())) {
+            userNameTV.setText(response.getCName());
+
+        } else if (null != response.getNickName() && !"".equals(response.getNickName())) {
+            userNameTV.setText(response.getNickName());
+        } else {
+            userNameTV.setText(response.getC_UserCode());
+        }
         userNameTV.setText("".equals(response.getCName()) ? response.getC_UserCode() : response.getCName());
         userAddressTV.setText(response.getArea());
         userAccountTV.setText(response.getC_UserCode());

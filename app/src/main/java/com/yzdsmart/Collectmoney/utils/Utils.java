@@ -79,6 +79,17 @@ public class Utils {
                 .toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
+    /**
+     * 根据mipmap文件的名字取得id
+     *
+     * @param context context
+     * @param name    name
+     * @return int
+     */
+    public static int getMipmapId(Context context, String name) {
+        return context.getResources().getIdentifier(name, "mipmap", context.getPackageName());
+    }
+
 
     /**
      * MD5加密

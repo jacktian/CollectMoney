@@ -125,6 +125,12 @@
             android:theme="@style/ActivityColorTranslucentTheme" />
 
         <activity
+            android:name=".settings.SettingsActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
             android:name=".friend_future.FriendFutureActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"

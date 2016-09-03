@@ -4,31 +4,27 @@ package com.yzdsmart.Collectmoney.http.response;
  * Created by YZD on 2016/8/29.
  */
 public class CustDetailInfoRequestResponse {
-    private String C_Code;//用户内码
     private String C_UserCode;//用户名
-    private String CName;//用户名
-    private String CSex;
-    private String CBirthday;
-    private String CTel;
-    private String CIdNo;
-    private String CNation;
-    private Double CHeight;
-    private Double CWeight;
-    private String CProfession;
-    private String CAddress;
-    private String CProv;
-    private String CCity;
-    private String CDist;
-    private String CCountry;
-    private String CRemark;
-    private String TCAccount;
-    private String TCPassword;
+    private String CName;//用户姓名
+    private String CSex;//性别
+    private String CBirthday;//生日
+    private String CTel;//手机
+    private String CIdNo;//身份证
+    private String CNation;//民族
+    private Double CHeight;//身高
+    private Double CWeight;//体重
+    private String CProfession;//职业
+    private String CAddress;//地址
+    private String CProv;//省
+    private String CCity;//市
+    private String CDist;//区
+    private String CCountry;//国家
+    private String CRemark;//备注
 
     public CustDetailInfoRequestResponse() {
     }
 
-    public CustDetailInfoRequestResponse(String c_Code, String c_UserCode, String CName, String CSex, String CBirthday, String CTel, String CIdNo, String CNation, Double CHeight, Double CWeight, String CProfession, String CAddress, String CProv, String CCity, String CDist, String CCountry, String CRemark, String TCAccount, String TCPassword) {
-        C_Code = c_Code;
+    public CustDetailInfoRequestResponse(String c_UserCode, String CName, String CSex, String CBirthday, String CTel, String CIdNo, String CNation, Double CHeight, Double CWeight, String CProfession, String CAddress, String CProv, String CCity, String CDist, String CCountry, String CRemark) {
         C_UserCode = c_UserCode;
         this.CName = CName;
         this.CSex = CSex;
@@ -45,16 +41,6 @@ public class CustDetailInfoRequestResponse {
         this.CDist = CDist;
         this.CCountry = CCountry;
         this.CRemark = CRemark;
-        this.TCAccount = TCAccount;
-        this.TCPassword = TCPassword;
-    }
-
-    public String getC_Code() {
-        return C_Code;
-    }
-
-    public void setC_Code(String c_Code) {
-        C_Code = c_Code;
     }
 
     public String getC_UserCode() {
@@ -185,27 +171,10 @@ public class CustDetailInfoRequestResponse {
         this.CRemark = CRemark;
     }
 
-    public String getTCAccount() {
-        return TCAccount;
-    }
-
-    public void setTCAccount(String TCAccount) {
-        this.TCAccount = TCAccount;
-    }
-
-    public String getTCPassword() {
-        return TCPassword;
-    }
-
-    public void setTCPassword(String TCPassword) {
-        this.TCPassword = TCPassword;
-    }
-
     @Override
     public String toString() {
         return "{" +
-                "C_Code:'" + C_Code + '\'' +
-                ", C_UserCode:'" + C_UserCode + '\'' +
+                "C_UserCode:'" + C_UserCode + '\'' +
                 ", CName:'" + CName + '\'' +
                 ", CSex:'" + CSex + '\'' +
                 ", CBirthday:'" + CBirthday + '\'' +
@@ -221,8 +190,6 @@ public class CustDetailInfoRequestResponse {
                 ", CDist:'" + CDist + '\'' +
                 ", CCountry:'" + CCountry + '\'' +
                 ", CRemark:'" + CRemark + '\'' +
-                ", TCAccount:'" + TCAccount + '\'' +
-                ", TCPassword:'" + TCPassword + '\'' +
                 '}';
     }
 }
