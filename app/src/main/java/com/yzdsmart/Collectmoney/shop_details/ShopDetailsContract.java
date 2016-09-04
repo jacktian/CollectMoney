@@ -2,7 +2,10 @@ package com.yzdsmart.Collectmoney.shop_details;
 
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;
+import com.yzdsmart.Collectmoney.bean.ShopFollower;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
+
+import java.util.List;
 
 /**
  * Created by YZD on 2016/8/26.
@@ -21,6 +24,13 @@ public interface ShopDetailsContract {
          * @param action
          */
         void onSetFollow(Boolean flag, String action, String msg);
+
+        /**
+         * 获取指定店铺的获取金币的用户信息
+         *
+         * @param shopFollowers
+         */
+        void onGetShopFollowers(List<ShopFollower> shopFollowers);
     }
 
     interface ShopDetailsPresenter extends BasePresenter {
@@ -41,6 +51,18 @@ public interface ShopDetailsContract {
          * @param bazaCode
          */
         void setFollow(String action, String submitCode, String custCode, String bazaCode);
+
+        /**
+         * 获取指定店铺的获取金币的用户信息
+         *
+         * @param action
+         * @param submitCode
+         * @param bazaCode
+         * @param custCode
+         * @param pageIndex
+         * @param pageSize
+         */
+        void getShopFollowers(String action, String submitCode, String bazaCode, String custCode, Integer pageIndex, Integer pageSize);
 
         void unRegisterSubscribe();
     }

@@ -23,11 +23,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ShopFollowerAdapter extends RecyclerView.Adapter<ShopFollowerAdapter.ViewHolder> {
     private Context context;
-    private List<ShopFollower> hotelFollowerList;
+    private List<ShopFollower> shopFollowerList;
 
     public ShopFollowerAdapter(Context context) {
         this.context = context;
-        hotelFollowerList = new ArrayList<ShopFollower>();
+        shopFollowerList = new ArrayList<ShopFollower>();
     }
 
     /**
@@ -36,8 +36,8 @@ public class ShopFollowerAdapter extends RecyclerView.Adapter<ShopFollowerAdapte
      * @param list
      */
     public void appenList(List<ShopFollower> list) {
-        if (null != hotelFollowerList) {
-            hotelFollowerList.addAll(list);
+        if (null != shopFollowerList) {
+            shopFollowerList.addAll(list);
         }
         notifyDataSetChanged();
     }
@@ -46,8 +46,8 @@ public class ShopFollowerAdapter extends RecyclerView.Adapter<ShopFollowerAdapte
      * 清除列表
      */
     public void clearList() {
-        if (null != hotelFollowerList) {
-            hotelFollowerList.clear();
+        if (null != shopFollowerList) {
+            shopFollowerList.clear();
         }
         notifyDataSetChanged();
     }
@@ -61,14 +61,14 @@ public class ShopFollowerAdapter extends RecyclerView.Adapter<ShopFollowerAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.setFollowerName(hotelFollowerList.get(position).getUserName());
-        holder.setCoinCounts(hotelFollowerList.get(position).getCoins());
-        holder.setGetTime(hotelFollowerList.get(position).getTime());
+        holder.setFollowerName(shopFollowerList.get(position).getCustPwdName());
+        holder.setCoinCounts(shopFollowerList.get(position).getGoldNum());
+        holder.setGetTime(shopFollowerList.get(position).getTimeStr());
     }
 
     @Override
     public int getItemCount() {
-        return hotelFollowerList.size();
+        return shopFollowerList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

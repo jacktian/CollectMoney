@@ -8,14 +8,14 @@ public class Url {
 
     public static final String USER = "User";
     public static final String CUST = "Cust";
-    public static final String SETCUST = "SetCust";
+    public static final String SET_CUST = "SetCust";
     public static final String FRIEND = "Friend";
     public static final String SMS = "Sms";
-    public static final String SHOPLIST = "ShopList";
-    public static final String SETFOLLOW = "SetFollow";
+    public static final String SHOP_LIST = "ShopList";
+    public static final String SET_FOLLOW = "SetFollow";
     public static final String EXPAND = "Expand";
     public static final String TASK = "Task";
-    public static final String FILEUPLOAD = "FileUpload";
+    public static final String FILE_UPLOAD = "FileUpload";
     public static final String BASE = "Base";
     public static final String PERSON = "Person";
 

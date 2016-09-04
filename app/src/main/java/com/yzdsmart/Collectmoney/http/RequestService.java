@@ -1,5 +1,6 @@
 package com.yzdsmart.Collectmoney.http;
 
+import com.yzdsmart.Collectmoney.bean.ShopFollower;
 import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
@@ -105,7 +106,7 @@ public interface RequestService {
      * @return
      */
     @FormUrlEncoded
-    @POST(Url.SETCUST)
+    @POST(Url.SET_CUST)
     Observable<RequestResponse> setCustInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("TCAccount") String tcAccount, @Field("Profile_Nick") String profile_Nick, @Field("Profile_Image") String profile_Image, @Field("Profile_AllowType") String profile_AllowType, @Field("Profile_SelfSignature") String profile_SelfSignature);
 
     /**
@@ -155,7 +156,7 @@ public interface RequestService {
      * @return
      */
     @FormUrlEncoded
-    @POST(Url.SHOPLIST)
+    @POST(Url.SHOP_LIST)
     Observable<List<ShopListRequestResponse>> getShopList(@Field("SubmitCode") String submitCode, @Field("Coor") String coor, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
@@ -167,7 +168,7 @@ public interface RequestService {
      * @return
      */
     @FormUrlEncoded
-    @POST(Url.SHOPLIST)
+    @POST(Url.SHOP_LIST)
     Observable<ShopInfoRequestResponse> getShopInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("CustCode") String custCode);
 
     /**
@@ -179,7 +180,7 @@ public interface RequestService {
      * @return
      */
     @FormUrlEncoded
-    @POST(Url.SETFOLLOW)
+    @POST(Url.SET_FOLLOW)
     Observable<RequestResponse> setFollow(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode);
 
     /**
@@ -219,7 +220,7 @@ public interface RequestService {
      * @return
      */
     @FormUrlEncoded
-    @POST(Url.FILEUPLOAD)
+    @POST(Url.FILE_UPLOAD)
     Observable<UploadFileRequestResponse> saveFile(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("TCAccount") String tcAccount);
 
     /**
@@ -247,5 +248,20 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.PERSON)
     Observable<PersonRequestResponse> getPersonBearby(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("Coor") String coor, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+
+    /**
+     * 获取指定店铺的获取金币的用户信息
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param custCode
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.PERSON)
+    Observable<List<ShopFollower>> getShopFollowers(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
 }

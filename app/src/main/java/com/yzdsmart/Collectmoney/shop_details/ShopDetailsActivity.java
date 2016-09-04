@@ -15,6 +15,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.ShopFollower;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
+import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
@@ -63,11 +64,14 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
     private String bazaCode;//商铺编码
     private Boolean isAtte = false;
+    private static final String GET_SHOP_FOLLOWERS_CODE = "2112";
+    private Integer pageIndex = 0;
+    private static final Integer PAGE_SIZE = 10;
 
     private LinearLayoutManager mLinearLayoutManager;
     private Paint dividerPaint;
-    List<ShopFollower> hotelFollowerList;
-    private ShopFollowerAdapter hotelFollowerAdapter;
+    private List<ShopFollower> shopFollowerList;
+    private ShopFollowerAdapter shopFollowerAdapter;
 
     private ShopDetailsContract.ShopDetailsPresenter mPresenter;
 
@@ -75,7 +79,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        hotelFollowerList = new ArrayList<ShopFollower>();
+        shopFollowerList = new ArrayList<ShopFollower>();
 
         bazaCode = getIntent().getExtras().getString("bazaCode");
 
@@ -91,25 +95,17 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         dividerPaint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
         HorizontalDividerItemDecoration dividerItemDecoration = new HorizontalDividerItemDecoration.Builder(this).paint(dividerPaint).build();
 
-        hotelFollowerAdapter = new ShopFollowerAdapter(this);
+        shopFollowerAdapter = new ShopFollowerAdapter(this);
         hotelUsersRV.setHasFixedSize(true);
         hotelUsersRV.setLayoutManager(mLinearLayoutManager);
         hotelUsersRV.addItemDecoration(dividerItemDecoration);
-        hotelUsersRV.setAdapter(hotelFollowerAdapter);
+        hotelUsersRV.setAdapter(shopFollowerAdapter);
 
         new ShopDetailsPresenter(this, this);
 
         mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
 
-        List<ShopFollower> list = new ArrayList<ShopFollower>();
-        list.add(new ShopFollower("file:///android_asset/album_pic.png", "艾伦", 10, "08:23"));
-        list.add(new ShopFollower("file:///android_asset/album_pic.png", "嗣位", 22, "10:45"));
-        list.add(new ShopFollower("file:///android_asset/album_pic.png", "木樨", 13, "12:30"));
-        list.add(new ShopFollower("file:///android_asset/album_pic.png", "提姆", 41, "14:58"));
-        list.add(new ShopFollower("file:///android_asset/album_pic.png", "韩梅梅", 8, "23:08"));
-
-        hotelFollowerList.addAll(list);
-        hotelFollowerAdapter.appenList(hotelFollowerList);
+        mPresenter.getShopFollowers(GET_SHOP_FOLLOWERS_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
     }
 
     @Override
@@ -118,7 +114,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.is_atte})
+    @OnClick({R.id.title_left_operation_layout, R.id.is_atte, R.id.title_right_operation_layout})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
@@ -126,6 +122,9 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 break;
             case R.id.is_atte:
                 mPresenter.setFollow(isAtte ? "56" : "66", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), bazaCode);
+                break;
+            case R.id.title_right_operation_layout:
+                openActivity(QRScannerActivity.class);
                 break;
         }
     }
@@ -154,5 +153,12 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         }
         isAtte = "56".equals(action) ? false : true;
         isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.heart_icon_white_checked) : getResources().getDrawable(R.mipmap.heart_icon_white));
+    }
+
+    @Override
+    public void onGetShopFollowers(List<ShopFollower> shopFollowers) {
+        shopFollowerList.clear();
+        shopFollowerList.addAll(shopFollowers);
+        shopFollowerAdapter.appenList(shopFollowerList);
     }
 }

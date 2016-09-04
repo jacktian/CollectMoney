@@ -46,7 +46,7 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
     @BindView(R.id.friend_future_list)
     RecyclerView friendFutureRV;
 
-    private final int PAGE_SIZE = 20;
+    private static final int PAGE_SIZE = 20;
     private long pendSeq, decideSeq, recommendSeq;
 
     private LinearLayoutManager mLinearLayoutManager;

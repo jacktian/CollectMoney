@@ -1,9 +1,12 @@
 package com.yzdsmart.Collectmoney.shop_details;
 
+import com.yzdsmart.Collectmoney.bean.ShopFollower;
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
+
+import java.util.List;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -16,6 +19,7 @@ public class ShopDetailsModel {
     //网络请求监听
     private Subscriber<ShopInfoRequestResponse> getShopInfoSubscriber;
     private Subscriber<RequestResponse> setFollowSubscriber;
+    private Subscriber<List<ShopFollower>> getShopFollowersSubscribe;
 
     void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode, final RequestListener listener) {
         getShopInfoSubscriber = new Subscriber<ShopInfoRequestResponse>() {
@@ -63,6 +67,29 @@ public class ShopDetailsModel {
                 .subscribe(setFollowSubscriber);
     }
 
+    void getShopFollowers(String action, String submitCode, String bazaCode, String custCode, Integer pageIndex, Integer pageSize, final RequestListener listener) {
+        getShopFollowersSubscribe = new Subscriber<List<ShopFollower>>() {
+            @Override
+            public void onCompleted() {
+                listener.onComplete();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                listener.onError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(List<ShopFollower> shopFollowers) {
+                listener.onSuccess(shopFollowers);
+            }
+        };
+        RequestAdapter.getRequestService().getShopFollowers(action, submitCode, bazaCode, custCode, pageIndex, pageSize)
+                .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
+                .observeOn(AndroidSchedulers.mainThread())//回调到主线程
+                .subscribe(getShopFollowersSubscribe);
+    }
+
     void unRegisterSubscribe() {
         //解除引用关系，以避免内存泄露的发生
         if (null != getShopInfoSubscriber) {
@@ -70,6 +97,9 @@ public class ShopDetailsModel {
         }
         if (null != setFollowSubscriber) {
             setFollowSubscriber.unsubscribe();
+        }
+        if (null != getShopFollowersSubscribe) {
+            getShopFollowersSubscribe.unsubscribe();
         }
     }
 }

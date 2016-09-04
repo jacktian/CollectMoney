@@ -4,60 +4,93 @@ package com.yzdsmart.Collectmoney.bean;
  * Created by YZD on 2016/8/22.
  */
 public class ShopFollower {
-    private String avaterUrl;
-    private String userName;
-    private Integer coins;
-    private String time;
+    private String CustCode;//用户内码
+    private String CustPwdName;//用户隐藏的部分姓名
+    private String ImageUrl;//用户的头像Url
+    private String CustSex;//用户性别
+    private Integer GoldNum;//获取的金币
+    private String TimeStr;//时间间隔
+    private String TCAccount;//用户云通讯用户
 
     public ShopFollower() {
     }
 
-    public ShopFollower(String avaterUrl, String userName, Integer coins, String time) {
-        this.avaterUrl = avaterUrl;
-        this.userName = userName;
-        this.coins = coins;
-        this.time = time;
+    public ShopFollower(String custCode, String custPwdName, String imageUrl, String custSex, Integer goldNum, String timeStr, String TCAccount) {
+        CustCode = custCode;
+        CustPwdName = custPwdName;
+        ImageUrl = imageUrl;
+        CustSex = custSex;
+        GoldNum = goldNum;
+        TimeStr = timeStr;
+        this.TCAccount = TCAccount;
     }
 
-    public String getAvaterUrl() {
-        return avaterUrl;
+    public String getCustCode() {
+        return CustCode;
     }
 
-    public void setAvaterUrl(String avaterUrl) {
-        this.avaterUrl = avaterUrl;
+    public void setCustCode(String custCode) {
+        CustCode = custCode;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getCustPwdName() {
+        return CustPwdName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setCustPwdName(String custPwdName) {
+        CustPwdName = custPwdName;
     }
 
-    public Integer getCoins() {
-        return coins;
+    public String getImageUrl() {
+        return ImageUrl;
     }
 
-    public void setCoins(Integer coins) {
-        this.coins = coins;
+    public void setImageUrl(String imageUrl) {
+        ImageUrl = imageUrl;
     }
 
-    public String getTime() {
-        return time;
+    public String getCustSex() {
+        return CustSex;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setCustSex(String custSex) {
+        CustSex = custSex;
+    }
+
+    public Integer getGoldNum() {
+        return GoldNum;
+    }
+
+    public void setGoldNum(Integer goldNum) {
+        GoldNum = goldNum;
+    }
+
+    public String getTimeStr() {
+        return TimeStr;
+    }
+
+    public void setTimeStr(String timeStr) {
+        TimeStr = timeStr;
+    }
+
+    public String getTCAccount() {
+        return TCAccount;
+    }
+
+    public void setTCAccount(String TCAccount) {
+        this.TCAccount = TCAccount;
     }
 
     @Override
     public String toString() {
         return "{" +
-                "avaterUrl:'" + avaterUrl + '\'' +
-                ", userName:'" + userName + '\'' +
-                ", coins:" + coins +
-                ", time:'" + time + '\'' +
+                "CustCode:'" + CustCode + '\'' +
+                ", CustPwdName:'" + CustPwdName + '\'' +
+                ", ImageUrl:'" + ImageUrl + '\'' +
+                ", CustSex:'" + CustSex + '\'' +
+                ", GoldNum:" + GoldNum +
+                ", TimeStr:'" + TimeStr + '\'' +
+                ", TCAccount:'" + TCAccount + '\'' +
                 '}';
     }
 }

@@ -23,8 +23,8 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
     }
 
     @Override
-    public void getShopInfo(String actioncode, String submitCode, String bazaCode,String custCode) {
-        mModel.getShopInfo(actioncode, submitCode, bazaCode,custCode, new RequestListener() {
+    public void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode) {
+        mModel.getShopInfo(actioncode, submitCode, bazaCode, custCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ShopInfoRequestResponse shopInfo = (ShopInfoRequestResponse) result;
@@ -61,6 +61,26 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void getShopFollowers(String action, String submitCode, String bazaCode, String custCode, Integer pageIndex, Integer pageSize) {
+        mModel.getShopFollowers(action, submitCode, bazaCode, custCode, pageIndex, pageSize, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+
+            }
+
+            @Override
+            public void onError(String err) {
+
             }
 
             @Override
