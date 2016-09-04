@@ -3,9 +3,12 @@ package com.yzdsmart.Collectmoney.shop_details;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.bean.ShopFollower;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
+
+import java.util.List;
 
 /**
  * Created by YZD on 2016/8/26.
@@ -75,7 +78,10 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
         mModel.getShopFollowers(action, submitCode, bazaCode, custCode, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-
+                List<ShopFollower> shopFollowers = (List<ShopFollower>) result;
+                if (null != shopFollowers && shopFollowers.size() > 0) {
+                    mView.onGetShopFollowers(shopFollowers);
+                }
             }
 
             @Override

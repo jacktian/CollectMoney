@@ -96,7 +96,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                     public void onError(int code, String desc) {
                         //错误码code和错误描述desc，可用于定位请求失败原因
                         //错误码code列表请参见错误码表
-                        Glide.with(context).load(data.getAvatar()).into(holder.avatar);
+                        holder.avatar.setImageDrawable(context.getResources().getDrawable(R.mipmap.user_avater));
                     }
 
                     @Override

@@ -147,6 +147,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 closeActivity();
                 break;
             case R.id.msg_chat:
+                if (friend_identify.trim().length() <= 3) return;
                 bundle = new Bundle();
                 bundle.putString("identify", friend_identify);
                 bundle.putSerializable("type", TIMConversationType.C2C);

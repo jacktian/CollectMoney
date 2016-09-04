@@ -68,6 +68,9 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     private Integer pageIndex = 0;
     private static final Integer PAGE_SIZE = 10;
 
+    private static final String SET_FOCUS_CODE = "66";//取消关注：56    关注：66
+    private static final String CANCEL_FOCUS_CODE = "56";
+
     private LinearLayoutManager mLinearLayoutManager;
     private Paint dividerPaint;
     private List<ShopFollower> shopFollowerList;
@@ -114,17 +117,21 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.is_atte, R.id.title_right_operation_layout})
+    @OnClick({R.id.title_left_operation_layout, R.id.is_atte, R.id.title_right_operation_layout, R.id.get_more_followers})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
                 break;
             case R.id.is_atte:
-                mPresenter.setFollow(isAtte ? "56" : "66", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), bazaCode);
+                mPresenter.setFollow(isAtte ? CANCEL_FOCUS_CODE : SET_FOCUS_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), bazaCode);
                 break;
             case R.id.title_right_operation_layout:
                 openActivity(QRScannerActivity.class);
+                break;
+            case R.id.get_more_followers:
+                pageIndex++;
+                mPresenter.getShopFollowers(GET_SHOP_FOLLOWERS_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
                 break;
         }
     }
@@ -151,8 +158,10 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
             showSnackbar(msg);
             return;
         }
-        isAtte = "56".equals(action) ? false : true;
+        isAtte = CANCEL_FOCUS_CODE.equals(action) ? false : true;
         isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.heart_icon_white_checked) : getResources().getDrawable(R.mipmap.heart_icon_white));
+
+        mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
     }
 
     @Override

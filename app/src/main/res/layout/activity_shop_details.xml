@@ -81,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:text="地址：高新技术产业开发区西湖路2号"
+                        android:text=""
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/font_medium" />
 
@@ -134,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:layout_above="@id/hotel_star_level_title"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:text="常州香格里拉大酒店"
+                        android:text=""
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/font_medium" />
                 </RelativeLayout>
@@ -266,6 +266,7 @@
                     android:background="@drawable/shop_focus_panel_bg" />
 
                 <TextView
+                    android:id="@+id/get_more_followers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

@@ -18,5 +18,6 @@ public class Url {
     public static final String FILE_UPLOAD = "FileUpload";
     public static final String BASE = "Base";
     public static final String PERSON = "Person";
+    public static final String REGISTER = "Register";
 
 }

@@ -9,6 +9,7 @@ import com.yzdsmart.Collectmoney.http.response.FriendsRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetCoinRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.PersonRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.RegisterBusinessRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopListRequestResponse;
@@ -108,6 +109,23 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.SET_CUST)
     Observable<RequestResponse> setCustInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("TCAccount") String tcAccount, @Field("Profile_Nick") String profile_Nick, @Field("Profile_Image") String profile_Image, @Field("Profile_AllowType") String profile_AllowType, @Field("Profile_SelfSignature") String profile_SelfSignature);
+
+    /**
+     * 普通用户升级为商家
+     *
+     * @param submitCode
+     * @param custCode
+     * @param bazaName
+     * @param bazaPers
+     * @param bazaTel
+     * @param bazaAddr
+     * @param remark
+     * @param coor
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.REGISTER)
+    Observable<RegisterBusinessRequestResponse> registerBusiness(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaName") String bazaName, @Field("BazaPers") String bazaPers, @Field("BazaTel") String bazaTel, @Field("BazaAddr") String bazaAddr, @Field("Remark") String remark, @Field("Coor") String coor);
 
     /**
      * 获取好友的列表(包括其等级和星级）

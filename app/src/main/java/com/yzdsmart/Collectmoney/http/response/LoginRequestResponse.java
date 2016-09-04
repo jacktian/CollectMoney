@@ -6,8 +6,9 @@ import com.yzdsmart.Collectmoney.bean.TecentAccount;
  * Created by YZD on 2016/8/27.
  */
 public class LoginRequestResponse {
-    private TecentAccount TCInfo;
-    private String CustCode;
+    private TecentAccount TCInfo;//腾讯云通讯账号和密码
+    private String BazaCode;//商铺编码（加密）
+    private String CustCode;//用户内码
     private String SubmitCode;
     private String ActionStatus;
     private Integer ErrorCode;
@@ -16,13 +17,22 @@ public class LoginRequestResponse {
     public LoginRequestResponse() {
     }
 
-    public LoginRequestResponse(TecentAccount TCInfo, String custCode, String submitCode, String actionStatus, Integer errorCode, String errorInfo) {
+    public LoginRequestResponse(TecentAccount TCInfo, String bazaCode, String custCode, String submitCode, String actionStatus, Integer errorCode, String errorInfo) {
         this.TCInfo = TCInfo;
+        BazaCode = bazaCode;
         CustCode = custCode;
         SubmitCode = submitCode;
         ActionStatus = actionStatus;
         ErrorCode = errorCode;
         ErrorInfo = errorInfo;
+    }
+
+    public String getBazaCode() {
+        return BazaCode;
+    }
+
+    public void setBazaCode(String bazaCode) {
+        BazaCode = bazaCode;
     }
 
     public String getCustCode() {
@@ -77,6 +87,7 @@ public class LoginRequestResponse {
     public String toString() {
         return "{" +
                 "TCInfo:" + TCInfo +
+                ", BazaCode:'" + BazaCode + '\'' +
                 ", CustCode:'" + CustCode + '\'' +
                 ", SubmitCode:'" + SubmitCode + '\'' +
                 ", ActionStatus:'" + ActionStatus + '\'' +

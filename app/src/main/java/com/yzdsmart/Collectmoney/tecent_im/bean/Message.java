@@ -5,9 +5,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMMessage;
@@ -16,7 +13,6 @@ import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
 import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.chat.ChatActivity;
 import com.yzdsmart.Collectmoney.tecent_im.adapters.ChatAdapter;
 import com.yzdsmart.Collectmoney.tecent_im.utils.TimeUtil;
 
@@ -71,7 +67,7 @@ public abstract class Message {
                     //错误码code和错误描述desc，可用于定位请求失败原因
                     //错误码code列表请参见错误码表
                     //getApplicationContext解决You cannot start a load for a destroyed activity 最好不要在非主线程里面使用Glide加载图片
-                    Glide.with(App.getAppInstance()).load(App.getAppInstance().getResources().getDrawable(R.mipmap.tecent_head_me)).into(viewHolder.rightAvatar);
+                    viewHolder.rightAvatar.setImageDrawable(App.getAppInstance().getResources().getDrawable(R.mipmap.tecent_head_me));
                 }
 
                 @Override
@@ -104,7 +100,7 @@ public abstract class Message {
                     //错误码code和错误描述desc，可用于定位请求失败原因
                     //错误码code列表请参见错误码表
                     //getApplicationContext解决You cannot start a load for a destroyed activity 最好不要在非主线程里面使用Glide加载图片
-                    Glide.with(App.getAppInstance()).load(App.getAppInstance().getResources().getDrawable(R.mipmap.tecent_head_other)).into(viewHolder.leftAvatar);
+                    viewHolder.leftAvatar.setImageDrawable(App.getAppInstance().getResources().getDrawable(R.mipmap.tecent_head_other));
                 }
 
                 @Override

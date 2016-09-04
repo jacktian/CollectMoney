@@ -107,6 +107,12 @@
             android:theme="@style/ActivityColorTranslucentTheme" />
 
         <activity
+            android:name=".register_business.RegisterBusinessActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
             android:name=".money_friendship.MoneyFriendshipActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"
