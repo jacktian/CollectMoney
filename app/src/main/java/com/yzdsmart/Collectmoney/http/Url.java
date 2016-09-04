@@ -19,5 +19,6 @@ public class Url {
     public static final String BASE = "Base";
     public static final String PERSON = "Person";
     public static final String REGISTER = "Register";
+    public static final String GOLD = "Gold";
 
 }

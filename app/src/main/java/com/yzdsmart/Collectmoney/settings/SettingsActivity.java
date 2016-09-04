@@ -27,8 +27,11 @@ import butterknife.Optional;
  */
 public class SettingsActivity extends BaseActivity implements SettingsContract.SettingView {
     @Nullable
-    @BindViews({R.id.left_title, R.id.title_logo, R.id.center_title, R.id.title_right_operation_layout})
+    @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout})
     List<View> hideViews;
+    @Nullable
+    @BindView(R.id.center_title)
+    TextView centerTitleTV;
     @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
@@ -59,6 +62,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.S
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        centerTitleTV.setText("设置");
 
         new SettingsPresenter(this, this);
 

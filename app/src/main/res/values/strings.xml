@@ -34,14 +34,23 @@
     <string name="my_friend">我的好友</string>
     <string name="qr_scan">扫一扫</string>
     <string name="coin_total_count">币总数</string>
-    <string name="recommend_count_down">限时推荐</string>
-    <string name="recommend_daily">每日推荐</string>
+    <string name="register_business">升级商户</string>
     <string name="focus_shop">关注店铺</string>
     <string name="settings">设置</string>
     <string name="take_photo">拍照</string>
     <string name="galley_select">相册选取</string>
     <string name="buy_coin">购买金币</string>
     <string name="publishing_tasks">发布任务</string>
+
+    <!--升级商户-->
+    <string name="register_business_baza_name">商铺名称:</string>
+    <string name="register_business_baza_pers">联系人\t:</string>
+    <string name="register_business_baza_tel">联系电话:</string>
+    <string name="register_business_baza_address">地\t\t址:</string>
+    <string name="register_business_remark">备注说明:</string>
+    <string name="register_business_coor">坐\t\t标:</string>
+    <string name="refresh_coor">获取坐标</string>
+    <string name="register_business_submit">提交</string>
 
     <!--扫码-->
     <string name="qr_scan_title">扫码</string>
@@ -69,7 +78,7 @@
     <!--搜索新好友-->
     <string name="future_search_new_friend">搜索新的朋友</string>
 
-    <!--酒店详情-->
+    <!--商铺详情-->
     <string name="shop_detail">详情</string>
     <string name="shop_focus_person_counts">关注人数</string>
     <string name="shop_daily_coins">今日币数</string>

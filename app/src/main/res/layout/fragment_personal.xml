@@ -270,13 +270,14 @@
                 android:paddingRight="@dimen/activity_horizontal_padding">
 
                 <RelativeLayout
+                    android:id="@+id/register_business_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
                     <ImageView
-                        android:id="@+id/recommend_count_down_icon"
+                        android:id="@+id/register_business_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -287,12 +288,13 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/recommend_count_down_icon"
-                        android:text="@string/recommend_count_down"
+                        android:layout_toRightOf="@id/register_business_icon"
+                        android:text="@string/register_business"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
 
                     <ImageView
+                        android:id="@+id/to_register_business"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -300,35 +302,32 @@
                         android:src="@mipmap/right_arrow" />
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.6dp"
-                    android:background="@color/light_grey" />
-
                 <RelativeLayout
+                    android:id="@+id/buy_coins_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
                     <ImageView
-                        android:id="@+id/recommend_daily_icon"
+                        android:id="@+id/cart_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/star_icon" />
+                        android:src="@mipmap/cart_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/recommend_daily_icon"
-                        android:text="@string/recommend_daily"
+                        android:layout_toRightOf="@id/cart_icon"
+                        android:text="@string/buy_coin"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
 
                     <ImageView
+                        android:id="@+id/to_buy_coins"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -342,6 +341,7 @@
                     android:background="@color/light_grey" />
 
                 <RelativeLayout
+                    android:id="@+id/focus_shop_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/activity_vertical_padding"
@@ -371,54 +371,9 @@
                         android:layout_centerVertical="true"
                         android:src="@mipmap/right_arrow" />
                 </RelativeLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/personal_item_panel_margin_top"
-                android:background="@drawable/personal_item_panel_bg"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/activity_horizontal_padding"
-                android:paddingRight="@dimen/activity_horizontal_padding">
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/activity_vertical_padding"
-                    android:paddingTop="@dimen/activity_vertical_padding">
-
-                    <ImageView
-                        android:id="@+id/cart_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/cart_icon" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/cart_icon"
-                        android:text="@string/buy_coin"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/right_arrow" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.6dp"
-                    android:background="@color/light_grey" />
-
-                <RelativeLayout
+                    android:id="@+id/publish_tasks_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/activity_vertical_padding"
@@ -442,6 +397,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <ImageView
+                        android:id="@+id/to_publish_tasks"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"

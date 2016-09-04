@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendResult;
@@ -31,6 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends BaseActivity implements ProfileContract.ProfileView, View.OnClickListener {
     @Nullable
@@ -86,6 +88,8 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Pro
         if (profile == null) return;
         TextView name = (TextView) findViewById(R.id.name);
         name.setText(profile.getName());
+        CircleImageView avatar = (CircleImageView) findViewById(R.id.avatar);
+        Glide.with(this).load(profile.getAvatarUrl()).error(getResources().getDrawable(R.mipmap.tecent_head_other)).into(avatar);
         LineControllerView id = (LineControllerView) findViewById(R.id.id);
         id.setContent(profile.getIdentify());
         final LineControllerView remark = (LineControllerView) findViewById(R.id.remark);

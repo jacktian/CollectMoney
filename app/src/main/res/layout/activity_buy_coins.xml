@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <include
+        layout="@layout/common_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_toolbar_height" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/common_toolbar_height"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/activity_vertical_padding"
+            android:paddingTop="@dimen/activity_vertical_padding">
+
+            <TextView
+                android:id="@+id/coin_counts_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="金币数:"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_medium" />
+
+            <EditText
+                android:id="@+id/coin_counts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/coin_counts_title"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_medium" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/buy_coin"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/orange_button_bg"
+            android:text="购买"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_medium" />
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

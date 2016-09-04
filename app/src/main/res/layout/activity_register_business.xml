@@ -9,4 +9,244 @@
         layout="@layout/common_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_toolbar_height" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/common_toolbar_height">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/personal_item_panel_margin_top"
+                android:background="@drawable/personal_item_panel_bg"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/activity_horizontal_padding"
+                android:paddingRight="@dimen/activity_horizontal_padding">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <TextView
+                        android:id="@+id/business_name_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/register_business_baza_name"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <EditText
+                        android:id="@+id/business_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_toRightOf="@id/business_name_title"
+                        android:maxLines="1"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="@color/light_grey" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <TextView
+                        android:id="@+id/business_pers_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/register_business_baza_pers"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <EditText
+                        android:id="@+id/business_pers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_toRightOf="@id/business_pers_title"
+                        android:maxLines="1"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="@color/light_grey" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <TextView
+                        android:id="@+id/business_tel_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/register_business_baza_tel"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <EditText
+                        android:id="@+id/business_tel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_toRightOf="@id/business_tel_title"
+                        android:maxLines="1"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/personal_item_panel_margin_top"
+                android:background="@drawable/personal_item_panel_bg"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/activity_horizontal_padding"
+                android:paddingRight="@dimen/activity_horizontal_padding">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <TextView
+                        android:id="@+id/business_address_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/register_business_baza_address"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <EditText
+                        android:id="@+id/business_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_toRightOf="@id/business_address_title"
+                        android:maxLines="1"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="@color/light_grey" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <TextView
+                        android:id="@+id/business_remark_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/register_business_remark"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <EditText
+                        android:id="@+id/business_remark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_toRightOf="@id/business_remark_title"
+                        android:maxLines="1"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="@color/light_grey" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <Button
+                        android:id="@+id/refresh_coor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/button_height"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/orange_button_bg"
+                        android:text="@string/refresh_coor"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_medium" />
+
+                    <TextView
+                        android:id="@+id/business_coor_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/register_business_coor"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <EditText
+                        android:id="@+id/business_coor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_toLeftOf="@id/refresh_coor"
+                        android:layout_toRightOf="@id/business_coor_title"
+                        android:maxLines="1"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/personal_item_panel_margin_top"
+                android:background="@drawable/personal_item_panel_bg"
+                android:gravity="center"
+                android:paddingBottom="@dimen/activity_vertical_padding"
+                android:paddingTop="@dimen/activity_vertical_padding"
+                android:text="@string/register_business_submit"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_medium" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

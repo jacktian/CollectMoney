@@ -282,4 +282,33 @@ public interface RequestService {
     @POST(Url.PERSON)
     Observable<List<ShopFollower>> getShopFollowers(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
+    /**
+     * 商户充值金币
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param goldNum
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.GOLD)
+    Observable<RequestResponse> buyCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldNum") Integer goldNum);
+
+    /**
+     * 商户创建金币任务
+     *
+     * @param submitCode
+     * @param bazaCode
+     * @param totalGold
+     * @param sMinGold
+     * @param sMaxGold
+     * @param beginTime
+     * @param endTime
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASK)
+    Observable<RequestResponse> publishTasks(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("TotalGold") Integer totalGold, @Field("SMinGold") Integer sMinGold, @Field("SMaxGold") Integer sMaxGold, @Field("BeginTime") String beginTime, @Field("EndTime") String endTime);
+
 }

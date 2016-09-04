@@ -113,6 +113,18 @@
             android:theme="@style/ActivityColorTranslucentTheme" />
 
         <activity
+            android:name=".buy_coins.BuyCoinsActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
+            android:name=".publish_tasks.PublishTasksActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
             android:name=".money_friendship.MoneyFriendshipActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"

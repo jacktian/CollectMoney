@@ -33,7 +33,7 @@ public class FriendProfile implements ProfileSummary {
      */
     @Override
     public String getAvatarUrl() {
-        return null;
+        return profile.getFaceUrl();
     }
 
     /**

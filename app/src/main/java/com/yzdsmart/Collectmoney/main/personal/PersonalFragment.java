@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,13 +16,17 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.buy_coins.BuyCoinsActivity;
 import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
+import com.yzdsmart.Collectmoney.publish_tasks.PublishTasksActivity;
+import com.yzdsmart.Collectmoney.register_business.RegisterBusinessActivity;
 import com.yzdsmart.Collectmoney.settings.SettingsActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -62,12 +67,28 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @Nullable
     @BindView(R.id.diamond_count)
     LinearLayout diamondCountLayout;
+    @Nullable
+    @BindView(R.id.register_business_layout)
+    RelativeLayout registerBusinessLayout;
+    @Nullable
+    @BindView(R.id.buy_coins_layout)
+    RelativeLayout buyCoinsLayout;
+    @Nullable
+    @BindView(R.id.focus_shop_layout)
+    RelativeLayout focusShopLayout;
+    @Nullable
+    @BindView(R.id.publish_tasks_layout)
+    RelativeLayout publishTasksLayout;
 
     private PersonalContract.PersonalPresenter mPresenter;
+
+    private List<View> toggleViews;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        toggleViews = new ArrayList<View>();
 
         new PersonalPresenter(getActivity(), this);
     }
@@ -87,12 +108,22 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         titleRightOpeTLIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.grey_mail_icon));
         leftTitleTV.setText(getActivity().getResources().getString(R.string.personal_find));
 
+        toggleViews.clear();
+        if (SharedPreferencesUtils.getString(getActivity(), "baza_code", "").trim().length() > 0) {
+            toggleViews.add(registerBusinessLayout);
+            toggleViews.add(focusShopLayout);
+        } else {
+            toggleViews.add(buyCoinsLayout);
+            toggleViews.add(publishTasksLayout);
+        }
+        ButterKnife.apply(toggleViews, BaseActivity.BUTTERKNIFEGONE);
+
         mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
         mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings})
+    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -110,6 +141,18 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
                 break;
             case R.id.to_settings:
                 ((BaseActivity) getActivity()).openActivity(SettingsActivity.class);
+                break;
+            case R.id.to_register_business:
+                ((BaseActivity) getActivity()).openActivity(RegisterBusinessActivity.class);
+                ((MainActivity) getActivity()).backToFindMoney();
+                break;
+            case R.id.to_buy_coins:
+                ((BaseActivity) getActivity()).openActivity(BuyCoinsActivity.class);
+                ((MainActivity) getActivity()).backToFindMoney();
+                break;
+            case R.id.to_publish_tasks:
+                ((BaseActivity) getActivity()).openActivity(PublishTasksActivity.class);
+                ((MainActivity) getActivity()).backToFindMoney();
                 break;
         }
     }
