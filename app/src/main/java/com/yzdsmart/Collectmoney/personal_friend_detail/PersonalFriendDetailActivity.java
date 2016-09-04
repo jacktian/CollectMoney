@@ -14,8 +14,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.tencent.TIMConversationType;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.chat.ChatActivity;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.listener.AppBarOffsetChangeListener;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -137,11 +139,18 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout})
+    @OnClick({R.id.title_left_operation_layout, R.id.msg_chat})
     void onClick(View view) {
+        Bundle bundle;
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
+                break;
+            case R.id.msg_chat:
+                bundle = new Bundle();
+                bundle.putString("identify", friend_identify);
+                bundle.putSerializable("type", TIMConversationType.C2C);
+                openActivity(ChatActivity.class, bundle, 0);
                 break;
         }
     }

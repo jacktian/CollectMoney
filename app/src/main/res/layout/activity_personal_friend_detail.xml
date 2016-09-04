@@ -455,7 +455,7 @@
                 android:layout_marginTop="@dimen/user_detail_chat_margin_top">
 
                 <Button
-                    android:id="@+id/send_msg"
+                    android:id="@+id/msg_chat"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/button_height"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
@@ -465,11 +465,11 @@
                     android:textSize="@dimen/font_large" />
 
                 <Button
-                    android:id="@+id/send_video"
+                    android:id="@+id/video_chat"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/button_height"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_toRightOf="@id/send_msg"
+                    android:layout_toRightOf="@id/msg_chat"
                     android:background="@drawable/personal_details_button_bg"
                     android:text="@string/detail_send_video"
                     android:textColor="@color/grey"

@@ -189,6 +189,7 @@ public class FriendListAdapter extends UltimateViewAdapter<FriendListAdapter.Vie
         }
 
         public void setUserDiamondCountLayout(Integer userLevel, Integer diamondCounts) {
+            userDiamondCountLayout.removeAllViews();
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             ImageView diamond;
             for (int i = 0; i < diamondCounts; i++) {

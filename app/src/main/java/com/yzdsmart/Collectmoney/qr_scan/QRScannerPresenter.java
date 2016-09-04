@@ -29,7 +29,7 @@ public class QRScannerPresenter implements QRScannerContract.QRScannerPresenter 
         String retaCode = Uri.parse(scannerResult).getQueryParameter("RetaCode");
         String coor = SharedPreferencesUtils.getString(context, "qLocation", "");
         String custCode = SharedPreferencesUtils.getString(context, "cust_code", "");
-        mModel.getCoins(actionCode, Utils.md5(retaCode + "yzd" + custCode), custCode, retaCode, coor, "192.168.0.172", new RequestListener() {
+        mModel.getCoins(actionCode, Utils.md5(retaCode + "yzd" + custCode), custCode, retaCode, coor, "0.0.0.0", new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 GetCoinRequestResponse response = (GetCoinRequestResponse) result;
