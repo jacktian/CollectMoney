@@ -118,7 +118,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/begin_time_title"
-                android:inputType="number"
                 android:maxLines="1"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/font_medium" />

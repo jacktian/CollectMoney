@@ -39,9 +39,16 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
 
     private static final Integer REQUEST_LOGIN_CODE = 1000;
 
+    private static MainActivity mainActivity;
+
+    public static MainActivity getInstance() {
+        return mainActivity;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mainActivity = this;
 
         fm = getFragmentManager();
 
@@ -151,6 +158,13 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         Fragment fragment = fm.findFragmentByTag("find");
         if (null != fragment) {
             ((FindMoneyFragment) fragment).getShopListNearByMarket(location);
+        }
+    }
+
+    public void planRoute(String coor) {
+        Fragment fragment = fm.findFragmentByTag("find");
+        if (null != fragment) {
+            ((FindMoneyFragment) fragment).planRoute(coor);
         }
     }
 

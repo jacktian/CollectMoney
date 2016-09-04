@@ -72,7 +72,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
             @Override
             public void onItemClick(View view, int position) {
                 ((MainActivity) getActivity()).backToFindMoney();
-                ((MainActivity) getActivity()).getShopListNearByMarket(expandList.get(position).getCoor());
+                MainActivity.getInstance().getShopListNearByMarket(expandList.get(position).getCoor());
             }
         });
     }

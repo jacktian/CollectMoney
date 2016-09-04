@@ -15,6 +15,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.ShopFollower;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
+import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
@@ -76,6 +77,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     private List<ShopFollower> shopFollowerList;
     private ShopFollowerAdapter shopFollowerAdapter;
 
+    private String shopCoor;
     private ShopDetailsContract.ShopDetailsPresenter mPresenter;
 
     @Override
@@ -117,7 +119,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.is_atte, R.id.title_right_operation_layout, R.id.get_more_followers})
+    @OnClick({R.id.title_left_operation_layout, R.id.is_atte, R.id.title_right_operation_layout, R.id.get_more_followers, R.id.route_line})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
@@ -130,8 +132,11 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 openActivity(QRScannerActivity.class);
                 break;
             case R.id.get_more_followers:
-                pageIndex++;
-                mPresenter.getShopFollowers(GET_SHOP_FOLLOWERS_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
+                mPresenter.getShopFollowers(GET_SHOP_FOLLOWERS_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), ++pageIndex, PAGE_SIZE);
+                break;
+            case R.id.route_line:
+                MainActivity.getInstance().planRoute(shopCoor);
+                closeActivity();
                 break;
         }
     }
@@ -150,6 +155,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         visitPersonCountsTV.setText("" + shopDetails.getVisiNum());
         isAtte = shopDetails.getAtte();
         isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.heart_icon_white_checked) : getResources().getDrawable(R.mipmap.heart_icon_white));
+        shopCoor = shopDetails.getCoor();
     }
 
     @Override

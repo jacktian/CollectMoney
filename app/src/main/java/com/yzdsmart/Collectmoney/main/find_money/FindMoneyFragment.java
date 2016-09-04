@@ -25,6 +25,17 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
+import com.baidu.mapapi.search.core.RouteLine;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.route.BikingRouteResult;
+import com.baidu.mapapi.search.route.DrivingRouteResult;
+import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
+import com.baidu.mapapi.search.route.PlanNode;
+import com.baidu.mapapi.search.route.RoutePlanSearch;
+import com.baidu.mapapi.search.route.TransitRouteResult;
+import com.baidu.mapapi.search.route.WalkingRouteLine;
+import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
+import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
@@ -32,6 +43,8 @@ import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.main.personal.PersonalFragment;
+import com.yzdsmart.Collectmoney.map.OverlayManager;
+import com.yzdsmart.Collectmoney.map.WalkingRouteOverlay;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -48,7 +61,7 @@ import butterknife.Optional;
 /**
  * Created by YZD on 2016/8/17.
  */
-public class FindMoneyFragment extends BaseFragment implements FindMoneyContract.FindMoneyView {
+public class FindMoneyFragment extends BaseFragment implements FindMoneyContract.FindMoneyView, OnGetRoutePlanResultListener {
     @Nullable
     @BindViews({R.id.left_title, R.id.center_title})
     List<View> hideViews;
@@ -72,9 +85,13 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private MyLocationListener locListener = new MyLocationListener();
     private Marker locMarker;
     private ArrayList<BitmapDescriptor> locGifList;
+    //路径规划相关
+    private RoutePlanSearch mSearch = null;// 搜索模块，也可去掉地图模块独立使用
+    private RouteLine routeLine = null;
+    private WalkingRouteOverlay walkingRouteOverlay = null;
     //周边检索
     //检索到的位置列表信息
-    List<Overlay> mOverlayList = null;
+    List<Overlay> coinsOverlayList = null;
     //周边商铺检索参数
     private static final Integer PAGE_SIZE = 5;//分页数量
     private Integer page_index = 0;//分页索引 当前页标，从0开始
@@ -84,7 +101,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private Marker marketMarker;//商场Marker
 
     //定位频率
-    private static final Integer LOCTIME = 5000;//毫秒
+    private static final Integer LOC_TIME = 5000;//毫秒
     //上传坐标时间间隔次数
     private Integer uploadCounts = 0;
 
@@ -99,7 +116,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         super.onCreate(savedInstanceState);
 
         fm = getFragmentManager();
-        mOverlayList = new ArrayList<Overlay>();
+        coinsOverlayList = new ArrayList<Overlay>();
         //定位图标
         locGifList = new ArrayList<BitmapDescriptor>();
         locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker1));
@@ -127,6 +144,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         initLoc();
         //路径描线
 //        initRoute();
+        // 初始化路径规划模块，注册事件监听
+        mSearch = RoutePlanSearch.newInstance();
+        mSearch.setOnGetRoutePlanResultListener(this);
     }
 
     @Override
@@ -212,6 +232,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                         marketMarker.remove();
                         marketMarker = null;
                     }
+                    if (null != walkingRouteOverlay) {
+                        walkingRouteOverlay.removeFromMap();
+                        walkingRouteOverlay = null;
+                    }
                     searchType = 0;
                     mPresenter.getShopList("000000", qLocation, page_index, PAGE_SIZE);
                 } else if (marketMarker == marker) {
@@ -235,7 +259,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); //返回的定位结果是百度经纬度,默认值gcj02
-        option.setScanSpan(LOCTIME);//设置发起定位请求的间隔时间为1000ms
+        option.setScanSpan(LOC_TIME);//设置发起定位请求的间隔时间为1000ms
         mLocClient.setLocOption(option);
         mLocClient.start();
     }
@@ -288,16 +312,49 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     public void onGetShopList(List<MarkerOptions> optionsList) {
         //先清除图层
         // mBaiduMap.clear();
-        for (Overlay overlay : mOverlayList) {
+        for (Overlay overlay : coinsOverlayList) {
             overlay.remove();
         }
-        mOverlayList.clear();
+        coinsOverlayList.clear();
         for (MarkerOptions options : optionsList) {
             // 在地图上添加Marker，并显示
-            mOverlayList.add(mBaiduMap.addOverlay(options));
+            coinsOverlayList.add(mBaiduMap.addOverlay(options));
         }
         //缩放地图，使所有Overlay都在合适的视野内 注： 该方法只对Marker类型的overlay有效
         zoomToSpan();
+    }
+
+    @Override
+    public void onGetWalkingRouteResult(WalkingRouteResult walkingRouteResult) {
+        if (null == walkingRouteResult || SearchResult.ERRORNO.NO_ERROR != walkingRouteResult.error) {
+            System.out.println("onGetWalkingRouteResult---->未找到结果");
+        }
+        if (SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR == walkingRouteResult.error) {
+            return;
+        }
+        if (SearchResult.ERRORNO.NO_ERROR == walkingRouteResult.error) {
+            routeLine = walkingRouteResult.getRouteLines().get(0);
+            System.out.println("onGetWalkingRouteResult---->步行行驶距离：" + routeLine.getDistance());
+            walkingRouteOverlay = new MyWalkingRouteOverlay(mBaiduMap);
+            walkingRouteOverlay.setData((WalkingRouteLine) routeLine);
+            walkingRouteOverlay.addToMap();
+            walkingRouteOverlay.zoomToSpan();
+        }
+    }
+
+    @Override
+    public void onGetTransitRouteResult(TransitRouteResult transitRouteResult) {
+
+    }
+
+    @Override
+    public void onGetDrivingRouteResult(DrivingRouteResult drivingRouteResult) {
+
+    }
+
+    @Override
+    public void onGetBikingRouteResult(BikingRouteResult bikingRouteResult) {
+
     }
 
     //定位监听器
@@ -340,9 +397,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 MapStatus.Builder builder = new MapStatus.Builder();
                 builder.target(ll).zoom(18.0f);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-
-//                searchType = 0;
-//                mPresenter.getShopList("000000", qLocation, page_index, PAGE_SIZE);
 //
 //                if (null != SharedPreferencesUtils.getString(getActivity(), "cust_code", "") && SharedPreferencesUtils.getString(getActivity(), "cust_code", "").length() > 0) {
 //                    mPresenter.getPersonBearby("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), qLocation, personPageIndex, personPageSize);
@@ -351,16 +405,53 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         }
     }
 
-    public void getShopListNearByMarket(String location) {
+    // 定制RouteOverly
+    private class MyWalkingRouteOverlay extends WalkingRouteOverlay {
+
+        public MyWalkingRouteOverlay(BaiduMap baiduMap) {
+            super(baiduMap);
+        }
+
+        @Override
+        public BitmapDescriptor getStartMarker() {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.icon_st);
+        }
+
+        @Override
+        public BitmapDescriptor getTerminalMarker() {
+            return BitmapDescriptorFactory.fromResource(R.mipmap.icon_en);
+        }
+    }
+
+    public void getShopListNearByMarket(String coor) {
         searchType = 1;
         page_index = 0;
         if (null != marketMarker) {
             marketMarker.remove();
             marketMarker = null;
         }
-        MarkerOptions marketMO = new MarkerOptions().position(new LatLng(Double.valueOf(location.split(",")[1]), Double.valueOf(location.split(",")[0]))).icon(BitmapDescriptorFactory.fromResource(R.mipmap.market_icon));
+        if (null != walkingRouteOverlay) {
+            walkingRouteOverlay.removeFromMap();
+            walkingRouteOverlay = null;
+        }
+        MarkerOptions marketMO = new MarkerOptions().position(new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]))).icon(BitmapDescriptorFactory.fromResource(R.mipmap.market_icon));
         marketMarker = (Marker) (mBaiduMap.addOverlay(marketMO));//定位图标
-        mPresenter.getShopList("000000", location, page_index, PAGE_SIZE);
+        mPresenter.getShopList("000000", coor, page_index, PAGE_SIZE);
+    }
+
+    public void planRoute(String coor) {
+        if (null != walkingRouteOverlay) {
+            walkingRouteOverlay.removeFromMap();
+            walkingRouteOverlay = null;
+        }
+        //点击检索点显示信息
+        LatLng stLocation = new LatLng(locLatitude, locLongitude);//定位坐标点
+        LatLng endLocation = new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]));//目的坐标点
+        // 设置起终点信息
+        PlanNode stNode = PlanNode.withLocation(stLocation);
+        PlanNode endNode = PlanNode.withLocation(endLocation);
+        //步行路线规划
+        mSearch.walkingSearch((new WalkingRoutePlanOption()).from(stNode).to(endNode));
     }
 
     /**
@@ -373,9 +464,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         if (mBaiduMap == null) {
             return;
         }
-        if (mOverlayList.size() > 0) {
+        if (coinsOverlayList.size() > 0) {
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            for (Overlay overlay : mOverlayList) {
+            for (Overlay overlay : coinsOverlayList) {
                 // polyline 中的点可能太多，只按marker 缩放
                 if (overlay instanceof Marker) {
                     builder.include(((Marker) overlay).getPosition());
