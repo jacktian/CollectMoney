@@ -21,6 +21,8 @@
     <dimen name="button_height">31dp</dimen>
     <dimen name="button_radius">14dp</dimen>
 
+    <dimen name="edit_height">30dp</dimen>
+
     <dimen name="common_text_view_padding">3dp</dimen>
 
     <!--登录、注册、忘记密码-->
@@ -50,7 +52,7 @@
     <dimen name="recommend_list_item_des_height">24dp</dimen>
     <dimen name="recommend_list_item_des_padding">8dp</dimen>
 
-    <!--酒店详情-->
+    <!--商铺详情-->
     <dimen name="shop_detail_head_height">35dp</dimen>
     <dimen name="shop_detail_head_width">74dp</dimen>
     <dimen name="shop_detail_head_panel_height">196dp</dimen>

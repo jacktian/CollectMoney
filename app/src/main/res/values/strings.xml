@@ -42,6 +42,17 @@
     <string name="buy_coin">购买金币</string>
     <string name="publishing_tasks">发布任务</string>
 
+    <!--金币总数-->
+    <string name="personal_coin_counts">获取金币数</string>
+    <string name="personal_coin_time">获取时间</string>
+
+    <!--购买金币-->
+    <string name="buy_coin_hint">请输入购买币数</string>
+    <string name="buy_coin_counts">购买币数</string>
+    <string name="buy_coin_time">交易时间</string>
+    <string name="buy_coin_amount">交易金额</string>
+    <string name="buy_coin_success">购买金币成功!</string>
+
     <!--升级商户-->
     <string name="register_business_baza_name">商铺名称:</string>
     <string name="register_business_baza_pers">联系人\t:</string>

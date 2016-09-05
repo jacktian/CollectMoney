@@ -92,6 +92,8 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.qr_code_icon));
 
+        new ShopDetailsPresenter(this, this);
+
         mLinearLayoutManager = new LinearLayoutManager(this);
         dividerPaint = new Paint();
         dividerPaint.setStrokeWidth(1);
@@ -105,8 +107,6 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         hotelUsersRV.setLayoutManager(mLinearLayoutManager);
         hotelUsersRV.addItemDecoration(dividerItemDecoration);
         hotelUsersRV.setAdapter(shopFollowerAdapter);
-
-        new ShopDetailsPresenter(this, this);
 
         mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
 

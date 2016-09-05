@@ -252,6 +252,12 @@
 
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
 
+        <activity
+            android:name=".personal_coin_list.PersonalCoinsActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
         <!--腾讯聊天开始-->
         <!-- 消息收发service -->
         <service

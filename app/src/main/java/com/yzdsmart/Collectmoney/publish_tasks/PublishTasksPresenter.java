@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.PublishTaskLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 
 /**
@@ -31,6 +32,29 @@ public class PublishTasksPresenter implements PublishTasksContract.PublishTasksP
                     mView.onPublishTask(true, null);
                 } else {
                     mView.onPublishTask(false, response.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize) {
+        mModel.publishTaskLog(action, submitCode, bazaCode, pageIndex, pageSize, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                PublishTaskLogRequestResponse response = (PublishTaskLogRequestResponse) result;
+                if (null != response.getLists() && response.getLists().size() > 0) {
+                    mView.onPublishTaskLog(response.getLists());
                 }
             }
 

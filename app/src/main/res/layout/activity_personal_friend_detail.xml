@@ -237,7 +237,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/personal_item_panel_margin_top"
-                android:background="@drawable/personal_item_panel_bg"
+                android:background="@drawable/white_panel_top_bottom_border"
                 android:paddingBottom="@dimen/activity_vertical_padding"
                 android:paddingLeft="@dimen/user_detail_item_layout_padding"
                 android:paddingRight="@dimen/user_detail_item_layout_padding"
@@ -278,7 +278,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/personal_item_panel_margin_top"
-                android:background="@drawable/personal_item_panel_bg"
+                android:background="@drawable/white_panel_top_bottom_border"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/activity_vertical_padding"
                 android:paddingTop="@dimen/activity_vertical_padding">

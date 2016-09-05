@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.bean.PublishTaskLog;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.List;
@@ -102,5 +103,10 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
             return;
         }
         closeActivity();
+    }
+
+    @Override
+    public void onPublishTaskLog(List<PublishTaskLog> logList) {
+
     }
 }

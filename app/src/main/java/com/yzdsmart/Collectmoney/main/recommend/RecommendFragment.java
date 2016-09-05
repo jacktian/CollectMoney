@@ -91,6 +91,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
         titleRightOpeTLIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.grey_mail_icon));
 
         cityRecommendSpinner.setAdapter(citiesAdapter);
+        cityRecommendSpinner.setText(cities[0]);
 
         recommendListRV.setHasFixedSize(true);
         recommendListRV.setLayoutManager(mLinearLayoutManager);

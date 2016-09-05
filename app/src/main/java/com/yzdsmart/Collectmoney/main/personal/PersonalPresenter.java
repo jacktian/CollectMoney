@@ -59,7 +59,7 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
                 } else {
                     name = requestResponse.getC_UserCode();
                 }
-                mView.onGetCustInfo(name, requestResponse.getImageUrl() == null ? "" : requestResponse.getImageUrl());
+                mView.onGetCustInfo(name, requestResponse.getImageUrl() == null ? "" : requestResponse.getImageUrl(), requestResponse.getGoldNum());
             }
 
             @Override

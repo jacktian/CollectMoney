@@ -19,6 +19,8 @@ import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.buy_coins.BuyCoinsActivity;
 import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
+import com.yzdsmart.Collectmoney.money_friendship.MoneyFriendshipActivity;
+import com.yzdsmart.Collectmoney.personal_coin_list.PersonalCoinsActivity;
 import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
 import com.yzdsmart.Collectmoney.publish_tasks.PublishTasksActivity;
 import com.yzdsmart.Collectmoney.register_business.RegisterBusinessActivity;
@@ -79,6 +81,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @Nullable
     @BindView(R.id.publish_tasks_layout)
     RelativeLayout publishTasksLayout;
+    @Nullable
+    @BindView(R.id.user_account_coin)
+    TextView userAccountCoinTV;
 
     private PersonalContract.PersonalPresenter mPresenter;
 
@@ -123,7 +128,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks})
+    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_money_friend})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -152,6 +157,14 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
                 break;
             case R.id.to_publish_tasks:
                 ((BaseActivity) getActivity()).openActivity(PublishTasksActivity.class);
+                ((MainActivity) getActivity()).backToFindMoney();
+                break;
+            case R.id.to_personal_coins:
+                ((BaseActivity) getActivity()).openActivity(PersonalCoinsActivity.class);
+                ((MainActivity) getActivity()).backToFindMoney();
+                break;
+            case R.id.to_money_friend:
+                ((BaseActivity) getActivity()).openActivity(MoneyFriendshipActivity.class);
                 ((MainActivity) getActivity()).backToFindMoney();
                 break;
         }
@@ -195,8 +208,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Override
-    public void onGetCustInfo(String name, String headUel) {
+    public void onGetCustInfo(String name, String headUel, Integer goldNum) {
         userNameTV.setText(name);
+        userAccountCoinTV.setText("" + goldNum);
         Glide.with(this).load(headUel).placeholder(getActivity().getResources().getDrawable(R.mipmap.user_avater)).into(new SimpleTarget<GlideDrawable>() {//解决有的图片第一次加载的时候只显示占位图，第二次才显示正常的图片呢
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {

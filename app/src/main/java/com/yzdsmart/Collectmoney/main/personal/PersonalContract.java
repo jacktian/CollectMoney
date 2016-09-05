@@ -21,8 +21,9 @@ public interface PersonalContract {
          *
          * @param name
          * @param headUel
+         * @param goldNum
          */
-        void onGetCustInfo(String name, String headUel);
+        void onGetCustInfo(String name, String headUel, Integer goldNum);
     }
 
     interface PersonalPresenter extends BasePresenter {

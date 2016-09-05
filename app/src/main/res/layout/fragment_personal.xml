@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/personal_item_panel_margin_top"
-                android:background="@drawable/personal_item_panel_bg"
+                android:background="@drawable/white_panel_top_bottom_border"
                 android:paddingBottom="@dimen/activity_vertical_padding"
                 android:paddingLeft="@dimen/activity_horizontal_padding"
                 android:paddingRight="@dimen/activity_horizontal_padding"
@@ -114,7 +114,7 @@
                                 android:textSize="@dimen/font_medium" />
 
                             <TextView
-                                android:id="@+id/user_account_money"
+                                android:id="@+id/user_account_coin"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
@@ -129,7 +129,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="right"
-                                android:text="元"
+                                android:text="金币"
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/font_medium" />
                         </LinearLayout>
@@ -151,7 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/personal_item_panel_margin_top"
-                android:background="@drawable/personal_item_panel_bg"
+                android:background="@drawable/white_panel_top_bottom_border"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/activity_horizontal_padding"
                 android:paddingRight="@dimen/activity_horizontal_padding">
@@ -180,6 +180,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <ImageView
+                        android:id="@+id/to_money_friend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -216,6 +217,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <ImageView
+                        android:id="@+id/to_qr_scan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -252,6 +254,7 @@
                         android:textSize="@dimen/font_medium" />
 
                     <ImageView
+                        android:id="@+id/to_personal_coins"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -264,7 +267,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/personal_item_panel_margin_top"
-                android:background="@drawable/personal_item_panel_bg"
+                android:background="@drawable/white_panel_top_bottom_border"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/activity_horizontal_padding"
                 android:paddingRight="@dimen/activity_horizontal_padding">

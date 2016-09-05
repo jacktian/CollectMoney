@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.buy_coins;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 
@@ -28,7 +29,7 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
             public void onSuccess(Object result) {
                 RequestResponse response = (RequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
-                    mView.onBuyCoins(true, null);
+                    mView.onBuyCoins(true, context.getResources().getString(R.string.buy_coin_success));
                 } else {
                     mView.onBuyCoins(false, response.getErrorInfo());
                 }

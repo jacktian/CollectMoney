@@ -82,10 +82,15 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
     @Override
     public void onBuyCoins(boolean flag, String msg) {
+        showSnackbar(msg);
         if (!flag) {
-            showSnackbar(msg);
             return;
         }
-        closeActivity();
+        try {
+            Thread.sleep(1000);
+            closeActivity();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
