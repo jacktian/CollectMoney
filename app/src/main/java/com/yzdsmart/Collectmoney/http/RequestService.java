@@ -7,8 +7,10 @@ import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.FriendsRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.GetCoinsLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.PersonRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.PublishTaskLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RegisterBusinessRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
@@ -310,5 +312,33 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.TASK)
     Observable<RequestResponse> publishTasks(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("TotalGold") Integer totalGold, @Field("SMinGold") Integer sMinGold, @Field("SMaxGold") Integer sMaxGold, @Field("BeginTime") String beginTime, @Field("EndTime") String endTime);
+
+    /**
+     * 用户获取金币日志列表
+     *
+     * @param action
+     * @param submitCode
+     * @param custCode
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASKLOG)
+    Observable<GetCoinsLogRequestResponse> getCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+
+    /**
+     * 指定商铺获得发布任务日志列表
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASKLOG)
+    Observable<PublishTaskLogRequestResponse> publishTaskLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
 }

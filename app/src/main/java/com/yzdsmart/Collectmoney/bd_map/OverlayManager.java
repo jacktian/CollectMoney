@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.map;
+package com.yzdsmart.Collectmoney.bd_map;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BaiduMap.OnPolylineClickListener;

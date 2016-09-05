@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.map;
+package com.yzdsmart.Collectmoney.bd_map;
 
 import android.graphics.Color;
 import android.os.Bundle;

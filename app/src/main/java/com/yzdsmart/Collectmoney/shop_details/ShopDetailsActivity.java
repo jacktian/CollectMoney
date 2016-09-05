@@ -135,6 +135,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 mPresenter.getShopFollowers(GET_SHOP_FOLLOWERS_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), ++pageIndex, PAGE_SIZE);
                 break;
             case R.id.route_line:
+                if (null == shopCoor || shopCoor.trim().length() <= 0) return;
                 MainActivity.getInstance().planRoute(shopCoor);
                 closeActivity();
                 break;

@@ -9,7 +9,7 @@ android {
         applicationId "com.yzdsmart.Collectmoney"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 31
+        versionCode 50
         versionName "1.0"
         multiDexEnabled true
         ndk {

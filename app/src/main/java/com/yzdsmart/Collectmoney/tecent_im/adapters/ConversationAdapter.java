@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
+import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.tecent_im.bean.Conversation;
 import com.yzdsmart.Collectmoney.tecent_im.utils.TimeUtil;
@@ -102,7 +103,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                     @Override
                     public void onSuccess(List<TIMUserProfile> result) {
                         for (TIMUserProfile res : result) {
-                            Glide.with(context).load(res.getFaceUrl()).error(data.getAvatar()).into(holder.avatar);
+                            Glide.with(App.getAppInstance()).load(res.getFaceUrl()).error(data.getAvatar()).into(holder.avatar);
                         }
                     }
                 });
