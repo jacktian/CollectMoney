@@ -21,6 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/personal_item_panel_margin_top"
             android:background="@drawable/white_panel_top_bottom_border"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical"
             android:paddingLeft="@dimen/activity_horizontal_padding"
             android:paddingRight="@dimen/activity_horizontal_padding">
@@ -219,7 +221,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/buy_coin_counts"
+                android:text="@string/publish_task_coin_total_counts"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/font_medium" />
 
@@ -229,7 +231,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/buy_coin_time"
+                android:text="@string/publish_task_begin_end_time"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/font_medium" />
 
@@ -238,7 +240,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/buy_coin_amount"
+                android:text="@string/publish_task_coin_left_counts"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/font_medium" />
         </LinearLayout>

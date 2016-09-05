@@ -212,7 +212,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_toRightOf="@id/qr_code_icon"
-                        android:text="@string/qr_scan"
+                        android:text="@string/qr_scan_log"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
 
@@ -249,7 +249,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_toRightOf="@id/coin_total_icon"
-                        android:text="@string/coin_total_count"
+                        android:text="@string/coin_log"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
 

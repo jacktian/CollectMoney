@@ -91,6 +91,31 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
                 businessCoorET.setText(SharedPreferencesUtils.getString(this, "qLocation", ""));
                 break;
             case R.id.submit:
+                if (!requiredVerify(businessNameET)) {
+                    businessNameET.setError(getResources().getString(R.string.register_business_name_required));
+                    return;
+                }
+                if (!requiredVerify(businessPersET)) {
+                    businessPersET.setError(getResources().getString(R.string.register_business_pers_required));
+                    return;
+                }
+                if (!requiredVerify(businessTelET)) {
+                    businessTelET.setError(getResources().getString(R.string.register_business_tel_required));
+                    return;
+                }
+                if (!requiredVerify(businessAddressET)) {
+                    businessAddressET.setError(getResources().getString(R.string.register_business_address_required));
+                    return;
+                }
+                if (!requiredVerify(businessRemarkET)) {
+                    businessRemarkET.setError(getResources().getString(R.string.register_business_remark_required));
+                    return;
+                }
+                if (!requiredVerify(businessCoorET)) {
+                    businessCoorET.setError(getResources().getString(R.string.register_business_coor_required));
+                    return;
+                }
+
                 String businessName = businessNameET.getText().toString();
                 String businessPers = businessPersET.getText().toString();
                 String businessTel = businessTelET.getText().toString();

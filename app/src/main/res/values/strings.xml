@@ -32,8 +32,8 @@
     <!--个人中心-->
     <string name="personal_find">我的搜搜</string>
     <string name="my_friend">我的好友</string>
-    <string name="qr_scan">扫一扫</string>
-    <string name="coin_total_count">币总数</string>
+    <string name="qr_scan_log">扫币日志</string>
+    <string name="coin_log">金币日志</string>
     <string name="register_business">升级商户</string>
     <string name="focus_shop">关注店铺</string>
     <string name="settings">设置</string>
@@ -50,8 +50,20 @@
     <string name="buy_coin_hint">请输入购买币数</string>
     <string name="buy_coin_counts">购买币数</string>
     <string name="buy_coin_time">交易时间</string>
-    <string name="buy_coin_amount">交易金额</string>
+    <string name="buy_coin_left_counts">剩余币数</string>
     <string name="buy_coin_success">购买金币成功!</string>
+    <string name="buy_coin_coin_count_required">请输入购买金币数!</string>
+
+    <!--发布任务-->
+    <string name="publish_task_coin_total_counts">发布总币数</string>
+    <string name="publish_task_begin_end_time">起止时间</string>
+    <string name="publish_task_coin_left_counts">剩余币数</string>
+    <string name="publish_task_success">发布任务成功!</string>
+    <string name="publish_task_total_coin_required">请输入发布总金币数!</string>
+    <string name="publish_task_min_coin_required">请输入最小扫描金币数!</string>
+    <string name="publish_task_max_coin_required">请输入最大扫描金币数!</string>
+    <string name="publish_task_begin_time_required">请输入任务开始时间!</string>
+    <string name="publish_task_end_time_required">请输入任务结束时间!</string>
 
     <!--升级商户-->
     <string name="register_business_baza_name">商铺名称:</string>
@@ -62,6 +74,12 @@
     <string name="register_business_coor">坐\t\t标:</string>
     <string name="refresh_coor">获取坐标</string>
     <string name="register_business_submit">提交</string>
+    <string name="register_business_name_required">请输入商铺名称!</string>
+    <string name="register_business_pers_required">请输入商铺联系人!</string>
+    <string name="register_business_tel_required">请输入商铺电话!</string>
+    <string name="register_business_address_required">请输入商铺地址!</string>
+    <string name="register_business_remark_required">请输入商铺备注!</string>
+    <string name="register_business_coor_required">请输入商铺坐标!</string>
 
     <!--扫码-->
     <string name="qr_scan_title">扫码</string>

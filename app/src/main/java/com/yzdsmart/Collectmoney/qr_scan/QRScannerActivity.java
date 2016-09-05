@@ -179,6 +179,11 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
             return;
         }
         showSnackbar("获得金币数：" + counts);
-        closeActivity();
+        try {
+            Thread.sleep(3000);
+            closeActivity();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,16 +1,25 @@
 package com.yzdsmart.Collectmoney.buy_coins;
 
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.bean.BuyCoinsLog;
+import com.yzdsmart.Collectmoney.bean.PublishTaskLog;
+import com.yzdsmart.Collectmoney.publish_tasks.PublishTasksAdapter;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,8 +44,20 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     @Nullable
     @BindView(R.id.coin_counts)
     EditText coinCountsET;
+    @Nullable
+    @BindView(R.id.coin_list)
+    RecyclerView coinListRV;
 
     private static final String BUY_COIN_CODE = "66";
+    private static final String BUY_COIN_LOG_CODE = "688";
+
+    private Integer pageIndex = 1;
+    private static final Integer PAGE_SIZE = 10;
+
+    private LinearLayoutManager mLinearLayoutManager;
+    private Paint dividerPaint;
+    private List<BuyCoinsLog> logList;
+    private BuyCoinsLogAdapter buyCoinsLogAdapter;
 
     private BuyCoinsContract.BuyCoinsPresenter mPresenter;
 
@@ -44,11 +65,29 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        logList = new ArrayList<BuyCoinsLog>();
+
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         centerTitleTV.setText("购买金币");
 
         new BuyCoinsPresenter(this, this);
+
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        dividerPaint = new Paint();
+        dividerPaint.setStrokeWidth(1);
+        dividerPaint.setColor(getResources().getColor(R.color.light_grey));
+        dividerPaint.setAntiAlias(true);
+        dividerPaint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
+        HorizontalDividerItemDecoration dividerItemDecoration = new HorizontalDividerItemDecoration.Builder(this).paint(dividerPaint).build();
+
+        buyCoinsLogAdapter = new BuyCoinsLogAdapter(this);
+        coinListRV.setHasFixedSize(true);
+        coinListRV.setLayoutManager(mLinearLayoutManager);
+        coinListRV.addItemDecoration(dividerItemDecoration);
+        coinListRV.setAdapter(buyCoinsLogAdapter);
+
+        mPresenter.buyCoinsLog(BUY_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE);
     }
 
     @Override
@@ -64,6 +103,10 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 closeActivity();
                 break;
             case R.id.buy_coin:
+                if (!requiredVerify(coinCountsET)) {
+                    coinCountsET.setError(getResources().getString(R.string.buy_coin_coin_count_required));
+                    return;
+                }
                 mPresenter.buyCoins(BUY_COIN_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()));
                 break;
         }
@@ -87,10 +130,17 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
             return;
         }
         try {
-            Thread.sleep(1000);
-            closeActivity();
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        closeActivity();
+    }
+
+    @Override
+    public void onBuyCoinsLog(List<BuyCoinsLog> logList) {
+        this.logList.clear();
+        this.logList.addAll(logList);
+        buyCoinsLogAdapter.appendList(this.logList);
     }
 }

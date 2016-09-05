@@ -1,6 +1,7 @@
 package com.yzdsmart.Collectmoney.http;
 
 import com.yzdsmart.Collectmoney.bean.ShopFollower;
+import com.yzdsmart.Collectmoney.http.response.BuyCoinLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
@@ -340,5 +341,19 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.TASKLOG)
     Observable<PublishTaskLogRequestResponse> publishTaskLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+
+    /**
+     * 指定商铺购买金币日志列表
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASKLOG)
+    Observable<BuyCoinLogRequestResponse> buyCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
 }
