@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.publish_tasks;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.yzdsmart.Collectmoney.bean.GetCoinsLog;
 import com.yzdsmart.Collectmoney.bean.PublishTaskLog;
 import com.yzdsmart.Collectmoney.personal_coin_list.PersonalCoinsAdapter;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
+import com.yzdsmart.Collectmoney.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +73,9 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
 
     private PublishTasksContract.PublishTasksPresenter mPresenter;
 
+    private Handler mHandler = new Handler();
+    private Runnable closeRunnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +87,13 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
         centerTitleTV.setText("发布任务");
 
         new PublishTasksPresenter(this, this);
+
+        closeRunnable = new Runnable() {
+            @Override
+            public void run() {
+                closeActivity();
+            }
+        };
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         dividerPaint = new Paint();
@@ -133,6 +145,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
                     endTimeET.setError(getResources().getString(R.string.publish_task_end_time_required));
                     return;
                 }
+                Utils.hideSoftInput(this);
                 Integer totalCoinCounts = Integer.valueOf(totalCoinCountsET.getText().toString());
                 Integer minCoinCounts = Integer.valueOf(minCoinCountsET.getText().toString());
                 Integer maxCoinCounts = Integer.valueOf(maxCoinCountsET.getText().toString());
@@ -150,6 +163,12 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     }
 
     @Override
+    protected void onDestroy() {
+        mHandler.removeCallbacks(closeRunnable);
+        super.onDestroy();
+    }
+
+    @Override
     public void setPresenter(PublishTasksContract.PublishTasksPresenter presenter) {
         mPresenter = presenter;
     }
@@ -160,12 +179,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
         if (!flag) {
             return;
         }
-        try {
-            Thread.sleep(3000);
-            closeActivity();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        mHandler.postDelayed(closeRunnable, 1500);
     }
 
     @Override

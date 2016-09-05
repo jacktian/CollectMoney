@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.buy_coins;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.yzdsmart.Collectmoney.bean.BuyCoinsLog;
 import com.yzdsmart.Collectmoney.bean.PublishTaskLog;
 import com.yzdsmart.Collectmoney.publish_tasks.PublishTasksAdapter;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
+import com.yzdsmart.Collectmoney.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +63,9 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
     private BuyCoinsContract.BuyCoinsPresenter mPresenter;
 
+    private Handler mHandler = new Handler();
+    private Runnable closeRunnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +77,13 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         centerTitleTV.setText("购买金币");
 
         new BuyCoinsPresenter(this, this);
+
+        closeRunnable = new Runnable() {
+            @Override
+            public void run() {
+                closeActivity();
+            }
+        };
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         dividerPaint = new Paint();
@@ -107,6 +119,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                     coinCountsET.setError(getResources().getString(R.string.buy_coin_coin_count_required));
                     return;
                 }
+                Utils.hideSoftInput(this);
                 mPresenter.buyCoins(BUY_COIN_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()));
                 break;
         }
@@ -116,6 +129,12 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     protected void onStop() {
         super.onStop();
         mPresenter.unRegisterSubscribe();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mHandler.removeCallbacks(closeRunnable);
+        super.onDestroy();
     }
 
     @Override
@@ -129,12 +148,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         if (!flag) {
             return;
         }
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        closeActivity();
+        mHandler.postDelayed(closeRunnable, 1500);
     }
 
     @Override

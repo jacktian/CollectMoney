@@ -6,6 +6,7 @@ import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -52,6 +53,9 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     private QRScannerContract.QRScannerPresenter mPresenter;
 
+    private Handler mHandler = new Handler();
+    private Runnable closeRunnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +74,13 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         initBeepSound();
         vibrate = true;
         mQRCodeView.setDelegate(this);
+
+        closeRunnable = new Runnable() {
+            @Override
+            public void run() {
+                closeActivity();
+            }
+        };
     }
 
     @Override
@@ -97,6 +108,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     @Override
     protected void onDestroy() {
+        mHandler.removeCallbacks(closeRunnable);
         mQRCodeView.onDestroy();
         mediaPlayer.release();
         super.onDestroy();
@@ -179,11 +191,6 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
             return;
         }
         showSnackbar("获得金币数：" + counts);
-        try {
-            Thread.sleep(3000);
-            closeActivity();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        mHandler.postDelayed(closeRunnable, 1500);
     }
 }

@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.register_business;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.RegisterBusinessRequestResponse;
 
@@ -28,7 +29,7 @@ public class RegisterBusinessPresenter implements RegisterBusinessContract.Regis
             public void onSuccess(Object result) {
                 RegisterBusinessRequestResponse response = (RegisterBusinessRequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
-                    mView.onRegisterBusiness(true, null);
+                    mView.onRegisterBusiness(true, context.getResources().getString(R.string.register_business_success));
                 } else {
                     mView.onRegisterBusiness(false, response.getErrorInfo());
                 }

@@ -1,6 +1,7 @@
 package com.yzdsmart.Collectmoney.register_business;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
+import com.yzdsmart.Collectmoney.utils.Utils;
 
 import java.util.List;
 
@@ -56,6 +58,9 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
 
     private RegisterBusinessContract.RegisterBusinessPresenter mPresenter;
 
+    private Handler mHandler = new Handler();
+    private Runnable closeRunnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +72,14 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
         businessCoorET.setText(SharedPreferencesUtils.getString(this, "qLocation", ""));
 
         new RegisterBusinessPresenter(this, this);
+
+        closeRunnable = new Runnable() {
+            @Override
+            public void run() {
+                App.getAppInstance().exitApp();
+                openActivity(MainActivity.class);
+            }
+        };
     }
 
     @Override
@@ -78,6 +91,12 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
     protected void onStop() {
         super.onStop();
         mPresenter.unRegisterSubscribe();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mHandler.removeCallbacks(closeRunnable);
+        super.onDestroy();
     }
 
     @Optional
@@ -115,7 +134,7 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
                     businessCoorET.setError(getResources().getString(R.string.register_business_coor_required));
                     return;
                 }
-
+                Utils.hideSoftInput(this);
                 String businessName = businessNameET.getText().toString();
                 String businessPers = businessPersET.getText().toString();
                 String businessTel = businessTelET.getText().toString();
@@ -134,12 +153,11 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
 
     @Override
     public void onRegisterBusiness(boolean flag, String msg) {
+        showSnackbar(msg);
         if (!flag) {
-            showSnackbar(msg);
             return;
         }
         SharedPreferencesUtils.clear(this, PreferenceManager.getDefaultSharedPreferences(this));
-        App.getAppInstance().exitApp();
-        openActivity(MainActivity.class);
+        mHandler.postDelayed(closeRunnable, 1500);
     }
 }

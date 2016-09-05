@@ -211,7 +211,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     public void onGetCustInfo(String name, String headUel, Integer goldNum) {
         userNameTV.setText(name);
         userAccountCoinTV.setText("" + goldNum);
-        Glide.with(this).load(headUel).placeholder(getActivity().getResources().getDrawable(R.mipmap.user_avater)).into(new SimpleTarget<GlideDrawable>() {//解决有的图片第一次加载的时候只显示占位图，第二次才显示正常的图片呢
+        Glide.with(this).load(headUel).placeholder(getActivity().getResources().getDrawable(R.mipmap.user_avater)).error(getActivity().getResources().getDrawable(R.mipmap.user_avater)).into(new SimpleTarget<GlideDrawable>() {//解决有的图片第一次加载的时候只显示占位图，第二次才显示正常的图片呢
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                 userAvaterIV.setImageDrawable(resource);

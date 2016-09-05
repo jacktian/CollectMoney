@@ -80,6 +80,7 @@
     <string name="register_business_address_required">请输入商铺地址!</string>
     <string name="register_business_remark_required">请输入商铺备注!</string>
     <string name="register_business_coor_required">请输入商铺坐标!</string>
+    <string name="register_business_success">您已成功升级为商户!</string>
 
     <!--扫码-->
     <string name="qr_scan_title">扫码</string>

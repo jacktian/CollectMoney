@@ -176,7 +176,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
 
     @Override
     public void onGetCustInfo(CustInfoRequestResponse response) {
-        Glide.with(this).load(response.getImageUrl()).placeholder(getResources().getDrawable(R.mipmap.user_avater)).into(new SimpleTarget<GlideDrawable>() {
+        Glide.with(this).load(response.getImageUrl()).placeholder(getResources().getDrawable(R.mipmap.user_avater)).error(getResources().getDrawable(R.mipmap.user_avater)).into(new SimpleTarget<GlideDrawable>() {
             @Override
             public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                 userAvaterIV.setImageDrawable(resource);
