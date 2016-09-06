@@ -240,9 +240,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 } else if (marketMarker == marker) {
 
                 } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("bazaCode", marker.getExtraInfo().getString("bazaCode"));
-                    ((BaseActivity) getActivity()).openActivity(ShopDetailsActivity.class, bundle, 0);
+                    if (null != marker.getExtraInfo() && null != marker.getExtraInfo().getString("bazaCode")) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("bazaCode", marker.getExtraInfo().getString("bazaCode"));
+                        ((BaseActivity) getActivity()).openActivity(ShopDetailsActivity.class, bundle, 0);
+                    }
                 }
                 return true;
             }
@@ -326,7 +328,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Override
     public void onGetWalkingRouteResult(WalkingRouteResult walkingRouteResult) {
         if (null == walkingRouteResult || SearchResult.ERRORNO.NO_ERROR != walkingRouteResult.error) {
-            System.out.println("onGetWalkingRouteResult---->未找到结果");
+            ((BaseActivity) getActivity()).showSnackbar("未找到规划路线!");
         }
         if (SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR == walkingRouteResult.error) {
             return;
