@@ -5,6 +5,7 @@ import android.content.Context;
 import com.tencent.TIMLogLevel;
 import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
 import com.yzdsmart.Collectmoney.tecent_im.business.InitBusiness;
@@ -28,6 +29,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
 
     @Override
     public void userLogin(String userName, String password, String loginCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.userLogin(userName, password, loginCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -45,12 +47,13 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

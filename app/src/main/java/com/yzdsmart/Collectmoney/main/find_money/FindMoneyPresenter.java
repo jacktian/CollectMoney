@@ -40,6 +40,7 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
 
     @Override
     public void getShopList(String submitCode, String coor, Integer pageIndex, Integer pageSize) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.radar_scan);
         mModel.getShopList(submitCode, coor, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -62,7 +63,7 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
                         // 定义Maker坐标点
                         LatLng point = new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]));
 //                        options = new MarkerOptions().position(point).extraInfo(bundle).icon(BitmapDescriptorFactory.fromBitmap(setNumToIcon(shop.getReleGold())));
-                        options = new MarkerOptions().position(point).extraInfo(bundle).icons(coinGif);
+                        options = new MarkerOptions().position(point).extraInfo(bundle).icons(coinGif).period(10);//动画速度
                         optionsList.add(options);
                     }
                     mView.onGetShopList(optionsList);
@@ -71,12 +72,13 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

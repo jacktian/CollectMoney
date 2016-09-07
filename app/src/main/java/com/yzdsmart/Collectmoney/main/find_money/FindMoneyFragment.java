@@ -370,7 +370,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 locMarker.remove();
                 locMarker = null;
             }
-            MarkerOptions locMO = new MarkerOptions().position(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).icons(locGifList);
+            MarkerOptions locMO = new MarkerOptions().position(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).icons(locGifList).period(10);//动画速度
             locMarker = (Marker) (mBaiduMap.addOverlay(locMO));//定位图标
 
             //获取当前位置坐标

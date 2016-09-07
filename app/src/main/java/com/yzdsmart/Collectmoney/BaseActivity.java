@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.utils.IntentUtils;
 import com.yzdsmart.Collectmoney.utils.Utils;
+import com.yzdsmart.Collectmoney.views.CustomDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +33,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     CoordinatorLayout container;
 
     private Unbinder unbinder = null;
+
+    private CustomDialog customDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,5 +162,26 @@ public abstract class BaseActivity extends AppCompatActivity {
                 break;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 显示进度条
+     */
+    public void showProgressDialog(int resourceId) {
+        if (null == customDialog) {
+            customDialog = new CustomDialog(BaseActivity.this, resourceId);
+        }
+        customDialog.setCancelable(false);
+        customDialog.show();
+    }
+
+    /**
+     * 隐藏进度条
+     */
+    public void hideProgressDialog() {
+        if (null != customDialog) {
+            customDialog.dismiss();
+            customDialog = null;
+        }
     }
 }

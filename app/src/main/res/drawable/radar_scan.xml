@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@mipmap/radar_1"
+        android:duration="50" />
+    <item
+        android:drawable="@mipmap/radar_2"
+        android:duration="50" />
+    <item
+        android:drawable="@mipmap/radar_3"
+        android:duration="50" />
+    <item
+        android:drawable="@mipmap/radar_4"
+        android:duration="50" />
+    <item
+        android:drawable="@mipmap/radar_5"
+        android:duration="50" />
+    <item
+        android:drawable="@mipmap/radar_6"
+        android:duration="50" />
+    <item
+        android:drawable="@mipmap/radar_7"
+        android:duration="50" />
+    <item
+        android:drawable="@mipmap/radar_8"
+        android:duration="50" />
+    <item
+        android:drawable="@mipmap/radar_9"
+        android:duration="50" />
+</animation-list>

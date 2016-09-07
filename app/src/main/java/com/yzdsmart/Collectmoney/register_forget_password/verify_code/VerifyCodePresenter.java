@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.register_forget_password.verify_code;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 
@@ -23,6 +24,7 @@ public class VerifyCodePresenter implements VerifyCodeContract.VerifyCodePresent
 
     @Override
     public void getVerifyCode(String telNum, String currDate) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.getVerifyCode(telNum, currDate, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -34,18 +36,20 @@ public class VerifyCodePresenter implements VerifyCodeContract.VerifyCodePresent
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }
 
     @Override
     public void validateVerifyCode(String actioncode, String telNum, String verifyCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.validateVerifyCode(actioncode, telNum, verifyCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -59,12 +63,13 @@ public class VerifyCodePresenter implements VerifyCodeContract.VerifyCodePresent
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

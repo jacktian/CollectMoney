@@ -24,6 +24,7 @@ public class RegisterBusinessPresenter implements RegisterBusinessContract.Regis
 
     @Override
     public void registerBusiness(String submitCode, String custCode, String bazaName, String bazaPers, String bazaTel, String bazaAddr, final String remark, String coor) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.registerBusiness(submitCode, custCode, bazaName, bazaPers, bazaTel, bazaAddr, remark, coor, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -37,12 +38,13 @@ public class RegisterBusinessPresenter implements RegisterBusinessContract.Regis
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

@@ -32,8 +32,8 @@
 
             <RadioButton
                 android:id="@+id/conversation_radio"
-                android:layout_width="@dimen/bottom_tab_width"
-                android:layout_height="@dimen/button_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="@drawable/conversation_tab_button"
                 android:button="@null"
@@ -47,8 +47,8 @@
 
             <RadioButton
                 android:id="@+id/friend_list_radio"
-                android:layout_width="@dimen/bottom_tab_width"
-                android:layout_height="@dimen/button_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="@drawable/contacts_tab_button"
                 android:button="@null" />
@@ -61,8 +61,8 @@
 
             <RadioButton
                 android:id="@+id/group_list_radio"
-                android:layout_width="@dimen/bottom_tab_width"
-                android:layout_height="@dimen/button_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="@drawable/group_contacts_tab_button"
                 android:button="@null" />

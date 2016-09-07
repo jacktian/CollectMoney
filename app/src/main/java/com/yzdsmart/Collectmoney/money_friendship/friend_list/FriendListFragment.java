@@ -84,7 +84,31 @@ public class FriendListFragment extends BaseFragment implements FriendListContra
         //给每一个item设置前置的栏目条，
         StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(friendListAdapter);
         friendProfileListRV.addItemDecoration(headersDecor);
+        friendProfileListRV.reenableLoadmore();
+        friendProfileListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+                System.out.println("----------------" + itemsCount);
+                mPresenter.getFriendsList("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), timeStampNow, startIndex, currentStandardSequence, PAGE_SIZE);
+            }
+        });
 
+        mPresenter.getFriendsList("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), timeStampNow, startIndex, currentStandardSequence, PAGE_SIZE);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mPresenter.unRegisterSubscribe();
+    }
+
+    @Override
+    public void onGetFriendsList(Long timeStampNow, Integer startIndex, Integer sequence, List<Friendship> friends) {
+        this.timeStampNow = timeStampNow;
+        this.startIndex = startIndex;
+        this.currentStandardSequence = sequence;
+        friendshipList.clear();
+        friendshipList.addAll(friends);
         List<Friendship> list = new ArrayList<Friendship>();
         list.add(new Friendship("", "", "", "", "艾伦", "file:///android_asset/album_pic.png", null, null, 1, 2));
         list.add(new Friendship("", "", "", "", "约翰", "file:///android_asset/album_pic.png", null, null, 2, 2));
@@ -103,19 +127,6 @@ public class FriendListFragment extends BaseFragment implements FriendListContra
         list.add(new Friendship("", "", "", "", "提姆", "file:///android_asset/album_pic.png", null, null, 4, 1));
         friendshipList.addAll(list);
         friendListAdapter.appendList(friendshipList);
-
-        mPresenter.getFriendsList("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), timeStampNow, startIndex, currentStandardSequence, PAGE_SIZE);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mPresenter.unRegisterSubscribe();
-    }
-
-    @Override
-    public void onGetFriendsList(List<Friendship> friends) {
-        friendListAdapter.appendList(friends);
     }
 
     @Override

@@ -25,6 +25,7 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
 
     @Override
     public void buyCoins(String action, String submitCode, String bazaCode, Integer goldNum) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.buyCoins(action, submitCode, bazaCode, goldNum, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -38,12 +39,13 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }
@@ -70,7 +72,6 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
 
             @Override
             public void onComplete() {
-
             }
         });
     }

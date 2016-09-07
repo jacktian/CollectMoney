@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.money_friendship.friend_list;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.FriendsRequestResponse;
 
@@ -23,29 +24,31 @@ public class FriendListPresenter implements FriendListContract.FriendListPresent
 
     @Override
     public void getFriendsList(String submitCode, String custCode, Long timeStampNow, Integer startIndex, Integer currentStandardSequence, Integer pageSize) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.getFriendsList(submitCode, custCode, timeStampNow, startIndex, currentStandardSequence, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 FriendsRequestResponse response = (FriendsRequestResponse) result;
-                if (null != response.getFriends()) {
-                    mView.onGetFriendsList(response.getFriends());
+                if (response.getFriendNum() > 0 && null != response.getFriends()) {
+                    mView.onGetFriendsList(response.getTimeStampNow(), response.getStartIndex(), response.getCurrentStandardSequence(), response.getFriends());
                 }
             }
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }
 
     @Override
     public void unRegisterSubscribe() {
-mModel.unRegisterSubscribe();
+        mModel.unRegisterSubscribe();
     }
 }

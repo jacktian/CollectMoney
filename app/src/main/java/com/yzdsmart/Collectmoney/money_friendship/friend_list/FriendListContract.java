@@ -10,15 +10,19 @@ import java.util.List;
  * Created by YZD on 2016/8/30.
  */
 public interface FriendListContract {
-    interface FriendListView extends BaseView<FriendListPresenter>{
+    interface FriendListView extends BaseView<FriendListPresenter> {
         /**
          * 获取好友列表
          *
+         * @param timeStampNow
+         * @param startIndex
+         * @param sequence
          * @param friends
          */
-        void onGetFriendsList(List<Friendship> friends);
+        void onGetFriendsList(Long timeStampNow, Integer startIndex, Integer sequence, List<Friendship> friends);
     }
-    interface FriendListPresenter extends BasePresenter{
+
+    interface FriendListPresenter extends BasePresenter {
         /**
          * 获取好友列表
          *

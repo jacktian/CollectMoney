@@ -25,6 +25,7 @@ public class PublishTasksPresenter implements PublishTasksContract.PublishTasksP
 
     @Override
     public void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer sMinGold, Integer sMaxGold, String beginTime, String endTime) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.publishTask(submitCode, bazaCode, totalGold, sMinGold, sMaxGold, beginTime, endTime, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -38,12 +39,13 @@ public class PublishTasksPresenter implements PublishTasksContract.PublishTasksP
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }
@@ -70,7 +72,6 @@ public class PublishTasksPresenter implements PublishTasksContract.PublishTasksP
 
             @Override
             public void onComplete() {
-
             }
         });
     }

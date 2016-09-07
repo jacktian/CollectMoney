@@ -43,7 +43,6 @@ public class PersonalCoinsPresenter implements PersonalCoinsContract.PersonalCoi
 
             @Override
             public void onComplete() {
-
             }
         });
     }

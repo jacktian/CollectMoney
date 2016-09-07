@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.register_forget_password.set_password;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 
@@ -22,8 +23,9 @@ public class SetPasswordPresenter implements SetPasswordContract.SetPasswordPres
     }
 
     @Override
-    public void setPassword(String actioncode,String userName, String password, String regCode) {
-        mModel.setPassword(actioncode,userName, password, regCode, new RequestListener() {
+    public void setPassword(String actioncode, String userName, String password, String regCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        mModel.setPassword(actioncode, userName, password, regCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RequestResponse response = (RequestResponse) result;
@@ -36,12 +38,13 @@ public class SetPasswordPresenter implements SetPasswordContract.SetPasswordPres
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }
