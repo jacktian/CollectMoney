@@ -256,12 +256,12 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                 try {
                     AssetManager am = getContext().getAssets();
                     final int index = 7 * i + j;
-                    InputStream is = am.open(String.format("emoticon/%d.gif", index));
+                    InputStream is = am.open(String.format("emoticon/%d.png", index));
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
                     Matrix matrix = new Matrix();
                     int width = bitmap.getWidth();
                     int height = bitmap.getHeight();
-                    matrix.postScale(3.5f, 3.5f);
+                    matrix.postScale(1.5f, 1.5f);
                     final Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
                             width, height, matrix, true);
                     ImageView image = new ImageView(getContext());
