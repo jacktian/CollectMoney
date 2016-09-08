@@ -18,6 +18,7 @@
     <dimen name="left_title_margin_left">8dp</dimen>
     <dimen name="right_ope_with_bubble_margin">3dp</dimen>
 
+    <dimen name="button_width">61dp</dimen>
     <dimen name="button_height">31dp</dimen>
     <dimen name="button_radius">14dp</dimen>
 

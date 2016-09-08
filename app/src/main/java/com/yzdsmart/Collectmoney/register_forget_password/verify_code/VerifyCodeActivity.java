@@ -68,7 +68,7 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        toolBar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        toolBar.setBackgroundColor(getResources().getColor(R.color.light_yellow));
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         userNameET.setEnabled(false);
         verifyCodeET.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -118,7 +118,6 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
                 closeActivity();
                 break;
             case R.id.get_verify_button:
-                Utils.hideSoftInput(this);
                 if (!Utils.isNetUsable(this)) {
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
@@ -128,7 +127,6 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
                 mPresenter.getVerifyCode(userName, DateTime.now().toString());
                 break;
             case R.id.login_register_confirm_button:
-                Utils.hideSoftInput(this);
                 if (!requiredVerify(verifyCodeET)) {
                     verifyCodeET.setError(getResources().getString(R.string.input_verify_code));
                     return;

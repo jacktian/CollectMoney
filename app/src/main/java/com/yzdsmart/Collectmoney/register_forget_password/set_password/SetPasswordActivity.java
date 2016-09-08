@@ -66,7 +66,7 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        toolBar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        toolBar.setBackgroundColor(getResources().getColor(R.color.light_yellow));
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         userNameET.setEnabled(false);
 
@@ -101,7 +101,6 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
                 closeActivity();
                 break;
             case R.id.login_register_confirm_button:
-                Utils.hideSoftInput(this);
                 if (!requiredVerify(userPwdET)) {
                     userPwdET.setError(getResources().getString(R.string.input_pwd));
                     return;

@@ -54,7 +54,7 @@ public class VerifyPhoneActivity extends BaseActivity implements VerifyPhoneCont
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        toolBar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        toolBar.setBackgroundColor(getResources().getColor(R.color.light_yellow));
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         userNameET.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
@@ -86,7 +86,6 @@ public class VerifyPhoneActivity extends BaseActivity implements VerifyPhoneCont
                 closeActivity();
                 break;
             case R.id.login_register_confirm_button:
-                Utils.hideSoftInput(this);
                 if (!requiredVerify(userNameET)) {
                     userNameET.setError(getResources().getString(R.string.input_phone_num));
                     return;

@@ -13,7 +13,7 @@
         android:top="1dp">
         <shape android:shape="rectangle">
             <corners android:radius="3dp" />
-            <solid android:color="@color/colorPrimary" />
+            <solid android:color="@color/light_yellow" />
             <padding
                 android:bottom="@dimen/common_text_view_padding"
                 android:left="@dimen/common_text_view_padding"

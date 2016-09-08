@@ -134,7 +134,6 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
                     businessCoorET.setError(getResources().getString(R.string.register_business_coor_required));
                     return;
                 }
-                Utils.hideSoftInput(this);
                 String businessName = businessNameET.getText().toString();
                 String businessPers = businessPersET.getText().toString();
                 String businessTel = businessTelET.getText().toString();

@@ -2,14 +2,12 @@ package com.yzdsmart.Collectmoney.login;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.register_forget_password.verify_phone.VerifyPhoneActivity;
 import com.yzdsmart.Collectmoney.utils.Utils;
 
@@ -26,11 +24,8 @@ import butterknife.Optional;
  */
 public class LoginActivity extends BaseActivity implements LoginContract.LoginView {
     @Nullable
-    @BindViews({R.id.toolbar_layout, R.id.user_count_down_layout, R.id.user_confirm_pwd_layout})
+    @BindViews({R.id.user_count_down_layout, R.id.user_confirm_pwd_layout})
     List<View> hideViews;
-    @Nullable
-    @BindView(R.id.toolBar)
-    Toolbar toolBar;
     @Nullable
     @BindView(R.id.user_name)
     EditText userNameET;
@@ -45,7 +40,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        toolBar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         userPasswordET.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         new LoginPresenter(this, this);

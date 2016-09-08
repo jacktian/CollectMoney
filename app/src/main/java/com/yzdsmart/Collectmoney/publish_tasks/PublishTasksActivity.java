@@ -145,7 +145,6 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
                     endTimeET.setError(getResources().getString(R.string.publish_task_end_time_required));
                     return;
                 }
-                Utils.hideSoftInput(this);
                 Integer totalCoinCounts = Integer.valueOf(totalCoinCountsET.getText().toString());
                 Integer minCoinCounts = Integer.valueOf(minCoinCountsET.getText().toString());
                 Integer maxCoinCounts = Integer.valueOf(maxCoinCountsET.getText().toString());

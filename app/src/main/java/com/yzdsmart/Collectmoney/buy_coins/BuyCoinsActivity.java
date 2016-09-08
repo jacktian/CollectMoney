@@ -119,7 +119,6 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                     coinCountsET.setError(getResources().getString(R.string.buy_coin_coin_count_required));
                     return;
                 }
-                Utils.hideSoftInput(this);
                 mPresenter.buyCoins(BUY_COIN_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()));
                 break;
         }

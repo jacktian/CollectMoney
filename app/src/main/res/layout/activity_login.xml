@@ -5,11 +5,6 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <include
-        layout="@layout/common_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/common_toolbar_height" />
-
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,8 +19,7 @@
                 layout="@layout/common_user_info"
                 android:layout_width="@dimen/common_user_info_layout_width"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/common_user_info_item_margin_top" />
+                android:layout_gravity="center_horizontal" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -48,7 +42,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/colorPrimary"
+                        android:background="@color/light_yellow"
                         android:padding="3dp"
                         android:text="@string/login_with_other_platform"
                         android:textColor="@color/grey"
