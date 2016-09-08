@@ -51,7 +51,7 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
 
     Button takePhoto, selectFromGalley;
 
-    private static final String UPLOAD_ACTION_CODE = "2101";
+    private static final String UPLOAD_ACTION_CODE = "2101";//上传头像
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     Uri photoUri;
