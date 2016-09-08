@@ -218,7 +218,7 @@
 
                     <Button
                         android:id="@+id/refresh_coor"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/button_width"
                         android:layout_height="@dimen/button_height"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
@@ -256,7 +256,7 @@
 
             <Button
                 android:id="@+id/submit"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/button_width"
                 android:layout_height="@dimen/button_height"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/personal_item_panel_margin_top"

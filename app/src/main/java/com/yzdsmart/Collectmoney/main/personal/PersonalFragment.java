@@ -70,16 +70,16 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @BindView(R.id.diamond_count)
     LinearLayout diamondCountLayout;
     @Nullable
-    @BindView(R.id.register_business_layout)
+    @BindView(R.id.to_register_business)
     RelativeLayout registerBusinessLayout;
     @Nullable
-    @BindView(R.id.buy_coins_layout)
+    @BindView(R.id.to_buy_coins)
     RelativeLayout buyCoinsLayout;
     @Nullable
     @BindView(R.id.focus_shop_layout)
     RelativeLayout focusShopLayout;
     @Nullable
-    @BindView(R.id.publish_tasks_layout)
+    @BindView(R.id.to_publish_tasks)
     RelativeLayout publishTasksLayout;
     @Nullable
     @BindView(R.id.user_account_coin)

@@ -99,7 +99,7 @@
     <LinearLayout
         android:id="@+id/morePanel"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="110dp"
         android:background="@color/tecent_background_gray1"
         android:orientation="vertical"
         android:visibility="gone">
@@ -180,33 +180,33 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp">
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="15dp">-->
 
-            <LinearLayout
-                android:id="@+id/btn_file"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="40dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
+        <!--<LinearLayout-->
+        <!--android:id="@+id/btn_file"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_marginLeft="40dp"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:orientation="vertical">-->
 
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@mipmap/tecent_ic_file" />
+        <!--<ImageView-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:src="@mipmap/tecent_ic_file" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/chat_file"
-                    android:textColor="@color/tecent_text_gray1" />
-            </LinearLayout>
-        </RelativeLayout>
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:text="@string/chat_file"-->
+        <!--android:textColor="@color/tecent_text_gray1" />-->
+        <!--</LinearLayout>-->
+        <!--</RelativeLayout>-->
     </LinearLayout>
 
     <LinearLayout

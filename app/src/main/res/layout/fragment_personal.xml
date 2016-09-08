@@ -20,6 +20,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/to_personal_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/personal_item_panel_margin_top"
@@ -36,7 +37,7 @@
                     android:layout_centerVertical="true" />
 
                 <ImageView
-                    android:id="@+id/to_personal_detail"
+                    android:id="@+id/to_personal_detail_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -48,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/activity_horizontal_padding"
-                    android:layout_toLeftOf="@id/to_personal_detail"
+                    android:layout_toLeftOf="@id/to_personal_detail_arrow"
                     android:layout_toRightOf="@id/user_avater"
                     android:orientation="vertical">
 
@@ -158,8 +159,10 @@
                 android:paddingRight="@dimen/activity_horizontal_padding">
 
                 <RelativeLayout
+                    android:id="@+id/to_money_friend"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/personal_panel_item_bg"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
@@ -181,7 +184,6 @@
                         android:textSize="@dimen/font_medium" />
 
                     <ImageView
-                        android:id="@+id/to_money_friend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -197,6 +199,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/personal_panel_item_bg"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
@@ -218,7 +221,6 @@
                         android:textSize="@dimen/font_medium" />
 
                     <ImageView
-                        android:id="@+id/to_qr_scan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -232,8 +234,10 @@
                     android:background="@color/light_grey" />
 
                 <RelativeLayout
+                    android:id="@+id/to_personal_coins"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/personal_panel_item_bg"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
@@ -255,7 +259,6 @@
                         android:textSize="@dimen/font_medium" />
 
                     <ImageView
-                        android:id="@+id/to_personal_coins"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -274,9 +277,10 @@
                 android:paddingRight="@dimen/activity_horizontal_padding">
 
                 <RelativeLayout
-                    android:id="@+id/register_business_layout"
+                    android:id="@+id/to_register_business"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/personal_panel_item_bg"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
@@ -298,7 +302,6 @@
                         android:textSize="@dimen/font_medium" />
 
                     <ImageView
-                        android:id="@+id/to_register_business"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -307,9 +310,10 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/buy_coins_layout"
+                    android:id="@+id/to_buy_coins"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/personal_panel_item_bg"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
@@ -331,7 +335,6 @@
                         android:textSize="@dimen/font_medium" />
 
                     <ImageView
-                        android:id="@+id/to_buy_coins"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -348,6 +351,7 @@
                     android:id="@+id/focus_shop_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/personal_panel_item_bg"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
@@ -377,9 +381,10 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/publish_tasks_layout"
+                    android:id="@+id/to_publish_tasks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/personal_panel_item_bg"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
@@ -401,7 +406,6 @@
                         android:textSize="@dimen/font_medium" />
 
                     <ImageView
-                        android:id="@+id/to_publish_tasks"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -415,8 +419,10 @@
                     android:background="@color/light_grey" />
 
                 <RelativeLayout
+                    android:id="@+id/to_settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/personal_panel_item_bg"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
@@ -438,7 +444,6 @@
                         android:textSize="@dimen/font_medium" />
 
                     <ImageView
-                        android:id="@+id/to_settings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
