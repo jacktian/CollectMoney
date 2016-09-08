@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/common_toolbar_height"
+        android:background="@color/light_yellow"
         android:orientation="vertical">
 
         <LinearLayout

@@ -13,7 +13,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/common_toolbar_height">
+        android:layout_marginTop="@dimen/common_toolbar_height"
+        android:background="@color/light_yellow">
 
         <EditText
             android:id="@+id/search_filter"
@@ -37,7 +38,6 @@
             android:id="@+id/profile_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/search_filter"
-            android:background="@color/white" />
+            android:layout_below="@id/search_filter" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
