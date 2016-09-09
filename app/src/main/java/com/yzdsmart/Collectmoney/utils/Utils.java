@@ -4,13 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
-
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
