@@ -2,6 +2,8 @@ package com.yzdsmart.Collectmoney.main.recommend;
 
 import android.content.Context;
 
+import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
 
@@ -24,6 +26,7 @@ public class RecommendPresenter implements RecommendContract.RecommendPresenter 
 
     @Override
     public void getExpandList(String submitCode, Integer pageIndex, Integer pageSize) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.getExpandList(submitCode, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -35,12 +38,13 @@ public class RecommendPresenter implements RecommendContract.RecommendPresenter 
 
             @Override
             public void onError(String err) {
-
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

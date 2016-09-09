@@ -55,6 +55,7 @@ public class GroupListFragment extends BaseFragment implements GroupListContract
 
         type = "Public";
         list = GroupInfo.getInstance().getGroupListByType(type);
+        showList.clear();
         showList.addAll(list);
         adapter = new ProfileSummaryAdapter(getActivity(), R.layout.tecent_item_profile_summary, showList);
     }
