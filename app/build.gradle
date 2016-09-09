@@ -9,7 +9,7 @@ android {
         applicationId "com.yzdsmart.Collectmoney"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 50
+        versionCode 55
         versionName "1.0"
         multiDexEnabled true
         ndk {
@@ -34,6 +34,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.soundcloud.android:android-crop:1.0.1@aar'
     compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
+    compile 'com.brucetoo.pickview:library:1.2.2'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     compile 'com.jakewharton:butterknife:8.2.1'
     compile 'joda-time:joda-time:2.9.4'

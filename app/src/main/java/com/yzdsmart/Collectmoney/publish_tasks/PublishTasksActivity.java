@@ -1,5 +1,6 @@
 package com.yzdsmart.Collectmoney.publish_tasks;
 
+import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -11,15 +12,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.GetCoinsLog;
 import com.yzdsmart.Collectmoney.bean.PublishTaskLog;
-import com.yzdsmart.Collectmoney.personal_coin_list.PersonalCoinsAdapter;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
-import com.yzdsmart.Collectmoney.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,8 +118,8 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.publish_task})
-    void onClick(View view) {
+    @OnClick({R.id.title_left_operation_layout, R.id.publish_task, R.id.begin_time, R.id.end_time})
+    void onClick(final View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
@@ -151,6 +151,25 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
                 String beginTime = beginTimeET.getText().toString();
                 String endTime = endTimeET.getText().toString();
                 mPresenter.publishTask("000000", SharedPreferencesUtils.getString(this, "baza_code", ""), totalCoinCounts, minCoinCounts, maxCoinCounts, beginTime, endTime);
+                break;
+            case R.id.begin_time:
+            case R.id.end_time:
+                DatePickerPopWin pickerPopWin = new DatePickerPopWin.Builder(PublishTasksActivity.this, new DatePickerPopWin.OnDatePickedListener() {
+                    @Override
+                    public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
+                        ((EditText) view).setText(dateDesc);
+                    }
+                }).textConfirm("确定") //text of confirm button
+                        .textCancel("取消") //text of cancel button
+                        .btnTextSize(16) // button text size
+                        .viewTextSize(25) // pick view text size
+                        .colorCancel(Color.parseColor("#999999")) //color of cancel button
+                        .colorConfirm(Color.parseColor("#fc7d1c"))//color of confirm button
+                        .minYear(2016) //min year in loop
+                        .maxYear(2550) // max year in loop
+                        .dateChose("2016-01-01") // date chose when init popwindow
+                        .build();
+                pickerPopWin.showPopWin(PublishTasksActivity.this);
                 break;
         }
     }
