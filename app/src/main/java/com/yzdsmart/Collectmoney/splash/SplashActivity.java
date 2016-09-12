@@ -38,4 +38,5 @@ public class SplashActivity extends BaseActivity {
         splashHandler.removeCallbacks(splashRunnable);
         super.onDestroy();
     }
+
 }

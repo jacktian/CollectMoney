@@ -1,8 +1,13 @@
 package com.yzdsmart.Collectmoney.qr_scan;
 
-import android.app.FragmentManager;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -13,9 +18,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.utils.Utils;
+import com.yzdsmart.Collectmoney.views.GetCoinDialog;
 
 import java.util.List;
 
@@ -55,6 +62,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     private Handler mHandler = new Handler();
     private Runnable closeRunnable;
+    private Dialog getCoinDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +86,9 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         closeRunnable = new Runnable() {
             @Override
             public void run() {
+                if (null != getCoinDialog) {
+                    getCoinDialog.dismiss();
+                }
                 closeActivity();
             }
         };
@@ -190,7 +201,29 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
             mQRCodeView.startSpot();
             return;
         }
-        showSnackbar("获得金币数：" + counts);
+        getCoinDialog = new GetCoinDialog(this, setNumToIcon(counts));
+        getCoinDialog.show();
         mHandler.postDelayed(closeRunnable, 1500);
+    }
+
+    /**
+     * 往图片添加数字
+     */
+    private Bitmap setNumToIcon(int num) {
+        BitmapDrawable bd = (BitmapDrawable) App.getAppInstance().getResources().getDrawable(
+                R.mipmap.scan_get_coin);
+        Bitmap bitmap = bd.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
+        Canvas canvas = new Canvas(bitmap);
+
+        Paint paint = new Paint();
+        paint.setColor(Color.WHITE);
+        paint.setAntiAlias(true);
+        paint.setTextSize(50);
+        float margin = bitmap.getWidth() / 3;
+        canvas.drawText(String.valueOf(num),
+                margin,
+                ((bitmap.getHeight() / 7) * 5), paint);
+
+        return bitmap;
     }
 }
