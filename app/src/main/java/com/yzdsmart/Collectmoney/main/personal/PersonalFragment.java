@@ -1,6 +1,7 @@
 package com.yzdsmart.Collectmoney.main.personal;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
@@ -89,11 +87,21 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
 
     private List<View> toggleViews;
 
+    private Handler backFindMoneyHandler = new Handler();
+    private Runnable backFindMoneyRunnable;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         toggleViews = new ArrayList<View>();
+
+        backFindMoneyRunnable = new Runnable() {
+            @Override
+            public void run() {
+                ((MainActivity) getActivity()).backToFindMoney();
+            }
+        };
 
         new PersonalPresenter(getActivity(), this);
     }
@@ -139,7 +147,8 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
                 bundle = new Bundle();
                 bundle.putInt("type", 0);//0 个人 1 好友
                 ((BaseActivity) getActivity()).openActivity(PersonalFriendDetailActivity.class, bundle, 0);
-                ((MainActivity) getActivity()).backToFindMoney();
+//                ((MainActivity) getActivity()).backToFindMoney();
+                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.user_avater:
                 ((BaseActivity) getActivity()).openActivity(ImageCropActivity.class);
@@ -149,23 +158,28 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
                 break;
             case R.id.to_register_business:
                 ((BaseActivity) getActivity()).openActivity(RegisterBusinessActivity.class);
-                ((MainActivity) getActivity()).backToFindMoney();
+//                ((MainActivity) getActivity()).backToFindMoney();
+                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.to_buy_coins:
                 ((BaseActivity) getActivity()).openActivity(BuyCoinsActivity.class);
-                ((MainActivity) getActivity()).backToFindMoney();
+//                ((MainActivity) getActivity()).backToFindMoney();
+                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.to_publish_tasks:
                 ((BaseActivity) getActivity()).openActivity(PublishTasksActivity.class);
-                ((MainActivity) getActivity()).backToFindMoney();
+//                ((MainActivity) getActivity()).backToFindMoney();
+                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.to_personal_coins:
                 ((BaseActivity) getActivity()).openActivity(PersonalCoinsActivity.class);
-                ((MainActivity) getActivity()).backToFindMoney();
+//                ((MainActivity) getActivity()).backToFindMoney();
+                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.to_money_friend:
                 ((BaseActivity) getActivity()).openActivity(MoneyFriendshipActivity.class);
-                ((MainActivity) getActivity()).backToFindMoney();
+//                ((MainActivity) getActivity()).backToFindMoney();
+                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
         }
     }
@@ -185,6 +199,12 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     public void onStop() {
         super.onStop();
         mPresenter.unRegisterSubscribe();
+    }
+
+    @Override
+    public void onDestroy() {
+        backFindMoneyHandler.removeCallbacks(backFindMoneyRunnable);
+        super.onDestroy();
     }
 
     @Override

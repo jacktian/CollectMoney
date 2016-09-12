@@ -138,7 +138,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         } else {
             ft.hide(mCurrentFragment).show(fragment);
         }
-        ft.commit();
+        ft.commitAllowingStateLoss();
         mCurrentFragment = fragment;
     }
 
