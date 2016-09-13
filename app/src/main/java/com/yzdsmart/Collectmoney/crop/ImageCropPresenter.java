@@ -5,6 +5,7 @@ import android.content.Context;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMFriendshipManager;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.UploadFileRequestResponse;
 
@@ -26,6 +27,7 @@ public class ImageCropPresenter implements ImageCropContract.ImageCropPresenter 
 
     @Override
     public void uploadPortrait(String action, String fileName, String fileData, String tcAccount) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.uploadPortrait(action, fileName, fileData, tcAccount, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -39,12 +41,13 @@ public class ImageCropPresenter implements ImageCropContract.ImageCropPresenter 
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar("上传头像异常!");
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

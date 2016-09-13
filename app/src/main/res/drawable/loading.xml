@@ -9,4 +9,7 @@
     <item
         android:drawable="@mipmap/loading_3"
         android:duration="100" />
+    <item
+        android:drawable="@mipmap/loading_4"
+        android:duration="100" />
 </animation-list>
