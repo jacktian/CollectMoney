@@ -242,7 +242,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.FILE_UPLOAD)
-    Observable<UploadFileRequestResponse> saveFile(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("TCAccount") String tcAccount);
+    Observable<UploadFileRequestResponse> uploadPortrait(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("TCAccount") String tcAccount);
 
     /**
      * 上传坐标
