@@ -26,5 +26,7 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/search_filter" />
+        android:layout_below="@id/search_filter"
+        android:divider="@color/light_grey"
+        android:dividerHeight="0.6dp" />
 </RelativeLayout>

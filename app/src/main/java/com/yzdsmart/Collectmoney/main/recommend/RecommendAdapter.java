@@ -106,18 +106,18 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
         }
 
         public void setAttractionImg(String attractionImg) {
-            Glide.with(context).load(attractionImg).into(attractionImgIV);
+            Glide.with(context).load(attractionImg).error(context.getResources().getDrawable(R.mipmap.recommend_load_error)).into(attractionImgIV);
 
-            ViewTreeObserver vto = attractionImgIV.getViewTreeObserver();
-            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    attractionImgIV.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    attractionImgIV.getHeight();
-                    attractionImgIV.getWidth();
-                    System.out.println(attractionImgIV.getHeight() + "----------------" + attractionImgIV.getWidth());
-                }
-            });
+//            ViewTreeObserver vto = attractionImgIV.getViewTreeObserver();
+//            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//                @Override
+//                public void onGlobalLayout() {
+//                    attractionImgIV.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                    attractionImgIV.getHeight();
+//                    attractionImgIV.getWidth();
+//                    System.out.println(attractionImgIV.getHeight() + "----------------" + attractionImgIV.getWidth());
+//                }
+//            });
         }
 
         public void setAttractionName(String attractionName) {

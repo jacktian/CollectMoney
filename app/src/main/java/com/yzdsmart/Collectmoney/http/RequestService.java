@@ -146,6 +146,47 @@ public interface RequestService {
     Observable<FriendsRequestResponse> getFriendsList(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("TimeStampNow") Long timeStampNow, @Field("StartIndex") Integer startIndex, @Field("CurrentStandardSequence") Integer currentStandardSequence, @Field("PageSize") Integer pageSize);
 
     /**
+     * 获取商铺关注者
+     *
+     * @param action
+     * @param submitCode
+     * @param custCode
+     * @param bazaCode
+     * @param coor
+     * @param ip
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASK)
+    Observable<GetCoinRequestResponse> getGoldCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode, @Field("Coor") String coor, @Field("Ip") String ip);
+
+    /**
+     * 上传用户头像
+     *
+     * @param action
+     * @param fileName
+     * @param fileData
+     * @param tcAccount
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.FILE_UPLOAD)
+    Observable<UploadFileRequestResponse> uploadPortrait(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("TCAccount") String tcAccount);
+
+    /**
+     * 上传个人相册
+     *
+     * @param action
+     * @param fileName
+     * @param fileData
+     * @param custCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.FILE_UPLOAD)
+    Observable<UploadFileRequestResponse> uploadGalley(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("CustCode") String custCode);
+
+    /**
      * 获取短信验证码
      *
      * @param telNum
@@ -215,34 +256,6 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.EXPAND)
     Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
-
-    /**
-     * 获取商铺关注者
-     *
-     * @param action
-     * @param submitCode
-     * @param custCode
-     * @param bazaCode
-     * @param coor
-     * @param ip
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Url.TASK)
-    Observable<GetCoinRequestResponse> getGoldCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode, @Field("Coor") String coor, @Field("Ip") String ip);
-
-    /**
-     * 上传用户头像
-     *
-     * @param action
-     * @param fileName
-     * @param fileData
-     * @param tcAccount
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Url.FILE_UPLOAD)
-    Observable<UploadFileRequestResponse> uploadPortrait(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("TCAccount") String tcAccount);
 
     /**
      * 上传坐标
@@ -355,5 +368,18 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.TASKLOG)
     Observable<BuyCoinLogRequestResponse> buyCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+
+    /**
+     * 上传商铺图片
+     *
+     * @param action
+     * @param fileName
+     * @param fileData
+     * @param bazaCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.FILE_UPLOAD)
+    Observable<UploadFileRequestResponse> uploadShopImage(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("BazaCode") String bazaCode);
 
 }

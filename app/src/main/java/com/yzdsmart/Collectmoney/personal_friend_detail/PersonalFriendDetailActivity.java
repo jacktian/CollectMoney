@@ -136,7 +136,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.msg_chat})
+    @OnClick({R.id.title_left_operation_layout, R.id.msg_chat, R.id.personal_galley_title})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -149,6 +149,13 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 bundle.putString("identify", friend_identify);
                 bundle.putSerializable("type", TIMConversationType.C2C);
                 openActivity(ChatActivity.class, bundle, 0);
+                break;
+            case R.id.personal_galley_title:
+                switch (type) {
+                    case 0:
+
+                        break;
+                }
                 break;
         }
     }

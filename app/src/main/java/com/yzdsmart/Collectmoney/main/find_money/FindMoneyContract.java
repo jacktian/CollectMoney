@@ -17,6 +17,16 @@ public class FindMoneyContract {
          * @param optionsList
          */
         void onGetShopList(List<MarkerOptions> optionsList);
+
+        /**
+         * 开始扫描
+         */
+        void startRadarScan();
+
+        /**
+         * 停止扫描
+         */
+        void stopRadarScan();
     }
 
     interface FindMoneyPresenter extends BasePresenter {
@@ -27,8 +37,9 @@ public class FindMoneyContract {
          * @param coor
          * @param pageIndex
          * @param pageSize
+         * @param type       0 扫描商铺 1 商场附近商铺
          */
-        void getShopList(String submitCode, String coor, Integer pageIndex, Integer pageSize);
+        void getShopList(String submitCode, String coor, Integer pageIndex, Integer pageSize, Integer type);
 
         /**
          * 上传坐标

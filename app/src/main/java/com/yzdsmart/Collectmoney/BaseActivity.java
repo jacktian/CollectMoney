@@ -124,7 +124,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             TextView snackTV = (TextView) snackView.findViewById(android.support.design.R.id.snackbar_text);
             if (null != snackTV) {
                 snackTV.setTextColor(Color.WHITE);
-                snackTV.setTextSize(getResources().getDimension(R.dimen.font_small));
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
                     snackTV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 }

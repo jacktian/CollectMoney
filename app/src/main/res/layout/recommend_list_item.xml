@@ -7,7 +7,8 @@
         android:id="@+id/recommend_item_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:src="@mipmap/recommend_pre_load" />
 
     <TextView
         android:id="@+id/recommend_item_name"
@@ -17,7 +18,7 @@
         android:background="@mipmap/recommend_list_item_name_bg"
         android:gravity="center_vertical|right"
         android:paddingRight="@dimen/recommend_list_item_des_padding"
-        android:text="一站地"
+        android:text=""
         android:textColor="@android:color/white"
         android:textSize="@dimen/font_medium" />
 </FrameLayout>

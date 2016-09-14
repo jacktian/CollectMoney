@@ -161,8 +161,6 @@
                     android:background="@drawable/shop_focus_panel_bg"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/activity_vertical_padding"
-                    android:paddingLeft="@dimen/user_detail_item_layout_padding"
-                    android:paddingRight="@dimen/user_detail_item_layout_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
                     <RelativeLayout
@@ -174,7 +172,7 @@
                             android:id="@+id/focus_person_counts"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/shop_focus_detail_margin"
+                            android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
                             android:singleLine="true"
                             android:text=""
@@ -186,6 +184,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/focus_person_counts"
+                            android:layout_centerHorizontal="true"
                             android:text="@string/shop_focus_person_counts"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_medium" />
@@ -229,8 +228,7 @@
                             android:id="@+id/visit_person_counts"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/shop_focus_detail_margin"
+                            android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
                             android:singleLine="true"
                             android:text=""
@@ -242,8 +240,8 @@
                             android:id="@+id/change_money_time_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
                             android:layout_below="@id/visit_person_counts"
+                            android:layout_centerHorizontal="true"
                             android:text="@string/shop_visit_person_counts"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_medium" />

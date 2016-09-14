@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.personal_coin_list;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.GetCoinsLogRequestResponse;
 
@@ -23,6 +24,7 @@ public class PersonalCoinsPresenter implements PersonalCoinsContract.PersonalCoi
 
     @Override
     public void getCoinsLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.getCoinsLog(action, submitCode, custCode, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -38,11 +40,13 @@ public class PersonalCoinsPresenter implements PersonalCoinsContract.PersonalCoi
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

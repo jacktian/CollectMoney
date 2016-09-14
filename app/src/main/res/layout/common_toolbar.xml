@@ -15,6 +15,7 @@
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/white_panel_bottom_border"
             android:paddingLeft="@dimen/activity_horizontal_padding"
             android:paddingRight="@dimen/activity_horizontal_padding">
 
@@ -112,10 +113,9 @@
                     android:gravity="center"
                     android:text="10"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/font_xxsmall"
+                    android:textSize="@dimen/font_xsmall"
                     android:visibility="gone" />
             </FrameLayout>
-
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 </android.support.design.widget.AppBarLayout>

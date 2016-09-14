@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_tab_height"
         android:layout_gravity="bottom"
-        android:background="@android:color/white"
+        android:background="@drawable/white_panel_top_border"
         android:orientation="horizontal">
 
         <RelativeLayout

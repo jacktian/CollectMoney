@@ -269,7 +269,7 @@
                     android:layout_toLeftOf="@id/user_qr_code"
                     android:layout_toRightOf="@id/user_account_title"
                     android:singleLine="true"
-                    android:text="387654926"
+                    android:text=""
                     android:textColor="@color/grey"
                     android:textSize="@dimen/font_medium" />
             </RelativeLayout>
@@ -299,7 +299,7 @@
                             android:id="@+id/change_money_times"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/user_detail_wealth_detail_margin"
+                            android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
                             android:singleLine="true"
                             android:text=""
@@ -311,6 +311,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/change_money_times"
+                            android:layout_centerHorizontal="true"
                             android:text="@string/detail_change_money_times"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_medium" />
@@ -354,8 +355,7 @@
                             android:id="@+id/get_from_friend_counts"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/user_detail_wealth_detail_margin"
+                            android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
                             android:singleLine="true"
                             android:text=""
@@ -367,8 +367,8 @@
                             android:id="@+id/change_money_time_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
                             android:layout_below="@id/get_from_friend_counts"
+                            android:layout_centerHorizontal="true"
                             android:text="@string/detail_get_from_friend_counts"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_medium" />
@@ -397,6 +397,7 @@
                         android:layout_weight="1">
 
                         <TextView
+                            android:id="@+id/personal_galley_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/detail_personal_album"

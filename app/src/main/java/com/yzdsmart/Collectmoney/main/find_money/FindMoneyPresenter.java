@@ -39,8 +39,15 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
     }
 
     @Override
-    public void getShopList(String submitCode, String coor, Integer pageIndex, Integer pageSize) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.radar_scan);
+    public void getShopList(String submitCode, String coor, Integer pageIndex, Integer pageSize, final Integer type) {
+        switch (type) {
+            case 0:
+                mView.startRadarScan();
+                break;
+            case 1:
+                ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+                break;
+        }
         mModel.getShopList(submitCode, coor, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -72,13 +79,27 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
 
             @Override
             public void onError(String err) {
-                ((BaseActivity) context).hideProgressDialog();
+                switch (type) {
+                    case 0:
+                        mView.stopRadarScan();
+                        break;
+                    case 1:
+                        ((BaseActivity) context).hideProgressDialog();
+                        break;
+                }
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-                ((BaseActivity) context).hideProgressDialog();
+                switch (type) {
+                    case 0:
+                        mView.stopRadarScan();
+                        break;
+                    case 1:
+                        ((BaseActivity) context).hideProgressDialog();
+                        break;
+                }
             }
         });
     }
