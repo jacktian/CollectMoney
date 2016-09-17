@@ -15,7 +15,7 @@ import com.tencent.TIMConversationType;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.chat.ChatActivity;
-import com.yzdsmart.Collectmoney.galley.UploadImageActivity;
+import com.yzdsmart.Collectmoney.galley.UploadGalleyActivity;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.listener.AppBarOffsetChangeListener;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -154,7 +154,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
             case R.id.personal_galley_title:
                 switch (type) {
                     case 0:
-                        openActivity(UploadImageActivity.class);
+                        openActivity(UploadGalleyActivity.class);
                         break;
                 }
                 break;

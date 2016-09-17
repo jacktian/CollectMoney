@@ -2,8 +2,12 @@ package com.yzdsmart.Collectmoney.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import java.net.InetAddress;
@@ -139,5 +143,36 @@ public class Utils {
 
         }
         return null;
+    }
+
+    /**
+     * FilePath To Bitmap
+     *
+     * @param context  上下文
+     * @param filePath 文件路径
+     */
+    public static Bitmap getBitmapFromFilePath(Context context, String filePath) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+
+        int bmpWidth = options.outWidth;
+        int bmpHeight = options.outHeight;
+
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(metrics);
+        int screenWidth = metrics.widthPixels;
+        int screenHeight = metrics.heightPixels;
+
+        options.inSampleSize = 1;
+        if (bmpWidth > bmpHeight) {
+            if (bmpWidth > screenWidth)
+                options.inSampleSize = bmpWidth / screenWidth;
+        } else {
+            if (bmpHeight > screenHeight)
+                options.inSampleSize = bmpHeight / screenHeight;
+        }
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(filePath, options);
     }
 }

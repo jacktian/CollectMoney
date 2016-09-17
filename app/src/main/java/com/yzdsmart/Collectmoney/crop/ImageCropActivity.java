@@ -105,18 +105,11 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
         if (resultCode == RESULT_OK) {
             Bitmap bitmap = null;
             byte[] bytes = null;
-            Cursor cursor = null;
             ContentResolver contentResolver = getContentResolver();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(contentResolver, Crop.getOutput(result));
-                cursor = getContentResolver().query(Crop.getOutput(result), null, null, null, null);
-                cursor.moveToFirst();
             } catch (Exception e) {
                 e.printStackTrace();
-            } finally {
-                if (cursor != null) {
-                    cursor.close();
-                }
             }
             if (bitmap != null) {
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -124,9 +117,9 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
                 bytes = byteArrayOutputStream.toByteArray();
             }
             bitmap.recycle();//释放bitmap
-            String file = new String(android.util.Base64.encode(bytes, android.util.Base64.DEFAULT));
+            String image = new String(android.util.Base64.encode(bytes, android.util.Base64.DEFAULT));
 
-            mPresenter.uploadPortrait(UPLOAD_ACTION_CODE, SharedPreferencesUtils.getString(this, "im_account", "") + ".png", file, SharedPreferencesUtils.getString(this, "im_account", ""));
+            mPresenter.uploadPortrait(UPLOAD_ACTION_CODE, SharedPreferencesUtils.getString(this, "im_account", "") + ".png", image, SharedPreferencesUtils.getString(this, "im_account", ""));
 
             resultImageIV.setImageURI(Crop.getOutput(result));
         } else if (resultCode == Crop.RESULT_ERROR) {

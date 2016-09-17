@@ -1,6 +1,7 @@
 package com.yzdsmart.Collectmoney.galley;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -9,7 +10,9 @@ import android.widget.ImageView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.utils.Utils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +29,7 @@ import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
 /**
  * Created by jacks on 2016/9/17.
  */
-public class UploadImageActivity extends BaseActivity implements UploadImageContract.UploadImageView, BGASortableNinePhotoLayout.Delegate {
+public class UploadGalleyActivity extends BaseActivity implements UploadGalleyContract.UploadImageView, BGASortableNinePhotoLayout.Delegate {
     @Nullable
     @BindViews({R.id.left_title, R.id.center_title, R.id.title_right_operation})
     List<View> hideViews;
@@ -42,7 +45,7 @@ public class UploadImageActivity extends BaseActivity implements UploadImageCont
     private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
     private static final int REQUEST_CODE_PHOTO_PREVIEW = 2;
 
-    private UploadImageContract.UploadImagePresenter mPresenter;
+    private UploadGalleyContract.UploadImagePresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,7 @@ public class UploadImageActivity extends BaseActivity implements UploadImageCont
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
 
-        new UploadImagePresenter(this, this);
+        new UploadGalleyPresenter(this, this);
 
         mPhotosSnpl.init(this);
         // 设置拖拽排序控件的代理
@@ -60,7 +63,13 @@ public class UploadImageActivity extends BaseActivity implements UploadImageCont
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_upload_image;
+        return R.layout.activity_upload_galley;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mPresenter.unRegisterSubscribe();
     }
 
     @Override
@@ -81,7 +90,24 @@ public class UploadImageActivity extends BaseActivity implements UploadImageCont
                 closeActivity();
                 break;
             case R.id.upload_galley:
-                System.out.println("---------->" + mPhotosSnpl.getData());
+                Bitmap bitmap = null;
+                byte[] bytes = null;
+                for (String path : mPhotosSnpl.getData()) {
+                    System.out.println("---------->" + path);
+                    try {
+                        bitmap = Utils.getBitmapFromFilePath(this, path);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    if (bitmap != null) {
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                        bytes = byteArrayOutputStream.toByteArray();
+                    }
+                    bitmap.recycle();//释放bitmap
+                    String image = new String(android.util.Base64.encode(bytes, android.util.Base64.DEFAULT));
+                    System.out.println("---------->" + image);
+                }
                 break;
         }
     }
@@ -104,7 +130,7 @@ public class UploadImageActivity extends BaseActivity implements UploadImageCont
     }
 
     @Override
-    public void setPresenter(UploadImageContract.UploadImagePresenter presenter) {
+    public void setPresenter(UploadGalleyContract.UploadImagePresenter presenter) {
         mPresenter = presenter;
     }
 }
