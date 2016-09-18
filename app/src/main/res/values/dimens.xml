@@ -83,4 +83,6 @@
     <dimen name="publish_tasks_item_title_margin_top">40dp</dimen>
     <dimen name="publish_tasks_item_title_padding_top_bottom">8dp</dimen>
     <dimen name="publish_tasks_item_margin_top">22dp</dimen>
+    <dimen name="publish_tasks_button_width">197dp</dimen>
+    <dimen name="publish_tasks_button_height">44dp</dimen>
 </resources>

@@ -98,7 +98,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     List<Overlay> coinsOverlayList = null;
     //周边商铺检索参数
     private static final Integer PAGE_SIZE = 5;//分页数量
-    private Integer page_index = 0;//分页索引 当前页标，从0开始
+    private Integer page_index = 1;//分页索引 当前页标，从0开始
     private String qLocation = "";//检索中心点
     private Integer searchType = 0;//0 定位获取商铺列表 1 搜索商场附近商铺列表 2 扫码
 

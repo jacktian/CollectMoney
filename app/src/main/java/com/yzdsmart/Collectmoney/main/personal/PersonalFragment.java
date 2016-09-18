@@ -44,9 +44,6 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @BindViews({R.id.center_title, R.id.title_logo, R.id.title_right_operation})
     List<View> hideViews;
     @Nullable
-    @BindViews({R.id.title_right_operation_to_left, R.id.bubble_count})
-    List<View> showViews;
-    @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
     @Nullable
@@ -119,7 +116,6 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         super.onActivityCreated(savedInstanceState);
 
         ButterKnife.apply(hideViews, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
-        ButterKnife.apply(showViews, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
         titleLeftOpeIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.left_arrow));
         titleRightOpeTLIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.grey_mail_icon));
         leftTitleTV.setText(getActivity().getResources().getString(R.string.personal_find));
