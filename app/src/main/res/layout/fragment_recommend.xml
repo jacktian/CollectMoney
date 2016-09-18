@@ -14,6 +14,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/activity_horizontal_padding"
-        android:layout_marginRight="@dimen/activity_horizontal_padding"
-        android:background="@color/light_yellow" />
+        android:layout_marginRight="@dimen/activity_horizontal_padding" />
 </LinearLayout>

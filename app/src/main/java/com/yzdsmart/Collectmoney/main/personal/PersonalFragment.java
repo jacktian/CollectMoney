@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.main.personal;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bumptech.glide.Glide;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
@@ -43,6 +46,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @Nullable
     @BindViews({R.id.center_title, R.id.title_logo, R.id.title_right_operation})
     List<View> hideViews;
+    @Nullable
+    @BindView(R.id.toolBar)
+    Toolbar toolBar;
     @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
@@ -82,6 +88,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @Nullable
     @BindView(R.id.user_account_coin)
     TextView userAccountCoinTV;
+    @Nullable
+    @BindView(R.id.shop_images_banner)
+    ConvenientBanner shopImagesBanner;
 
     private PersonalContract.PersonalPresenter mPresenter;
 
@@ -89,6 +98,8 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
 
     private Handler backFindMoneyHandler = new Handler();
     private Runnable backFindMoneyRunnable;
+
+    private ArrayList<Integer> localImages = new ArrayList<Integer>();//banner图片
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,6 +115,11 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         };
 
         new PersonalPresenter(getActivity(), this);
+
+        localImages.add(R.mipmap.shop_banner);
+        localImages.add(R.mipmap.shop_banner);
+        localImages.add(R.mipmap.shop_banner);
+        localImages.add(R.mipmap.shop_banner);
     }
 
     @Override
@@ -125,6 +141,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
             toggleViews.add(personalDetailLayout);
             toggleViews.add(registerBusinessLayout);
         } else {
+            toggleViews.add(shopImagesBanner);
             toggleViews.add(shopDetailLayout);
             toggleViews.add(shopFocusVisitLayout);
             toggleViews.add(businessOpeLayout);
@@ -134,6 +151,17 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         }
         ButterKnife.apply(toggleViews, BaseActivity.BUTTERKNIFEGONE);
 
+        shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
+            @Override
+            public ShopImageBannerHolderView createHolder() {
+                return new ShopImageBannerHolderView();
+            }
+        }, localImages)
+                //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
+                //设置指示器的方向
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+        shopImagesBanner.startTurning(3000);
     }
 
     @Optional
@@ -196,8 +224,18 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         if (!hidden) {
             mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
             mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+            shopImagesBanner.startTurning(3000);
         } else {
             mPresenter.unRegisterSubscribe();
+            shopImagesBanner.stopTurning();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (this.isVisible()) {
+            shopImagesBanner.startTurning(3000);
         }
     }
 
@@ -205,6 +243,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     public void onStop() {
         super.onStop();
         mPresenter.unRegisterSubscribe();
+        shopImagesBanner.stopTurning();
     }
 
     @Override
