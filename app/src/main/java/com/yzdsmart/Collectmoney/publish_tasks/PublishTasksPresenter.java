@@ -5,7 +5,6 @@ import android.content.Context;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.PublishTaskLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 
 /**
@@ -34,35 +33,6 @@ public class PublishTasksPresenter implements PublishTasksContract.PublishTasksP
                     mView.onPublishTask(true, context.getResources().getString(R.string.publish_task_success));
                 } else {
                     mView.onPublishTask(false, response.getErrorInfo());
-                }
-            }
-
-            @Override
-            public void onError(String err) {
-                ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(err);
-            }
-
-            @Override
-            public void onComplete() {
-                ((BaseActivity) context).hideProgressDialog();
-            }
-        });
-    }
-
-    @Override
-    public void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
-        mModel.publishTaskLog(action, submitCode, bazaCode, pageIndex, pageSize, new RequestListener() {
-            @Override
-            public void onSuccess(Object result) {
-                PublishTaskLogRequestResponse response = (PublishTaskLogRequestResponse) result;
-                if ("OK".equals(response.getActionStatus())) {
-                    if (null != response.getLists() && response.getLists().size() > 0) {
-                        mView.onPublishTaskLog(response.getLists());
-                    }
-                } else {
-                    ((BaseActivity) context).showSnackbar(response.getErrorInfo());
                 }
             }
 

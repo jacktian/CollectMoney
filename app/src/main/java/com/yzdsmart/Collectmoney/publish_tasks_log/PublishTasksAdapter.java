@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.publish_tasks;
+package com.yzdsmart.Collectmoney.publish_tasks_log;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

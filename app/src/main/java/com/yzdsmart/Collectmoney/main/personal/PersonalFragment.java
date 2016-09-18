@@ -17,10 +17,10 @@ import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.buy_coins.BuyCoinsActivity;
 import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
-import com.yzdsmart.Collectmoney.money_friendship.MoneyFriendshipActivity;
 import com.yzdsmart.Collectmoney.personal_coin_list.PersonalCoinsActivity;
 import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
 import com.yzdsmart.Collectmoney.publish_tasks.PublishTasksActivity;
+import com.yzdsmart.Collectmoney.publish_tasks_log.PublishTasksLogActivity;
 import com.yzdsmart.Collectmoney.register_business.RegisterBusinessActivity;
 import com.yzdsmart.Collectmoney.settings.SettingsActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -68,17 +68,20 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @BindView(R.id.diamond_count)
     LinearLayout diamondCountLayout;
     @Nullable
-    @BindView(R.id.to_register_business)
+    @BindView(R.id.to_personal_detail)
+    RelativeLayout personalDetailLayout;
+    @Nullable
+    @BindView(R.id.to_shop_detail)
+    RelativeLayout shopDetailLayout;
+    @Nullable
+    @BindView(R.id.shop_focus_visit_panel)
+    LinearLayout shopFocusVisitLayout;
+    @Nullable
+    @BindView(R.id.register_business_panel)
     RelativeLayout registerBusinessLayout;
     @Nullable
-    @BindView(R.id.to_buy_coins)
-    RelativeLayout buyCoinsLayout;
-    @Nullable
-    @BindView(R.id.focus_shop_layout)
-    RelativeLayout focusShopLayout;
-    @Nullable
-    @BindView(R.id.to_publish_tasks)
-    RelativeLayout publishTasksLayout;
+    @BindView(R.id.business_ope_panel)
+    LinearLayout businessOpeLayout;
     @Nullable
     @BindView(R.id.user_account_coin)
     TextView userAccountCoinTV;
@@ -123,20 +126,22 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
 
         toggleViews.clear();
         if (SharedPreferencesUtils.getString(getActivity(), "baza_code", "").trim().length() > 0) {
+            toggleViews.add(personalDetailLayout);
             toggleViews.add(registerBusinessLayout);
-            toggleViews.add(focusShopLayout);
         } else {
-            toggleViews.add(buyCoinsLayout);
-            toggleViews.add(publishTasksLayout);
+            toggleViews.add(shopDetailLayout);
+            toggleViews.add(shopFocusVisitLayout);
+            toggleViews.add(businessOpeLayout);
+
+            mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
+            mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
         }
         ButterKnife.apply(toggleViews, BaseActivity.BUTTERKNIFEGONE);
 
-        mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
-        mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_money_friend})
+    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -176,8 +181,13 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
 //                ((MainActivity) getActivity()).backToFindMoney();
                 backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
-            case R.id.to_money_friend:
-                ((BaseActivity) getActivity()).openActivity(MoneyFriendshipActivity.class);
+//            case R.id.to_money_friend:
+//                ((BaseActivity) getActivity()).openActivity(MoneyFriendshipActivity.class);
+////                ((MainActivity) getActivity()).backToFindMoney();
+//                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
+//                break;
+            case R.id.to_publish_tasks_log:
+                ((BaseActivity) getActivity()).openActivity(PublishTasksLogActivity.class);
 //                ((MainActivity) getActivity()).backToFindMoney();
                 backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;

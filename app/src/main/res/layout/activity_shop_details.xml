@@ -237,7 +237,7 @@
                             android:textSize="@dimen/font_xlarge" />
 
                         <TextView
-                            android:id="@+id/change_money_time_title"
+                            android:id="@+id/visit_person_counts_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/visit_person_counts"
@@ -248,14 +248,14 @@
                     </RelativeLayout>
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/hotel_detail_introduction"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/shop_item_panel_margin_top"
-                    android:text="常州香格里拉大酒店是常州武进首家真正的豪华国际五星级酒店。毗邻“淹城”春秋乐园、天目湖和南山竹海等景区，是商务会奖、拓展旅游和休闲下榻的佳选。常州香格里拉将以完备的设施，产品和服务，尤其是在餐饮方面具独特的品质，真诚热情和关怀，为来常州的商务人士，本地企业家和各地旅游人士提供豪华至尊的礼遇和好的体验。"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/font_small" />
+                <!--<TextView-->
+                <!--android:id="@+id/hotel_detail_introduction"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="@dimen/shop_item_panel_margin_top"-->
+                <!--android:text="常州香格里拉大酒店是常州武进首家真正的豪华国际五星级酒店。毗邻“淹城”春秋乐园、天目湖和南山竹海等景区，是商务会奖、拓展旅游和休闲下榻的佳选。常州香格里拉将以完备的设施，产品和服务，尤其是在餐饮方面具独特的品质，真诚热情和关怀，为来常州的商务人士，本地企业家和各地旅游人士提供豪华至尊的礼遇和好的体验。"-->
+                <!--android:textColor="@color/grey"-->
+                <!--android:textSize="@dimen/font_small" />-->
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/hotel_user_list"

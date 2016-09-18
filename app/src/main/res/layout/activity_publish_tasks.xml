@@ -15,7 +15,107 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/common_toolbar_height"
         android:background="@color/light_yellow"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/activity_vertical_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/publish_task_package_title"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/font_medium" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/activity_vertical_padding"
+            android:paddingTop="@dimen/activity_vertical_padding">
+
+            <TextView
+                android:id="@+id/total_coin_counts_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_weight="3"
+                android:text="红包个数:"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_medium" />
+
+            <EditText
+                android:id="@+id/total_coin_counts"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edit_height"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/total_coin_counts_title"
+                android:layout_weight="7"
+                android:background="@null"
+                android:hint="@string/publish_task_package_count_hint"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="9"
+                android:maxLines="1"
+                android:textColor="@color/grey"
+                android:textColorHint="@color/light_grey"
+                android:textDirection="rtl"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="个"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_medium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/personal_item_panel_margin_top"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/activity_vertical_padding"
+            android:paddingTop="@dimen/activity_vertical_padding">
+
+            <TextView
+                android:id="@+id/total_coin_amounts_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_weight="3"
+                android:text="总金额数:"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_medium" />
+
+            <EditText
+                android:id="@+id/total_coin_amounts"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edit_height"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/total_coin_counts_title"
+                android:layout_weight="7"
+                android:background="@null"
+                android:hint="@string/publish_task_package_amount_hint"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="9"
+                android:maxLines="1"
+                android:textColor="@color/grey"
+                android:textColorHint="@color/light_grey"
+                android:textDirection="rtl"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="个"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_medium" />
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,35 +128,6 @@
             android:paddingLeft="@dimen/activity_horizontal_padding"
             android:paddingRight="@dimen/activity_horizontal_padding">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/activity_vertical_padding"
-                android:paddingTop="@dimen/activity_vertical_padding">
-
-                <TextView
-                    android:id="@+id/total_coin_counts_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="总金币数\t:"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/font_medium" />
-
-                <EditText
-                    android:id="@+id/total_coin_counts"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/edit_height"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/total_coin_counts_title"
-                    android:background="@null"
-                    android:imeOptions="actionNext"
-                    android:inputType="number"
-                    android:maxLength="9"
-                    android:maxLines="1"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/font_medium" />
-            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -207,48 +278,5 @@
             android:text="提交"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_medium" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/personal_item_panel_margin_top"
-            android:background="@drawable/white_panel_top_bottom_border"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/activity_vertical_padding"
-            android:paddingTop="@dimen/activity_vertical_padding">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/publish_task_coin_total_counts"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/font_medium" />
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/publish_task_begin_end_time"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/font_medium" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/publish_task_coin_left_counts"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/font_medium" />
-        </LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/publish_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

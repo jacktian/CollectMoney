@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -43,10 +42,10 @@ import com.baidu.mapapi.utils.DistanceUtil;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.bd_map.WalkingRouteOverlay;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.main.personal.PersonalFragment;
-import com.yzdsmart.Collectmoney.bd_map.WalkingRouteOverlay;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -244,6 +243,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         // searchMapView.removeViewAt(1);
 
         mBaiduMap = findMoneyMap.getMap();
+        mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+        mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(15));
         //设置默认显示城市
         MapStatusUpdate msu_cz = MapStatusUpdateFactory.newLatLng(GEO_DEFAULT_CITY);
         mBaiduMap.setMapStatus(msu_cz);
@@ -426,7 +427,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 LatLng ll = new LatLng(bdLocation.getLatitude(),
                         bdLocation.getLongitude());
                 MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(ll).zoom(18.0f);
+                builder.target(ll);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
 //
 //                if (null != SharedPreferencesUtils.getString(getActivity(), "cust_code", "") && SharedPreferencesUtils.getString(getActivity(), "cust_code", "").length() > 0) {

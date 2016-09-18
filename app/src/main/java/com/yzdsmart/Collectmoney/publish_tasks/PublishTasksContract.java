@@ -13,7 +13,6 @@ public interface PublishTasksContract {
     interface PublishTasksView extends BaseView<PublishTasksPresenter> {
         void onPublishTask(boolean flag, String msg);
 
-        void onPublishTaskLog(List<PublishTaskLog> logList);
     }
 
     interface PublishTasksPresenter extends BasePresenter {
@@ -29,17 +28,6 @@ public interface PublishTasksContract {
          * @param endTime
          */
         void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer sMinGold, Integer sMaxGold, String beginTime, String endTime);
-
-        /**
-         * 指定商铺获得发布任务日志列表
-         *
-         * @param action
-         * @param submitCode
-         * @param bazaCode
-         * @param pageIndex
-         * @param pageSize
-         */
-        void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize);
 
         void unRegisterSubscribe();
     }

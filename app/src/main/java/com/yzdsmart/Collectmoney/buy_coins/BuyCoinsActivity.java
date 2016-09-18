@@ -16,10 +16,7 @@ import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalD
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.BuyCoinsLog;
-import com.yzdsmart.Collectmoney.bean.PublishTaskLog;
-import com.yzdsmart.Collectmoney.publish_tasks.PublishTasksAdapter;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
-import com.yzdsmart.Collectmoney.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

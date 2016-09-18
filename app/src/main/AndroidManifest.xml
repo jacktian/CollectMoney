@@ -125,6 +125,12 @@
             android:theme="@style/ActivityColorTranslucentTheme" />
 
         <activity
+            android:name=".publish_tasks_log.PublishTasksLogActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
             android:name=".money_friendship.MoneyFriendshipActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"

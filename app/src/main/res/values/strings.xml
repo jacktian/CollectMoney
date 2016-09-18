@@ -41,6 +41,7 @@
     <string name="galley_select">相册选取</string>
     <string name="buy_coin">购买金币</string>
     <string name="publishing_tasks">发布任务</string>
+    <string name="publishing_tasks_log">发布任务日志</string>
 
     <!--金币总数-->
     <string name="personal_coin_counts">获取金币数</string>
@@ -55,6 +56,8 @@
     <string name="buy_coin_coin_count_required">请输入购买金币数!</string>
 
     <!--发布任务-->
+    <string name="publish_task_package_title">悬赏金币</string>
+    <string name="publish_task_time_title">悬赏时间</string>
     <string name="publish_task_coin_total_counts">发布总币数</string>
     <string name="publish_task_begin_end_time">起止时间</string>
     <string name="publish_task_coin_left_counts">剩余币数</string>
@@ -64,6 +67,9 @@
     <string name="publish_task_max_coin_required">请输入最大扫描金币数!</string>
     <string name="publish_task_begin_time_required">请输入任务开始时间!</string>
     <string name="publish_task_end_time_required">请输入任务结束时间!</string>
+    <string name="publish_task_package_count_hint">填写个数</string>
+    <string name="publish_task_package_amount_hint">填写金额</string>
+    <string name="publish_task_time_hint">请选择时间</string>
 
     <!--升级商户-->
     <string name="register_business_baza_name">商铺名称:</string>
