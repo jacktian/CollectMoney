@@ -240,7 +240,7 @@
             android:layout_width="@dimen/button_width"
             android:layout_height="@dimen/button_height"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/personal_item_panel_margin_top"
+            android:layout_marginTop="@dimen/publish_tasks_item_title_margin_top"
             android:background="@drawable/orange_button_bg"
             android:text="提交"
             android:textColor="@android:color/white"
