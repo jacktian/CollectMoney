@@ -6,6 +6,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 
 /**
  * Created by YZD on 2016/8/27.
@@ -60,6 +61,29 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
                     name = requestResponse.getC_UserCode();
                 }
                 mView.onGetCustInfo(name, requestResponse.getImageUrl() == null ? "" : requestResponse.getImageUrl(), requestResponse.getGoldNum());
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode) {
+        mModel.getShopInfo(actioncode, submitCode, bazaCode, custCode, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                ShopInfoRequestResponse shopInfo = (ShopInfoRequestResponse) result;
+                if (null != shopInfo) {
+                    mView.onGetShopInfo(shopInfo);
+                }
             }
 
             @Override

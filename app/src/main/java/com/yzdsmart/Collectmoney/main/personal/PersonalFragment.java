@@ -19,6 +19,7 @@ import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.buy_coins.BuyCoinsActivity;
 import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
+import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.personal_coin_list.PersonalCoinsActivity;
 import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
@@ -91,6 +92,21 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @Nullable
     @BindView(R.id.shop_images_banner)
     ConvenientBanner shopImagesBanner;
+    @Nullable
+    @BindView(R.id.shop_name)
+    TextView shopNameTV;
+    @Nullable
+    @BindView(R.id.shop_address)
+    TextView shopAddressTV;
+    @Nullable
+    @BindView(R.id.focus_person_counts)
+    TextView focusPersonCountsTV;
+    @Nullable
+    @BindView(R.id.daily_coin_counts)
+    TextView dailyCoinCountsTV;
+    @Nullable
+    @BindView(R.id.visit_person_counts)
+    TextView visitPersonCountsTV;
 
     private PersonalContract.PersonalPresenter mPresenter;
 
@@ -140,6 +156,8 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         if (SharedPreferencesUtils.getString(getActivity(), "baza_code", "").trim().length() > 0) {
             toggleViews.add(personalDetailLayout);
             toggleViews.add(registerBusinessLayout);
+
+//            mPresenter.getShopInfo("000000", "000000");
         } else {
             toggleViews.add(shopImagesBanner);
             toggleViews.add(shopDetailLayout);
@@ -270,5 +288,14 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         userNameTV.setText(name);
         userAccountCoinTV.setText("" + goldNum);
         Glide.with(this).load(headUel).error(getActivity().getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
+    }
+
+    @Override
+    public void onGetShopInfo(ShopInfoRequestResponse shopDetails) {
+        shopNameTV.setText(shopDetails.getName());
+        shopAddressTV.setText(shopDetails.getAddr());
+        focusPersonCountsTV.setText("" + shopDetails.getAtteNum());
+        dailyCoinCountsTV.setText("" + shopDetails.getTodayGlodNum());
+        visitPersonCountsTV.setText("" + shopDetails.getVisiNum());
     }
 }
