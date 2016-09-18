@@ -222,9 +222,10 @@
                                         android:id="@+id/shop_name"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_toRightOf="@id/shop_name_title"
                                         android:ellipsize="marquee"
                                         android:singleLine="true"
-                                        android:text=""
+                                        android:text="XXX的店铺"
                                         android:textColor="@color/grey"
                                         android:textIsSelectable="true"
                                         android:textSize="@dimen/font_medium" />
@@ -255,7 +256,7 @@
                                         <ImageView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:src="@mipmap/vip1" />
+                                            android:src="@mipmap/five_start" />
                                     </LinearLayout>
 
                                 </RelativeLayout>
@@ -282,7 +283,7 @@
                                     android:layout_height="wrap_content"
                                     android:ellipsize="marquee"
                                     android:singleLine="true"
-                                    android:text=""
+                                    android:text="常州市常武中路189号"
                                     android:textColor="@color/grey"
                                     android:textIsSelectable="true"
                                     android:textSize="@dimen/font_medium" />
@@ -322,7 +323,7 @@
                             android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
                             android:singleLine="true"
-                            android:text="0"
+                            android:text="100"
                             android:textColor="@color/orange"
                             android:textIsSelectable="true"
                             android:textSize="@dimen/font_xlarge" />
@@ -351,7 +352,7 @@
                             android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
                             android:singleLine="true"
-                            android:text="0"
+                            android:text="2560"
                             android:textColor="@color/orange"
                             android:textIsSelectable="true"
                             android:textSize="@dimen/font_xlarge" />
@@ -381,7 +382,7 @@
                             android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
                             android:singleLine="true"
-                            android:text="0"
+                            android:text="348"
                             android:textColor="@color/orange"
                             android:textIsSelectable="true"
                             android:textSize="@dimen/font_xlarge" />
