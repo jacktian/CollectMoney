@@ -35,15 +35,15 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
-    @Nullable
-    @BindView(R.id.total_coin_counts)
-    EditText totalCoinCountsET;
-    @Nullable
-    @BindView(R.id.min_coin_counts)
-    EditText minCoinCountsET;
-    @Nullable
-    @BindView(R.id.max_coin_counts)
-    EditText maxCoinCountsET;
+    //    @Nullable
+//    @BindView(R.id.total_coin_counts)
+//    EditText totalCoinCountsET;
+//    @Nullable
+//    @BindView(R.id.min_coin_counts)
+//    EditText minCoinCountsET;
+//    @Nullable
+//    @BindView(R.id.max_coin_counts)
+//    EditText maxCoinCountsET;
     @Nullable
     @BindView(R.id.begin_time)
     EditText beginTimeET;
@@ -87,18 +87,18 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
                 closeActivity();
                 break;
             case R.id.publish_task:
-                if (!requiredVerify(totalCoinCountsET)) {
-                    totalCoinCountsET.setError(getResources().getString(R.string.publish_task_total_coin_required));
-                    return;
-                }
-                if (!requiredVerify(minCoinCountsET)) {
-                    minCoinCountsET.setError(getResources().getString(R.string.publish_task_min_coin_required));
-                    return;
-                }
-                if (!requiredVerify(maxCoinCountsET)) {
-                    maxCoinCountsET.setError(getResources().getString(R.string.publish_task_max_coin_required));
-                    return;
-                }
+//                if (!requiredVerify(totalCoinCountsET)) {
+//                    totalCoinCountsET.setError(getResources().getString(R.string.publish_task_total_coin_required));
+//                    return;
+//                }
+//                if (!requiredVerify(minCoinCountsET)) {
+//                    minCoinCountsET.setError(getResources().getString(R.string.publish_task_min_coin_required));
+//                    return;
+//                }
+//                if (!requiredVerify(maxCoinCountsET)) {
+//                    maxCoinCountsET.setError(getResources().getString(R.string.publish_task_max_coin_required));
+//                    return;
+//                }
                 if (!requiredVerify(beginTimeET)) {
                     beginTimeET.setError(getResources().getString(R.string.publish_task_begin_time_required));
                     return;
@@ -107,12 +107,12 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
                     endTimeET.setError(getResources().getString(R.string.publish_task_end_time_required));
                     return;
                 }
-                Integer totalCoinCounts = Integer.valueOf(totalCoinCountsET.getText().toString());
-                Integer minCoinCounts = Integer.valueOf(minCoinCountsET.getText().toString());
-                Integer maxCoinCounts = Integer.valueOf(maxCoinCountsET.getText().toString());
+//                Integer totalCoinCounts = Integer.valueOf(totalCoinCountsET.getText().toString());
+//                Integer minCoinCounts = Integer.valueOf(minCoinCountsET.getText().toString());
+//                Integer maxCoinCounts = Integer.valueOf(maxCoinCountsET.getText().toString());
                 String beginTime = beginTimeET.getText().toString();
                 String endTime = endTimeET.getText().toString();
-                mPresenter.publishTask("000000", SharedPreferencesUtils.getString(this, "baza_code", ""), totalCoinCounts, minCoinCounts, maxCoinCounts, beginTime, endTime);
+//                mPresenter.publishTask("000000", SharedPreferencesUtils.getString(this, "baza_code", ""), totalCoinCounts, minCoinCounts, maxCoinCounts, beginTime, endTime);
                 break;
             case R.id.begin_time:
             case R.id.end_time:

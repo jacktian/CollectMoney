@@ -78,4 +78,9 @@
     <!--钱圈-->
     <dimen name="friendship_list_item_height">42dp</dimen>
     <dimen name="friendship_list_item_avater_width">32dp</dimen>
+
+    <!--发布任务-->
+    <dimen name="publish_tasks_item_title_margin_top">40dp</dimen>
+    <dimen name="publish_tasks_item_title_padding_top_bottom">8dp</dimen>
+    <dimen name="publish_tasks_item_margin_top">22dp</dimen>
 </resources>
