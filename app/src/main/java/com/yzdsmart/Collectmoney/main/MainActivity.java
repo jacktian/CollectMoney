@@ -114,9 +114,9 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     @Override
     protected void onResume() {
         super.onResume();
-        if (!(mCurrentFragment instanceof FindMoneyFragment)) {
-            backToFindMoney();
-        }
+//        if (!(mCurrentFragment instanceof FindMoneyFragment)) {
+//            backToFindMoney();
+//        }
     }
 
     @Override

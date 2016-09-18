@@ -176,8 +176,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
                 bundle = new Bundle();
                 bundle.putInt("type", 0);//0 个人 1 好友
                 ((BaseActivity) getActivity()).openActivity(PersonalFriendDetailActivity.class, bundle, 0);
-//                ((MainActivity) getActivity()).backToFindMoney();
-                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
+//                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.user_avater:
                 ((BaseActivity) getActivity()).openActivity(ImageCropActivity.class);
@@ -187,33 +186,27 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
                 break;
             case R.id.to_register_business:
                 ((BaseActivity) getActivity()).openActivity(RegisterBusinessActivity.class);
-//                ((MainActivity) getActivity()).backToFindMoney();
-                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
+//                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.to_buy_coins:
                 ((BaseActivity) getActivity()).openActivity(BuyCoinsActivity.class);
-//                ((MainActivity) getActivity()).backToFindMoney();
-                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
+//                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.to_publish_tasks:
                 ((BaseActivity) getActivity()).openActivity(PublishTasksActivity.class);
-//                ((MainActivity) getActivity()).backToFindMoney();
-                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
+//                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.to_personal_coins:
                 ((BaseActivity) getActivity()).openActivity(PersonalCoinsActivity.class);
-//                ((MainActivity) getActivity()).backToFindMoney();
-                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
+//                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
 //            case R.id.to_money_friend:
 //                ((BaseActivity) getActivity()).openActivity(MoneyFriendshipActivity.class);
-////                ((MainActivity) getActivity()).backToFindMoney();
 //                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
 //                break;
             case R.id.to_publish_tasks_log:
                 ((BaseActivity) getActivity()).openActivity(PublishTasksLogActivity.class);
-//                ((MainActivity) getActivity()).backToFindMoney();
-                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
+//                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
         }
     }
