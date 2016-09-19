@@ -272,4 +272,13 @@
     <string name="add_friend_del_black_list">添加失败，该用户在你的黑名单中，是否将该用户从黑名单中移除（你需要在移除成功后重发添加好友请求）</string>
     <string name="add_friend_del_black_err">移出黑名单失败</string>
     <string name="add_friend_del_black_succ">移出黑名单成功</string>
+    <!--日期选择-->
+    <string name="picker_sure">确定</string>
+    <string name="picker_cancel">取消</string>
+    <string name="picker_title">选择时间</string>
+    <string name="picker_year">年</string>
+    <string name="picker_month">月</string>
+    <string name="picker_day">日</string>
+    <string name="picker_hour">时</string>
+    <string name="picker_minute">分</string>
 </resources>

@@ -35,4 +35,9 @@
     <color name="tecent_btn_blue_hover">#1E86E4</color>
     <color name="tecent_btn_text">#FFFFFF</color>
     <color name="tecent_btn_text_hover">#CCFFFFFF</color>
+    <!--日期选择-->
+    <color name="timetimepicker_default_text_color">#999999</color>
+    <color name="timepicker_toolbar_bg">#e60012</color>
+    <color name="timepicker_dialog_bg">#80000000</color>
+    <color name="timepicker_line">#e8e8e8</color>
 </resources>

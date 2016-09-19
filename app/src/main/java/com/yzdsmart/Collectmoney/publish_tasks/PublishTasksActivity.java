@@ -9,10 +9,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
+import com.yzdsmart.Collectmoney.views.pickerview.TimePickerDialog;
+import com.yzdsmart.Collectmoney.views.pickerview.data.Type;
+import com.yzdsmart.Collectmoney.views.pickerview.listener.OnDateSetListener;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 
@@ -56,6 +61,9 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     private Handler mHandler = new Handler();
     private Runnable closeRunnable;
 
+    private DateTimeFormatter dtf;
+    private long tenYears = 10L * 365 * 1000 * 60 * 60 * 24L;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +73,8 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
         centerTitleTV.setText("发布任务");
 
         new PublishTasksPresenter(this, this);
+
+        dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
         closeRunnable = new Runnable() {
             @Override
@@ -116,22 +126,35 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
                 break;
             case R.id.begin_time:
             case R.id.end_time:
-                DatePickerPopWin pickerPopWin = new DatePickerPopWin.Builder(PublishTasksActivity.this, new DatePickerPopWin.OnDatePickedListener() {
-                    @Override
-                    public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
-                        ((EditText) view).setText(dateDesc);
-                    }
-                }).textConfirm("确定") //text of confirm button
-                        .textCancel("取消") //text of cancel button
-                        .btnTextSize(16) // button text size
-                        .viewTextSize(25) // pick view text size
-                        .colorCancel(Color.parseColor("#999999")) //color of cancel button
-                        .colorConfirm(Color.parseColor("#fc7d1c"))//color of confirm button
-                        .minYear(2016) //min year in loop
-                        .maxYear(2550) // max year in loop
-                        .dateChose("2016-01-01") // date chose when init popwindow
+                TimePickerDialog mDialogAll = new TimePickerDialog.Builder()
+                        .setCallBack(new OnDateSetListener() {
+                            @Override
+                            public void onDateSet(TimePickerDialog timePickerView, long millseconds) {
+                                DateTime dateTime = new DateTime(millseconds);
+                                ((EditText) view).setText(dateTime.toString(dtf));
+                            }
+                        })
+//                        .setCancelStringId("取消")
+                        .setCancelTextColor(getResources().getColor(R.color.grey))
+//                        .setSureStringId("确认")
+                        .setSureTextColor(getResources().getColor(R.color.grey))
+//                        .setTitleStringId("")
+//                        .setYearText("年")
+//                        .setMonthText("月")
+//                        .setDayText("日")
+//                        .setHourText("时")
+//                        .setMinuteText("分")
+                        .setCyclic(false)
+                        .setMinMillseconds(System.currentTimeMillis())
+                        .setMaxMillseconds(System.currentTimeMillis() + tenYears)
+                        .setCurrentMillseconds(System.currentTimeMillis())
+                        .setThemeColor(Color.WHITE)
+                        .setType(Type.ALL)
+                        .setWheelItemTextNormalColor(getResources().getColor(R.color.light_grey))
+                        .setWheelItemTextSelectorColor(getResources().getColor(R.color.grey))
+                        .setWheelItemTextSize(14)
                         .build();
-                pickerPopWin.showPopWin(PublishTasksActivity.this);
+                mDialogAll.show(getSupportFragmentManager(), "all");
                 break;
         }
     }
