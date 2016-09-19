@@ -120,8 +120,10 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     @Override
     protected void onDestroy() {
         mHandler.removeCallbacks(closeRunnable);
+        if (null != mediaPlayer) {
+            mediaPlayer.release();
+        }
         mQRCodeView.onDestroy();
-        mediaPlayer.release();
         super.onDestroy();
     }
 
