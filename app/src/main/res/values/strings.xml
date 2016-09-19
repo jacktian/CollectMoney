@@ -73,13 +73,19 @@
 
     <!--升级商户-->
     <string name="register_business_baza_name">商铺名称:</string>
-    <string name="register_business_baza_pers">联系人\t:</string>
+    <string name="register_business_baza_pers">联系姓名:</string>
     <string name="register_business_baza_tel">联系电话:</string>
-    <string name="register_business_baza_address">地\t\t址:</string>
-    <string name="register_business_remark">备注说明:</string>
-    <string name="register_business_coor">坐\t\t标:</string>
-    <string name="refresh_coor">获取坐标</string>
+    <string name="register_business_baza_address">地址:</string>
+    <string name="register_business_remark">备注:</string>
+    <string name="register_business_coor">坐标:</string>
+    <string name="refresh_coor">定位</string>
     <string name="register_business_submit">提交</string>
+    <string name="register_business_name_hint">填写商铺名称</string>
+    <string name="register_business_pers_hint">填写联系人姓名</string>
+    <string name="register_business_tel_hint">填写联系电话</string>
+    <string name="register_business_address_hint">填写商铺地址</string>
+    <string name="register_business_remark_hint">填写商铺备注</string>
+    <string name="register_business_coor_hint">填写商铺坐标</string>
     <string name="register_business_name_required">请输入商铺名称!</string>
     <string name="register_business_pers_required">请输入商铺联系人!</string>
     <string name="register_business_tel_required">请输入商铺电话!</string>

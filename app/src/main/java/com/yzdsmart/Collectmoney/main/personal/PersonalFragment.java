@@ -107,6 +107,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @Nullable
     @BindView(R.id.visit_person_counts)
     TextView visitPersonCountsTV;
+    @Nullable
+    @BindView(R.id.shop_level)
+    LinearLayout shopLevelLayout;
 
     private PersonalContract.PersonalPresenter mPresenter;
 
@@ -314,5 +317,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         focusPersonCountsTV.setText("" + shopDetails.getAtteNum());
         dailyCoinCountsTV.setText("" + shopDetails.getTodayGlodNum());
         visitPersonCountsTV.setText("" + shopDetails.getVisiNum());
+        shopLevelLayout.removeAllViews();
+        ImageView shopLevel = new ImageView(getActivity());
+        shopLevel.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.five_start));
+        shopLevelLayout.addView(shopLevel);
     }
 }
