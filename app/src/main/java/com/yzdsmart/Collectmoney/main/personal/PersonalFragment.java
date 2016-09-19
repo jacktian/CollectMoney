@@ -157,7 +157,19 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
             toggleViews.add(personalDetailLayout);
             toggleViews.add(registerBusinessLayout);
 
-//            mPresenter.getShopInfo("000000", "000000");
+            mPresenter.getShopInfo("000000", "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+
+            shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
+                @Override
+                public ShopImageBannerHolderView createHolder() {
+                    return new ShopImageBannerHolderView();
+                }
+            }, localImages)
+                    //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                    .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
+                    //设置指示器的方向
+                    .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+            shopImagesBanner.startTurning(3000);
         } else {
             toggleViews.add(shopImagesBanner);
             toggleViews.add(shopDetailLayout);
@@ -169,17 +181,6 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         }
         ButterKnife.apply(toggleViews, BaseActivity.BUTTERKNIFEGONE);
 
-        shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
-            @Override
-            public ShopImageBannerHolderView createHolder() {
-                return new ShopImageBannerHolderView();
-            }
-        }, localImages)
-                //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
-                .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
-                //设置指示器的方向
-                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
-        shopImagesBanner.startTurning(3000);
     }
 
     @Optional
@@ -233,12 +234,19 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
-            mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
-            shopImagesBanner.startTurning(3000);
+            if (SharedPreferencesUtils.getString(getActivity(), "baza_code", "").trim().length() > 0) {
+//                mPresenter.getShopInfo("000000", "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+
+                shopImagesBanner.startTurning(3000);
+            } else {
+//                mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
+//                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+            }
         } else {
             mPresenter.unRegisterSubscribe();
-            shopImagesBanner.stopTurning();
+            if (SharedPreferencesUtils.getString(getActivity(), "baza_code", "").trim().length() > 0) {
+                shopImagesBanner.stopTurning();
+            }
         }
     }
 
@@ -246,7 +254,14 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     public void onResume() {
         super.onResume();
         if (this.isVisible()) {
-            shopImagesBanner.startTurning(3000);
+            if (SharedPreferencesUtils.getString(getActivity(), "baza_code", "").trim().length() > 0) {
+//                mPresenter.getShopInfo("000000", "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+
+                shopImagesBanner.startTurning(3000);
+            } else {
+//                mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
+//                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+            }
         }
     }
 
@@ -254,7 +269,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     public void onStop() {
         super.onStop();
         mPresenter.unRegisterSubscribe();
-        shopImagesBanner.stopTurning();
+        if (SharedPreferencesUtils.getString(getActivity(), "baza_code", "").trim().length() > 0) {
+            shopImagesBanner.stopTurning();
+        }
     }
 
     @Override

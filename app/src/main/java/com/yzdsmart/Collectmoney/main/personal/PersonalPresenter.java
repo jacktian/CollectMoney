@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.main.personal;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
@@ -25,6 +26,7 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
 
     @Override
     public void getCustLevel(String custcode, String submitcode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.getCustLevel(custcode, submitcode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -36,18 +38,20 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }
 
     @Override
     public void getCustInfo(String submitcode, String custCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.getCustInfo(submitcode, custCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -65,18 +69,20 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }
 
     @Override
     public void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.getShopInfo(actioncode, submitCode, bazaCode, custCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -88,12 +94,13 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

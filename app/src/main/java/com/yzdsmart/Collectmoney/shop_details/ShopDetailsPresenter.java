@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.shop_details;
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.ShopFollower;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
@@ -27,6 +28,7 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
 
     @Override
     public void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.getShopInfo(actioncode, submitCode, bazaCode, custCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -38,18 +40,20 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }
 
     @Override
     public void setFollow(final String action, String submitCode, String custCode, String bazaCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.setFollow(action, submitCode, custCode, bazaCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -63,18 +67,20 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }
 
     @Override
     public void getShopFollowers(String action, String submitCode, String bazaCode, String custCode, Integer pageIndex, Integer pageSize) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
         mModel.getShopFollowers(action, submitCode, bazaCode, custCode, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -86,12 +92,13 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
 
             @Override
             public void onError(String err) {
-
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }
