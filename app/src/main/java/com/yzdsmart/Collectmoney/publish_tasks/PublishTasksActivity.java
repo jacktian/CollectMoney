@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import butterknife.Optional;
 
 /**
@@ -40,21 +42,21 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
-    //    @Nullable
-//    @BindView(R.id.total_coin_counts)
-//    EditText totalCoinCountsET;
-//    @Nullable
-//    @BindView(R.id.min_coin_counts)
-//    EditText minCoinCountsET;
-//    @Nullable
-//    @BindView(R.id.max_coin_counts)
-//    EditText maxCoinCountsET;
+    @Nullable
+    @BindView(R.id.total_coin_counts)
+    EditText totalCoinCountsET;
+    @Nullable
+    @BindView(R.id.total_coin_amounts)
+    EditText totalCoinAmountsET;
     @Nullable
     @BindView(R.id.begin_time)
     EditText beginTimeET;
     @Nullable
     @BindView(R.id.end_time)
     EditText endTimeET;
+    @Nullable
+    @BindView(R.id.publish_task)
+    Button publishTaskBtn;
 
     private PublishTasksContract.PublishTasksPresenter mPresenter;
 
@@ -63,6 +65,11 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
 
     private DateTimeFormatter dtf;
     private long tenYears = 10L * 365 * 1000 * 60 * 60 * 24L;
+
+    private boolean packageCountsPass = false;
+    private boolean packageAmountPass = false;
+    private boolean packageBeginPass = false;
+    private boolean packageEndPass = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +97,71 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     }
 
     @Optional
+    @OnTextChanged({R.id.total_coin_counts})
+    void onPackageCountsTextChanged(CharSequence s, int start, int before, int count) {
+        System.out.println(s + "---" + start + "---" + before + "---" + count);
+        if (s.toString().trim().length() > 0) {
+            packageCountsPass = true;
+        } else {
+            packageCountsPass = false;
+        }
+        if (packageCountsPass && packageAmountPass && packageBeginPass && packageEndPass) {
+            publishTaskBtn.setEnabled(true);
+        } else {
+            publishTaskBtn.setEnabled(false);
+        }
+    }
+
+    @Optional
+    @OnTextChanged({R.id.total_coin_amounts})
+    void onPackageAmountsTextChanged(CharSequence s, int start, int before, int count) {
+        System.out.println(s + "---" + start + "---" + before + "---" + count);
+        if (s.toString().trim().length() > 0) {
+            packageAmountPass = true;
+        } else {
+            packageAmountPass = false;
+        }
+        if (packageCountsPass && packageAmountPass && packageBeginPass && packageEndPass) {
+            publishTaskBtn.setEnabled(true);
+        } else {
+            publishTaskBtn.setEnabled(false);
+        }
+    }
+
+    @Optional
+    @OnTextChanged({R.id.begin_time})
+    void onBeginTimeTextChanged(CharSequence s, int start, int before, int count) {
+        System.out.println(s + "---" + start + "---" + before + "---" + count);
+        if (s.toString().trim().length() > 0) {
+            packageBeginPass = true;
+        } else {
+            packageBeginPass = false;
+        }
+        if (packageCountsPass && packageAmountPass && packageBeginPass && packageEndPass) {
+            publishTaskBtn.setEnabled(true);
+        } else {
+            publishTaskBtn.setEnabled(false);
+        }
+    }
+
+    @Optional
+    @OnTextChanged({R.id.end_time})
+    void onEndTimeTextChanged(CharSequence s, int start, int before, int count) {
+        System.out.println(s + "---" + start + "---" + before + "---" + count);
+        if (s.toString().trim().length() > 0) {
+            packageEndPass = true;
+        } else {
+            packageEndPass = false;
+        }
+        if (packageCountsPass && packageAmountPass && packageBeginPass && packageEndPass) {
+            publishTaskBtn.setEnabled(true);
+        } else {
+            publishTaskBtn.setEnabled(false);
+        }
+    }
+
+
+    @Optional
     @OnClick({R.id.title_left_operation_layout, R.id.publish_task, R.id.begin_time, R.id.end_time})
     void onClick(final View view) {
         switch (view.getId()) {
@@ -97,29 +169,8 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
                 closeActivity();
                 break;
             case R.id.publish_task:
-//                if (!requiredVerify(totalCoinCountsET)) {
-//                    totalCoinCountsET.setError(getResources().getString(R.string.publish_task_total_coin_required));
-//                    return;
-//                }
-//                if (!requiredVerify(minCoinCountsET)) {
-//                    minCoinCountsET.setError(getResources().getString(R.string.publish_task_min_coin_required));
-//                    return;
-//                }
-//                if (!requiredVerify(maxCoinCountsET)) {
-//                    maxCoinCountsET.setError(getResources().getString(R.string.publish_task_max_coin_required));
-//                    return;
-//                }
-                if (!requiredVerify(beginTimeET)) {
-                    beginTimeET.setError(getResources().getString(R.string.publish_task_begin_time_required));
-                    return;
-                }
-                if (!requiredVerify(endTimeET)) {
-                    endTimeET.setError(getResources().getString(R.string.publish_task_end_time_required));
-                    return;
-                }
-//                Integer totalCoinCounts = Integer.valueOf(totalCoinCountsET.getText().toString());
-//                Integer minCoinCounts = Integer.valueOf(minCoinCountsET.getText().toString());
-//                Integer maxCoinCounts = Integer.valueOf(maxCoinCountsET.getText().toString());
+                String totalCoinCounts = totalCoinCountsET.getText().toString();
+                String totalCoinAmounts = totalCoinAmountsET.getText().toString();
                 String beginTime = beginTimeET.getText().toString();
                 String endTime = endTimeET.getText().toString();
 //                mPresenter.publishTask("000000", SharedPreferencesUtils.getString(this, "baza_code", ""), totalCoinCounts, minCoinCounts, maxCoinCounts, beginTime, endTime);

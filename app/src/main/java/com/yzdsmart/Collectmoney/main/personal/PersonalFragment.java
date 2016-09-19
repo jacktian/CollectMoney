@@ -19,6 +19,7 @@ import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.buy_coins.BuyCoinsActivity;
 import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
+import com.yzdsmart.Collectmoney.focused_shop.FocusedShopActivity;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.personal_coin_list.PersonalCoinsActivity;
@@ -187,7 +188,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log})
+    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -229,6 +230,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
             case R.id.to_publish_tasks_log:
                 ((BaseActivity) getActivity()).openActivity(PublishTasksLogActivity.class);
 //                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
+                break;
+            case R.id.to_focused_shop:
+                ((BaseActivity) getActivity()).openActivity(FocusedShopActivity.class);
                 break;
         }
     }

@@ -154,7 +154,9 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
             case R.id.personal_galley_title:
                 switch (type) {
                     case 0:
-                        openActivity(UploadGalleyActivity.class);
+                        bundle = new Bundle();
+                        bundle.putInt("type", 0);
+                        openActivity(UploadGalleyActivity.class, bundle, 0);
                         break;
                 }
                 break;

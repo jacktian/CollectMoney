@@ -45,7 +45,7 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
                 mView.startRadarScan();
                 break;
             case 1:
-                ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+                ((BaseActivity) context).showProgressDialog(R.drawable.loading,context.getResources().getString(R.string.loading));
                 break;
         }
         mModel.getShopList(submitCode, coor, pageIndex, pageSize, new RequestListener() {

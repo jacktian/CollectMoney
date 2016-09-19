@@ -2,6 +2,10 @@
     <string name="app_name">搜钱</string>
 
     <string name="net_unusable">网络不可用!</string>
+    <string name="loading">正在加载......</string>
+    <string name="uploading">正在上传......</string>
+    <string name="upload_success">上传成功</string>
+
     <!--登录、注册、忘记密码-->
     <string name="input_phone_num">输入手机号</string>
     <string name="get_verify_code">获取验证码</string>
@@ -15,11 +19,14 @@
     <string name="register">注册</string>
     <string name="confirm">确认</string>
     <string name="next_step">下一步</string>
-    <string name="user_exist">该手机号码已被注册!</string>
-    <string name="user_not_exist">该手机号码未注册!</string>
-    <string name="phone_num_error">请输入正确的手机号码!</string>
-    <string name="confirm_pwd_different">两次密码输入不一致!</string>
-    <string name="login_error">用户登录异常!</string>
+    <string name="user_exist">该手机号码已被注册</string>
+    <string name="user_not_exist">该手机号码未注册</string>
+    <string name="phone_num_error">请输入正确的手机号码</string>
+    <string name="confirm_pwd_different">两次密码输入不一致</string>
+    <string name="login_error">用户登录异常</string>
+    <string name="loginning">正在登录......</string>
+    <string name="setting">正在设置......</string>
+    <string name="validating">正在校验......</string>
 
     <!--主界面-->
     <string name="recommend">推荐</string>
@@ -61,15 +68,17 @@
     <string name="publish_task_coin_total_counts">发布总币数</string>
     <string name="publish_task_begin_end_time">起止时间</string>
     <string name="publish_task_coin_left_counts">剩余币数</string>
-    <string name="publish_task_success">发布任务成功!</string>
-    <string name="publish_task_total_coin_required">请输入发布总金币数!</string>
-    <string name="publish_task_min_coin_required">请输入最小扫描金币数!</string>
-    <string name="publish_task_max_coin_required">请输入最大扫描金币数!</string>
-    <string name="publish_task_begin_time_required">请输入任务开始时间!</string>
-    <string name="publish_task_end_time_required">请输入任务结束时间!</string>
+    <string name="publish_task_success">发布任务成功</string>
+    <string name="publish_task_total_coin_required">请输入发布总金币数</string>
+    <string name="publish_task_min_coin_required">请输入最小扫描金币数</string>
+    <string name="publish_task_max_coin_required">请输入最大扫描金币数</string>
+    <string name="publish_task_begin_time_required">请输入任务开始时间</string>
+    <string name="publish_task_end_time_required">请输入任务结束时间</string>
     <string name="publish_task_package_count_hint">填写个数</string>
     <string name="publish_task_package_amount_hint">填写金额</string>
     <string name="publish_task_time_hint">请选择时间</string>
+    <string name="publishing">正在发布......</string>
+    <string name="publish_success">发布成功</string>
 
     <!--升级商户-->
     <string name="register_business_baza_name">商铺名称:</string>
@@ -86,13 +95,14 @@
     <string name="register_business_address_hint">填写商铺地址</string>
     <string name="register_business_remark_hint">填写商铺备注</string>
     <string name="register_business_coor_hint">填写商铺坐标</string>
-    <string name="register_business_name_required">请输入商铺名称!</string>
-    <string name="register_business_pers_required">请输入商铺联系人!</string>
-    <string name="register_business_tel_required">请输入商铺电话!</string>
-    <string name="register_business_address_required">请输入商铺地址!</string>
-    <string name="register_business_remark_required">请输入商铺备注!</string>
-    <string name="register_business_coor_required">请输入商铺坐标!</string>
-    <string name="register_business_success">您已成功升级为商户!</string>
+    <string name="register_business_name_required">请输入商铺名称</string>
+    <string name="register_business_pers_required">请输入商铺联系人</string>
+    <string name="register_business_tel_required">请输入商铺电话</string>
+    <string name="register_business_address_required">请输入商铺地址</string>
+    <string name="register_business_remark_required">请输入商铺备注</string>
+    <string name="register_business_coor_required">请输入商铺坐标</string>
+    <string name="register_business_success">您已成功升级为商户</string>
+    <string name="registering_business">正在升级......</string>
 
     <!--扫码-->
     <string name="qr_scan_title">扫码</string>
@@ -128,8 +138,8 @@
     <string name="shop_more_followers">查看更多</string>
 
     <!-- 腾讯聊天 -->
-    <string name="logout_warning">您的账号在其他设备登录,请重新登陆!</string>
-    <string name="user_sig_warning">您的账号票据过期,请重新登陆!</string>
+    <string name="logout_warning">您的账号在其他设备登录,请重新登陆</string>
+    <string name="user_sig_warning">您的账号票据过期,请重新登陆</string>
     <!--message-->
     <string name="summary_image">[图片]</string>
     <string name="summary_voice">[语音]</string>

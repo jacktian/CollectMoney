@@ -24,7 +24,7 @@ public class VerifyCodePresenter implements VerifyCodeContract.VerifyCodePresent
 
     @Override
     public void getVerifyCode(String telNum, String currDate) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
         mModel.getVerifyCode(telNum, currDate, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -49,7 +49,7 @@ public class VerifyCodePresenter implements VerifyCodeContract.VerifyCodePresent
 
     @Override
     public void validateVerifyCode(String actioncode, String telNum, String verifyCode) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.validating));
         mModel.validateVerifyCode(actioncode, telNum, verifyCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

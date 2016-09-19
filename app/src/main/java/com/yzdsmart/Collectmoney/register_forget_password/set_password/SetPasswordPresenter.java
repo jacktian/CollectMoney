@@ -24,7 +24,7 @@ public class SetPasswordPresenter implements SetPasswordContract.SetPasswordPres
 
     @Override
     public void setPassword(String actioncode, String userName, String password, String regCode) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.setting));
         mModel.setPassword(actioncode, userName, password, regCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

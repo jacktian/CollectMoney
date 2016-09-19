@@ -79,8 +79,6 @@ public class TimePickerDialog extends DialogFragment implements View.OnClickList
         TextView title = (TextView) view.findViewById(R.id.tv_title);
         View toolbar = view.findViewById(R.id.toolbar);
 
-        title.setText(mPickerConfig.mTitleString);
-        title.setTextColor(mPickerConfig.mTitleTVColor);
         cancel.setText(mPickerConfig.mCancelString);
         cancel.setTextColor(mPickerConfig.mCancelTVColor);
         sure.setText(mPickerConfig.mSureString);

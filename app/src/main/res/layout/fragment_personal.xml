@@ -491,7 +491,7 @@
                 <!--</RelativeLayout>-->
 
                 <RelativeLayout
-                    android:id="@+id/focus_shop_layout"
+                    android:id="@+id/to_focused_shop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/personal_panel_item_top_border_bg"

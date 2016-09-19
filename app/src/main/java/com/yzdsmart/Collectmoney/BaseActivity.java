@@ -166,9 +166,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 显示进度条
      */
-    public void showProgressDialog(int resourceId) {
+    public void showProgressDialog(int resourceId, String str) {
         if (null == customDialog) {
-            customDialog = new CustomDialog(BaseActivity.this, resourceId);
+            customDialog = new CustomDialog(BaseActivity.this, resourceId, str);
         }
         customDialog.setCancelable(false);
         customDialog.show();

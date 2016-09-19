@@ -26,7 +26,7 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
 
     @Override
     public void getCustLevel(String custcode, String submitcode) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading,context.getResources().getString(R.string.loading));
         mModel.getCustLevel(custcode, submitcode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -51,7 +51,7 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
 
     @Override
     public void getCustInfo(String submitcode, String custCode) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading,context.getResources().getString(R.string.loading));
         mModel.getCustInfo(submitcode, custCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -82,7 +82,7 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
 
     @Override
     public void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading,context.getResources().getString(R.string.loading));
         mModel.getShopInfo(actioncode, submitCode, bazaCode, custCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

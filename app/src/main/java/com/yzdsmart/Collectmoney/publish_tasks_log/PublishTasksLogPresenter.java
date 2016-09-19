@@ -24,7 +24,7 @@ public class PublishTasksLogPresenter implements PublishTasksLogContract.Publish
 
     @Override
     public void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
         mModel.publishTaskLog(action, submitCode, bazaCode, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

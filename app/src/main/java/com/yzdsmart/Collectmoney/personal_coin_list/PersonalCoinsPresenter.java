@@ -24,7 +24,7 @@ public class PersonalCoinsPresenter implements PersonalCoinsContract.PersonalCoi
 
     @Override
     public void getCoinsLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading,context.getResources().getString(R.string.loading));
         mModel.getCoinsLog(action, submitCode, custCode, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

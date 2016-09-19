@@ -6,6 +6,7 @@ import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.FocusedShopRequestREsponse;
 import com.yzdsmart.Collectmoney.http.response.FriendsRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetCoinRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetCoinsLogRequestResponse;
@@ -282,6 +283,20 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.PERSON)
     Observable<PersonRequestResponse> getPersonBearby(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("Coor") String coor, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+
+    /**
+     * 获取用户关注的店铺信息
+     *
+     * @param action
+     * @param submitCode
+     * @param custCode
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.FOLLOW)
+    Observable<FocusedShopRequestREsponse> getFocusedShopList(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
      * 获取指定店铺的获取金币的用户信息

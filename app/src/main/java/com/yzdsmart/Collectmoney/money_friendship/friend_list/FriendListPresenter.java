@@ -24,7 +24,7 @@ public class FriendListPresenter implements FriendListContract.FriendListPresent
 
     @Override
     public void getFriendsList(String submitCode, String custCode, Long timeStampNow, Integer startIndex, Integer currentStandardSequence, Integer pageSize) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading,context.getResources().getString(R.string.loading));
         mModel.getFriendsList(submitCode, custCode, timeStampNow, startIndex, currentStandardSequence, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

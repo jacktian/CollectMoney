@@ -24,7 +24,7 @@ public class PublishTasksPresenter implements PublishTasksContract.PublishTasksP
 
     @Override
     public void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer sMinGold, Integer sMaxGold, String beginTime, String endTime) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.publishing));
         mModel.publishTask(submitCode, bazaCode, totalGold, sMinGold, sMaxGold, beginTime, endTime, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

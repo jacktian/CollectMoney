@@ -29,7 +29,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
 
     @Override
     public void userLogin(String userName, String password, String loginCode) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loginning));
         mModel.userLogin(userName, password, loginCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

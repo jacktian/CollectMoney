@@ -24,7 +24,7 @@ public class VerifyPhonePresenter implements VerifyPhoneContract.VerifyPhonePres
 
     @Override
     public void isUserExist(String telNum) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.validating));
         mModel.isUserExist(telNum, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

@@ -8,7 +8,7 @@ import com.yzdsmart.Collectmoney.BaseView;
  */
 public interface UploadGalleyContract {
     interface UploadImageView extends BaseView<UploadImagePresenter> {
-
+        void onUploadImageSuccess();
     }
 
     interface UploadImagePresenter extends BasePresenter {
@@ -21,6 +21,16 @@ public interface UploadGalleyContract {
          * @param custCode
          */
         void uploadGalley(String action, String fileName, String fileData, String custCode);
+
+        /**
+         * 上传商铺相册
+         *
+         * @param action
+         * @param fileName
+         * @param fileData
+         * @param bazaCode
+         */
+        void uploadShopImage(String action, String fileName, String fileData, String bazaCode);
 
         void unRegisterSubscribe();
     }

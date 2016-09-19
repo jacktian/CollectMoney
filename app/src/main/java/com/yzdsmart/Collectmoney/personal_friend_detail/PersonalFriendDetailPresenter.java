@@ -25,7 +25,7 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
 
     @Override
     public void getCustLevel(String custcode, String submitcode) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading,context.getResources().getString(R.string.loading));
         mModel.getCustLevel(custcode, submitcode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -50,7 +50,7 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
 
     @Override
     public void getCustInfo(String submitcode, String custCode) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading,context.getResources().getString(R.string.loading));
         mModel.getCustInfo(submitcode, custCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

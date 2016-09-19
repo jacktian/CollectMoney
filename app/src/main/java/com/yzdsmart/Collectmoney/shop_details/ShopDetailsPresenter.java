@@ -28,7 +28,7 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
 
     @Override
     public void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
         mModel.getShopInfo(actioncode, submitCode, bazaCode, custCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -53,7 +53,7 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
 
     @Override
     public void setFollow(final String action, String submitCode, String custCode, String bazaCode) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
         mModel.setFollow(action, submitCode, custCode, bazaCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -80,7 +80,7 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
 
     @Override
     public void getShopFollowers(String action, String submitCode, String bazaCode, String custCode, Integer pageIndex, Integer pageSize) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
         mModel.getShopFollowers(action, submitCode, bazaCode, custCode, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

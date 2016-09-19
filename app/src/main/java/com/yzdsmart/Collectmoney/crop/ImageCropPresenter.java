@@ -27,7 +27,7 @@ public class ImageCropPresenter implements ImageCropContract.ImageCropPresenter 
 
     @Override
     public void uploadPortrait(String action, String fileName, String fileData, String tcAccount) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.uploading));
         mModel.uploadPortrait(action, fileName, fileData, tcAccount, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

@@ -25,7 +25,7 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
 
     @Override
     public void buyCoins(String action, String submitCode, String bazaCode, Integer goldNum) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading,context.getResources().getString(R.string.loading));
         mModel.buyCoins(action, submitCode, bazaCode, goldNum, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -52,7 +52,7 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
 
     @Override
     public void buyCoinsLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading);
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading,context.getResources().getString(R.string.loading));
         mModel.buyCoinsLog(action, submitCode, bazaCode, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
