@@ -6,7 +6,7 @@ import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.FocusedShopRequestREsponse;
+import com.yzdsmart.Collectmoney.http.response.FocusedShopRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.FriendsRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetCoinRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetCoinsLogRequestResponse;
@@ -296,7 +296,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.FOLLOW)
-    Observable<FocusedShopRequestREsponse> getFocusedShopList(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<FocusedShopRequestResponse> getFocusedShopList(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
      * 获取指定店铺的获取金币的用户信息

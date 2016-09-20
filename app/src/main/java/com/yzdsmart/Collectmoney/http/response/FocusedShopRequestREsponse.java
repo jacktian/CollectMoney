@@ -7,16 +7,16 @@ import java.util.List;
 /**
  * Created by YZD on 2016/9/19.
  */
-public class FocusedShopRequestREsponse {
+public class FocusedShopRequestResponse {
     private List<FocusedShop> lists;
     private String ActionStatus;
     private Integer ErrorCode;
     private String ErrorInfo;
 
-    public FocusedShopRequestREsponse() {
+    public FocusedShopRequestResponse() {
     }
 
-    public FocusedShopRequestREsponse(List<FocusedShop> lists, String actionStatus, Integer errorCode, String errorInfo) {
+    public FocusedShopRequestResponse(List<FocusedShop> lists, String actionStatus, Integer errorCode, String errorInfo) {
         this.lists = lists;
         ActionStatus = actionStatus;
         ErrorCode = errorCode;
