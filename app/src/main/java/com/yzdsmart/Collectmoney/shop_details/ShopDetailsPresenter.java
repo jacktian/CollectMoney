@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.ShopFollower;
+import com.yzdsmart.Collectmoney.bean.ShopScanner;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
@@ -84,9 +84,9 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
         mModel.getShopFollowers(action, submitCode, bazaCode, custCode, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                List<ShopFollower> shopFollowers = (List<ShopFollower>) result;
-                if (null != shopFollowers && shopFollowers.size() > 0) {
-                    mView.onGetShopFollowers(shopFollowers);
+                List<ShopScanner> shopScanners = (List<ShopScanner>) result;
+                if (null != shopScanners && shopScanners.size() > 0) {
+                    mView.onGetShopFollowers(shopScanners);
                 }
             }
 

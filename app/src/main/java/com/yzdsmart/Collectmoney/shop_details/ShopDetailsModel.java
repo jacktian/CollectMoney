@@ -1,6 +1,6 @@
 package com.yzdsmart.Collectmoney.shop_details;
 
-import com.yzdsmart.Collectmoney.bean.ShopFollower;
+import com.yzdsmart.Collectmoney.bean.ShopScanner;
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
@@ -19,7 +19,7 @@ public class ShopDetailsModel {
     //网络请求监听
     private Subscriber<ShopInfoRequestResponse> getShopInfoSubscriber;
     private Subscriber<RequestResponse> setFollowSubscriber;
-    private Subscriber<List<ShopFollower>> getShopFollowersSubscribe;
+    private Subscriber<List<ShopScanner>> getShopFollowersSubscribe;
 
     void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode, final RequestListener listener) {
         getShopInfoSubscriber = new Subscriber<ShopInfoRequestResponse>() {
@@ -68,7 +68,7 @@ public class ShopDetailsModel {
     }
 
     void getShopFollowers(String action, String submitCode, String bazaCode, String custCode, Integer pageIndex, Integer pageSize, final RequestListener listener) {
-        getShopFollowersSubscribe = new Subscriber<List<ShopFollower>>() {
+        getShopFollowersSubscribe = new Subscriber<List<ShopScanner>>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -80,8 +80,8 @@ public class ShopDetailsModel {
             }
 
             @Override
-            public void onNext(List<ShopFollower> shopFollowers) {
-                listener.onSuccess(shopFollowers);
+            public void onNext(List<ShopScanner> shopScanners) {
+                listener.onSuccess(shopScanners);
             }
         };
         RequestAdapter.getRequestService().getShopFollowers(action, submitCode, bazaCode, custCode, pageIndex, pageSize)

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.GetCoinRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 
 /**
@@ -23,11 +24,39 @@ public class PublishTasksPresenter implements PublishTasksContract.PublishTasksP
     }
 
     @Override
-    public void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer sMinGold, Integer sMaxGold, String beginTime, String endTime) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.publishing));
-        mModel.publishTask(submitCode, bazaCode, totalGold, sMinGold, sMaxGold, beginTime, endTime, new RequestListener() {
+    public void getLeftCoins(String action, String submitCode, String bazaCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.getLeftCoins(action, submitCode, bazaCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
+                GetCoinRequestResponse requestResponse = (GetCoinRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onGetLeftCoins(requestResponse.getGoldNum());
+                } else {
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer totalNum, String beginTime, String endTime) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.publishing));
+        mModel.publishTask(submitCode, bazaCode, totalGold, totalNum, beginTime, endTime, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                ((BaseActivity) context).hideProgressDialog();
                 RequestResponse response = (RequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
                     mView.onPublishTask(true, context.getResources().getString(R.string.publish_task_success));
@@ -44,7 +73,6 @@ public class PublishTasksPresenter implements PublishTasksContract.PublishTasksP
 
             @Override
             public void onComplete() {
-                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

@@ -2,7 +2,7 @@ package com.yzdsmart.Collectmoney.shop_details;
 
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.bean.ShopFollower;
+import com.yzdsmart.Collectmoney.bean.ShopScanner;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 
 import java.util.List;
@@ -28,9 +28,9 @@ public interface ShopDetailsContract {
         /**
          * 获取指定店铺的获取金币的用户信息
          *
-         * @param shopFollowers
+         * @param shopScanners
          */
-        void onGetShopFollowers(List<ShopFollower> shopFollowers);
+        void onGetShopFollowers(List<ShopScanner> shopScanners);
     }
 
     interface ShopDetailsPresenter extends BasePresenter {

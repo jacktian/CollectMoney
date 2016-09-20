@@ -276,6 +276,12 @@
             android:launchMode="singleTop"
             android:theme="@style/ActivityColorTranslucentTheme" />
 
+        <activity
+            android:name=".shop_focuser.ShopFocuserActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
         <!--腾讯聊天开始-->
         <!-- 消息收发service -->
         <service

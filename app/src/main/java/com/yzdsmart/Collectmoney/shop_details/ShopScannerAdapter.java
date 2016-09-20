@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import com.tencent.TIMConversationType;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.ShopFollower;
+import com.yzdsmart.Collectmoney.bean.ShopScanner;
 import com.yzdsmart.Collectmoney.chat.ChatActivity;
 
 import java.util.ArrayList;
@@ -26,15 +26,16 @@ import butterknife.Optional;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Created by YZD on 2016/8/22.
+ * Created by YZD on 2016/9/20.
  */
-public class ShopFollowerAdapter extends RecyclerView.Adapter<ShopFollowerAdapter.ViewHolder> {
-    private Context context;
-    private List<ShopFollower> shopFollowerList;
 
-    public ShopFollowerAdapter(Context context) {
+public class ShopScannerAdapter extends RecyclerView.Adapter<ShopScannerAdapter.ViewHolder> {
+    private Context context;
+    private List<ShopScanner> shopScannerList;
+
+    public ShopScannerAdapter(Context context) {
         this.context = context;
-        shopFollowerList = new ArrayList<ShopFollower>();
+        shopScannerList = new ArrayList<ShopScanner>();
     }
 
     /**
@@ -42,9 +43,9 @@ public class ShopFollowerAdapter extends RecyclerView.Adapter<ShopFollowerAdapte
      *
      * @param list
      */
-    public void appenList(List<ShopFollower> list) {
-        if (null != shopFollowerList) {
-            shopFollowerList.addAll(list);
+    public void appenList(List<ShopScanner> list) {
+        if (null != shopScannerList) {
+            shopScannerList.addAll(list);
         }
         notifyDataSetChanged();
     }
@@ -53,39 +54,39 @@ public class ShopFollowerAdapter extends RecyclerView.Adapter<ShopFollowerAdapte
      * 清除列表
      */
     public void clearList() {
-        if (null != shopFollowerList) {
-            shopFollowerList.clear();
+        if (null != shopScannerList) {
+            shopScannerList.clear();
         }
         notifyDataSetChanged();
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.hotel_follower_list_item, parent, false);
-        ShopFollowerAdapter.ViewHolder holder = new ShopFollowerAdapter.ViewHolder(itemView);
+    public ShopScannerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(context).inflate(R.layout.shop_scanner_list_item, parent, false);
+        ShopScannerAdapter.ViewHolder holder = new ShopScannerAdapter.ViewHolder(itemView);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.setFollowerAvater(shopFollowerList.get(position).getImageUrl());
-        holder.setFollowerName(shopFollowerList.get(position).getCustPwdName());
-        holder.setCoinCounts(shopFollowerList.get(position).getGoldNum());
-        holder.setGetTime(shopFollowerList.get(position).getTimeStr());
+    public void onBindViewHolder(ShopScannerAdapter.ViewHolder holder, int position) {
+        holder.setScannerAvater(shopScannerList.get(position).getImageUrl());
+        holder.setScannerName(shopScannerList.get(position).getCustPwdName());
+        holder.setCoinCounts(shopScannerList.get(position).getGoldNum());
+        holder.setGetTime(shopScannerList.get(position).getTimeStr());
     }
 
     @Override
     public int getItemCount() {
-        return shopFollowerList.size();
+        return shopScannerList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @Nullable
-        @BindView(R.id.follower_user_avater)
-        CircleImageView followerAvaterIV;
+        @BindView(R.id.scanner_user_avater)
+        CircleImageView scannerAvaterIV;
         @Nullable
-        @BindView(R.id.follower_user_name)
-        TextView followerNameTV;
+        @BindView(R.id.scanner_user_name)
+        TextView scannerNameTV;
         @Nullable
         @BindView(R.id.get_coin_counts)
         TextView coinCountsTV;
@@ -98,12 +99,12 @@ public class ShopFollowerAdapter extends RecyclerView.Adapter<ShopFollowerAdapte
             ButterKnife.bind(this, itemView);
         }
 
-        public void setFollowerAvater(String followerAvater) {
-            Glide.with(context).load(followerAvater).error(context.getResources().getDrawable(R.mipmap.user_avater)).into(followerAvaterIV);
+        public void setScannerAvater(String followerAvater) {
+            Glide.with(context).load(followerAvater).error(context.getResources().getDrawable(R.mipmap.user_avater)).into(scannerAvaterIV);
         }
 
-        public void setFollowerName(String followerName) {
-            followerNameTV.setText(followerName);
+        public void setScannerName(String followerName) {
+            scannerNameTV.setText(followerName);
         }
 
         public void setCoinCounts(Integer coinCounts) {
@@ -121,7 +122,7 @@ public class ShopFollowerAdapter extends RecyclerView.Adapter<ShopFollowerAdapte
             switch (view.getId()) {
                 case R.id.to_chat_layout:
                     bundle = new Bundle();
-                    bundle.putString("identify", shopFollowerList.get(getLayoutPosition()).getTCAccount());
+                    bundle.putString("identify", shopScannerList.get(getLayoutPosition()).getTCAccount());
                     bundle.putSerializable("type", TIMConversationType.C2C);
                     ((BaseActivity) context).openActivity(ChatActivity.class, bundle, 0);
                     break;

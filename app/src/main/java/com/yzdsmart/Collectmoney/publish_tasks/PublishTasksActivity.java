@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.views.pickerview.TimePickerDialog;
 import com.yzdsmart.Collectmoney.views.pickerview.data.Type;
 import com.yzdsmart.Collectmoney.views.pickerview.listener.OnDateSetListener;
@@ -43,6 +44,9 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
     @Nullable
+    @BindView(R.id.left_coins)
+    TextView leftCoinsTV;
+    @Nullable
     @BindView(R.id.total_coin_counts)
     EditText totalCoinCountsET;
     @Nullable
@@ -57,6 +61,8 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     @Nullable
     @BindView(R.id.publish_task)
     Button publishTaskBtn;
+
+    private static final String GET_LEFT_COINS_ACTION_CODE = "1288";
 
     private PublishTasksContract.PublishTasksPresenter mPresenter;
 
@@ -86,9 +92,12 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
         closeRunnable = new Runnable() {
             @Override
             public void run() {
+                hideProgressDialog();
                 closeActivity();
             }
         };
+
+        mPresenter.getLeftCoins(GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
     }
 
     @Override
@@ -99,7 +108,6 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     @Optional
     @OnTextChanged({R.id.total_coin_counts})
     void onPackageCountsTextChanged(CharSequence s, int start, int before, int count) {
-        System.out.println(s + "---" + start + "---" + before + "---" + count);
         if (s.toString().trim().length() > 0) {
             packageCountsPass = true;
         } else {
@@ -115,7 +123,6 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     @Optional
     @OnTextChanged({R.id.total_coin_amounts})
     void onPackageAmountsTextChanged(CharSequence s, int start, int before, int count) {
-        System.out.println(s + "---" + start + "---" + before + "---" + count);
         if (s.toString().trim().length() > 0) {
             packageAmountPass = true;
         } else {
@@ -131,7 +138,6 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     @Optional
     @OnTextChanged({R.id.begin_time})
     void onBeginTimeTextChanged(CharSequence s, int start, int before, int count) {
-        System.out.println(s + "---" + start + "---" + before + "---" + count);
         if (s.toString().trim().length() > 0) {
             packageBeginPass = true;
         } else {
@@ -147,7 +153,6 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     @Optional
     @OnTextChanged({R.id.end_time})
     void onEndTimeTextChanged(CharSequence s, int start, int before, int count) {
-        System.out.println(s + "---" + start + "---" + before + "---" + count);
         if (s.toString().trim().length() > 0) {
             packageEndPass = true;
         } else {
@@ -173,7 +178,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
                 String totalCoinAmounts = totalCoinAmountsET.getText().toString();
                 String beginTime = beginTimeET.getText().toString();
                 String endTime = endTimeET.getText().toString();
-//                mPresenter.publishTask("000000", SharedPreferencesUtils.getString(this, "baza_code", ""), totalCoinCounts, minCoinCounts, maxCoinCounts, beginTime, endTime);
+                mPresenter.publishTask("000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(totalCoinAmounts), Integer.valueOf(totalCoinCounts), beginTime, endTime);
                 break;
             case R.id.begin_time:
             case R.id.end_time:
@@ -228,11 +233,17 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     }
 
     @Override
+    public void onGetLeftCoins(Integer counts) {
+        leftCoinsTV.setText("" + counts);
+    }
+
+    @Override
     public void onPublishTask(boolean flag, String msg) {
-        showSnackbar(msg);
         if (!flag) {
+            showSnackbar(msg);
             return;
         }
-        mHandler.postDelayed(closeRunnable, 1500);
+        showProgressDialog(R.drawable.success, getResources().getString(R.string.publish_success));
+        mHandler.postDelayed(closeRunnable, 500);
     }
 }

@@ -8,18 +8,18 @@
     android:paddingRight="@dimen/activity_horizontal_padding">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/follower_user_avater"
+        android:id="@+id/scanner_user_avater"
         android:layout_width="@dimen/friendship_list_item_avater_width"
         android:layout_height="@dimen/friendship_list_item_avater_width"
         android:layout_centerVertical="true" />
 
     <TextView
-        android:id="@+id/follower_user_name"
+        android:id="@+id/scanner_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_toRightOf="@id/follower_user_avater"
+        android:layout_toRightOf="@id/scanner_user_avater"
         android:text=""
         android:textColor="@color/grey"
         android:textSize="@dimen/font_medium" />

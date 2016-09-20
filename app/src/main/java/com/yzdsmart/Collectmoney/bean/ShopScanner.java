@@ -3,7 +3,7 @@ package com.yzdsmart.Collectmoney.bean;
 /**
  * Created by YZD on 2016/8/22.
  */
-public class ShopFollower {
+public class ShopScanner {
     private String CustCode;//用户内码
     private String CustPwdName;//用户隐藏的部分姓名
     private String ImageUrl;//用户的头像Url
@@ -12,10 +12,10 @@ public class ShopFollower {
     private String TimeStr;//时间间隔
     private String TCAccount;//用户云通讯用户
 
-    public ShopFollower() {
+    public ShopScanner() {
     }
 
-    public ShopFollower(String custCode, String custPwdName, String imageUrl, String custSex, Integer goldNum, String timeStr, String TCAccount) {
+    public ShopScanner(String custCode, String custPwdName, String imageUrl, String custSex, Integer goldNum, String timeStr, String TCAccount) {
         CustCode = custCode;
         CustPwdName = custPwdName;
         ImageUrl = imageUrl;

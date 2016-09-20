@@ -49,6 +49,7 @@
     <string name="buy_coin">购买金币</string>
     <string name="publishing_tasks">发布任务</string>
     <string name="publishing_tasks_log">发布任务日志</string>
+    <string name="publishing_focuser">店铺关注者</string>
 
     <!--金币总数-->
     <string name="personal_coin_counts">获取金币数</string>
@@ -63,6 +64,7 @@
     <string name="buy_coin_coin_count_required">请输入购买金币数!</string>
 
     <!--发布任务-->
+    <string name="publish_task_left_coins">剩余金币数</string>
     <string name="publish_task_package_title">悬赏金币</string>
     <string name="publish_task_time_title">悬赏时间</string>
     <string name="publish_task_coin_total_counts">发布总币数</string>
@@ -143,6 +145,10 @@
     <string name="focused_shop_tel">联系电话&#160;:&#160;</string>
     <string name="focused_shop_daily_coins">当日币数&#160;:&#160;</string>
     <string name="focused_shop_address">店铺地址&#160;:&#160;</string>
+
+    <!--关注店铺的人-->
+    <string name="shop_focuser_total_person">总关注人</string>
+    <string name="shop_focuser_person">人</string>
 
     <!-- 腾讯聊天 -->
     <string name="logout_warning">您的账号在其他设备登录,请重新登陆</string>

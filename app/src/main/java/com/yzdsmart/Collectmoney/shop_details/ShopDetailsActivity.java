@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.ShopFollower;
+import com.yzdsmart.Collectmoney.bean.ShopScanner;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
@@ -66,7 +66,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     private String bazaCode;//商铺编码
     private Boolean isAtte = false;
     private static final String GET_SHOP_FOLLOWERS_CODE = "2112";
-    private Integer pageIndex = 0;
+    private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
 
     private static final String SET_FOCUS_CODE = "66";//取消关注：56    关注：66
@@ -74,8 +74,8 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
     private LinearLayoutManager mLinearLayoutManager;
     private Paint dividerPaint;
-    private List<ShopFollower> shopFollowerList;
-    private ShopFollowerAdapter shopFollowerAdapter;
+    private List<ShopScanner> shopScannerList;
+    private ShopScannerAdapter shopScannerAdapter;
 
     private String shopCoor;
     private ShopDetailsContract.ShopDetailsPresenter mPresenter;
@@ -84,10 +84,10 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        shopFollowerList = new ArrayList<ShopFollower>();
-        shopFollowerList.add(new ShopFollower("f47faba3-5bb8-4bd4-b844-206c80503704", "三毛", "http://y3.ifengimg.com/haina/2016_06/048f23be371c78c_w432_h520.jpg", "男", 888, "昨天", "54673646"));
-        shopFollowerList.add(new ShopFollower("f47faba3-5bb8-4bd4-b844-206c80503704", "小黄", "http://p3.ifengimg.com/a/2016_39/7c512d79019b613_size46_w604_h595.jpg", "女", 123, "08:30", "8964648465"));
-        shopFollowerList.add(new ShopFollower("f47faba3-5bb8-4bd4-b844-206c80503704", "丫头", "http://d.ifengimg.com/mw978_mh598/p2.ifengimg.com/a/2016_39/d476f58859c90a0_size491_w439_h661.png", "女", 546, "三天前", "2136658"));
+        shopScannerList = new ArrayList<ShopScanner>();
+        shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "三毛", "http://y3.ifengimg.com/haina/2016_06/048f23be371c78c_w432_h520.jpg", "男", 888, "昨天", "54673646"));
+        shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "小黄", "http://p3.ifengimg.com/a/2016_39/7c512d79019b613_size46_w604_h595.jpg", "女", 123, "08:30", "8964648465"));
+        shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "丫头", "http://d.ifengimg.com/mw978_mh598/p2.ifengimg.com/a/2016_39/d476f58859c90a0_size491_w439_h661.png", "女", 546, "三天前", "2136658"));
 
         bazaCode = getIntent().getExtras().getString("bazaCode");
 
@@ -105,13 +105,13 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         dividerPaint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
         HorizontalDividerItemDecoration dividerItemDecoration = new HorizontalDividerItemDecoration.Builder(this).paint(dividerPaint).build();
 
-        shopFollowerAdapter = new ShopFollowerAdapter(this);
+        shopScannerAdapter = new ShopScannerAdapter(this);
         hotelUsersRV.setHasFixedSize(true);
         hotelUsersRV.setLayoutManager(mLinearLayoutManager);
         hotelUsersRV.addItemDecoration(dividerItemDecoration);
-        hotelUsersRV.setAdapter(shopFollowerAdapter);
+        hotelUsersRV.setAdapter(shopScannerAdapter);
 
-        shopFollowerAdapter.appenList(shopFollowerList);
+        shopScannerAdapter.appenList(shopScannerList);
 
         mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
 
@@ -177,9 +177,9 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     }
 
     @Override
-    public void onGetShopFollowers(List<ShopFollower> shopFollowers) {
-        shopFollowerList.clear();
-        shopFollowerList.addAll(shopFollowers);
-        shopFollowerAdapter.appenList(shopFollowerList);
+    public void onGetShopFollowers(List<ShopScanner> shopScanners) {
+        shopScannerList.clear();
+        shopScannerList.addAll(shopScanners);
+        shopScannerAdapter.appenList(shopScannerList);
     }
 }

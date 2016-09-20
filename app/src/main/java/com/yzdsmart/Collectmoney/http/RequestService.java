@@ -1,6 +1,6 @@
 package com.yzdsmart.Collectmoney.http;
 
-import com.yzdsmart.Collectmoney.bean.ShopFollower;
+import com.yzdsmart.Collectmoney.bean.ShopScanner;
 import com.yzdsmart.Collectmoney.http.response.BuyCoinLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
@@ -15,6 +15,7 @@ import com.yzdsmart.Collectmoney.http.response.PersonRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.PublishTaskLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RegisterBusinessRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
+import com.yzdsmart.Collectmoney.http.response.ShopFocuserRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopListRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.UploadFileRequestResponse;
@@ -311,7 +312,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.PERSON)
-    Observable<List<ShopFollower>> getShopFollowers(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<List<ShopScanner>> getShopFollowers(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
      * 商户充值金币
@@ -327,20 +328,31 @@ public interface RequestService {
     Observable<RequestResponse> buyCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldNum") Integer goldNum);
 
     /**
+     * 获取店铺剩余金币数
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.GOLD)
+    Observable<GetCoinRequestResponse> getLeftCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode);
+
+    /**
      * 商户创建金币任务
      *
      * @param submitCode
      * @param bazaCode
      * @param totalGold
-     * @param sMinGold
-     * @param sMaxGold
+     * @param totalNum
      * @param beginTime
      * @param endTime
      * @return
      */
     @FormUrlEncoded
     @POST(Url.TASK)
-    Observable<RequestResponse> publishTasks(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("TotalGold") Integer totalGold, @Field("SMinGold") Integer sMinGold, @Field("SMaxGold") Integer sMaxGold, @Field("BeginTime") String beginTime, @Field("EndTime") String endTime);
+    Observable<RequestResponse> publishTasks(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("TotalGold") Integer totalGold, @Field("TotalNum") Integer totalNum, @Field("BeginTime") String beginTime, @Field("EndTime") String endTime);
 
     /**
      * 用户获取金币日志列表
@@ -397,4 +409,17 @@ public interface RequestService {
     @POST(Url.FILE_UPLOAD)
     Observable<UploadFileRequestResponse> uploadShopImage(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("BazaCode") String bazaCode);
 
+    /**
+     * 获取关注店铺的用户信息
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.FOLLOW)
+    Observable<ShopFocuserRequestResponse> getShopFocuser(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 }

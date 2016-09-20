@@ -28,6 +28,7 @@ import com.yzdsmart.Collectmoney.publish_tasks.PublishTasksActivity;
 import com.yzdsmart.Collectmoney.publish_tasks_log.PublishTasksLogActivity;
 import com.yzdsmart.Collectmoney.register_business.RegisterBusinessActivity;
 import com.yzdsmart.Collectmoney.settings.SettingsActivity;
+import com.yzdsmart.Collectmoney.shop_focuser.ShopFocuserActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.utils.Utils;
 
@@ -112,6 +113,8 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @BindView(R.id.shop_level)
     LinearLayout shopLevelLayout;
 
+    private static final String SHOP_INFO_ACTION_CODE = "000000";
+
     private PersonalContract.PersonalPresenter mPresenter;
 
     private List<View> toggleViews;
@@ -161,7 +164,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
             toggleViews.add(personalDetailLayout);
             toggleViews.add(registerBusinessLayout);
 
-            mPresenter.getShopInfo("000000", "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+            mPresenter.getShopInfo(SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
 
             shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
                 @Override
@@ -188,7 +191,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop})
+    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -233,6 +236,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
                 break;
             case R.id.to_focused_shop:
                 ((BaseActivity) getActivity()).openActivity(FocusedShopActivity.class);
+                break;
+            case R.id.to_shop_focuser:
+                ((BaseActivity) getActivity()).openActivity(ShopFocuserActivity.class);
                 break;
         }
     }

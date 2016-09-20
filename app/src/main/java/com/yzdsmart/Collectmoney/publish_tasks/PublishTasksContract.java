@@ -11,23 +11,32 @@ import java.util.List;
  */
 public interface PublishTasksContract {
     interface PublishTasksView extends BaseView<PublishTasksPresenter> {
-        void onPublishTask(boolean flag, String msg);
+        void onGetLeftCoins(Integer counts);
 
+        void onPublishTask(boolean flag, String msg);
     }
 
     interface PublishTasksPresenter extends BasePresenter {
+        /**
+         * 获取店铺剩余金币数
+         *
+         * @param action
+         * @param submitCode
+         * @param bazaCode
+         */
+        void getLeftCoins(String action, String submitCode, String bazaCode);
+
         /**
          * 商户创建金币任务
          *
          * @param submitCode
          * @param bazaCode
          * @param totalGold
-         * @param sMinGold
-         * @param sMaxGold
+         * @param totalNum
          * @param beginTime
          * @param endTime
          */
-        void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer sMinGold, Integer sMaxGold, String beginTime, String endTime);
+        void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer totalNum, String beginTime, String endTime);
 
         void unRegisterSubscribe();
     }
