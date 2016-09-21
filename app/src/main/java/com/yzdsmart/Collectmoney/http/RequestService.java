@@ -10,6 +10,7 @@ import com.yzdsmart.Collectmoney.http.response.FocusedShopRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.FriendsRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetCoinRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetCoinsLogRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.GetGalleyRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.PersonRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.PublishTaskLogRequestResponse;
@@ -187,6 +188,18 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.FILE_UPLOAD)
     Observable<UploadFileRequestResponse> uploadGalley(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("CustCode") String custCode);
+
+    /**
+     * 获取个人的图片列表
+     *
+     * @param action
+     * @param submitCode
+     * @param custCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.IMAGE)
+    Observable<GetGalleyRequestResponse> getPersonalGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode);
 
     /**
      * 获取短信验证码

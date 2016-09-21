@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.galley;
+package com.yzdsmart.Collectmoney.galley.upload;
 
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;

@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.galley;
+package com.yzdsmart.Collectmoney.galley.upload;
 
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;

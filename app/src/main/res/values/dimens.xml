@@ -94,4 +94,7 @@
     <dimen name="picker_line_width">1dp</dimen>
     <dimen name="picker_line_mar">15dp</dimen>
     <dimen name="picker_height">230dp</dimen>
+
+    <!--个人/好友详情-->
+    <dimen name="galley_preview_item_width">49dp</dimen>
 </resources>

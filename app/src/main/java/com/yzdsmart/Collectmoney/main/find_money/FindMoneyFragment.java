@@ -15,7 +15,6 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -274,18 +273,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                     }
                 }
                 return true;
-            }
-        });
-        mBaiduMap.setOnMapDoubleClickListener(new BaiduMap.OnMapDoubleClickListener() {
-            @Override
-            public void onMapDoubleClick(LatLng latLng) {
-                if (null == locLatitude || null == locLongitude) return;
-                ((BaseActivity) getActivity()).showSnackbar(locLatitude + "----" + locLongitude);
-                LatLng ll = new LatLng(locLatitude,
-                        locLongitude);
-                MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(ll);
-                mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
             }
         });
     }

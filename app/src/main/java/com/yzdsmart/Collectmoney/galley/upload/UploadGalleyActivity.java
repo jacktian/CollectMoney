@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.galley;
+package com.yzdsmart.Collectmoney.galley.upload;
 
 import android.content.Intent;
 import android.os.Bundle;

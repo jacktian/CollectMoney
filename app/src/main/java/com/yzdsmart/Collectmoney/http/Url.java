@@ -22,5 +22,6 @@ public class Url {
     public static final String REGISTER = "Register";
     public static final String GOLD = "Gold";
     public static final String FOLLOW = "Follow";
+    public static final String IMAGE = "Image";
 
 }

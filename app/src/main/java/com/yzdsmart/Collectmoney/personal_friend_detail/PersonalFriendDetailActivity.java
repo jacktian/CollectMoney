@@ -15,8 +15,10 @@ import com.bumptech.glide.Glide;
 import com.tencent.TIMConversationType;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.chat.ChatActivity;
-import com.yzdsmart.Collectmoney.galley.UploadGalleyActivity;
+import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
+import com.yzdsmart.Collectmoney.galley.upload.UploadGalleyActivity;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.listener.AppBarOffsetChangeListener;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
@@ -24,6 +26,7 @@ import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -79,8 +82,13 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     @Nullable
     @BindView(R.id.get_from_friend_counts)
     TextView getFriendCountsTV;
+    @Nullable
+    @BindView(R.id.galley_preview_layout)
+    LinearLayout galleyPreviewLayout;
 
     private static final Integer REQUEST_LOGIN_CODE = 1000;
+
+    private static final String PERSONAL_GALLEY_ACTION_CODE = "2102";
 
     private Integer type;//0 个人 1 好友
     private String friend_c_code;
@@ -88,9 +96,13 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
 
     private PersonalFriendDetailContract.PersonalFriendDetailPresenter mPresenter;
 
+    private ArrayList<GalleyInfo> galleyInfoList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        galleyInfoList = new ArrayList<GalleyInfo>();
 
         type = getIntent().getExtras().getInt("type");
         friend_c_code = getIntent().getExtras().getString("cust_code");
@@ -130,9 +142,11 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
             case 0:
                 mPresenter.getCustLevel(SharedPreferencesUtils.getString(this, "cust_code", ""), "000000");
                 mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
+                mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
                 break;
             case 1:
                 mPresenter.getCustInfo("000000", friend_c_code);
+                mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", friend_c_code);
                 break;
         }
     }
@@ -151,7 +165,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.msg_chat, R.id.personal_galley_title})
+    @OnClick({R.id.title_left_operation_layout, R.id.msg_chat, R.id.personal_galley_title, R.id.galley_preview_layout})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -173,10 +187,16 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 switch (type) {
                     case 0:
                         bundle = new Bundle();
-                        bundle.putInt("type", 0);
+                        bundle.putInt("type", type);
                         openActivity(UploadGalleyActivity.class, bundle, 0);
                         break;
                 }
+                break;
+            case R.id.galley_preview_layout:
+                bundle = new Bundle();
+                bundle.putInt("type", type);
+                bundle.putParcelableArrayList("galleys", galleyInfoList);
+                openActivity(GalleyPreviewActivity.class, bundle, 0);
                 break;
         }
     }
@@ -216,6 +236,25 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         changeMoneyTimesTV.setText("" + response.getOperNum());
         coinCountsTV.setText("" + response.getGoldNum());
         getFriendCountsTV.setText("" + response.getFriendNum());
+    }
+
+    @Override
+    public void onGetPersonalGalley(List<GalleyInfo> galleyInfos) {
+        galleyInfoList.clear();
+        galleyInfoList.addAll(galleyInfos);
+        galleyPreviewLayout.removeAllViews();
+        ImageView imageView;
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.galley_preview_item_width), (int) getResources().getDimension(R.dimen.galley_preview_item_width));
+        for (int i = 0; i < galleyInfos.size(); i++) {
+            imageView = new ImageView(this);
+            imageView.setLayoutParams(params);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            Glide.with(this).load(galleyInfos.get(i).getImageFileUrl()).error(getResources().getDrawable(R.mipmap.album_pic)).into(imageView);
+            galleyPreviewLayout.addView(imageView);
+            if (i == 3) {
+                return;
+            }
+        }
     }
 
     @Override

@@ -271,7 +271,13 @@
             android:theme="@style/ActivityColorTranslucentTheme" />
 
         <activity
-            android:name=".galley.UploadGalleyActivity"
+            android:name=".galley.upload.UploadGalleyActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
+            android:name=".galley.preview.GalleyPreviewActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"
             android:theme="@style/ActivityColorTranslucentTheme" />
