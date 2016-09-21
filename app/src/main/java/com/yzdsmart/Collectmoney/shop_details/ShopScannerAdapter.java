@@ -15,6 +15,9 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.ShopScanner;
 import com.yzdsmart.Collectmoney.chat.ChatActivity;
+import com.yzdsmart.Collectmoney.login.LoginActivity;
+import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
+import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ShopScannerAdapter extends RecyclerView.Adapter<ShopScannerAdapter.ViewHolder> {
     private Context context;
     private List<ShopScanner> shopScannerList;
+    private static final Integer REQUEST_LOGIN_CODE = 1000;
 
     public ShopScannerAdapter(Context context) {
         this.context = context;
@@ -121,6 +125,10 @@ public class ShopScannerAdapter extends RecyclerView.Adapter<ShopScannerAdapter.
             Bundle bundle;
             switch (view.getId()) {
                 case R.id.to_chat_layout:
+                    if (null == SharedPreferencesUtils.getString(context, "cust_code", "") || SharedPreferencesUtils.getString(context, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
+                        ((BaseActivity) context).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                        return;
+                    }
                     bundle = new Bundle();
                     bundle.putString("identify", shopScannerList.get(getLayoutPosition()).getTCAccount());
                     bundle.putSerializable("type", TIMConversationType.C2C);

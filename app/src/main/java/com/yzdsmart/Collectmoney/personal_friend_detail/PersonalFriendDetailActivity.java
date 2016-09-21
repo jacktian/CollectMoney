@@ -1,5 +1,6 @@
 package com.yzdsmart.Collectmoney.personal_friend_detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -18,6 +19,9 @@ import com.yzdsmart.Collectmoney.chat.ChatActivity;
 import com.yzdsmart.Collectmoney.galley.UploadGalleyActivity;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.listener.AppBarOffsetChangeListener;
+import com.yzdsmart.Collectmoney.login.LoginActivity;
+import com.yzdsmart.Collectmoney.main.MainActivity;
+import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.List;
@@ -75,6 +79,8 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     @Nullable
     @BindView(R.id.get_from_friend_counts)
     TextView getFriendCountsTV;
+
+    private static final Integer REQUEST_LOGIN_CODE = 1000;
 
     private Integer type;//0 个人 1 好友
     private String friend_c_code;
@@ -136,6 +142,14 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         return R.layout.activity_personal_friend_detail;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
+            MainActivity.getInstance().chatLogin();
+        }
+    }
+
     @Optional
     @OnClick({R.id.title_left_operation_layout, R.id.msg_chat, R.id.personal_galley_title})
     void onClick(View view) {
@@ -145,6 +159,10 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 closeActivity();
                 break;
             case R.id.msg_chat:
+                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
+                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    return;
+                }
                 if (friend_identify.trim().length() <= 3) return;
                 bundle = new Bundle();
                 bundle.putString("identify", friend_identify);

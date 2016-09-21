@@ -2,7 +2,6 @@ package com.yzdsmart.Collectmoney.main.find_money;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +15,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -23,8 +23,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.Overlay;
-import com.baidu.mapapi.map.OverlayOptions;
-import com.baidu.mapapi.map.PolylineOptions;
+import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.baidu.mapapi.search.core.RouteLine;
@@ -38,7 +37,6 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRouteLine;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
-import com.baidu.mapapi.utils.DistanceUtil;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
@@ -78,6 +76,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private FragmentManager fm;
 
     private BaiduMap mBaiduMap = null;
+    private UiSettings mMapSettings;
     //默认城市经纬度
     private static final LatLng GEO_DEFAULT_CITY = new LatLng(31.79, 119.95);
     //定位坐标点
@@ -200,13 +199,13 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Optional
     @OnClick({R.id.title_left_operation_layout, R.id.title_right_operation_layout, R.id.loc_scan_coins})
     void onClick(View view) {
-        if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-            ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
-            return;
-        }
         Fragment fragment;
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
+                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
+                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    return;
+                }
                 fragment = fm.findFragmentByTag("personal");
                 if (null == fragment) {
                     fragment = new PersonalFragment();
@@ -214,6 +213,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 ((MainActivity) getActivity()).addOrShowFragment(fragment, "personal");
                 break;
             case R.id.title_right_operation_layout:
+                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
+                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    return;
+                }
                 ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class);
                 break;
             case R.id.loc_scan_coins:
@@ -243,6 +246,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         // searchMapView.removeViewAt(1);
 
         mBaiduMap = findMoneyMap.getMap();
+        mMapSettings = mBaiduMap.getUiSettings();
+        mMapSettings.setScrollGesturesEnabled(false);
+        mBaiduMap.setMaxAndMinZoomLevel(15, 14);
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(15));
         //设置默认显示城市
@@ -252,10 +258,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
-                    return true;
-                }
+//                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
+//                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+//                    return true;
+//                }
                 if (locMarker == marker) {
 
                 } else if (marketMarker == marker) {
@@ -268,6 +274,18 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                     }
                 }
                 return true;
+            }
+        });
+        mBaiduMap.setOnMapDoubleClickListener(new BaiduMap.OnMapDoubleClickListener() {
+            @Override
+            public void onMapDoubleClick(LatLng latLng) {
+                if (null == locLatitude || null == locLongitude) return;
+                ((BaseActivity) getActivity()).showSnackbar(locLatitude + "----" + locLongitude);
+                LatLng ll = new LatLng(locLatitude,
+                        locLongitude);
+                MapStatus.Builder builder = new MapStatus.Builder();
+                builder.target(ll);
+                mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
             }
         });
     }
@@ -286,38 +304,38 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         mLocClient.start();
     }
 
-    private void initRoute() {
-        // 构造折线点坐标
-        List<LatLng> points = new ArrayList<LatLng>();
-        points.add(new LatLng(31.701841, 119.942198));
-        points.add(new LatLng(31.701595, 119.944138));
-        points.add(new LatLng(31.700182, 119.944066));
-        points.add(new LatLng(31.697048, 119.946869));
-        points.add(new LatLng(31.696557, 119.953983));
-        points.add(new LatLng(31.691088, 119.954199));
-        points.add(new LatLng(31.696495, 119.958367));
-        points.add(new LatLng(31.689736, 119.965913));
-        points.add(new LatLng(31.688998, 119.973674));
-        points.add(new LatLng(31.687401, 119.977986));
-        points.add(new LatLng(31.686878, 119.977016));
-
-        //构建分段颜色索引数组
-        List<Integer> colors = new ArrayList<>();
-        colors.add(Integer.valueOf(Color.RED));
-
-        OverlayOptions ooPolyline = new PolylineOptions().width(10)
-                .colorsValues(colors).points(points);
-        //添加在地图中
-        mBaiduMap.addOverlay(ooPolyline);
-        System.out.println("------------------->" + DistanceUtil.getDistance(new LatLng(31.701841, 119.942198), new LatLng(31.686878, 119.977016)));
-        //缩放地图，使所有Overlay都在合适的视野内
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (LatLng point : points) {
-            builder.include(point);
-        }
-        mBaiduMap.setMapStatus(MapStatusUpdateFactory
-                .newLatLngBounds(builder.build()));
-    }
+//    private void initRoute() {
+//        // 构造折线点坐标
+//        List<LatLng> points = new ArrayList<LatLng>();
+//        points.add(new LatLng(31.701841, 119.942198));
+//        points.add(new LatLng(31.701595, 119.944138));
+//        points.add(new LatLng(31.700182, 119.944066));
+//        points.add(new LatLng(31.697048, 119.946869));
+//        points.add(new LatLng(31.696557, 119.953983));
+//        points.add(new LatLng(31.691088, 119.954199));
+//        points.add(new LatLng(31.696495, 119.958367));
+//        points.add(new LatLng(31.689736, 119.965913));
+//        points.add(new LatLng(31.688998, 119.973674));
+//        points.add(new LatLng(31.687401, 119.977986));
+//        points.add(new LatLng(31.686878, 119.977016));
+//
+//        //构建分段颜色索引数组
+//        List<Integer> colors = new ArrayList<>();
+//        colors.add(Integer.valueOf(Color.RED));
+//
+//        OverlayOptions ooPolyline = new PolylineOptions().width(10)
+//                .colorsValues(colors).points(points);
+//        //添加在地图中
+//        mBaiduMap.addOverlay(ooPolyline);
+//        System.out.println("------------------->" + DistanceUtil.getDistance(new LatLng(31.701841, 119.942198), new LatLng(31.686878, 119.977016)));
+//        //缩放地图，使所有Overlay都在合适的视野内
+//        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+//        for (LatLng point : points) {
+//            builder.include(point);
+//        }
+//        mBaiduMap.setMapStatus(MapStatusUpdateFactory
+//                .newLatLngBounds(builder.build()));
+//    }
 
     @Override
     public void setPresenter(FindMoneyContract.FindMoneyPresenter presenter) {

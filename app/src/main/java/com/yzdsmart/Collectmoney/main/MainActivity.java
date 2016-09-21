@@ -15,6 +15,7 @@ import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.find_money.FindMoneyFragment;
 import com.yzdsmart.Collectmoney.main.recommend.RecommendFragment;
 import com.yzdsmart.Collectmoney.money_friendship.MoneyFriendshipActivity;
+import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.tecent_im.service.TLSService;
 import com.yzdsmart.Collectmoney.tecent_im.utils.PushUtil;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -87,7 +88,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
                 addOrShowFragment(fragment, "recommend");
                 break;
             case R.id.money_friend_radio:
-                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
+                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
                     openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
                     group.clearCheck();
                     return;
@@ -209,5 +210,9 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
             String im_pwd = SharedPreferencesUtils.getString(this, "im_password", "");
             mPresenter.chatLogin(im_name, im_pwd);
         }
+    }
+
+    public void chatLogin(){
+        imLogin();
     }
 }

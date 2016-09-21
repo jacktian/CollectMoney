@@ -1,5 +1,6 @@
 package com.yzdsmart.Collectmoney.shop_details;
 
+import android.content.Intent;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -15,8 +16,10 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.ShopScanner;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
+import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
+import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
@@ -62,6 +65,8 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     @Nullable
     @BindView(R.id.is_atte)
     ImageView isAtteIV;
+
+    private static final Integer REQUEST_LOGIN_CODE = 1000;
 
     private String bazaCode;//商铺编码
     private Boolean isAtte = false;
@@ -123,6 +128,14 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         return R.layout.activity_shop_details;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
+            MainActivity.getInstance().chatLogin();
+        }
+    }
+
     @Optional
     @OnClick({R.id.title_left_operation_layout, R.id.is_atte, R.id.title_right_operation_layout, R.id.get_more_followers, R.id.route_line})
     void onClick(View view) {
@@ -131,12 +144,20 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 closeActivity();
                 break;
             case R.id.is_atte:
+                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
+                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    return;
+                }
                 mPresenter.setFollow(isAtte ? CANCEL_FOCUS_CODE : SET_FOCUS_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), bazaCode);
                 break;
             case R.id.title_right_operation_layout:
                 openActivity(QRScannerActivity.class);
                 break;
             case R.id.get_more_followers:
+                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
+                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    return;
+                }
                 mPresenter.getShopFollowers(GET_SHOP_FOLLOWERS_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), ++pageIndex, PAGE_SIZE);
                 break;
             case R.id.route_line:
