@@ -16,6 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/common_toolbar_height"
+        app:bga_snpl_isPlusSwitchOpened="false"
+        app:bga_snpl_isSortable="false"
         app:bga_snpl_itemSpanCount="3"
-        app:bga_snpl_maxItemCount="500" />
+        app:bga_snpl_maxItemCount="100" />
 </android.support.design.widget.CoordinatorLayout>

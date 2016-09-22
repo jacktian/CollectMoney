@@ -1,12 +1,18 @@
 package com.yzdsmart.Collectmoney.main.find_money;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -43,6 +49,8 @@ import com.yzdsmart.Collectmoney.bd_map.WalkingRouteOverlay;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.main.personal.PersonalFragment;
+import com.yzdsmart.Collectmoney.money_friendship.group_list.create.CreateGroupActivity;
+import com.yzdsmart.Collectmoney.money_friendship.group_list.search.SearchGroupActivity;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -212,11 +220,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 ((MainActivity) getActivity()).addOrShowFragment(fragment, "personal");
                 break;
             case R.id.title_right_operation_layout:
-                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
-                    return;
-                }
-                ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class);
+                showMoveDialog(getActivity());
                 break;
             case R.id.loc_scan_coins:
                 if (null != marketMarker) {
@@ -234,6 +238,38 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 mPresenter.getShopList("000000", qLocation, page_index, PAGE_SIZE, 0);
                 break;
         }
+    }
+
+    private Dialog scannerChooseDialog;
+    private TextView scanCoin, payCoin;
+
+    private void showMoveDialog(Context context) {
+        final Bundle bundle = new Bundle();
+        scannerChooseDialog = new Dialog(context, R.style.custom_dialog);
+        scannerChooseDialog.setContentView(R.layout.qr_scanner_choose);
+        scanCoin = (TextView) scannerChooseDialog.findViewById(R.id.scan_coin);
+        payCoin = (TextView) scannerChooseDialog.findViewById(R.id.pay_coin);
+        scanCoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bundle.putInt("scanType", 0);
+                ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
+                scannerChooseDialog.dismiss();
+            }
+        });
+        payCoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bundle.putInt("scanType", 1);
+                ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
+                scannerChooseDialog.dismiss();
+            }
+        });
+        Window window = scannerChooseDialog.getWindow();
+        window.setGravity(Gravity.TOP | Gravity.RIGHT);
+        WindowManager.LayoutParams lp = window.getAttributes();
+        window.setAttributes(lp);
+        scannerChooseDialog.show();
     }
 
     private void initMap() {

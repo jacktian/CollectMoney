@@ -1,5 +1,7 @@
 package com.yzdsmart.Collectmoney.shop_details;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
@@ -7,7 +9,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -151,7 +156,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 mPresenter.setFollow(isAtte ? CANCEL_FOCUS_CODE : SET_FOCUS_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), bazaCode);
                 break;
             case R.id.title_right_operation_layout:
-                openActivity(QRScannerActivity.class);
+                showMoveDialog(this);
                 break;
             case R.id.get_more_followers:
                 if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
@@ -171,6 +176,38 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     @Override
     public void setPresenter(ShopDetailsContract.ShopDetailsPresenter presenter) {
         mPresenter = presenter;
+    }
+
+    private Dialog scannerChooseDialog;
+    private TextView scanCoin, payCoin;
+
+    private void showMoveDialog(Context context) {
+        final Bundle bundle = new Bundle();
+        scannerChooseDialog = new Dialog(context, R.style.custom_dialog);
+        scannerChooseDialog.setContentView(R.layout.qr_scanner_choose);
+        scanCoin = (TextView) scannerChooseDialog.findViewById(R.id.scan_coin);
+        payCoin = (TextView) scannerChooseDialog.findViewById(R.id.pay_coin);
+        scanCoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bundle.putInt("scanType", 0);
+                openActivity(QRScannerActivity.class, bundle, 0);
+                scannerChooseDialog.dismiss();
+            }
+        });
+        payCoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bundle.putInt("scanType", 1);
+                openActivity(QRScannerActivity.class, bundle, 0);
+                scannerChooseDialog.dismiss();
+            }
+        });
+        Window window = scannerChooseDialog.getWindow();
+        window.setGravity(Gravity.TOP | Gravity.RIGHT);
+        WindowManager.LayoutParams lp = window.getAttributes();
+        window.setAttributes(lp);
+        scannerChooseDialog.show();
     }
 
     @Override

@@ -66,6 +66,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
         mPhotosSnpl.init(this);
         // 设置拖拽排序控件的代理
         mPhotosSnpl.setDelegate(this);
+        mPhotosSnpl.setDeleteDrawableResId(0);
 
         deleteGalleys.clear();
         for (GalleyInfo galleyInfo : galleyInfoList) {

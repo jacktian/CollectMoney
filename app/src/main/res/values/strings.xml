@@ -33,6 +33,10 @@
     <string name="find_money">找钱</string>
     <string name="money_friendship">钱圈</string>
 
+    <!--找钱-->
+    <string name="find_money_scan_coin">扫币</string>
+    <string name="find_money_pay_coin">付款</string>
+
     <!--圈钱-->
     <string name="search">搜索</string>
 
