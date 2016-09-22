@@ -110,6 +110,13 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
     }
 
     /**
+     * 刷新列表
+     */
+    public void refresh() {
+        mPhotoAdapter.notifyDataSetChanged();
+    }
+
+    /**
      * 设置是否可拖拽排序
      *
      * @param isSortable

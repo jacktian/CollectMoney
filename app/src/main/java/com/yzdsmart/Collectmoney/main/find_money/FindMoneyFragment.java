@@ -283,7 +283,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         mBaiduMap = findMoneyMap.getMap();
         mMapSettings = mBaiduMap.getUiSettings();
         mMapSettings.setScrollGesturesEnabled(false);
-        mBaiduMap.setMaxAndMinZoomLevel(15, 14);
+        mBaiduMap.setMaxAndMinZoomLevel(18, 14);
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(15));
         //设置默认显示城市

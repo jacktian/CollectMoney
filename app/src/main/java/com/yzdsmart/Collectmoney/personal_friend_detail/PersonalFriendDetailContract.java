@@ -27,6 +27,11 @@ public interface PersonalFriendDetailContract {
          */
         void onGetCustInfo(CustInfoRequestResponse response);
 
+        /**
+         * 获取个人的图片列表
+         *
+         * @param galleyInfos
+         */
         void onGetPersonalGalley(List<GalleyInfo> galleyInfos);
     }
 

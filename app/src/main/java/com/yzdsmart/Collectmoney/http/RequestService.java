@@ -202,6 +202,19 @@ public interface RequestService {
     Observable<GetGalleyRequestResponse> getPersonalGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode);
 
     /**
+     * 删除个人相册
+     *
+     * @param action
+     * @param submitCode
+     * @param custCode
+     * @param fileIdList
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.IMAGE)
+    Observable<RequestResponse> deletePersonalGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("FileIdList") List<Integer> fileIdList);
+
+    /**
      * 获取短信验证码
      *
      * @param telNum

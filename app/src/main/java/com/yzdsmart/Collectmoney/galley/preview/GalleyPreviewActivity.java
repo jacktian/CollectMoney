@@ -1,14 +1,20 @@
 package com.yzdsmart.Collectmoney.galley.preview;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
+import com.yzdsmart.Collectmoney.galley.upload.UploadGalleyActivity;
+import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +30,7 @@ import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
  * Created by YZD on 2016/9/21.
  */
 
-public class GalleyPreviewActivity extends BaseActivity implements BGASortableNinePhotoLayout.Delegate {
+public class GalleyPreviewActivity extends BaseActivity implements BGASortableNinePhotoLayout.Delegate, GalleyPreviewContract.GalleyPreviewView {
     @Nullable
     @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout})
     List<View> hideViews;
@@ -43,18 +49,42 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     @Nullable
     @BindView(R.id.snpl_delete_photos)
     BGASortableNinePhotoLayout mPhotosSnpl;
+    @Nullable
+    @BindView(R.id.add_galley)
+    Button addGalley;
+    @Nullable
+    @BindView(R.id.delete_galley)
+    Button deleteGalley;
+    @Nullable
+    @BindView(R.id.add_galley_layout)
+    FrameLayout addGalleyLayout;
+    @Nullable
+    @BindView(R.id.delete_galley_layout)
+    FrameLayout deleteGalleyLayout;
 
     private Integer type;
     private List<GalleyInfo> galleyInfoList;
     private ArrayList<String> deleteGalleys;
+    private List<Integer> deleteFileList;
 
     private boolean isGalleyOperated = false;
+
+    private static final Integer GALLEY_OPERATION_CODE = 1000;
+
+    private static final String PERSONAL_GALLEY_ACTION_CODE = "2102";
+    private static final String PERSONAL_GALLEY_DELETE_ACTION_CODE = "4102";
+
+    private GalleyPreviewContract.GalleyPreviewPresenter mPresenter;
+
+    private Handler mHandler = new Handler();
+    private Runnable deleteGalleySuccessRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         deleteGalleys = new ArrayList<String>();
+        deleteFileList = new ArrayList<Integer>();
 
         type = getIntent().getExtras().getInt("type");
         galleyInfoList = getIntent().getExtras().getParcelableArrayList("galleys");
@@ -65,13 +95,25 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
         switch (type) {
             case 0:
                 centerTitleTV.setText("个人相册");
-                ButterKnife.apply(showViews, BUTTERKNIFEVISIBLE);
                 rightTitleTV.setText("选择");
+                ButterKnife.apply(showViews, BUTTERKNIFEVISIBLE);
+                ButterKnife.apply(addGalleyLayout, BUTTERKNIFEVISIBLE);
+                ButterKnife.apply(deleteGalleyLayout, BUTTERKNIFEVISIBLE);
                 break;
             case 1:
                 centerTitleTV.setText("好友相册");
                 break;
         }
+
+        new GalleyPreviewPresenter(this, this);
+
+        deleteGalleySuccessRunnable = new Runnable() {
+            @Override
+            public void run() {
+                hideProgressDialog();
+                mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "cust_code", ""));
+            }
+        };
 
         mPhotosSnpl.init(this);
         // 设置拖拽排序控件的代理
@@ -90,20 +132,70 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
         return R.layout.activity_galley_preview;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mPresenter.unRegisterSubscribe();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mHandler.removeCallbacks(deleteGalleySuccessRunnable);
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (GALLEY_OPERATION_CODE == requestCode && RESULT_OK == resultCode) {
+            mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
+        }
+    }
+
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.right_title})
+    @OnClick({R.id.title_left_operation_layout, R.id.right_title, R.id.add_galley, R.id.delete_galley})
     void onClick(View view) {
+        Bundle bundle;
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
                 break;
             case R.id.right_title:
+                if (mPhotosSnpl.getData().size() <= 0) return;
+                isGalleyOperated = !isGalleyOperated;
                 if (isGalleyOperated) {
                     rightTitleTV.setText("取消");
+                    mPhotosSnpl.setDeleteDrawableResId(R.mipmap.bga_pp_ic_delete);
+                    addGalley.setEnabled(false);
+                    deleteGalley.setEnabled(true);
                 } else {
                     rightTitleTV.setText("选择");
                     mPhotosSnpl.setDeleteDrawableResId(0);
+                    deleteGalley.setEnabled(false);
+                    addGalley.setEnabled(true);
                 }
+                mPhotosSnpl.refresh();
+                break;
+            case R.id.add_galley:
+                bundle = new Bundle();
+                bundle.putInt("type", 0);
+                openActivity(UploadGalleyActivity.class, bundle, GALLEY_OPERATION_CODE);
+                break;
+            case R.id.delete_galley:
+                rightTitleTV.setText("选择");
+                isGalleyOperated = false;
+                mPhotosSnpl.setDeleteDrawableResId(0);
+                deleteGalley.setEnabled(false);
+                addGalley.setEnabled(true);
+                deleteFileList.clear();
+                for (String path : mPhotosSnpl.getData()) {
+                    for (GalleyInfo galleyInfo : galleyInfoList) {
+                        if (galleyInfo.getImageFileUrl().equals(path)) {
+                            deleteFileList.add(galleyInfo.getFileId());
+                        }
+                    }
+                }
+                mPresenter.deletePersonalGalley(PERSONAL_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), deleteFileList);
                 break;
         }
     }
@@ -116,10 +208,40 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     @Override
     public void onClickDeleteNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
         mPhotosSnpl.removeItem(position);
+        if (mPhotosSnpl.getData().size() <= 0) {
+            rightTitleTV.setText("选择");
+            isGalleyOperated = false;
+            mPhotosSnpl.setDeleteDrawableResId(0);
+            deleteGalley.setEnabled(false);
+            addGalley.setEnabled(true);
+        }
     }
 
     @Override
     public void onClickNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
 
+    }
+
+    @Override
+    public void onGetPersonalGalley(List<GalleyInfo> galleyInfos) {
+        galleyInfoList.clear();
+        deleteGalleys.clear();
+        galleyInfoList.addAll(galleyInfos);
+        for (GalleyInfo galleyInfo : galleyInfoList) {
+            deleteGalleys.add(galleyInfo.getImageFileUrl());
+        }
+        mPhotosSnpl.removeAllViews();
+        mPhotosSnpl.setData(deleteGalleys);
+    }
+
+    @Override
+    public void onDeletePersonalGalley() {
+        showProgressDialog(R.drawable.success, getResources().getString(R.string.delete_success));
+        mHandler.postDelayed(deleteGalleySuccessRunnable, 500);
+    }
+
+    @Override
+    public void setPresenter(GalleyPreviewContract.GalleyPreviewPresenter presenter) {
+        mPresenter = presenter;
     }
 }

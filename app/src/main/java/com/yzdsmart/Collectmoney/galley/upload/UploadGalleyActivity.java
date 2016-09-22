@@ -92,6 +92,7 @@ public class UploadGalleyActivity extends BaseActivity implements UploadGalleyCo
             @Override
             public void run() {
                 hideProgressDialog();
+                setResult(RESULT_OK);
                 closeActivity();
             }
         };

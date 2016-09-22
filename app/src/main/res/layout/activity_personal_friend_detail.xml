@@ -408,7 +408,7 @@
                     <LinearLayout
                         android:id="@+id/galley_preview_layout"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="2"
                         android:orientation="horizontal">
 
@@ -416,15 +416,15 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/more_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/personal_item_panel_margin_top"
-                android:text="@string/detail_more_info"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/font_medium" />
+            <!--<TextView-->
+            <!--android:id="@+id/more_info"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginTop="@dimen/personal_item_panel_margin_top"-->
+            <!--android:text="@string/detail_more_info"-->
+            <!--android:textColor="@color/grey"-->
+            <!--android:textSize="@dimen/font_medium" />-->
 
             <RelativeLayout
                 android:id="@+id/im_ope_layout"

@@ -18,7 +18,6 @@ import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.chat.ChatActivity;
 import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
-import com.yzdsmart.Collectmoney.galley.upload.UploadGalleyActivity;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.listener.AppBarOffsetChangeListener;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
@@ -165,7 +164,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.msg_chat, R.id.personal_galley_title, R.id.galley_preview_layout})
+    @OnClick({R.id.title_left_operation_layout, R.id.msg_chat, R.id.galley_preview_layout})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -182,15 +181,6 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 bundle.putString("identify", friend_identify);
                 bundle.putSerializable("type", TIMConversationType.C2C);
                 openActivity(ChatActivity.class, bundle, 0);
-                break;
-            case R.id.personal_galley_title:
-                switch (type) {
-                    case 0:
-                        bundle = new Bundle();
-                        bundle.putInt("type", type);
-                        openActivity(UploadGalleyActivity.class, bundle, 0);
-                        break;
-                }
                 break;
             case R.id.galley_preview_layout:
                 bundle = new Bundle();
