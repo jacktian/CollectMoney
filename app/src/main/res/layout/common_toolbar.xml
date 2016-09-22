@@ -116,6 +116,17 @@
                     android:textSize="@dimen/font_xsmall"
                     android:visibility="gone" />
             </FrameLayout>
+
+            <TextView
+                android:id="@+id/right_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@id/title_right_operation_layout"
+                android:text="右标题"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_medium"
+                android:visibility="gone" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 </android.support.design.widget.AppBarLayout>

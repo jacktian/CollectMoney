@@ -103,7 +103,7 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
             throw new RuntimeException("请先调用init方法进行初始化");
         }
 
-        int itemWidth = BGAPhotoPickerUtil.getScreenWidth(getContext()) / 4;
+        int itemWidth = BGAPhotoPickerUtil.getScreenWidth(getContext()) / 3;
         if (photos.size() == 0) {
             setVisibility(GONE);
         } else if (photos.size() == 1) {

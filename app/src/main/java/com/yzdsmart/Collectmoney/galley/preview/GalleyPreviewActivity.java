@@ -29,18 +29,26 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout})
     List<View> hideViews;
     @Nullable
+    @BindViews({R.id.right_title})
+    List<View> showViews;
+    @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
     @Nullable
     @BindView(R.id.center_title)
     TextView centerTitleTV;
     @Nullable
-    @BindView(R.id.snpl_add_photos)
+    @BindView(R.id.right_title)
+    TextView rightTitleTV;
+    @Nullable
+    @BindView(R.id.snpl_delete_photos)
     BGASortableNinePhotoLayout mPhotosSnpl;
 
     private Integer type;
     private List<GalleyInfo> galleyInfoList;
     private ArrayList<String> deleteGalleys;
+
+    private boolean isGalleyOperated = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,8 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
         switch (type) {
             case 0:
                 centerTitleTV.setText("个人相册");
+                ButterKnife.apply(showViews, BUTTERKNIFEVISIBLE);
+                rightTitleTV.setText("选择");
                 break;
             case 1:
                 centerTitleTV.setText("好友相册");
@@ -81,11 +91,19 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout})
+    @OnClick({R.id.title_left_operation_layout, R.id.right_title})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
+                break;
+            case R.id.right_title:
+                if (isGalleyOperated) {
+                    rightTitleTV.setText("取消");
+                } else {
+                    rightTitleTV.setText("选择");
+                    mPhotosSnpl.setDeleteDrawableResId(0);
+                }
                 break;
         }
     }
@@ -97,7 +115,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
 
     @Override
     public void onClickDeleteNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
-
+        mPhotosSnpl.removeItem(position);
     }
 
     @Override
