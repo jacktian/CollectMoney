@@ -114,7 +114,33 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SET_CUST)
-    Observable<RequestResponse> setCustInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("TCAccount") String tcAccount, @Field("Profile_Nick") String profile_Nick, @Field("Profile_Image") String profile_Image, @Field("Profile_AllowType") String profile_AllowType, @Field("Profile_SelfSignature") String profile_SelfSignature);
+    Observable<RequestResponse> setCustIMInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("TCAccount") String tcAccount, @Field("Profile_Nick") String profile_Nick, @Field("Profile_Image") String profile_Image, @Field("Profile_AllowType") String profile_AllowType, @Field("Profile_SelfSignature") String profile_SelfSignature);
+
+    /**
+     * 设置用户详细信息
+     *
+     * @param submitCode
+     * @param custCode
+     * @param cName
+     * @param cSex
+     * @param cBirthday
+     * @param cTel
+     * @param cIdNo
+     * @param cNation
+     * @param cHeight
+     * @param cWeight
+     * @param cProfession
+     * @param cAddress
+     * @param cProv
+     * @param cCity
+     * @param cDist
+     * @param cCountry
+     * @param cRemark
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.SET_CUST)
+    Observable<RequestResponse> setCustDetailInfo(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("CName") String cName, @Field("CSex") String cSex, @Field("CBirthday") String cBirthday, @Field("CTel") String cTel, @Field("CIdNo") String cIdNo, @Field("CNation") String cNation, @Field("CHeight") Double cHeight, @Field("CWeight") Double cWeight, @Field("CProfession") String cProfession, @Field("CAddress") String cAddress, @Field("CProv") String cProv, @Field("CCity") String cCity, @Field("CDist") String cDist, @Field("CCountry") String cCountry, @Field("CRemark") String cRemark);
 
     /**
      * 普通用户升级为商家
