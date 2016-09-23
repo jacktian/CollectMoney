@@ -1,5 +1,7 @@
 package com.yzdsmart.Collectmoney.buy_coins;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -7,7 +9,10 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +21,7 @@ import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalD
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.BuyCoinsLog;
+import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
@@ -136,6 +142,38 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     @Override
     public void setPresenter(BuyCoinsContract.BuyCoinsPresenter presenter) {
         mPresenter = presenter;
+    }
+
+    private Dialog buyCoinDialog;
+    private TextView scanCoin, payCoin;
+
+    private void showMoveDialog(Context context) {
+        final Bundle bundle = new Bundle();
+        buyCoinDialog = new Dialog(context, R.style.buy_coin_popup);
+        buyCoinDialog.setContentView(R.layout.buy_coin_pay);
+//        scanCoin = (TextView) scannerChooseDialog.findViewById(R.id.scan_coin);
+//        payCoin = (TextView) scannerChooseDialog.findViewById(R.id.pay_coin);
+//        scanCoin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                bundle.putInt("scanType", 0);
+//                openActivity(QRScannerActivity.class, bundle, 0);
+//                scannerChooseDialog.dismiss();
+//            }
+//        });
+//        payCoin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                bundle.putInt("scanType", 1);
+//                openActivity(QRScannerActivity.class, bundle, 0);
+//                scannerChooseDialog.dismiss();
+//            }
+//        });
+        Window window = buyCoinDialog.getWindow();
+        window.setGravity(Gravity.TOP | Gravity.RIGHT);
+        WindowManager.LayoutParams lp = window.getAttributes();
+        window.setAttributes(lp);
+        buyCoinDialog.show();
     }
 
     @Override
