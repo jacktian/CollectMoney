@@ -2,7 +2,10 @@ package com.yzdsmart.Collectmoney.main.personal;
 
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;
+import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
+
+import java.util.List;
 
 /**
  * Created by YZD on 2016/8/27.
@@ -32,6 +35,13 @@ public interface PersonalContract {
          * @param shopDetails
          */
         void onGetShopInfo(ShopInfoRequestResponse shopDetails);
+
+        /**
+         * 获取商铺图片列表
+         *
+         * @param galleyInfos
+         */
+        void onGetShopGalley(List<GalleyInfo> galleyInfos);
     }
 
     interface PersonalPresenter extends BasePresenter {
@@ -58,6 +68,15 @@ public interface PersonalContract {
          * @param bazaCode
          */
         void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode);
+
+        /**
+         * 获取商铺图片列表
+         *
+         * @param action
+         * @param submitCode
+         * @param bazaCode
+         */
+        void getShopGalley(String action, String submitCode, String bazaCode);
 
         void unRegisterSubscribe();
     }

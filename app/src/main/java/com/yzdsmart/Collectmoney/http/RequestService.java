@@ -448,4 +448,30 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.FOLLOW)
     Observable<ShopFocuserRequestResponse> getShopFocuser(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+
+
+    /**
+     * 获取商铺图片列表
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.IMAGE)
+    Observable<GetGalleyRequestResponse> getShopGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode);
+
+    /**
+     * 删除商铺图片
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param fileIdList
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.IMAGE)
+    Observable<RequestResponse> deleteShopGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("FileIdList") List<Integer> fileIdList);
 }

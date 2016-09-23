@@ -83,6 +83,63 @@ public class GalleyPreviewPresenter implements GalleyPreviewContract.GalleyPrevi
     }
 
     @Override
+    public void getShopGalley(String action, String submitCode, String bazaCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.getShopGalley(action, submitCode, bazaCode, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                GetGalleyRequestResponse requestResponse = (GetGalleyRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    if (null != requestResponse.getLists()) {
+                        mView.onGetShopGalley(requestResponse.getLists());
+                    }
+                } else {
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void deleteShopGalley(String action, String submitCode, String bazaCode, List<Integer> fileIdList) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.deleting));
+        mModel.deleteShopGalley(action, submitCode, bazaCode, fileIdList, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                ((BaseActivity) context).hideProgressDialog();
+                RequestResponse requestResponse = (RequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onDeleteShopGalley();
+                } else {
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
     public void unRegisterSubscribe() {
         mModel.unRegisterSubscribe();
     }

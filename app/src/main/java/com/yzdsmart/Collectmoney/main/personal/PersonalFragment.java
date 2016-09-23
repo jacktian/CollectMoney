@@ -1,5 +1,6 @@
 package com.yzdsmart.Collectmoney.main.personal;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -13,13 +14,17 @@ import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.holder.Holder;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.bumptech.glide.Glide;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.buy_coins.BuyCoinsActivity;
 import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
 import com.yzdsmart.Collectmoney.focused_shop.FocusedShopActivity;
+import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.personal_coin_list.PersonalCoinsActivity;
@@ -114,6 +119,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     LinearLayout shopLevelLayout;
 
     private static final String SHOP_INFO_ACTION_CODE = "000000";
+    private static final String GET_SHOP_GALLEY_ACTION_CODE = "5101";
 
     private PersonalContract.PersonalPresenter mPresenter;
 
@@ -122,11 +128,17 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     private Handler backFindMoneyHandler = new Handler();
     private Runnable backFindMoneyRunnable;
 
-    private ArrayList<Integer> localImages = new ArrayList<Integer>();//banner图片
+    private ArrayList<Integer> localImages;//默认banner图片
+    private ArrayList<String> galleyImages;
+    private ArrayList<GalleyInfo> galleyInfoList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        localImages = new ArrayList<Integer>();//默认banner图片
+        galleyImages = new ArrayList<String>();
+        galleyInfoList = new ArrayList<GalleyInfo>();
 
         toggleViews = new ArrayList<View>();
 
@@ -139,9 +151,6 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
 
         new PersonalPresenter(getActivity(), this);
 
-        localImages.add(R.mipmap.shop_banner);
-        localImages.add(R.mipmap.shop_banner);
-        localImages.add(R.mipmap.shop_banner);
         localImages.add(R.mipmap.shop_banner);
     }
 
@@ -165,18 +174,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
             toggleViews.add(registerBusinessLayout);
 
             mPresenter.getShopInfo(SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
-
-            shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
-                @Override
-                public ShopImageBannerHolderView createHolder() {
-                    return new ShopImageBannerHolderView();
-                }
-            }, localImages)
-                    //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
-                    .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
-                    //设置指示器的方向
-                    .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
-            shopImagesBanner.startTurning(3000);
+            mPresenter.getShopGalley(GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""));
         } else {
             toggleViews.add(shopImagesBanner);
             toggleViews.add(shopDetailLayout);
@@ -188,6 +186,15 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         }
         ButterKnife.apply(toggleViews, BaseActivity.BUTTERKNIFEGONE);
 
+        shopImagesBanner.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("identity", 1);
+                bundle.putParcelableArrayList("galleys", galleyInfoList);
+                ((BaseActivity) getActivity()).openActivity(GalleyPreviewActivity.class, bundle, 0);
+            }
+        });
     }
 
     @Optional
@@ -331,5 +338,58 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         ImageView shopLevel = new ImageView(getActivity());
         shopLevel.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.five_start));
         shopLevelLayout.addView(shopLevel);
+    }
+
+    @Override
+    public void onGetShopGalley(List<GalleyInfo> galleyInfos) {
+        galleyInfoList.clear();
+        galleyInfoList.addAll(galleyInfos);
+        if (galleyInfos.size() <= 0) {
+            shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
+                @Override
+                public ShopImageBannerHolderView createHolder() {
+                    return new ShopImageBannerHolderView();
+                }
+            }, localImages)
+                    //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                    .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
+                    //设置指示器的方向
+                    .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+            shopImagesBanner.startTurning(3000);
+        } else {
+            for (int i = 0; i < galleyInfos.size(); i++) {
+                galleyImages.add(galleyInfos.get(i).getImageFileUrl());
+                if (i == 3) {
+                    break;
+                }
+            }
+            shopImagesBanner.setPages(new CBViewHolderCreator<ShopGalleyViewHolder>() {
+                @Override
+                public ShopGalleyViewHolder createHolder() {
+                    return new ShopGalleyViewHolder();
+                }
+            }, galleyImages)
+                    //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                    .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
+                    //设置指示器的方向
+                    .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+            shopImagesBanner.startTurning(3000);
+        }
+    }
+
+    class ShopGalleyViewHolder implements Holder<String> {
+        private ImageView imageView;
+
+        @Override
+        public View createView(Context context) {
+            imageView = new ImageView(context);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            return imageView;
+        }
+
+        @Override
+        public void UpdateUI(Context context, int position, String data) {
+            Glide.with(context).load(data).error(context.getResources().getDrawable(R.mipmap.shop_banner)).into(imageView);
+        }
     }
 }

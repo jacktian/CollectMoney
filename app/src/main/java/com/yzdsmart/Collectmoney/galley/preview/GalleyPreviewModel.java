@@ -17,7 +17,9 @@ import rx.schedulers.Schedulers;
 
 public class GalleyPreviewModel {
     private Subscriber<GetGalleyRequestResponse> getGalleySubscriber;
-    private Subscriber<RequestResponse> deleteGalleySubscriber;
+    private Subscriber<RequestResponse> deletePersonalGalleySubscriber;
+    private Subscriber<GetGalleyRequestResponse> getShopGalleySubscriber;
+    private Subscriber<RequestResponse> deleteShopGalleySubscriber;
 
     void getPersonalGalley(String action, String submitCode, String custCode, final RequestListener listener) {
         getGalleySubscriber = new Subscriber<GetGalleyRequestResponse>() {
@@ -43,7 +45,7 @@ public class GalleyPreviewModel {
     }
 
     void deletePersonalGalley(String action, String submitCode, String custCode, List<Integer> fileIdList, final RequestListener listener) {
-        deleteGalleySubscriber = new Subscriber<RequestResponse>() {
+        deletePersonalGalleySubscriber = new Subscriber<RequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -62,7 +64,53 @@ public class GalleyPreviewModel {
         RequestAdapter.getRequestService().deletePersonalGalley(action, submitCode, custCode, fileIdList)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
-                .subscribe(deleteGalleySubscriber);
+                .subscribe(deletePersonalGalleySubscriber);
+    }
+
+    void getShopGalley(String action, String submitCode, String bazaCode, final RequestListener listener) {
+        getShopGalleySubscriber = new Subscriber<GetGalleyRequestResponse>() {
+            @Override
+            public void onCompleted() {
+                listener.onComplete();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                listener.onError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(GetGalleyRequestResponse response) {
+                listener.onSuccess(response);
+            }
+        };
+        RequestAdapter.getRequestService().getShopGalley(action, submitCode, bazaCode)
+                .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
+                .observeOn(AndroidSchedulers.mainThread())//回调到主线程
+                .subscribe(getShopGalleySubscriber);
+    }
+
+    void deleteShopGalley(String action, String submitCode, String bazaCode, List<Integer> fileIdList, final RequestListener listener) {
+        deleteShopGalleySubscriber = new Subscriber<RequestResponse>() {
+            @Override
+            public void onCompleted() {
+                listener.onComplete();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                listener.onError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(RequestResponse requestResponse) {
+                listener.onSuccess(requestResponse);
+            }
+        };
+        RequestAdapter.getRequestService().deleteShopGalley(action, submitCode, bazaCode, fileIdList)
+                .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
+                .observeOn(AndroidSchedulers.mainThread())//回调到主线程
+                .subscribe(deleteShopGalleySubscriber);
     }
 
     void unRegisterSubscribe() {
@@ -70,8 +118,14 @@ public class GalleyPreviewModel {
         if (null != getGalleySubscriber) {
             getGalleySubscriber.unsubscribe();
         }
-        if (null != deleteGalleySubscriber) {
-            deleteGalleySubscriber.unsubscribe();
+        if (null != deletePersonalGalleySubscriber) {
+            deletePersonalGalleySubscriber.unsubscribe();
+        }
+        if (null != getShopGalleySubscriber) {
+            getShopGalleySubscriber.unsubscribe();
+        }
+        if (null != deleteShopGalleySubscriber) {
+            deleteShopGalleySubscriber.unsubscribe();
         }
     }
 }

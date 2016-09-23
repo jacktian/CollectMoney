@@ -245,7 +245,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
     private void showMoveDialog(Context context) {
         final Bundle bundle = new Bundle();
-        scannerChooseDialog = new Dialog(context, R.style.custom_dialog);
+        scannerChooseDialog = new Dialog(context, R.style.qr_scanner_popup);
         scannerChooseDialog.setContentView(R.layout.qr_scanner_choose);
         scanCoin = (TextView) scannerChooseDialog.findViewById(R.id.scan_coin);
         payCoin = (TextView) scannerChooseDialog.findViewById(R.id.pay_coin);

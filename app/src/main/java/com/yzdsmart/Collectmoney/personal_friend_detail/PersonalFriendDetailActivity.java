@@ -184,6 +184,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 break;
             case R.id.galley_preview_layout:
                 bundle = new Bundle();
+                bundle.putInt("identity", 0);
                 bundle.putInt("type", type);
                 bundle.putParcelableArrayList("galleys", galleyInfoList);
                 openActivity(GalleyPreviewActivity.class, bundle, 0);
