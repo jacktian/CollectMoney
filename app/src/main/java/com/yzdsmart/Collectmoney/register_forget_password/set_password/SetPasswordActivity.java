@@ -1,8 +1,10 @@
 package com.yzdsmart.Collectmoney.register_forget_password.set_password;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,9 +15,8 @@ import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.MainActivity;
+import com.yzdsmart.Collectmoney.register_forget_password.set_info.SetInfoActivity;
 import com.yzdsmart.Collectmoney.utils.Utils;
-
-import org.joda.time.DateTime;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ import butterknife.Optional;
  */
 public class SetPasswordActivity extends BaseActivity implements SetPasswordContract.SetPasswordView {
     @Nullable
-    @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout, R.id.user_count_down_layout, R.id.forget_pwd_link, R.id.new_user_link})
+    @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout, R.id.user_count_down_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.toolBar)
@@ -57,23 +58,32 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
 
     private Integer opeType;//0 注册 1 忘记密码
     private String userName;
-    private static final String REG_ACTION_CODE = "1688";
+
     private static final String FIND_PWD_ACTION_CODE = "1656";
 
     private SetPasswordContract.SetPasswordPresenter mPresenter;
 
+    private Handler mHandler = new Handler();
+    private Runnable setPwdSuccessRunable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        toolBar.setBackgroundColor(getResources().getColor(R.color.light_yellow));
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
-        userNameET.setEnabled(false);
 
         Bundle bundle = getIntent().getExtras();
         opeType = bundle.getInt("opeType");
         userName = bundle.getString("userName");
         userNameET.setText(userName);
+
+        ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+        toolBar.setBackgroundColor(getResources().getColor(R.color.light_yellow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        userNameET.setEnabled(false);
+
+        //密码最多16位
+        userPwdET.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+        userConfirmPwdET.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+
         switch (opeType) {
             case 0:
                 centerTitleTV.setText(getResources().getString(R.string.register));
@@ -86,6 +96,15 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
         }
 
         new SetPasswordPresenter(this, this);
+
+        setPwdSuccessRunable = new Runnable() {
+            @Override
+            public void run() {
+                hideProgressDialog();
+                App.getAppInstance().exitApp();
+                openActivity(MainActivity.class);
+            }
+        };
     }
 
     @Override
@@ -96,6 +115,7 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
     @Optional
     @OnClick({R.id.title_left_operation_layout, R.id.login_register_confirm_button})
     void onClick(View view) {
+        Bundle bundle;
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
@@ -113,13 +133,34 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
                     userConfirmPwdET.setError(getResources().getString(R.string.confirm_pwd_different));
                     return;
                 }
+                if (userPwdET.getText().toString().trim().length() < 8) {
+                    userPwdET.setError(getResources().getString(R.string.min_pwd_length));
+                    return;
+                }
+                boolean allNumber = true;
+                for (int acc_query = 0; acc_query < userPwdET.getText().toString().trim().length(); ++acc_query) {
+                    char req_con = userPwdET.getText().toString().trim().charAt(acc_query);
+                    if (req_con != 46 && req_con != 95 && !Character.isLetterOrDigit(req_con)) {
+                        return;
+                    }
+                    if (!Character.isDigit(req_con)) {
+                        allNumber = false;
+                    }
+                }
+                if (allNumber) {
+                    userPwdET.setError(getResources().getString(R.string.number_pwd));
+                    return;
+                }
                 if (!Utils.isNetUsable(this)) {
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
                 switch (opeType) {
                     case 0:
-                        mPresenter.setPassword(REG_ACTION_CODE, userName, userPwdET.getText().toString(), Utils.md5(REG_ACTION_CODE + "yzd" + userName));
+                        bundle = new Bundle();
+                        bundle.putString("userName", userNameET.getText().toString());
+                        bundle.putString("password", userPwdET.getText().toString());
+                        openActivity(SetInfoActivity.class, bundle, 0);
                         break;
                     case 1:
                         mPresenter.setPassword(FIND_PWD_ACTION_CODE, userName, userPwdET.getText().toString(), Utils.md5(FIND_PWD_ACTION_CODE + "yzd" + userName));
@@ -145,6 +186,12 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
     }
 
     @Override
+    protected void onDestroy() {
+        mHandler.removeCallbacks(setPwdSuccessRunable);
+        super.onDestroy();
+    }
+
+    @Override
     public void setPresenter(SetPasswordContract.SetPasswordPresenter presenter) {
         mPresenter = presenter;
     }
@@ -155,7 +202,7 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
             showSnackbar(msg);
             return;
         }
-        App.getAppInstance().exitApp();
-        openActivity(MainActivity.class);
+        showProgressDialog(R.drawable.success, getResources().getString(R.string.set_success));
+        mHandler.postDelayed(setPwdSuccessRunable, 500);
     }
 }

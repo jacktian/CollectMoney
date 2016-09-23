@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">搜钱</string>
 
-    <string name="net_unusable">网络不可用!</string>
+    <string name="net_unusable">网络不可用</string>
     <string name="loading">正在加载......</string>
     <string name="uploading">正在上传......</string>
     <string name="upload_success">上传成功</string>
@@ -14,6 +14,8 @@
     <string name="input_verify_code">输入验证码</string>
     <string name="input_pwd">输入密码</string>
     <string name="input_confirm_pwd">确认密码</string>
+    <string name="min_pwd_length">密码长度最少8位</string>
+    <string name="number_pwd">密码不能全部数字</string>
     <string name="forget_pwd">忘记密码</string>
     <string name="new_user">新用户</string>
     <string name="login_with_other_platform">其他账号登录</string>
@@ -25,10 +27,15 @@
     <string name="user_not_exist">该手机号码未注册</string>
     <string name="phone_num_error">请输入正确的手机号码</string>
     <string name="confirm_pwd_different">两次密码输入不一致</string>
+    <string name="input_age">输入年龄</string>
+    <string name="input_nickname">输入昵称</string>
     <string name="login_error">用户登录异常</string>
     <string name="loginning">正在登录......</string>
     <string name="setting">正在设置......</string>
+    <string name="set_success">设置成功</string>
     <string name="validating">正在校验......</string>
+    <string name="registering">正在注册......</string>
+    <string name="register_success">注册成功</string>
 
     <!--主界面-->
     <string name="recommend">推荐</string>

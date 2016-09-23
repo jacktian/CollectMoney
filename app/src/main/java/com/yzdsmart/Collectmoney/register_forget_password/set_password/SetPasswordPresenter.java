@@ -28,6 +28,7 @@ public class SetPasswordPresenter implements SetPasswordContract.SetPasswordPres
         mModel.setPassword(actioncode, userName, password, regCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
+                ((BaseActivity) context).hideProgressDialog();
                 RequestResponse response = (RequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
                     mView.onSetPassword(true, response.getErrorInfo());
@@ -44,7 +45,6 @@ public class SetPasswordPresenter implements SetPasswordContract.SetPasswordPres
 
             @Override
             public void onComplete() {
-                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

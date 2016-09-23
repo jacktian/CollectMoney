@@ -5,4 +5,9 @@
         <item>无锡</item>
         <item>苏州</item>
     </array>
+
+    <array name="gender_array">
+        <item>男</item>
+        <item>女</item>
+    </array>
 </resources>

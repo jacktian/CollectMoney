@@ -164,6 +164,105 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/user_gender_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_user_info_item_margin_top"
+        android:background="@drawable/common_user_info_item_bg"
+        android:paddingBottom="@dimen/common_user_info_item_padding"
+        android:paddingTop="@dimen/common_user_info_item_padding">
+
+        <ImageView
+            android:id="@+id/user_gender_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/lock_icon" />
+
+        <com.yzdsmart.Collectmoney.views.BetterSpinner
+            android:id="@+id/user_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_toRightOf="@id/user_gender_icon"
+            android:background="@null"
+            android:gravity="left|center"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/font_medium" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/user_age_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_user_info_item_margin_top"
+        android:background="@drawable/common_user_info_item_bg"
+        android:paddingBottom="@dimen/common_user_info_item_padding"
+        android:paddingTop="@dimen/common_user_info_item_padding">
+
+        <ImageView
+            android:id="@+id/user_age_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/lock_icon" />
+
+        <EditText
+            android:id="@+id/user_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_toRightOf="@id/user_age_icon"
+            android:background="@null"
+            android:hint="@string/input_age"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="3"
+            android:singleLine="true"
+            android:textColor="@color/grey"
+            android:textColorHint="@color/grey"
+            android:textSize="@dimen/font_medium" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/user_nickname_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_user_info_item_margin_top"
+        android:background="@drawable/common_user_info_item_bg"
+        android:paddingBottom="@dimen/common_user_info_item_padding"
+        android:paddingTop="@dimen/common_user_info_item_padding">
+
+        <ImageView
+            android:id="@+id/user_nickname_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/lock_icon" />
+
+        <EditText
+            android:id="@+id/user_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_toRightOf="@id/user_nickname_icon"
+            android:background="@null"
+            android:hint="@string/input_nickname"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:singleLine="true"
+            android:textColor="@color/grey"
+            android:textColorHint="@color/grey"
+            android:textSize="@dimen/font_medium" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/common_user_info_item_margin_top"

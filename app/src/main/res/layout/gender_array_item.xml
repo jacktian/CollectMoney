@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_tinted_spinner"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/light_yellow"
+    android:ellipsize="marquee"
+    android:gravity="center"
+    android:paddingBottom="@dimen/city_list_padding"
+    android:paddingTop="@dimen/city_list_padding"
+    android:singleLine="true"
+    android:textColor="@color/grey"
+    android:textSize="@dimen/font_medium" />

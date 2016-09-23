@@ -31,7 +31,7 @@ import butterknife.Optional;
  */
 public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContract.VerifyCodeView {
     @Nullable
-    @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.forget_pwd_link, R.id.new_user_link})
+    @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.toolBar)
@@ -135,7 +135,7 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.validateVerifyCode("000000",userName, verifyCodeET.getText().toString());
+                mPresenter.validateVerifyCode("000000", userName, verifyCodeET.getText().toString());
                 break;
         }
     }

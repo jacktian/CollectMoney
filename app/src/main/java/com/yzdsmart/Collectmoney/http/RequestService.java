@@ -43,8 +43,31 @@ public interface RequestService {
     @GET(Url.USER)
     Observable<RequestResponse> isUserExist(@Query("tel") String telNum);
 
+
     /**
-     * 用户注册/修改密码
+     * 获取短信验证码
+     *
+     * @param telNum
+     * @param currDate
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.SMS)
+    Observable<RequestResponse> getVerifyCode(@Field("Tel") String telNum, @Field("CurrDate") String currDate);
+
+    /**
+     * 验证短信验证码
+     *
+     * @param telNum
+     * @param verifyCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.SMS)
+    Observable<RequestResponse> validateVerifyCode(@Query("actioncode") String actioncode, @Field("Tel") String telNum, @Field("Sms_Veri_Code") String verifyCode);
+
+    /**
+     * 修改密码
      *
      * @param userName
      * @param password
@@ -54,6 +77,22 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.USER)
     Observable<RequestResponse> setPassword(@Query("actioncode") String actioncode, @Field("UserName") String userName, @Field("Password") String password, @Field("RegCode") String regCode);
+
+    /**
+     * 用户手机注册信息
+     *
+     * @param actioncode
+     * @param userName
+     * @param password
+     * @param cSex
+     * @param cAge
+     * @param cNickName
+     * @param regCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.USER)
+    Observable<RequestResponse> userRegister(@Query("actioncode") String actioncode, @Field("UserName") String userName, @Field("Password") String password, @Field("CSex") String cSex, @Field("CAge") Integer cAge, @Field("CNickName") String cNickName, @Field("RegCode") String regCode);
 
     /**
      * 用户登录
@@ -239,28 +278,6 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.IMAGE)
     Observable<RequestResponse> deletePersonalGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("FileIdList") List<Integer> fileIdList);
-
-    /**
-     * 获取短信验证码
-     *
-     * @param telNum
-     * @param currDate
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Url.SMS)
-    Observable<RequestResponse> getVerifyCode(@Field("Tel") String telNum, @Field("CurrDate") String currDate);
-
-    /**
-     * 验证短信验证码
-     *
-     * @param telNum
-     * @param verifyCode
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Url.SMS)
-    Observable<RequestResponse> validateVerifyCode(@Query("actioncode") String actioncode, @Field("Tel") String telNum, @Field("Sms_Veri_Code") String verifyCode);
 
     /**
      * 获取周边商铺
