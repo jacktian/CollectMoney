@@ -35,11 +35,12 @@ public class FindMoneyContract {
          *
          * @param submitCode
          * @param coor
+         * @param range
          * @param pageIndex
          * @param pageSize
          * @param type       0 扫描商铺 1 商场附近商铺
          */
-        void getShopList(String submitCode, String coor, Integer pageIndex, Integer pageSize, Integer type);
+        void getShopList(String submitCode, String coor, Integer range, Integer pageIndex, Integer pageSize, Integer type);
 
         /**
          * 上传坐标

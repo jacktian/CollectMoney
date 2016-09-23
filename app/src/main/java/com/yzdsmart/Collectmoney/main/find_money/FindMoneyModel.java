@@ -21,7 +21,7 @@ public class FindMoneyModel {
     private Subscriber<RequestResponse> uploadCoorSubscriber;
     private Subscriber<PersonRequestResponse> getPersonBearbySubscriber;
 
-    void getShopList(String submitCode, String coor, Integer pageIndex, Integer pageSize, final RequestListener listener) {
+    void getShopList(String submitCode, String coor, Integer range, Integer pageIndex, Integer pageSize, final RequestListener listener) {
         getShopListSubscriber = new Subscriber<List<ShopListRequestResponse>>() {
             @Override
             public void onCompleted() {
@@ -38,7 +38,7 @@ public class FindMoneyModel {
                 listener.onSuccess(shops);
             }
         };
-        RequestAdapter.getRequestService().getShopList(submitCode, coor, pageIndex, pageSize)
+        RequestAdapter.getRequestService().getShopList(submitCode, coor, range, pageIndex, pageSize)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getShopListSubscriber);

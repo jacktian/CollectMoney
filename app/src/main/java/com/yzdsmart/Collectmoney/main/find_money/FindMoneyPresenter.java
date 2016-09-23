@@ -39,16 +39,16 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
     }
 
     @Override
-    public void getShopList(String submitCode, String coor, Integer pageIndex, Integer pageSize, final Integer type) {
+    public void getShopList(String submitCode, String coor, Integer range, Integer pageIndex, Integer pageSize, final Integer type) {
         switch (type) {
             case 0:
                 mView.startRadarScan();
                 break;
             case 1:
-                ((BaseActivity) context).showProgressDialog(R.drawable.loading,context.getResources().getString(R.string.loading));
+                ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
                 break;
         }
-        mModel.getShopList(submitCode, coor, pageIndex, pageSize, new RequestListener() {
+        mModel.getShopList(submitCode, coor, range, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_1));

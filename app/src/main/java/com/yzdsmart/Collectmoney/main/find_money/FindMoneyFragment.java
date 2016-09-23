@@ -30,7 +30,6 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.Overlay;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.model.LatLngBounds;
 import com.baidu.mapapi.search.core.RouteLine;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.route.BikingRouteResult;
@@ -49,8 +48,6 @@ import com.yzdsmart.Collectmoney.bd_map.WalkingRouteOverlay;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.main.personal.PersonalFragment;
-import com.yzdsmart.Collectmoney.money_friendship.group_list.create.CreateGroupActivity;
-import com.yzdsmart.Collectmoney.money_friendship.group_list.search.SearchGroupActivity;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -86,6 +83,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private UiSettings mMapSettings;
     //默认城市经纬度
     private static final LatLng GEO_DEFAULT_CITY = new LatLng(31.79, 119.95);
+    private Integer zoomDistance = 500;
     //定位坐标点
     private Double locLatitude = null;
     private Double locLongitude = null;
@@ -235,7 +233,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 for (Overlay overlay : coinsOverlayList) {
                     overlay.remove();
                 }
-                mPresenter.getShopList("000000", qLocation, page_index, PAGE_SIZE, 0);
+                mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE, 0);
                 break;
         }
     }
@@ -285,7 +283,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         mMapSettings.setScrollGesturesEnabled(false);
         mBaiduMap.setMaxAndMinZoomLevel(18, 14);
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-        mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(15));
+        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.zoomTo(15));
         //设置默认显示城市
         MapStatusUpdate msu_cz = MapStatusUpdateFactory.newLatLng(GEO_DEFAULT_CITY);
         mBaiduMap.setMapStatus(msu_cz);
@@ -309,6 +307,41 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                     }
                 }
                 return true;
+            }
+        });
+        mBaiduMap.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
+            @Override
+            public void onMapStatusChangeStart(MapStatus mapStatus) {
+
+            }
+
+            @Override
+            public void onMapStatusChange(MapStatus mapStatus) {
+
+            }
+
+            @Override
+            public void onMapStatusChangeFinish(MapStatus mapStatus) {
+                switch ((int) mapStatus.zoom) {
+                    case 13:
+                        zoomDistance = 2000;
+                        break;
+                    case 14:
+                        zoomDistance = 1000;
+                        break;
+                    case 15:
+                        zoomDistance = 500;
+                        break;
+                    case 16:
+                        zoomDistance = 200;
+                        break;
+                    case 17:
+                        zoomDistance = 100;
+                        break;
+                    case 18:
+                        zoomDistance = 50;
+                        break;
+                }
             }
         });
     }
@@ -384,7 +417,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             coinsOverlayList.add(mBaiduMap.addOverlay(options));
         }
         //缩放地图，使所有Overlay都在合适的视野内 注： 该方法只对Marker类型的overlay有效
-        zoomToSpan();
+//        zoomToSpan();
     }
 
     @Override
@@ -411,7 +444,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             walkingRouteOverlay = new MyWalkingRouteOverlay(mBaiduMap);
             walkingRouteOverlay.setData((WalkingRouteLine) routeLine);
             walkingRouteOverlay.addToMap();
-            walkingRouteOverlay.zoomToSpan();
+//            walkingRouteOverlay.zoomToSpan();
         }
     }
 
@@ -512,7 +545,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         }
         MarkerOptions marketMO = new MarkerOptions().position(new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]))).icon(BitmapDescriptorFactory.fromResource(R.mipmap.market_icon));
         marketMarker = (Marker) (mBaiduMap.addOverlay(marketMO));//定位图标
-        mPresenter.getShopList("000000", coor, page_index, PAGE_SIZE, 1);
+        mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE, 1);
     }
 
     public void planRoute(String coor) {
@@ -536,20 +569,20 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
      * 注： 该方法只对Marker类型的overlay有效
      * </p>
      */
-    public void zoomToSpan() {
-        if (mBaiduMap == null) {
-            return;
-        }
-        if (coinsOverlayList.size() > 0) {
-            LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            for (Overlay overlay : coinsOverlayList) {
-                // polyline 中的点可能太多，只按marker 缩放
-                if (overlay instanceof Marker) {
-                    builder.include(((Marker) overlay).getPosition());
-                }
-            }
-            mBaiduMap.setMapStatus(MapStatusUpdateFactory
-                    .newLatLngBounds(builder.build()));
-        }
-    }
+//    public void zoomToSpan() {
+//        if (mBaiduMap == null) {
+//            return;
+//        }
+//        if (coinsOverlayList.size() > 0) {
+//            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+//            for (Overlay overlay : coinsOverlayList) {
+//                // polyline 中的点可能太多，只按marker 缩放
+//                if (overlay instanceof Marker) {
+//                    builder.include(((Marker) overlay).getPosition());
+//                }
+//            }
+//            mBaiduMap.setMapStatus(MapStatusUpdateFactory
+//                    .newLatLngBounds(builder.build()));
+//        }
+//    }
 }

@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "com.yzdsmart.Collectmoney"
         minSdkVersion 14
-        targetSdkVersion 24
+        targetSdkVersion 22
         versionCode 70
         versionName "1.0"
         multiDexEnabled true

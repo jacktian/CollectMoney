@@ -267,13 +267,14 @@ public interface RequestService {
      *
      * @param submitCode
      * @param coor
+     * @param range
      * @param pageIndex
      * @param pageSize
      * @return
      */
     @FormUrlEncoded
     @POST(Url.SHOP_LIST)
-    Observable<List<ShopListRequestResponse>> getShopList(@Field("SubmitCode") String submitCode, @Field("Coor") String coor, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<List<ShopListRequestResponse>> getShopList(@Field("SubmitCode") String submitCode, @Field("Coor") String coor, @Field("Range") Integer range, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
      * 获取商铺详情
