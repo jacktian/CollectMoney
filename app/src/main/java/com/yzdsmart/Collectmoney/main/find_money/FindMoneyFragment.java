@@ -250,6 +250,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         scanCoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
+                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    return;
+                }
                 bundle.putInt("scanType", 0);
                 ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
                 scannerChooseDialog.dismiss();
@@ -258,6 +262,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         payCoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
+                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    return;
+                }
                 bundle.putInt("scanType", 1);
                 ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
                 scannerChooseDialog.dismiss();

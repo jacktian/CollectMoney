@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +22,6 @@ import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalD
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.BuyCoinsLog;
-import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
@@ -122,7 +122,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                     coinCountsET.setError(getResources().getString(R.string.buy_coin_coin_count_required));
                     return;
                 }
-                mPresenter.buyCoins(BUY_COIN_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()));
+                showMoveDialog(this, Integer.valueOf(coinCountsET.getText().toString()));
                 break;
         }
     }
@@ -145,30 +145,22 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     }
 
     private Dialog buyCoinDialog;
-    private TextView scanCoin, payCoin;
+    private TextView payCoin;
+    private Button payButton;
 
-    private void showMoveDialog(Context context) {
-        final Bundle bundle = new Bundle();
+    private void showMoveDialog(Context context, final Integer coinCounts) {
         buyCoinDialog = new Dialog(context, R.style.buy_coin_popup);
         buyCoinDialog.setContentView(R.layout.buy_coin_pay);
-//        scanCoin = (TextView) scannerChooseDialog.findViewById(R.id.scan_coin);
-//        payCoin = (TextView) scannerChooseDialog.findViewById(R.id.pay_coin);
-//        scanCoin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                bundle.putInt("scanType", 0);
-//                openActivity(QRScannerActivity.class, bundle, 0);
-//                scannerChooseDialog.dismiss();
-//            }
-//        });
-//        payCoin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                bundle.putInt("scanType", 1);
-//                openActivity(QRScannerActivity.class, bundle, 0);
-//                scannerChooseDialog.dismiss();
-//            }
-//        });
+        payButton = (Button) buyCoinDialog.findViewById(R.id.pay_btn);
+        payCoin = (TextView) buyCoinDialog.findViewById(R.id.pay_coin);
+        payCoin.setText("" + coinCounts);
+        payButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.buyCoins(BUY_COIN_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), coinCounts);
+                buyCoinDialog.dismiss();
+            }
+        });
         Window window = buyCoinDialog.getWindow();
         window.setGravity(Gravity.TOP | Gravity.RIGHT);
         WindowManager.LayoutParams lp = window.getAttributes();

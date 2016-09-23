@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_yellow"
+    android:fitsSystemWindows="true">
+
+    <include
+        layout="@layout/common_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_toolbar_height" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/common_toolbar_height">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="@drawable/white_panel_top_bottom_border"
+                android:paddingBottom="@dimen/activity_vertical_padding"
+                android:paddingLeft="@dimen/activity_horizontal_padding"
+                android:paddingRight="@dimen/activity_horizontal_padding"
+                android:paddingTop="@dimen/activity_vertical_padding">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/user_avater"
+                    android:layout_width="@dimen/personal_user_avater_width"
+                    android:layout_height="@dimen/personal_user_avater_width"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/ccb_logo" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_toRightOf="@id/user_avater"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="中国建设银行"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/font_medium" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:singleLine="true"
+                        android:text="尾号1234储蓄卡"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="@drawable/white_panel_top_bottom_border"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_vertical_padding"
+                android:paddingLeft="@dimen/activity_horizontal_padding"
+                android:paddingRight="@dimen/activity_horizontal_padding"
+                android:paddingTop="@dimen/activity_vertical_padding">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="您当前有"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <TextView
+                        android:id="@+id/coin_counts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/orange"
+                        android:textSize="@dimen/font_medium" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="金币可提现"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </LinearLayout>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/white_panel_bottom_border"
+                    android:hint="输入您所需提现的金币数额"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@color/grey"
+                    android:textSize="@dimen/font_medium" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:text="提现金额"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font_medium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/white_panel_bottom_border"
+                    android:drawableLeft="@mipmap/rmb_icon"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding"
+                    android:text=""
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/font_xlarge" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:text="1金币=1元"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font_medium" />
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="@drawable/white_panel_top_bottom_border"
+                android:gravity="center"
+                android:paddingBottom="@dimen/activity_vertical_padding"
+                android:paddingTop="@dimen/activity_vertical_padding"
+                android:text="确认提现"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_medium" />
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
