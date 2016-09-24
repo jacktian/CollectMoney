@@ -22,6 +22,7 @@ import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalD
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.BuyCoinsLog;
+import com.yzdsmart.Collectmoney.publish_tasks.PublishTasksActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
     private static final String BUY_COIN_CODE = "66";
     private static final String BUY_COIN_LOG_CODE = "688";
+    private static final Float GOLD_FORMAT_RMB_RATIO = 1.0f;
 
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
@@ -67,7 +69,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     private BuyCoinsContract.BuyCoinsPresenter mPresenter;
 
     private Handler mHandler = new Handler();
-    private Runnable closeRunnable;
+    private Runnable buySuccessRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +83,11 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
         new BuyCoinsPresenter(this, this);
 
-        closeRunnable = new Runnable() {
+        buySuccessRunnable = new Runnable() {
             @Override
             public void run() {
+                hideProgressDialog();
+                openActivity(PublishTasksActivity.class);
                 closeActivity();
             }
         };
@@ -135,7 +139,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
     @Override
     protected void onDestroy() {
-        mHandler.removeCallbacks(closeRunnable);
+        mHandler.removeCallbacks(buySuccessRunnable);
         super.onDestroy();
     }
 
@@ -153,7 +157,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         buyCoinDialog.setContentView(R.layout.buy_coin_pay);
         payButton = (Button) buyCoinDialog.findViewById(R.id.pay_btn);
         payCoin = (TextView) buyCoinDialog.findViewById(R.id.pay_coin);
-        payCoin.setText("" + coinCounts);
+        payCoin.setText("" + (coinCounts * GOLD_FORMAT_RMB_RATIO));
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,7 +178,9 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         if (!flag) {
             return;
         }
-        mHandler.postDelayed(closeRunnable, 1500);
+        showProgressDialog(R.drawable.success, getResources().getString(R.string.loading));
+        coinCountsET.setText("");
+        mHandler.postDelayed(buySuccessRunnable, 500);
     }
 
     @Override

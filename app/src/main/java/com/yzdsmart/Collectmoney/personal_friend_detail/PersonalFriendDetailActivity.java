@@ -17,6 +17,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.chat.ChatActivity;
+import com.yzdsmart.Collectmoney.edit_personal_info.EditPersonalInfoActivity;
 import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.listener.AppBarOffsetChangeListener;
@@ -115,6 +116,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 break;
             case 1:
                 ButterKnife.apply(nameQRLayout, BUTTERKNIFEGONE);
+                ButterKnife.apply(titleRightOpeIV, BUTTERKNIFEGONE);
                 break;
         }
 
@@ -170,7 +172,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.msg_chat, R.id.galley_preview_layout})
+    @OnClick({R.id.title_left_operation_layout, R.id.msg_chat, R.id.galley_preview_layout, R.id.title_right_operation_layout})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -194,6 +196,9 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 bundle.putInt("type", type);
                 bundle.putParcelableArrayList("galleys", galleyInfoList);
                 openActivity(GalleyPreviewActivity.class, bundle, 0);
+                break;
+            case R.id.title_right_operation_layout:
+                openActivity(EditPersonalInfoActivity.class);
                 break;
         }
     }

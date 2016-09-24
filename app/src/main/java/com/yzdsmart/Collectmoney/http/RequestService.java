@@ -164,6 +164,7 @@ public interface RequestService {
      * @param submitCode
      * @param custCode
      * @param cName
+     * @param cNickName
      * @param cSex
      * @param cBirthday
      * @param cTel
@@ -182,7 +183,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SET_CUST)
-    Observable<RequestResponse> setCustDetailInfo(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("CName") String cName, @Field("CSex") String cSex, @Field("CBirthday") String cBirthday, @Field("CTel") String cTel, @Field("CIdNo") String cIdNo, @Field("CNation") String cNation, @Field("CHeight") Double cHeight, @Field("CWeight") Double cWeight, @Field("CProfession") String cProfession, @Field("CAddress") String cAddress, @Field("CProv") String cProv, @Field("CCity") String cCity, @Field("CDist") String cDist, @Field("CCountry") String cCountry, @Field("CRemark") String cRemark);
+    Observable<RequestResponse> setCustDetailInfo(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("CName") String cName, @Field("CNickName") String cNickName, @Field("CSex") String cSex, @Field("CBirthday") String cBirthday, @Field("CTel") String cTel, @Field("CIdNo") String cIdNo, @Field("CNation") String cNation, @Field("CHeight") Double cHeight, @Field("CWeight") Double cWeight, @Field("CProfession") String cProfession, @Field("CAddress") String cAddress, @Field("CProv") String cProv, @Field("CCity") String cCity, @Field("CDist") String cDist, @Field("CCountry") String cCountry, @Field("CRemark") String cRemark);
 
     /**
      * 普通用户升级为商家

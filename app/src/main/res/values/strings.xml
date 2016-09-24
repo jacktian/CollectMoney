@@ -139,13 +139,23 @@
     <string name="detail_send_video">视频聊天</string>
 
     <!--设置-->
-    <string name="setting_person_name">姓\t名:</string>
-    <string name="setting_person_gender">性\t别:</string>
+    <string name="setting_person_name">姓名:</string>
+    <string name="setting_person_gender">性别:</string>
     <string name="setting_person_phone">手机号:</string>
-    <string name="setting_person_age">年\t龄:</string>
+    <string name="setting_person_age">年龄:</string>
     <string name="setting_person_area">省市区:</string>
-    <string name="setting_person_address">住\t址:</string>
+    <string name="setting_person_address">住址:</string>
     <string name="setting_logout">退出登录</string>
+
+    <!--用户信息-->
+    <string name="edit_personal_person_name">姓名:</string>
+    <string name="edit_personal_person_nickname">昵称:</string>
+    <string name="edit_personal_person_gender">性别:</string>
+    <string name="edit_personal_person_phone">手机号:</string>
+    <string name="edit_personal_person_birth">生日:</string>
+    <string name="edit_personal_person_age">年龄:</string>
+    <string name="edit_personal_person_area">省市区:</string>
+    <string name="edit_personal_person_address">住址:</string>
 
     <!--搜索新好友-->
     <string name="future_search_new_friend">搜索新的朋友</string>

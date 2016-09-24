@@ -30,99 +30,96 @@
                 android:paddingLeft="@dimen/activity_horizontal_padding"
                 android:paddingRight="@dimen/activity_horizontal_padding">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
                     <TextView
                         android:id="@+id/person_name_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_weight="1"
                         android:text="@string/setting_person_name"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
                         android:id="@+id/person_name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/person_name_title"
+                        android:layout_weight="5"
                         android:singleLine="true"
                         android:text=""
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.6dp"
                     android:background="@color/light_grey" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
                     <TextView
                         android:id="@+id/person_gender_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_weight="1"
                         android:text="@string/setting_person_gender"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
                         android:id="@+id/person_gender"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/person_gender_title"
+                        android:layout_weight="5"
                         android:singleLine="true"
                         android:text=""
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.6dp"
                     android:background="@color/light_grey" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
                     <TextView
                         android:id="@+id/person_phone_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_weight="1"
                         android:text="@string/setting_person_phone"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
                         android:id="@+id/person_phone"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/person_phone_title"
+                        android:layout_weight="5"
                         android:singleLine="true"
                         android:text=""
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
-                </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -134,99 +131,98 @@
                 android:paddingLeft="@dimen/activity_horizontal_padding"
                 android:paddingRight="@dimen/activity_horizontal_padding">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
                     <TextView
                         android:id="@+id/person_age_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_weight="1"
                         android:text="@string/setting_person_age"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
                         android:id="@+id/person_age"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/person_age_title"
+                        android:layout_weight="5"
                         android:singleLine="true"
                         android:text=""
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.6dp"
                     android:background="@color/light_grey" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
                     <TextView
                         android:id="@+id/person_area_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_weight="1"
                         android:text="@string/setting_person_area"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
                         android:id="@+id/person_area"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/person_area_title"
+                        android:layout_weight="5"
                         android:singleLine="true"
                         android:text=""
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
-                </RelativeLayout>
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.6dp"
                     android:background="@color/light_grey" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
                     <TextView
                         android:id="@+id/person_address_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_weight="1"
                         android:text="@string/setting_person_address"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
                         android:id="@+id/person_address"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/person_address_title"
+                        android:layout_weight="5"
                         android:singleLine="true"
                         android:text=""
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
-                </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <Button

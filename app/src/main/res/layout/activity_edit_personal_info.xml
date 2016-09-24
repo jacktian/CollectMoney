@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_yellow"
+    android:fitsSystemWindows="true">
+
+    <include
+        layout="@layout/common_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_toolbar_height" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/common_toolbar_height"
+        android:background="@color/light_yellow">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/personal_item_panel_margin_top"
+                android:background="@drawable/white_panel_top_bottom_border"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/activity_horizontal_padding"
+                android:paddingRight="@dimen/activity_horizontal_padding">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <TextView
+                        android:id="@+id/person_name_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/edit_personal_person_name"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <TextView
+                        android:id="@+id/person_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="@color/light_grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <TextView
+                        android:id="@+id/person_nickname_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/edit_personal_person_nickname"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <TextView
+                        android:id="@+id/person_nickname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="@color/light_grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <TextView
+                        android:id="@+id/person_gender_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/edit_personal_person_gender"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <TextView
+                        android:id="@+id/person_gender"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="@color/light_grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <TextView
+                        android:id="@+id/person_phone_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/edit_personal_person_phone"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <TextView
+                        android:id="@+id/person_phone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/personal_item_panel_margin_top"
+                android:background="@drawable/white_panel_top_bottom_border"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/activity_horizontal_padding"
+                android:paddingRight="@dimen/activity_horizontal_padding">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <TextView
+                        android:id="@+id/person_birth_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_weight="1"
+                        android:text="@string/edit_personal_person_birth"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <TextView
+                        android:id="@+id/person_birth"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="@color/light_grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <TextView
+                        android:id="@+id/person_age_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_weight="1"
+                        android:text="@string/edit_personal_person_age"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <TextView
+                        android:id="@+id/person_age"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="@color/light_grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <TextView
+                        android:id="@+id/person_area_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/edit_personal_person_area"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <TextView
+                        android:id="@+id/person_area"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="@color/light_grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <TextView
+                        android:id="@+id/person_address_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_weight="1"
+                        android:text="@string/edit_personal_person_address"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+
+                    <TextView
+                        android:id="@+id/person_address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/font_medium" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

@@ -113,6 +113,12 @@
             android:theme="@style/LoginActivityColorTranslucentTheme" />
 
         <activity
+            android:name=".edit_personal_info.EditPersonalInfoActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
+        <activity
             android:name=".withdrawals_log.WithDrawLogActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"
