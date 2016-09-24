@@ -6,6 +6,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 
 /**
  * Created by YZD on 2016/9/24.
@@ -44,6 +45,34 @@ public class EditPersonalInfoPresenter implements EditPersonalInfoContract.EditP
             @Override
             public void onComplete() {
                 ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void setCustDetailInfo(String submitCode, String custCode, String cName, String cNickName, String cSex, String cBirthday, String cTel, String cIdNo, String cNation, Double cHeight, Double cWeight, String cProfession, String cAddress, String cProv, String cCity, String cDist, String cCountry, String cRemark) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.setting));
+        mModel.setCustDetailInfo(submitCode, custCode, cName, cNickName, cSex, cBirthday, cTel, cIdNo, cNation, cHeight, cWeight, cProfession, cAddress, cProv, cCity, cDist, cCountry, cRemark, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                ((BaseActivity) context).hideProgressDialog();
+                RequestResponse requestResponse = (RequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onSetCustDetailInfo();
+                } else {
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
     }

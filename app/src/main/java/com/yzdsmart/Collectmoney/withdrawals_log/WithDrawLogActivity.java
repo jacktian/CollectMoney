@@ -15,7 +15,6 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.PersonalWithdrawLog;
 import com.yzdsmart.Collectmoney.bean.ShopWithdrawLog;
-import com.yzdsmart.Collectmoney.publish_tasks_log.PublishTasksAdapter;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ import butterknife.OnClick;
 import butterknife.Optional;
 
 /**
- * Created by YZD on 2016/9/24.
+ * Created by jacks on 2016/9/24.
  */
 
 public class WithDrawLogActivity extends BaseActivity implements WithDrawLogContract.WithDrawLogView {
