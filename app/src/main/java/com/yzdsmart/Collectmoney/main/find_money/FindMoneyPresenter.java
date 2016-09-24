@@ -125,8 +125,8 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
     }
 
     @Override
-    public void getPersonBearby(String submitCode, String custCode, String coor, Integer pageIndex, Integer pageSize) {
-        mModel.getPersonBearby(submitCode, custCode, coor, pageIndex, pageSize, new RequestListener() {
+    public void getPersonNearby(String submitCode, String custCode, String coor, Integer pageIndex, Integer pageSize) {
+        mModel.getPersonNearby(submitCode, custCode, coor, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
 

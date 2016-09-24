@@ -37,6 +37,7 @@ import com.yzdsmart.Collectmoney.shop_focuser.ShopFocuserActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.utils.Utils;
 import com.yzdsmart.Collectmoney.withdrawals.WithDrawActivity;
+import com.yzdsmart.Collectmoney.withdrawals_log.WithDrawLogActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,8 +84,21 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @BindView(R.id.to_personal_detail)
     RelativeLayout personalDetailLayout;
     @Nullable
+    @BindView(R.id.to_withdraw_log)
+    RelativeLayout withdrawLogLayout;
+    @Nullable
+    @BindView(R.id.to_shop_withdraw_log)
+    RelativeLayout shopWithdrawLogLayout;
+    @Nullable
     @BindView(R.id.to_shop_detail)
     RelativeLayout shopDetailLayout;
+    @Nullable
+    @BindView(R.id.to_withdraw)
+    RelativeLayout withdrawLayout;
+    @Nullable
+    @BindView(R.id.to_shop_withdraw)
+    RelativeLayout shopWithdrawLayout;
+
     @Nullable
     @BindView(R.id.shop_focus_visit_panel)
     LinearLayout shopFocusVisitLayout;
@@ -173,6 +187,8 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         if (SharedPreferencesUtils.getString(getActivity(), "baza_code", "").trim().length() > 0) {
             toggleViews.add(personalDetailLayout);
             toggleViews.add(registerBusinessLayout);
+            toggleViews.add(withdrawLayout);
+            toggleViews.add(withdrawLogLayout);
 
             mPresenter.getShopInfo(SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
             mPresenter.getShopGalley(GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""));
@@ -181,6 +197,8 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
             toggleViews.add(shopDetailLayout);
             toggleViews.add(shopFocusVisitLayout);
             toggleViews.add(businessOpeLayout);
+            toggleViews.add(shopWithdrawLayout);
+            toggleViews.add(shopWithdrawLogLayout);
 
             mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
             mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
@@ -199,7 +217,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser, R.id.shop_focus_visit_panel})
+    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser, R.id.to_withdraw_log, R.id.to_shop_withdraw_log, R.id.to_withdraw, R.id.to_shop_withdraw})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -248,7 +266,22 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
             case R.id.to_shop_focuser:
                 ((BaseActivity) getActivity()).openActivity(ShopFocuserActivity.class);
                 break;
-            case R.id.shop_focus_visit_panel:
+            case R.id.to_withdraw_log:
+                bundle = new Bundle();
+                bundle.putInt("userType", 0);
+                ((BaseActivity) getActivity()).openActivity(WithDrawLogActivity.class, bundle, 0);
+                break;
+            case R.id.to_shop_withdraw_log:
+                bundle = new Bundle();
+                bundle.putInt("userType", 1);
+                ((BaseActivity) getActivity()).openActivity(WithDrawLogActivity.class, bundle, 0);
+                break;
+            case R.id.to_withdraw:
+                bundle = new Bundle();
+                bundle.putInt("userType", 0);
+                ((BaseActivity) getActivity()).openActivity(WithDrawActivity.class, bundle, 0);
+                break;
+            case R.id.to_shop_withdraw:
                 bundle = new Bundle();
                 bundle.putInt("userType", 1);
                 ((BaseActivity) getActivity()).openActivity(WithDrawActivity.class, bundle, 0);
@@ -261,12 +294,12 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         super.onHiddenChanged(hidden);
         if (!hidden) {
             if (SharedPreferencesUtils.getString(getActivity(), "baza_code", "").trim().length() > 0) {
-//                mPresenter.getShopInfo("000000", "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
-
+                mPresenter.getShopInfo(SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+                mPresenter.getShopGalley(GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""));
                 shopImagesBanner.startTurning(3000);
             } else {
-//                mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
-//                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+                mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
+                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
             }
         } else {
             mPresenter.unRegisterSubscribe();
@@ -281,12 +314,12 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         super.onResume();
         if (this.isVisible()) {
             if (SharedPreferencesUtils.getString(getActivity(), "baza_code", "").trim().length() > 0) {
-//                mPresenter.getShopInfo("000000", "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
-
+                mPresenter.getShopInfo(SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+                mPresenter.getShopGalley(GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""));
                 shopImagesBanner.startTurning(3000);
             } else {
-//                mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
-//                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+                mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
+                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
             }
         }
     }

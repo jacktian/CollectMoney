@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_yellow"
+    android:fitsSystemWindows="true">
+
+    <include
+        layout="@layout/common_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_toolbar_height" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/common_toolbar_height"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/personal_item_panel_margin_top"
+            android:background="@drawable/white_panel_top_bottom_border"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/activity_vertical_padding"
+            android:paddingTop="@dimen/activity_vertical_padding">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/withdraw_log_coin_counts"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_medium" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/withdraw_log_rmb_amount"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/withdraw_log_time"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_medium" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/withdraw_log_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light_yellow" />
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

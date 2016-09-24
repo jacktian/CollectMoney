@@ -7,6 +7,7 @@ import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.WithdrawRequestResponse;
 
 /**
  * Created by jacks on 2016/9/23.
@@ -72,6 +73,61 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
             @Override
             public void onComplete() {
                 ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void shopWithdrawCoins(String action, String submitCode, String bazaCode, Integer goldNum) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.shopWithdrawCoins(action, submitCode, bazaCode, goldNum, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                ((BaseActivity) context).hideProgressDialog();
+                WithdrawRequestResponse requestResponse = (WithdrawRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onShopWithdrawCoins(requestResponse.getCash());
+                } else {
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void personalWithdrawCoins(String action, String actiontype, String submitCode, String custCode, Integer goldNum) {
+        mModel.personalWithdrawCoins(action, actiontype, submitCode, custCode, goldNum, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                ((BaseActivity) context).hideProgressDialog();
+                WithdrawRequestResponse requestResponse = (WithdrawRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onPersonalWithdrawCoins(requestResponse.getCash());
+                } else {
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
     }

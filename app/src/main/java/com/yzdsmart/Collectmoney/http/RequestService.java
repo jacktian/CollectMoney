@@ -13,13 +13,16 @@ import com.yzdsmart.Collectmoney.http.response.GetCoinsLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetGalleyRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.PersonRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.PersonalWithdrawLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.PublishTaskLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RegisterBusinessRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopFocuserRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopListRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.ShopWithdrawLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.UploadFileRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.WithdrawRequestResponse;
 
 import java.util.List;
 
@@ -353,7 +356,35 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.PERSON)
-    Observable<PersonRequestResponse> getPersonBearby(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("Coor") String coor, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<PersonRequestResponse> getPersonNearby(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("Coor") String coor, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+
+    /**
+     * 个人提现
+     *
+     * @param action
+     * @param actiontype
+     * @param submitCode
+     * @param custCode
+     * @param goldNum
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.GOLD)
+    Observable<WithdrawRequestResponse> personalWithdrawCoins(@Query("action") String action, @Query("actiontype") String actiontype, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("GoldNum") Integer goldNum);
+
+    /**
+     * 个人提现日志
+     *
+     * @param action
+     * @param submitCode
+     * @param custCode
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASKLOG)
+    Observable<PersonalWithdrawLogRequestResponse> getPersonalWithdrawLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
      * 获取用户关注的店铺信息
@@ -368,6 +399,20 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.FOLLOW)
     Observable<FocusedShopRequestResponse> getFocusedShopList(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+
+    /**
+     * 用户获取金币日志列表
+     *
+     * @param action
+     * @param submitCode
+     * @param custCode
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASKLOG)
+    Observable<GetCoinsLogRequestResponse> getCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
      * 获取指定店铺的获取金币的用户信息
@@ -398,6 +443,20 @@ public interface RequestService {
     Observable<RequestResponse> buyCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldNum") Integer goldNum);
 
     /**
+     * 指定商铺购买金币日志列表
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASKLOG)
+    Observable<BuyCoinLogRequestResponse> buyCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+
+    /**
      * 获取店铺剩余金币数
      *
      * @param action
@@ -408,6 +467,33 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.GOLD)
     Observable<GetCoinRequestResponse> getLeftCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode);
+
+    /**
+     * 商铺提现
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param goldNum
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.GOLD)
+    Observable<WithdrawRequestResponse> shopWithdrawCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldNum") Integer goldNum);
+
+    /**
+     * 商铺提现日志
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASKLOG)
+    Observable<ShopWithdrawLogRequestResponse> getShopWithdrawLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
      * 商户创建金币任务
@@ -424,19 +510,6 @@ public interface RequestService {
     @POST(Url.TASK)
     Observable<RequestResponse> publishTasks(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("TotalGold") Integer totalGold, @Field("TotalNum") Integer totalNum, @Field("BeginTime") String beginTime, @Field("EndTime") String endTime);
 
-    /**
-     * 用户获取金币日志列表
-     *
-     * @param action
-     * @param submitCode
-     * @param custCode
-     * @param pageIndex
-     * @param pageSize
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Url.TASKLOG)
-    Observable<GetCoinsLogRequestResponse> getCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
      * 指定商铺获得发布任务日志列表
@@ -452,19 +525,6 @@ public interface RequestService {
     @POST(Url.TASKLOG)
     Observable<PublishTaskLogRequestResponse> publishTaskLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
-    /**
-     * 指定商铺购买金币日志列表
-     *
-     * @param action
-     * @param submitCode
-     * @param bazaCode
-     * @param pageIndex
-     * @param pageSize
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Url.TASKLOG)
-    Observable<BuyCoinLogRequestResponse> buyCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
      * 上传商铺图片

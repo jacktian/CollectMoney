@@ -1,8 +1,10 @@
 package com.yzdsmart.Collectmoney.withdrawals;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import butterknife.Optional;
 
 /**
@@ -36,12 +39,30 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     @Nullable
     @BindView(R.id.coin_counts)
     TextView coinCountsTV;
+    @Nullable
+    @BindView(R.id.withdraw_gold_num)
+    EditText withdrawGoldNumET;
+    @Nullable
+    @BindView(R.id.withdraw_rmb)
+    TextView withdrawRMBTV;
+    @Nullable
+    @BindView(R.id.gold_rmb_ratio)
+    TextView goldRMBRatioTV;
 
     private static final String GET_LEFT_COINS_ACTION_CODE = "1288";
+    private static final String SHOP_WITHDRAW_ACTION_CODE = "688";
+    private static final String PERSONAL_WITHDRAW_ACTION_CODE = "588";
+    private static final String PERSONAL_WITHDRAW_ACTION_TYPE_CODE = "166";
+
+    private static final Float GOLD_FORMAT_RMB_RATIO = 0.94f;
 
     private Integer userType;//0 个人 1 商家
 
     private WithDrawContract.WithDrawPresenter mPresenter;
+
+    private Handler mHandler = new Handler();
+    private Runnable shopWithdrawSuccessRunnable;
+    private Runnable personalWithdrawSuccessRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +81,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                 centerTitleTV.setText("商家提现");
                 break;
         }
+        goldRMBRatioTV.setText("1金币=" + GOLD_FORMAT_RMB_RATIO + "元");
 
         new WithDrawPresenter(this, this);
 
@@ -71,6 +93,21 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                 mPresenter.getLeftCoins(GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
                 break;
         }
+
+        shopWithdrawSuccessRunnable = new Runnable() {
+            @Override
+            public void run() {
+                hideProgressDialog();
+                mPresenter.getLeftCoins(GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "baza_code", ""));
+            }
+        };
+        personalWithdrawSuccessRunnable = new Runnable() {
+            @Override
+            public void run() {
+                hideProgressDialog();
+                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "cust_code", ""));
+            }
+        };
     }
 
     @Override
@@ -84,13 +121,44 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
         mPresenter.unRegisterSubscribe();
     }
 
+    @Override
+    protected void onDestroy() {
+        mHandler.removeCallbacks(shopWithdrawSuccessRunnable);
+        mHandler.removeCallbacks(personalWithdrawSuccessRunnable);
+        super.onDestroy();
+    }
+
     @Optional
-    @OnClick({R.id.title_left_operation_layout})
+    @OnClick({R.id.title_left_operation_layout, R.id.withdraw_money})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
                 break;
+            case R.id.withdraw_money:
+                if (!requiredVerify(withdrawGoldNumET)) {
+                    withdrawGoldNumET.setError(getResources().getString(R.string.input_withdraw_gold_num));
+                    return;
+                }
+                switch (userType) {
+                    case 0:
+                        mPresenter.personalWithdrawCoins(PERSONAL_WITHDRAW_ACTION_CODE, PERSONAL_WITHDRAW_ACTION_TYPE_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()));
+                        break;
+                    case 1:
+                        mPresenter.shopWithdrawCoins(SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()));
+                        break;
+                }
+                break;
+        }
+    }
+
+    @Optional
+    @OnTextChanged({R.id.withdraw_gold_num})
+    void onTextChanged() {
+        if (withdrawGoldNumET.getText().toString().length() > 0) {
+            withdrawRMBTV.setText(Float.valueOf(withdrawGoldNumET.getText().toString()) * GOLD_FORMAT_RMB_RATIO + "");
+        } else {
+            withdrawRMBTV.setText("");
         }
     }
 
@@ -102,6 +170,22 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     @Override
     public void onGetLeftCoins(Integer counts) {
         coinCountsTV.setText("" + counts);
+    }
+
+    @Override
+    public void onShopWithdrawCoins(String withdrawRMB) {
+        withdrawGoldNumET.setText("");
+        withdrawRMBTV.setText("");
+        showProgressDialog(R.drawable.success, "您已成功提现" + withdrawRMB + "元");
+        mHandler.postDelayed(shopWithdrawSuccessRunnable, 500);
+    }
+
+    @Override
+    public void onPersonalWithdrawCoins(String withdrawRMB) {
+        withdrawGoldNumET.setText("");
+        withdrawRMBTV.setText("");
+        showProgressDialog(R.drawable.success, "您已成功提现" + withdrawRMB + "元");
+        mHandler.postDelayed(personalWithdrawSuccessRunnable, 500);
     }
 
     @Override

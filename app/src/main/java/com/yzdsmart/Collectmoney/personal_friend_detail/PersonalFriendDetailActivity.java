@@ -165,7 +165,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.msg_chat, R.id.galley_preview_layout, R.id.personal_coins_layout})
+    @OnClick({R.id.title_left_operation_layout, R.id.msg_chat, R.id.galley_preview_layout})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -189,12 +189,6 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 bundle.putInt("type", type);
                 bundle.putParcelableArrayList("galleys", galleyInfoList);
                 openActivity(GalleyPreviewActivity.class, bundle, 0);
-                break;
-            case R.id.personal_coins_layout:
-                if (type == 1) return;
-                bundle = new Bundle();
-                bundle.putInt("userType", 0);
-                openActivity(WithDrawActivity.class, bundle, 0);
                 break;
         }
     }

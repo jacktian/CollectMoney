@@ -63,6 +63,8 @@
     <string name="publishing_tasks">发布任务</string>
     <string name="publishing_tasks_log">发布任务日志</string>
     <string name="publishing_focuser">店铺关注者</string>
+    <string name="withdraw">提现</string>
+    <string name="withdraw_log">提现日志</string>
 
     <!--金币总数-->
     <string name="personal_coin_counts">获取金币数</string>
@@ -162,6 +164,14 @@
     <!--关注店铺的人-->
     <string name="shop_focuser_total_person">总关注人</string>
     <string name="shop_focuser_person">人</string>
+
+    <!--提现-->
+    <string name="input_withdraw_gold_num">输入您所需提现的金币数额</string>
+
+    <!--提现日志-->
+    <string name="withdraw_log_coin_counts">兑换金币数</string>
+    <string name="withdraw_log_rmb_amount">提现金额</string>
+    <string name="withdraw_log_time">时间间隔</string>
 
     <!-- 腾讯聊天 -->
     <string name="logout_warning">您的账号在其他设备登录,请重新登陆</string>

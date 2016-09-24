@@ -60,7 +60,7 @@ public class FindMoneyContract {
          * @param pageIndex
          * @param pageSize
          */
-        void getPersonBearby(String submitCode, String custCode, String coor, Integer pageIndex, Integer pageSize);
+        void getPersonNearby(String submitCode, String custCode, String coor, Integer pageIndex, Integer pageSize);
 
         /**
          * 取消网络请求
