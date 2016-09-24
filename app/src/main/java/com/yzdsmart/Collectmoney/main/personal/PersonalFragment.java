@@ -190,8 +190,8 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
             toggleViews.add(withdrawLayout);
             toggleViews.add(withdrawLogLayout);
 
-            mPresenter.getShopInfo(SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
-            mPresenter.getShopGalley(GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""));
+//            mPresenter.getShopInfo(SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+//            mPresenter.getShopGalley(GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""));
         } else {
             toggleViews.add(shopImagesBanner);
             toggleViews.add(shopDetailLayout);
@@ -200,8 +200,8 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
             toggleViews.add(shopWithdrawLayout);
             toggleViews.add(shopWithdrawLogLayout);
 
-            mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
-            mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+//            mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
+//            mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
         }
         ButterKnife.apply(toggleViews, BaseActivity.BUTTERKNIFEGONE);
 
@@ -383,6 +383,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     public void onGetShopGalley(List<GalleyInfo> galleyInfos) {
         galleyInfoList.clear();
         galleyInfoList.addAll(galleyInfos);
+        galleyImages.clear();
         if (galleyInfos.size() <= 0) {
             shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
                 @Override
@@ -414,6 +415,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
                     .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
             shopImagesBanner.startTurning(3000);
         }
+        shopImagesBanner.notifyDataSetChanged();
     }
 
     class ShopGalleyViewHolder implements Holder<String> {

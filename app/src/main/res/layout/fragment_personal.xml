@@ -536,7 +536,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/heart_icon" />
+                        android:src="@mipmap/cart_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -569,7 +569,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/heart_icon" />
+                        android:src="@mipmap/cart_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -689,7 +689,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/heart_icon" />
+                        android:src="@mipmap/cart_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -722,7 +722,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/heart_icon" />
+                        android:src="@mipmap/cart_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"

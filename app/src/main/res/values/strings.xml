@@ -75,8 +75,11 @@
     <string name="buy_coin_counts">购买币数</string>
     <string name="buy_coin_time">交易时间</string>
     <string name="buy_coin_left_counts">剩余币数</string>
-    <string name="buy_coin_success">购买金币成功!</string>
-    <string name="buy_coin_coin_count_required">请输入购买金币数!</string>
+    <string name="buy_coin_success">购买金币成功</string>
+    <string name="buy_coin_coin_count_required">请输入购买金币数</string>
+    <string name="buy_coin_pay_type">请选择支付方式</string>
+    <string name="buy_coin_pay_wechat">微信支付</string>
+    <string name="buy_coin_pay_union">银行卡支付</string>
 
     <!--发布任务-->
     <string name="publish_task_left_coins">剩余金币数</string>

@@ -137,6 +137,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
+            mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
             MainActivity.getInstance().chatLogin();
         }
     }

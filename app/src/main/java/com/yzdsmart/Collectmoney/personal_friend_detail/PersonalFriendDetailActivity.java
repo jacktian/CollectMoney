@@ -24,7 +24,6 @@ import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
-import com.yzdsmart.Collectmoney.withdrawals.WithDrawActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,6 +137,17 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
 
         new PersonalFriendDetailPresenter(this, this);
 
+
+    }
+
+    @Override
+    protected int getLayoutResource() {
+        return R.layout.activity_personal_friend_detail;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         switch (type) {
             case 0:
                 mPresenter.getCustLevel(SharedPreferencesUtils.getString(this, "cust_code", ""), "000000");
@@ -149,11 +159,6 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", friend_c_code);
                 break;
         }
-    }
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.activity_personal_friend_detail;
     }
 
     @Override
