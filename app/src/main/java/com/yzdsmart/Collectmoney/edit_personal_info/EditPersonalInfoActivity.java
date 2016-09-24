@@ -1,8 +1,13 @@
 package com.yzdsmart.Collectmoney.edit_personal_info;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,6 +65,8 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
 
     private EditPersonalInfoContract.EditPersonalInfoPresenter mPresenter;
 
+    private AlertDialog editDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,13 +86,79 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout})
+    @OnClick({R.id.title_left_operation_layout, R.id.person_name, R.id.person_nickname, R.id.person_gender, R.id.person_phone, R.id.person_birth, R.id.person_area, R.id.person_address})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
                 break;
+            case R.id.person_name:
+                showEditInfo("姓名", 0);
+                break;
+            case R.id.person_nickname:
+                showEditInfo("昵称", 1);
+                break;
+            case R.id.person_gender:
+                showEditInfo("性别", 2);
+                break;
+            case R.id.person_phone:
+                showEditInfo("电话", 3);
+                break;
+            case R.id.person_birth:
+                showEditInfo("生日", 4);
+                break;
+            case R.id.person_area:
+                showEditInfo("省市区", 5);
+                break;
+            case R.id.person_address:
+                showEditInfo("地址", 6);
+                break;
         }
+    }
+
+    void showEditInfo(final String dialogTitle, final Integer editItem) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final View view = LayoutInflater.from(this).inflate(R.layout.edit_info_dialog, null);
+        TextView editInfoTitle = (TextView) view.findViewById(R.id.edit_info_dialog_title);
+        editInfoTitle.setText(dialogTitle);
+        final EditText editInfoContent = (EditText) view.findViewById(R.id.edit_info_dialog_content);
+        Button editCancel = (Button) view.findViewById(R.id.edit_cancel);
+        Button editConfirm = (Button) view.findViewById(R.id.edit_confirm);
+        editCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editDialog.dismiss();
+            }
+        });
+        editConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editInfoContent.getText().toString().length() <= 0) {
+                    editInfoContent.setError("请输入" + dialogTitle);
+                    return;
+                }
+                switch (editItem) {
+                    case 0://姓名
+                        break;
+                    case 1://昵称
+                        break;
+                    case 2://性别
+                        break;
+                    case 3://电话
+                        break;
+                    case 4://生日
+                        break;
+                    case 5://省市区
+                        break;
+                    case 6://地址
+                        break;
+                }
+                editDialog.dismiss();
+            }
+        });
+        builder.setView(view);
+        editDialog = builder.show();
+        editDialog.setCancelable(false);
     }
 
     @Override
@@ -101,6 +174,11 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
         personAgeTV.setText(response.getCBirthday());
         personAreaTV.setText(response.getCProv() + response.getCCity() + response.getCDist());
         personAddressTV.setText(response.getCAddress());
+    }
+
+    @Override
+    public void onSetCustDetailInfo() {
+
     }
 
     @Override
