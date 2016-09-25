@@ -1,38 +1,38 @@
-package com.yzdsmart.Collectmoney.edit_personal_info;
+package com.yzdsmart.Collectmoney.edit_shop_info;
 
 import android.content.Context;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
+import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
 
 /**
- * Created by YZD on 2016/9/24.
+ * Created by YZD on 2016/9/25.
  */
 
-public class EditPersonalInfoPresenter implements EditPersonalInfoContract.EditPersonalInfoPresenter {
+public class EditShopInfoPresenter implements EditShopInfoContract.EditShopInfoPresenter {
     private Context context;
-    private EditPersonalInfoContract.EditPersonalInfoView mView;
-    private EditPersonalInfoModel mModel;
+    private EditShopInfoContract.EditShopInfoView mView;
+    private EditShopInfoModel mModel;
 
-    public EditPersonalInfoPresenter(Context context, EditPersonalInfoContract.EditPersonalInfoView mView) {
+    public EditShopInfoPresenter(Context context, EditShopInfoContract.EditShopInfoView mView) {
         this.context = context;
         this.mView = mView;
-        mModel = new EditPersonalInfoModel();
+        mModel = new EditShopInfoModel();
         mView.setPresenter(this);
     }
 
     @Override
-    public void getCustDetailInfo(String actioncode, String submitCode, String custCode) {
+    public void getShopInfo(String actioncode, String submitCode, String bazaCode) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustDetailInfo(actioncode, submitCode, custCode, new RequestListener() {
+        mModel.getShopInfo(actioncode, submitCode, bazaCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                CustDetailInfoRequestResponse response = (CustDetailInfoRequestResponse) result;
-                if (null != response) {
-                    mView.onGetCustDetailInfo(response);
+                ShopInfoByPersRequestResponse requestResponse = (ShopInfoByPersRequestResponse) result;
+                if (null != requestResponse) {
+                    mView.onGetShopInfo(requestResponse);
                 }
             }
 
@@ -50,14 +50,14 @@ public class EditPersonalInfoPresenter implements EditPersonalInfoContract.EditP
     }
 
     @Override
-    public void setCustDetailInfo(final Integer editItem, String submitCode, String custCode, String cName, String cNickName, String cSex, String cBirthday, String cTel, String cIdNo, String cNation, Double cHeight, Double cWeight, String cProfession, String cAddress, String cProv, String cCity, String cDist, String cCountry, String cRemark) {
+    public void setShopInfos(final Integer editItem, String submitCode, String bazaCode, String bazaName, String bazaPers, String bazaTel, String bazaAddr, String remark, String coor) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.setting));
-        mModel.setCustDetailInfo(submitCode, custCode, cName, cNickName, cSex, cBirthday, cTel, cIdNo, cNation, cHeight, cWeight, cProfession, cAddress, cProv, cCity, cDist, cCountry, cRemark, new RequestListener() {
+        mModel.setShopInfos(submitCode, bazaCode, bazaName, bazaPers, bazaTel, bazaAddr, remark, coor, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RequestResponse requestResponse = (RequestResponse) result;
                 if ("OK".equals(requestResponse.getActionStatus())) {
-                    mView.onSetCustDetailInfo(editItem);
+                    mView.onSetShopInfos(editItem);
                 } else {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
                 }

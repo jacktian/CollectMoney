@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.main.personal;
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
+import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 
 import java.util.List;
@@ -30,11 +31,11 @@ public interface PersonalContract {
         void onGetCustInfo(String name, String headUel, Integer goldNum);
 
         /**
-         * 商铺详细信息
+         * 商家商铺详细信息
          *
          * @param shopDetails
          */
-        void onGetShopInfo(ShopInfoRequestResponse shopDetails);
+        void onGetShopInfo(ShopInfoByPersRequestResponse shopDetails);
 
         /**
          * 获取商铺图片列表
@@ -62,12 +63,12 @@ public interface PersonalContract {
         void getCustInfo(String submitcode, String custCode);
 
         /**
-         * 获取商铺详情
+         * 商家获取商铺详情
          *
          * @param submitCode
          * @param bazaCode
          */
-        void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode);
+        void getShopInfo(String actioncode, String submitCode, String bazaCode);
 
         /**
          * 获取商铺图片列表

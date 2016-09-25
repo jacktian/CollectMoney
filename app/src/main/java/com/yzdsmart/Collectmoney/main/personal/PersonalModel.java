@@ -5,7 +5,7 @@ import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetGalleyRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -18,7 +18,7 @@ public class PersonalModel {
     //网络请求监听
     private Subscriber<CustLevelRequestResponse> getCustLevelSubscriber;
     private Subscriber<CustInfoRequestResponse> getCustInfoSubscriber;
-    private Subscriber<ShopInfoRequestResponse> getShopInfoSubscriber;
+    private Subscriber<ShopInfoByPersRequestResponse> getShopInfoSubscriber;
     private Subscriber<GetGalleyRequestResponse> getShopGalleySubscriber;
 
     /**
@@ -73,8 +73,8 @@ public class PersonalModel {
                 .subscribe(getCustInfoSubscriber);
     }
 
-    void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode, final RequestListener listener) {
-        getShopInfoSubscriber = new Subscriber<ShopInfoRequestResponse>() {
+    void getShopInfo(String actioncode, String submitCode, String bazaCode, final RequestListener listener) {
+        getShopInfoSubscriber = new Subscriber<ShopInfoByPersRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -86,11 +86,11 @@ public class PersonalModel {
             }
 
             @Override
-            public void onNext(ShopInfoRequestResponse shopInfo) {
-                listener.onSuccess(shopInfo);
+            public void onNext(ShopInfoByPersRequestResponse requestResponse) {
+                listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getShopInfo(actioncode, submitCode, bazaCode, custCode)
+        RequestAdapter.getRequestService().getShopInfoByPers(actioncode, submitCode, bazaCode)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getShopInfoSubscriber);

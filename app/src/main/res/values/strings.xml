@@ -164,6 +164,7 @@
     <string name="shop_detail">详情</string>
     <string name="shop_focus_person_counts">关注人数</string>
     <string name="shop_daily_coins">今日币数</string>
+    <string name="shop_left_total_coins">剩余总币数</string>
     <string name="shop_visit_person_counts">访问人数</string>
     <string name="shop_more_followers">查看更多</string>
 
@@ -185,6 +186,13 @@
     <string name="withdraw_log_coin_counts">兑换金币数</string>
     <string name="withdraw_log_rmb_amount">提现金额</string>
     <string name="withdraw_log_time">时间间隔</string>
+
+    <!--商铺信息编辑-->
+    <string name="baza_name">商铺名称:</string>
+    <string name="baza_pers">联系人:</string>
+    <string name="baza_tel">联系电话:</string>
+    <string name="baza_address">商铺地址:</string>
+    <string name="baza_remark">备注:</string>
 
     <!-- 腾讯聊天 -->
     <string name="logout_warning">您的账号在其他设备登录,请重新登陆</string>

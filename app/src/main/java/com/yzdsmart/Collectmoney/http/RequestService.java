@@ -18,6 +18,7 @@ import com.yzdsmart.Collectmoney.http.response.PublishTaskLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RegisterBusinessRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopFocuserRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopListRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopWithdrawLogRequestResponse;
@@ -414,6 +415,35 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.TASKLOG)
     Observable<GetCoinsLogRequestResponse> getCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+
+    /**
+     * 商家获取商铺详情
+     *
+     * @param actioncode
+     * @param submitCode
+     * @param bazaCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.SHOP_LIST)
+    Observable<ShopInfoByPersRequestResponse> getShopInfoByPers(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode);
+
+    /**
+     * 设置商铺详细信息
+     *
+     * @param submitCode
+     * @param bazaCode
+     * @param bazaName
+     * @param bazaPers
+     * @param bazaTel
+     * @param bazaAddr
+     * @param remark
+     * @param coor
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.SHOP)
+    Observable<RequestResponse> setShopInfos(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("BazaName") String bazaName, @Field("BazaPers") String bazaPers, @Field("BazaTel") String bazaTel, @Field("BazaAddr") String bazaAddr, @Field("Remark") String remark, @Field("Coor") String coor);
 
     /**
      * 获取指定店铺的获取金币的用户信息

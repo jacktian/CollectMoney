@@ -234,7 +234,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
 
     @Override
     public void onGetLeftCoins(Integer counts) {
-        leftCoinsTV.setText("" + counts);
+        leftCoinsTV.setText(" " + counts);
     }
 
     @Override

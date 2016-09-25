@@ -8,7 +8,7 @@ import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetGalleyRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
 
 /**
  * Created by YZD on 2016/8/27.
@@ -82,14 +82,14 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
     }
 
     @Override
-    public void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode) {
+    public void getShopInfo(String actioncode, String submitCode, String bazaCode) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getShopInfo(actioncode, submitCode, bazaCode, custCode, new RequestListener() {
+        mModel.getShopInfo(actioncode, submitCode, bazaCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                ShopInfoRequestResponse shopInfo = (ShopInfoRequestResponse) result;
-                if (null != shopInfo) {
-                    mView.onGetShopInfo(shopInfo);
+                ShopInfoByPersRequestResponse requestResponse = (ShopInfoByPersRequestResponse) result;
+                if (null != requestResponse) {
+                    mView.onGetShopInfo(requestResponse);
                 }
             }
 

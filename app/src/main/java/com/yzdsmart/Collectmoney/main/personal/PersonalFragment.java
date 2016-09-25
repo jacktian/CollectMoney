@@ -23,9 +23,10 @@ import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.buy_coins.BuyCoinsActivity;
 import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
+import com.yzdsmart.Collectmoney.edit_shop_info.EditShopInfoActivity;
 import com.yzdsmart.Collectmoney.focused_shop.FocusedShopActivity;
 import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
-import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.personal_coin_list.PersonalCoinsActivity;
 import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
@@ -98,7 +99,6 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @Nullable
     @BindView(R.id.to_shop_withdraw)
     RelativeLayout shopWithdrawLayout;
-
     @Nullable
     @BindView(R.id.shop_focus_visit_panel)
     LinearLayout shopFocusVisitLayout;
@@ -124,8 +124,8 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @BindView(R.id.focus_person_counts)
     TextView focusPersonCountsTV;
     @Nullable
-    @BindView(R.id.daily_coin_counts)
-    TextView dailyCoinCountsTV;
+    @BindView(R.id.left_total_coin_counts)
+    TextView leftTotalCoinCountsTV;
     @Nullable
     @BindView(R.id.visit_person_counts)
     TextView visitPersonCountsTV;
@@ -133,7 +133,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @BindView(R.id.shop_level)
     LinearLayout shopLevelLayout;
 
-    private static final String SHOP_INFO_ACTION_CODE = "000000";
+    private static final String SHOP_INFO_ACTION_CODE = "3666";
     private static final String GET_SHOP_GALLEY_ACTION_CODE = "5101";
 
     private PersonalContract.PersonalPresenter mPresenter;
@@ -217,7 +217,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser, R.id.to_withdraw_log, R.id.to_shop_withdraw_log, R.id.to_withdraw, R.id.to_shop_withdraw})
+    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser, R.id.to_withdraw_log, R.id.to_shop_withdraw_log, R.id.to_withdraw, R.id.to_shop_withdraw, R.id.to_shop_detail})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -286,6 +286,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
                 bundle.putInt("userType", 1);
                 ((BaseActivity) getActivity()).openActivity(WithDrawActivity.class, bundle, 0);
                 break;
+            case R.id.to_shop_detail:
+                ((BaseActivity) getActivity()).openActivity(EditShopInfoActivity.class);
+                break;
         }
     }
 
@@ -294,7 +297,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         super.onHiddenChanged(hidden);
         if (!hidden) {
             if (SharedPreferencesUtils.getString(getActivity(), "baza_code", "").trim().length() > 0) {
-                mPresenter.getShopInfo(SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+                mPresenter.getShopInfo(SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""));
                 mPresenter.getShopGalley(GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""));
                 shopImagesBanner.startTurning(3000);
             } else {
@@ -314,7 +317,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         super.onResume();
         if (this.isVisible()) {
             if (SharedPreferencesUtils.getString(getActivity(), "baza_code", "").trim().length() > 0) {
-                mPresenter.getShopInfo(SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+                mPresenter.getShopInfo(SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""));
                 mPresenter.getShopGalley(GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""));
                 shopImagesBanner.startTurning(3000);
             } else {
@@ -367,11 +370,11 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Override
-    public void onGetShopInfo(ShopInfoRequestResponse shopDetails) {
+    public void onGetShopInfo(ShopInfoByPersRequestResponse shopDetails) {
         shopNameTV.setText(shopDetails.getName());
         shopAddressTV.setText(shopDetails.getAddr());
         focusPersonCountsTV.setText("" + shopDetails.getAtteNum());
-        dailyCoinCountsTV.setText("" + shopDetails.getTodayGlodNum());
+        leftTotalCoinCountsTV.setText("" + shopDetails.getTotalGlodNum());
         visitPersonCountsTV.setText("" + shopDetails.getVisiNum());
         shopLevelLayout.removeAllViews();
         ImageView shopLevel = new ImageView(getActivity());

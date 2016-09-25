@@ -312,6 +312,12 @@
             android:launchMode="singleTop"
             android:theme="@style/ActivityColorTranslucentTheme" />
 
+        <activity
+            android:name=".edit_shop_info.EditShopInfoActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/ActivityColorTranslucentTheme" />
+
         <!--腾讯聊天开始-->
         <!-- 消息收发service -->
         <service

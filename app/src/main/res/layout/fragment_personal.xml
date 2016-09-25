@@ -169,6 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/personal_item_panel_margin_top"
                 android:background="@drawable/white_panel_top_bottom_border"
+                android:paddingLeft="@dimen/activity_horizontal_padding"
                 android:paddingRight="@dimen/activity_horizontal_padding">
 
                 <RelativeLayout
@@ -190,7 +191,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_padding"
                         android:layout_toLeftOf="@id/to_shop_detail_arrow"
                         android:orientation="vertical">
 
@@ -327,19 +327,19 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/daily_coin_counts_title"
+                        android:id="@+id/left_total_coin_counts_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="@string/shop_daily_coins"
+                        android:text="@string/shop_left_total_coins"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
-                        android:id="@+id/daily_coin_counts"
+                        android:id="@+id/left_total_coin_counts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/daily_coin_counts_title"
+                        android:layout_below="@id/left_total_coin_counts_title"
                         android:layout_centerHorizontal="true"
                         android:ellipsize="marquee"
                         android:singleLine="true"
@@ -347,7 +347,6 @@
                         android:textColor="@color/orange"
                         android:textIsSelectable="true"
                         android:textSize="@dimen/font_xlarge" />
-
 
                 </RelativeLayout>
 
