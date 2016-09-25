@@ -6,6 +6,7 @@ package com.yzdsmart.Collectmoney.http.response;
 public class CustDetailInfoRequestResponse {
     private String C_UserCode;//用户名
     private String CName;//用户姓名
+    private String CNickName;//用户昵称
     private String CSex;//性别
     private String CBirthday;//生日
     private String CTel;//手机
@@ -24,9 +25,10 @@ public class CustDetailInfoRequestResponse {
     public CustDetailInfoRequestResponse() {
     }
 
-    public CustDetailInfoRequestResponse(String c_UserCode, String CName, String CSex, String CBirthday, String CTel, String CIdNo, String CNation, Double CHeight, Double CWeight, String CProfession, String CAddress, String CProv, String CCity, String CDist, String CCountry, String CRemark) {
+    public CustDetailInfoRequestResponse(String c_UserCode, String CName, String CNickName, String CSex, String CBirthday, String CTel, String CIdNo, String CNation, Double CHeight, Double CWeight, String CProfession, String CAddress, String CProv, String CCity, String CDist, String CCountry, String CRemark) {
         C_UserCode = c_UserCode;
         this.CName = CName;
+        this.CNickName = CNickName;
         this.CSex = CSex;
         this.CBirthday = CBirthday;
         this.CTel = CTel;
@@ -57,6 +59,14 @@ public class CustDetailInfoRequestResponse {
 
     public void setCName(String CName) {
         this.CName = CName;
+    }
+
+    public String getCNickName() {
+        return CNickName;
+    }
+
+    public void setCNickName(String CNickName) {
+        this.CNickName = CNickName;
     }
 
     public String getCSex() {
@@ -176,6 +186,7 @@ public class CustDetailInfoRequestResponse {
         return "{" +
                 "C_UserCode:'" + C_UserCode + '\'' +
                 ", CName:'" + CName + '\'' +
+                ", CNickName:'" + CNickName + '\'' +
                 ", CSex:'" + CSex + '\'' +
                 ", CBirthday:'" + CBirthday + '\'' +
                 ", CTel:'" + CTel + '\'' +

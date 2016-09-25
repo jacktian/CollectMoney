@@ -11,22 +11,39 @@
         android:id="@+id/edit_info_dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="sa"
         android:textColor="@android:color/black"
         android:textSize="@dimen/font_medium" />
     　　
 
-    <EditText
-        android:id="@+id/edit_info_dialog_content"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/edit_height"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:background="@null"
-        android:maxLength="30"
-        android:maxLines="1"
-        android:text=""
-        android:textColor="@color/grey"
-        android:textSize="@dimen/font_medium" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+        <EditText
+            android:id="@+id/edit_info_dialog_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_height"
+            android:background="@drawable/white_panel_with_border"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/grey"
+            android:textSize="@dimen/font_medium" />
+
+        <com.yzdsmart.Collectmoney.views.BetterSpinner
+            android:id="@+id/edit_info_gender"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_height"
+            android:background="@drawable/white_panel_with_border"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/font_medium"
+            android:visibility="gone" />
+    </FrameLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"

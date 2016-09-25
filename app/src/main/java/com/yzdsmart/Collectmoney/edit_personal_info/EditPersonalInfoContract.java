@@ -19,8 +19,10 @@ public interface EditPersonalInfoContract {
 
         /**
          * 设置用户详细信息
+         *
+         * @param editItem
          */
-        void onSetCustDetailInfo();
+        void onSetCustDetailInfo(Integer editItem);
     }
 
     interface EditPersonalInfoPresenter extends BasePresenter {
@@ -37,6 +39,7 @@ public interface EditPersonalInfoContract {
         /**
          * 设置用户详细信息
          *
+         * @param editItem
          * @param submitCode
          * @param custCode
          * @param cName
@@ -56,7 +59,7 @@ public interface EditPersonalInfoContract {
          * @param cCountry
          * @param cRemark
          */
-        void setCustDetailInfo(String submitCode, String custCode, String cName, String cNickName, String cSex, String cBirthday, String cTel, String cIdNo, String cNation, Double cHeight, Double cWeight, String cProfession, String cAddress, String cProv, String cCity, String cDist, String cCountry, String cRemark);
+        void setCustDetailInfo(Integer editItem, String submitCode, String custCode, String cName, String cNickName, String cSex, String cBirthday, String cTel, String cIdNo, String cNation, Double cHeight, Double cWeight, String cProfession, String cAddress, String cProv, String cCity, String cDist, String cCountry, String cRemark);
 
         void unRegisterSubscribe();
     }

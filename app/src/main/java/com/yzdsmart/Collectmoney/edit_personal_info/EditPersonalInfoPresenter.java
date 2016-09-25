@@ -50,7 +50,7 @@ public class EditPersonalInfoPresenter implements EditPersonalInfoContract.EditP
     }
 
     @Override
-    public void setCustDetailInfo(String submitCode, String custCode, String cName, String cNickName, String cSex, String cBirthday, String cTel, String cIdNo, String cNation, Double cHeight, Double cWeight, String cProfession, String cAddress, String cProv, String cCity, String cDist, String cCountry, String cRemark) {
+    public void setCustDetailInfo(final Integer editItem, String submitCode, String custCode, String cName, String cNickName, String cSex, String cBirthday, String cTel, String cIdNo, String cNation, Double cHeight, Double cWeight, String cProfession, String cAddress, String cProv, String cCity, String cDist, String cCountry, String cRemark) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.setting));
         mModel.setCustDetailInfo(submitCode, custCode, cName, cNickName, cSex, cBirthday, cTel, cIdNo, cNation, cHeight, cWeight, cProfession, cAddress, cProv, cCity, cDist, cCountry, cRemark, new RequestListener() {
             @Override
@@ -58,7 +58,7 @@ public class EditPersonalInfoPresenter implements EditPersonalInfoContract.EditP
                 ((BaseActivity) context).hideProgressDialog();
                 RequestResponse requestResponse = (RequestResponse) result;
                 if ("OK".equals(requestResponse.getActionStatus())) {
-                    mView.onSetCustDetailInfo();
+                    mView.onSetCustDetailInfo(editItem);
                 } else {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
                 }
