@@ -12,10 +12,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
+import com.tencent.TIMConversationType;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.Friendship;
+import com.yzdsmart.Collectmoney.chat.ChatActivity;
 import com.yzdsmart.Collectmoney.money_friendship.friend_list.add.AddFriendActivity;
+import com.yzdsmart.Collectmoney.tecent_im.bean.FriendshipInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,9 +99,15 @@ public class RecommendFriendsAdapter extends UltimateViewAdapter<RecommendFriend
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("id", friendship.getTCAccount());
-                bundle.putString("name", friendship.getTCAccount());
-                ((BaseActivity) context).openActivity(AddFriendActivity.class, bundle, 0);
+                if (FriendshipInfo.getInstance().isFriend(friendship.getTCAccount())) {
+                    bundle.putString("identify", friendship.getTCAccount());
+                    bundle.putSerializable("type", TIMConversationType.C2C);
+                    ((BaseActivity) context).openActivity(ChatActivity.class, bundle, 0);
+                } else {
+                    bundle.putString("id", friendship.getTCAccount());
+                    bundle.putString("name", friendship.getTCAccount());
+                    ((BaseActivity) context).openActivity(AddFriendActivity.class, bundle, 0);
+                }
             }
         });
     }

@@ -174,8 +174,8 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
     @Override
     public void onBuyCoins(boolean flag, String msg) {
-        showSnackbar(msg);
         if (!flag) {
+            showSnackbar(msg);
             return;
         }
         showProgressDialog(R.drawable.success, getResources().getString(R.string.loading));

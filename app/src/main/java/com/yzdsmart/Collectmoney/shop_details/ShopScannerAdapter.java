@@ -16,6 +16,8 @@ import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.ShopScanner;
 import com.yzdsmart.Collectmoney.chat.ChatActivity;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
+import com.yzdsmart.Collectmoney.money_friendship.friend_list.add.AddFriendActivity;
+import com.yzdsmart.Collectmoney.tecent_im.bean.FriendshipInfo;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
@@ -129,10 +131,17 @@ public class ShopScannerAdapter extends RecyclerView.Adapter<ShopScannerAdapter.
                         ((BaseActivity) context).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
                         return;
                     }
+                    ShopScanner shopScanner = shopScannerList.get(getLayoutPosition());
                     bundle = new Bundle();
-                    bundle.putString("identify", shopScannerList.get(getLayoutPosition()).getTCAccount());
-                    bundle.putSerializable("type", TIMConversationType.C2C);
-                    ((BaseActivity) context).openActivity(ChatActivity.class, bundle, 0);
+                    if (FriendshipInfo.getInstance().isFriend(shopScanner.getTCAccount())) {
+                        bundle.putString("identify", shopScanner.getTCAccount());
+                        bundle.putSerializable("type", TIMConversationType.C2C);
+                        ((BaseActivity) context).openActivity(ChatActivity.class, bundle, 0);
+                    } else {
+                        bundle.putString("id", shopScanner.getTCAccount());
+                        bundle.putSerializable("name", shopScanner.getTCAccount());
+                        ((BaseActivity) context).openActivity(AddFriendActivity.class, bundle, 0);
+                    }
                     break;
             }
         }

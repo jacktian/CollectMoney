@@ -14,8 +14,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.holder.Holder;
+import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
@@ -23,9 +28,12 @@ import com.yzdsmart.Collectmoney.bean.ShopScanner;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
+import com.yzdsmart.Collectmoney.main.personal.PersonalFragment;
+import com.yzdsmart.Collectmoney.main.personal.ShopImageBannerHolderView;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
+import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +57,15 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     @Nullable
     @BindView(R.id.title_right_operation)
     ImageView titleRightOpeIV;
+    @Nullable
+    @BindView(R.id.shop_info_check_group)
+    CustomNestRadioGroup shopInfoCheckGroup;
+    @Nullable
+    @BindView(R.id.hotel_base_info_layout)
+    RelativeLayout hotelBaseInfoLayout;
+    @Nullable
+    @BindView(R.id.shop_images_banner)
+    ConvenientBanner shopImagesBanner;
     @Nullable
     @BindView(R.id.hotel_user_list)
     RecyclerView hotelUsersRV;
@@ -87,12 +104,19 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     private List<ShopScanner> shopScannerList;
     private ShopScannerAdapter shopScannerAdapter;
 
+    private ArrayList<Integer> localImages;//默认banner图片
+    private ArrayList<String> shopImageList;
+
     private String shopCoor;
     private ShopDetailsContract.ShopDetailsPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        localImages = new ArrayList<Integer>();
+        localImages.add(R.mipmap.shop_banner);
+        shopImageList = new ArrayList<String>();
 
         shopScannerList = new ArrayList<ShopScanner>();
         shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "三毛", "http://y3.ifengimg.com/haina/2016_06/048f23be371c78c_w432_h520.jpg", "男", 888, "昨天", "54673646"));
@@ -103,7 +127,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
-        titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.qr_code_icon));
+        titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.qr_code_scanner_icon));
 
         new ShopDetailsPresenter(this, this);
 
@@ -126,6 +150,20 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
 
         mPresenter.getShopFollowers(GET_SHOP_FOLLOWERS_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
+
+        shopInfoCheckGroup.setOnCheckedChangeListener(new CustomNestRadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
+                switch (group.getCheckedRadioButtonId()) {
+                    case R.id.shop_info_radio:
+                        ButterKnife.apply(hotelBaseInfoLayout, BUTTERKNIFEGONE);
+                        break;
+                    case R.id.shop_detail_info_radio:
+                        ButterKnife.apply(hotelBaseInfoLayout, BUTTERKNIFEVISIBLE);
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -221,6 +259,32 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         isAtte = shopDetails.getAtte();
         isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.heart_icon_white_checked) : getResources().getDrawable(R.mipmap.heart_icon_white));
         shopCoor = shopDetails.getCoor();
+        shopImageList.clear();
+        shopImageList.addAll(shopDetails.getImageLists());
+        if (shopImageList.size() <= 0) {
+            shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
+                @Override
+                public ShopImageBannerHolderView createHolder() {
+                    return new ShopImageBannerHolderView();
+                }
+            }, localImages)
+                    //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                    .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
+                    //设置指示器的方向
+                    .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+        } else {
+            shopImagesBanner.setPages(new CBViewHolderCreator<ShopDetailsActivity.ShopGalleyViewHolder>() {
+                @Override
+                public ShopDetailsActivity.ShopGalleyViewHolder createHolder() {
+                    return new ShopDetailsActivity.ShopGalleyViewHolder();
+                }
+            }, shopImageList)
+                    //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                    .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
+                    //设置指示器的方向
+                    .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+        }
+        shopImagesBanner.notifyDataSetChanged();
     }
 
     @Override
@@ -240,5 +304,21 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         shopScannerList.clear();
         shopScannerList.addAll(shopScanners);
         shopScannerAdapter.appenList(shopScannerList);
+    }
+
+    class ShopGalleyViewHolder implements Holder<String> {
+        private ImageView imageView;
+
+        @Override
+        public View createView(Context context) {
+            imageView = new ImageView(context);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            return imageView;
+        }
+
+        @Override
+        public void UpdateUI(Context context, int position, String data) {
+            Glide.with(context).load(data).error(context.getResources().getDrawable(R.mipmap.shop_banner)).into(imageView);
+        }
     }
 }
