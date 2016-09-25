@@ -12,10 +12,32 @@ import java.util.List;
 public interface PublishTasksLogContract {
     interface PublishTasksLogView extends BaseView<PublishTasksLogPresenter> {
 
+        /**
+         * 获取店铺任务剩余金币数
+         *
+         * @param counts
+         */
+        void onGetLeftCoins(Integer counts);
+
+        /**
+         * 指定商铺获得发布任务日志列表
+         *
+         * @param logList
+         */
         void onPublishTaskLog(List<PublishTaskLog> logList);
+
     }
 
     interface PublishTasksLogPresenter extends BasePresenter {
+        /**
+         * 获取店铺任务剩余金币数
+         *
+         * @param action
+         * @param submitCode
+         * @param bazaCode
+         */
+        void getLeftCoins(String action, String submitCode, String bazaCode);
+
         /**
          * 指定商铺获得发布任务日志列表
          *

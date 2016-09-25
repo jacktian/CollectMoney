@@ -24,9 +24,9 @@ import butterknife.BindView;
  * Created by jacks on 2016/8/29.
  */
 public class FriendListFragment extends BaseFragment implements FriendListContract.FriendListView {
-    @Nullable
-    @BindView(R.id.search_filter)
-    EditText searchFilterET;
+//    @Nullable
+//    @BindView(R.id.search_filter)
+//    EditText searchFilterET;
     @Nullable
     @BindView(R.id.friend_profile_list)
     UltimateRecyclerView friendProfileListRV;

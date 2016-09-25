@@ -29,6 +29,7 @@ import com.yzdsmart.Collectmoney.money_friendship.friend_list.FriendListFragment
 import com.yzdsmart.Collectmoney.money_friendship.group_list.GroupListFragment;
 import com.yzdsmart.Collectmoney.money_friendship.group_list.search.SearchGroupActivity;
 import com.yzdsmart.Collectmoney.money_friendship.group_list.create.CreateGroupActivity;
+import com.yzdsmart.Collectmoney.money_friendship.recommend_friends.RecommendFriendsFragment;
 import com.yzdsmart.Collectmoney.tecent_im.bean.Conversation;
 import com.yzdsmart.Collectmoney.tecent_im.bean.CustomMessage;
 import com.yzdsmart.Collectmoney.tecent_im.bean.GroupManageConversation;
@@ -99,8 +100,9 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
 
     private void initView() {
         FragmentTransaction ft = fm.beginTransaction();
-        mCurrentFragment = new ConversationFragment();
-        ft.add(R.id.layout_frame, mCurrentFragment, "conversation");
+        mCurrentFragment = new RecommendFriendsFragment();
+        ft.add(R.id.layout_frame, new ConversationFragment(), "conversation");
+        ft.add(R.id.layout_frame, mCurrentFragment, "recommend");
         ft.commit();
     }
 
@@ -177,6 +179,14 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
         Fragment fragment;
         ButterKnife.apply(titleRightOpeLayout, BUTTERKNIFEVISIBLE);
         switch (group.getCheckedRadioButtonId()) {
+            case R.id.recommend_friend_radio:
+                ButterKnife.apply(titleRightOpeLayout, BUTTERKNIFEGONE);
+                fragment = fm.findFragmentByTag("recommend");
+                if (null == fragment) {
+                    fragment = new RecommendFriendsFragment();
+                }
+                addOrShowFragment(fragment, "recommend");
+                break;
             case R.id.conversation_radio:
                 ButterKnife.apply(titleRightOpeLayout, BUTTERKNIFEGONE);
                 fragment = fm.findFragmentByTag("conversation");

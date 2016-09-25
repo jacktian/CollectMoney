@@ -41,9 +41,13 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
     @Nullable
     @BindView(R.id.publish_list)
     RecyclerView publishListRV;
+    @Nullable
+    @BindView(R.id.tasks_left_coins)
+    TextView tasksLeftCoinsTV;
 
     private PublishTasksLogContract.PublishTasksLogPresenter mPresenter;
 
+    private static final String GET_TASKS_LEFT_COINS_ACTION_CODE = "7288";
     private static final String PUBLISH_TASK_LOG_CODE = "2188";
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
@@ -79,6 +83,7 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
         publishListRV.addItemDecoration(dividerItemDecoration);
         publishListRV.setAdapter(publishTasksAdapter);
 
+        mPresenter.getLeftCoins(GET_TASKS_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
         mPresenter.publishTaskLog(PUBLISH_TASK_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE);
     }
 
@@ -106,6 +111,11 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
     @Override
     public void setPresenter(PublishTasksLogContract.PublishTasksLogPresenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void onGetLeftCoins(Integer counts) {
+        tasksLeftCoinsTV.setText(" " + counts);
     }
 
     @Override

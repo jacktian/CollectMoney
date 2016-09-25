@@ -5,6 +5,7 @@ import android.content.Context;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.GetCoinRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.PublishTaskLogRequestResponse;
 
 /**
@@ -20,6 +21,33 @@ public class PublishTasksLogPresenter implements PublishTasksLogContract.Publish
         this.mView = mView;
         mModel = new PublishTasksLogModel();
         mView.setPresenter(this);
+    }
+
+    @Override
+    public void getLeftCoins(String action, String submitCode, String bazaCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.getLeftCoins(action, submitCode, bazaCode, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                GetCoinRequestResponse requestResponse = (GetCoinRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onGetLeftCoins(requestResponse.getGoldNum());
+                } else {
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
     }
 
     @Override

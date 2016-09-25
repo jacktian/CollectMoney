@@ -15,6 +15,7 @@ import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.PersonRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.PersonalWithdrawLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.PublishTaskLogRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.RecommendFriendsRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RegisterBusinessRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopFocuserRequestResponse;
@@ -46,7 +47,6 @@ public interface RequestService {
      */
     @GET(Url.USER)
     Observable<RequestResponse> isUserExist(@Query("tel") String telNum);
-
 
     /**
      * 获取短信验证码
@@ -219,6 +219,19 @@ public interface RequestService {
     Observable<FriendsRequestResponse> getFriendsList(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("TimeStampNow") Long timeStampNow, @Field("StartIndex") Integer startIndex, @Field("CurrentStandardSequence") Integer currentStandardSequence, @Field("PageSize") Integer pageSize);
 
     /**
+     * 获取系统推荐好友
+     *
+     * @param action
+     * @param submitCode
+     * @param custCode
+     * @param recomNum
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.FRIEND)
+    Observable<RecommendFriendsRequestResponse> getRecommendFriends(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("RecomNum") Integer recomNum);
+
+    /**
      * 获取商铺关注者
      *
      * @param action
@@ -321,18 +334,6 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.SET_FOLLOW)
     Observable<RequestResponse> setFollow(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode);
-
-    /**
-     * 获取推荐列表
-     *
-     * @param submitCode
-     * @param pageIndex
-     * @param pageSize
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Url.EXPAND)
-    Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
      * 上传坐标
@@ -541,7 +542,6 @@ public interface RequestService {
     @POST(Url.TASK)
     Observable<RequestResponse> publishTasks(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("TotalGold") Integer totalGold, @Field("TotalNum") Integer totalNum, @Field("BeginTime") String beginTime, @Field("EndTime") String endTime);
 
-
     /**
      * 指定商铺获得发布任务日志列表
      *
@@ -555,7 +555,6 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.TASKLOG)
     Observable<PublishTaskLogRequestResponse> publishTaskLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
-
 
     /**
      * 上传商铺图片
@@ -584,7 +583,6 @@ public interface RequestService {
     @POST(Url.FOLLOW)
     Observable<ShopFocuserRequestResponse> getShopFocuser(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
-
     /**
      * 获取商铺图片列表
      *
@@ -609,4 +607,16 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.IMAGE)
     Observable<RequestResponse> deleteShopGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("FileIdList") List<Integer> fileIdList);
+
+    /**
+     * 获取推荐列表
+     *
+     * @param submitCode
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.EXPAND)
+    Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 }
