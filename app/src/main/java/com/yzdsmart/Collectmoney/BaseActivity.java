@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.utils.IntentUtils;
+import com.yzdsmart.Collectmoney.utils.StatusBarUtil;
 import com.yzdsmart.Collectmoney.utils.Utils;
 import com.yzdsmart.Collectmoney.views.CustomDialog;
 
@@ -43,6 +44,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this);
         App.getAppInstance().storeActivity(this);
+
+        StatusBarUtil.statusBarLightMode(this);
 
         if (null != toolBar) {
             setSupportActionBar(toolBar);

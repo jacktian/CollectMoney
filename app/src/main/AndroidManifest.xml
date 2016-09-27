@@ -68,7 +68,7 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityImageTranslucentTheme">
+            android:theme="@style/Splash_Style">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

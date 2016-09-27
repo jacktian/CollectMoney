@@ -3,7 +3,6 @@ package com.yzdsmart.Collectmoney.register_forget_password.verify_code;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -31,11 +30,8 @@ import butterknife.Optional;
  */
 public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContract.VerifyCodeView {
     @Nullable
-    @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
+    @BindViews({R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
     List<View> hideViews;
-    @Nullable
-    @BindView(R.id.toolBar)
-    Toolbar toolBar;
     @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
@@ -68,7 +64,6 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        toolBar.setBackgroundColor(getResources().getColor(R.color.light_yellow));
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         userNameET.setEnabled(false);
         verifyCodeET.setImeOptions(EditorInfo.IME_ACTION_DONE);

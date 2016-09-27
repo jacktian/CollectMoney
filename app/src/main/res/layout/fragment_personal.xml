@@ -298,22 +298,23 @@
 
                     <TextView
                         android:id="@+id/focus_person_counts_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
                         android:layout_centerHorizontal="true"
+                        android:gravity="center"
                         android:text="@string/shop_focus_person_counts"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
                         android:id="@+id/focus_person_counts"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/focus_person_counts_title"
                         android:layout_centerHorizontal="true"
                         android:ellipsize="marquee"
-                        android:singleLine="true"
+                        android:gravity="center"
+                        android:maxLines="1"
                         android:text=""
                         android:textColor="@color/orange"
                         android:textIsSelectable="true"
@@ -328,21 +329,23 @@
 
                     <TextView
                         android:id="@+id/left_total_coin_counts_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
+                        android:gravity="center"
                         android:text="@string/shop_left_total_coins"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
                         android:id="@+id/left_total_coin_counts"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/left_total_coin_counts_title"
                         android:layout_centerHorizontal="true"
                         android:ellipsize="marquee"
-                        android:singleLine="true"
+                        android:gravity="center"
+                        android:maxLines="1"
                         android:text=""
                         android:textColor="@color/orange"
                         android:textIsSelectable="true"
@@ -357,21 +360,23 @@
 
                     <TextView
                         android:id="@+id/visit_person_counts_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
+                        android:gravity="center"
                         android:text="@string/shop_visit_person_counts"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
                         android:id="@+id/visit_person_counts"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/visit_person_counts_title"
                         android:layout_centerHorizontal="true"
                         android:ellipsize="marquee"
-                        android:singleLine="true"
+                        android:gravity="center"
+                        android:maxLines="1"
                         android:text=""
                         android:textColor="@color/orange"
                         android:textIsSelectable="true"
@@ -535,7 +540,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/cart_icon" />
+                        android:src="@mipmap/withdraw_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -568,7 +573,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/cart_icon" />
+                        android:src="@mipmap/withdraw_log_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -688,7 +693,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/cart_icon" />
+                        android:src="@mipmap/withdraw_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -721,7 +726,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/cart_icon" />
+                        android:src="@mipmap/withdraw_log_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -787,7 +792,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/bell_icon" />
+                        android:src="@mipmap/log_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -820,7 +825,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/heart_icon" />
+                        android:src="@mipmap/star_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"

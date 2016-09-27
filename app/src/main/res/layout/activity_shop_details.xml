@@ -129,7 +129,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@id/hotel_star_level_title"
+                            android:layout_marginTop="3dp"
                             android:layout_toRightOf="@id/hotel_star_level_title"
+                            android:gravity="center_vertical"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -193,21 +195,23 @@
 
                         <TextView
                             android:id="@+id/focus_person_counts"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
-                            android:singleLine="true"
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:text=""
                             android:textColor="@color/orange"
                             android:textIsSelectable="true"
                             android:textSize="@dimen/font_xlarge" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/focus_person_counts"
                             android:layout_centerHorizontal="true"
+                            android:gravity="center"
                             android:text="@string/shop_focus_person_counts"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_medium" />
@@ -221,21 +225,23 @@
 
                         <TextView
                             android:id="@+id/daily_coin_counts"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
-                            android:singleLine="true"
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:text=""
                             android:textColor="@color/orange"
                             android:textIsSelectable="true"
                             android:textSize="@dimen/font_xlarge" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/daily_coin_counts"
                             android:layout_centerHorizontal="true"
+                            android:gravity="center"
                             android:text="@string/shop_daily_coins"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_medium" />
@@ -249,11 +255,12 @@
 
                         <TextView
                             android:id="@+id/visit_person_counts"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
-                            android:singleLine="true"
+                            android:gravity="center"
+                            android:maxLines="1"
                             android:text=""
                             android:textColor="@color/orange"
                             android:textIsSelectable="true"
@@ -261,10 +268,11 @@
 
                         <TextView
                             android:id="@+id/visit_person_counts_title"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/visit_person_counts"
                             android:layout_centerHorizontal="true"
+                            android:gravity="center"
                             android:text="@string/shop_visit_person_counts"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_medium" />

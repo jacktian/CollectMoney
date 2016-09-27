@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.baidu.mapapi.map.Text;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
@@ -43,6 +45,9 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     @Nullable
     @BindView(R.id.recommend_list)
     RecyclerView recommendListRV;
+    @Nullable
+    @BindView(R.id.bubble_count)
+    TextView bubbleCountTV;
 
     private Integer pageIndex = 0;
     private static final Integer PAGE_SIZE = 10;
@@ -127,6 +132,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 
     @Override
     public void onGetExpandList(List<ExpandListRequestResponse> expands) {
+        bubbleCountTV.setText("" + expands.size());
         expandList.clear();
         expandList.addAll(expands);
         recommendAdapter.appendList(expandList);

@@ -1,10 +1,7 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -12,15 +9,21 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="ActivityImageTranslucentTheme" parent="AppTheme">
-        <item name="android:windowBackground">@mipmap/window_img_bg</item>
+    <style name="Splash_Style" parent="AppTheme">
+        <item name="colorPrimary">@color/transparent</item>
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <item name="android:windowBackground">@mipmap/splash_bg_img</item>
     </style>
 
     <style name="ActivityColorTranslucentTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:windowBackground">@color/white</item>
     </style>
 
-    <style name="LoginActivityColorTranslucentTheme" parent="AppTheme">
+    <style name="LoginActivityColorTranslucentTheme" parent="ActivityColorTranslucentTheme">
+        <item name="colorPrimary">@color/light_yellow</item>
+        <item name="colorPrimaryDark">@color/light_yellow</item>
         <item name="android:windowBackground">@color/light_yellow</item>
     </style>
 
