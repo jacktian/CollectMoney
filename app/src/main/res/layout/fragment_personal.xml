@@ -660,7 +660,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/cart_icon" />
+                        android:src="@mipmap/coin_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
