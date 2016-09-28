@@ -50,6 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (null != toolBar) {
             setSupportActionBar(toolBar);
         }
+
     }
 
     //获取页面布局
