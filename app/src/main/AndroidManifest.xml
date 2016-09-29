@@ -376,6 +376,15 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!--腾讯开放平台结束-->
 
+        <!--微博开放平台开始-->
+        <!-- 必须注册在微博授权，分享微博时候用到 -->
+        <activity
+            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+        <!--微博开放平台结束-->
+
         <!--定位服务-->
         <service
             android:name="com.baidu.location.f"
@@ -385,6 +394,13 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="G0dSaiav5Weoy8nPIAze1svuYgYxpFUo" />
+
+        <meta-data
+            android:name="WEIBO_APPKEY"
+            android:value="1371063102" />
+        <meta-data
+            android:name="WEIBO_CHANNEL"
+            android:value="weibo" />
 
         <!-- 配置APP ID -->
         <meta-data

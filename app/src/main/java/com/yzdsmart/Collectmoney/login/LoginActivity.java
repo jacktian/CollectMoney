@@ -7,6 +7,11 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
+import com.sina.weibo.sdk.auth.AuthInfo;
+import com.sina.weibo.sdk.auth.Oauth2AccessToken;
+import com.sina.weibo.sdk.auth.WeiboAuthListener;
+import com.sina.weibo.sdk.auth.sso.SsoHandler;
+import com.sina.weibo.sdk.exception.WeiboException;
 import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
@@ -16,6 +21,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.register_forget_password.verify_phone.VerifyPhoneActivity;
 import com.yzdsmart.Collectmoney.utils.Utils;
+import com.yzdsmart.Collectmoney.weibo.AccessTokenKeeper;
 
 import org.json.JSONObject;
 
@@ -41,8 +47,66 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     @BindView(R.id.user_pwd)
     EditText userPasswordET;
 
+    //腾讯
     public static final String mTecentAppid = "1105651703";
     public static Tencent mTencent;
+    //腾讯
+
+    //微博
+    /**
+     * 当前 DEMO 应用的 APP_KEY，第三方应用应该使用自己的 APP_KEY 替换该 APP_KEY
+     */
+    public static final String APP_KEY = "1371063102";
+
+    /**
+     * 当前 DEMO 应用的回调页，第三方应用可以使用自己的回调页。
+     * <p>
+     * <p>
+     * 注：关于授权回调页对移动客户端应用来说对用户是不可见的，所以定义为何种形式都将不影响，
+     * 但是没有定义将无法使用 SDK 认证登录。
+     * 建议使用默认回调页：https://api.weibo.com/oauth2/default.html
+     * </p>
+     */
+    public static final String REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";
+
+    /**
+     * Scope 是 OAuth2.0 授权机制中 authorize 接口的一个参数。通过 Scope，平台将开放更多的微博
+     * 核心功能给开发者，同时也加强用户隐私保护，提升了用户体验，用户在新 OAuth2.0 授权页中有权利
+     * 选择赋予应用的功能。
+     * <p>
+     * 我们通过新浪微博开放平台-->管理中心-->我的应用-->接口管理处，能看到我们目前已有哪些接口的
+     * 使用权限，高级权限需要进行申请。
+     * <p>
+     * 目前 Scope 支持传入多个 Scope 权限，用逗号分隔。
+     * <p>
+     * 有关哪些 OpenAPI 需要权限申请，请查看：http://open.weibo.com/wiki/%E5%BE%AE%E5%8D%9AAPI
+     * 关于 Scope 概念及注意事项，请查看：http://open.weibo.com/wiki/Scope
+     */
+    public static final String SCOPE =
+            "email,direct_messages_read,direct_messages_write,"
+                    + "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
+                    + "follow_app_official_microblog," + "invitation_write";
+
+    /**
+     * 授权认证所需要的信息
+     */
+    private AuthInfo mAuthInfo;
+
+    /**
+     * 封装了 "access_token"，"expires_in"，"refresh_token"，并提供了他们的管理功能
+     */
+    private Oauth2AccessToken mAccessToken;
+
+    /**
+     * SSO 授权认证实例
+     */
+    private SsoHandler mSsoHandler;
+
+    /**
+     * 登陆认证对应的listener
+     */
+    private AuthListener mLoginListener = new AuthListener();
+    //微博
 
     private LoginContract.LoginPresenter mPresenter;
 
@@ -53,9 +117,14 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         userPasswordET.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
+        //腾讯
         if (null == mTencent) {
             mTencent = Tencent.createInstance(mTecentAppid, App.getAppInstance());
         }
+
+        //微博
+        // 创建授权认证信息
+        mAuthInfo = new AuthInfo(this, APP_KEY, REDIRECT_URL, SCOPE);
 
         new LoginPresenter(this, this);
     }
@@ -66,7 +135,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     }
 
     @Optional
-    @OnClick({R.id.forget_pwd_link, R.id.new_user_link, R.id.login_register_confirm_button, R.id.platform_qq})
+    @OnClick({R.id.forget_pwd_link, R.id.new_user_link, R.id.login_register_confirm_button, R.id.platform_qq, R.id.platform_webo})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -98,6 +167,16 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
             case R.id.platform_qq:
                 if (!mTencent.isSessionValid()) {
                     mTencent.login(this, "all", tecentLoginListener);
+                }
+                break;
+            case R.id.platform_webo:
+                if (null == mSsoHandler && mAuthInfo != null) {
+                    mSsoHandler = new SsoHandler(this, mAuthInfo);
+                }
+                if (mSsoHandler != null) {
+                    mSsoHandler.authorize(mLoginListener);
+                } else {
+                    showSnackbar("Please setWeiboAuthInfo(...) for first");
                 }
                 break;
         }
@@ -171,6 +250,26 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         @Override
         public void onCancel() {
             showSnackbar("onCancel");
+        }
+    }
+
+    /**
+     * 登入按钮的监听器，接收授权结果。
+     */
+    private class AuthListener implements WeiboAuthListener {
+        @Override
+        public void onComplete(Bundle values) {
+            mAccessToken = Oauth2AccessToken.parseAccessToken(values);
+        }
+
+        @Override
+        public void onWeiboException(WeiboException e) {
+            showSnackbar(e.getMessage());
+        }
+
+        @Override
+        public void onCancel() {
+            showSnackbar(getResources().getString(R.string.weibosdk_demo_toast_auth_canceled));
         }
     }
 }
