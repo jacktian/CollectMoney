@@ -17,45 +17,44 @@
         android:clickable="true"
         android:translationZ="0dp" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/map_ope_margin_left"
-        android:layout_marginTop="@dimen/map_ope_margin_top"
-        android:orientation="vertical"
-        android:translationZ="2dp">
+    <!--<LinearLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="@dimen/map_ope_margin_left"-->
+    <!--android:layout_marginTop="@dimen/map_ope_margin_top"-->
+    <!--android:orientation="vertical"-->
+    <!--android:translationZ="2dp">-->
 
-        <ImageButton
-            android:id="@+id/map_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/map_location" />
+    <!--<ImageButton-->
+    <!--android:id="@+id/map_location"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@null"-->
+    <!--android:src="@drawable/map_location" />-->
 
-        <ImageButton
-            android:id="@+id/map_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/map_search" />
+    <!--<ImageButton-->
+    <!--android:id="@+id/map_search"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@null"-->
+    <!--android:src="@drawable/map_search" />-->
 
-        <ImageButton
-            android:id="@+id/map_shareable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/map_shareable" />
+    <!--<ImageButton-->
+    <!--android:id="@+id/map_shareable"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@null"-->
+    <!--android:src="@drawable/map_shareable" />-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
-    <ImageButton
-        android:id="@+id/loc_scan_coins"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
-        android:layout_marginBottom="@dimen/map_radar_margin_bottom"
-        android:layout_marginRight="@dimen/map_radar_margin_right"
-        android:background="@null"
-        android:src="@drawable/radar_scan"
-        android:translationZ="2dp" />
+    <!--<ImageButton-->
+        <!--android:id="@+id/loc_scan_coins"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center|bottom"-->
+        <!--android:layout_marginBottom="-54dp"-->
+        <!--android:background="@null"-->
+        <!--android:src="@mipmap/radar_scan"-->
+        <!--android:translationZ="2dp" />-->
 </FrameLayout>

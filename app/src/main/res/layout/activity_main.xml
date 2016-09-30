@@ -6,45 +6,74 @@
     android:fitsSystemWindows="true">
 
     <FrameLayout
-        android:id="@+id/layout_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/bottom_tab_height" />
+        android:layout_height="match_parent">
 
-    <com.yzdsmart.Collectmoney.views.CustomNestRadioGroup
-        android:id="@+id/main_bottom_tab"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/bottom_tab_height"
-        android:layout_gravity="bottom"
-        android:background="@drawable/white_panel_top_border"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="0dp"
+        <FrameLayout
+            android:id="@+id/layout_frame"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_marginBottom="@dimen/bottom_tab_height" />
 
-            <RadioButton
-                android:id="@+id/recommend_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@drawable/main_bottom_tab_button_recommend"
-                android:button="@null" />
-        </RelativeLayout>
+        <com.yzdsmart.Collectmoney.views.CustomNestRadioGroup
+            android:id="@+id/main_bottom_tab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_tab_height"
+            android:layout_gravity="bottom"
+            android:background="@drawable/white_panel_top_border"
+            android:orientation="horizontal"
+            android:translationZ="0dp">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-            <RadioButton
-                android:id="@+id/money_friend_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@drawable/main_bottom_tab_button_chat"
-                android:button="@null" />
-        </RelativeLayout>
-    </com.yzdsmart.Collectmoney.views.CustomNestRadioGroup>
+                <RadioButton
+                    android:id="@+id/recommend_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/main_bottom_tab_button_recommend"
+                    android:button="@null" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <RadioButton
+                    android:id="@+id/money_friend_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/main_bottom_tab_button_chat"
+                    android:button="@null" />
+            </RelativeLayout>
+
+        </com.yzdsmart.Collectmoney.views.CustomNestRadioGroup>
+
+        <ImageButton
+            android:id="@+id/loc_scan_coins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_marginTop="-25dp"
+            android:background="@null"
+            android:src="@mipmap/radar_scan"
+            android:translationZ="2dp" />
+    </FrameLayout>
+
+
+    <!--<FrameLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/bottom_tab_height"-->
+    <!--android:layout_gravity="bottom">-->
+
+    <!---->
+
+    <!---->
+    <!--</FrameLayout>-->
+
 </android.support.design.widget.CoordinatorLayout>

@@ -71,9 +71,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Nullable
     @BindView(R.id.find_money_map)
     MapView findMoneyMap;
-    @Nullable
-    @BindView(R.id.loc_scan_coins)
-    ImageButton locScanCoins;
+//    @Nullable
+//    @BindView(R.id.loc_scan_coins)
+//    ImageButton locScanCoins;
 
     private static final Integer REQUEST_LOGIN_CODE = 1000;
 
@@ -114,7 +114,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private Integer uploadCounts = 0;
 
     //扫描金币动画
-    private AnimationDrawable locScanCoinsAnim;
+//    private AnimationDrawable locScanCoinsAnim;
 
     //获取当前用户周边用户
     private static final Integer personPageSize = 10;
@@ -150,7 +150,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
         ButterKnife.apply(hideViews, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
 
-        locScanCoinsAnim = (AnimationDrawable) locScanCoins.getDrawable();
+//        locScanCoinsAnim = (AnimationDrawable) locScanCoins.getDrawable();
 
         //初始化地图
         initMap();
@@ -174,7 +174,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         super.onHiddenChanged(hidden);
         if (hidden) {
             findMoneyMap.onPause();
-            locScanCoinsAnim.stop();
+//            locScanCoinsAnim.stop();
             mPresenter.unRegisterSubscribe();
         } else {
             findMoneyMap.onResume();
@@ -184,7 +184,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Override
     public void onPause() {
         findMoneyMap.onPause();
-        locScanCoinsAnim.stop();
+//        locScanCoinsAnim.stop();
         super.onPause();
     }
 
@@ -430,12 +430,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
     @Override
     public void startRadarScan() {
-        locScanCoinsAnim.start();
+//        locScanCoinsAnim.start();
     }
 
     @Override
     public void stopRadarScan() {
-        locScanCoinsAnim.stop();
+//        locScanCoinsAnim.stop();
     }
 
     @Override
@@ -535,6 +535,22 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         public BitmapDescriptor getTerminalMarker() {
             return BitmapDescriptorFactory.fromResource(R.mipmap.icon_en);
         }
+    }
+
+    public void locScanCoins() {
+        if (null != marketMarker) {
+            marketMarker.remove();
+            marketMarker = null;
+        }
+        if (null != walkingRouteOverlay) {
+            walkingRouteOverlay.removeFromMap();
+            walkingRouteOverlay = null;
+        }
+        searchType = 0;
+        for (Overlay overlay : coinsOverlayList) {
+            overlay.remove();
+        }
+        mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE, 0);
     }
 
     public void getShopListNearByMarket(String coor) {

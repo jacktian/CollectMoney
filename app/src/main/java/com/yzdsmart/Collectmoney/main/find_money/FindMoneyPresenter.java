@@ -42,8 +42,8 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
     public void getShopList(String submitCode, String coor, Integer range, Integer pageIndex, Integer pageSize, final Integer type) {
         switch (type) {
             case 0:
-                mView.startRadarScan();
-                break;
+//                mView.startRadarScan();
+//                break;
             case 1:
                 ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
                 break;
@@ -81,8 +81,8 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
             public void onError(String err) {
                 switch (type) {
                     case 0:
-                        mView.stopRadarScan();
-                        break;
+//                        mView.stopRadarScan();
+//                        break;
                     case 1:
                         ((BaseActivity) context).hideProgressDialog();
                         break;
@@ -94,8 +94,8 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
             public void onComplete() {
                 switch (type) {
                     case 0:
-                        mView.stopRadarScan();
-                        break;
+//                        mView.stopRadarScan();
+//                        break;
                     case 1:
                         ((BaseActivity) context).hideProgressDialog();
                         break;

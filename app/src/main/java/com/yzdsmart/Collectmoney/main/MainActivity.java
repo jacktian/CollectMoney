@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
+import android.view.View;
 
 import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
@@ -22,6 +23,8 @@ import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import butterknife.Optional;
 
 /**
  * Created by YZD on 2016/8/17.
@@ -77,6 +80,44 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+//        if (!(mCurrentFragment instanceof FindMoneyFragment)) {
+//            backToFindMoney();
+//        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPresenter.unRegisterObserver();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
+            imLogin();
+        }
+    }
+
+    @Optional
+    @OnClick({R.id.loc_scan_coins})
+    void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.loc_scan_coins:
+                if (!(mCurrentFragment instanceof FindMoneyFragment)) {
+                    backToFindMoney();
+                }
+                Fragment fragment = fm.findFragmentByTag("find");
+                if (null != fragment) {
+                    ((FindMoneyFragment) fragment).locScanCoins();
+                }
+                break;
+        }
+    }
+
+    @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
         Fragment fragment;
         switch (group.getCheckedRadioButtonId()) {
@@ -102,28 +143,6 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
                 group.clearCheck();
                 break;
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
-            imLogin();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        if (!(mCurrentFragment instanceof FindMoneyFragment)) {
-//            backToFindMoney();
-//        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        mPresenter.unRegisterObserver();
-        super.onDestroy();
     }
 
     /**
@@ -212,7 +231,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         }
     }
 
-    public void chatLogin(){
+    public void chatLogin() {
         imLogin();
     }
 }
