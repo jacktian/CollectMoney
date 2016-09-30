@@ -27,6 +27,7 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.Overlay;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
@@ -218,6 +219,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 ((MainActivity) getActivity()).addOrShowFragment(fragment, "personal");
                 break;
             case R.id.title_right_operation_layout:
+                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
+                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    return;
+                }
                 showMoveDialog(getActivity());
                 break;
             case R.id.loc_scan_coins:
@@ -250,10 +255,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         scanCoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
-                    return;
-                }
                 bundle.putInt("scanType", 0);
                 ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
                 scannerChooseDialog.dismiss();
@@ -262,10 +263,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         payCoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
-                    return;
-                }
                 bundle.putInt("scanType", 1);
                 ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
                 scannerChooseDialog.dismiss();
@@ -479,12 +476,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             if (null == bdLocation || null == findMoneyMap) {
                 return;
             }
-            if (null != locMarker) {
-                locMarker.remove();
-                locMarker = null;
-            }
-            MarkerOptions locMO = new MarkerOptions().position(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).icons(locGifList).period(10);//动画速度
-            locMarker = (Marker) (mBaiduMap.addOverlay(locMO));//定位图标
 
             //获取当前位置坐标
             locLatitude = bdLocation.getLatitude();
@@ -492,6 +483,18 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             qLocation = locLongitude + "," + locLatitude;
 
             SharedPreferencesUtils.setString(getActivity(), "qLocation", qLocation);
+
+            MyLocationData locData = new MyLocationData.Builder().accuracy(bdLocation.getRadius())
+                    // 此处设置开发者获取到的方向信息，顺时针0-360
+                    .direction(100).latitude(locLatitude).longitude(locLongitude).build();
+            mBaiduMap.setMyLocationData(locData);
+
+//            if (null != locMarker) {
+//                locMarker.remove();
+//                locMarker = null;
+//            }
+//            MarkerOptions locMO = new MarkerOptions().position(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).icons(locGifList).period(10);//动画速度
+//            locMarker = (Marker) (mBaiduMap.addOverlay(locMO));//定位图标
 
             if (null != SharedPreferencesUtils.getString(getActivity(), "cust_code", "") && SharedPreferencesUtils.getString(getActivity(), "cust_code", "").length() > 0) {
                 if (uploadCounts == 600) {

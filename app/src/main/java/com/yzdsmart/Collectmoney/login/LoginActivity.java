@@ -13,6 +13,8 @@ import com.sina.weibo.sdk.auth.WeiboAuthListener;
 import com.sina.weibo.sdk.auth.sso.SsoHandler;
 import com.sina.weibo.sdk.exception.WeiboException;
 import com.tencent.connect.common.Constants;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
@@ -108,6 +110,19 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     private AuthListener mLoginListener = new AuthListener();
     //微博
 
+    //微信
+    private static final String APP_ID = "wx1f0757f65d97d285";
+    //IWXAPI是第三方app和微信通信的openapi接口
+    private IWXAPI iwxapi;
+
+    //注册到微信
+    private void regToWx() {
+        //通过WXAPIFactory工厂获取IWXAPI的实例
+        iwxapi = WXAPIFactory.createWXAPI(this, APP_ID, true);
+        iwxapi.registerApp(APP_ID);
+    }
+    //微信
+
     private LoginContract.LoginPresenter mPresenter;
 
     @Override
@@ -135,7 +150,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     }
 
     @Optional
-    @OnClick({R.id.forget_pwd_link, R.id.new_user_link, R.id.login_register_confirm_button, R.id.platform_qq, R.id.platform_webo})
+    @OnClick({R.id.forget_pwd_link, R.id.new_user_link, R.id.login_register_confirm_button, R.id.platform_wechat, R.id.platform_qq, R.id.platform_webo})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -163,6 +178,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                     return;
                 }
                 mPresenter.userLogin(userNameET.getText().toString(), userPasswordET.getText().toString(), "");
+                break;
+            case R.id.platform_wechat:
+                regToWx();
                 break;
             case R.id.platform_qq:
                 if (!mTencent.isSessionValid()) {

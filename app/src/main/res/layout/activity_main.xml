@@ -21,8 +21,7 @@
             android:layout_height="@dimen/bottom_tab_height"
             android:layout_gravity="bottom"
             android:background="@drawable/white_panel_top_border"
-            android:orientation="horizontal"
-            android:translationZ="0dp">
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -61,19 +60,7 @@
             android:layout_gravity="center|bottom"
             android:layout_marginTop="-25dp"
             android:background="@null"
-            android:src="@mipmap/radar_scan"
-            android:translationZ="2dp" />
+            android:src="@mipmap/radar_scan" />
     </FrameLayout>
-
-
-    <!--<FrameLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/bottom_tab_height"-->
-    <!--android:layout_gravity="bottom">-->
-
-    <!---->
-
-    <!---->
-    <!--</FrameLayout>-->
 
 </android.support.design.widget.CoordinatorLayout>
