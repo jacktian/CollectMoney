@@ -58,12 +58,6 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     @BindView(R.id.title_right_operation)
     ImageView titleRightOpeIV;
     @Nullable
-    @BindView(R.id.shop_info_check_group)
-    CustomNestRadioGroup shopInfoCheckGroup;
-    @Nullable
-    @BindView(R.id.hotel_base_info_layout)
-    RelativeLayout hotelBaseInfoLayout;
-    @Nullable
     @BindView(R.id.shop_images_banner)
     ConvenientBanner shopImagesBanner;
     @Nullable
@@ -150,20 +144,6 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
 
         mPresenter.getShopFollowers(GET_SHOP_FOLLOWERS_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
-
-        shopInfoCheckGroup.setOnCheckedChangeListener(new CustomNestRadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
-                switch (group.getCheckedRadioButtonId()) {
-                    case R.id.shop_info_radio:
-                        ButterKnife.apply(hotelBaseInfoLayout, BUTTERKNIFEGONE);
-                        break;
-                    case R.id.shop_detail_info_radio:
-                        ButterKnife.apply(hotelBaseInfoLayout, BUTTERKNIFEVISIBLE);
-                        break;
-                }
-            }
-        });
     }
 
     @Override
@@ -257,7 +237,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         dailyCoinCountsTV.setText("" + shopDetails.getTodayGlodNum());
         visitPersonCountsTV.setText("" + shopDetails.getVisiNum());
         isAtte = shopDetails.getAtte();
-        isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.heart_icon_white_checked) : getResources().getDrawable(R.mipmap.heart_icon_white));
+        isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.heart_icon_pink_checked) : getResources().getDrawable(R.mipmap.heart_icon_pink));
         shopCoor = shopDetails.getCoor();
         shopImageList.clear();
         shopImageList.addAll(shopDetails.getImageLists());
@@ -294,7 +274,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
             return;
         }
         isAtte = CANCEL_FOCUS_CODE.equals(action) ? false : true;
-        isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.heart_icon_white_checked) : getResources().getDrawable(R.mipmap.heart_icon_white));
+        isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.heart_icon_pink_checked) : getResources().getDrawable(R.mipmap.heart_icon_pink));
 
         mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
     }

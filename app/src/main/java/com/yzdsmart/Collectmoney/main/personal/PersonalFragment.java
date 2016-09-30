@@ -365,7 +365,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @Override
     public void onGetCustInfo(String name, String headUel, Integer goldNum) {
         userNameTV.setText(name);
-        userAccountCoinTV.setText("" + goldNum);
+        userAccountCoinTV.setText(" " + goldNum);
         Glide.with(this).load(headUel).error(getActivity().getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
     }
 

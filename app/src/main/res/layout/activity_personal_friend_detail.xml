@@ -298,10 +298,11 @@
 
                         <TextView
                             android:id="@+id/change_money_times"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
+                            android:gravity="center_horizontal"
                             android:singleLine="true"
                             android:text=""
                             android:textColor="@color/orange"
@@ -309,10 +310,11 @@
                             android:textSize="@dimen/font_xlarge" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/change_money_times"
                             android:layout_centerHorizontal="true"
+                            android:gravity="center_horizontal"
                             android:text="@string/detail_change_money_times"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_medium" />
@@ -326,10 +328,11 @@
 
                         <TextView
                             android:id="@+id/coin_counts"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
+                            android:gravity="center_horizontal"
                             android:singleLine="true"
                             android:text=""
                             android:textColor="@color/orange"
@@ -337,10 +340,11 @@
                             android:textSize="@dimen/font_xlarge" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/coin_counts"
                             android:layout_centerHorizontal="true"
+                            android:gravity="center_horizontal"
                             android:text="@string/detail_coin_counts"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_medium" />
@@ -354,10 +358,11 @@
 
                         <TextView
                             android:id="@+id/get_from_friend_counts"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:ellipsize="marquee"
+                            android:gravity="center_horizontal"
                             android:singleLine="true"
                             android:text=""
                             android:textColor="@color/orange"
@@ -366,10 +371,11 @@
 
                         <TextView
                             android:id="@+id/change_money_time_title"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/get_from_friend_counts"
                             android:layout_centerHorizontal="true"
+                            android:gravity="center_horizontal"
                             android:text="@string/detail_get_from_friend_counts"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/font_medium" />
