@@ -17,6 +17,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.chat.ChatActivity;
+import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
 import com.yzdsmart.Collectmoney.edit_personal_info.EditPersonalInfoActivity;
 import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
@@ -172,12 +173,21 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.msg_chat, R.id.galley_preview_layout, R.id.title_right_operation_layout})
+    @OnClick({R.id.title_left_operation_layout, R.id.user_avater, R.id.msg_chat, R.id.galley_preview_layout, R.id.title_right_operation_layout})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
+                break;
+            case R.id.user_avater:
+                switch (type) {
+                    case 0:
+                        openActivity(ImageCropActivity.class);
+                        break;
+                    default:
+                        break;
+                }
                 break;
             case R.id.msg_chat:
                 if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {

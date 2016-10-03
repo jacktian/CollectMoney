@@ -5,7 +5,9 @@ import android.content.Context;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
+import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 /**
  * Created by YZD on 2016/9/23.
@@ -47,6 +49,37 @@ public class SetInfoPresenter implements SetInfoContract.SetInfoPresenter {
             @Override
             public void onComplete() {
 
+            }
+        });
+    }
+
+    @Override
+    public void userLogin(String userName, String password, String loginCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loginning));
+        mModel.userLogin(userName, password, loginCode, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                LoginRequestResponse response = (LoginRequestResponse) result;
+                if ("OK".equals(response.getActionStatus())) {
+                    SharedPreferencesUtils.setString(context, "baza_code", response.getBazaCode());
+                    SharedPreferencesUtils.setString(context, "cust_code", response.getCustCode());
+                    SharedPreferencesUtils.setString(context, "im_account", response.getTCInfo().getTCAccount());
+                    SharedPreferencesUtils.setString(context, "im_password", response.getTCInfo().getTCPassword());
+                    mView.onUserLogin(true, response.getErrorInfo());
+                } else if ("FAIL".equals(response.getActionStatus())) {
+                    mView.onUserLogin(false, response.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

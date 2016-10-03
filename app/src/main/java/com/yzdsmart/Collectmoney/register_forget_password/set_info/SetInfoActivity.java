@@ -94,8 +94,7 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
             @Override
             public void run() {
                 hideProgressDialog();
-                App.getAppInstance().exitApp();
-                openActivity(MainActivity.class);
+                mPresenter.userLogin(userName, password, "");
             }
         };
     }
@@ -142,6 +141,12 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
     public void onUserRegister() {
         showProgressDialog(R.drawable.success, getResources().getString(R.string.register_success));
         mHandler.postDelayed(registerSuccessRunnable, 500);
+    }
+
+    @Override
+    public void onUserLogin(boolean flag, String msg) {
+        App.getAppInstance().exitApp();
+        openActivity(MainActivity.class);
     }
 
     @Override

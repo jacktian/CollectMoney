@@ -231,7 +231,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
 //                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.user_avater:
-                ((BaseActivity) getActivity()).openActivity(ImageCropActivity.class);
+//                ((BaseActivity) getActivity()).openActivity(ImageCropActivity.class);
                 break;
             case R.id.to_settings:
                 ((BaseActivity) getActivity()).openActivity(SettingsActivity.class);

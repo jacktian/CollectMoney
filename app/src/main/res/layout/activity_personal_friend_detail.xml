@@ -94,89 +94,6 @@
     <!--</android.support.v7.widget.Toolbar>-->
     <!--</android.support.design.widget.CollapsingToolbarLayout>-->
     <!--</android.support.design.widget.AppBarLayout>-->
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="148dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="148dp"
-            android:background="@color/light_yellow">
-
-            <ImageView
-                android:id="@+id/main.backdrop"
-                android:layout_width="match_parent"
-                android:layout_height="105dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/toolbar_image_bg" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/user_avater"
-                android:layout_width="@dimen/user_detail_avater_width"
-                android:layout_height="@dimen/user_detail_avater_width"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true" />
-        </RelativeLayout>
-
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#00f7f5ef">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolBar"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                app:contentInsetStart="0dp">
-
-                <RelativeLayout
-                    android:id="@+id/toolbar_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="@dimen/activity_horizontal_padding"
-                    android:paddingRight="@dimen/activity_horizontal_padding">
-
-                    <FrameLayout
-                        android:id="@+id/title_left_operation_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:paddingRight="@dimen/activity_horizontal_padding">
-
-                        <ImageView
-                            android:id="@+id/title_left_operation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginBottom="@dimen/activity_vertical_margin"
-                            android:layout_marginTop="@dimen/activity_vertical_margin"
-                            android:src="@mipmap/left_arrow_white" />
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/title_right_operation_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:paddingLeft="@dimen/activity_horizontal_padding">
-
-                        <ImageView
-                            android:id="@+id/title_right_operation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginBottom="@dimen/activity_vertical_margin"
-                            android:layout_marginTop="@dimen/activity_vertical_margin"
-                            android:src="@mipmap/menu_icon_white" />
-
-                    </FrameLayout>
-                </RelativeLayout>
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.AppBarLayout>
-    </FrameLayout>
 
     <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
     <android.support.v4.widget.NestedScrollView
@@ -464,4 +381,88 @@
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="148dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="148dp"
+            android:background="@color/light_yellow">
+
+            <ImageView
+                android:id="@+id/main.backdrop"
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/toolbar_image_bg" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_avater"
+                android:layout_width="@dimen/user_detail_avater_width"
+                android:layout_height="@dimen/user_detail_avater_width"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00f7f5ef">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolBar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                app:contentInsetStart="0dp">
+
+                <RelativeLayout
+                    android:id="@+id/toolbar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/activity_horizontal_padding"
+                    android:paddingRight="@dimen/activity_horizontal_padding">
+
+                    <FrameLayout
+                        android:id="@+id/title_left_operation_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="@dimen/activity_horizontal_padding">
+
+                        <ImageView
+                            android:id="@+id/title_left_operation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            android:src="@mipmap/left_arrow_white" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/title_right_operation_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/activity_horizontal_padding">
+
+                        <ImageView
+                            android:id="@+id/title_right_operation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            android:src="@mipmap/menu_icon_white" />
+
+                    </FrameLayout>
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+    </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>

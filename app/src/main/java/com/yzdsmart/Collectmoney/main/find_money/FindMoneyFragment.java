@@ -285,7 +285,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
         mBaiduMap = findMoneyMap.getMap();
         mMapSettings = mBaiduMap.getUiSettings();
-        mMapSettings.setScrollGesturesEnabled(false);
+//        mMapSettings.setScrollGesturesEnabled(false);
         mBaiduMap.setMaxAndMinZoomLevel(18, 14);
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.zoomTo(15));
@@ -449,7 +449,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             walkingRouteOverlay = new MyWalkingRouteOverlay(mBaiduMap);
             walkingRouteOverlay.setData((WalkingRouteLine) routeLine);
             walkingRouteOverlay.addToMap();
-//            walkingRouteOverlay.zoomToSpan();
+            walkingRouteOverlay.zoomToSpan();
         }
     }
 
@@ -572,6 +572,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         }
         MarkerOptions marketMO = new MarkerOptions().position(new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]))).icon(BitmapDescriptorFactory.fromResource(R.mipmap.market_icon));
         marketMarker = (Marker) (mBaiduMap.addOverlay(marketMO));//定位图标
+        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]))));
         mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE, 1);
     }
 
