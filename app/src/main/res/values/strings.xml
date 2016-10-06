@@ -161,7 +161,7 @@
     <string name="edit_personal_person_address">住址:</string>
 
     <!--搜索新好友-->
-    <string name="future_search_new_friend">搜索新的朋友</string>
+    <string name="future_search_new_friend">搜索新朋友</string>
 
     <!--商铺详情-->
     <string name="shop_detail">详情</string>
@@ -306,9 +306,9 @@
     <string name="search_friend">搜索</string>
     <string name="not_found_friend">好友数\t0</string>
     <string name="new_friend">新的朋友</string>
-    <string name="add_new_friend">添加新的朋友</string>
+    <string name="add_new_friend">添加新朋友</string>
     <string name="accept_friend">接受</string>
-    <string name="wait_accept_friend">等待验证</string>
+    <string name="wait_accept_friend">待验证</string>
     <string name="already_accept_friend">已接受</string>
     <string name="search_account_hint">输入您要搜索的账号</string>
     <string name="search_result_hint">搜索结果</string>

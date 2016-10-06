@@ -19,7 +19,9 @@ import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.bean.Friendship;
 import com.yzdsmart.Collectmoney.tecent_im.bean.FriendFuture;
+import com.yzdsmart.Collectmoney.tecent_im.bean.FriendshipInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -159,21 +161,26 @@ public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapte
         @Optional
         @OnClick({R.id.friend_future_operation})
         void onClick(View view) {
-            TIMFriendAddResponse response = new TIMFriendAddResponse();
-            response.setIdentifier(future.getIdentify());
-            response.setType(TIMFriendResponseType.AgreeAndAdd);
-            TIMFriendshipManager.getInstance().addFriendResponse(response, new TIMValueCallBack<TIMFriendResult>() {
-                @Override
-                public void onError(int i, String s) {
+            switch (view.getId()) {
+                case R.id.friend_future_operation:
+                    TIMFriendAddResponse response = new TIMFriendAddResponse();
+                    response.setIdentifier(future.getIdentify());
+                    response.setType(TIMFriendResponseType.AgreeAndAdd);
+                    TIMFriendshipManager.getInstance().addFriendResponse(response, new TIMValueCallBack<TIMFriendResult>() {
+                        @Override
+                        public void onError(int i, String s) {
+                            System.out.println("-------------onError-------------");
+                        }
 
-                }
-
-                @Override
-                public void onSuccess(TIMFriendResult timFriendResult) {
-                    future.setType(TIMFutureFriendType.TIM_FUTURE_FRIEND_DECIDE_TYPE);
-                    notifyDataSetChanged();
-                }
-            });
+                        @Override
+                        public void onSuccess(TIMFriendResult timFriendResult) {
+                            System.out.println("------------onSuccess--------------" + FriendshipInfo.getInstance().isFriend(future.getIdentify()));
+                            future.setType(TIMFutureFriendType.TIM_FUTURE_FRIEND_DECIDE_TYPE);
+                            notifyDataSetChanged();
+                        }
+                    });
+                    break;
+            }
         }
     }
 }

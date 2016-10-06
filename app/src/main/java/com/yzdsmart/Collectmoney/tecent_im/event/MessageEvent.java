@@ -13,7 +13,6 @@ import java.util.Observable;
  */
 public class MessageEvent extends Observable implements TIMMessageListener {
 
-
     private volatile static MessageEvent instance;
 
     private MessageEvent() {

@@ -5,6 +5,11 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -21,6 +26,7 @@ import com.tencent.TIMConversationType;
 import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMGroupPendencyItem;
 import com.tencent.TIMMessage;
+import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.friend_future.FriendFutureActivity;
@@ -32,11 +38,13 @@ import com.yzdsmart.Collectmoney.money_friendship.group_list.create.CreateGroupA
 import com.yzdsmart.Collectmoney.money_friendship.recommend_friends.RecommendFriendsFragment;
 import com.yzdsmart.Collectmoney.tecent_im.bean.Conversation;
 import com.yzdsmart.Collectmoney.tecent_im.bean.CustomMessage;
+import com.yzdsmart.Collectmoney.tecent_im.bean.GroupInfo;
 import com.yzdsmart.Collectmoney.tecent_im.bean.GroupManageConversation;
 import com.yzdsmart.Collectmoney.tecent_im.bean.MessageFactory;
 import com.yzdsmart.Collectmoney.tecent_im.bean.NormalConversation;
 import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -70,6 +78,9 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
     @Nullable
     @BindView(R.id.im_bottom_tab)
     CustomNestRadioGroup imBottomTab;
+    @Nullable
+    @BindView(R.id.unread_conversation_bubble)
+    TextView unreadConversationBubbleTV;
 
     private FragmentManager fm;
     private Fragment mCurrentFragment;
@@ -77,12 +88,14 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
     private MoneyFriendshipContract.MoneyFriendshipPresenter mPresenter;
 
     private List<Conversation> conversationList;
+    private List<Conversation> pgConversationList = null;//个人或者群消息
     private GroupManageConversation groupManageConversation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        conversationList = new LinkedList<>();
+        conversationList = new LinkedList<Conversation>();
+        pgConversationList = new ArrayList<Conversation>();
 
         fm = getFragmentManager();
 
@@ -160,6 +173,12 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
     @Override
     public void setPresenter(MoneyFriendshipContract.MoneyFriendshipPresenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUnreadConversationBubble();
     }
 
     @Override
@@ -350,5 +369,50 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
         if (null != chatFragment) {
             ((ConversationFragment) chatFragment).updateConversions(conversationList);
         }
+        updateUnreadConversationBubble();
+    }
+
+    public void updateUnreadConversationBubble() {
+        long unreadCount = getTotalConversationUnreadNum();
+        if (unreadCount <= 0) {
+            unreadConversationBubbleTV.setVisibility(View.INVISIBLE);
+        } else {
+            unreadConversationBubbleTV.setVisibility(View.VISIBLE);
+            String unReadStr = String.valueOf(unreadCount);
+            unreadConversationBubbleTV.setBackgroundResource(R.mipmap.tecent_point1);
+            if (unreadCount > 99) {
+                unreadConversationBubbleTV.setBackgroundResource(R.mipmap.tecent_point2);
+                unReadStr = getResources().getString(R.string.time_more);
+            }
+            unreadConversationBubbleTV.setText(unReadStr);
+        }
+    }
+
+    /**
+     * 统计未读信息数
+     *
+     * @return
+     */
+    private long getTotalConversationUnreadNum() {
+        long num = 0;
+        pgConversationList.clear();
+        for (Conversation conversation : conversationList) {
+            if (null != conversation.getType()) {
+                switch (conversation.getType()) {
+                    case C2C:
+                        pgConversationList.add(conversation);
+                        break;
+                    case Group:
+                        if (GroupInfo.getInstance().isInGroup(conversation.getIdentify())) {
+                            pgConversationList.add(conversation);
+                        }
+                        break;
+                }
+            }
+        }
+        for (Conversation conversation : pgConversationList) {
+            num += conversation.getUnreadNum();
+        }
+        return num;
     }
 }

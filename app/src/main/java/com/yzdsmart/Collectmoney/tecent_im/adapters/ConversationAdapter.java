@@ -78,6 +78,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        System.out.println("---------onBindViewHolder-------");
         // 如果设置了回调，则设置点击事件
         if (null != mOnItemClickListener) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {

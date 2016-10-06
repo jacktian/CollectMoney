@@ -225,6 +225,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
     @Override
     protected void onDestroy() {
         mPresenter.unRegisterObserver();
+        handler.removeCallbacks(resetTitle);
         super.onDestroy();
     }
 

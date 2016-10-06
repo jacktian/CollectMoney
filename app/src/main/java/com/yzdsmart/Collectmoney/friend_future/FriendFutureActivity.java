@@ -31,7 +31,7 @@ import butterknife.Optional;
  */
 public class FriendFutureActivity extends BaseActivity implements FriendFutureContract.FriendFutureView {
     @Nullable
-    @BindViews({R.id.center_title})
+    @BindViews({R.id.center_title, R.id.title_logo})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.title_left_operation)
@@ -46,7 +46,7 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
     @BindView(R.id.friend_future_list)
     RecyclerView friendFutureRV;
 
-    private static final int PAGE_SIZE = 20;
+    private static final int PAGE_SIZE = 10;
     private long pendSeq, decideSeq, recommendSeq;
 
     private LinearLayoutManager mLinearLayoutManager;

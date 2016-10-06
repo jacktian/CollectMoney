@@ -42,7 +42,7 @@ import butterknife.Optional;
  */
 public class SearchFriendActivity extends BaseActivity implements SearchFriendContract.AddFriendView {
     @Nullable
-    @BindViews({R.id.center_title, R.id.title_right_operation_layout})
+    @BindViews({R.id.center_title, R.id.title_logo, R.id.title_right_operation_layout})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.title_left_operation)
