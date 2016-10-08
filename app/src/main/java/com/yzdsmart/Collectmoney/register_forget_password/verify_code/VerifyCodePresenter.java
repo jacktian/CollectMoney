@@ -29,8 +29,10 @@ public class VerifyCodePresenter implements VerifyCodeContract.VerifyCodePresent
             @Override
             public void onSuccess(Object result) {
                 RequestResponse response = (RequestResponse) result;
-                if ("FAIL".equals(response.getActionStatus())) {
-                    ((BaseActivity) context).showSnackbar(response.getErrorInfo());
+                if ("OK".equals(response.getActionStatus())) {
+                    mView.onGetVerifyCode(true, null);
+                } else if ("FAIL".equals(response.getActionStatus())) {
+                    mView.onGetVerifyCode(false, response.getErrorInfo());
                 }
             }
 

@@ -271,4 +271,21 @@ public class Utils {
             return upperBound;
         }
     }
+
+    /**
+     * 获取设备宽度（px）
+     *
+     * @param context context
+     * @return int
+     */
+    public static int deviceWidth(Context context) {
+        return context.getResources().getDisplayMetrics().widthPixels;
+    }
+
+    /**
+     * 获取设备高度（px）
+     */
+    public static int deviceHeight(Context context) {
+        return context.getResources().getDisplayMetrics().heightPixels;
+    }
 }

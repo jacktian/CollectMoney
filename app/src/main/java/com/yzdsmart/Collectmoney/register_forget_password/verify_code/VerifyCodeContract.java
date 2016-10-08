@@ -9,6 +9,14 @@ import com.yzdsmart.Collectmoney.BaseView;
 public interface VerifyCodeContract {
     interface VerifyCodeView extends BaseView<VerifyCodePresenter> {
         /**
+         * 获取短信验证码
+         *
+         * @param flag
+         * @param msg
+         */
+        void onGetVerifyCode(boolean flag, String msg);
+
+        /**
          * 验证短信验证码
          *
          * @param flag
@@ -32,7 +40,7 @@ public interface VerifyCodeContract {
          * @param telNum
          * @param verifyCode
          */
-        void validateVerifyCode(String actioncode,String telNum, String verifyCode);
+        void validateVerifyCode(String actioncode, String telNum, String verifyCode);
 
         void unRegisterSubscribe();
     }

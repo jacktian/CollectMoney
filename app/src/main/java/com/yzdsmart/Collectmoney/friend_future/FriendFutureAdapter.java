@@ -40,7 +40,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapter.ViewHolder> {
     private Context context;
     private List<FriendFuture> friendFutureList;
-    private FriendFuture future;
 
     public FriendFutureAdapter(Context context) {
         this.context = context;
@@ -78,7 +77,7 @@ public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        future = friendFutureList.get(position);
+        final FriendFuture future = friendFutureList.get(position);
         holder.setUserNameTV(future.getName());
         //获取用户资料
         TIMFriendshipManager.getInstance().getUsersProfile(Collections.singletonList(future.getIdentify()), new TIMValueCallBack<List<TIMUserProfile>>() {
@@ -163,6 +162,7 @@ public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapte
         void onClick(View view) {
             switch (view.getId()) {
                 case R.id.friend_future_operation:
+                    final FriendFuture future = friendFutureList.get(getAdapterPosition());
                     TIMFriendAddResponse response = new TIMFriendAddResponse();
                     response.setIdentifier(future.getIdentify());
                     response.setType(TIMFriendResponseType.AgreeAndAdd);
@@ -174,7 +174,7 @@ public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapte
 
                         @Override
                         public void onSuccess(TIMFriendResult timFriendResult) {
-                            System.out.println("------------onSuccess--------------" + FriendshipInfo.getInstance().isFriend(future.getIdentify()));
+                            System.out.println(future.getIdentify() + "-------" + future.getName() + "--------" + FriendshipInfo.getInstance().isFriend(future.getIdentify()));
                             future.setType(TIMFutureFriendType.TIM_FUTURE_FRIEND_DECIDE_TYPE);
                             notifyDataSetChanged();
                         }

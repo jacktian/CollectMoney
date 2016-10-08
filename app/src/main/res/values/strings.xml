@@ -307,7 +307,7 @@
     <string name="not_found_friend">好友数\t0</string>
     <string name="new_friend">新的朋友</string>
     <string name="add_new_friend">添加新朋友</string>
-    <string name="accept_friend">接受</string>
+    <string name="accept_friend">同意</string>
     <string name="wait_accept_friend">待验证</string>
     <string name="already_accept_friend">已接受</string>
     <string name="search_account_hint">输入您要搜索的账号</string>

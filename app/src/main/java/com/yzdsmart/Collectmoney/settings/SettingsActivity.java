@@ -66,7 +66,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.S
 
         new SettingsPresenter(this, this);
 
-        mPresenter.getCustDetailInfo("000000", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
+//        mPresenter.getCustDetailInfo("000000", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
     }
 
     @Override

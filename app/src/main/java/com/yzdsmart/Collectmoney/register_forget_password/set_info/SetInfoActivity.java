@@ -1,5 +1,6 @@
 package com.yzdsmart.Collectmoney.register_forget_password.set_info;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -16,6 +17,14 @@ import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.utils.Utils;
 import com.yzdsmart.Collectmoney.views.BetterSpinner;
+import com.yzdsmart.Collectmoney.views.pickerview.TimePickerDialog;
+import com.yzdsmart.Collectmoney.views.pickerview.data.Type;
+import com.yzdsmart.Collectmoney.views.pickerview.listener.OnDateSetListener;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 
@@ -67,6 +76,10 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
     private Handler mHandler = new Handler();
     private Runnable registerSuccessRunnable;
 
+    private DateTimeFormatter dtf;
+
+    private long birthBefore = 150L * 365 * 1000 * 60 * 60 * 24L;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +87,8 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
         Bundle bundle = getIntent().getExtras();
         userName = bundle.getString("userName");
         password = bundle.getString("password");
+
+        dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
@@ -117,11 +132,35 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.login_register_confirm_button})
+    @OnClick({R.id.title_left_operation_layout, R.id.user_age, R.id.login_register_confirm_button})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
+                break;
+            case R.id.user_age:
+                TimePickerDialog mDialogAll = new TimePickerDialog.Builder()
+                        .setCallBack(new OnDateSetListener() {
+                            @Override
+                            public void onDateSet(TimePickerDialog timePickerView, long millseconds) {
+                                userAgeET.setError(null, null);
+                                DateTime dateTime = new DateTime(millseconds);
+                                userAgeET.setText(dateTime.toString(dtf));
+                            }
+                        })
+                        .setCancelTextColor(getResources().getColor(R.color.grey))
+                        .setSureTextColor(getResources().getColor(R.color.grey))
+                        .setCyclic(false)
+                        .setMinMillseconds(System.currentTimeMillis() - birthBefore)
+                        .setMaxMillseconds(System.currentTimeMillis())
+                        .setCurrentMillseconds(System.currentTimeMillis())
+                        .setThemeColor(Color.WHITE)
+                        .setType(Type.YEAR_MONTH_DAY)
+                        .setWheelItemTextNormalColor(getResources().getColor(R.color.light_grey))
+                        .setWheelItemTextSelectorColor(getResources().getColor(R.color.grey))
+                        .setWheelItemTextSize(14)
+                        .build();
+                mDialogAll.show(getSupportFragmentManager(), "year_month_day");
                 break;
             case R.id.login_register_confirm_button:
                 if (!requiredVerify(userAgeET)) {
@@ -132,7 +171,7 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
                     nickNameET.setError(getResources().getString(R.string.input_nickname));
                     return;
                 }
-                mPresenter.userRegister(REG_ACTION_CODE, userName, password, userGenderSpinner.getText().toString(), Integer.valueOf(userAgeET.getText().toString()), nickNameET.getText().toString(), Utils.md5(REG_ACTION_CODE + "yzd" + userName));
+                mPresenter.userRegister(REG_ACTION_CODE, userName, password, userGenderSpinner.getText().toString(), Integer.valueOf(Days.daysBetween(dtf.parseDateTime(userAgeET.getText().toString()), new DateTime()).getDays() / 365 + 1), nickNameET.getText().toString(), Utils.md5(REG_ACTION_CODE + "yzd" + userName));
                 break;
         }
     }

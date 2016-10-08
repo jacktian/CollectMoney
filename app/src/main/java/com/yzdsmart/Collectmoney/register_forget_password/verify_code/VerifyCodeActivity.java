@@ -153,6 +153,19 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
     }
 
     @Override
+    public void onGetVerifyCode(boolean flag, String msg) {
+        if (!flag) {
+            showSnackbar(msg);
+            getVerifyTV.setText(getResources().getString(R.string.get_verify_code));
+            getVerifyTV.setEnabled(true);
+            mHandler.removeCallbacks(getVerifyCodeRunnable);
+            countDownTime = 60;
+            return;
+        }
+        showSnackbar("获取验证码成功");
+    }
+
+    @Override
     public void onValidateVerifyCode(boolean flag, String msg) {
         if (!flag) {
             showSnackbar(msg);

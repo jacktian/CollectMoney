@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -68,8 +69,6 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     private QRScannerContract.QRScannerPresenter mPresenter;
 
-    private Handler mHandler = new Handler();
-    private Runnable closeRunnable;
     private Dialog getCoinDialog;
 
     @Override
@@ -97,16 +96,6 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         initBeepSound();
         vibrate = true;
         mQRCodeView.setDelegate(this);
-
-        closeRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (null != getCoinDialog) {
-                    getCoinDialog.dismiss();
-                }
-                closeActivity();
-            }
-        };
     }
 
     @Override
@@ -134,7 +123,6 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     @Override
     protected void onDestroy() {
-        mHandler.removeCallbacks(closeRunnable);
         if (null != mediaPlayer) {
             mediaPlayer.release();
         }
@@ -228,7 +216,17 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         }
         getCoinDialog = new GetCoinDialog(this, setNumToIcon(counts));
         getCoinDialog.show();
-        mHandler.postDelayed(closeRunnable, 1500);
+        Button dialogConfirm = (Button) getCoinDialog.findViewById(R.id.dialog_confirm);
+        dialogConfirm.setVisibility(View.VISIBLE);
+        dialogConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != getCoinDialog) {
+                    getCoinDialog.dismiss();
+                }
+                closeActivity();
+            }
+        });
     }
 
     /**
@@ -240,10 +238,20 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         Bitmap bitmap = bd.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(bitmap);
 
+        // 字体大小随分辨率大小变化
+        // 计算与你开发时设定的屏幕大小的纵横比
+        int screenWidth = Utils.deviceWidth(this);
+        int screenHeight = Utils.deviceHeight(this);
+        float ratioWidth = (float) screenWidth / 480;
+        float ratioHeight = (float) screenHeight / 800;
+
+        float ratio = Math.min(ratioWidth, ratioHeight);
+        int textSize = Math.round(40 * ratio);
+
         Paint paint = new Paint();
         paint.setColor(Color.WHITE);
         paint.setAntiAlias(true);
-        paint.setTextSize(50);
+        paint.setTextSize(textSize);
         float margin = bitmap.getWidth() / 3;
         canvas.drawText(String.valueOf(num),
                 margin,
