@@ -85,6 +85,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     //默认城市经纬度
     private static final LatLng GEO_DEFAULT_CITY = new LatLng(31.79, 119.95);
     private Integer zoomDistance = 500;
+    private Marker mapCenterMarker;
     //定位坐标点
     private Double locLatitude = null;
     private Double locLongitude = null;
@@ -92,7 +93,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private LocationClient mLocClient;
     private boolean isFirstLoc = true; // 是否首次定位
     private MyLocationListener locListener = new MyLocationListener();
-    private Marker locMarker;
+    //    private Marker locMarker;
     private ArrayList<BitmapDescriptor> locGifList;
     //路径规划相关
     private RoutePlanSearch mSearch = null;// 搜索模块，也可去掉地图模块独立使用
@@ -300,9 +301,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 //                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
 //                    return true;
 //                }
-                if (locMarker == marker) {
 
-                } else if (marketMarker == marker) {
+//                if (locMarker == marker) {
+//
+//                } else
+                if (marketMarker == marker) {
 
                 } else {
                     if (null != marker.getExtraInfo() && null != marker.getExtraInfo().getString("bazaCode")) {
@@ -327,6 +330,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
             @Override
             public void onMapStatusChangeFinish(MapStatus mapStatus) {
+                if (null != mapCenterMarker) {
+                    mapCenterMarker.remove();
+                    mapCenterMarker = null;
+                }
+                MarkerOptions centerMO = new MarkerOptions().position(mapStatus.target).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_center_icon));
+                mapCenterMarker = (Marker) (mBaiduMap.addOverlay(centerMO));//地图中心点图标
                 switch ((int) mapStatus.zoom) {
                     case 13:
                         zoomDistance = 2000;
@@ -541,6 +550,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     public void locScanCoins() {
+        searchType = 0;
+        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(locLatitude, locLongitude)));
         if (null != marketMarker) {
             marketMarker.remove();
             marketMarker = null;
@@ -549,7 +560,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             walkingRouteOverlay.removeFromMap();
             walkingRouteOverlay = null;
         }
-        searchType = 0;
         for (Overlay overlay : coinsOverlayList) {
             overlay.remove();
         }
