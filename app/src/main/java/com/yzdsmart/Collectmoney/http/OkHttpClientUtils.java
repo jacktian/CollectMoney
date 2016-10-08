@@ -25,6 +25,7 @@ public class OkHttpClientUtils {
                     Request request = chain.request()
                             .newBuilder()
                             .addHeader("Accept", "*/*")
+                            .addHeader("Accept-Encoding", "gzip, deflate")
                             .build();
                     return chain.proceed(request);
                 }

@@ -28,6 +28,7 @@ import com.yzdsmart.Collectmoney.http.response.WithdrawRequestResponse;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -618,5 +619,6 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.EXPAND)
-    Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+//    Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<ResponseBody> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 }
