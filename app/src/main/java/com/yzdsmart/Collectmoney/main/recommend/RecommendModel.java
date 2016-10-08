@@ -56,8 +56,8 @@ public class RecommendModel {
             }
 
             @Override
-            public void onNext(ResponseBody expands) {
-                listener.onSuccess(expands);
+            public void onNext(ResponseBody responseBody) {
+                listener.onSuccess(responseBody);
             }
         };
         RequestAdapter.getRequestService().getExpandList(submitCode, pageIndex, pageSize)

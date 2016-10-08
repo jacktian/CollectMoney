@@ -2,15 +2,11 @@ package com.yzdsmart.Collectmoney.main.recommend;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -42,12 +38,13 @@ public class RecommendPresenter implements RecommendContract.RecommendPresenter 
 //                }
                 ResponseBody responseBody = (ResponseBody) result;
                 try {
-                    ((BaseActivity) context).showSnackbar(responseBody.string());
-                    Gson gson = new Gson();
-                    List<LinkedTreeMap> expands = gson.fromJson(responseBody.string(), ArrayList.class);
-                    for (LinkedTreeMap expand : expands) {
-                        System.out.println("---->" + expand.toString());
-                    }
+                    System.out.println("---->" + responseBody.string());
+//                    Gson gson = new Gson();
+//                    List<LinkedTreeMap> expands = gson.fromJson(responseBody.string(), ArrayList.class);
+//                    for (LinkedTreeMap expand : expands) {
+//                        ExpandListRequestResponse response = gson.fromJson(expand.toString(), ExpandListRequestResponse.class);
+//                        System.out.println("---->" + response.getImageUrl());
+//                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
