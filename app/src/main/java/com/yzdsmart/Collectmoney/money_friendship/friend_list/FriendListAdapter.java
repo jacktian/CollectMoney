@@ -56,7 +56,7 @@ public class FriendListAdapter extends UltimateViewAdapter<FriendListAdapter.Vie
             @Override
             public int compare(Friendship user, Friendship t1) {
                 try {
-                    return PinyinHelper.getShortPinyin(user.getNickName()).compareTo(PinyinHelper.getShortPinyin(t1.getNickName()));
+                    return PinyinHelper.getShortPinyin(user.getNickName()).toLowerCase().compareTo(PinyinHelper.getShortPinyin(t1.getNickName()).toLowerCase());
                 } catch (PinyinException e) {
                     e.printStackTrace();
                 }

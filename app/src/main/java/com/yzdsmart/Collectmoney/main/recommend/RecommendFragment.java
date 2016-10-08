@@ -2,11 +2,13 @@ package com.yzdsmart.Collectmoney.main.recommend;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
@@ -41,12 +43,12 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 //    ImageView titleRightOpeTLIV;
     @Nullable
     @BindView(R.id.recommend_list)
-    RecyclerView recommendListRV;
+    UltimateRecyclerView recommendListRV;
 //    @Nullable
 //    @BindView(R.id.bubble_count)
 //    TextView bubbleCountTV;
 
-    private Integer pageIndex = 0;
+    private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
     private RecommendContract.RecommendPresenter mPresenter;
 
@@ -98,6 +100,22 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
         recommendListRV.setHasFixedSize(true);
         recommendListRV.setLayoutManager(mLinearLayoutManager);
         recommendListRV.setAdapter(recommendAdapter);
+        recommendListRV.reenableLoadmore();
+        recommendListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+                mPresenter.getExpandList("000000", pageIndex, PAGE_SIZE);
+            }
+        });
+        recommendListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                recommendListRV.setRefreshing(false);
+                pageIndex = 1;
+                recommendAdapter.clearList();
+                mPresenter.getExpandList("000000", pageIndex, PAGE_SIZE);
+            }
+        });
 
         mPresenter.getExpandList("000000", pageIndex, PAGE_SIZE);
     }
@@ -133,5 +151,6 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
         expandList.clear();
         expandList.addAll(expands);
         recommendAdapter.appendList(expandList);
+        pageIndex++;
     }
 }

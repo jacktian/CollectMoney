@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/friendship_list_item_height"
+    android:layout_height="wrap_content"
     android:background="@color/white"
+    android:paddingBottom="@dimen/activity_vertical_padding"
     android:paddingLeft="@dimen/activity_horizontal_padding"
-    android:paddingRight="@dimen/activity_horizontal_padding">
+    android:paddingRight="@dimen/activity_horizontal_padding"
+    android:paddingTop="@dimen/activity_vertical_padding">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/focuser_user_avater"
@@ -21,7 +23,6 @@
         android:layout_toRightOf="@id/focuser_user_avater"
         android:textColor="@color/grey"
         android:textSize="@dimen/font_medium" />
-
 
     <TextView
         android:id="@+id/focuser_user_gender"

@@ -4,6 +4,7 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.EditText;
 
@@ -24,7 +25,7 @@ import butterknife.BindView;
  * Created by jacks on 2016/8/29.
  */
 public class FriendListFragment extends BaseFragment implements FriendListContract.FriendListView {
-//    @Nullable
+    //    @Nullable
 //    @BindView(R.id.search_filter)
 //    EditText searchFilterET;
     @Nullable
@@ -81,6 +82,17 @@ public class FriendListFragment extends BaseFragment implements FriendListContra
         friendProfileListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, final int maxLastVisiblePosition) {
+                mPresenter.getFriendsList("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), timeStampNow, startIndex, currentStandardSequence, PAGE_SIZE);
+            }
+        });
+        friendProfileListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                friendProfileListRV.setRefreshing(false);
+                timeStampNow = 0l;
+                startIndex = 0;
+                currentStandardSequence = 0;
+                friendListAdapter.clearList();
                 mPresenter.getFriendsList("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), timeStampNow, startIndex, currentStandardSequence, PAGE_SIZE);
             }
         });

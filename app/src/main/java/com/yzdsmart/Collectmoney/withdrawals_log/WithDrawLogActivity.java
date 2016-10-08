@@ -4,12 +4,14 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
@@ -42,7 +44,7 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
     ImageView titleLeftOpeIV;
     @Nullable
     @BindView(R.id.withdraw_log_list)
-    RecyclerView withdrawLogTV;
+    UltimateRecyclerView withdrawLogTV;
 
     private Integer userType;//0 个人 1 商家
 
@@ -95,6 +97,37 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
         withdrawLogTV.setLayoutManager(mLinearLayoutManager);
         withdrawLogTV.addItemDecoration(dividerItemDecoration);
         withdrawLogTV.setAdapter(withDrawLogAdapter);
+        withdrawLogTV.reenableLoadmore();
+        withdrawLogTV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+                switch (userType) {
+                    case 0:
+                        mPresenter.getPersonalWithdrawLog(PERSONAL_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
+                        break;
+                    case 1:
+                        mPresenter.getShopWithdrawLog(SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+                        break;
+                }
+            }
+        });
+        withdrawLogTV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                withdrawLogTV.setRefreshing(false);
+                pageIndex = 1;
+                switch (userType) {
+                    case 0:
+                        withDrawLogAdapter.clearPersonalList();
+                        mPresenter.getPersonalWithdrawLog(PERSONAL_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
+                        break;
+                    case 1:
+                        withDrawLogAdapter.clearShopList();
+                        mPresenter.getShopWithdrawLog(SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+                        break;
+                }
+            }
+        });
 
         switch (userType) {
             case 0:
@@ -126,6 +159,7 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
         personalWithdrawLogList.clear();
         personalWithdrawLogList.addAll(personalWithdrawLogs);
         withDrawLogAdapter.appendPersonalLogList(personalWithdrawLogList);
+        pageIndex++;
     }
 
     @Override
@@ -133,6 +167,7 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
         shopWithdrawLogList.clear();
         shopWithdrawLogList.addAll(shopWithdrawLogs);
         withDrawLogAdapter.appendShopLogList(shopWithdrawLogList);
+        pageIndex++;
     }
 
     @Override

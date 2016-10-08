@@ -4,12 +4,14 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
@@ -41,7 +43,7 @@ public class ShopFocuserActivity extends BaseActivity implements ShopFocuserCont
     TextView focuserCountsTV;
     @Nullable
     @BindView(R.id.shop_focuser_list)
-    RecyclerView shopFocuserRV;
+    UltimateRecyclerView shopFocuserRV;
 
     private Integer focuserCounts = 0;
     private Integer pageIndex = 1;
@@ -80,6 +82,23 @@ public class ShopFocuserActivity extends BaseActivity implements ShopFocuserCont
         shopFocuserRV.setLayoutManager(mLinearLayoutManager);
         shopFocuserRV.addItemDecoration(dividerItemDecoration);
         shopFocuserRV.setAdapter(shopFocuserAdapter);
+        shopFocuserRV.reenableLoadmore();
+        shopFocuserRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+                mPresenter.getShopFocuser(SHOP_FOCUSER_ACTION_CODE, "000000", SharedPreferencesUtils.getString(ShopFocuserActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+            }
+        });
+        shopFocuserRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                shopFocuserRV.setRefreshing(false);
+                focuserCounts = 0;
+                pageIndex = 1;
+                shopFocuserAdapter.clearList();
+                mPresenter.getShopFocuser(SHOP_FOCUSER_ACTION_CODE, "000000", SharedPreferencesUtils.getString(ShopFocuserActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+            }
+        });
 
         mPresenter.getShopFocuser(SHOP_FOCUSER_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE);
     }
@@ -106,6 +125,7 @@ public class ShopFocuserActivity extends BaseActivity implements ShopFocuserCont
         shopFocuserList.clear();
         shopFocuserList.addAll(shopFocusers);
         shopFocuserAdapter.appendList(shopFocuserList);
+        pageIndex++;
     }
 
     @Override

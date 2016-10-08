@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.PublishTaskLog;
 
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
 /**
  * Created by YZD on 2016/9/5.
  */
-public class PublishTasksAdapter extends RecyclerView.Adapter<PublishTasksAdapter.ViewHolder> {
+public class PublishTasksAdapter extends UltimateViewAdapter<PublishTasksAdapter.ViewHolder> {
     private Context context;
     private List<PublishTaskLog> logList;
     private DateTimeFormatter dtf;
@@ -65,6 +66,21 @@ public class PublishTasksAdapter extends RecyclerView.Adapter<PublishTasksAdapte
     }
 
     @Override
+    public ViewHolder newFooterHolder(View view) {
+        return null;
+    }
+
+    @Override
+    public ViewHolder newHeaderHolder(View view) {
+        return null;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         PublishTaskLog log = logList.get(position);
         DateTime beginTime = dtf.parseDateTime(log.getBeginTime());
@@ -76,8 +92,28 @@ public class PublishTasksAdapter extends RecyclerView.Adapter<PublishTasksAdapte
     }
 
     @Override
+    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+    }
+
+    @Override
     public int getItemCount() {
         return logList.size();
+    }
+
+    @Override
+    public int getAdapterItemCount() {
+        return logList.size();
+    }
+
+    @Override
+    public long generateHeaderId(int position) {
+        return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

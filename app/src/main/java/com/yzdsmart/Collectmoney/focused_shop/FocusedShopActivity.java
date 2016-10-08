@@ -2,6 +2,7 @@ package com.yzdsmart.Collectmoney.focused_shop;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.FocusedShop;
@@ -38,7 +40,7 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
     TextView centerTitleTV;
     @Nullable
     @BindView(R.id.focused_shop_list)
-    RecyclerView focusedShopRV;
+    UltimateRecyclerView focusedShopRV;
 
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
@@ -67,6 +69,22 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
         focusedShopRV.setHasFixedSize(true);
         focusedShopRV.setLayoutManager(mLinearLayoutManager);
         focusedShopRV.setAdapter(focusedShopAdapter);
+        focusedShopRV.reenableLoadmore();
+        focusedShopRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+                mPresenter.getFocusedShopList(GET_ACTION_CODE, "000000", SharedPreferencesUtils.getString(FocusedShopActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
+            }
+        });
+        focusedShopRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                focusedShopRV.setRefreshing(false);
+                pageIndex = 1;
+                focusedShopAdapter.clearList();
+                mPresenter.getFocusedShopList(GET_ACTION_CODE, "000000", SharedPreferencesUtils.getString(FocusedShopActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
+            }
+        });
 
         mPresenter.getFocusedShopList(GET_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
     }
@@ -91,6 +109,7 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
         focusedShopList.clear();
         focusedShopList.addAll(focusedShops);
         focusedShopAdapter.appendList(focusedShopList);
+        pageIndex++;
     }
 
     @Override

@@ -4,12 +4,13 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
@@ -40,7 +41,7 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
     ImageView titleLeftOpeIV;
     @Nullable
     @BindView(R.id.publish_list)
-    RecyclerView publishListRV;
+    UltimateRecyclerView publishListRV;
     @Nullable
     @BindView(R.id.tasks_left_coins)
     TextView tasksLeftCoinsTV;
@@ -82,6 +83,22 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
         publishListRV.setLayoutManager(mLinearLayoutManager);
         publishListRV.addItemDecoration(dividerItemDecoration);
         publishListRV.setAdapter(publishTasksAdapter);
+        publishListRV.reenableLoadmore();
+        publishListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+                mPresenter.publishTaskLog(PUBLISH_TASK_LOG_CODE, "000000", SharedPreferencesUtils.getString(PublishTasksLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+            }
+        });
+        publishListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                publishListRV.setRefreshing(false);
+                pageIndex = 1;
+                publishTasksAdapter.clearList();
+                mPresenter.publishTaskLog(PUBLISH_TASK_LOG_CODE, "000000", SharedPreferencesUtils.getString(PublishTasksLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+            }
+        });
 
         mPresenter.getLeftCoins(GET_TASKS_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
         mPresenter.publishTaskLog(PUBLISH_TASK_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE);
@@ -123,5 +140,6 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
         this.logList.clear();
         this.logList.addAll(logList);
         publishTasksAdapter.appendList(this.logList);
+        pageIndex++;
     }
 }

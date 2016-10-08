@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.PersonalWithdrawLog;
 import com.yzdsmart.Collectmoney.bean.ShopWithdrawLog;
@@ -22,7 +23,7 @@ import butterknife.ButterKnife;
  * Created by YZD on 2016/9/24.
  */
 
-public class WithDrawLogAdapter extends RecyclerView.Adapter<WithDrawLogAdapter.ViewHolder> {
+public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.ViewHolder> {
     private Integer userType;
     private Context context;
     private List<PersonalWithdrawLog> personalWithdrawLogs;
@@ -87,6 +88,21 @@ public class WithDrawLogAdapter extends RecyclerView.Adapter<WithDrawLogAdapter.
     }
 
     @Override
+    public ViewHolder newFooterHolder(View view) {
+        return null;
+    }
+
+    @Override
+    public ViewHolder newHeaderHolder(View view) {
+        return null;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         switch (userType) {
             case 0:
@@ -105,6 +121,16 @@ public class WithDrawLogAdapter extends RecyclerView.Adapter<WithDrawLogAdapter.
     }
 
     @Override
+    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+    }
+
+    @Override
     public int getItemCount() {
         switch (userType) {
             case 0:
@@ -112,6 +138,22 @@ public class WithDrawLogAdapter extends RecyclerView.Adapter<WithDrawLogAdapter.
             case 1:
                 return shopWithdrawLogs.size();
         }
+        return 0;
+    }
+
+    @Override
+    public int getAdapterItemCount() {
+        switch (userType) {
+            case 0:
+                return personalWithdrawLogs.size();
+            case 1:
+                return shopWithdrawLogs.size();
+        }
+        return 0;
+    }
+
+    @Override
+    public long generateHeaderId(int position) {
         return 0;
     }
 

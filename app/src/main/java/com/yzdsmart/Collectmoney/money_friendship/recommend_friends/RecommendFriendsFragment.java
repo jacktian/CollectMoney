@@ -4,6 +4,7 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
@@ -64,9 +65,16 @@ public class RecommendFriendsFragment extends BaseFragment implements RecommendF
         recommendFriendsRV.setLayoutManager(mLinearLayoutManager);
         recommendFriendsRV.addItemDecoration(dividerItemDecoration);
         recommendFriendsRV.setAdapter(recommendFriendsAdapter);
+        recommendFriendsRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                recommendFriendsRV.setRefreshing(false);
+                recommendFriendsAdapter.clearList();
+                mPresenter.getRecommendFriends(RECOMMEND_FRIEND_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), RECOMMEND_NUM);
+            }
+        });
 
         mPresenter.getRecommendFriends(RECOMMEND_FRIEND_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), RECOMMEND_NUM);
-
     }
 
     @Override

@@ -4,12 +4,14 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
@@ -40,7 +42,7 @@ public class PersonalCoinsActivity extends BaseActivity implements PersonalCoins
     ImageView titleLeftOpeIV;
     @Nullable
     @BindView(R.id.coin_list)
-    RecyclerView coinListRV;
+    UltimateRecyclerView coinListRV;
 
     private static final String GET_COIN_LOG_CODE = "1666";
     private Integer pageIndex = 1;
@@ -78,6 +80,22 @@ public class PersonalCoinsActivity extends BaseActivity implements PersonalCoins
         coinListRV.setLayoutManager(mLinearLayoutManager);
         coinListRV.addItemDecoration(dividerItemDecoration);
         coinListRV.setAdapter(personalCoinsAdapter);
+        coinListRV.reenableLoadmore();
+        coinListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+                mPresenter.getCoinsLog(GET_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(PersonalCoinsActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
+            }
+        });
+        coinListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                coinListRV.setRefreshing(false);
+                pageIndex = 1;
+                personalCoinsAdapter.clearList();
+                mPresenter.getCoinsLog(GET_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(PersonalCoinsActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
+            }
+        });
 
         mPresenter.getCoinsLog(GET_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
     }
@@ -108,6 +126,7 @@ public class PersonalCoinsActivity extends BaseActivity implements PersonalCoins
         this.logList.clear();
         this.logList.addAll(logList);
         personalCoinsAdapter.appendList(this.logList);
+        pageIndex++;
     }
 
     @Override

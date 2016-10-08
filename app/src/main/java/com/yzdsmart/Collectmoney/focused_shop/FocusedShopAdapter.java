@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.FocusedShop;
 import com.yzdsmart.Collectmoney.personal_coin_list.PersonalCoinsAdapter;
@@ -22,7 +23,7 @@ import butterknife.ButterKnife;
  * Created by YZD on 2016/9/20.
  */
 
-public class FocusedShopAdapter extends RecyclerView.Adapter<FocusedShopAdapter.ViewHolder> {
+public class FocusedShopAdapter extends UltimateViewAdapter<FocusedShopAdapter.ViewHolder> {
     private Context context;
     private List<FocusedShop> focusedShops;
 
@@ -61,6 +62,21 @@ public class FocusedShopAdapter extends RecyclerView.Adapter<FocusedShopAdapter.
     }
 
     @Override
+    public ViewHolder newFooterHolder(View view) {
+        return null;
+    }
+
+    @Override
+    public ViewHolder newHeaderHolder(View view) {
+        return null;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         FocusedShop shop = focusedShops.get(position);
         holder.setShopName(shop.getName());
@@ -71,8 +87,28 @@ public class FocusedShopAdapter extends RecyclerView.Adapter<FocusedShopAdapter.
     }
 
     @Override
+    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+    }
+
+    @Override
     public int getItemCount() {
         return focusedShops.size();
+    }
+
+    @Override
+    public int getAdapterItemCount() {
+        return focusedShops.size();
+    }
+
+    @Override
+    public long generateHeaderId(int position) {
+        return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

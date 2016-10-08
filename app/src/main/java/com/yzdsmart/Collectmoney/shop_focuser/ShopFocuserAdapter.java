@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.ShopFocuser;
 
@@ -23,7 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by YZD on 2016/9/20.
  */
 
-public class ShopFocuserAdapter extends RecyclerView.Adapter<ShopFocuserAdapter.ViewHolder> {
+public class ShopFocuserAdapter extends UltimateViewAdapter<ShopFocuserAdapter.ViewHolder> {
     private Context context;
     private List<ShopFocuser> shopFocusers;
 
@@ -62,6 +63,21 @@ public class ShopFocuserAdapter extends RecyclerView.Adapter<ShopFocuserAdapter.
     }
 
     @Override
+    public ViewHolder newFooterHolder(View view) {
+        return null;
+    }
+
+    @Override
+    public ViewHolder newHeaderHolder(View view) {
+        return null;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ShopFocuser focuser = shopFocusers.get(position);
         holder.setUserAvater(focuser.getImageUrl());
@@ -70,8 +86,28 @@ public class ShopFocuserAdapter extends RecyclerView.Adapter<ShopFocuserAdapter.
     }
 
     @Override
+    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+    }
+
+    @Override
     public int getItemCount() {
         return shopFocusers.size();
+    }
+
+    @Override
+    public int getAdapterItemCount() {
+        return shopFocusers.size();
+    }
+
+    @Override
+    public long generateHeaderId(int position) {
+        return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

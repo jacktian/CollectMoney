@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
 
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
 /**
  * Created by YZD on 2016/8/19.
  */
-public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.ViewHolder> {
+public class RecommendAdapter extends UltimateViewAdapter<RecommendAdapter.ViewHolder> {
     private Context context;
     private List<ExpandListRequestResponse> expandList;
 
@@ -72,6 +73,21 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
     }
 
     @Override
+    public ViewHolder newFooterHolder(View view) {
+        return null;
+    }
+
+    @Override
+    public ViewHolder newHeaderHolder(View view) {
+        return null;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // 如果设置了回调，则设置点击事件
         if (null != mOnItemClickListener) {
@@ -88,8 +104,28 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.View
     }
 
     @Override
+    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+    }
+
+    @Override
     public int getItemCount() {
         return expandList.size();
+    }
+
+    @Override
+    public int getAdapterItemCount() {
+        return expandList.size();
+    }
+
+    @Override
+    public long generateHeaderId(int position) {
+        return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

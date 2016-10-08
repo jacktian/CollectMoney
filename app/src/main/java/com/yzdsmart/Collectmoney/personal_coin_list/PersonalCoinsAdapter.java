@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.GetCoinsLog;
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
 /**
  * Created by YZD on 2016/9/5.
  */
-public class PersonalCoinsAdapter extends RecyclerView.Adapter<PersonalCoinsAdapter.ViewHolder> {
+public class PersonalCoinsAdapter extends UltimateViewAdapter<PersonalCoinsAdapter.ViewHolder> {
     private Context context;
     private List<GetCoinsLog> logList;
     private DateTimeFormatter dtf;
@@ -67,6 +68,21 @@ public class PersonalCoinsAdapter extends RecyclerView.Adapter<PersonalCoinsAdap
     }
 
     @Override
+    public ViewHolder newFooterHolder(View view) {
+        return null;
+    }
+
+    @Override
+    public ViewHolder newHeaderHolder(View view) {
+        return null;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         GetCoinsLog log = logList.get(position);
         DateTime dateTime = dtf.parseDateTime(log.getCreateTime());
@@ -76,8 +92,28 @@ public class PersonalCoinsAdapter extends RecyclerView.Adapter<PersonalCoinsAdap
     }
 
     @Override
+    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+    }
+
+    @Override
     public int getItemCount() {
         return logList.size();
+    }
+
+    @Override
+    public int getAdapterItemCount() {
+        return logList.size();
+    }
+
+    @Override
+    public long generateHeaderId(int position) {
+        return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
