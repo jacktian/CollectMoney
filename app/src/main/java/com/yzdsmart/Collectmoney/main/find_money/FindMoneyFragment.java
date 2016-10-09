@@ -53,6 +53,10 @@ import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,6 +134,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
         fm = getFragmentManager();
         coinsOverlayList = new ArrayList<Overlay>();
+
+        new FindMoneyPresenter(getActivity(), this);
+
         //定位图标
         locGifList = new ArrayList<BitmapDescriptor>();
         locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker1));
@@ -137,8 +144,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker3));
         locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker4));
 
-        new FindMoneyPresenter(getActivity(), this);
-
+        setMapCustomFile(getActivity());
     }
 
     @Override
@@ -283,6 +289,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         findMoneyMap.showZoomControls(false);
         // 删除百度地图LoGo
         // searchMapView.removeViewAt(1);
+        findMoneyMap.setMapCustomEnable(true);
 
         mBaiduMap = findMoneyMap.getMap();
         mMapSettings = mBaiduMap.getUiSettings();
@@ -623,4 +630,40 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 //                    .newLatLngBounds(builder.build()));
 //        }
 //    }
+
+    // 设置个性化地图config文件路径
+    private void setMapCustomFile(Context context) {
+        FileOutputStream out = null;
+        InputStream inputStream = null;
+        String moduleName = null;
+        try {
+            inputStream = context.getAssets().open("customConfigdir/custom_config.txt");
+            byte[] b = new byte[inputStream.available()];
+            inputStream.read(b);
+
+            moduleName = context.getFilesDir().getAbsolutePath();
+            File f = new File(moduleName + "/" + "custom_config.txt");
+            if (f.exists()) {
+                f.delete();
+            }
+            f.createNewFile();
+            out = new FileOutputStream(f);
+            out.write(b);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        MapView.setCustomMapStylePath(moduleName + "/custom_config.txt");
+    }
 }
