@@ -1,13 +1,21 @@
 package com.yzdsmart.Collectmoney.chat;
 
 import android.content.Context;
+import android.os.Bundle;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.sina.weibo.sdk.api.share.Base;
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMManager;
 import com.tencent.TIMMessage;
 import com.tencent.TIMMessageDraft;
 import com.tencent.TIMValueCallBack;
+import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
 import com.yzdsmart.Collectmoney.tecent_im.event.MessageEvent;
 import com.yzdsmart.Collectmoney.tecent_im.event.RefreshEvent;
 
@@ -145,6 +153,38 @@ public class ChatPresenter implements ChatContract.ChatPresenter, Observer {
             }
             conversation.setDraft(draft);
         }
+    }
+
+    @Override
+    public void getCustCode(final String code, String submitcode, String action) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.getCustCode(code, submitcode, action, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                ((BaseActivity) context).hideProgressDialog();
+                String custCodeJson = (String) result;
+                if (null != custCodeJson) {
+                    JSONObject jsonObject = JSON.parseObject(custCodeJson);
+                    String custCode = jsonObject.getString("C_Code");
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("type", 1);
+                    bundle.putString("cust_code", custCode);
+                    bundle.putString("user_code", code.replace("yzd", ""));
+                    ((BaseActivity) context).openActivity(PersonalFriendDetailActivity.class, bundle, 0);
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
     @Override

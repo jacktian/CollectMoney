@@ -2,10 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/to_chat_layout"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/friendship_list_item_height"
+    android:layout_height="wrap_content"
     android:background="@color/white"
+    android:paddingBottom="@dimen/activity_vertical_padding"
     android:paddingLeft="@dimen/activity_horizontal_padding"
-    android:paddingRight="@dimen/activity_horizontal_padding">
+    android:paddingRight="@dimen/activity_horizontal_padding"
+    android:paddingTop="@dimen/activity_vertical_padding">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/scanner_user_avater"

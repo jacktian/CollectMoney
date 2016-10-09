@@ -26,9 +26,9 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
     }
 
     @Override
-    public void getCustLevel(String custcode, String submitcode) {
+    public void getCustLevel(String code, String submitcode, String action) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustLevel(custcode, submitcode, new RequestListener() {
+        mModel.getCustLevel(code, submitcode, action, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 CustLevelRequestResponse response = (CustLevelRequestResponse) result;

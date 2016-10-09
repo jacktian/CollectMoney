@@ -100,15 +100,6 @@ public class RecommendFriendsAdapter extends UltimateViewAdapter<RecommendFriend
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-//                if (FriendshipInfo.getInstance().isFriend(friendship.getTCAccount())) {
-//                    bundle.putString("identify", friendship.getTCAccount());
-//                    bundle.putSerializable("type", TIMConversationType.C2C);
-//                    ((BaseActivity) context).openActivity(ChatActivity.class, bundle, 0);
-//                } else {
-//                    bundle.putString("id", friendship.getTCAccount());
-//                    bundle.putString("name", friendship.getTCAccount());
-//                    ((BaseActivity) context).openActivity(AddFriendActivity.class, bundle, 0);
-//                }
                 bundle.putInt("type", 1);
                 bundle.putString("cust_code", friendship.getC_Code());
                 bundle.putString("user_code", friendship.getC_UserCode());

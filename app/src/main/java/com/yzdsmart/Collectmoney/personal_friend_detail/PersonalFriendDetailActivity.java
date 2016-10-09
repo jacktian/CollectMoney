@@ -27,6 +27,7 @@ import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.FriendshipInfo;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
+import com.yzdsmart.Collectmoney.tecent_im.event.FriendshipEvent;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
@@ -104,6 +105,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     private static final Integer REQUEST_LOGIN_CODE = 1000;
 
     private static final String PERSONAL_GALLEY_ACTION_CODE = "2102";
+    private static final String GET_CUST_LEVEL_ACTION_CODE = "612";
 
     private Integer type;//0 个人 1 好友
     private String friend_c_code;
@@ -127,9 +129,13 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
 
         switch (type) {
             case 0:
+                new PersonalFriendDetailPresenter(this, this, UserInfo.getInstance().getId());
+
                 ButterKnife.apply(imOpeLayout, BUTTERKNIFEGONE);
                 break;
             case 1:
+                new PersonalFriendDetailPresenter(this, this, friend_identify);
+
                 ButterKnife.apply(nameQRLayout, BUTTERKNIFEGONE);
                 ButterKnife.apply(titleRightOpeIV, BUTTERKNIFEGONE);
                 if (FriendshipInfo.getInstance().isFriend(friend_identify)) {
@@ -158,9 +164,6 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 }
             }
         });
-
-        new PersonalFriendDetailPresenter(this, this);
-
     }
 
     @Override
@@ -173,7 +176,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         super.onResume();
         switch (type) {
             case 0:
-                mPresenter.getCustLevel(SharedPreferencesUtils.getString(this, "cust_code", ""), "000000");
+                mPresenter.getCustLevel(SharedPreferencesUtils.getString(this, "cust_code", ""), "000000", GET_CUST_LEVEL_ACTION_CODE);
                 mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
                 mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
                 break;
@@ -193,7 +196,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.user_avater, R.id.msg_chat, R.id.galley_preview_layout, R.id.title_right_operation_layout})
+    @OnClick({R.id.title_left_operation_layout, R.id.user_avater, R.id.galley_preview_layout, R.id.title_right_operation_layout, R.id.add_friend, R.id.msg_chat, R.id.video_chat, R.id.delete_friend})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -235,7 +238,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
             case R.id.video_chat:
                 break;
             case R.id.delete_friend:
-
+                mPresenter.deleteFriend(friend_identify);
                 break;
         }
     }
@@ -243,6 +246,12 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPresenter.unRegisterObserver();
+        super.onDestroy();
     }
 
     @Override
@@ -291,6 +300,21 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
             if (i == 3) {
                 return;
             }
+        }
+    }
+
+    @Override
+    public void refreshFriendship() {
+        if (FriendshipInfo.getInstance().isFriend(friend_identify)) {
+            ButterKnife.apply(addFriendBtn, BUTTERKNIFEGONE);
+            ButterKnife.apply(msgChatBtn, BUTTERKNIFEVISIBLE);
+            ButterKnife.apply(videoChatBtn, BUTTERKNIFEVISIBLE);
+            ButterKnife.apply(deleteFriendBtn, BUTTERKNIFEVISIBLE);
+        } else {
+            ButterKnife.apply(addFriendBtn, BUTTERKNIFEVISIBLE);
+            ButterKnife.apply(msgChatBtn, BUTTERKNIFEGONE);
+            ButterKnife.apply(videoChatBtn, BUTTERKNIFEGONE);
+            ButterKnife.apply(deleteFriendBtn, BUTTERKNIFEGONE);
         }
     }
 

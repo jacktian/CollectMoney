@@ -89,6 +89,8 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
 
     private ChatContract.ChatPresenter mPresenter;
 
+    private final static String GET_CUST_CODE_ACTION_CODE = "628";
+
     private List<Message> messageList;
     private ChatAdapter adapter;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -153,28 +155,34 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
             case C2C:
                 titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.personal_head_icon));
                 if (FriendshipInfo.getInstance().isFriend(identify)) {
-                    titleRightOpeLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(ChatActivity.this, ProfileActivity.class);
-                            intent.putExtra("identify", identify);
-                            startActivity(intent);
-                        }
-                    });
+//                    titleRightOpeLayout.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent intent = new Intent(ChatActivity.this, ProfileActivity.class);
+//                            intent.putExtra("identify", identify);
+//                            startActivity(intent);
+//                        }
+//                    });
                     FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
                     centerTitleTV.setText(titleStr = profile == null ? identify : profile.getName());
                 } else {
-                    titleRightOpeLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent person = new Intent(ChatActivity.this, AddFriendActivity.class);
-                            person.putExtra("id", identify);
-                            person.putExtra("name", identify);
-                            startActivity(person);
-                        }
-                    });
+//                    titleRightOpeLayout.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent person = new Intent(ChatActivity.this, AddFriendActivity.class);
+//                            person.putExtra("id", identify);
+//                            person.putExtra("name", identify);
+//                            startActivity(person);
+//                        }
+//                    });
                     centerTitleTV.setText(titleStr = identify);
                 }
+                titleRightOpeLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        toFriendDetail(identify);
+                    }
+                });
                 break;
             case Group:
                 titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.group_head_icon));
@@ -188,7 +196,6 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
                 });
                 centerTitleTV.setText(GroupInfo.getInstance().getGroupName(identify));
                 break;
-
         }
     }
 
@@ -536,6 +543,15 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
             Toast.makeText(this, getString(R.string.chat_file_not_exist), Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    /**
+     * 跳转到好友详情页
+     *
+     * @param identify
+     */
+    public void toFriendDetail(String identify) {
+        mPresenter.getCustCode(identify, "000000", GET_CUST_CODE_ACTION_CODE);
     }
 
     /**

@@ -18,6 +18,7 @@ import com.yzdsmart.Collectmoney.http.response.PublishTaskLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RecommendFriendsRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RegisterBusinessRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
+import com.yzdsmart.Collectmoney.http.response.ScannedLogRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopFocuserRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
@@ -114,12 +115,24 @@ public interface RequestService {
     /**
      * 获取用户等级和星级
      *
-     * @param custcode
+     * @param code
      * @param submitcode
+     * @param action
      * @return
      */
     @GET(Url.CUST)
-    Observable<CustLevelRequestResponse> getCustLevel(@Query("custcode") String custcode, @Query("submitcode") String submitcode);
+    Observable<CustLevelRequestResponse> getCustLevel(@Query("code") String code, @Query("submitcode") String submitcode, @Query("action") String action);
+
+    /**
+     * 根据腾讯云通信账号获取用户cust code
+     *
+     * @param code
+     * @param submitcode
+     * @param action
+     * @return
+     */
+    @GET(Url.CUST)
+    Observable<String> getCustCode(@Query("code") String code, @Query("submitcode") String submitcode, @Query("action") String action);
 
     /**
      * 获取用户信息
@@ -583,6 +596,20 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.FOLLOW)
     Observable<ShopFocuserRequestResponse> getShopFocuser(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+
+    /**
+     * 获取指定商铺被扫码日志
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASKLOG)
+    Observable<ScannedLogRequestResponse> getScannedLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 
     /**
      * 获取商铺图片列表

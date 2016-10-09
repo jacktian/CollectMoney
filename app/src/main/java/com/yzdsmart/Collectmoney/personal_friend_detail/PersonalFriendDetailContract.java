@@ -4,6 +4,7 @@ import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Collectmoney.tecent_im.event.FriendshipEvent;
 
 import java.util.List;
 
@@ -33,16 +34,22 @@ public interface PersonalFriendDetailContract {
          * @param galleyInfos
          */
         void onGetPersonalGalley(List<GalleyInfo> galleyInfos);
+
+        /**
+         * 更新好友关系
+         */
+        void refreshFriendship();
     }
 
     interface PersonalFriendDetailPresenter extends BasePresenter {
         /**
          * 获取用户等级和星级
          *
-         * @param custcode
+         * @param code
          * @param submitcode
+         * @param action
          */
-        void getCustLevel(String custcode, String submitcode);
+        void getCustLevel(String code, String submitcode,String action);
 
         /**
          * 获取用户信息
@@ -67,6 +74,15 @@ public interface PersonalFriendDetailContract {
          * @param identify
          */
         void addFriend(String identify);
+
+        /**
+         * 删除好友
+         *
+         * @param identify
+         */
+        void deleteFriend(String identify);
+
+        void unRegisterObserver();
 
         void unRegisterSubscribe();
     }

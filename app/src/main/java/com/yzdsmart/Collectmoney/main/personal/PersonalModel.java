@@ -24,10 +24,10 @@ public class PersonalModel {
     /**
      * 获取用户等级和星级
      *
-     * @param custcode
+     * @param code
      * @param submitcode
      */
-    void getCustLevel(String custcode, String submitcode, final RequestListener listener) {
+    void getCustLevel(String code, String submitcode, String action, final RequestListener listener) {
         getCustLevelSubscriber = new Subscriber<CustLevelRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -44,7 +44,7 @@ public class PersonalModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getCustLevel(custcode, submitcode)
+        RequestAdapter.getRequestService().getCustLevel(code, submitcode, action)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getCustLevelSubscriber);

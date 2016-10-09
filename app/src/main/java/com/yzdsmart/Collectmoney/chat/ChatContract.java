@@ -133,6 +133,15 @@ public interface ChatContract {
          */
         void saveDraft(TIMMessage message);
 
+        /**
+         * 根据腾讯云通信账号获取用户cust code
+         *
+         * @param code
+         * @param submitcode
+         * @param action
+         */
+        void getCustCode(String code, String submitcode, String action);
+
         void unRegisterObserver();
     }
 }

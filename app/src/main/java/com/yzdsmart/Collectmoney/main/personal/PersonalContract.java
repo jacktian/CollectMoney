@@ -49,10 +49,11 @@ public interface PersonalContract {
         /**
          * 获取用户等级和星级
          *
-         * @param custcode
+         * @param code
          * @param submitcode
+         * @param action
          */
-        void getCustLevel(String custcode, String submitcode);
+        void getCustLevel(String code, String submitcode, String action);
 
         /**
          * 获取用户信息

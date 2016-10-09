@@ -10,7 +10,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.chat.ChatActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.Message;
 
 import java.util.List;
@@ -21,7 +23,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 聊天界面adapter
  */
 public class ChatAdapter extends ArrayAdapter<Message> {
-
+    private Context context;
     private int resourceId;
     private View view;
     private ViewHolder viewHolder;
@@ -36,6 +38,7 @@ public class ChatAdapter extends ArrayAdapter<Message> {
      */
     public ChatAdapter(Context context, int resource, List<Message> objects) {
         super(context, resource, objects);
+        this.context = context;
         resourceId = resource;
     }
 
@@ -62,6 +65,12 @@ public class ChatAdapter extends ArrayAdapter<Message> {
         }
         final Message data = getItem(position);
         data.showMessage(viewHolder, getContext());
+        viewHolder.leftAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((ChatActivity) context).toFriendDetail(data.getSender());
+            }
+        });
         return view;
     }
 

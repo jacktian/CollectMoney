@@ -65,6 +65,7 @@
     <string name="publishing_tasks">发布任务</string>
     <string name="publishing_tasks_log">发布任务日志</string>
     <string name="publishing_focuser">店铺关注者</string>
+    <string name="scanned_log">被扫日志</string>
     <string name="withdraw">提现</string>
     <string name="withdraw_log">提现日志</string>
 

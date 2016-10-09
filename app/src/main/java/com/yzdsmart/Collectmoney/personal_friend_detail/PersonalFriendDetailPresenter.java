@@ -2,32 +2,42 @@ package com.yzdsmart.Collectmoney.personal_friend_detail;
 
 import android.content.Context;
 
+import com.tencent.TIMUserProfile;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetGalleyRequestResponse;
+import com.yzdsmart.Collectmoney.tecent_im.event.FriendshipEvent;
+
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by YZD on 2016/8/29.
  */
-public class PersonalFriendDetailPresenter implements PersonalFriendDetailContract.PersonalFriendDetailPresenter {
+public class PersonalFriendDetailPresenter implements PersonalFriendDetailContract.PersonalFriendDetailPresenter, Observer {
     private Context context;
     private PersonalFriendDetailContract.PersonalFriendDetailView mView;
     private PersonalFriendDetailModel mModel;
+    private String friendIdentify;
 
-    public PersonalFriendDetailPresenter(Context context, PersonalFriendDetailContract.PersonalFriendDetailView mView) {
+    public PersonalFriendDetailPresenter(Context context, PersonalFriendDetailContract.PersonalFriendDetailView mView, String friendIdentify) {
         this.context = context;
         this.mView = mView;
+        this.friendIdentify = friendIdentify;
         mModel = new PersonalFriendDetailModel();
         mView.setPresenter(this);
+        //注册好友关系链监听
+        FriendshipEvent.getInstance().addObserver(this);
     }
 
     @Override
-    public void getCustLevel(String custcode, String submitcode) {
+    public void getCustLevel(String code, String submitcode, String action) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustLevel(custcode, submitcode, new RequestListener() {
+        mModel.getCustLevel(code, submitcode, action, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 CustLevelRequestResponse response = (CustLevelRequestResponse) result;
@@ -127,7 +137,56 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
     }
 
     @Override
+    public void deleteFriend(String identify) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.requesting));
+        mModel.deleteFriend(identify, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.request_success));
+                mView.refreshFriendship();
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void unRegisterObserver() {
+        //解除好友关系链监听
+        FriendshipEvent.getInstance().deleteObserver(this);
+    }
+
+    @Override
     public void unRegisterSubscribe() {
         mModel.unRegisterSubscribe();
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        if (observable instanceof FriendshipEvent) {
+            FriendshipEvent.NotifyCmd fcmd = (FriendshipEvent.NotifyCmd) data;
+            String identify = "";
+            switch (fcmd.type) {
+                case ADD:
+                    identify = ((List<TIMUserProfile>) fcmd.data).get(0).getIdentifier();
+                    break;
+                case DEL:
+                    identify = ((List<String>) fcmd.data).get(0);
+                    break;
+            }
+            if (friendIdentify.equals(identify)) {
+                mView.refreshFriendship();
+            }
+        }
     }
 }
