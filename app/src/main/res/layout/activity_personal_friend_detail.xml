@@ -350,18 +350,27 @@
             <!--android:textColor="@color/grey"-->
             <!--android:textSize="@dimen/font_medium" />-->
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/im_ope_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/user_detail_chat_margin_top">
+                android:layout_marginTop="@dimen/user_detail_chat_margin_top"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/add_friend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/button_height"
+                    android:background="@drawable/personal_details_button_bg"
+                    android:text="@string/detail_add_friend"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font_large" />
 
                 <Button
                     android:id="@+id/msg_chat"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/button_height"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:background="@drawable/personal_details_button_bg"
                     android:text="@string/detail_send_msg"
                     android:textColor="@color/grey"
@@ -372,12 +381,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/button_height"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_toRightOf="@id/msg_chat"
                     android:background="@drawable/personal_details_button_bg"
                     android:text="@string/detail_send_video"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/font_large" />
-            </RelativeLayout>
+
+                <Button
+                    android:id="@+id/delete_friend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/personal_details_button_bg"
+                    android:text="@string/detail_delete_friend"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/font_large" />
+            </LinearLayout>
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

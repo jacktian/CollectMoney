@@ -4,6 +4,8 @@
     <string name="net_unusable">网络不可用</string>
     <string name="loading">正在加载......</string>
     <string name="uploading">正在上传......</string>
+    <string name="requesting">正在请求......</string>
+    <string name="request_success">请求成功</string>
     <string name="upload_success">上传成功</string>
     <string name="deleting">正在删除......</string>
     <string name="delete_success">删除成功</string>
@@ -138,6 +140,8 @@
     <string name="detail_get_from_friend_counts">收友数量</string>
     <string name="detail_personal_album">个人相册</string>
     <string name="detail_more_info">查看更多</string>
+    <string name="detail_add_friend">添加好友</string>
+    <string name="detail_delete_friend">删除好友</string>
     <string name="detail_send_msg">发送消息</string>
     <string name="detail_send_video">视频聊天</string>
 

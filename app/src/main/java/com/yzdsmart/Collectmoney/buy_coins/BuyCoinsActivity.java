@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
@@ -52,7 +54,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     EditText coinCountsET;
     @Nullable
     @BindView(R.id.coin_list)
-    RecyclerView coinListRV;
+    UltimateRecyclerView coinListRV;
 
     private static final String BUY_COIN_CODE = "66";
     private static final String BUY_COIN_LOG_CODE = "688";
@@ -105,6 +107,22 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         coinListRV.setLayoutManager(mLinearLayoutManager);
         coinListRV.addItemDecoration(dividerItemDecoration);
         coinListRV.setAdapter(buyCoinsLogAdapter);
+        coinListRV.reenableLoadmore();
+        coinListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+                mPresenter.buyCoinsLog(BUY_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+            }
+        });
+        coinListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                coinListRV.setRefreshing(false);
+                pageIndex = 1;
+                buyCoinsLogAdapter.clearList();
+                mPresenter.buyCoinsLog(BUY_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+            }
+        });
 
         mPresenter.buyCoinsLog(BUY_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE);
     }
@@ -188,5 +206,6 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         this.logList.clear();
         this.logList.addAll(logList);
         buyCoinsLogAdapter.appendList(this.logList);
+        pageIndex++;
     }
 }

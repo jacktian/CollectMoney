@@ -1,10 +1,17 @@
 package com.yzdsmart.Collectmoney.personal_friend_detail;
 
+import com.tencent.TIMAddFriendRequest;
+import com.tencent.TIMFriendResult;
+import com.tencent.TIMFriendshipManager;
+import com.tencent.TIMValueCallBack;
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetGalleyRequestResponse;
+
+import java.util.Collections;
+import java.util.List;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -92,6 +99,24 @@ public class PersonalFriendDetailModel {
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getGalleySubscriber);
+    }
+
+    void addFriend(String identify, final RequestListener listener) {
+        //添加好友请求
+        TIMAddFriendRequest req = new TIMAddFriendRequest();
+        req.setIdentifier(identify);
+        //申请添加好友
+        TIMFriendshipManager.getInstance().addFriend(Collections.singletonList(req), new TIMValueCallBack<List<TIMFriendResult>>() {
+            @Override
+            public void onError(int i, String s) {
+                listener.onError(s);
+            }
+
+            @Override
+            public void onSuccess(List<TIMFriendResult> timFriendResults) {
+                listener.onSuccess(timFriendResults);
+            }
+        });
     }
 
     void unRegisterSubscribe() {

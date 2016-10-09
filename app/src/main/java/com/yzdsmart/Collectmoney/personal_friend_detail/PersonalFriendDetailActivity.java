@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,6 +25,7 @@ import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.listener.AppBarOffsetChangeListener;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
+import com.yzdsmart.Collectmoney.tecent_im.bean.FriendshipInfo;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
@@ -58,7 +60,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     RelativeLayout nameQRLayout;
     @Nullable
     @BindView(R.id.im_ope_layout)
-    RelativeLayout imOpeLayout;
+    LinearLayout imOpeLayout;
     @Nullable
     @BindView(R.id.user_avater)
     CircleImageView userAvaterIV;
@@ -86,6 +88,18 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     @Nullable
     @BindView(R.id.galley_preview_layout)
     LinearLayout galleyPreviewLayout;
+    @Nullable
+    @BindView(R.id.add_friend)
+    Button addFriendBtn;
+    @Nullable
+    @BindView(R.id.msg_chat)
+    Button msgChatBtn;
+    @Nullable
+    @BindView(R.id.video_chat)
+    Button videoChatBtn;
+    @Nullable
+    @BindView(R.id.delete_friend)
+    Button deleteFriendBtn;
 
     private static final Integer REQUEST_LOGIN_CODE = 1000;
 
@@ -118,6 +132,13 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
             case 1:
                 ButterKnife.apply(nameQRLayout, BUTTERKNIFEGONE);
                 ButterKnife.apply(titleRightOpeIV, BUTTERKNIFEGONE);
+                if (FriendshipInfo.getInstance().isFriend(friend_identify)) {
+                    ButterKnife.apply(addFriendBtn, BUTTERKNIFEGONE);
+                } else {
+                    ButterKnife.apply(msgChatBtn, BUTTERKNIFEGONE);
+                    ButterKnife.apply(videoChatBtn, BUTTERKNIFEGONE);
+                    ButterKnife.apply(deleteFriendBtn, BUTTERKNIFEGONE);
+                }
                 break;
         }
 
@@ -139,7 +160,6 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         });
 
         new PersonalFriendDetailPresenter(this, this);
-
 
     }
 
@@ -180,6 +200,9 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
             case R.id.title_left_operation_layout:
                 closeActivity();
                 break;
+            case R.id.title_right_operation_layout:
+                openActivity(EditPersonalInfoActivity.class);
+                break;
             case R.id.user_avater:
                 switch (type) {
                     case 0:
@@ -189,17 +212,6 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                         break;
                 }
                 break;
-            case R.id.msg_chat:
-                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
-                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
-                    return;
-                }
-                if (friend_identify.trim().length() <= 3) return;
-                bundle = new Bundle();
-                bundle.putString("identify", friend_identify);
-                bundle.putSerializable("type", TIMConversationType.C2C);
-                openActivity(ChatActivity.class, bundle, 0);
-                break;
             case R.id.galley_preview_layout:
                 bundle = new Bundle();
                 bundle.putInt("identity", 0);
@@ -207,8 +219,23 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 bundle.putParcelableArrayList("galleys", galleyInfoList);
                 openActivity(GalleyPreviewActivity.class, bundle, 0);
                 break;
-            case R.id.title_right_operation_layout:
-                openActivity(EditPersonalInfoActivity.class);
+            case R.id.add_friend:
+                mPresenter.addFriend(friend_identify);
+                break;
+            case R.id.msg_chat:
+                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
+                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    return;
+                }
+                bundle = new Bundle();
+                bundle.putString("identify", friend_identify);
+                bundle.putSerializable("type", TIMConversationType.C2C);
+                openActivity(ChatActivity.class, bundle, 0);
+                break;
+            case R.id.video_chat:
+                break;
+            case R.id.delete_friend:
+
                 break;
         }
     }
@@ -236,13 +263,11 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         Glide.with(this).load(response.getImageUrl()).error(getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
         if (null != response.getCName() && !"".equals(response.getCName())) {
             userNameTV.setText(response.getCName());
-
         } else if (null != response.getNickName() && !"".equals(response.getNickName())) {
             userNameTV.setText(response.getNickName());
         } else {
             userNameTV.setText(response.getC_UserCode());
         }
-        userNameTV.setText("".equals(response.getCName()) ? response.getC_UserCode() : response.getCName());
         userAddressTV.setText(response.getArea());
         userAccountTV.setText(response.getC_UserCode());
         changeMoneyTimesTV.setText("" + response.getOperNum());

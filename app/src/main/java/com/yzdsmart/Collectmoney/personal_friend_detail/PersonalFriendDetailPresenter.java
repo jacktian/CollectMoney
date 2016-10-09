@@ -104,6 +104,29 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
     }
 
     @Override
+    public void addFriend(String identify) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.requesting));
+        mModel.addFriend(identify, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.request_success));
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
     public void unRegisterSubscribe() {
         mModel.unRegisterSubscribe();
     }

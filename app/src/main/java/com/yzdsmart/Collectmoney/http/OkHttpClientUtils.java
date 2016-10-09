@@ -24,6 +24,7 @@ public class OkHttpClientUtils {
                 public Response intercept(Chain chain) throws IOException {
                     Request request = chain.request()
                             .newBuilder()
+                            .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
                             .addHeader("Accept", "*/*")
                             .addHeader("Accept-Encoding", "gzip, deflate")
                             .build();

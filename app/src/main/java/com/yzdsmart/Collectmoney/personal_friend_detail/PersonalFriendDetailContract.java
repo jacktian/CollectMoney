@@ -61,6 +61,13 @@ public interface PersonalFriendDetailContract {
          */
         void getPersonalGalley(String action, String submitCode, String custCode);
 
+        /**
+         * 添加好友
+         *
+         * @param identify
+         */
+        void addFriend(String identify);
+
         void unRegisterSubscribe();
     }
 }

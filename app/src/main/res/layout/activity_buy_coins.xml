@@ -100,7 +100,7 @@
                 android:textSize="@dimen/font_medium" />
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
+        <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
             android:id="@+id/coin_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
