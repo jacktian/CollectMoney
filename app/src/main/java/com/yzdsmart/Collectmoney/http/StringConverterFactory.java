@@ -16,7 +16,7 @@ import retrofit2.Retrofit;
  * Retrofit请求时将数据转换为String类型的字符串
  */
 public class StringConverterFactory extends Converter.Factory {
-    private static final MediaType MEDIA_TYPE = MediaType.parse("text/plain");
+    private static final MediaType MEDIA_TYPE = MediaType.parse("text/plain; charset=UTF-8");
 
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
