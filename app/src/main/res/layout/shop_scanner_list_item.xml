@@ -23,7 +23,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_toRightOf="@id/scanner_user_avater"
-        android:maxLength="6"
+        android:maxLength="7"
         android:text=""
         android:textColor="@color/grey"
         android:textSize="@dimen/font_medium" />

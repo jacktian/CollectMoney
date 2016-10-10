@@ -23,6 +23,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Optional;
 
 /**
  * Created by YZD on 2016/10/9.
@@ -107,6 +109,16 @@ public class ShopScannedLogActivity extends BaseActivity implements ShopScannedL
     protected void onStop() {
         super.onStop();
         mPresenter.unRegisterSubscribe();
+    }
+
+    @Optional
+    @OnClick({R.id.title_left_operation_layout})
+    void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.title_left_operation_layout:
+                closeActivity();
+                break;
+        }
     }
 
     @Override
