@@ -18,8 +18,8 @@ import com.bumptech.glide.request.target.Target;
  * 创建时间:16/6/25 下午4:40
  * 描述:
  */
-class BGAGlideImageLoader extends BGAImageLoader {
 
+public class BGAGlideImageloader extends BGAImageLoader {
     @Override
     public void displayImage(Activity activity, final ImageView imageView, String path, @DrawableRes int loadingResId, @DrawableRes int failResId, int width, int height, final DisplayDelegate delegate) {
         final String finalPath = getPath(path);

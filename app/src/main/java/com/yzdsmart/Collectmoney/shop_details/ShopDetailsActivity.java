@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
@@ -28,12 +27,10 @@ import com.yzdsmart.Collectmoney.bean.ShopScanner;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
-import com.yzdsmart.Collectmoney.main.personal.PersonalFragment;
 import com.yzdsmart.Collectmoney.main.personal.ShopImageBannerHolderView;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
-import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,18 +109,25 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         localImages.add(R.mipmap.shop_banner);
         shopImageList = new ArrayList<String>();
 
+        ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.qr_code_scanner_icon));
+
+        new ShopDetailsPresenter(this, this);
+
+        shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
+            @Override
+            public ShopImageBannerHolderView createHolder() {
+                return new ShopImageBannerHolderView();
+            }
+        }, localImages);
+
         shopScannerList = new ArrayList<ShopScanner>();
         shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "三毛", "http://y3.ifengimg.com/haina/2016_06/048f23be371c78c_w432_h520.jpg", "男", 888, "昨天", "54673646"));
         shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "小黄", "http://p3.ifengimg.com/a/2016_39/7c512d79019b613_size46_w604_h595.jpg", "女", 123, "08:30", "8964648465"));
         shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "丫头", "http://d.ifengimg.com/mw978_mh598/p2.ifengimg.com/a/2016_39/d476f58859c90a0_size491_w439_h661.png", "女", 546, "三天前", "2136658"));
 
         bazaCode = getIntent().getExtras().getString("bazaCode");
-
-        ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
-        titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.qr_code_scanner_icon));
-
-        new ShopDetailsPresenter(this, this);
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         dividerPaint = new Paint();
@@ -186,7 +190,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                     openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
                     return;
                 }
-                mPresenter.getShopFollowers(GET_SHOP_FOLLOWERS_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), ++pageIndex, PAGE_SIZE);
+                mPresenter.getShopFollowers(GET_SHOP_FOLLOWERS_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
                 break;
             case R.id.route_line:
                 if (null == shopCoor || shopCoor.trim().length() <= 0) return;
@@ -251,11 +255,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 public ShopImageBannerHolderView createHolder() {
                     return new ShopImageBannerHolderView();
                 }
-            }, localImages)
-                    //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
-                    .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
-                    //设置指示器的方向
-                    .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+            }, localImages);
         } else {
             shopImagesBanner.setPages(new CBViewHolderCreator<ShopDetailsActivity.ShopGalleyViewHolder>() {
                 @Override
@@ -288,6 +288,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         shopScannerList.clear();
         shopScannerList.addAll(shopScanners);
         shopScannerAdapter.appenList(shopScannerList);
+        pageIndex++;
     }
 
     class ShopGalleyViewHolder implements Holder<String> {
@@ -302,7 +303,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
         @Override
         public void UpdateUI(Context context, int position, String data) {
-            Glide.with(context).load(data).error(context.getResources().getDrawable(R.mipmap.shop_banner)).into(imageView);
+            Glide.with(context).load(data).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.recommend_pre_load)).error(context.getResources().getDrawable(R.mipmap.shop_banner)).into(imageView);
         }
     }
 }

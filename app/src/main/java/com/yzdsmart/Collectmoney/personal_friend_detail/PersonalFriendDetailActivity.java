@@ -295,7 +295,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
             imageView = new ImageView(this);
             imageView.setLayoutParams(params);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            Glide.with(this).load(galleyInfos.get(i).getImageFileUrl()).error(getResources().getDrawable(R.mipmap.album_pic)).into(imageView);
+            Glide.with(this).load(galleyInfos.get(i).getImageFileUrl()).asBitmap().placeholder(getResources().getDrawable(R.mipmap.ic_holder_light)).error(getResources().getDrawable(R.mipmap.album_pic)).into(imageView);
             galleyPreviewLayout.addView(imageView);
             if (i == 3) {
                 return;

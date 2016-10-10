@@ -25,10 +25,10 @@ public interface PersonalContract {
          * 获取用户信息
          *
          * @param name
-         * @param headUel
+         * @param headUrl
          * @param goldNum
          */
-        void onGetCustInfo(String name, String headUel, Integer goldNum);
+        void onGetCustInfo(String name, String headUrl, Integer goldNum);
 
         /**
          * 商家商铺详细信息

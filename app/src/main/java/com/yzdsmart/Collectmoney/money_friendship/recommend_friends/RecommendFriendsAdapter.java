@@ -137,7 +137,7 @@ public class RecommendFriendsAdapter extends UltimateViewAdapter<RecommendFriend
         }
 
         public void setUserAvater(String userAvater) {
-            Glide.with(context).load(userAvater).error(context.getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
+            Glide.with(context).load(userAvater).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
         }
 
         public void setUserName(String userName) {

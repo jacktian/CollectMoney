@@ -21,7 +21,7 @@ public class BGAImage {
             synchronized (BGAImage.class) {
                 if (sImageLoader == null) {
                     if (isClassExists("com.bumptech.glide.Glide")) {
-                        sImageLoader = new BGAGlideImageLoader();
+                        sImageLoader = new BGAGlideImageloader();
                     } else if (isClassExists("com.squareup.picasso.Picasso")) {
                         sImageLoader = new BGAPicassoImageLoader();
                     } else if (isClassExists("com.nostra13.universalimageloader.core.ImageLoader")) {

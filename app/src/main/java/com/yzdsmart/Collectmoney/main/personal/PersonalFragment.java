@@ -154,6 +154,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         super.onCreate(savedInstanceState);
 
         localImages = new ArrayList<Integer>();//默认banner图片
+        localImages.add(R.mipmap.shop_banner);
         galleyImages = new ArrayList<String>();
         galleyInfoList = new ArrayList<GalleyInfo>();
 
@@ -167,8 +168,6 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         };
 
         new PersonalPresenter(getActivity(), this);
-
-        localImages.add(R.mipmap.shop_banner);
     }
 
     @Override
@@ -206,6 +205,13 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
 //            mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
         }
         ButterKnife.apply(toggleViews, BaseActivity.BUTTERKNIFEGONE);
+
+        shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
+            @Override
+            public ShopImageBannerHolderView createHolder() {
+                return new ShopImageBannerHolderView();
+            }
+        }, localImages);
 
         shopImagesBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -368,10 +374,10 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Override
-    public void onGetCustInfo(String name, String headUel, Integer goldNum) {
+    public void onGetCustInfo(String name, String headUrl, Integer goldNum) {
         userNameTV.setText(name);
         userAccountCoinTV.setText(" " + goldNum);
-        Glide.with(this).load(headUel).error(getActivity().getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
+        Glide.with(this).load(headUrl).asBitmap().placeholder(getActivity().getResources().getDrawable(R.mipmap.ic_holder_light)).error(getActivity().getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
     }
 
     @Override
@@ -398,11 +404,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
                 public ShopImageBannerHolderView createHolder() {
                     return new ShopImageBannerHolderView();
                 }
-            }, localImages)
-                    //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
-                    .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
-                    //设置指示器的方向
-                    .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+            }, localImages);
             shopImagesBanner.startTurning(3000);
         } else {
             for (int i = 0; i < galleyInfos.size(); i++) {
@@ -438,7 +440,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
 
         @Override
         public void UpdateUI(Context context, int position, String data) {
-            Glide.with(context).load(data).error(context.getResources().getDrawable(R.mipmap.shop_banner)).into(imageView);
+            Glide.with(context).load(data).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.recommend_pre_load)).error(context.getResources().getDrawable(R.mipmap.shop_banner)).into(imageView);
         }
     }
 }

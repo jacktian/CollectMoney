@@ -421,7 +421,8 @@
                 android:layout_width="@dimen/user_detail_avater_width"
                 android:layout_height="@dimen/user_detail_avater_width"
                 android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ic_holder_light" />
         </RelativeLayout>
 
         <android.support.design.widget.AppBarLayout

@@ -177,7 +177,7 @@ public class FriendListAdapter extends UltimateViewAdapter<FriendListAdapter.Vie
         }
 
         public void setUserAvaterIV(String userAvaterUrl) {
-            Glide.with(context).load(userAvaterUrl).error(context.getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
+            Glide.with(context).load(userAvaterUrl).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
         }
 
         public void setUserNameTV(String userName) {

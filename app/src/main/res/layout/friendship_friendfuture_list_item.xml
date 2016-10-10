@@ -10,7 +10,8 @@
         android:id="@+id/friend_user_avater"
         android:layout_width="@dimen/friendship_list_item_avater_width"
         android:layout_height="@dimen/friendship_list_item_avater_width"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_holder_light" />
 
     <TextView
         android:id="@+id/friend_user_name"

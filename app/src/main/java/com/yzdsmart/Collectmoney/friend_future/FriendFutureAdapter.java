@@ -133,7 +133,7 @@ public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapte
                 Glide.with(context).load(context.getResources().getDrawable(R.mipmap.tecent_head_other)).into(userAvaterIV);
                 return;
             }
-            Glide.with(context).load(userAvaterUrl).error(context.getResources().getDrawable(R.mipmap.tecent_head_other)).into(userAvaterIV);
+            Glide.with(context).load(userAvaterUrl).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.tecent_head_other)).into(userAvaterIV);
         }
 
         public void setUserNameTV(String userName) {
@@ -169,12 +169,10 @@ public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapte
                     TIMFriendshipManager.getInstance().addFriendResponse(response, new TIMValueCallBack<TIMFriendResult>() {
                         @Override
                         public void onError(int i, String s) {
-                            System.out.println("-------------onError-------------");
                         }
 
                         @Override
                         public void onSuccess(TIMFriendResult timFriendResult) {
-                            System.out.println(future.getIdentify() + "-------" + future.getName() + "--------" + FriendshipInfo.getInstance().isFriend(future.getIdentify()));
                             future.setType(TIMFutureFriendType.TIM_FUTURE_FRIEND_DECIDE_TYPE);
                             notifyDataSetChanged();
                         }

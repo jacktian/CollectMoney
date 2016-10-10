@@ -149,7 +149,7 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
                 Glide.with(context).load(context.getResources().getDrawable(R.mipmap.tecent_head_other)).into(userAvaterIV);
                 return;
             }
-            Glide.with(context).load(userAvaterUrl).error(context.getResources().getDrawable(R.mipmap.tecent_head_other)).into(userAvaterIV);
+            Glide.with(context).load(userAvaterUrl).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.tecent_head_other)).into(userAvaterIV);
         }
 
         public void setUserNameTV(String userName) {

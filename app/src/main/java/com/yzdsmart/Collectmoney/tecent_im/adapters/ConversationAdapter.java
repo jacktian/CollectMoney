@@ -103,7 +103,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                     @Override
                     public void onSuccess(List<TIMUserProfile> result) {
                         for (TIMUserProfile res : result) {
-                            Glide.with(App.getAppInstance()).load(res.getFaceUrl()).error(data.getAvatar()).into(holder.avatar);
+                            Glide.with(App.getAppInstance()).load(res.getFaceUrl()).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(data.getAvatar()).into(holder.avatar);
                         }
                     }
                 });

@@ -17,6 +17,7 @@ import com.yzdsmart.Collectmoney.bean.ShopScanner;
 import com.yzdsmart.Collectmoney.chat.ChatActivity;
 import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.money_friendship.friend_list.add.AddFriendActivity;
+import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.FriendshipInfo;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -106,7 +107,7 @@ public class ShopScannerAdapter extends RecyclerView.Adapter<ShopScannerAdapter.
         }
 
         public void setScannerAvater(String followerAvater) {
-            Glide.with(context).load(followerAvater).error(context.getResources().getDrawable(R.mipmap.user_avater)).into(scannerAvaterIV);
+            Glide.with(context).load(followerAvater).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.user_avater)).into(scannerAvaterIV);
         }
 
         public void setScannerName(String followerName) {
@@ -133,15 +134,19 @@ public class ShopScannerAdapter extends RecyclerView.Adapter<ShopScannerAdapter.
                     }
                     ShopScanner shopScanner = shopScannerList.get(getLayoutPosition());
                     bundle = new Bundle();
-                    if (FriendshipInfo.getInstance().isFriend(shopScanner.getTCAccount())) {
-                        bundle.putString("identify", shopScanner.getTCAccount());
-                        bundle.putSerializable("type", TIMConversationType.C2C);
-                        ((BaseActivity) context).openActivity(ChatActivity.class, bundle, 0);
-                    } else {
-                        bundle.putString("id", shopScanner.getTCAccount());
-                        bundle.putSerializable("name", shopScanner.getTCAccount());
-                        ((BaseActivity) context).openActivity(AddFriendActivity.class, bundle, 0);
-                    }
+//                    if (FriendshipInfo.getInstance().isFriend(shopScanner.getTCAccount())) {
+//                        bundle.putString("identify", shopScanner.getTCAccount());
+//                        bundle.putSerializable("type", TIMConversationType.C2C);
+//                        ((BaseActivity) context).openActivity(ChatActivity.class, bundle, 0);
+//                    } else {
+//                        bundle.putString("id", shopScanner.getTCAccount());
+//                        bundle.putSerializable("name", shopScanner.getTCAccount());
+//                        ((BaseActivity) context).openActivity(AddFriendActivity.class, bundle, 0);
+//                    }
+                    bundle.putInt("type", 1);
+                    bundle.putString("cust_code", shopScanner.getCustCode());
+                    bundle.putString("user_code", shopScanner.getTCAccount().replace("yzd", ""));
+                    ((BaseActivity) context).openActivity(PersonalFriendDetailActivity.class, bundle, 0);
                     break;
             }
         }
