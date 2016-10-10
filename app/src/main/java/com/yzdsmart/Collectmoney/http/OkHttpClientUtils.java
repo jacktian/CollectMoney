@@ -25,8 +25,10 @@ public class OkHttpClientUtils {
                     Request request = chain.request()
                             .newBuilder()
                             .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                            .addHeader("Accept", "*/*")
+                            .addHeader("Content-Type", "application/json; charset=UTF-8")
                             .addHeader("Accept-Encoding", "gzip, deflate")
+                            .addHeader("Connection", "keep-alive")
+                            .addHeader("Accept", "*/*")
                             .build();
                     return chain.proceed(request);
                 }

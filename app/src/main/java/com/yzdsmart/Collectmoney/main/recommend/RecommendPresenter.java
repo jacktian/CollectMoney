@@ -5,9 +5,6 @@ import android.content.Context;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
-
-import java.util.List;
 
 import okhttp3.ResponseBody;
 
