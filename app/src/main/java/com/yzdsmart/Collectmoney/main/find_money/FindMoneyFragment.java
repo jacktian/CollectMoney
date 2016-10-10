@@ -289,12 +289,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         findMoneyMap.showZoomControls(false);
         // 删除百度地图LoGo
         // searchMapView.removeViewAt(1);
-        findMoneyMap.setMapCustomEnable(true);
+        findMoneyMap.setMapCustomEnable(true);//自定义样式
 
         mBaiduMap = findMoneyMap.getMap();
         mMapSettings = mBaiduMap.getUiSettings();
 //        mMapSettings.setScrollGesturesEnabled(false);
-        mBaiduMap.setMaxAndMinZoomLevel(18, 14);
+//        mBaiduMap.setMaxAndMinZoomLevel(18, 14);
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.zoomTo(15));
         //设置默认显示城市
@@ -343,7 +343,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 }
                 MarkerOptions centerMO = new MarkerOptions().position(mapStatus.target).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_center_icon));
                 mapCenterMarker = (Marker) (mBaiduMap.addOverlay(centerMO));//地图中心点图标
-                switch ((int) mapStatus.zoom) {
+                int zoomLevel = (int) mapStatus.zoom;
+                switch (zoomLevel) {
                     case 13:
                         zoomDistance = 2000;
                         break;
@@ -361,6 +362,13 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                         break;
                     case 18:
                         zoomDistance = 50;
+                        break;
+                    default:
+                        if (zoomLevel < 13) {
+                            zoomDistance = 2000;
+                        } else if (zoomLevel > 18) {
+                            zoomDistance = 50;
+                        }
                         break;
                 }
             }
