@@ -4,12 +4,14 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.tencent.TIMFriendFutureItem;
 import com.yzdsmart.Collectmoney.BaseActivity;
@@ -44,10 +46,10 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
     TextView leftTitleTV;
     @Nullable
     @BindView(R.id.friend_future_list)
-    RecyclerView friendFutureRV;
+    UltimateRecyclerView friendFutureRV;
 
     private static final int PAGE_SIZE = 10;
-    private long pendSeq, decideSeq, recommendSeq;
+    private long pendSeq = 0, decideSeq = 0, recommendSeq = 0;
 
     private LinearLayoutManager mLinearLayoutManager;
     private List<FriendFuture> friendFutureList;
@@ -82,6 +84,25 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
         friendFutureRV.setLayoutManager(mLinearLayoutManager);
         friendFutureRV.addItemDecoration(dividerItemDecoration);
         friendFutureRV.setAdapter(friendFutureAdapter);
+        friendFutureRV.reenableLoadmore();
+        friendFutureRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+
+                mPresenter.getFutureFriends(PAGE_SIZE, pendSeq, decideSeq, recommendSeq);
+            }
+        });
+        friendFutureRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                friendFutureRV.setRefreshing(false);
+                pendSeq = 0;
+                decideSeq = 0;
+                recommendSeq = 0;
+                friendFutureAdapter.clearList();
+                mPresenter.getFutureFriends(PAGE_SIZE, pendSeq, decideSeq, recommendSeq);
+            }
+        });
 
         mPresenter.getFutureFriends(PAGE_SIZE, pendSeq, decideSeq, recommendSeq);
     }
@@ -112,20 +133,25 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
 
     @Override
     public void onGetFutureFriends(List<TIMFriendFutureItem> futureItems, long p, long d, long r) {
+        if (pendSeq == p && decideSeq == d && recommendSeq == r) {
+            friendFutureRV.disableLoadmore();
+            return;
+        }
         pendSeq = p;
         decideSeq = d;
         recommendSeq = r;
-        if (null != futureItems && 0 < futureItems.size()) {
-            friendFutureList.clear();
-            for (TIMFriendFutureItem item : futureItems) {
-                friendFutureList.add(new FriendFuture(item));
-            }
-            friendFutureAdapter.appendList(friendFutureList);
+        friendFutureList.clear();
+        for (TIMFriendFutureItem item : futureItems) {
+            friendFutureList.add(new FriendFuture(item));
         }
+        friendFutureAdapter.appendList(friendFutureList);
     }
 
     @Override
     public void refreshFriendFuture() {
+        pendSeq = 0;
+        decideSeq = 0;
+        recommendSeq = 0;
         friendFutureAdapter.clearList();
         mPresenter.getFutureFriends(PAGE_SIZE, pendSeq, decideSeq, recommendSeq);
     }

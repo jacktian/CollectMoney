@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_toolbar_height" />
 
-    <android.support.v7.widget.RecyclerView
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
         android:id="@+id/friend_future_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

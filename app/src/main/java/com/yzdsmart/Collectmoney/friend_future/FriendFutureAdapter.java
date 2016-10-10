@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.tencent.TIMFriendAddResponse;
 import com.tencent.TIMFriendResponseType;
 import com.tencent.TIMFriendResult;
@@ -37,7 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by YZD on 2016/8/21.
  */
-public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapter.ViewHolder> {
+public class FriendFutureAdapter extends UltimateViewAdapter<FriendFutureAdapter.ViewHolder> {
     private Context context;
     private List<FriendFuture> friendFutureList;
 
@@ -76,6 +77,21 @@ public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapte
     }
 
     @Override
+    public ViewHolder newFooterHolder(View view) {
+        return null;
+    }
+
+    @Override
+    public ViewHolder newHeaderHolder(View view) {
+        return null;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final FriendFuture future = friendFutureList.get(position);
         holder.setUserNameTV(future.getName());
@@ -99,8 +115,28 @@ public class FriendFutureAdapter extends RecyclerView.Adapter<FriendFutureAdapte
     }
 
     @Override
+    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+    }
+
+    @Override
     public int getItemCount() {
         return friendFutureList.size();
+    }
+
+    @Override
+    public int getAdapterItemCount() {
+        return friendFutureList.size();
+    }
+
+    @Override
+    public long generateHeaderId(int position) {
+        return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
