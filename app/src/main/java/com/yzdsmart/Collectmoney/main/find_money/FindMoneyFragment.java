@@ -337,12 +337,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
             @Override
             public void onMapStatusChangeFinish(MapStatus mapStatus) {
-                if (null != mapCenterMarker) {
-                    mapCenterMarker.remove();
-                    mapCenterMarker = null;
-                }
-                MarkerOptions centerMO = new MarkerOptions().position(mapStatus.target).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_center_icon));
-                mapCenterMarker = (Marker) (mBaiduMap.addOverlay(centerMO));//地图中心点图标
                 int zoomLevel = (int) mapStatus.zoom;
                 switch (zoomLevel) {
                     case 13:
@@ -371,6 +365,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                         }
                         break;
                 }
+                if (null != mapCenterMarker) {
+                    mapCenterMarker.remove();
+                    mapCenterMarker = null;
+                }
+                MarkerOptions centerMO = new MarkerOptions().position(mapStatus.target).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_center_icon));
+                mapCenterMarker = (Marker) (mBaiduMap.addOverlay(centerMO));//地图中心点图标
             }
         });
     }
@@ -648,7 +648,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             inputStream = context.getAssets().open("customConfigdir/custom_config.txt");
             byte[] b = new byte[inputStream.available()];
             inputStream.read(b);
-
             moduleName = context.getFilesDir().getAbsolutePath();
             File f = new File(moduleName + "/" + "custom_config.txt");
             if (f.exists()) {
@@ -671,7 +670,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 e.printStackTrace();
             }
         }
-
         MapView.setCustomMapStylePath(moduleName + "/custom_config.txt");
     }
 }
