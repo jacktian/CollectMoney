@@ -11,7 +11,7 @@ import com.yzdsmart.Collectmoney.http.RequestListener;
  * Created by YZD on 2016/9/2.
  */
 public class FriendFutureModel {
-    public void getFutureFriends(int pageSize, long pendSeq, long decideSeq, long recommendSeq, final RequestListener listener) {
+    void getFutureFriends(int pageSize, long pendSeq, long decideSeq, long recommendSeq, final RequestListener listener) {
         TIMFriendFutureMeta meta = new TIMFriendFutureMeta();
         meta.setReqNum(pageSize);
         //设置用于分页拉取的seq

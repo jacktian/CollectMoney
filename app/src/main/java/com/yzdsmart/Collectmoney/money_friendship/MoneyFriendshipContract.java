@@ -49,6 +49,15 @@ public interface MoneyFriendshipContract {
          * 刷新界面
          */
         void refreshConversation();
+
+        void updateUnreadFriendFutureBubble();
+
+        /**
+         * 获取未决请求
+         *
+         * @param unreadCount
+         */
+        void onGetUnReadFriendFuture(Integer unreadCount);
     }
 
     interface MoneyFriendshipPresenter extends BasePresenter {
@@ -62,6 +71,11 @@ public interface MoneyFriendshipContract {
          * 包括：加群等已决和未决的消息
          */
         void getGroupManageLastMessage();
+
+        /**
+         * 获取未决请求
+         */
+        void getUnReadFriendFuture();
 
         void unRegisterObserver();
 

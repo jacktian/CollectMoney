@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
+import com.tencent.TIMGetFriendFutureListSucc;
 import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupPendencyGetParam;
@@ -103,6 +104,27 @@ public class MoneyFriendshipPresenter implements MoneyFriendshipContract.MoneyFr
     }
 
     @Override
+    public void getUnReadFriendFuture() {
+        mModel.getUnReadFriendFuture(new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                TIMGetFriendFutureListSucc listSucc = (TIMGetFriendFutureListSucc) result;
+                mView.onGetUnReadFriendFuture(listSucc.getItems().size());
+            }
+
+            @Override
+            public void onError(String err) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
     public void unRegisterObserver() {
         //解除消息监听
         MessageEvent.getInstance().deleteObserver(this);
@@ -130,6 +152,9 @@ public class MoneyFriendshipPresenter implements MoneyFriendshipContract.MoneyFr
                 case REFRESH:
                 case DEL:
                     mView.refreshConversation();
+                    break;
+                case ADD_REQ:
+                    mView.updateUnreadFriendFutureBubble();
                     break;
             }
         } else if (observable instanceof GroupEvent) {

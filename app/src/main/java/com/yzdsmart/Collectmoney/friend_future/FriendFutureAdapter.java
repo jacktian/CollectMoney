@@ -166,7 +166,7 @@ public class FriendFutureAdapter extends UltimateViewAdapter<FriendFutureAdapter
 
         public void setUserAvaterIV(String userAvaterUrl) {
             if (null == userAvaterUrl) {
-                Glide.with(context).load(context.getResources().getDrawable(R.mipmap.tecent_head_other)).into(userAvaterIV);
+                userAvaterIV.setImageDrawable(context.getResources().getDrawable(R.mipmap.tecent_head_other));
                 return;
             }
             Glide.with(context).load(userAvaterUrl).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.tecent_head_other)).into(userAvaterIV);

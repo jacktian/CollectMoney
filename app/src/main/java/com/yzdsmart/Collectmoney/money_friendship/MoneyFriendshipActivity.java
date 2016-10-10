@@ -81,6 +81,12 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
     @Nullable
     @BindView(R.id.unread_conversation_bubble)
     TextView unreadConversationBubbleTV;
+    @Nullable
+    @BindView(R.id.unread_future_bubble)
+    TextView unreadFutureBubbleTV;
+    @Nullable
+    @BindView(R.id.bubble_count)
+    TextView titleRightBubbleTV;
 
     private FragmentManager fm;
     private Fragment mCurrentFragment;
@@ -179,6 +185,7 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
     protected void onResume() {
         super.onResume();
         updateUnreadConversationBubble();
+        updateUnreadFriendFutureBubble();
     }
 
     @Override
@@ -370,6 +377,32 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
             ((ConversationFragment) chatFragment).updateConversions(conversationList);
         }
         updateUnreadConversationBubble();
+    }
+
+    @Override
+    public void updateUnreadFriendFutureBubble() {
+        mPresenter.getUnReadFriendFuture();
+    }
+
+    @Override
+    public void onGetUnReadFriendFuture(Integer unreadCount) {
+        if (unreadCount <= 0) {
+            unreadFutureBubbleTV.setVisibility(View.INVISIBLE);
+            titleRightBubbleTV.setVisibility(View.GONE);
+        } else {
+            unreadFutureBubbleTV.setVisibility(View.VISIBLE);
+            titleRightBubbleTV.setVisibility(View.VISIBLE);
+            String unReadStr = String.valueOf(unreadCount);
+            unreadFutureBubbleTV.setBackgroundResource(R.mipmap.tecent_point1);
+            titleRightBubbleTV.setBackgroundResource(R.mipmap.tecent_point1);
+            if (unreadCount > 99) {
+                unreadFutureBubbleTV.setBackgroundResource(R.mipmap.tecent_point2);
+                titleRightBubbleTV.setBackgroundResource(R.mipmap.tecent_point2);
+                unReadStr = getResources().getString(R.string.time_more);
+            }
+            unreadFutureBubbleTV.setText(unReadStr);
+            titleRightBubbleTV.setText(unReadStr);
+        }
     }
 
     public void updateUnreadConversationBubble() {
