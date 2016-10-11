@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class BuyCoinLogRequestResponse {
     private List<BuyCoinsLog> lists;
+    private Integer lastsequence;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
     private String ActionStatus;
     private Integer ErrorCode;
     private String ErrorInfo;
@@ -16,8 +17,9 @@ public class BuyCoinLogRequestResponse {
     public BuyCoinLogRequestResponse() {
     }
 
-    public BuyCoinLogRequestResponse(List<BuyCoinsLog> lists, String actionStatus, Integer errorCode, String errorInfo) {
+    public BuyCoinLogRequestResponse(List<BuyCoinsLog> lists, Integer lastsequence, String actionStatus, Integer errorCode, String errorInfo) {
         this.lists = lists;
+        this.lastsequence = lastsequence;
         ActionStatus = actionStatus;
         ErrorCode = errorCode;
         ErrorInfo = errorInfo;
@@ -29,6 +31,14 @@ public class BuyCoinLogRequestResponse {
 
     public void setLists(List<BuyCoinsLog> lists) {
         this.lists = lists;
+    }
+
+    public Integer getLastsequence() {
+        return lastsequence;
+    }
+
+    public void setLastsequence(Integer lastsequence) {
+        this.lastsequence = lastsequence;
     }
 
     public String getActionStatus() {
@@ -59,6 +69,7 @@ public class BuyCoinLogRequestResponse {
     public String toString() {
         return "{" +
                 "lists:" + lists +
+                "lastsequence:" + lastsequence +
                 ", ActionStatus:'" + ActionStatus + '\'' +
                 ", ErrorCode:" + ErrorCode +
                 ", ErrorInfo:'" + ErrorInfo + '\'' +

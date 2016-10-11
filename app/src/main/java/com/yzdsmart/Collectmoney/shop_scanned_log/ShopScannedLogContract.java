@@ -16,8 +16,9 @@ public class ShopScannedLogContract {
          * 获取指定商铺被扫码日志
          *
          * @param scannedLogs
+         * @param lastsequence
          */
-        void onGetScannedLog(List<ScannedLog> scannedLogs);
+        void onGetScannedLog(List<ScannedLog> scannedLogs, Integer lastsequence);
     }
 
     interface ShopScannedLogPresenter extends BasePresenter {
@@ -29,8 +30,9 @@ public class ShopScannedLogContract {
          * @param bazaCode
          * @param pageIndex
          * @param pageSize
+         * @param lastsequence
          */
-        void getScannedLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize);
+        void getScannedLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence);
 
         void unRegisterSubscribe();
     }

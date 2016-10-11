@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class GetCoinsLogRequestResponse {
     private List<GetCoinsLog> lists;
+    private Integer lastsequence;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
     private String ActionStatus;
     private Integer ErrorCode;
     private String ErrorInfo;
@@ -16,8 +17,9 @@ public class GetCoinsLogRequestResponse {
     public GetCoinsLogRequestResponse() {
     }
 
-    public GetCoinsLogRequestResponse(List<GetCoinsLog> lists, String actionStatus, Integer errorCode, String errorInfo) {
+    public GetCoinsLogRequestResponse(List<GetCoinsLog> lists, Integer lastsequence, String actionStatus, Integer errorCode, String errorInfo) {
         this.lists = lists;
+        this.lastsequence = lastsequence;
         ActionStatus = actionStatus;
         ErrorCode = errorCode;
         ErrorInfo = errorInfo;
@@ -31,12 +33,12 @@ public class GetCoinsLogRequestResponse {
         this.lists = lists;
     }
 
-    public String getErrorInfo() {
-        return ErrorInfo;
+    public Integer getLastsequence() {
+        return lastsequence;
     }
 
-    public void setErrorInfo(String errorInfo) {
-        ErrorInfo = errorInfo;
+    public void setLastsequence(Integer lastsequence) {
+        this.lastsequence = lastsequence;
     }
 
     public String getActionStatus() {
@@ -55,10 +57,19 @@ public class GetCoinsLogRequestResponse {
         ErrorCode = errorCode;
     }
 
+    public String getErrorInfo() {
+        return ErrorInfo;
+    }
+
+    public void setErrorInfo(String errorInfo) {
+        ErrorInfo = errorInfo;
+    }
+
     @Override
     public String toString() {
         return "{" +
                 "lists:" + lists +
+                ", lastsequence:'" + lastsequence + '\'' +
                 ", ActionStatus:'" + ActionStatus + '\'' +
                 ", ErrorCode:" + ErrorCode +
                 ", ErrorInfo:'" + ErrorInfo + '\'' +

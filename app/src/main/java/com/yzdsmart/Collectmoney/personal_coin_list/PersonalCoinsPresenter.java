@@ -23,16 +23,14 @@ public class PersonalCoinsPresenter implements PersonalCoinsContract.PersonalCoi
     }
 
     @Override
-    public void getCoinsLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading,context.getResources().getString(R.string.loading));
-        mModel.getCoinsLog(action, submitCode, custCode, pageIndex, pageSize, new RequestListener() {
+    public void getCoinsLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize, Integer lastsequence) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.getCoinsLog(action, submitCode, custCode, pageIndex, pageSize, lastsequence, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 GetCoinsLogRequestResponse response = (GetCoinsLogRequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
-                    if (null != response.getLists() && response.getLists().size() > 0) {
-                        mView.onGetCoinsLog(response.getLists());
-                    }
+                    mView.onGetCoinsLog(response.getLists(), response.getLastsequence());
                 } else {
                     ((BaseActivity) context).showSnackbar(response.getErrorInfo());
                 }

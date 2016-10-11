@@ -1,6 +1,5 @@
 package com.yzdsmart.Collectmoney.http.response;
 
-import com.yzdsmart.Collectmoney.bean.BuyCoinsLog;
 import com.yzdsmart.Collectmoney.bean.ShopWithdrawLog;
 
 import java.util.List;
@@ -10,6 +9,7 @@ import java.util.List;
  */
 public class ShopWithdrawLogRequestResponse {
     private List<ShopWithdrawLog> lists;
+    private Integer lastsequence;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
     private String ActionStatus;
     private Integer ErrorCode;
     private String ErrorInfo;
@@ -17,8 +17,9 @@ public class ShopWithdrawLogRequestResponse {
     public ShopWithdrawLogRequestResponse() {
     }
 
-    public ShopWithdrawLogRequestResponse(List<ShopWithdrawLog> lists, String actionStatus, Integer errorCode, String errorInfo) {
+    public ShopWithdrawLogRequestResponse(List<ShopWithdrawLog> lists, Integer lastsequence, String actionStatus, Integer errorCode, String errorInfo) {
         this.lists = lists;
+        this.lastsequence = lastsequence;
         ActionStatus = actionStatus;
         ErrorCode = errorCode;
         ErrorInfo = errorInfo;
@@ -30,6 +31,14 @@ public class ShopWithdrawLogRequestResponse {
 
     public void setLists(List<ShopWithdrawLog> lists) {
         this.lists = lists;
+    }
+
+    public Integer getLastsequence() {
+        return lastsequence;
+    }
+
+    public void setLastsequence(Integer lastsequence) {
+        this.lastsequence = lastsequence;
     }
 
     public String getActionStatus() {
@@ -60,6 +69,7 @@ public class ShopWithdrawLogRequestResponse {
     public String toString() {
         return "{" +
                 "lists:" + lists +
+                "lastsequence:" + lastsequence +
                 ", ActionStatus:'" + ActionStatus + '\'' +
                 ", ErrorCode:" + ErrorCode +
                 ", ErrorInfo:'" + ErrorInfo + '\'' +

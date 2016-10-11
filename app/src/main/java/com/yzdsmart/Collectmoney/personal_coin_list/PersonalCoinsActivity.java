@@ -47,6 +47,7 @@ public class PersonalCoinsActivity extends BaseActivity implements PersonalCoins
     private static final String GET_COIN_LOG_CODE = "1666";
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
+    private Integer lastsequence = 0;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
 
     private PersonalCoinsContract.PersonalCoinsPresenter mPresenter;
 
@@ -84,20 +85,21 @@ public class PersonalCoinsActivity extends BaseActivity implements PersonalCoins
         coinListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                mPresenter.getCoinsLog(GET_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(PersonalCoinsActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
+                mPresenter.getCoinsLog(GET_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(PersonalCoinsActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
             }
         });
         coinListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 coinListRV.setRefreshing(false);
+                lastsequence = 0;
                 pageIndex = 1;
                 personalCoinsAdapter.clearList();
-                mPresenter.getCoinsLog(GET_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(PersonalCoinsActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
+                mPresenter.getCoinsLog(GET_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(PersonalCoinsActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
             }
         });
 
-        mPresenter.getCoinsLog(GET_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
+        mPresenter.getCoinsLog(GET_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
     }
 
     @Override
@@ -122,7 +124,8 @@ public class PersonalCoinsActivity extends BaseActivity implements PersonalCoins
     }
 
     @Override
-    public void onGetCoinsLog(List<GetCoinsLog> logList) {
+    public void onGetCoinsLog(List<GetCoinsLog> logList, Integer lastsequence) {
+        this.lastsequence = lastsequence;
         this.logList.clear();
         this.logList.addAll(logList);
         personalCoinsAdapter.appendList(this.logList);

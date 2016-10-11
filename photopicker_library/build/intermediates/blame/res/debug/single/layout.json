@@ -24,12 +24,12 @@
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
     },
     {
-        "merged": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_bar.xml",
-        "source": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_mode_bar.xml"
-    },
-    {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\layout\\bga_pp_activity_photo_preview.xml",
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\src\\main\\res\\layout\\bga_pp_activity_photo_preview.xml"
+    },
+    {
+        "merged": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_bar.xml",
+        "source": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_mode_bar.xml"
     },
     {
         "merged": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_toolbar.xml",
@@ -92,12 +92,12 @@
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\src\\main\\res\\layout\\bga_pp_pw_photo_folder.xml"
     },
     {
-        "merged": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
-        "source": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\support_simple_spinner_dropdown_item.xml"
-    },
-    {
         "merged": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view_list_item.xml",
         "source": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_activity_chooser_view_list_item.xml"
+    },
+    {
+        "merged": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
+        "source": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\support_simple_spinner_dropdown_item.xml"
     },
     {
         "merged": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_title_item.xml",

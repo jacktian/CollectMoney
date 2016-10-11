@@ -12,12 +12,12 @@
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_activity_chooser_view.xml"
     },
     {
-        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_title_item.xml",
-        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_bar_title_item.xml"
-    },
-    {
         "merged": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_menu_item_layout.xml",
         "source": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_menu_item_layout.xml"
+    },
+    {
+        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_title_item.xml",
+        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_bar_title_item.xml"
     },
     {
         "merged": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\bga_pp_item_photo_folder.xml",
@@ -52,16 +52,16 @@
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_screen_simple.xml"
     },
     {
-        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_content_include.xml",
-        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_screen_content_include.xml"
+        "merged": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\bga_pp_item_photo_picker.xml",
+        "source": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\bundles\\debug\\res\\layout\\bga_pp_item_photo_picker.xml"
     },
     {
         "merged": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_material.xml",
         "source": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_alert_dialog_material.xml"
     },
     {
-        "merged": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\bga_pp_item_photo_picker.xml",
-        "source": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\bundles\\debug\\res\\layout\\bga_pp_item_photo_picker.xml"
+        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_screen_content_include.xml",
+        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_screen_content_include.xml"
     },
     {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_dialog_title_material.xml",
@@ -104,12 +104,12 @@
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_search_view.xml"
     },
     {
-        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\bga_pp_item_photo_folder.xml",
-        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\bundles\\debug\\res\\layout\\bga_pp_item_photo_folder.xml"
-    },
-    {
         "merged": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_search_view.xml",
         "source": "E:\\WorkSpace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_search_view.xml"
+    },
+    {
+        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\bga_pp_item_photo_folder.xml",
+        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\bundles\\debug\\res\\layout\\bga_pp_item_photo_folder.xml"
     },
     {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\bga_pp_activity_photo_picker_preview.xml",

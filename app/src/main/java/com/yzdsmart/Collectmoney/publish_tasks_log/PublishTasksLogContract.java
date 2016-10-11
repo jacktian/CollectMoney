@@ -23,8 +23,9 @@ public interface PublishTasksLogContract {
          * 指定商铺获得发布任务日志列表
          *
          * @param logList
+         * @param lastsequence
          */
-        void onPublishTaskLog(List<PublishTaskLog> logList);
+        void onPublishTaskLog(List<PublishTaskLog> logList, Integer lastsequence);
 
     }
 
@@ -46,8 +47,9 @@ public interface PublishTasksLogContract {
          * @param bazaCode
          * @param pageIndex
          * @param pageSize
+         * @param lastsequence
          */
-        void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize);
+        void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence);
 
         void unRegisterSubscribe();
     }

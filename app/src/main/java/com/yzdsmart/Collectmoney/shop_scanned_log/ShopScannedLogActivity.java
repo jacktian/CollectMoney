@@ -47,6 +47,7 @@ public class ShopScannedLogActivity extends BaseActivity implements ShopScannedL
     private final static String GET_SCANNED_LOG_ACTION_CODE = "1688";
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
+    private Integer lastsequence = 0;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
 
     private LinearLayoutManager mLinearLayoutManager;
     private Paint dividerPaint;
@@ -84,7 +85,7 @@ public class ShopScannedLogActivity extends BaseActivity implements ShopScannedL
         scannedLogRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                mPresenter.getScannedLog(GET_SCANNED_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(ShopScannedLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+                mPresenter.getScannedLog(GET_SCANNED_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(ShopScannedLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
             }
         });
         scannedLogRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -92,12 +93,13 @@ public class ShopScannedLogActivity extends BaseActivity implements ShopScannedL
             public void onRefresh() {
                 scannedLogRV.setRefreshing(false);
                 pageIndex = 1;
+                lastsequence = 0;
                 shopScannedLogAdapter.clearList();
-                mPresenter.getScannedLog(GET_SCANNED_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(ShopScannedLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+                mPresenter.getScannedLog(GET_SCANNED_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(ShopScannedLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
             }
         });
 
-        mPresenter.getScannedLog(GET_SCANNED_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE);
+        mPresenter.getScannedLog(GET_SCANNED_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
     }
 
     @Override
@@ -127,7 +129,8 @@ public class ShopScannedLogActivity extends BaseActivity implements ShopScannedL
     }
 
     @Override
-    public void onGetScannedLog(List<ScannedLog> scannedLogs) {
+    public void onGetScannedLog(List<ScannedLog> scannedLogs, Integer lastsequence) {
+        this.lastsequence = lastsequence;
         scannedLogList.clear();
         scannedLogList.addAll(scannedLogs);
         shopScannedLogAdapter.appendList(scannedLogList);

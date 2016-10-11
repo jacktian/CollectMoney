@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -62,6 +61,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
+    private Integer lastsequence;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
 
     private LinearLayoutManager mLinearLayoutManager;
     private Paint dividerPaint;
@@ -111,7 +111,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         coinListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                mPresenter.buyCoinsLog(BUY_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+                mPresenter.buyCoinsLog(BUY_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
             }
         });
         coinListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -119,12 +119,13 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
             public void onRefresh() {
                 coinListRV.setRefreshing(false);
                 pageIndex = 1;
+                lastsequence = 0;
                 buyCoinsLogAdapter.clearList();
-                mPresenter.buyCoinsLog(BUY_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+                mPresenter.buyCoinsLog(BUY_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
             }
         });
 
-        mPresenter.buyCoinsLog(BUY_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE);
+        mPresenter.buyCoinsLog(BUY_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
     }
 
     @Override
@@ -202,7 +203,8 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     }
 
     @Override
-    public void onBuyCoinsLog(List<BuyCoinsLog> logList) {
+    public void onBuyCoinsLog(List<BuyCoinsLog> logList, Integer lastsequence) {
+        this.lastsequence = lastsequence;
         this.logList.clear();
         this.logList.addAll(logList);
         buyCoinsLogAdapter.appendList(this.logList);

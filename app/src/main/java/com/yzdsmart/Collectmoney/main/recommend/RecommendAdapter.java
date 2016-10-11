@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,12 +13,15 @@ import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
+import com.yzdsmart.Collectmoney.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Optional;
 
 /**
  * Created by YZD on 2016/8/19.
@@ -27,16 +29,6 @@ import butterknife.ButterKnife;
 public class RecommendAdapter extends UltimateViewAdapter<RecommendAdapter.ViewHolder> {
     private Context context;
     private List<ExpandListRequestResponse> expandList;
-
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
-
-    private OnItemClickListener mOnItemClickListener;
-
-    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
-        this.mOnItemClickListener = mOnItemClickListener;
-    }
 
     public RecommendAdapter(Context context) {
         this.context = context;
@@ -89,16 +81,6 @@ public class RecommendAdapter extends UltimateViewAdapter<RecommendAdapter.ViewH
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        // 如果设置了回调，则设置点击事件
-        if (null != mOnItemClickListener) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = holder.getLayoutPosition();
-                    mOnItemClickListener.onItemClick(holder.itemView, pos);
-                }
-            });
-        }
         holder.setAttractionImg(expandList.get(position).getImageUrl());
         holder.setAttractionName(expandList.get(position).getName());
     }
@@ -158,6 +140,17 @@ public class RecommendAdapter extends UltimateViewAdapter<RecommendAdapter.ViewH
 
         public void setAttractionName(String attractionName) {
             attractionNameTV.setText(attractionName);
+        }
+
+        @Optional
+        @OnClick({R.id.recommend_item})
+        void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.recommend_item:
+                    ((MainActivity) context).backToFindMoney();
+                    ((MainActivity) context).getShopListNearByMarket(expandList.get(getAdapterPosition()).getCoor());
+                    break;
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class PublishTaskLogRequestResponse {
     private List<PublishTaskLog> lists;
+    private Integer lastsequence;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
     private String ActionStatus;
     private Integer ErrorCode;
     private String ErrorInfo;
@@ -16,8 +17,9 @@ public class PublishTaskLogRequestResponse {
     public PublishTaskLogRequestResponse() {
     }
 
-    public PublishTaskLogRequestResponse(List<PublishTaskLog> lists, String actionStatus, Integer errorCode, String errorInfo) {
+    public PublishTaskLogRequestResponse(List<PublishTaskLog> lists, Integer lastsequence, String actionStatus, Integer errorCode, String errorInfo) {
         this.lists = lists;
+        this.lastsequence = lastsequence;
         ActionStatus = actionStatus;
         ErrorCode = errorCode;
         ErrorInfo = errorInfo;
@@ -29,6 +31,14 @@ public class PublishTaskLogRequestResponse {
 
     public void setLists(List<PublishTaskLog> lists) {
         this.lists = lists;
+    }
+
+    public Integer getLastsequence() {
+        return lastsequence;
+    }
+
+    public void setLastsequence(Integer lastsequence) {
+        this.lastsequence = lastsequence;
     }
 
     public String getActionStatus() {
@@ -59,6 +69,7 @@ public class PublishTaskLogRequestResponse {
     public String toString() {
         return "{" +
                 "lists:" + lists +
+                "lastsequence:" + lastsequence +
                 ", ActionStatus:'" + ActionStatus + '\'' +
                 ", ErrorCode:" + ErrorCode +
                 ", ErrorInfo:'" + ErrorInfo + '\'' +

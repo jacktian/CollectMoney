@@ -52,6 +52,7 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
     private static final String PUBLISH_TASK_LOG_CODE = "2188";
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
+    private Integer lastsequence = 0;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
 
     private LinearLayoutManager mLinearLayoutManager;
     private Paint dividerPaint;
@@ -87,21 +88,22 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
         publishListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                mPresenter.publishTaskLog(PUBLISH_TASK_LOG_CODE, "000000", SharedPreferencesUtils.getString(PublishTasksLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+                mPresenter.publishTaskLog(PUBLISH_TASK_LOG_CODE, "000000", SharedPreferencesUtils.getString(PublishTasksLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
             }
         });
         publishListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 publishListRV.setRefreshing(false);
+                lastsequence = 0;
                 pageIndex = 1;
                 publishTasksAdapter.clearList();
-                mPresenter.publishTaskLog(PUBLISH_TASK_LOG_CODE, "000000", SharedPreferencesUtils.getString(PublishTasksLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+                mPresenter.publishTaskLog(PUBLISH_TASK_LOG_CODE, "000000", SharedPreferencesUtils.getString(PublishTasksLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
             }
         });
 
         mPresenter.getLeftCoins(GET_TASKS_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
-        mPresenter.publishTaskLog(PUBLISH_TASK_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE);
+        mPresenter.publishTaskLog(PUBLISH_TASK_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
     }
 
     @Override
@@ -136,7 +138,8 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
     }
 
     @Override
-    public void onPublishTaskLog(List<PublishTaskLog> logList) {
+    public void onPublishTaskLog(List<PublishTaskLog> logList, Integer lastsequence) {
+        this.lastsequence = lastsequence;
         this.logList.clear();
         this.logList.addAll(logList);
         publishTasksAdapter.appendList(this.logList);

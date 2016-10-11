@@ -11,7 +11,13 @@ import java.util.List;
  */
 public interface PersonalCoinsContract {
     interface PersonalCoinsView extends BaseView<PersonalCoinsPresenter> {
-        void onGetCoinsLog(List<GetCoinsLog> logList);
+        /**
+         * 用户获取金币日志列表
+         *
+         * @param logList
+         * @param lastsequence
+         */
+        void onGetCoinsLog(List<GetCoinsLog> logList, Integer lastsequence);
     }
 
     interface PersonalCoinsPresenter extends BasePresenter {
@@ -23,8 +29,9 @@ public interface PersonalCoinsContract {
          * @param custCode
          * @param pageIndex
          * @param pageSize
+         * @param lastsequence
          */
-        void getCoinsLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize);
+        void getCoinsLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize, Integer lastsequence);
 
         void unRegisterSubscribe();
     }

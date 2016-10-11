@@ -17,15 +17,17 @@ public interface WithDrawLogContract {
          * 个人提现日志
          *
          * @param personalWithdrawLogs
+         * @param lastsequence
          */
-        void onGetPersonalWithdrawLog(List<PersonalWithdrawLog> personalWithdrawLogs);
+        void onGetPersonalWithdrawLog(List<PersonalWithdrawLog> personalWithdrawLogs, Integer lastsequence);
 
         /**
          * 商铺提现日志
          *
          * @param shopWithdrawLogs
+         * @param lastsequence
          */
-        void onGetShopWithdrawLog(List<ShopWithdrawLog> shopWithdrawLogs);
+        void onGetShopWithdrawLog(List<ShopWithdrawLog> shopWithdrawLogs, Integer lastsequence);
     }
 
     interface WithDrawLogPresenter extends BasePresenter {
@@ -37,8 +39,9 @@ public interface WithDrawLogContract {
          * @param custCode
          * @param pageIndex
          * @param pageSize
+         * @param lastsequence
          */
-        void getPersonalWithdrawLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize);
+        void getPersonalWithdrawLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize, Integer lastsequence);
 
         /**
          * 商铺提现日志
@@ -48,8 +51,9 @@ public interface WithDrawLogContract {
          * @param bazaCode
          * @param pageIndex
          * @param pageSize
+         * @param lastsequence
          */
-        void getShopWithdrawLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize);
+        void getShopWithdrawLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence);
 
         void unRegisterSubscribe();
     }

@@ -51,16 +51,14 @@ public class PublishTasksLogPresenter implements PublishTasksLogContract.Publish
     }
 
     @Override
-    public void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize) {
+    public void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.publishTaskLog(action, submitCode, bazaCode, pageIndex, pageSize, new RequestListener() {
+        mModel.publishTaskLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 PublishTaskLogRequestResponse response = (PublishTaskLogRequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
-                    if (null != response.getLists() && response.getLists().size() > 0) {
-                        mView.onPublishTaskLog(response.getLists());
-                    }
+                    mView.onPublishTaskLog(response.getLists(), response.getLastsequence());
                 } else {
                     ((BaseActivity) context).showSnackbar(response.getErrorInfo());
                 }

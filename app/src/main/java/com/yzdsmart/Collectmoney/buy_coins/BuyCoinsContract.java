@@ -11,9 +11,21 @@ import java.util.List;
  */
 public interface BuyCoinsContract {
     interface BuyCoinsView extends BaseView<BuyCoinsPresenter> {
+        /**
+         * 商户充值金币
+         *
+         * @param flag
+         * @param msg
+         */
         void onBuyCoins(boolean flag, String msg);
 
-        void onBuyCoinsLog(List<BuyCoinsLog> logList);
+        /**
+         * 指定商铺购买金币日志列表
+         *
+         * @param logList
+         * @param lastsequence
+         */
+        void onBuyCoinsLog(List<BuyCoinsLog> logList, Integer lastsequence);
     }
 
     interface BuyCoinsPresenter extends BasePresenter {
@@ -35,8 +47,9 @@ public interface BuyCoinsContract {
          * @param bazaCode
          * @param pageIndex
          * @param pageSize
+         * @param lastsequence
          */
-        void buyCoinsLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize);
+        void buyCoinsLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence);
 
         void unRegisterSubscribe();
     }

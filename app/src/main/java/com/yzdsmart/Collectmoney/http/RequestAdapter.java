@@ -20,7 +20,8 @@ public class RequestAdapter {
             Retrofit mRetrofit = new Retrofit.Builder().baseUrl(Url.BASE_URL)
                     .client(OkHttpClientUtils.getOkHttpClient())
                     .addConverterFactory(new StringConverterFactory())
-                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addConverterFactory(LenientGsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();
             mRequestService = mRetrofit.create(RequestService.class);

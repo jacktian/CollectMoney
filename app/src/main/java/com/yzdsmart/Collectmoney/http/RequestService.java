@@ -29,7 +29,6 @@ import com.yzdsmart.Collectmoney.http.response.WithdrawRequestResponse;
 
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -397,11 +396,12 @@ public interface RequestService {
      * @param custCode
      * @param pageIndex
      * @param pageSize
+     * @param lastsequence 保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
      * @return
      */
     @FormUrlEncoded
     @POST(Url.TASKLOG)
-    Observable<PersonalWithdrawLogRequestResponse> getPersonalWithdrawLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<PersonalWithdrawLogRequestResponse> getPersonalWithdrawLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence);
 
     /**
      * 获取用户关注的店铺信息
@@ -425,11 +425,12 @@ public interface RequestService {
      * @param custCode
      * @param pageIndex
      * @param pageSize
+     * @param lastsequence
      * @return
      */
     @FormUrlEncoded
     @POST(Url.TASKLOG)
-    Observable<GetCoinsLogRequestResponse> getCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<GetCoinsLogRequestResponse> getCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence);
 
     /**
      * 商家获取商铺详情
@@ -496,11 +497,12 @@ public interface RequestService {
      * @param bazaCode
      * @param pageIndex
      * @param pageSize
+     * @param lastsequence
      * @return
      */
     @FormUrlEncoded
     @POST(Url.TASKLOG)
-    Observable<BuyCoinLogRequestResponse> buyCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<BuyCoinLogRequestResponse> buyCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence);
 
     /**
      * 获取店铺剩余金币数
@@ -535,11 +537,12 @@ public interface RequestService {
      * @param bazaCode
      * @param pageIndex
      * @param pageSize
+     * @param lastsequence 保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
      * @return
      */
     @FormUrlEncoded
     @POST(Url.TASKLOG)
-    Observable<ShopWithdrawLogRequestResponse> getShopWithdrawLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<ShopWithdrawLogRequestResponse> getShopWithdrawLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence);
 
     /**
      * 商户创建金币任务
@@ -564,11 +567,12 @@ public interface RequestService {
      * @param bazaCode
      * @param pageIndex
      * @param pageSize
+     * @param lastsequence
      * @return
      */
     @FormUrlEncoded
     @POST(Url.TASKLOG)
-    Observable<PublishTaskLogRequestResponse> publishTaskLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<PublishTaskLogRequestResponse> publishTaskLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence);
 
     /**
      * 上传商铺图片
@@ -605,11 +609,12 @@ public interface RequestService {
      * @param bazaCode
      * @param pageIndex
      * @param pageSize
+     * @param lastsequence
      * @return
      */
     @FormUrlEncoded
     @POST(Url.TASKLOG)
-    Observable<ScannedLogRequestResponse> getScannedLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<ScannedLogRequestResponse> getScannedLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence);
 
     /**
      * 获取商铺图片列表
@@ -646,6 +651,5 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.EXPAND)
-//    Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
-    Observable<ResponseBody> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 }

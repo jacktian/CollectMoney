@@ -52,6 +52,7 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
     private static final String SHOP_WITHDRAW_ACTION_CODE = "5688";
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
+    private Integer lastsequence = 0;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
 
     private LinearLayoutManager mLinearLayoutManager;
     private Paint dividerPaint;
@@ -103,10 +104,10 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
                 switch (userType) {
                     case 0:
-                        mPresenter.getPersonalWithdrawLog(PERSONAL_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
+                        mPresenter.getPersonalWithdrawLog(PERSONAL_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
                         break;
                     case 1:
-                        mPresenter.getShopWithdrawLog(SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+                        mPresenter.getShopWithdrawLog(SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
                         break;
                 }
             }
@@ -115,15 +116,16 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
             @Override
             public void onRefresh() {
                 withdrawLogTV.setRefreshing(false);
+                lastsequence = 0;
                 pageIndex = 1;
                 switch (userType) {
                     case 0:
                         withDrawLogAdapter.clearPersonalList();
-                        mPresenter.getPersonalWithdrawLog(PERSONAL_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
+                        mPresenter.getPersonalWithdrawLog(PERSONAL_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
                         break;
                     case 1:
                         withDrawLogAdapter.clearShopList();
-                        mPresenter.getShopWithdrawLog(SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+                        mPresenter.getShopWithdrawLog(SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
                         break;
                 }
             }
@@ -131,10 +133,10 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
 
         switch (userType) {
             case 0:
-                mPresenter.getPersonalWithdrawLog(PERSONAL_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
+                mPresenter.getPersonalWithdrawLog(PERSONAL_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
                 break;
             case 1:
-                mPresenter.getShopWithdrawLog(SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE);
+                mPresenter.getShopWithdrawLog(SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
                 break;
         }
     }
@@ -155,7 +157,8 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
     }
 
     @Override
-    public void onGetPersonalWithdrawLog(List<PersonalWithdrawLog> personalWithdrawLogs) {
+    public void onGetPersonalWithdrawLog(List<PersonalWithdrawLog> personalWithdrawLogs, Integer lastsequence) {
+        this.lastsequence = lastsequence;
         personalWithdrawLogList.clear();
         personalWithdrawLogList.addAll(personalWithdrawLogs);
         withDrawLogAdapter.appendPersonalLogList(personalWithdrawLogList);
@@ -163,7 +166,8 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
     }
 
     @Override
-    public void onGetShopWithdrawLog(List<ShopWithdrawLog> shopWithdrawLogs) {
+    public void onGetShopWithdrawLog(List<ShopWithdrawLog> shopWithdrawLogs, Integer lastsequence) {
+        this.lastsequence = lastsequence;
         shopWithdrawLogList.clear();
         shopWithdrawLogList.addAll(shopWithdrawLogs);
         withDrawLogAdapter.appendShopLogList(shopWithdrawLogList);

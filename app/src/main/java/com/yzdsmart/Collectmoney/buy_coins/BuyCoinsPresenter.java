@@ -51,16 +51,14 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
     }
 
     @Override
-    public void buyCoinsLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize) {
+    public void buyCoinsLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.buyCoinsLog(action, submitCode, bazaCode, pageIndex, pageSize, new RequestListener() {
+        mModel.buyCoinsLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 BuyCoinLogRequestResponse response = (BuyCoinLogRequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
-                    if (null != response.getLists() && response.getLists().size() > 0) {
-                        mView.onBuyCoinsLog(response.getLists());
-                    }
+                    mView.onBuyCoinsLog(response.getLists(), response.getLastsequence());
                 } else {
                     ((BaseActivity) context).showSnackbar(response.getErrorInfo());
                 }

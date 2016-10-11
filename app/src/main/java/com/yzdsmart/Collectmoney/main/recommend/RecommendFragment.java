@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
@@ -72,13 +71,6 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         expandList = new ArrayList<ExpandListRequestResponse>();
         recommendAdapter = new RecommendAdapter(getActivity());
-        recommendAdapter.setOnItemClickListener(new RecommendAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                ((MainActivity) getActivity()).backToFindMoney();
-                ((MainActivity) getActivity()).getShopListNearByMarket(expandList.get(position).getCoor());
-            }
-        });
     }
 
     @Override

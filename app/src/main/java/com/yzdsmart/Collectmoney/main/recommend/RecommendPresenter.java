@@ -5,8 +5,9 @@ import android.content.Context;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
 
-import okhttp3.ResponseBody;
+import java.util.List;
 
 /**
  * Created by YZD on 2016/8/28.
@@ -29,21 +30,9 @@ public class RecommendPresenter implements RecommendContract.RecommendPresenter 
         mModel.getExpandList(submitCode, pageIndex, pageSize, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-//                List<ExpandListRequestResponse> expands = (List<ExpandListRequestResponse>) result;
-//                if (null != expands) {
-//                    mView.onGetExpandList(expands);
-//                }
-                ResponseBody responseBody = (ResponseBody) result;
-                try {
-                    System.out.println("---->" + responseBody.string());
-//                    Gson gson = new Gson();
-//                    List<LinkedTreeMap> expands = gson.fromJson(responseBody.string(), ArrayList.class);
-//                    for (LinkedTreeMap expand : expands) {
-//                        ExpandListRequestResponse response = gson.fromJson(expand.toString(), ExpandListRequestResponse.class);
-//                        System.out.println("---->" + response.getImageUrl());
-//                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                List<ExpandListRequestResponse> expands = (List<ExpandListRequestResponse>) result;
+                if (null != expands) {
+                    mView.onGetExpandList(expands);
                 }
             }
 

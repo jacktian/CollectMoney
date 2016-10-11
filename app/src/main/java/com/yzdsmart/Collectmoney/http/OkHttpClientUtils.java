@@ -4,10 +4,15 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import okio.BufferedSink;
+import okio.GzipSink;
+import okio.Okio;
 
 
 /**
@@ -24,10 +29,6 @@ public class OkHttpClientUtils {
                 public Response intercept(Chain chain) throws IOException {
                     Request request = chain.request()
                             .newBuilder()
-                            .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-                            .addHeader("Content-Type", "application/json; charset=UTF-8")
-                            .addHeader("Accept-Encoding", "gzip, deflate")
-                            .addHeader("Connection", "keep-alive")
                             .addHeader("Accept", "*/*")
                             .build();
                     return chain.proceed(request);
@@ -45,5 +46,44 @@ public class OkHttpClientUtils {
                     .build();
         }
         return mOkHttpClient;
+    }
+
+    /**
+     * 拦截器压缩http请求体，许多服务器无法解析
+     */
+    static class GzipRequestInterceptor implements Interceptor {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request originalRequest = chain.request();
+            if (originalRequest.body() == null || originalRequest.header("Content-Encoding") != null) {
+                return chain.proceed(originalRequest);
+            }
+            Request compressedRequest = originalRequest.newBuilder()
+                    .header("Content-Encoding", "gzip")
+                    .method(originalRequest.method(), gzip(originalRequest.body()))
+                    .build();
+            return chain.proceed(compressedRequest);
+        }
+
+        private RequestBody gzip(final RequestBody body) {
+            return new RequestBody() {
+                @Override
+                public MediaType contentType() {
+                    return body.contentType();
+                }
+
+                @Override
+                public long contentLength() {
+                    return -1; // 无法知道压缩后的数据大小
+                }
+
+                @Override
+                public void writeTo(BufferedSink sink) throws IOException {
+                    BufferedSink gzipSink = Okio.buffer(new GzipSink(sink));
+                    body.writeTo(gzipSink);
+                    gzipSink.close();
+                }
+            };
+        }
     }
 }

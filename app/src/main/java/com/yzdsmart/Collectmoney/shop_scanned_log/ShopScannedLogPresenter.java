@@ -24,14 +24,14 @@ public class ShopScannedLogPresenter implements ShopScannedLogContract.ShopScann
     }
 
     @Override
-    public void getScannedLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize) {
+    public void getScannedLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getScannedLog(action, submitCode, bazaCode, pageIndex, pageSize, new RequestListener() {
+        mModel.getScannedLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ScannedLogRequestResponse requestResponse = (ScannedLogRequestResponse) result;
                 if ("OK".equals(requestResponse.getActionStatus())) {
-                    mView.onGetScannedLog(requestResponse.getLists());
+                    mView.onGetScannedLog(requestResponse.getLists(), requestResponse.getLastsequence());
                 } else {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
                 }

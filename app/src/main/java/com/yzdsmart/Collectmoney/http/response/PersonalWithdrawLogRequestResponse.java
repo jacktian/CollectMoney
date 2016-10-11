@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class PersonalWithdrawLogRequestResponse {
     private List<PersonalWithdrawLog> lists;
+    private Integer lastsequence;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
     private String ActionStatus;
     private Integer ErrorCode;
     private String ErrorInfo;
@@ -17,8 +18,9 @@ public class PersonalWithdrawLogRequestResponse {
     public PersonalWithdrawLogRequestResponse() {
     }
 
-    public PersonalWithdrawLogRequestResponse(List<PersonalWithdrawLog> lists, String actionStatus, Integer errorCode, String errorInfo) {
+    public PersonalWithdrawLogRequestResponse(List<PersonalWithdrawLog> lists, Integer lastsequence, String actionStatus, Integer errorCode, String errorInfo) {
         this.lists = lists;
+        this.lastsequence = lastsequence;
         ActionStatus = actionStatus;
         ErrorCode = errorCode;
         ErrorInfo = errorInfo;
@@ -30,6 +32,14 @@ public class PersonalWithdrawLogRequestResponse {
 
     public void setLists(List<PersonalWithdrawLog> lists) {
         this.lists = lists;
+    }
+
+    public Integer getLastsequence() {
+        return lastsequence;
+    }
+
+    public void setLastsequence(Integer lastsequence) {
+        this.lastsequence = lastsequence;
     }
 
     public String getActionStatus() {
@@ -60,6 +70,7 @@ public class PersonalWithdrawLogRequestResponse {
     public String toString() {
         return "{" +
                 "lists:" + lists +
+                "lastsequence:" + lastsequence +
                 ", ActionStatus:'" + ActionStatus + '\'' +
                 ", ErrorCode:" + ErrorCode +
                 ", ErrorInfo:'" + ErrorInfo + '\'' +
