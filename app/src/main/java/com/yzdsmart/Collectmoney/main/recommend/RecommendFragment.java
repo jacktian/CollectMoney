@@ -103,6 +103,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
             @Override
             public void onRefresh() {
                 recommendListRV.setRefreshing(false);
+                recommendListRV.reenableLoadmore();
                 pageIndex = 1;
                 recommendAdapter.clearList();
                 mPresenter.getExpandList("000000", pageIndex, PAGE_SIZE);
@@ -140,9 +141,12 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     @Override
     public void onGetExpandList(List<ExpandListRequestResponse> expands) {
 //        bubbleCountTV.setText("" + expands.size());
+        pageIndex++;
         expandList.clear();
         expandList.addAll(expands);
         recommendAdapter.appendList(expandList);
-        pageIndex++;
+        if (expands.size() < PAGE_SIZE) {
+            recommendListRV.disableLoadmore();
+        }
     }
 }

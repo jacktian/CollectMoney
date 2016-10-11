@@ -116,6 +116,7 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
             @Override
             public void onRefresh() {
                 withdrawLogTV.setRefreshing(false);
+                withdrawLogTV.reenableLoadmore();
                 lastsequence = 0;
                 pageIndex = 1;
                 switch (userType) {
@@ -159,19 +160,25 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
     @Override
     public void onGetPersonalWithdrawLog(List<PersonalWithdrawLog> personalWithdrawLogs, Integer lastsequence) {
         this.lastsequence = lastsequence;
+        pageIndex++;
         personalWithdrawLogList.clear();
         personalWithdrawLogList.addAll(personalWithdrawLogs);
         withDrawLogAdapter.appendPersonalLogList(personalWithdrawLogList);
-        pageIndex++;
+        if (personalWithdrawLogs.size() < PAGE_SIZE) {
+            withdrawLogTV.disableLoadmore();
+        }
     }
 
     @Override
     public void onGetShopWithdrawLog(List<ShopWithdrawLog> shopWithdrawLogs, Integer lastsequence) {
         this.lastsequence = lastsequence;
+        pageIndex++;
         shopWithdrawLogList.clear();
         shopWithdrawLogList.addAll(shopWithdrawLogs);
         withDrawLogAdapter.appendShopLogList(shopWithdrawLogList);
-        pageIndex++;
+        if (shopWithdrawLogs.size() < PAGE_SIZE) {
+            withdrawLogTV.disableLoadmore();
+        }
     }
 
     @Override

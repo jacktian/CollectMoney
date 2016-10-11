@@ -92,6 +92,7 @@ public class PersonalCoinsActivity extends BaseActivity implements PersonalCoins
             @Override
             public void onRefresh() {
                 coinListRV.setRefreshing(false);
+                coinListRV.reenableLoadmore();
                 lastsequence = 0;
                 pageIndex = 1;
                 personalCoinsAdapter.clearList();
@@ -126,10 +127,13 @@ public class PersonalCoinsActivity extends BaseActivity implements PersonalCoins
     @Override
     public void onGetCoinsLog(List<GetCoinsLog> logList, Integer lastsequence) {
         this.lastsequence = lastsequence;
+        pageIndex++;
         this.logList.clear();
         this.logList.addAll(logList);
         personalCoinsAdapter.appendList(this.logList);
-        pageIndex++;
+        if (logList.size() < PAGE_SIZE) {
+            coinListRV.disableLoadmore();
+        }
     }
 
     @Override

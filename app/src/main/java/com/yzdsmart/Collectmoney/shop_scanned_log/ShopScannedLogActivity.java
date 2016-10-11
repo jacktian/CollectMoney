@@ -92,6 +92,7 @@ public class ShopScannedLogActivity extends BaseActivity implements ShopScannedL
             @Override
             public void onRefresh() {
                 scannedLogRV.setRefreshing(false);
+                scannedLogRV.reenableLoadmore();
                 pageIndex = 1;
                 lastsequence = 0;
                 shopScannedLogAdapter.clearList();
@@ -131,9 +132,12 @@ public class ShopScannedLogActivity extends BaseActivity implements ShopScannedL
     @Override
     public void onGetScannedLog(List<ScannedLog> scannedLogs, Integer lastsequence) {
         this.lastsequence = lastsequence;
+        pageIndex++;
         scannedLogList.clear();
         scannedLogList.addAll(scannedLogs);
         shopScannedLogAdapter.appendList(scannedLogList);
-        pageIndex++;
+        if (scannedLogs.size() < PAGE_SIZE) {
+            scannedLogRV.disableLoadmore();
+        }
     }
 }

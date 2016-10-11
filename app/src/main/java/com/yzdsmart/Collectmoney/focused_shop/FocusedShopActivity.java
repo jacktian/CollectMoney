@@ -80,6 +80,7 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
             @Override
             public void onRefresh() {
                 focusedShopRV.setRefreshing(false);
+                focusedShopRV.reenableLoadmore();
                 pageIndex = 1;
                 focusedShopAdapter.clearList();
                 mPresenter.getFocusedShopList(GET_ACTION_CODE, "000000", SharedPreferencesUtils.getString(FocusedShopActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
@@ -106,10 +107,13 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
 
     @Override
     public void onGetFocusedShopList(List<FocusedShop> focusedShops) {
+        pageIndex++;
         focusedShopList.clear();
         focusedShopList.addAll(focusedShops);
         focusedShopAdapter.appendList(focusedShopList);
-        pageIndex++;
+        if (focusedShops.size() < PAGE_SIZE) {
+            focusedShopRV.disableLoadmore();
+        }
     }
 
     @Override

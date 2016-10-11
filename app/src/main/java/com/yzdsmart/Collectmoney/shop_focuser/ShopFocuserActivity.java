@@ -93,6 +93,7 @@ public class ShopFocuserActivity extends BaseActivity implements ShopFocuserCont
             @Override
             public void onRefresh() {
                 shopFocuserRV.setRefreshing(false);
+                shopFocuserRV.reenableLoadmore();
                 focuserCounts = 0;
                 pageIndex = 1;
                 shopFocuserAdapter.clearList();
@@ -120,12 +121,15 @@ public class ShopFocuserActivity extends BaseActivity implements ShopFocuserCont
 
     @Override
     public void onGetShopFocuser(List<ShopFocuser> shopFocusers) {
+        pageIndex++;
         focuserCounts += shopFocusers.size();
         focuserCountsTV.setText("" + focuserCounts);
         shopFocuserList.clear();
         shopFocuserList.addAll(shopFocusers);
         shopFocuserAdapter.appendList(shopFocuserList);
-        pageIndex++;
+        if (shopFocusers.size() < PAGE_SIZE) {
+            shopFocuserRV.disableLoadmore();
+        }
     }
 
     @Override

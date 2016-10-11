@@ -4,14 +4,12 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -108,11 +106,16 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     List<Overlay> coinsOverlayList = null;
     //周边商铺检索参数
     private static final Integer PAGE_SIZE = 5;//分页数量
-    private Integer page_index = 1;//分页索引 当前页标，从0开始
+    private Integer page_index = 1;//分页索引 当前页标
     private String qLocation = "";//检索中心点
     private Integer searchType = 0;//0 定位获取商铺列表 1 搜索商场附近商铺列表 2 扫码
 
+    private String lastLocScanLocation = "";
+    private boolean isLocMarketScan = true;//是否是点击扫描按钮/商场附近商铺扫描
+    private String lastMapStatusLocation = "";//记录地图状态改变后坐标
+
     private Marker marketMarker;//商场Marker
+    private String lastMarketLocation = "";//记录上一次商场坐标
 
     //定位频率
     private static final Integer LOC_TIME = 5000;//毫秒
@@ -332,7 +335,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
             @Override
             public void onMapStatusChange(MapStatus mapStatus) {
-
+//                if (null != mapCenterMarker) {
+//                    mapCenterMarker.remove();
+//                    mapCenterMarker = null;
+//                }
+//                MarkerOptions centerMO = new MarkerOptions().position(mapStatus.target).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_center_icon));
+//                mapCenterMarker = (Marker) (mBaiduMap.addOverlay(centerMO));//地图中心点图标
             }
 
             @Override
@@ -365,12 +373,18 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                         }
                         break;
                 }
-                if (null != mapCenterMarker) {
-                    mapCenterMarker.remove();
-                    mapCenterMarker = null;
+                if ((isLocMarketScan && searchType == 0) || (isLocMarketScan && searchType == 1)) {
+                    isLocMarketScan = false;
+                    lastMapStatusLocation = mapStatus.target.longitude + "," + mapStatus.target.latitude;
+                    return;
                 }
-                MarkerOptions centerMO = new MarkerOptions().position(mapStatus.target).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_center_icon));
-                mapCenterMarker = (Marker) (mBaiduMap.addOverlay(centerMO));//地图中心点图标
+                String mapStatusLocation = mapStatus.target.longitude + "," + mapStatus.target.latitude;
+                if (mapStatusLocation.equals(lastMapStatusLocation)) {
+                    return;
+                } else {
+                    lastMapStatusLocation = mapStatusLocation;
+                }
+                mPresenter.getShopList("000000", mapStatusLocation, zoomDistance, page_index, PAGE_SIZE, 0);
             }
         });
     }
@@ -500,7 +514,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             if (null == bdLocation || null == findMoneyMap) {
                 return;
             }
-
             //获取当前位置坐标
             locLatitude = bdLocation.getLatitude();
             locLongitude = bdLocation.getLongitude();
@@ -522,6 +535,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
             if (null != SharedPreferencesUtils.getString(getActivity(), "cust_code", "") && SharedPreferencesUtils.getString(getActivity(), "cust_code", "").length() > 0) {
                 if (uploadCounts == 600) {
+                    mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(locLatitude, locLongitude)));
                     mPresenter.uploadCoor("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), qLocation);
                     uploadCounts = 0;
                 } else {
@@ -566,7 +580,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
     public void locScanCoins() {
         searchType = 0;
-        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(locLatitude, locLongitude)));
+        isLocMarketScan = true;
         if (null != marketMarker) {
             marketMarker.remove();
             marketMarker = null;
@@ -578,12 +592,19 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         for (Overlay overlay : coinsOverlayList) {
             overlay.remove();
         }
-        mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE, 0);
+        if (lastLocScanLocation.equals(qLocation)) {
+            isLocMarketScan = false;
+        } else {
+            lastLocScanLocation = qLocation;
+            mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE, 0);
+        }
+        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(locLatitude, locLongitude)));
     }
 
     public void getShopListNearByMarket(String coor) {
         searchType = 1;
-        page_index = 0;
+        isLocMarketScan = true;
+        page_index = 1;
         if (null != marketMarker) {
             marketMarker.remove();
             marketMarker = null;
@@ -595,10 +616,15 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         for (Overlay overlay : coinsOverlayList) {
             overlay.remove();
         }
+        if (lastMarketLocation.equals(coor)) {
+            isLocMarketScan = false;
+        } else {
+            lastMarketLocation = coor;
+            mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE, 1);
+        }
         MarkerOptions marketMO = new MarkerOptions().position(new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]))).icon(BitmapDescriptorFactory.fromResource(R.mipmap.market_icon));
         marketMarker = (Marker) (mBaiduMap.addOverlay(marketMO));//定位图标
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]))));
-        mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE, 1);
     }
 
     public void planRoute(String coor) {

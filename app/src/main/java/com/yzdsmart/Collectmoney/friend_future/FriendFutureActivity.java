@@ -96,6 +96,7 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
             @Override
             public void onRefresh() {
                 friendFutureRV.setRefreshing(false);
+                friendFutureRV.reenableLoadmore();
                 pendSeq = 0;
                 decideSeq = 0;
                 recommendSeq = 0;
@@ -133,10 +134,10 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
 
     @Override
     public void onGetFutureFriends(List<TIMFriendFutureItem> futureItems, long p, long d, long r) {
-        if (pendSeq == p && decideSeq == d && recommendSeq == r) {
-            friendFutureRV.disableLoadmore();
-            return;
-        }
+//        if (pendSeq == p && decideSeq == d && recommendSeq == r) {
+//            friendFutureRV.disableLoadmore();
+//            return;
+//        }
         pendSeq = p;
         decideSeq = d;
         recommendSeq = r;
@@ -145,6 +146,9 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
             friendFutureList.add(new FriendFuture(item));
         }
         friendFutureAdapter.appendList(friendFutureList);
+        if (futureItems.size() < PAGE_SIZE) {
+            friendFutureRV.disableLoadmore();
+        }
     }
 
     @Override

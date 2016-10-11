@@ -95,6 +95,7 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
             @Override
             public void onRefresh() {
                 publishListRV.setRefreshing(false);
+                publishListRV.reenableLoadmore();
                 lastsequence = 0;
                 pageIndex = 1;
                 publishTasksAdapter.clearList();
@@ -140,9 +141,12 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
     @Override
     public void onPublishTaskLog(List<PublishTaskLog> logList, Integer lastsequence) {
         this.lastsequence = lastsequence;
+        pageIndex++;
         this.logList.clear();
         this.logList.addAll(logList);
         publishTasksAdapter.appendList(this.logList);
-        pageIndex++;
+        if (logList.size() < PAGE_SIZE) {
+            publishListRV.disableLoadmore();
+        }
     }
 }

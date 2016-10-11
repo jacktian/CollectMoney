@@ -89,6 +89,7 @@ public class FriendListFragment extends BaseFragment implements FriendListContra
             @Override
             public void onRefresh() {
                 friendProfileListRV.setRefreshing(false);
+                friendProfileListRV.reenableLoadmore();
                 timeStampNow = 0l;
                 startIndex = 0;
                 currentStandardSequence = 0;
@@ -130,6 +131,9 @@ public class FriendListFragment extends BaseFragment implements FriendListContra
 //        friendshipList.addAll(list);
         friendshipList.addAll(friends);
         friendListAdapter.appendList(friendshipList);
+        if (friends.size() < PAGE_SIZE) {
+            friendProfileListRV.disableLoadmore();
+        }
     }
 
     @Override

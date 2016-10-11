@@ -118,6 +118,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
             @Override
             public void onRefresh() {
                 coinListRV.setRefreshing(false);
+                coinListRV.reenableLoadmore();
                 pageIndex = 1;
                 lastsequence = 0;
                 buyCoinsLogAdapter.clearList();
@@ -205,9 +206,12 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     @Override
     public void onBuyCoinsLog(List<BuyCoinsLog> logList, Integer lastsequence) {
         this.lastsequence = lastsequence;
+        pageIndex++;
         this.logList.clear();
         this.logList.addAll(logList);
         buyCoinsLogAdapter.appendList(this.logList);
-        pageIndex++;
+        if (logList.size() < PAGE_SIZE) {
+            coinListRV.disableLoadmore();
+        }
     }
 }
