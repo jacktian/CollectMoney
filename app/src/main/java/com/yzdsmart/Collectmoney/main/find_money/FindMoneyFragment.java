@@ -110,9 +110,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private String qLocation = "";//检索中心点
     private Integer searchType = 0;//0 定位获取商铺列表 1 搜索商场附近商铺列表 2 扫码
 
-    private String lastLocScanLocation = "";
+    private boolean isLocScanOn = false;//是否点击过扫描按钮
     private boolean isLocMarketScan = true;//是否是点击扫描按钮/商场附近商铺扫描
     private String lastMapStatusLocation = "";//记录地图状态改变后坐标
+    private boolean isMarketScanOn = false;
 
     private Marker marketMarker;//商场Marker
     private String lastMarketLocation = "";//记录上一次商场坐标
@@ -373,11 +374,19 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                         }
                         break;
                 }
-                if ((isLocMarketScan && searchType == 0) || (isLocMarketScan && searchType == 1)) {
-                    isLocMarketScan = false;
-                    lastMapStatusLocation = mapStatus.target.longitude + "," + mapStatus.target.latitude;
-                    return;
+                if (0 == searchType) {
+                    if (isLocScanOn) {
+                        isLocScanOn = false;
+                        return;
+                    }
                 }
+//                isLocScanOn = false;
+//                isMarketScanOn = false;
+//                if ((isLocMarketScan && searchType == 0) || (isLocMarketScan && searchType == 1)) {
+//                    isLocMarketScan = false;
+//                    lastMapStatusLocation = mapStatus.target.longitude + "," + mapStatus.target.latitude;
+//                    return;
+//                }
                 String mapStatusLocation = mapStatus.target.longitude + "," + mapStatus.target.latitude;
                 if (mapStatusLocation.equals(lastMapStatusLocation)) {
                     return;
@@ -592,12 +601,13 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         for (Overlay overlay : coinsOverlayList) {
             overlay.remove();
         }
-        if (lastLocScanLocation.equals(qLocation)) {
-            isLocMarketScan = false;
-        } else {
-            lastLocScanLocation = qLocation;
-            mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE, 0);
-        }
+//        if (isLocScanOn) {
+//            mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE, 0);
+//            isLocMarketScan = false;
+//        } else {
+        isLocScanOn = true;
+        mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE, 0);
+//        }
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(locLatitude, locLongitude)));
     }
 
@@ -618,7 +628,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         }
         if (lastMarketLocation.equals(coor)) {
             isLocMarketScan = false;
+            if (!isMarketScanOn) {
+                mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE, 1);
+            }
         } else {
+            isMarketScanOn = true;
             lastMarketLocation = coor;
             mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE, 1);
         }
