@@ -174,6 +174,8 @@ public class FriendListAdapter extends UltimateViewAdapter<FriendListAdapter.Vie
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            userNameTV.setMaxEms(6);
         }
 
         public void setUserAvaterIV(String userAvaterUrl) {

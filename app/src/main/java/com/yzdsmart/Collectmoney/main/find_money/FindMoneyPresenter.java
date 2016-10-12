@@ -39,69 +39,49 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
     }
 
     @Override
-    public void getShopList(String submitCode, String coor, Integer range, Integer pageIndex, Integer pageSize, final Integer type) {
-        switch (type) {
-            case 0:
-//                mView.startRadarScan();
-//                break;
-            case 1:
-                ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-                break;
-        }
+    public void getShopList(String submitCode, String coor, Integer range, Integer pageIndex, Integer pageSize) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
         mModel.getShopList(submitCode, coor, range, pageIndex, pageSize, new RequestListener() {
-            @Override
-            public void onSuccess(Object result) {
-                coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_1));
-                coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_2));
-                coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_3));
-                coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_4));
-                coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_5));
-                coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_6));
-                List<ShopListRequestResponse> shopList = (List<ShopListRequestResponse>) result;
-                if (null != shopList) {
-                    // 构建MarkerOption，用于在地图上添加Marker
-                    MarkerOptions options;
-                    List<MarkerOptions> optionsList = new ArrayList<MarkerOptions>();
-                    for (ShopListRequestResponse shop : shopList) {
-                        //给marker加上标签
-                        Bundle bundle = new Bundle();
-                        bundle.putString("bazaCode", shop.getCode());
-                        String coor = shop.getCoor();
-                        // 定义Maker坐标点
-                        LatLng point = new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]));
+                    @Override
+                    public void onSuccess(Object result) {
+                        coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_1));
+                        coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_2));
+                        coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_3));
+                        coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_4));
+                        coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_5));
+                        coinGif.add(BitmapDescriptorFactory.fromResource(R.mipmap.coin_6));
+                        List<ShopListRequestResponse> shopList = (List<ShopListRequestResponse>) result;
+                        if (null != shopList) {
+                            // 构建MarkerOption，用于在地图上添加Marker
+                            MarkerOptions options;
+                            List<MarkerOptions> optionsList = new ArrayList<MarkerOptions>();
+                            for (ShopListRequestResponse shop : shopList) {
+                                //给marker加上标签
+                                Bundle bundle = new Bundle();
+                                bundle.putString("bazaCode", shop.getCode());
+                                String coor = shop.getCoor();
+                                // 定义Maker坐标点
+                                LatLng point = new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]));
 //                        options = new MarkerOptions().position(point).extraInfo(bundle).icon(BitmapDescriptorFactory.fromBitmap(setNumToIcon(shop.getReleGold())));
-                        options = new MarkerOptions().position(point).extraInfo(bundle).icons(coinGif).period(10);//动画速度
-                        optionsList.add(options);
+                                options = new MarkerOptions().position(point).extraInfo(bundle).icons(coinGif).period(10);//动画速度
+                                optionsList.add(options);
+                            }
+                            mView.onGetShopList(optionsList);
+                        }
                     }
-                    mView.onGetShopList(optionsList);
-                }
-            }
 
-            @Override
-            public void onError(String err) {
-                switch (type) {
-                    case 0:
-//                        mView.stopRadarScan();
-//                        break;
-                    case 1:
+                    @Override
+                    public void onError(String err) {
                         ((BaseActivity) context).hideProgressDialog();
-                        break;
-                }
-                ((BaseActivity) context).showSnackbar(err);
-            }
+                        ((BaseActivity) context).showSnackbar(err);
+                    }
 
-            @Override
-            public void onComplete() {
-                switch (type) {
-                    case 0:
-//                        mView.stopRadarScan();
-//                        break;
-                    case 1:
+                    @Override
+                    public void onComplete() {
                         ((BaseActivity) context).hideProgressDialog();
-                        break;
+                    }
                 }
-            }
-        });
+        );
     }
 
     @Override

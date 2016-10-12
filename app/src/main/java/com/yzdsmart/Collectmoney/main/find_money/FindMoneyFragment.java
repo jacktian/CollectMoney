@@ -55,6 +55,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,8 +85,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
     private BaiduMap mBaiduMap = null;
     private UiSettings mMapSettings;
-    //默认城市经纬度
-    private static final LatLng GEO_DEFAULT_CITY = new LatLng(31.79, 119.95);
+    //默认城市经纬度119.980524,31.816058
+    private static final LatLng GEO_DEFAULT_CITY = new LatLng(31.816058, 119.980524);
     private Integer zoomDistance = 500;
     private Marker mapCenterMarker;
     //定位坐标点
@@ -110,13 +111,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private String qLocation = "";//检索中心点
     private Integer searchType = 0;//0 定位获取商铺列表 1 搜索商场附近商铺列表 2 扫码
 
-    private boolean isLocScanOn = false;//是否点击过扫描按钮
-    private boolean isLocMarketScan = true;//是否是点击扫描按钮/商场附近商铺扫描
+    private boolean isFirstMapAnimate = true;//是否是点击扫描按钮/商场附近商铺扫描
     private String lastMapStatusLocation = "";//记录地图状态改变后坐标
-    private boolean isMarketScanOn = false;
+    private Integer isAlreadyLocScan = 0;
+    private Integer isAlreadyMarketScan = 0;
 
     private Marker marketMarker;//商场Marker
-    private String lastMarketLocation = "";//记录上一次商场坐标
 
     //定位频率
     private static final Integer LOC_TIME = 5000;//毫秒
@@ -249,7 +249,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 for (Overlay overlay : coinsOverlayList) {
                     overlay.remove();
                 }
-                mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE, 0);
+                mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE);
                 break;
         }
     }
@@ -336,12 +336,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
             @Override
             public void onMapStatusChange(MapStatus mapStatus) {
-//                if (null != mapCenterMarker) {
-//                    mapCenterMarker.remove();
-//                    mapCenterMarker = null;
-//                }
-//                MarkerOptions centerMO = new MarkerOptions().position(mapStatus.target).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_center_icon));
-//                mapCenterMarker = (Marker) (mBaiduMap.addOverlay(centerMO));//地图中心点图标
+
             }
 
             @Override
@@ -374,26 +369,31 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                         }
                         break;
                 }
-                if (0 == searchType) {
-                    if (isLocScanOn) {
-                        isLocScanOn = false;
+                if (0 == isAlreadyLocScan && 0 == isAlreadyMarketScan) {
+                    String mapStatusLocation = mapStatus.target.longitude + "," + mapStatus.target.latitude;
+                    if (mapStatusLocation.equals(lastMapStatusLocation)) {
+                        return;
+                    } else {
+                        lastMapStatusLocation = mapStatusLocation;
+                    }
+                    if (isFirstMapAnimate) {
+                        isFirstMapAnimate = false;
                         return;
                     }
-                }
-//                isLocScanOn = false;
-//                isMarketScanOn = false;
-//                if ((isLocMarketScan && searchType == 0) || (isLocMarketScan && searchType == 1)) {
-//                    isLocMarketScan = false;
-//                    lastMapStatusLocation = mapStatus.target.longitude + "," + mapStatus.target.latitude;
-//                    return;
-//                }
-                String mapStatusLocation = mapStatus.target.longitude + "," + mapStatus.target.latitude;
-                if (mapStatusLocation.equals(lastMapStatusLocation)) {
-                    return;
+                    mPresenter.getShopList("000000", mapStatusLocation, zoomDistance, page_index, PAGE_SIZE);
                 } else {
-                    lastMapStatusLocation = mapStatusLocation;
+                    String mapStatusLocation = mapStatus.target.longitude + "," + mapStatus.target.latitude;
+                    if (mapStatusLocation.equals(lastMapStatusLocation)) {
+                        return;
+                    } else {
+                        lastMapStatusLocation = mapStatusLocation;
+                    }
+                    if (isFirstMapAnimate) {
+                        return;
+                    } else {
+                        mPresenter.getShopList("000000", mapStatusLocation, zoomDistance, page_index, PAGE_SIZE);
+                    }
                 }
-                mPresenter.getShopList("000000", mapStatusLocation, zoomDistance, page_index, PAGE_SIZE, 0);
             }
         });
     }
@@ -544,7 +544,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
             if (null != SharedPreferencesUtils.getString(getActivity(), "cust_code", "") && SharedPreferencesUtils.getString(getActivity(), "cust_code", "").length() > 0) {
                 if (uploadCounts == 600) {
-                    mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(locLatitude, locLongitude)));
+//                    mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(locLatitude, locLongitude)));
                     mPresenter.uploadCoor("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), qLocation);
                     uploadCounts = 0;
                 } else {
@@ -588,8 +588,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     public void locScanCoins() {
+        if (0 == isAlreadyLocScan) {
+            isAlreadyLocScan = 1;
+        }
         searchType = 0;
-        isLocMarketScan = true;
         if (null != marketMarker) {
             marketMarker.remove();
             marketMarker = null;
@@ -601,19 +603,21 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         for (Overlay overlay : coinsOverlayList) {
             overlay.remove();
         }
-//        if (isLocScanOn) {
-//            mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE, 0);
-//            isLocMarketScan = false;
-//        } else {
-        isLocScanOn = true;
-        mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE, 0);
-//        }
-        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(locLatitude, locLongitude)));
+        LatLng latLng = mBaiduMap.getMapStatus().target;
+        DecimalFormat decimalFormat = new DecimalFormat(".######");
+        String mapStatusLocation = decimalFormat.format(latLng.longitude) + "," + decimalFormat.format(latLng.latitude);
+        if (qLocation.equals(mapStatusLocation)) {
+            mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE);
+        } else {
+            mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(locLatitude, locLongitude)));
+        }
     }
 
     public void getShopListNearByMarket(String coor) {
+        if (0 == isAlreadyMarketScan) {
+            isAlreadyMarketScan = 1;
+        }
         searchType = 1;
-        isLocMarketScan = true;
         page_index = 1;
         if (null != marketMarker) {
             marketMarker.remove();
@@ -626,19 +630,18 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         for (Overlay overlay : coinsOverlayList) {
             overlay.remove();
         }
-        if (lastMarketLocation.equals(coor)) {
-            isLocMarketScan = false;
-            if (!isMarketScanOn) {
-                mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE, 1);
-            }
-        } else {
-            isMarketScanOn = true;
-            lastMarketLocation = coor;
-            mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE, 1);
-        }
-        MarkerOptions marketMO = new MarkerOptions().position(new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]))).icon(BitmapDescriptorFactory.fromResource(R.mipmap.market_icon));
+        String marketLongitude = coor.split(",")[0];
+        String marketLatitude = coor.split(",")[1];
+        LatLng latLng = mBaiduMap.getMapStatus().target;
+        DecimalFormat decimalFormat = new DecimalFormat(".######");
+        String mapStatusLocation = decimalFormat.format(latLng.longitude) + "," + decimalFormat.format(latLng.latitude);
+        MarkerOptions marketMO = new MarkerOptions().position(new LatLng(Double.valueOf(marketLatitude), Double.valueOf(marketLongitude))).icon(BitmapDescriptorFactory.fromResource(R.mipmap.market_icon));
         marketMarker = (Marker) (mBaiduMap.addOverlay(marketMO));//定位图标
-        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]))));
+        if ((decimalFormat.format(Double.valueOf(marketLongitude)) + "," + decimalFormat.format(Double.valueOf(marketLatitude))).equals(mapStatusLocation)) {
+            mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE);
+        } else {
+            mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(Double.valueOf(marketLatitude), Double.valueOf(marketLongitude))));
+        }
     }
 
     public void planRoute(String coor) {

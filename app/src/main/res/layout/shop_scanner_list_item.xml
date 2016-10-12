@@ -23,9 +23,13 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_toRightOf="@id/scanner_user_avater"
-        android:maxLength="7"
+        android:ellipsize="marquee"
+        android:focusableInTouchMode="true"
+        android:maxEms="6"
+        android:singleLine="true"
         android:text=""
         android:textColor="@color/grey"
+        android:textIsSelectable="true"
         android:textSize="@dimen/font_medium" />
 
     <LinearLayout
