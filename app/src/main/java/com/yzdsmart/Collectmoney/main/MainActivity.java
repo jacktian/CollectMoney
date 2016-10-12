@@ -12,13 +12,12 @@ import android.view.View;
 import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.find_money.FindMoneyFragment;
 import com.yzdsmart.Collectmoney.main.recommend.RecommendFragment;
 import com.yzdsmart.Collectmoney.money_friendship.MoneyFriendshipActivity;
+import com.yzdsmart.Collectmoney.register_login_password.login.LoginActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.tecent_im.service.TLSService;
-import com.yzdsmart.Collectmoney.tecent_im.utils.PushUtil;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 

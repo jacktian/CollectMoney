@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.register_forget_password.set_password;
+package com.yzdsmart.Collectmoney.register_login_password.set_password;
 
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;

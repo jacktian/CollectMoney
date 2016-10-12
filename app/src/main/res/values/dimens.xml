@@ -6,10 +6,10 @@
     <dimen name="activity_vertical_padding">13dp</dimen>
 
     <!--字体大小-->
-    <dimen name="font_xsmall">10sp</dimen>
-    <dimen name="font_small">12sp</dimen>
-    <dimen name="font_medium">14sp</dimen>
-    <dimen name="font_large">16sp</dimen>
+    <dimen name="font_x_small">12sp</dimen>
+    <dimen name="font_small">13sp</dimen>
+    <dimen name="font_medium">15sp</dimen>
+    <dimen name="font_large">18sp</dimen>
     <dimen name="font_xlarge">21sp</dimen>
 
     <!--标题栏公共高度-->
@@ -29,12 +29,18 @@
     <!--登录、注册、忘记密码-->
     <!--条目内边距-->
     <dimen name="common_user_info_item_padding">8dp</dimen>
+    <!--条目高度-->
+    <dimen name="common_user_info_item_height">46dp</dimen>
+    <dimen name="common_user_info_item_radius">23dp</dimen>
     <!--条目上边距-->
     <dimen name="common_user_info_item_margin_top">25dp</dimen>
     <!--距LOGO上边距-->
     <dimen name="common_user_info_layout_margin_top">52dp</dimen>
     <!--用户信息宽度-->
     <dimen name="common_user_info_layout_width">255dp</dimen>
+    <dimen name="common_user_info_verify_button_width">84dp</dimen>
+    <dimen name="common_user_info_verify_button_height">28dp</dimen>
+    <dimen name="common_user_info_verify_button_radius">14dp</dimen>
 
     <!--主界面-->
     <dimen name="bottom_tab_height">50dp</dimen>

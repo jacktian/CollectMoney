@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.register_forget_password.verify_code;
+package com.yzdsmart.Collectmoney.register_login_password.verify_code;
 
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;

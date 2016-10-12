@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.register_forget_password.verify_phone;
+package com.yzdsmart.Collectmoney.register_login_password.verify_phone;
 
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;

@@ -10,15 +10,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.tencent.TIMConversationType;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.ShopScanner;
-import com.yzdsmart.Collectmoney.chat.ChatActivity;
-import com.yzdsmart.Collectmoney.login.LoginActivity;
-import com.yzdsmart.Collectmoney.money_friendship.friend_list.add.AddFriendActivity;
 import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
-import com.yzdsmart.Collectmoney.tecent_im.bean.FriendshipInfo;
+import com.yzdsmart.Collectmoney.register_login_password.login.LoginActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 

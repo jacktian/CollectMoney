@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.login;
+package com.yzdsmart.Collectmoney.register_login_password.login;
 
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;

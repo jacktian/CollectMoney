@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.login;
+package com.yzdsmart.Collectmoney.register_login_password.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,9 +21,8 @@ import com.tencent.tauth.UiError;
 import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.register_forget_password.verify_phone.VerifyPhoneActivity;
+import com.yzdsmart.Collectmoney.register_login_password.verify_phone.VerifyPhoneActivity;
 import com.yzdsmart.Collectmoney.utils.Utils;
-import com.yzdsmart.Collectmoney.weibo.AccessTokenKeeper;
 
 import org.json.JSONObject;
 

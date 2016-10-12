@@ -23,11 +23,10 @@ import com.yzdsmart.Collectmoney.edit_personal_info.EditPersonalInfoActivity;
 import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.listener.AppBarOffsetChangeListener;
-import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
+import com.yzdsmart.Collectmoney.register_login_password.login.LoginActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.FriendshipInfo;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
-import com.yzdsmart.Collectmoney.tecent_im.event.FriendshipEvent;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;

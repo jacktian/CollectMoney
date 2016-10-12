@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.register_forget_password.set_info;
+package com.yzdsmart.Collectmoney.register_login_password.set_info;
 
 import android.content.Context;
 

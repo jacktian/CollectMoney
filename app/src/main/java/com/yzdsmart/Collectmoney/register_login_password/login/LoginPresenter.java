@@ -1,15 +1,11 @@
-package com.yzdsmart.Collectmoney.login;
+package com.yzdsmart.Collectmoney.register_login_password.login;
 
 import android.content.Context;
 
-import com.tencent.TIMLogLevel;
-import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
-import com.yzdsmart.Collectmoney.tecent_im.business.InitBusiness;
-import com.yzdsmart.Collectmoney.tecent_im.service.TlsBusiness;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 /**

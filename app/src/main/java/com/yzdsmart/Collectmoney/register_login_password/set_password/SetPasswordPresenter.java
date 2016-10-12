@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.register_forget_password.verify_phone;
+package com.yzdsmart.Collectmoney.register_login_password.set_password;
 
 import android.content.Context;
 
@@ -10,31 +10,30 @@ import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 /**
  * Created by YZD on 2016/8/26.
  */
-public class VerifyPhonePresenter implements VerifyPhoneContract.VerifyPhonePresenter {
+public class SetPasswordPresenter implements SetPasswordContract.SetPasswordPresenter {
     private Context context;
-    private VerifyPhoneContract.VerifyPhoneView mView;
-    private VerifyPhoneModel mModel;
+    private SetPasswordContract.SetPasswordView mView;
+    private SetPasswordModel mModel;
 
-    public VerifyPhonePresenter(Context context, VerifyPhoneContract.VerifyPhoneView mView) {
+    public SetPasswordPresenter(Context context, SetPasswordContract.SetPasswordView mView) {
         this.context = context;
         this.mView = mView;
-        mModel = new VerifyPhoneModel();
+        mModel = new SetPasswordModel();
         mView.setPresenter(this);
     }
 
     @Override
-    public void isUserExist(String telNum) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.validating));
-        mModel.isUserExist(telNum, new RequestListener() {
+    public void setPassword(String actioncode, String userName, String password, String regCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.setting));
+        mModel.setPassword(actioncode, userName, password, regCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
+                ((BaseActivity) context).hideProgressDialog();
                 RequestResponse response = (RequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
-                    mView.onIsUserExist(true, response.getErrorInfo());
-                } else if ("FAIL".equals(response.getActionStatus()) && 1004 == response.getErrorCode()) {
-                    mView.onIsUserExist(false, response.getErrorInfo());
-                } else {
-                    ((BaseActivity) context).showSnackbar(response.getErrorInfo());
+                    mView.onSetPassword(true, response.getErrorInfo());
+                } else if ("FAIL".equals(response.getActionStatus())) {
+                    mView.onSetPassword(false, response.getErrorInfo());
                 }
             }
 
@@ -46,7 +45,6 @@ public class VerifyPhonePresenter implements VerifyPhoneContract.VerifyPhonePres
 
             @Override
             public void onComplete() {
-                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

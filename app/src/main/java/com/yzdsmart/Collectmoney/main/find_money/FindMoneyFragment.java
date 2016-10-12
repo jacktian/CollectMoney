@@ -45,10 +45,10 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bd_map.WalkingRouteOverlay;
-import com.yzdsmart.Collectmoney.login.LoginActivity;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.main.personal.PersonalFragment;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
+import com.yzdsmart.Collectmoney.register_login_password.login.LoginActivity;
 import com.yzdsmart.Collectmoney.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.utils.Utils;
@@ -99,7 +99,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private boolean isFirstLoc = true; // 是否首次定位
     private MyLocationListener locListener = new MyLocationListener();
     //    private Marker locMarker;
-    private ArrayList<BitmapDescriptor> locGifList;
     //路径规划相关
     private RoutePlanSearch mSearch = null;// 搜索模块，也可去掉地图模块独立使用
     private RouteLine routeLine = null;
@@ -143,13 +142,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         coinsOverlayList = new ArrayList<Overlay>();
 
         new FindMoneyPresenter(getActivity(), this);
-
-        //定位图标
-        locGifList = new ArrayList<BitmapDescriptor>();
-        locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker1));
-        locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker2));
-        locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker3));
-        locGifList.add(BitmapDescriptorFactory.fromResource(R.mipmap.loc_marker4));
 
         setMapCustomFile(getActivity());
     }

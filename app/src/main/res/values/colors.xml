@@ -6,6 +6,12 @@
 
     <color name="transparent">#00000000</color>
 
+    <color name="font_red">#f20044</color>
+    <color name="font_black">#333333</color>
+    <color name="font_grey">#999999</color>
+
+    <color name="border_grey">#cccccc</color>
+
     <color name="white">#fafafa</color>
     <color name="dark_white">#eeeeee</color>
 
@@ -16,6 +22,8 @@
     <color name="orange">#fc7d1c</color>
     <color name="orange_hover">#fb9547</color>
     <color name="orange_disable">#f3c5bf</color>
+
+    <color name="verify_button_bg">#f2f2f2</color>
 
     <!--腾讯云通讯-->
     <color name="tecent_background_gray1">#EBEBEB</color>
