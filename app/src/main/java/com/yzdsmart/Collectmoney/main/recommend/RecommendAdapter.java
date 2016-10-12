@@ -148,7 +148,7 @@ public class RecommendAdapter extends UltimateViewAdapter<RecommendAdapter.ViewH
             switch (view.getId()) {
                 case R.id.recommend_item:
                     ((MainActivity) context).backToFindMoney();
-                    ((MainActivity) context).getShopListNearByMarket(expandList.get(getAdapterPosition()).getCoor());
+                    ((MainActivity) context).getShopListNearByMarket(expandList.get(getAdapterPosition()).getName(), expandList.get(getAdapterPosition()).getCoor());
                     break;
             }
         }
