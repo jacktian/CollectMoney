@@ -40,10 +40,10 @@ import butterknife.Optional;
  */
 public class LoginActivity extends BaseActivity implements LoginContract.LoginView {
     @Nullable
-    @BindViews({R.id.register_login_area_code, R.id.user_count_down_layout, R.id.user_confirm_pwd_layout, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
+    @BindViews({R.id.register_login_area_code, R.id.common_user_info_layout_padding, R.id.user_count_down_layout, R.id.user_confirm_pwd_layout, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
     List<View> hideViews;
     @Nullable
-    @BindViews({R.id.forget_new_user_layout})
+    @BindViews({R.id.app_logo_layout, R.id.forget_new_user_layout})
     List<View> showViews;
     @Nullable
     @BindView(R.id.center_title)

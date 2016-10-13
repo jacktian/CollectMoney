@@ -6,6 +6,7 @@
     <dimen name="activity_vertical_padding">10dp</dimen>
 
     <!--字体大小-->
+    <dimen name="font_xx_small">10sp</dimen>
     <dimen name="font_x_small">12sp</dimen>
     <dimen name="font_small">13sp</dimen>
     <dimen name="font_medium">15sp</dimen>
@@ -44,6 +45,8 @@
     <dimen name="common_user_info_register_login_button_margin_top">25dp</dimen>
 
     <dimen name="common_user_info_layout_padding">40dp</dimen>
+
+    <dimen name="login_logo_layout_height">123dp</dimen>
     <!--第三方登录-->
     <dimen name="login_other_platform_margin">29dp</dimen>
 

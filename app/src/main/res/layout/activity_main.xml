@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/main_bottom_tab_button_chat"
+                    android:background="@mipmap/main_bottom_tab_friend"
                     android:button="@null" />
             </RelativeLayout>
 
@@ -58,9 +58,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
-            android:layout_marginTop="-25dp"
+            android:layout_marginBottom="6dp"
             android:background="@null"
-            android:src="@mipmap/radar_scan" />
+            android:src="@mipmap/coin_scan_button" />
     </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

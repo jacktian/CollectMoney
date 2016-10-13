@@ -8,14 +8,14 @@
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/toolbar_color"
         app:contentInsetStart="0dp">
 
         <RelativeLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/white_panel_bottom_border"
+            android:background="@drawable/toolbar_bg"
             android:paddingLeft="@dimen/activity_horizontal_padding"
             android:paddingRight="@dimen/activity_horizontal_padding">
 
@@ -65,8 +65,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="中标题"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/font_medium" />
+                android:textColor="@color/font_grey"
+                android:textSize="@dimen/font_large" />
 
             <ImageView
                 android:id="@+id/title_logo"

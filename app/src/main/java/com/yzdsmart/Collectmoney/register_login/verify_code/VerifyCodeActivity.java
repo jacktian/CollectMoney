@@ -29,7 +29,7 @@ import butterknife.Optional;
  */
 public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContract.VerifyCodeView {
     @Nullable
-    @BindViews({R.id.app_logo, R.id.register_login_phone_icon, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
+    @BindViews({R.id.register_login_phone_icon, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.center_title)

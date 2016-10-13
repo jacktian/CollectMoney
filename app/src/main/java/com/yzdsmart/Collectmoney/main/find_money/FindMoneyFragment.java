@@ -72,8 +72,11 @@ import butterknife.Optional;
  */
 public class FindMoneyFragment extends BaseFragment implements FindMoneyContract.FindMoneyView, OnGetRoutePlanResultListener {
     @Nullable
-    @BindViews({R.id.left_title, R.id.center_title})
+    @BindViews({R.id.left_title, R.id.title_logo})
     List<View> hideViews;
+    @Nullable
+    @BindView(R.id.center_title)
+    TextView centerTitleTV;
     @Nullable
     @BindView(R.id.find_money_map)
     MapView findMoneyMap;
@@ -98,7 +101,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private LocationClient mLocClient;
     private boolean isFirstLoc = true; // 是否首次定位
     private MyLocationListener locListener = new MyLocationListener();
-    //    private Marker locMarker;
+    private Marker locMarker;
     //路径规划相关
     private RoutePlanSearch mSearch = null;// 搜索模块，也可去掉地图模块独立使用
     private RouteLine routeLine = null;
@@ -156,6 +159,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         super.onActivityCreated(savedInstanceState);
 
         ButterKnife.apply(hideViews, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
+        centerTitleTV.setText(getActivity().getResources().getString(R.string.app_name));
 
 //        locScanCoinsAnim = (AnimationDrawable) locScanCoins.getDrawable();
 
@@ -525,17 +529,18 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
             SharedPreferencesUtils.setString(getActivity(), "qLocation", qLocation);
 
-            MyLocationData locData = new MyLocationData.Builder().accuracy(bdLocation.getRadius())
-                    // 此处设置开发者获取到的方向信息，顺时针0-360
-                    .direction(100).latitude(locLatitude).longitude(locLongitude).build();
-            mBaiduMap.setMyLocationData(locData);
+//            MyLocationData locData = new MyLocationData.Builder().accuracy(bdLocation.getRadius())
+//                    // 此处设置开发者获取到的方向信息，顺时针0-360
+//                    .direction(100).latitude(locLatitude).longitude(locLongitude).build();
+//            mBaiduMap.setMyLocationData(locData);
 
-//            if (null != locMarker) {
-//                locMarker.remove();
-//                locMarker = null;
-//            }
+            if (null != locMarker) {
+                locMarker.remove();
+                locMarker = null;
+            }
 //            MarkerOptions locMO = new MarkerOptions().position(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).icons(locGifList).period(10);//动画速度
-//            locMarker = (Marker) (mBaiduMap.addOverlay(locMO));//定位图标
+            MarkerOptions locMO = new MarkerOptions().position(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_loc_icon));
+            locMarker = (Marker) (mBaiduMap.addOverlay(locMO));//定位图标
 
             if (null != SharedPreferencesUtils.getString(getActivity(), "cust_code", "") && SharedPreferencesUtils.getString(getActivity(), "cust_code", "").length() > 0) {
                 if (uploadCounts == 600) {
