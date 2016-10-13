@@ -27,7 +27,7 @@ import butterknife.Optional;
  */
 public class VerifyPhoneActivity extends BaseActivity implements VerifyPhoneContract.VerifyPhoneView {
     @Nullable
-    @BindViews({R.id.user_count_down_layout, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
+    @BindViews({R.id.app_logo,R.id.register_login_phone_icon, R.id.user_count_down_layout, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.title_left_operation)

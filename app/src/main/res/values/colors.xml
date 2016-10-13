@@ -23,6 +23,10 @@
     <color name="orange_hover">#fb9547</color>
     <color name="orange_disable">#f3c5bf</color>
 
+    <!--登陆、注册-->
+    <color name="register_login_button">#f20044</color>
+    <color name="register_login_button_press">#ef1a56</color>
+    <color name="register_login_button_disable">#f2f2f2</color>
     <color name="verify_button_bg">#f2f2f2</color>
 
     <!--腾讯云通讯-->

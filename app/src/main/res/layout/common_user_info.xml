@@ -7,12 +7,14 @@
     android:paddingTop="@dimen/common_user_info_item_margin_top">
 
     <ImageView
+        android:id="@+id/app_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:src="@mipmap/app_logo" />
 
     <LinearLayout
+        android:id="@+id/register_login_name_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_user_info_item_height"
         android:layout_marginTop="@dimen/common_user_info_layout_margin_top"
@@ -28,15 +30,18 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/register_login_phone_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:src="@mipmap/register_login_phone_icon" />
 
             <TextView
+                android:id="@+id/register_login_area_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:background="@drawable/register_login_area_code_bg"
                 android:gravity="center"
                 android:text="+86"
                 android:textColor="@color/font_grey"
@@ -231,85 +236,121 @@
         android:paddingBottom="@dimen/common_user_info_item_padding"
         android:paddingTop="@dimen/common_user_info_item_padding">
 
-        <ImageView
-            android:id="@+id/user_nickname_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/lock_icon" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
-        <EditText
-            android:id="@+id/user_nickname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_toRightOf="@id/user_nickname_icon"
-            android:background="@null"
-            android:hint="@string/input_nickname"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textColor="@color/grey"
-            android:textColorHint="@color/grey"
-            android:textSize="@dimen/font_medium" />
+            android:layout_weight="9">
+
+            <EditText
+                android:id="@+id/user_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:hint="@string/input_nickname"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColor="@color/grey"
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/font_medium" />
+        </RelativeLayout>
+
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/user_gender_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/common_user_info_item_height"
         android:layout_marginTop="@dimen/common_user_info_item_margin_top"
         android:background="@drawable/common_user_info_item_bg"
+        android:orientation="horizontal"
         android:paddingBottom="@dimen/common_user_info_item_padding"
         android:paddingTop="@dimen/common_user_info_item_padding">
 
-        <ImageView
-            android:id="@+id/user_gender_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/lock_icon" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
-        <com.yzdsmart.Collectmoney.views.BetterSpinner
-            android:id="@+id/user_gender"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_toRightOf="@id/user_gender_icon"
-            android:background="@null"
-            android:gravity="left|center"
-            android:textColor="@color/grey"
+            android:layout_weight="3"
+            android:text="@string/select_gender"
+            android:textColor="@color/font_grey"
             android:textSize="@dimen/font_medium" />
-    </RelativeLayout>
 
-    <RelativeLayout
+        <com.yzdsmart.Collectmoney.views.CustomNestRadioGroup
+            android:id="@+id/gender_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_weight="6"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/gender_male"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:button="@drawable/register_login_gender_radio"
+                android:checked="true"
+                android:gravity="right|center_vertical"
+                android:text="@string/gender_male"
+                android:textColor="@color/font_black"
+                android:textSize="@dimen/font_medium" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:id="@+id/gender_female"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:button="@drawable/register_login_gender_radio"
+                android:gravity="right|center_vertical"
+                android:text="@string/gender_female"
+                android:textColor="@color/font_black"
+                android:textSize="@dimen/font_medium" />
+        </com.yzdsmart.Collectmoney.views.CustomNestRadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/user_age_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/common_user_info_item_height"
         android:layout_marginTop="@dimen/common_user_info_item_margin_top"
         android:background="@drawable/common_user_info_item_bg"
+        android:orientation="horizontal"
         android:paddingBottom="@dimen/common_user_info_item_padding"
         android:paddingTop="@dimen/common_user_info_item_padding">
 
-        <ImageView
-            android:id="@+id/user_age_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/lock_icon" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
         <EditText
             android:id="@+id/user_age"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_toRightOf="@id/user_age_icon"
+            android:layout_weight="8"
             android:background="@null"
             android:focusable="false"
             android:hint="@string/input_age"
@@ -317,8 +358,33 @@
             android:textColor="@color/grey"
             android:textColorHint="@color/grey"
             android:textSize="@dimen/font_medium" />
-    </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/register_calendar_icon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/register_login_calendar_icon" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login_register_confirm_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_user_info_item_height"
+        android:layout_marginTop="@dimen/common_user_info_item_margin_top"
+        android:background="@drawable/register_login_button"
+        android:gravity="center"
+        android:text="@string/login"
+        android:textColor="@android:color/white" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -341,13 +407,6 @@
             android:textColor="@color/grey"
             android:textSize="@dimen/font_medium" />
 
-        <Button
-            android:id="@+id/login_register_confirm_button"
-            style="@style/orange_button"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
-            android:layout_centerInParent="true"
-            android:text="@string/login" />
 
         <TextView
             android:id="@+id/new_user_link"

@@ -30,7 +30,7 @@ import butterknife.Optional;
  */
 public class SetPasswordActivity extends BaseActivity implements SetPasswordContract.SetPasswordView {
     @Nullable
-    @BindViews({R.id.user_count_down_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
+    @BindViews({R.id.app_logo, R.id.register_login_name_layout, R.id.user_count_down_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.title_left_operation)
@@ -38,9 +38,9 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
     @Nullable
     @BindView(R.id.center_title)
     TextView centerTitleTV;
-    @Nullable
-    @BindView(R.id.user_name)
-    EditText userNameET;
+    //    @Nullable
+//    @BindView(R.id.user_name)
+//    EditText userNameET;
     @Nullable
     @BindView(R.id.user_pwd)
     EditText userPwdET;
@@ -68,11 +68,11 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
         Bundle bundle = getIntent().getExtras();
         opeType = bundle.getInt("opeType");
         userName = bundle.getString("userName");
-        userNameET.setText(userName);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
-        userNameET.setEnabled(false);
+//        userNameET.setEnabled(false);
+//        userNameET.setText(userName);
 
         //密码最多16位
 //        userPwdET.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
@@ -81,7 +81,7 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
         switch (opeType) {
             case 0:
                 centerTitleTV.setText(getResources().getString(R.string.register));
-                confirmButton.setText(getResources().getString(R.string.register));
+                confirmButton.setText(getResources().getString(R.string.confirm));
                 break;
             case 1:
                 centerTitleTV.setText(getResources().getString(R.string.forget_pwd));
@@ -152,7 +152,7 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
                 switch (opeType) {
                     case 0:
                         bundle = new Bundle();
-                        bundle.putString("userName", userNameET.getText().toString());
+                        bundle.putString("userName", userName);
                         bundle.putString("password", userPwdET.getText().toString());
                         openActivity(SetInfoActivity.class, bundle, 0);
                         break;

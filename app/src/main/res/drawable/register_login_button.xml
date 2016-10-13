@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/common_user_info_item_radius" />
+            <solid android:color="@color/register_login_button_press" />
+        </shape>
+    </item>
+    <item android:state_enabled="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/common_user_info_item_radius" />
+            <solid android:color="@color/register_login_button" />
+        </shape>
+    </item>
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/common_user_info_item_radius" />
+            <solid android:color="@color/register_login_button_disable" />
+        </shape>
+    </item>
+</selector>

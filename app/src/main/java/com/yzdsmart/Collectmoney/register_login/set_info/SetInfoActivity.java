@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.utils.Utils;
-import com.yzdsmart.Collectmoney.views.BetterSpinner;
 import com.yzdsmart.Collectmoney.views.pickerview.TimePickerDialog;
 import com.yzdsmart.Collectmoney.views.pickerview.data.Type;
 import com.yzdsmart.Collectmoney.views.pickerview.listener.OnDateSetListener;
@@ -40,7 +38,7 @@ import butterknife.Optional;
 
 public class SetInfoActivity extends BaseActivity implements SetInfoContract.SetInfoView {
     @Nullable
-    @BindViews({R.id.user_count_down_layout, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.forget_pwd_link, R.id.new_user_link})
+    @BindViews({R.id.app_logo, R.id.register_login_name_layout, R.id.user_count_down_layout, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.forget_pwd_link, R.id.new_user_link})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.title_left_operation)
@@ -48,12 +46,9 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
     @Nullable
     @BindView(R.id.center_title)
     TextView centerTitleTV;
-    @Nullable
-    @BindView(R.id.user_name)
-    EditText userNameET;
-    @Nullable
-    @BindView(R.id.user_gender)
-    BetterSpinner userGenderSpinner;
+    //    @Nullable
+//    @BindView(R.id.user_name)
+//    EditText userNameET;
     @Nullable
     @BindView(R.id.user_age)
     EditText userAgeET;
@@ -67,9 +62,6 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
     private static final String REG_ACTION_CODE = "1688";
 
     private String userName, password;
-
-    private String[] genderArray;
-    private ArrayAdapter<String> genderAdapter;
 
     private SetInfoContract.SetInfoPresenter mPresenter;
 
@@ -94,14 +86,8 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         centerTitleTV.setText(getResources().getString(R.string.register));
         confirmButton.setText(getResources().getString(R.string.register));
-        userNameET.setEnabled(false);
-        userNameET.setText(userName);
-
-        genderArray = getResources().getStringArray(R.array.gender_array);
-        genderAdapter = new ArrayAdapter<String>(this,
-                R.layout.gender_array_item, genderArray);
-        userGenderSpinner.setAdapter(genderAdapter);
-        userGenderSpinner.setText(genderArray[0]);
+//        userNameET.setEnabled(false);
+//        userNameET.setText(userName);
 
         new SetInfoPresenter(this, this);
 
@@ -132,13 +118,13 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.user_age, R.id.login_register_confirm_button})
+    @OnClick({R.id.title_left_operation_layout, R.id.user_age_layout, R.id.login_register_confirm_button})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
                 break;
-            case R.id.user_age:
+            case R.id.user_age_layout:
                 TimePickerDialog mDialogAll = new TimePickerDialog.Builder()
                         .setCallBack(new OnDateSetListener() {
                             @Override
@@ -171,7 +157,7 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
                     nickNameET.setError(getResources().getString(R.string.input_nickname));
                     return;
                 }
-                mPresenter.userRegister(REG_ACTION_CODE, userName, password, userGenderSpinner.getText().toString(), Integer.valueOf(Days.daysBetween(dtf.parseDateTime(userAgeET.getText().toString()), new DateTime()).getDays() / 365 + 1), nickNameET.getText().toString(), Utils.md5(REG_ACTION_CODE + "yzd" + userName));
+                mPresenter.userRegister(REG_ACTION_CODE, userName, password, "男", Integer.valueOf(Days.daysBetween(dtf.parseDateTime(userAgeET.getText().toString()), new DateTime()).getDays() / 365 + 1), nickNameET.getText().toString(), Utils.md5(REG_ACTION_CODE + "yzd" + userName));
                 break;
         }
     }
