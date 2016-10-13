@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.register_login_password.login;
+package com.yzdsmart.Collectmoney.register_login.login;
 
 import android.content.Context;
 

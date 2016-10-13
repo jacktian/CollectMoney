@@ -48,7 +48,7 @@ import com.yzdsmart.Collectmoney.bd_map.WalkingRouteOverlay;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.main.personal.PersonalFragment;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
-import com.yzdsmart.Collectmoney.register_login_password.login.LoginActivity;
+import com.yzdsmart.Collectmoney.register_login.login.LoginActivity;
 import com.yzdsmart.Collectmoney.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.utils.Utils;

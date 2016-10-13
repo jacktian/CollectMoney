@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.register_login_password.verify_code;
+package com.yzdsmart.Collectmoney.register_login.verify_code;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.register_login_password.set_password.SetPasswordActivity;
+import com.yzdsmart.Collectmoney.register_login.set_password.SetPasswordActivity;
 import com.yzdsmart.Collectmoney.utils.Utils;
 
 import org.joda.time.DateTime;

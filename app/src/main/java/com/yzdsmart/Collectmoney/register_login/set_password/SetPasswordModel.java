@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.register_login_password.set_password;
+package com.yzdsmart.Collectmoney.register_login.set_password;
 
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;

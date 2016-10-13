@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.register_login_password.login;
+package com.yzdsmart.Collectmoney.register_login.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,7 +21,7 @@ import com.tencent.tauth.UiError;
 import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.register_login_password.verify_phone.VerifyPhoneActivity;
+import com.yzdsmart.Collectmoney.register_login.verify_phone.VerifyPhoneActivity;
 import com.yzdsmart.Collectmoney.utils.Utils;
 
 import org.json.JSONObject;

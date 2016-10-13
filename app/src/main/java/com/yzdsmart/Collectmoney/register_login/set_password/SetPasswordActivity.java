@@ -1,9 +1,8 @@
-package com.yzdsmart.Collectmoney.register_login_password.set_password;
+package com.yzdsmart.Collectmoney.register_login.set_password;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +13,7 @@ import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.MainActivity;
-import com.yzdsmart.Collectmoney.register_login_password.set_info.SetInfoActivity;
+import com.yzdsmart.Collectmoney.register_login.set_info.SetInfoActivity;
 import com.yzdsmart.Collectmoney.utils.Utils;
 
 import java.util.List;
@@ -76,8 +75,8 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
         userNameET.setEnabled(false);
 
         //密码最多16位
-        userPwdET.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
-        userConfirmPwdET.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+//        userPwdET.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+//        userConfirmPwdET.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
 
         switch (opeType) {
             case 0:

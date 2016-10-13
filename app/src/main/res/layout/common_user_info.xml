@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     android:orientation="vertical"
     android:paddingBottom="@dimen/common_user_info_item_margin_top"
     android:paddingTop="@dimen/common_user_info_item_margin_top">
@@ -25,20 +24,29 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_weight="1">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:src="@mipmap/phone_icon" />
+                android:layout_centerInParent="true"
+                android:src="@mipmap/register_login_phone_icon" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="+86"
+                android:textColor="@color/font_grey"
+                android:textSize="@dimen/font_medium" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_weight="4">
 
             <EditText
@@ -46,10 +54,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:background="@null"
                 android:hint="@string/input_phone_num"
                 android:inputType="phone"
+                android:maxLength="11"
                 android:singleLine="true"
                 android:textColor="@color/font_grey"
                 android:textColorHint="@color/font_grey"
@@ -70,20 +78,20 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_weight="1">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:src="@mipmap/verify_icon" />
+                android:layout_centerInParent="true"
+                android:src="@mipmap/register_login_verify_icon" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_weight="4">
 
             <TextView
@@ -104,7 +112,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_toLeftOf="@id/get_verify_button"
                 android:background="@null"
@@ -133,20 +140,20 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_weight="1">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:src="@mipmap/password_icon" />
+                android:layout_centerInParent="true"
+                android:src="@mipmap/register_login_password_icon" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_weight="4">
 
             <EditText
@@ -154,11 +161,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:background="@null"
                 android:hint="@string/input_pwd"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
+                android:maxLength="16"
                 android:singleLine="true"
                 android:textColor="@color/font_grey"
                 android:textColorHint="@color/font_grey"
@@ -180,20 +187,20 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_weight="1">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:src="@mipmap/password_icon" />
+                android:layout_centerInParent="true"
+                android:src="@mipmap/register_login_password_icon" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_weight="4">
 
             <EditText
@@ -201,11 +208,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:background="@null"
                 android:hint="@string/input_confirm_pwd"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
+                android:maxLength="16"
                 android:singleLine="true"
                 android:textColor="@color/font_grey"
                 android:textColorHint="@color/font_grey"

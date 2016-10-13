@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.register_login_password.set_info;
+package com.yzdsmart.Collectmoney.register_login.set_info;
 
 import android.graphics.Color;
 import android.os.Bundle;

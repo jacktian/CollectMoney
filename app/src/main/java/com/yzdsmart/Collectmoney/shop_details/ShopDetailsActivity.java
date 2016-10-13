@@ -28,7 +28,7 @@ import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.main.personal.ShopImageBannerHolderView;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
-import com.yzdsmart.Collectmoney.register_login_password.login.LoginActivity;
+import com.yzdsmart.Collectmoney.register_login.login.LoginActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
