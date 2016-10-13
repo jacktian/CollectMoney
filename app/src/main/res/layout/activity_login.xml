@@ -3,7 +3,13 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:fitsSystemWindows="true">
+
+    <include
+        layout="@layout/register_set_pwd_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_toolbar_height" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -13,11 +19,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/common_user_info_layout_padding"
+            android:paddingRight="@dimen/common_user_info_layout_padding">
 
             <include
                 layout="@layout/common_user_info"
-                android:layout_width="@dimen/common_user_info_layout_width"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal" />
 
@@ -25,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/common_user_info_layout_margin_top"
+                android:layout_marginTop="@dimen/common_user_info_layout_margin"
                 android:orientation="vertical">
 
                 <FrameLayout
@@ -36,17 +44,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@color/grey" />
+                        android:background="@color/border_grey" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/light_yellow"
+                        android:background="@android:color/white"
                         android:padding="3dp"
-                        android:text="@string/login_with_other_platform"
+                        android:text="@string/login_on_other_platform"
                         android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
+                        android:textSize="@dimen/font_small" />
                 </FrameLayout>
 
                 <RelativeLayout
@@ -58,13 +66,14 @@
                         android:id="@+id/platform_wechat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/login_other_platform_margin"
                         android:src="@mipmap/wechat_logo" />
 
                     <ImageView
                         android:id="@+id/platform_qq"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginLeft="@dimen/login_other_platform_margin"
                         android:layout_toRightOf="@id/platform_wechat"
                         android:src="@mipmap/qq_logo" />
 
@@ -72,7 +81,8 @@
                         android:id="@+id/platform_webo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginLeft="@dimen/login_other_platform_margin"
+                        android:layout_marginRight="@dimen/login_other_platform_margin"
                         android:layout_toRightOf="@id/platform_qq"
                         android:src="@mipmap/webo_logo" />
                 </RelativeLayout>

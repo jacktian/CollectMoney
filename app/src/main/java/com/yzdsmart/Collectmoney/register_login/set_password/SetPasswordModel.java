@@ -2,6 +2,7 @@ package com.yzdsmart.Collectmoney.register_login.set_password;
 
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.LoginRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 
 import rx.Subscriber;
@@ -14,6 +15,7 @@ import rx.schedulers.Schedulers;
 public class SetPasswordModel {
     //网络请求监听
     private Subscriber<RequestResponse> setPwdSubscriber;
+    private Subscriber<LoginRequestResponse> loginSubscriber;
 
     void setPassword(String actioncode, String userName, String password, String regCode, final RequestListener listener) {
         setPwdSubscriber = new Subscriber<RequestResponse>() {
@@ -38,10 +40,36 @@ public class SetPasswordModel {
                 .subscribe(setPwdSubscriber);
     }
 
+    void userLogin(String userName, String password, String loginCode, final RequestListener listener) {
+        loginSubscriber = new Subscriber<LoginRequestResponse>() {
+            @Override
+            public void onCompleted() {
+                listener.onComplete();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                listener.onError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(LoginRequestResponse requestResponse) {
+                listener.onSuccess(requestResponse);
+            }
+        };
+        RequestAdapter.getRequestService().userLogin(userName, password, loginCode)
+                .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
+                .observeOn(AndroidSchedulers.mainThread())//回调到主线程
+                .subscribe(loginSubscriber);
+    }
+
     void unRegisterSubscribe() {
         //解除引用关系，以避免内存泄露的发生
         if (null != setPwdSubscriber) {
             setPwdSubscriber.unsubscribe();
+        }
+        if (null != loginSubscriber) {
+            loginSubscriber.unsubscribe();
         }
     }
 }

@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.App;
@@ -30,11 +29,8 @@ import butterknife.Optional;
  */
 public class SetPasswordActivity extends BaseActivity implements SetPasswordContract.SetPasswordView {
     @Nullable
-    @BindViews({R.id.app_logo, R.id.register_login_name_layout, R.id.user_count_down_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
+    @BindViews({R.id.app_logo, R.id.register_login_name_layout, R.id.user_count_down_layout, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
     List<View> hideViews;
-    @Nullable
-    @BindView(R.id.title_left_operation)
-    ImageView titleLeftOpeIV;
     @Nullable
     @BindView(R.id.center_title)
     TextView centerTitleTV;
@@ -59,7 +55,7 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
     private SetPasswordContract.SetPasswordPresenter mPresenter;
 
     private Handler mHandler = new Handler();
-    private Runnable setPwdSuccessRunable;
+    private Runnable setPwdSuccessRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +66,6 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
         userName = bundle.getString("userName");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
 //        userNameET.setEnabled(false);
 //        userNameET.setText(userName);
 
@@ -91,12 +86,11 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
 
         new SetPasswordPresenter(this, this);
 
-        setPwdSuccessRunable = new Runnable() {
+        setPwdSuccessRunnable = new Runnable() {
             @Override
             public void run() {
                 hideProgressDialog();
-                App.getAppInstance().exitApp();
-                openActivity(MainActivity.class);
+                mPresenter.userLogin(userName, userPwdET.getText().toString(), "");
             }
         };
     }
@@ -181,7 +175,7 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
 
     @Override
     protected void onDestroy() {
-        mHandler.removeCallbacks(setPwdSuccessRunable);
+        mHandler.removeCallbacks(setPwdSuccessRunnable);
         super.onDestroy();
     }
 
@@ -197,6 +191,12 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
             return;
         }
         showProgressDialog(R.drawable.success, getResources().getString(R.string.set_success));
-        mHandler.postDelayed(setPwdSuccessRunable, 500);
+        mHandler.postDelayed(setPwdSuccessRunnable, 500);
+    }
+
+    @Override
+    public void onUserLogin(boolean flag, String msg) {
+        App.getAppInstance().exitApp();
+        openActivity(MainActivity.class);
     }
 }

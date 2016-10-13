@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.App;
@@ -15,6 +14,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.utils.Utils;
+import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 import com.yzdsmart.Collectmoney.views.pickerview.TimePickerDialog;
 import com.yzdsmart.Collectmoney.views.pickerview.data.Type;
 import com.yzdsmart.Collectmoney.views.pickerview.listener.OnDateSetListener;
@@ -38,11 +38,8 @@ import butterknife.Optional;
 
 public class SetInfoActivity extends BaseActivity implements SetInfoContract.SetInfoView {
     @Nullable
-    @BindViews({R.id.app_logo, R.id.register_login_name_layout, R.id.user_count_down_layout, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.forget_pwd_link, R.id.new_user_link})
+    @BindViews({R.id.app_logo, R.id.register_login_name_layout, R.id.user_count_down_layout, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout})
     List<View> hideViews;
-    @Nullable
-    @BindView(R.id.title_left_operation)
-    ImageView titleLeftOpeIV;
     @Nullable
     @BindView(R.id.center_title)
     TextView centerTitleTV;
@@ -50,11 +47,14 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
 //    @BindView(R.id.user_name)
 //    EditText userNameET;
     @Nullable
-    @BindView(R.id.user_age)
-    EditText userAgeET;
-    @Nullable
     @BindView(R.id.user_nickname)
     EditText nickNameET;
+    @Nullable
+    @BindView(R.id.gender_group)
+    CustomNestRadioGroup userGenderRG;
+    @Nullable
+    @BindView(R.id.user_age)
+    EditText userAgeET;
     @Nullable
     @BindView(R.id.login_register_confirm_button)
     Button confirmButton;
@@ -83,7 +83,6 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
         dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         centerTitleTV.setText(getResources().getString(R.string.register));
         confirmButton.setText(getResources().getString(R.string.register));
 //        userNameET.setEnabled(false);
@@ -118,13 +117,14 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.user_age_layout, R.id.login_register_confirm_button})
+    @OnClick({R.id.title_left_operation_layout, R.id.user_age, R.id.register_calendar_icon, R.id.login_register_confirm_button})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
                 break;
-            case R.id.user_age_layout:
+            case R.id.user_age:
+            case R.id.register_calendar_icon:
                 TimePickerDialog mDialogAll = new TimePickerDialog.Builder()
                         .setCallBack(new OnDateSetListener() {
                             @Override
@@ -157,7 +157,7 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
                     nickNameET.setError(getResources().getString(R.string.input_nickname));
                     return;
                 }
-                mPresenter.userRegister(REG_ACTION_CODE, userName, password, "男", Integer.valueOf(Days.daysBetween(dtf.parseDateTime(userAgeET.getText().toString()), new DateTime()).getDays() / 365 + 1), nickNameET.getText().toString(), Utils.md5(REG_ACTION_CODE + "yzd" + userName));
+                mPresenter.userRegister(REG_ACTION_CODE, userName, password, (userGenderRG.getCheckedRadioButtonId() == R.id.gender_male) ? "男" : "女", Integer.valueOf(Days.daysBetween(dtf.parseDateTime(userAgeET.getText().toString()), new DateTime()).getDays() / 365 + 1), nickNameET.getText().toString(), Utils.md5(REG_ACTION_CODE + "yzd" + userName));
                 break;
         }
     }

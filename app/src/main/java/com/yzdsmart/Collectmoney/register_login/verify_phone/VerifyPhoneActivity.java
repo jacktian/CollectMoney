@@ -5,8 +5,9 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
@@ -19,6 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.Optional;
 
@@ -27,11 +29,11 @@ import butterknife.Optional;
  */
 public class VerifyPhoneActivity extends BaseActivity implements VerifyPhoneContract.VerifyPhoneView {
     @Nullable
-    @BindViews({R.id.app_logo,R.id.register_login_phone_icon, R.id.user_count_down_layout, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
+    @BindViews({R.id.app_logo, R.id.register_login_phone_icon, R.id.user_count_down_layout, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
     List<View> hideViews;
     @Nullable
-    @BindView(R.id.title_left_operation)
-    ImageView titleLeftOpeIV;
+    @BindView(R.id.register_agreement_layout)
+    LinearLayout registerAgreementLayout;
     @Nullable
     @BindView(R.id.center_title)
     TextView centerTitleTV;
@@ -50,7 +52,6 @@ public class VerifyPhoneActivity extends BaseActivity implements VerifyPhoneCont
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         userNameET.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         Bundle bundle = getIntent().getExtras();
@@ -58,6 +59,7 @@ public class VerifyPhoneActivity extends BaseActivity implements VerifyPhoneCont
         switch (opeType) {
             case 0:
                 centerTitleTV.setText(getResources().getString(R.string.register));
+                ButterKnife.apply(registerAgreementLayout, BUTTERKNIFEVISIBLE);
                 break;
             case 1:
                 centerTitleTV.setText(getResources().getString(R.string.forget_pwd));
@@ -94,6 +96,20 @@ public class VerifyPhoneActivity extends BaseActivity implements VerifyPhoneCont
                     return;
                 }
                 mPresenter.isUserExist(userNameET.getText().toString());
+                break;
+        }
+    }
+
+    @Optional
+    @OnCheckedChanged({R.id.register_agreement_check})
+    void onCheckedChanged(CompoundButton button, boolean changed) {
+        switch (button.getId()) {
+            case R.id.register_agreement_check:
+                if (button.isChecked()) {
+                    nextButton.setEnabled(true);
+                } else {
+                    nextButton.setEnabled(false);
+                }
                 break;
         }
     }

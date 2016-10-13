@@ -8,7 +8,7 @@
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_yellow"
+        android:background="@color/toolbar_color"
         app:contentInsetStart="0dp">
 
         <RelativeLayout
@@ -33,7 +33,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:src="@mipmap/personal_icon" />
+                    android:src="@mipmap/left_arrow" />
             </FrameLayout>
 
             <TextView
@@ -42,8 +42,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="中标题"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/font_medium" />
+                android:textColor="@color/font_grey"
+                android:textSize="@dimen/font_large" />
 
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#fafafa</color>
-    <color name="colorPrimaryDark">#fafafa</color>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="transparent">#00000000</color>
@@ -10,6 +10,7 @@
     <color name="font_black">#333333</color>
     <color name="font_grey">#999999</color>
 
+    <color name="toolbar_color">#f9f9f9</color>
     <color name="border_grey">#cccccc</color>
 
     <color name="white">#fafafa</color>
@@ -25,8 +26,8 @@
 
     <!--登陆、注册-->
     <color name="register_login_button">#f20044</color>
-    <color name="register_login_button_press">#ef1a56</color>
-    <color name="register_login_button_disable">#f2f2f2</color>
+    <color name="register_login_button_press">#ee5983</color>
+    <color name="register_login_button_disable">#cccccc</color>
     <color name="verify_button_bg">#f2f2f2</color>
 
     <!--腾讯云通讯-->

@@ -1,6 +1,7 @@
 package com.yzdsmart.Collectmoney.register_login.login;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
@@ -31,6 +32,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
             public void onSuccess(Object result) {
                 LoginRequestResponse response = (LoginRequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
+//                    SharedPreferencesUtils.clear(context, PreferenceManager.getDefaultSharedPreferences(context));
                     SharedPreferencesUtils.setString(context, "baza_code", response.getBazaCode());
                     SharedPreferencesUtils.setString(context, "cust_code", response.getCustCode());
                     SharedPreferencesUtils.setString(context, "im_account", response.getTCInfo().getTCAccount());

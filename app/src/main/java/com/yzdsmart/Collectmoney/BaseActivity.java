@@ -45,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         unbinder = ButterKnife.bind(this);
         App.getAppInstance().storeActivity(this);
 
-        StatusBarUtil.statusBarLightMode(this);
+//        StatusBarUtil.statusBarLightMode(this);改变状态栏字体颜色
 
         if (null != toolBar) {
             setSupportActionBar(toolBar);

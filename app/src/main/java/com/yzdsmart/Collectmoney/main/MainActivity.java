@@ -57,11 +57,11 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
 
         initView();
 
-        mainBottomTab.setOnCheckedChangeListener(this);
-
         tlsService = TLSService.getInstance();
 
         new MainPresenter(this, this, tlsService);
+
+        mainBottomTab.setOnCheckedChangeListener(this);
 
         imLogin();
     }

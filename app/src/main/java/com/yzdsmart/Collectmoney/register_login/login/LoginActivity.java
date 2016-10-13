@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
@@ -41,6 +42,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     @Nullable
     @BindViews({R.id.register_login_area_code, R.id.user_count_down_layout, R.id.user_confirm_pwd_layout, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
     List<View> hideViews;
+    @Nullable
+    @BindViews({R.id.forget_new_user_layout})
+    List<View> showViews;
+    @Nullable
+    @BindView(R.id.center_title)
+    TextView centerTitleTV;
     @Nullable
     @BindView(R.id.user_name)
     EditText userNameET;
@@ -129,6 +136,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+        ButterKnife.apply(showViews, BUTTERKNIFEVISIBLE);
+        centerTitleTV.setText(getResources().getString(R.string.login));
         userPasswordET.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         //腾讯
@@ -149,10 +158,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     }
 
     @Optional
-    @OnClick({R.id.forget_pwd_link, R.id.new_user_link, R.id.login_register_confirm_button, R.id.platform_wechat, R.id.platform_qq, R.id.platform_webo})
+    @OnClick({R.id.title_left_operation_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.login_register_confirm_button, R.id.platform_wechat, R.id.platform_qq, R.id.platform_webo})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
+            case R.id.title_left_operation_layout:
+                closeActivity();
+                break;
             case R.id.forget_pwd_link:
                 bundle = new Bundle();
                 bundle.putInt("opeType", 1);

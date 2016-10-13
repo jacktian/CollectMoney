@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
@@ -30,11 +29,8 @@ import butterknife.Optional;
  */
 public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContract.VerifyCodeView {
     @Nullable
-    @BindViews({R.id.app_logo,R.id.register_login_phone_icon, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
+    @BindViews({R.id.app_logo, R.id.register_login_phone_icon, R.id.user_pwd_layout, R.id.user_confirm_pwd_layout, R.id.user_gender_layout, R.id.user_age_layout, R.id.user_nickname_layout})
     List<View> hideViews;
-    @Nullable
-    @BindView(R.id.title_left_operation)
-    ImageView titleLeftOpeIV;
     @Nullable
     @BindView(R.id.center_title)
     TextView centerTitleTV;
@@ -64,7 +60,6 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         userNameET.setEnabled(false);
         verifyCodeET.setImeOptions(EditorInfo.IME_ACTION_DONE);
 

@@ -80,250 +80,209 @@
         <activity
             android:name=".main.MainActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".register_login.login.LoginActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/LoginActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".register_login.verify_phone.VerifyPhoneActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/LoginActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".register_login.verify_code.VerifyCodeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/LoginActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".register_login.set_password.SetPasswordActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/LoginActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".register_login.set_info.SetInfoActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/LoginActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".edit_personal_info.EditPersonalInfoActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".withdrawals_log.WithDrawLogActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".focused_shop.FocusedShopActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".register_business.RegisterBusinessActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".buy_coins.BuyCoinsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".publish_tasks.PublishTasksActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".publish_tasks_log.PublishTasksLogActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".money_friendship.MoneyFriendshipActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".qr_scan.QRScannerActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".personal_friend_detail.PersonalFriendDetailActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".settings.SettingsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".friend_future.FriendFutureActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".search_friend.SearchFriendActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".money_friendship.friend_list.profile.ProfileActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".money_friendship.friend_list.add.AddFriendActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".chat.ChatActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".chat.image_preview.ImagePreviewActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".chat.image_view.ImageViewActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".chat.video_view.VideoViewActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".money_friendship.group_list.search.SearchGroupActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".money_friendship.group_list.profile.GroupProfileActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".money_friendship.group_list.edit.EditActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".money_friendship.group_list.apply.ApplyGroupActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".money_friendship.group_list.create.CreateGroupActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".money_friendship.group_list.choose.ChooseFriendActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".money_friendship.group_list.member.GroupMemberActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".shop_details.ShopDetailsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".crop.ImageCropActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop"/>
 
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
 
         <activity
             android:name=".personal_coin_list.PersonalCoinsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop"/>
 
         <activity
             android:name=".galley.upload.UploadGalleyActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".galley.preview.GalleyPreviewActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".shop_focuser.ShopFocuserActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".withdrawals.WithDrawActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".edit_shop_info.EditShopInfoActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".shop_scanned_log.ShopScannedLogActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"
-            android:theme="@style/ActivityColorTranslucentTheme" />
+            android:launchMode="singleTop" />
 
         <!--腾讯聊天开始-->
         <!-- 消息收发service -->
