@@ -12,9 +12,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.utils.Utils;
 import com.yzdsmart.Collectmoney.views.BetterSpinner;
@@ -34,6 +36,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by YZD on 2016/9/24.
@@ -49,6 +52,9 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
     @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
+    @Nullable
+    @BindView(R.id.personal_avater)
+    CircleImageView personalAvaterIV;
     @Nullable
     @BindView(R.id.person_name)
     TextView personNameTV;
@@ -90,7 +96,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
-        centerTitleTV.setText("个人信息");
+        centerTitleTV.setText("个人资料");
 
         new EditPersonalInfoPresenter(this, this);
 
@@ -236,6 +242,11 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
         builder.setView(view);
         editDialog = builder.show();
         editDialog.setCancelable(false);
+    }
+
+    @Override
+    public void onGetCustInfo(CustInfoRequestResponse response) {
+        Glide.with(this).load(response.getImageUrl()).asBitmap().placeholder(getResources().getDrawable(R.mipmap.ic_holder_light)).error(getResources().getDrawable(R.mipmap.user_avater)).into(personalAvaterIV);
     }
 
     @Override

@@ -1,6 +1,9 @@
 package com.yzdsmart.Collectmoney.personal_friend_detail;
 
+import android.util.Log;
+
 import com.tencent.TIMAddFriendRequest;
+import com.tencent.TIMCallBack;
 import com.tencent.TIMDelFriendType;
 import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendshipManager;
@@ -128,6 +131,22 @@ public class PersonalFriendDetailModel {
                 listener.onSuccess(timFriendResults);
             }
         });
+    }
+
+    void remarkFriend(String identify, final String remark, final RequestListener listener) {
+        TIMFriendshipManager.getInstance().setFriendRemark(identify, remark,
+                new TIMCallBack() {//回调接口
+
+                    @Override
+                    public void onSuccess() {//成功
+                        listener.onSuccess(remark);
+                    }
+
+                    @Override
+                    public void onError(int code, String desc) {//失败
+                        listener.onError(desc);
+                    }
+                });
     }
 
     void unRegisterSubscribe() {

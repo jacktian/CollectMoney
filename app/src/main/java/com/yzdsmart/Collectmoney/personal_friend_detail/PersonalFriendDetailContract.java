@@ -39,6 +39,13 @@ public interface PersonalFriendDetailContract {
          * 更新好友关系
          */
         void refreshFriendship();
+
+        /**
+         * 设置好友备注
+         *
+         * @param remark
+         */
+        void onRemarkFriend(String remark);
     }
 
     interface PersonalFriendDetailPresenter extends BasePresenter {
@@ -83,6 +90,14 @@ public interface PersonalFriendDetailContract {
          * @param identify
          */
         void deleteFriend(String identify);
+
+        /**
+         * 设置好友备注
+         *
+         * @param identify
+         * @param remark
+         */
+        void remarkFriend(String identify, String remark);
 
         void unRegisterObserver();
 

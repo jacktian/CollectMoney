@@ -3,7 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_yellow"
+    android:background="@color/background_grey"
     android:fitsSystemWindows="true">
 
     <include
@@ -39,23 +39,69 @@
                     android:paddingTop="@dimen/activity_vertical_padding">
 
                     <TextView
+                        android:id="@+id/person_avater_title"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/edit_personal_person_avater"
+                        android:textColor="@color/font_black"
+                        android:textSize="@dimen/font_medium" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/personal_avater"
+                            android:layout_width="@dimen/edit_personal_avater_width"
+                            android:layout_height="@dimen/edit_personal_avater_width"
+                            android:layout_alignParentRight="true"
+                            android:src="@mipmap/ic_holder_light" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <TextView
                         android:id="@+id/person_name_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/edit_personal_person_name"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_black"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
                         android:id="@+id/person_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="5"
+                        android:layout_weight="4"
+                        android:gravity="right|center_vertical"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_grey"
                         android:textSize="@dimen/font_medium" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/validated_pass" />
+                    </RelativeLayout>
+
                 </LinearLayout>
 
                 <View
@@ -76,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/edit_personal_person_nickname"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_black"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
@@ -84,9 +130,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
+                        android:gravity="right|center_vertical"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_grey"
                         android:textSize="@dimen/font_medium" />
                 </LinearLayout>
 
@@ -108,7 +155,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/edit_personal_person_gender"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_black"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
@@ -116,9 +163,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
+                        android:gravity="right|center_vertical"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_grey"
                         android:textSize="@dimen/font_medium" />
                 </LinearLayout>
 
@@ -140,7 +188,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/edit_personal_person_phone"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_black"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
@@ -148,9 +196,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
+                        android:gravity="right|center_vertical"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_grey"
                         android:textSize="@dimen/font_medium" />
                 </LinearLayout>
             </LinearLayout>
@@ -178,7 +227,7 @@
                         android:layout_centerVertical="true"
                         android:layout_weight="1"
                         android:text="@string/edit_personal_person_birth"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_black"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
@@ -186,9 +235,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
+                        android:gravity="right|center_vertical"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_grey"
                         android:textSize="@dimen/font_medium" />
                 </LinearLayout>
 
@@ -211,7 +261,7 @@
                         android:layout_centerVertical="true"
                         android:layout_weight="1"
                         android:text="@string/edit_personal_person_age"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_black"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
@@ -219,9 +269,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
+                        android:gravity="right|center_vertical"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_grey"
                         android:textSize="@dimen/font_medium" />
                 </LinearLayout>
 
@@ -243,7 +294,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/edit_personal_person_area"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_black"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
@@ -251,9 +302,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
+                        android:gravity="right|center_vertical"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_grey"
                         android:textSize="@dimen/font_medium" />
                 </LinearLayout>
 
@@ -276,7 +328,7 @@
                         android:layout_centerVertical="true"
                         android:layout_weight="1"
                         android:text="@string/edit_personal_person_address"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_black"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
@@ -284,9 +336,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
+                        android:gravity="right|center_vertical"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="@color/grey"
+                        android:textColor="@color/font_grey"
                         android:textSize="@dimen/font_medium" />
                 </LinearLayout>
             </LinearLayout>

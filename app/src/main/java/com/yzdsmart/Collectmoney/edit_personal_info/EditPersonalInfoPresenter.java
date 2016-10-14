@@ -6,6 +6,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
 import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.RequestResponse;
 
 /**
@@ -22,6 +23,31 @@ public class EditPersonalInfoPresenter implements EditPersonalInfoContract.EditP
         this.mView = mView;
         mModel = new EditPersonalInfoModel();
         mView.setPresenter(this);
+    }
+
+    @Override
+    public void getCustInfo(String submitcode, String custCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.getCustInfo(submitcode, custCode, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                CustInfoRequestResponse requestResponse = (CustInfoRequestResponse) result;
+                if (null != requestResponse) {
+                    mView.onGetCustInfo(requestResponse);
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
     }
 
     @Override

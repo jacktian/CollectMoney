@@ -87,9 +87,10 @@
 
     <!--用户详情-->
     <dimen name="user_detail_avater_width">85dp</dimen>
-    <dimen name="user_detail_item_layout_padding">38dp</dimen>
-    <dimen name="user_detail_wealth_detail_margin">12dp</dimen>
-    <dimen name="user_detail_chat_margin_top">90dp</dimen>
+    <dimen name="user_detail_buttons_margin_top">22dp</dimen>
+    <dimen name="user_detail_buttons_padding">40dp</dimen>
+    <dimen name="user_detail_button_height">46dp</dimen>
+    <dimen name="user_detail_button_radius">23dp</dimen>
 
     <!--钱圈-->
     <dimen name="friendship_list_item_height">42dp</dimen>
@@ -111,8 +112,8 @@
     <dimen name="picker_line_mar">15dp</dimen>
     <dimen name="picker_height">230dp</dimen>
 
-    <!--个人/好友详情-->
-    <dimen name="galley_preview_item_width">50dp</dimen>
+    <!--个人信息-->
+    <dimen name="edit_personal_avater_width">60dp</dimen>
 
     <!--购买金币-->
     <dimen name="buy_coin_pay_type_layout">340dp</dimen>

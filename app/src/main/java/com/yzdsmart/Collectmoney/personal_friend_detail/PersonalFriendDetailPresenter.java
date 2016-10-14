@@ -161,6 +161,30 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
     }
 
     @Override
+    public void remarkFriend(String identify, final String remark) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.requesting));
+        mModel.remarkFriend(identify, remark, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.request_success));
+                mView.onRemarkFriend(remark);
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
     public void unRegisterObserver() {
         //解除好友关系链监听
         FriendshipEvent.getInstance().deleteObserver(this);

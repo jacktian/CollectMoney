@@ -148,7 +148,8 @@
     <string name="detail_personal_album">个人相册</string>
     <string name="detail_more_info">查看更多</string>
     <string name="detail_add_friend">添加好友</string>
-    <string name="detail_delete_friend">删除好友</string>
+    <string name="detail_delete_friend">解除好友</string>
+    <string name="detail_remark_friend">添加备注</string>
     <string name="detail_send_msg">发送消息</string>
     <string name="detail_send_video">视频聊天</string>
 
@@ -162,14 +163,15 @@
     <string name="setting_logout">退出登录</string>
 
     <!--用户信息-->
-    <string name="edit_personal_person_name">姓名:</string>
-    <string name="edit_personal_person_nickname">昵称:</string>
-    <string name="edit_personal_person_gender">性别:</string>
-    <string name="edit_personal_person_phone">手机号:</string>
-    <string name="edit_personal_person_birth">生日:</string>
-    <string name="edit_personal_person_age">年龄:</string>
-    <string name="edit_personal_person_area">省市区:</string>
-    <string name="edit_personal_person_address">住址:</string>
+    <string name="edit_personal_person_avater">头像</string>
+    <string name="edit_personal_person_name">姓名</string>
+    <string name="edit_personal_person_nickname">昵称</string>
+    <string name="edit_personal_person_gender">性别</string>
+    <string name="edit_personal_person_phone">手机号</string>
+    <string name="edit_personal_person_birth">生日</string>
+    <string name="edit_personal_person_age">年龄</string>
+    <string name="edit_personal_person_area">省市区</string>
+    <string name="edit_personal_person_address">住址</string>
 
     <!--搜索新好友-->
     <string name="future_search_new_friend">搜索新朋友</string>

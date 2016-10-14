@@ -1,11 +1,19 @@
 package com.yzdsmart.Collectmoney.personal_friend_detail;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.AlertDialog;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -102,9 +110,6 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     @Nullable
     @BindView(R.id.video_chat)
     Button videoChatBtn;
-    @Nullable
-    @BindView(R.id.delete_friend)
-    Button deleteFriendBtn;
 
     private static final Integer REQUEST_LOGIN_CODE = 1000;
 
@@ -117,6 +122,8 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     private PersonalFriendDetailContract.PersonalFriendDetailPresenter mPresenter;
 
     private ArrayList<GalleyInfo> galleyInfoList;
+
+    private AlertDialog remarkDialog;
 
     private DateTimeFormatter dtf;
 
@@ -137,7 +144,6 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         switch (type) {
             case 0:
                 new PersonalFriendDetailPresenter(this, this, UserInfo.getInstance().getId());
-
                 ButterKnife.apply(imOpeLayout, BUTTERKNIFEGONE);
                 break;
             case 1:
@@ -146,9 +152,9 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 if (FriendshipInfo.getInstance().isFriend(friend_identify)) {
                     ButterKnife.apply(addFriendBtn, BUTTERKNIFEGONE);
                 } else {
+                    ButterKnife.apply(titleRightOpeIV, BUTTERKNIFEGONE);
                     ButterKnife.apply(msgChatBtn, BUTTERKNIFEGONE);
                     ButterKnife.apply(videoChatBtn, BUTTERKNIFEGONE);
-                    ButterKnife.apply(deleteFriendBtn, BUTTERKNIFEGONE);
                 }
                 break;
         }
@@ -215,8 +221,63 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         }
     }
 
+    private Dialog deleteRemarkDialog;
+    private TextView deleteFriend, remarkFriend;
+
+    private void showDeleteRemarkDialog(Context context) {
+        deleteRemarkDialog = new Dialog(context, R.style.qr_scanner_popup);
+        deleteRemarkDialog.setContentView(R.layout.friend_delete_remark_choose);
+        deleteFriend = (TextView) deleteRemarkDialog.findViewById(R.id.delete_friend);
+        remarkFriend = (TextView) deleteRemarkDialog.findViewById(R.id.remark_friend);
+        deleteFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteRemarkDialog.dismiss();
+                mPresenter.deleteFriend(friend_identify);
+            }
+        });
+        remarkFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteRemarkDialog.dismiss();
+                showRemarkFriend("好友备注");
+            }
+        });
+        Window window = deleteRemarkDialog.getWindow();
+        window.setGravity(Gravity.TOP | Gravity.RIGHT);
+        WindowManager.LayoutParams lp = window.getAttributes();
+        window.setAttributes(lp);
+        deleteRemarkDialog.show();
+    }
+
+    void showRemarkFriend(final String dialogTitle) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final View view = LayoutInflater.from(this).inflate(R.layout.edit_info_dialog, null);
+        TextView editInfoTitle = (TextView) view.findViewById(R.id.edit_info_dialog_title);
+        editInfoTitle.setText("请输入" + dialogTitle);
+        final EditText remarkFriendET = (EditText) view.findViewById(R.id.edit_info_dialog_content);
+        Button editCancel = (Button) view.findViewById(R.id.edit_cancel);
+        Button editConfirm = (Button) view.findViewById(R.id.edit_confirm);
+        editCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remarkDialog.dismiss();
+            }
+        });
+        editConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remarkDialog.dismiss();
+                mPresenter.remarkFriend(friend_identify, remarkFriendET.getText().toString());
+            }
+        });
+        builder.setView(view);
+        remarkDialog = builder.show();
+        remarkDialog.setCancelable(false);
+    }
+
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.user_avater, R.id.galley_preview_layout, R.id.title_right_operation_layout, R.id.add_friend, R.id.msg_chat, R.id.video_chat, R.id.delete_friend})
+    @OnClick({R.id.title_left_operation_layout, R.id.user_avater, R.id.galley_preview_layout, R.id.title_right_operation_layout, R.id.add_friend, R.id.msg_chat, R.id.video_chat})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -229,6 +290,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                         openActivity(EditPersonalInfoActivity.class);
                         break;
                     case 1:
+                        showDeleteRemarkDialog(this);
                         break;
                 }
                 break;
@@ -263,9 +325,6 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 break;
             case R.id.video_chat:
                 break;
-            case R.id.delete_friend:
-                mPresenter.deleteFriend(friend_identify);
-                break;
         }
     }
 
@@ -293,7 +352,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         changeMoneyTimesTV.setText("" + response.getOperNum());
         coinCountsTV.setText("" + response.getGoldNum());
         getFriendCountsTV.setText("" + response.getFriendNum());
-        Glide.with(this).load(response.getImageUrl()).error(getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
+        Glide.with(this).load(response.getImageUrl()).placeholder(getResources().getDrawable(R.mipmap.ic_holder_light)).error(getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
     }
 
     @Override
@@ -364,15 +423,20 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     public void refreshFriendship() {
         if (FriendshipInfo.getInstance().isFriend(friend_identify)) {
             ButterKnife.apply(addFriendBtn, BUTTERKNIFEGONE);
+            ButterKnife.apply(titleRightOpeIV, BUTTERKNIFEVISIBLE);
             ButterKnife.apply(msgChatBtn, BUTTERKNIFEVISIBLE);
             ButterKnife.apply(videoChatBtn, BUTTERKNIFEVISIBLE);
-            ButterKnife.apply(deleteFriendBtn, BUTTERKNIFEVISIBLE);
         } else {
             ButterKnife.apply(addFriendBtn, BUTTERKNIFEVISIBLE);
+            ButterKnife.apply(titleRightOpeIV, BUTTERKNIFEGONE);
             ButterKnife.apply(msgChatBtn, BUTTERKNIFEGONE);
             ButterKnife.apply(videoChatBtn, BUTTERKNIFEGONE);
-            ButterKnife.apply(deleteFriendBtn, BUTTERKNIFEGONE);
         }
+    }
+
+    @Override
+    public void onRemarkFriend(String remark) {
+        userRemarkTV.setText(remark);
     }
 
     @Override

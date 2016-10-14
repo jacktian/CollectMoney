@@ -3,6 +3,7 @@ package com.yzdsmart.Collectmoney.edit_personal_info;
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;
 import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 
 /**
  * Created by YZD on 2016/9/24.
@@ -10,6 +11,13 @@ import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
 
 public interface EditPersonalInfoContract {
     interface EditPersonalInfoView extends BaseView<EditPersonalInfoPresenter> {
+        /**
+         * 获取用户信息
+         *
+         * @param response
+         */
+        void onGetCustInfo(CustInfoRequestResponse response);
+
         /**
          * 获取用户详细信息
          *
@@ -26,6 +34,14 @@ public interface EditPersonalInfoContract {
     }
 
     interface EditPersonalInfoPresenter extends BasePresenter {
+        /**
+         * 获取用户信息
+         *
+         * @param submitcode
+         * @param custCode
+         */
+        void getCustInfo(String submitcode, String custCode);
+
         /**
          * 获取用户详细信息
          *
