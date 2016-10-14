@@ -234,7 +234,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser, R.id.to_withdraw_log, R.id.to_shop_withdraw_log, R.id.to_withdraw, R.id.to_shop_withdraw, R.id.to_shop_detail, R.id.to_shop_scanned_log})
+    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser, R.id.to_withdraw_log, R.id.to_shop_withdraw_log, R.id.to_withdraw, R.id.to_shop_withdraw, R.id.to_shop_detail, R.id.to_shop_scanned_log, R.id.to_personal_galley})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -308,6 +308,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
                 break;
             case R.id.to_shop_scanned_log:
                 ((BaseActivity) getActivity()).openActivity(ShopScannedLogActivity.class);
+                break;
+            case R.id.to_personal_galley:
+
                 break;
         }
     }

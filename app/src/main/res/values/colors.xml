@@ -36,6 +36,9 @@
     <!--搜钱-->
     <color name="red_package_bg">#f20044</color>
 
+    <!--我的搜搜-->
+    <color name="personal_item_pressed">#eeeeee</color>
+
     <!--腾讯云通讯-->
     <color name="tecent_background_gray1">#EBEBEB</color>
     <color name="tecent_background_gray3">#D4D4D4</color>

@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +19,7 @@ import com.yzdsmart.Collectmoney.chat.ChatActivity;
 import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
 import com.yzdsmart.Collectmoney.edit_personal_info.EditPersonalInfoActivity;
 import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
+import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.listener.AppBarOffsetChangeListener;
 import com.yzdsmart.Collectmoney.main.MainActivity;
@@ -28,6 +27,12 @@ import com.yzdsmart.Collectmoney.register_login.login.LoginActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.FriendshipInfo;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
+import com.yzdsmart.Collectmoney.utils.Utils;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,26 +61,26 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     @BindView(R.id.title_right_operation)
     ImageView titleRightOpeIV;
     @Nullable
-    @BindView(R.id.name_qr_layout)
-    RelativeLayout nameQRLayout;
-    @Nullable
     @BindView(R.id.im_ope_layout)
     LinearLayout imOpeLayout;
     @Nullable
     @BindView(R.id.user_avater)
     CircleImageView userAvaterIV;
     @Nullable
-    @BindView(R.id.user_name)
-    TextView userNameTV;
+    @BindView(R.id.user_gender)
+    ImageView userGenderIV;
     @Nullable
-    @BindView(R.id.user_address)
-    TextView userAddressTV;
+    @BindView(R.id.user_remark)
+    TextView userRemarkTV;
     @Nullable
-    @BindView(R.id.user_level)
-    LinearLayout userLevelLayout;
+    @BindView(R.id.user_nickname)
+    TextView userNickNameTV;
     @Nullable
-    @BindView(R.id.user_account)
-    TextView userAccountTV;
+    @BindView(R.id.user_age)
+    TextView userAgeTV;
+    @Nullable
+    @BindView(R.id.user_area)
+    TextView userAreaTV;
     @Nullable
     @BindView(R.id.change_money_times)
     TextView changeMoneyTimesTV;
@@ -104,7 +109,6 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     private static final Integer REQUEST_LOGIN_CODE = 1000;
 
     private static final String PERSONAL_GALLEY_ACTION_CODE = "2102";
-    private static final String GET_CUST_LEVEL_ACTION_CODE = "612";
 
     private Integer type;//0 个人 1 好友
     private String friend_c_code;
@@ -114,11 +118,15 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
 
     private ArrayList<GalleyInfo> galleyInfoList;
 
+    private DateTimeFormatter dtf;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         galleyInfoList = new ArrayList<GalleyInfo>();
+
+        dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
 
         type = getIntent().getExtras().getInt("type");
         friend_c_code = getIntent().getExtras().getString("cust_code");
@@ -134,9 +142,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 break;
             case 1:
                 new PersonalFriendDetailPresenter(this, this, friend_identify);
-
-                ButterKnife.apply(nameQRLayout, BUTTERKNIFEGONE);
-                ButterKnife.apply(titleRightOpeIV, BUTTERKNIFEGONE);
+                titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.friend_remark_white_icon));
                 if (FriendshipInfo.getInstance().isFriend(friend_identify)) {
                     ButterKnife.apply(addFriendBtn, BUTTERKNIFEGONE);
                 } else {
@@ -153,11 +159,25 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 if (state == State.EXPANDED) {
                     //展开状态
                     titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
-                    titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.menu_icon_white));
+                    switch (type) {
+                        case 0:
+                            titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.menu_icon_white));
+                            break;
+                        case 1:
+                            titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.friend_remark_white_icon));
+                            break;
+                    }
                 } else if (state == State.COLLAPSED) {
                     //折叠状态
                     titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
-                    titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.menu_icon));
+                    switch (type) {
+                        case 0:
+                            titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.menu_icon));
+                            break;
+                        case 1:
+                            titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.friend_remark_icon));
+                            break;
+                    }
                 } else {
                     //中间状态
                 }
@@ -175,12 +195,13 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         super.onResume();
         switch (type) {
             case 0:
-                mPresenter.getCustLevel(SharedPreferencesUtils.getString(this, "cust_code", ""), "000000", GET_CUST_LEVEL_ACTION_CODE);
                 mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
+                mPresenter.getCustDetailInfo("000000", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
                 mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
                 break;
             case 1:
                 mPresenter.getCustInfo("000000", friend_c_code);
+                mPresenter.getCustDetailInfo("000000", "000000", friend_c_code);
                 mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", friend_c_code);
                 break;
         }
@@ -203,7 +224,13 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 closeActivity();
                 break;
             case R.id.title_right_operation_layout:
-                openActivity(EditPersonalInfoActivity.class);
+                switch (type) {
+                    case 0:
+                        openActivity(EditPersonalInfoActivity.class);
+                        break;
+                    case 1:
+                        break;
+                }
                 break;
             case R.id.user_avater:
                 switch (type) {
@@ -254,33 +281,55 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     }
 
     @Override
-    public void onGetCustLevel(Integer gra, Integer sta) {
-        userLevelLayout.removeAllViews();
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        ImageView diamond;
-        for (int i = 0; i < sta; i++) {
-            diamond = new ImageView(this);
-            diamond.setLayoutParams(params);
-            diamond.setImageDrawable(getResources().getDrawable(R.mipmap.diamond_pink));
-            userLevelLayout.addView(diamond);
-        }
-    }
-
-    @Override
     public void onGetCustInfo(CustInfoRequestResponse response) {
-        Glide.with(this).load(response.getImageUrl()).error(getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
-        if (null != response.getCName() && !"".equals(response.getCName())) {
-            userNameTV.setText(response.getCName());
-        } else if (null != response.getNickName() && !"".equals(response.getNickName())) {
-            userNameTV.setText(response.getNickName());
+        if (null != response.getNickName() && !"".equals(response.getNickName())) {
+            userNickNameTV.setText(response.getNickName());
+        } else if (null != response.getCName() && !"".equals(response.getCName())) {
+            userNickNameTV.setText(response.getCName());
         } else {
-            userNameTV.setText(response.getC_UserCode());
+            userNickNameTV.setText(response.getC_UserCode());
         }
-        userAddressTV.setText(response.getArea());
-        userAccountTV.setText(response.getC_UserCode());
+        userAreaTV.setText(response.getArea());
         changeMoneyTimesTV.setText("" + response.getOperNum());
         coinCountsTV.setText("" + response.getGoldNum());
         getFriendCountsTV.setText("" + response.getFriendNum());
+        Glide.with(this).load(response.getImageUrl()).error(getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
+    }
+
+    @Override
+    public void onGetCustDetailInfo(CustDetailInfoRequestResponse response) {
+        switch (type) {
+            case 0:
+                if (null != response.getCName() && !"".equals(response.getCName())) {
+                    userRemarkTV.setText(response.getCName());
+                } else if (null != response.getCNickName() && !"".equals(response.getCNickName())) {
+                    userRemarkTV.setText(response.getCNickName());
+                } else {
+                    userRemarkTV.setText(response.getC_UserCode());
+                }
+                break;
+            case 1:
+                if (null != response.getCRemark() && !"".equals(response.getCRemark())) {
+                    userRemarkTV.setText(response.getCRemark());
+                } else if (null != response.getCNickName() && !"".equals(response.getCNickName())) {
+                    userRemarkTV.setText(response.getCNickName());
+                } else if (null != response.getCName() && !"".equals(response.getCName())) {
+                    userRemarkTV.setText(response.getCName());
+                } else {
+                    userRemarkTV.setText(response.getC_UserCode());
+                }
+                break;
+        }
+
+        if (null != response.getCBirthday() && !"".equals(response.getCBirthday())) {
+            DateTime birthDay = dtf.parseDateTime(response.getCBirthday());
+            userAgeTV.setText((Days.daysBetween(birthDay, new DateTime()).getDays() / 365 + 1) + "岁");
+        }
+        if (null != response.getCSex() && !"".equals(response.getCSex()) && "女".equals(response.getCSex())) {
+            userGenderIV.setImageDrawable(getResources().getDrawable(R.mipmap.gender_female_icon));
+        } else {
+            userGenderIV.setImageDrawable(getResources().getDrawable(R.mipmap.gender_male_icon));
+        }
     }
 
     @Override
@@ -289,14 +338,23 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         galleyInfoList.addAll(galleyInfos);
         galleyPreviewLayout.removeAllViews();
         ImageView imageView;
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.galley_preview_item_width), (int) getResources().getDimension(R.dimen.galley_preview_item_width));
+        // 计算与你开发时设定的屏幕大小的纵横比
+        int screenWidth = Utils.deviceWidth(this);
+        int screenHeight = Utils.deviceHeight(this);
+        float ratioWidth = (float) screenWidth / 480;
+        float ratioHeight = (float) screenHeight / 800;
+        float ratio = Math.min(ratioWidth, ratioHeight);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(Math.round(80 * ratio), Math.round(80 * ratio));
         for (int i = 0; i < galleyInfos.size(); i++) {
+            if (i > 0) {
+                params.setMargins(Math.round(2 * ratio), 0, 0, 0);
+            }
             imageView = new ImageView(this);
             imageView.setLayoutParams(params);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             Glide.with(this).load(galleyInfos.get(i).getImageFileUrl()).asBitmap().placeholder(getResources().getDrawable(R.mipmap.ic_holder_light)).error(getResources().getDrawable(R.mipmap.album_pic)).into(imageView);
             galleyPreviewLayout.addView(imageView);
-            if (i == 3) {
+            if (i == 4) {
                 return;
             }
         }

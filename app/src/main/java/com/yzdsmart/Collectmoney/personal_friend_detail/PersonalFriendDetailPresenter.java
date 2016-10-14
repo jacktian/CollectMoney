@@ -6,8 +6,8 @@ import com.tencent.TIMUserProfile;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetGalleyRequestResponse;
 import com.yzdsmart.Collectmoney.tecent_im.event.FriendshipEvent;
 
@@ -32,31 +32,6 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
         mView.setPresenter(this);
         //注册好友关系链监听
         FriendshipEvent.getInstance().addObserver(this);
-    }
-
-    @Override
-    public void getCustLevel(String code, String submitcode, String action) {
-        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustLevel(code, submitcode, action, new RequestListener() {
-            @Override
-            public void onSuccess(Object result) {
-                CustLevelRequestResponse response = (CustLevelRequestResponse) result;
-                if (null != response) {
-                    mView.onGetCustLevel(response.getGra(), response.getSta());
-                }
-            }
-
-            @Override
-            public void onError(String err) {
-                ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(err);
-            }
-
-            @Override
-            public void onComplete() {
-                ((BaseActivity) context).hideProgressDialog();
-            }
-        });
     }
 
     @Override
@@ -97,6 +72,31 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
                     }
                 } else {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void getCustDetailInfo(String actioncode, String submitCode, String custCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.getCustDetailInfo(actioncode, submitCode, custCode, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                CustDetailInfoRequestResponse response = (CustDetailInfoRequestResponse) result;
+                if (null != response) {
+                    mView.onGetCustDetailInfo(response);
                 }
             }
 

@@ -3,8 +3,8 @@ package com.yzdsmart.Collectmoney.personal_friend_detail;
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
+import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
-import com.yzdsmart.Collectmoney.tecent_im.event.FriendshipEvent;
 
 import java.util.List;
 
@@ -13,13 +13,6 @@ import java.util.List;
  */
 public interface PersonalFriendDetailContract {
     interface PersonalFriendDetailView extends BaseView<PersonalFriendDetailPresenter> {
-        /**
-         * 获取用户等级和星级
-         *
-         * @param gra
-         * @param sta
-         */
-        void onGetCustLevel(Integer gra, Integer sta);
 
         /**
          * 获取用户信息
@@ -27,6 +20,13 @@ public interface PersonalFriendDetailContract {
          * @param response
          */
         void onGetCustInfo(CustInfoRequestResponse response);
+
+        /**
+         * 获取用户详细信息
+         *
+         * @param response
+         */
+        void onGetCustDetailInfo(CustDetailInfoRequestResponse response);
 
         /**
          * 获取个人的图片列表
@@ -42,14 +42,6 @@ public interface PersonalFriendDetailContract {
     }
 
     interface PersonalFriendDetailPresenter extends BasePresenter {
-        /**
-         * 获取用户等级和星级
-         *
-         * @param code
-         * @param submitcode
-         * @param action
-         */
-        void getCustLevel(String code, String submitcode,String action);
 
         /**
          * 获取用户信息
@@ -67,6 +59,16 @@ public interface PersonalFriendDetailContract {
          * @param custCode
          */
         void getPersonalGalley(String action, String submitCode, String custCode);
+
+        /**
+         * 获取用户详细信息
+         *
+         * @param actioncode
+         * @param submitCode
+         * @param custCode
+         * @return
+         */
+        void getCustDetailInfo(String actioncode, String submitCode, String custCode);
 
         /**
          * 添加好友

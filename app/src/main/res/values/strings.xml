@@ -59,7 +59,8 @@
     <!--个人中心-->
     <string name="personal_find">我的搜搜</string>
     <string name="my_friend">我的好友</string>
-    <string name="qr_scan_log">扫币日志</string>
+    <string name="my_galley">我的相册</string>
+    <string name="qr_scan_log">扫币明细</string>
     <string name="coin_log">金币日志</string>
     <string name="register_business">升级商户</string>
     <string name="focus_shop">关注店铺</string>
@@ -71,8 +72,8 @@
     <string name="publishing_tasks_log">发布任务日志</string>
     <string name="publishing_focuser">店铺关注者</string>
     <string name="scanned_log">被扫日志</string>
-    <string name="withdraw">提现</string>
-    <string name="withdraw_log">提现日志</string>
+    <string name="withdraw">个人提现</string>
+    <string name="withdraw_log">提现明细</string>
 
     <!--金币总数-->
     <string name="personal_coin_counts">获取金币数</string>

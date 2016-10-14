@@ -112,7 +112,7 @@
     <dimen name="picker_height">230dp</dimen>
 
     <!--个人/好友详情-->
-    <dimen name="galley_preview_item_width">49dp</dimen>
+    <dimen name="galley_preview_item_width">50dp</dimen>
 
     <!--购买金币-->
     <dimen name="buy_coin_pay_type_layout">340dp</dimen>
