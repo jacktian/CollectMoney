@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.yzdsmart.Collectmoney.BaseActivity;
@@ -29,8 +30,11 @@ import butterknife.Optional;
  */
 public class RecommendFragment extends BaseFragment implements RecommendContract.RecommendView {
     @Nullable
-    @BindViews({R.id.title_left_operation_layout, R.id.left_title, R.id.center_title, R.id.title_right_operation})
+    @BindViews({R.id.title_left_operation_layout, R.id.left_title, R.id.title_logo, R.id.title_right_operation})
     List<View> hideViews;
+    @Nullable
+    @BindView(R.id.center_title)
+    TextView centerTitleTV;
     @Nullable
     @BindViews({R.id.city_recommend_spinner})
     List<View> showViews;
@@ -84,6 +88,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 
         ButterKnife.apply(hideViews, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
         ButterKnife.apply(showViews, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
+        centerTitleTV.setText(getActivity().getResources().getString(R.string.recommend));
 //        titleRightOpeTLIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.grey_mail_icon));
 
         cityRecommendSpinner.setAdapter(citiesAdapter);

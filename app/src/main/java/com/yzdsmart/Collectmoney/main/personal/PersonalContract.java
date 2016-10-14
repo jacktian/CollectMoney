@@ -3,8 +3,8 @@ package com.yzdsmart.Collectmoney.main.personal;
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
+import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 
 import java.util.List;
 
@@ -24,11 +24,9 @@ public interface PersonalContract {
         /**
          * 获取用户信息
          *
-         * @param name
-         * @param headUrl
-         * @param goldNum
+         * @param requestResponse
          */
-        void onGetCustInfo(String name, String headUrl, Integer goldNum);
+        void onGetCustInfo(CustInfoRequestResponse requestResponse);
 
         /**
          * 商家商铺详细信息

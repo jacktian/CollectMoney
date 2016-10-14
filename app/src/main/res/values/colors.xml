@@ -7,11 +7,16 @@
     <color name="transparent">#00000000</color>
 
     <color name="font_red">#f20044</color>
+    <color name="font_yellow">#fff100</color>
+    <color name="font_orange">#ff9900</color>
     <color name="font_black">#333333</color>
     <color name="font_grey">#999999</color>
 
-    <color name="toolbar_color">#f9f9f9</color>
     <color name="border_grey">#cccccc</color>
+    <color name="divider_grey">#e5e5e5</color>
+    <color name="background_grey">#f7f7f7</color>
+
+    <color name="toolbar_color">#f9f9f9</color>
 
     <color name="white">#fafafa</color>
     <color name="dark_white">#eeeeee</color>

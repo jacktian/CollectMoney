@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
+import com.yzdsmart.Collectmoney.R;
+
 import java.util.Calendar;
 
 public class BetterSpinner extends AutoCompleteTextView implements AdapterView.OnItemClickListener {
@@ -92,7 +94,7 @@ public class BetterSpinner extends AutoCompleteTextView implements AdapterView.O
 
     @Override
     public void setCompoundDrawablesWithIntrinsicBounds(Drawable left, Drawable top, Drawable right, Drawable bottom) {
-        Drawable dropdownIcon = null;
+        Drawable dropdownIcon = ContextCompat.getDrawable(getContext(), R.mipmap.down_arrow);
         if (dropdownIcon != null) {
             right = dropdownIcon;
             right.mutate().setAlpha(128);

@@ -67,7 +67,8 @@
     <dimen name="recommend_spinner_width">48dp</dimen>
     <dimen name="recommend_spinner_height">26dp</dimen>
     <dimen name="city_list_padding">6dp</dimen>
-    <dimen name="recommend_list_item_height">127dp</dimen>
+    <dimen name="recommend_list_item_height">136dp</dimen>
+    <dimen name="recommend_list_item_margin">6dp</dimen>
     <dimen name="recommend_list_item_des_height">24dp</dimen>
     <dimen name="recommend_list_item_des_padding">8dp</dimen>
 
@@ -81,6 +82,7 @@
     <!--我的搜搜-->
     <dimen name="personal_user_avater_width">63dp</dimen>
     <dimen name="personal_item_panel_margin_top">20dp</dimen>
+    <dimen name="personal_info_margin_left">26dp</dimen>
     <dimen name="shop_image_slider_height">176dp</dimen>
 
     <!--用户详情-->

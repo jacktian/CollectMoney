@@ -22,10 +22,10 @@ import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.buy_coins.BuyCoinsActivity;
-import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
 import com.yzdsmart.Collectmoney.edit_shop_info.EditShopInfoActivity;
 import com.yzdsmart.Collectmoney.focused_shop.FocusedShopActivity;
 import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
+import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.personal_coin_list.PersonalCoinsActivity;
@@ -56,7 +56,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class PersonalFragment extends BaseFragment implements PersonalContract.PersonalView {
     @Nullable
-    @BindViews({R.id.center_title, R.id.title_logo, R.id.title_right_operation})
+    @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.toolBar)
@@ -68,8 +68,8 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @BindView(R.id.title_right_operation_to_left)
     ImageView titleRightOpeTLIV;
     @Nullable
-    @BindView(R.id.left_title)
-    TextView leftTitleTV;
+    @BindView(R.id.center_title)
+    TextView centerTitleTV;
     @Nullable
     @BindView(R.id.user_name)
     TextView userNameTV;
@@ -82,6 +82,15 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @Nullable
     @BindView(R.id.diamond_count)
     LinearLayout diamondCountLayout;
+    @Nullable
+    @BindView(R.id.change_money_times)
+    TextView changeMoneyTimesTV;
+    @Nullable
+    @BindView(R.id.coin_counts)
+    TextView coinCountsTV;
+    @Nullable
+    @BindView(R.id.get_from_friend_counts)
+    TextView getFriendCountsTV;
     @Nullable
     @BindView(R.id.to_personal_detail)
     RelativeLayout personalDetailLayout;
@@ -182,7 +191,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         ButterKnife.apply(hideViews, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.left_arrow));
         titleRightOpeTLIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.grey_mail_icon));
-        leftTitleTV.setText(getActivity().getResources().getString(R.string.personal_find));
+        centerTitleTV.setText(getActivity().getResources().getString(R.string.personal_find));
 
         toggleViews.clear();
         if (SharedPreferencesUtils.getString(getActivity(), "baza_code", "").trim().length() > 0) {
@@ -368,16 +377,27 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         for (int i = 0; i < sta; i++) {
             diamond = new ImageView(getActivity());
             diamond.setLayoutParams(params);
-            diamond.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.diamond_pink));
+            diamond.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.diamond_white));
             diamondCountLayout.addView(diamond);
         }
     }
 
     @Override
-    public void onGetCustInfo(String name, String headUrl, Integer goldNum) {
+    public void onGetCustInfo(CustInfoRequestResponse requestResponse) {
+        String name;
+        if (null != requestResponse.getCName() && !"".equals(requestResponse.getCName())) {
+            name = requestResponse.getCName();
+        } else if (null != requestResponse.getNickName() && !"".equals(requestResponse.getNickName())) {
+            name = requestResponse.getNickName();
+        } else {
+            name = requestResponse.getC_UserCode();
+        }
         userNameTV.setText(name);
-        userAccountCoinTV.setText(" " + goldNum);
-        Glide.with(this).load(headUrl).asBitmap().placeholder(getActivity().getResources().getDrawable(R.mipmap.ic_holder_light)).error(getActivity().getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
+        userAccountCoinTV.setText(" " + requestResponse.getGoldNum());
+        changeMoneyTimesTV.setText("" + requestResponse.getOperNum());
+        coinCountsTV.setText("" + requestResponse.getGoldNum());
+        getFriendCountsTV.setText("" + requestResponse.getFriendNum());
+        Glide.with(this).load(requestResponse.getImageUrl() == null ? "" : requestResponse.getImageUrl()).asBitmap().placeholder(getActivity().getResources().getDrawable(R.mipmap.ic_holder_light)).error(getActivity().getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
     }
 
     @Override
