@@ -260,14 +260,11 @@
                                 android:id="@+id/user_age"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:focusableInTouchMode="true"
                                 android:gravity="center"
                                 android:padding="3dp"
                                 android:singleLine="true"
                                 android:text=""
                                 android:textColor="@android:color/white"
-                                android:textIsSelectable="true"
                                 android:textSize="@dimen/font_x_small" />
 
                             <TextView
@@ -275,14 +272,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                                android:ellipsize="marquee"
-                                android:focusableInTouchMode="true"
                                 android:gravity="center"
                                 android:padding="3dp"
                                 android:singleLine="true"
                                 android:text=""
                                 android:textColor="@android:color/white"
-                                android:textIsSelectable="true"
                                 android:textSize="@dimen/font_x_small" />
                         </LinearLayout>
                     </LinearLayout>

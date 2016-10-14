@@ -4,6 +4,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:fitsSystemWindows="true">
 
     <include
@@ -21,7 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentTop="true"
-            android:background="@color/white"
             android:visibility="gone">
 
             <Button
@@ -38,7 +38,6 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/white"
             android:visibility="gone">
 
             <Button

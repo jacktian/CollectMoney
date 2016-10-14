@@ -100,6 +100,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
 
         new EditPersonalInfoPresenter(this, this);
 
+        mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
         mPresenter.getCustDetailInfo("000000", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
     }
 

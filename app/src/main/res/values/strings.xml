@@ -185,11 +185,12 @@
     <string name="shop_more_followers">查看更多</string>
 
     <!--关注店铺-->
-    <string name="focused_shop_name">店铺名称&#160;:&#160;</string>
-    <string name="focused_shop_pers">联系姓名&#160;:&#160;</string>
-    <string name="focused_shop_tel">联系电话&#160;:&#160;</string>
-    <string name="focused_shop_daily_coins">当日币数&#160;:&#160;</string>
-    <string name="focused_shop_address">店铺地址&#160;:&#160;</string>
+    <!--<string name="focused_shop_name">店铺名称&#160;:&#160;</string>-->
+    <string name="focused_shop_name">店铺:</string>
+    <string name="focused_shop_pers">联系人:</string>
+    <string name="focused_shop_tel">电话:</string>
+    <string name="focused_shop_daily_coins">金币数</string>
+    <string name="focused_shop_address">地址:</string>
 
     <!--关注店铺的人-->
     <string name="shop_focuser_total_person">总关注人</string>

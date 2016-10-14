@@ -88,11 +88,12 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        galleyInfoList = new ArrayList<GalleyInfo>();
         deleteGalleys = new ArrayList<String>();
         deleteFileList = new ArrayList<Integer>();
 
         identityType = getIntent().getExtras().getInt("identity");
-        galleyInfoList = getIntent().getExtras().getParcelableArrayList("galleys");
+//        galleyInfoList = getIntent().getExtras().getParcelableArrayList("galleys");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
 
@@ -102,7 +103,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                 userType = getIntent().getExtras().getInt("type");
                 switch (userType) {
                     case 0:
-                        centerTitleTV.setText("个人相册");
+                        centerTitleTV.setText("我的相册");
                         rightTitleTV.setText("选择");
                         ButterKnife.apply(showViews, BUTTERKNIFEVISIBLE);
                         ButterKnife.apply(addGalleyLayout, BUTTERKNIFEVISIBLE);
@@ -123,6 +124,15 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
         }
 
         new GalleyPreviewPresenter(this, this);
+
+        switch (identityType) {
+            case 0:
+                mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "cust_code", ""));
+                break;
+            case 1:
+                mPresenter.getShopGalley(SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "baza_code", ""));
+                break;
+        }
 
         deletePersonalGalleySuccessRunnable = new Runnable() {
             @Override
@@ -145,11 +155,11 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
         mPhotosSnpl.setDelegate(this);
         mPhotosSnpl.setDeleteDrawableResId(0);
 
-        deleteGalleys.clear();
-        for (GalleyInfo galleyInfo : galleyInfoList) {
-            deleteGalleys.add(galleyInfo.getImageFileUrl());
-        }
-        mPhotosSnpl.setData(deleteGalleys);
+//        deleteGalleys.clear();
+//        for (GalleyInfo galleyInfo : galleyInfoList) {
+//            deleteGalleys.add(galleyInfo.getImageFileUrl());
+//        }
+//        mPhotosSnpl.setData(deleteGalleys);
     }
 
     @Override

@@ -117,4 +117,9 @@
 
     <!--购买金币-->
     <dimen name="buy_coin_pay_type_layout">340dp</dimen>
+
+    <!--关注店铺-->
+    <dimen name="focused_shop_avater_width">60dp</dimen>
+    <dimen name="focused_shop_coin_counts_width">52dp</dimen>
+    <dimen name="focused_shop_coin_counts_radius">26dp</dimen>
 </resources>
