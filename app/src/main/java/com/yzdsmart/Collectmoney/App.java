@@ -16,6 +16,8 @@ import com.tencent.qalsdk.sdk.MsfSdkUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by YZD on 2016/8/17.
  */
@@ -43,6 +45,8 @@ public class App extends MultiDexApplication {
                 }
             });
         }
+        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);            // 初始化 JPush
         CrashReport.initCrashReport(this);
     }
 

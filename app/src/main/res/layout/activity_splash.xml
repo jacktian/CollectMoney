@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"></android.support.design.widget.CoordinatorLayout>
+    android:fitsSystemWindows="true">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.bigkoo.convenientbanner.ConvenientBanner
+            android:id="@+id/splash_banner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:canLoop="true" />
+
+        <Button
+            android:id="@+id/start_app"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/splash_button_height"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="@dimen/splash_button_margin"
+            android:layout_marginRight="@dimen/splash_button_margin"
+            android:background="@drawable/splash_button_bg"
+            android:text="进入程序"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_large"
+            android:visibility="gone" />
+    </FrameLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

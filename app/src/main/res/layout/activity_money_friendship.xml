@@ -34,10 +34,23 @@
                 android:id="@+id/recommend_friend_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/near_recommend_tab_button"
                 android:button="@null"
                 android:checked="true" />
+
+            <CheckedTextView
+                android:id="@+id/recommend_friend_radio_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recommend_friend_radio"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:checked="true"
+                android:text="附近"
+                android:textColor="@color/money_friend_tab"
+                android:textSize="@dimen/font_xx_small" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -49,9 +62,22 @@
                 android:id="@+id/conversation_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/conversation_tab_button"
                 android:button="@null" />
+
+            <CheckedTextView
+                android:id="@+id/conversation_radio_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/conversation_radio"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:text="消息"
+                android:textColor="@color/money_friend_tab"
+                android:textSize="@dimen/font_xx_small" />
 
             <TextView
                 android:id="@+id/unread_conversation_bubble"
@@ -74,9 +100,22 @@
                 android:id="@+id/friend_list_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/contacts_tab_button"
                 android:button="@null" />
+
+            <CheckedTextView
+                android:id="@+id/friend_list_radio_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/friend_list_radio"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:text="通讯录"
+                android:textColor="@color/money_friend_tab"
+                android:textSize="@dimen/font_xx_small" />
 
             <TextView
                 android:id="@+id/unread_future_bubble"
@@ -99,9 +138,22 @@
                 android:id="@+id/group_list_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/group_contacts_tab_button"
                 android:button="@null" />
+
+            <CheckedTextView
+                android:id="@+id/group_list_radio_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group_list_radio"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:checked="false"
+                android:text="消息"
+                android:textColor="@color/money_friend_tab"
+                android:textSize="@dimen/font_xx_small" />
         </RelativeLayout>
     </com.yzdsmart.Collectmoney.views.CustomNestRadioGroup>
 </android.support.design.widget.CoordinatorLayout>

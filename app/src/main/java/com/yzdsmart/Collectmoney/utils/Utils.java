@@ -288,4 +288,14 @@ public class Utils {
     public static int deviceHeight(Context context) {
         return context.getResources().getDisplayMetrics().heightPixels;
     }
+
+    public static boolean isEmpty(String s) {
+        if (null == s)
+            return true;
+        if (s.length() == 0)
+            return true;
+        if (s.trim().length() == 0)
+            return true;
+        return false;
+    }
 }

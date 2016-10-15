@@ -14,6 +14,7 @@ import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -58,7 +59,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     private static final String PERSONAL_WITHDRAW_ACTION_CODE = "588";
     private static final String PERSONAL_WITHDRAW_ACTION_TYPE_CODE = "166";
 
-    private static final Float GOLD_FORMAT_RMB_RATIO = 0.94f;
+    private Float GOLD_FORMAT_RMB_RATIO = 0.0f;
 
     private Integer userType;//0 个人 1 商家
 
@@ -83,6 +84,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                 break;
             case 1:
                 centerTitleTV.setText("商家提现");
+                GOLD_FORMAT_RMB_RATIO = 0.94f;
                 break;
         }
         goldRMBRatioTV.setText("1金币=" + GOLD_FORMAT_RMB_RATIO + "元");
@@ -166,10 +168,21 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     @OnTextChanged({R.id.withdraw_gold_num})
     void onTextChanged() {
         if (withdrawGoldNumET.getText().toString().length() > 0) {
+            switch (userType) {
+                case 0:
+                    if (Float.valueOf(withdrawGoldNumET.getText().toString()) > 100) {
+                        GOLD_FORMAT_RMB_RATIO = 0.9f;
+                    } else {
+                        GOLD_FORMAT_RMB_RATIO = 0.8f;
+                    }
+                    break;
+            }
+            goldRMBRatioTV.setText("1金币=" + GOLD_FORMAT_RMB_RATIO + "元");
             withdrawMoneyBtn.setEnabled(true);
-            withdrawRMBTV.setText("￥" + Float.valueOf(withdrawGoldNumET.getText().toString()) * GOLD_FORMAT_RMB_RATIO);
+            DecimalFormat df = new DecimalFormat("#.00");
+            withdrawRMBTV.setText("￥" + df.format((Float.valueOf(withdrawGoldNumET.getText().toString()) * GOLD_FORMAT_RMB_RATIO)));
         } else {
-            withdrawRMBTV.setText("￥0");
+            withdrawRMBTV.setText("￥0.0");
             withdrawMoneyBtn.setEnabled(false);
         }
     }

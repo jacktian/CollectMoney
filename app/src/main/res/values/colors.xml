@@ -27,6 +27,9 @@
     <color name="orange_hover">#fb9547</color>
     <color name="orange_disable">#f3c5bf</color>
 
+    <!--启动页-->
+    <color name="splash_button">#cccccc</color>
+
     <!--登陆、注册-->
     <color name="register_login_button">#f20044</color>
     <color name="register_login_button_press">#ee5983</color>

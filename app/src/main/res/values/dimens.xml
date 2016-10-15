@@ -27,6 +27,11 @@
 
     <dimen name="common_text_view_padding">3dp</dimen>
 
+    <!--启动页-->
+    <dimen name="splash_button_height">46dp</dimen>
+    <dimen name="splash_button_radius">23dp</dimen>
+    <dimen name="splash_button_margin">40dp</dimen>
+
     <!--登录、注册、忘记密码-->
     <!--条目内边距-->
     <dimen name="common_user_info_item_padding">8dp</dimen>
