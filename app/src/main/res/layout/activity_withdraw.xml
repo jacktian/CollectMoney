@@ -61,7 +61,7 @@
                         android:singleLine="true"
                         android:text="尾号1234储蓄卡"
                         android:textColor="@color/font_grey"
-                        android:textSize="@dimen/font_x_small" />
+                        android:textSize="@dimen/font_small" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -83,24 +83,36 @@
                     android:paddingTop="@dimen/activity_vertical_padding"
                     android:text="提现金币"
                     android:textColor="@color/font_grey"
-                    android:textSize="@dimen/font_x_small" />
+                    android:textSize="@dimen/font_small" />
 
-                <EditText
-                    android:id="@+id/withdraw_gold_num"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/white_panel_bottom_border"
-                    android:drawableLeft="@mipmap/withdrawals_rmb_coin_icon"
-                    android:drawablePadding="@dimen/activity_horizontal_padding"
-                    android:hint="@string/input_withdraw_gold_num"
-                    android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:maxLength="9"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/activity_vertical_padding"
-                    android:paddingTop="@dimen/activity_vertical_padding"
-                    android:textColor="@color/font_black"
-                    android:textColorHint="@color/font_grey"
-                    android:textSize="@dimen/font_x_small" />
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/withdrawals_rmb_coin_icon" />
+
+                    <EditText
+                        android:id="@+id/withdraw_gold_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:background="@drawable/white_panel_bottom_border"
+                        android:hint="@string/input_withdraw_gold_num"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:maxLength="9"
+                        android:textColor="@color/font_black"
+                        android:textColorHint="@color/font_grey"
+                        android:textSize="@dimen/font_small" />
+                </LinearLayout>
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -155,7 +167,7 @@
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:text="提现金额"
                     android:textColor="@color/font_grey"
-                    android:textSize="@dimen/font_x_small" />
+                    android:textSize="@dimen/font_small" />
 
                 <TextView
                     android:id="@+id/withdraw_rmb"
@@ -164,7 +176,7 @@
                     android:gravity="center"
                     android:paddingBottom="5dp"
                     android:paddingTop="5dp"
-                    android:text=""
+                    android:text="￥0"
                     android:textColor="@color/font_red"
                     android:textSize="@dimen/font_x_large" />
 
@@ -178,15 +190,15 @@
                     android:drawablePadding="5dp"
                     android:text=""
                     android:textColor="@color/font_grey"
-                    android:textSize="@dimen/font_medium" />
+                    android:textSize="@dimen/font_small" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/withdraw_money"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/withdrawals_button_height"
-                android:layout_marginLeft="@dimen/withdrawals_button__margin"
-                android:layout_marginRight="@dimen/withdrawals_button__margin"
+                android:layout_marginLeft="@dimen/withdrawals_button_margin"
+                android:layout_marginRight="@dimen/withdrawals_button_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:background="@drawable/withdrawal_button_bg"
                 android:enabled="false"

@@ -3,6 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_grey"
     android:fitsSystemWindows="true">
 
     <include
@@ -14,13 +15,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/common_toolbar_height"
-        android:background="@color/light_yellow"
         android:orientation="vertical">
 
         <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
             android:id="@+id/scanned_log_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/light_yellow" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

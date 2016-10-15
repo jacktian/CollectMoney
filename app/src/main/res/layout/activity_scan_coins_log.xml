@@ -3,6 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_grey"
     android:fitsSystemWindows="true">
 
     <include
@@ -14,8 +15,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/common_toolbar_height"
-        android:background="@color/light_yellow"
         android:orientation="vertical">
+
+        <com.yzdsmart.Collectmoney.views.BetterSpinner
+            android:id="@+id/log_filter"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/scan_coin_log_filter_height"
+            android:background="@drawable/white_panel_bottom_border"
+            android:gravity="center"
+            android:textColor="@color/font_black"
+            android:textSize="@dimen/font_small" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +33,8 @@
             android:background="@drawable/white_panel_top_bottom_border"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/activity_vertical_padding"
-            android:paddingTop="@dimen/activity_vertical_padding">
+            android:paddingTop="@dimen/activity_vertical_padding"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="0dp"

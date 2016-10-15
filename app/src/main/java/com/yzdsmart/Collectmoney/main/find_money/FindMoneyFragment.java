@@ -330,7 +330,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         mBaiduMap.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
             @Override
             public void onMapStatusChangeStart(MapStatus mapStatus) {
-
+//                mBaiduMap.animateMapStatus(MapStatusUpdateFactory.zoomTo(16));
             }
 
             @Override
@@ -607,6 +607,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         for (Overlay overlay : coinsOverlayList) {
             overlay.remove();
         }
+        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.zoomTo(16));
         LatLng latLng = mBaiduMap.getMapStatus().target;
         DecimalFormat decimalFormat = new DecimalFormat(".######");
         String mapStatusLocation = decimalFormat.format(latLng.longitude) + "," + decimalFormat.format(latLng.latitude);
@@ -638,6 +639,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         for (Overlay overlay : coinsOverlayList) {
             overlay.remove();
         }
+        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.zoomTo(16));
         String marketLongitude = coor.split(",")[0];
         String marketLatitude = coor.split(",")[1];
         LatLng latLng = mBaiduMap.getMapStatus().target;

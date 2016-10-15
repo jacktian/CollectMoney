@@ -81,7 +81,7 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
         mLinearLayoutManager = new LinearLayoutManager(this);
         dividerPaint = new Paint();
         dividerPaint.setStrokeWidth(1);
-        dividerPaint.setColor(getResources().getColor(R.color.light_grey));
+        dividerPaint.setColor(getResources().getColor(R.color.divider_grey));
         dividerPaint.setAntiAlias(true);
         dividerPaint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
         HorizontalDividerItemDecoration dividerItemDecoration = new HorizontalDividerItemDecoration.Builder(this).paint(dividerPaint).build();

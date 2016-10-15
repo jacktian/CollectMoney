@@ -22,17 +22,17 @@ import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.buy_coins.BuyCoinsActivity;
+import com.yzdsmart.Collectmoney.edit_personal_info.EditPersonalInfoActivity;
 import com.yzdsmart.Collectmoney.edit_shop_info.EditShopInfoActivity;
 import com.yzdsmart.Collectmoney.focused_shop.FocusedShopActivity;
 import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Collectmoney.main.MainActivity;
-import com.yzdsmart.Collectmoney.personal_coin_list.PersonalCoinsActivity;
-import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
 import com.yzdsmart.Collectmoney.publish_tasks.PublishTasksActivity;
 import com.yzdsmart.Collectmoney.publish_tasks_log.PublishTasksLogActivity;
 import com.yzdsmart.Collectmoney.register_business.RegisterBusinessActivity;
+import com.yzdsmart.Collectmoney.scan_coin_log.ScanCoinsLogActivity;
 import com.yzdsmart.Collectmoney.settings.SettingsActivity;
 import com.yzdsmart.Collectmoney.shop_focuser.ShopFocuserActivity;
 import com.yzdsmart.Collectmoney.shop_scanned_log.ShopScannedLogActivity;
@@ -83,6 +83,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @BindView(R.id.diamond_count)
     LinearLayout diamondCountLayout;
     @Nullable
+    @BindView(R.id.personal_coins_layout)
+    LinearLayout personalCoinsLayout;
+    @Nullable
     @BindView(R.id.change_money_times)
     TextView changeMoneyTimesTV;
     @Nullable
@@ -99,16 +102,19 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     RelativeLayout withdrawLogLayout;
     @Nullable
     @BindView(R.id.to_shop_withdraw_log)
-    RelativeLayout shopWithdrawLogLayout;
+    LinearLayout shopWithdrawLogLayout;
     @Nullable
     @BindView(R.id.to_shop_detail)
-    RelativeLayout shopDetailLayout;
+    LinearLayout shopDetailLayout;
     @Nullable
     @BindView(R.id.to_withdraw)
     RelativeLayout withdrawLayout;
     @Nullable
+    @BindView(R.id.personal_galley_panel)
+    RelativeLayout personalGalleyPanelLayout;
+    @Nullable
     @BindView(R.id.to_shop_withdraw)
-    RelativeLayout shopWithdrawLayout;
+    LinearLayout shopWithdrawLayout;
     @Nullable
     @BindView(R.id.shop_focus_visit_panel)
     LinearLayout shopFocusVisitLayout;
@@ -140,8 +146,8 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @BindView(R.id.visit_person_counts)
     TextView visitPersonCountsTV;
     @Nullable
-    @BindView(R.id.shop_level)
-    LinearLayout shopLevelLayout;
+    @BindView(R.id.personal_setting_layout)
+    LinearLayout personalSettingLayout;
 
     private static final String SHOP_INFO_ACTION_CODE = "3666";
     private static final String GET_SHOP_GALLEY_ACTION_CODE = "5101";
@@ -196,7 +202,9 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         toggleViews.clear();
         if (SharedPreferencesUtils.getString(getActivity(), "baza_code", "").trim().length() > 0) {
             toggleViews.add(personalDetailLayout);
-            toggleViews.add(registerBusinessLayout);
+            toggleViews.add(personalCoinsLayout);
+            toggleViews.add(personalSettingLayout);
+            toggleViews.add(personalGalleyPanelLayout);
             toggleViews.add(withdrawLayout);
             toggleViews.add(withdrawLogLayout);
 
@@ -235,7 +243,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.user_avater, R.id.to_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser, R.id.to_withdraw_log, R.id.to_shop_withdraw_log, R.id.to_withdraw, R.id.to_shop_withdraw, R.id.to_shop_detail, R.id.to_shop_scanned_log, R.id.to_personal_galley})
+    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.to_settings, R.id.to_shop_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser, R.id.to_withdraw_log, R.id.to_shop_withdraw_log, R.id.to_withdraw, R.id.to_shop_withdraw, R.id.to_shop_detail, R.id.to_shop_scanned_log, R.id.to_personal_galley})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -245,13 +253,12 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
             case R.id.to_personal_detail:
                 bundle = new Bundle();
                 bundle.putInt("type", 0);//0 个人 1 好友
-                ((BaseActivity) getActivity()).openActivity(PersonalFriendDetailActivity.class, bundle, 0);
+//                ((BaseActivity) getActivity()).openActivity(PersonalFriendDetailActivity.class, bundle, 0);
+                ((BaseActivity) getActivity()).openActivity(EditPersonalInfoActivity.class);
 //                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
-            case R.id.user_avater:
-//                ((BaseActivity) getActivity()).openActivity(ImageCropActivity.class);
-                break;
             case R.id.to_settings:
+            case R.id.to_shop_settings:
                 ((BaseActivity) getActivity()).openActivity(SettingsActivity.class);
                 break;
             case R.id.to_register_business:
@@ -267,7 +274,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
 //                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.to_personal_coins:
-                ((BaseActivity) getActivity()).openActivity(PersonalCoinsActivity.class);
+                ((BaseActivity) getActivity()).openActivity(ScanCoinsLogActivity.class);
 //                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
 //            case R.id.to_money_friend:
@@ -311,7 +318,11 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
                 ((BaseActivity) getActivity()).openActivity(ShopScannedLogActivity.class);
                 break;
             case R.id.to_personal_galley:
-
+                bundle = new Bundle();
+                bundle.putInt("identity", 0);
+                bundle.putInt("type", 0);
+                bundle.putString("cust_code", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
+                ((BaseActivity) getActivity()).openActivity(GalleyPreviewActivity.class, bundle, 0);
                 break;
         }
     }
@@ -375,7 +386,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     public void onGetCustLevel(Integer gra, Integer sta) {
         userLevelIV.setImageDrawable(null);
         diamondCountLayout.removeAllViews();
-        userLevelIV.setImageDrawable(getActivity().getResources().getDrawable(Utils.getMipmapId(getActivity(), "vip" + gra)));
+        userLevelIV.setImageDrawable(getActivity().getResources().getDrawable(Utils.getMipmapId(getActivity(), "vip_orange_" + gra)));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         ImageView diamond;
         for (int i = 0; i < sta; i++) {
@@ -411,10 +422,6 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         focusPersonCountsTV.setText("" + shopDetails.getAtteNum());
         leftTotalCoinCountsTV.setText("" + shopDetails.getTotalGlodNum());
         visitPersonCountsTV.setText("" + shopDetails.getVisiNum());
-        shopLevelLayout.removeAllViews();
-        ImageView shopLevel = new ImageView(getActivity());
-        shopLevel.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.five_start));
-        shopLevelLayout.addView(shopLevel);
     }
 
     @Override

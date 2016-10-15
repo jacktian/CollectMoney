@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
 import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -99,7 +100,11 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
         centerTitleTV.setText("个人资料");
 
         new EditPersonalInfoPresenter(this, this);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
         mPresenter.getCustDetailInfo("000000", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
     }
@@ -110,7 +115,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.person_name, R.id.person_nickname, R.id.person_gender, R.id.person_phone, R.id.person_birth, R.id.person_area, R.id.person_address})
+    @OnClick({R.id.title_left_operation_layout, R.id.person_name, R.id.person_nickname, R.id.person_gender, R.id.person_phone, R.id.person_birth, R.id.person_area, R.id.person_address, R.id.personal_avater})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
@@ -136,6 +141,9 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
                 break;
             case R.id.person_address:
                 showEditInfo("地址", 6);
+                break;
+            case R.id.personal_avater:
+                openActivity(ImageCropActivity.class);
                 break;
         }
     }

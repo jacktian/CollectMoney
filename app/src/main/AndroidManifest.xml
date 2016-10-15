@@ -245,14 +245,14 @@
         <activity
             android:name=".crop.ImageCropActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
 
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
 
         <activity
-            android:name=".personal_coin_list.PersonalCoinsActivity"
+            android:name=".scan_coin_log.ScanCoinsLogActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".galley.upload.UploadGalleyActivity"

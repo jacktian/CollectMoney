@@ -21,15 +21,26 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_toRightOf="@id/focuser_user_avater"
-        android:textColor="@color/grey"
-        android:textSize="@dimen/font_medium" />
+        android:ellipsize="marquee"
+        android:focusableInTouchMode="true"
+        android:maxEms="6"
+        android:singleLine="true"
+        android:textColor="@color/font_grey"
+        android:textIsSelectable="true"
+        android:textSize="@dimen/font_small" />
 
-    <TextView
+    <!--<TextView-->
+    <!--android:id="@+id/focuser_user_gender"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:textColor="@color/font_grey"-->
+    <!--android:textSize="@dimen/font_small" />-->
+
+    <ImageView
         android:id="@+id/focuser_user_gender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textColor="@color/grey"
-        android:textSize="@dimen/font_medium" />
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

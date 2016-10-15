@@ -51,7 +51,7 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
     private static final String GET_TASKS_LEFT_COINS_ACTION_CODE = "7288";
     private static final String PUBLISH_TASK_LOG_CODE = "2188";
     private Integer pageIndex = 1;
-    private static final Integer PAGE_SIZE = 10;
+    private static final Integer PAGE_SIZE = 15;
     private Integer lastsequence = 0;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
 
     private LinearLayoutManager mLinearLayoutManager;
@@ -74,7 +74,7 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
         mLinearLayoutManager = new LinearLayoutManager(this);
         dividerPaint = new Paint();
         dividerPaint.setStrokeWidth(1);
-        dividerPaint.setColor(getResources().getColor(R.color.light_grey));
+        dividerPaint.setColor(getResources().getColor(R.color.divider_grey));
         dividerPaint.setAntiAlias(true);
         dividerPaint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
         HorizontalDividerItemDecoration dividerItemDecoration = new HorizontalDividerItemDecoration.Builder(this).paint(dividerPaint).build();

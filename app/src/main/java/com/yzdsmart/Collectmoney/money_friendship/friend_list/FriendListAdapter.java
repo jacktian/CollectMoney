@@ -20,6 +20,7 @@ import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.Friendship;
 import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
+import com.yzdsmart.Collectmoney.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -88,7 +89,7 @@ public class FriendListAdapter extends UltimateViewAdapter<FriendListAdapter.Vie
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.friendship_friendfuture_list_item, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.friendship_list_item, parent, false);
         FriendListAdapter.ViewHolder holder = new FriendListAdapter.ViewHolder(itemView);
         return holder;
     }
@@ -166,7 +167,7 @@ public class FriendListAdapter extends UltimateViewAdapter<FriendListAdapter.Vie
         TextView userNameTV;
         @Nullable
         @BindView(R.id.friend_user_level)
-        TextView userLevelTV;
+        ImageView userLevelIV;
         @Nullable
         @BindView(R.id.friend_user_diamond_count)
         LinearLayout userDiamondCountLayout;
@@ -187,7 +188,7 @@ public class FriendListAdapter extends UltimateViewAdapter<FriendListAdapter.Vie
         }
 
         public void setUserLevelTV(Integer userLevel) {
-            userLevelTV.setText("等级 : V" + userLevel);
+            userLevelIV.setImageDrawable(context.getResources().getDrawable(Utils.getMipmapId(context, "vip_orange_" + userLevel)));
         }
 
         public void setUserDiamondCountLayout(Integer userLevel, Integer diamondCounts) {

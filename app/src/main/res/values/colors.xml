@@ -45,9 +45,26 @@
     <color name="user_detail_button_white_pressed">#eeeeee</color>
     <color name="user_detail_delete_remark">#591c2d</color>
 
-    <!--体现-->
+    <!--提现-->
     <color name="withdrawals_button">#f20044</color>
+    <color name="withdrawals_button_pressed">#ee5983</color>
     <color name="withdrawals_button_disable">#cccccc</color>
+
+    <!--升级商户-->
+    <color name="register_business_button">#f20044</color>
+    <color name="register_business_button_pressed">#ee5983</color>
+
+    <!--购买金币-->
+    <color name="buy_coin_button">#f20044</color>
+    <color name="buy_coin_button_pressed">#ee5983</color>
+
+    <!--购买金币-->
+    <color name="publish_task_button">#f20044</color>
+    <color name="publish_task_button_pressed">#ee5983</color>
+    <color name="publish_task_button_disable">#cccccc</color>
+
+    <!--设置-->
+    <color name="setting_logout_button">#cccccc</color>
 
     <!--腾讯云通讯-->
     <color name="tecent_background_gray1">#EBEBEB</color>

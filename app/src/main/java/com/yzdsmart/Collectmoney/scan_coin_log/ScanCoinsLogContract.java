@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.personal_coin_list;
+package com.yzdsmart.Collectmoney.scan_coin_log;
 
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;
@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * Created by YZD on 2016/9/5.
  */
-public interface PersonalCoinsContract {
-    interface PersonalCoinsView extends BaseView<PersonalCoinsPresenter> {
+public interface ScanCoinsLogContract {
+    interface ScanCoinsLogView extends BaseView<ScanCoinsLogPresenter> {
         /**
          * 用户获取金币日志列表
          *
@@ -20,7 +20,7 @@ public interface PersonalCoinsContract {
         void onGetCoinsLog(List<GetCoinsLog> logList, Integer lastsequence);
     }
 
-    interface PersonalCoinsPresenter extends BasePresenter {
+    interface ScanCoinsLogPresenter extends BasePresenter {
         /**
          * 用户获取金币日志列表
          *

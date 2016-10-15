@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.personal_coin_list;
+package com.yzdsmart.Collectmoney.scan_coin_log;
 
 import android.content.Context;
 
@@ -10,15 +10,15 @@ import com.yzdsmart.Collectmoney.http.response.GetCoinsLogRequestResponse;
 /**
  * Created by YZD on 2016/9/5.
  */
-public class PersonalCoinsPresenter implements PersonalCoinsContract.PersonalCoinsPresenter {
+public class ScanCoinsLogPresenter implements ScanCoinsLogContract.ScanCoinsLogPresenter {
     private Context context;
-    private PersonalCoinsContract.PersonalCoinsView mView;
-    private PersonalCoinsModel mModel;
+    private ScanCoinsLogContract.ScanCoinsLogView mView;
+    private ScanCoinsLogModel mModel;
 
-    public PersonalCoinsPresenter(Context context, PersonalCoinsContract.PersonalCoinsView mView) {
+    public ScanCoinsLogPresenter(Context context, ScanCoinsLogContract.ScanCoinsLogView mView) {
         this.context = context;
         this.mView = mView;
-        mModel = new PersonalCoinsModel();
+        mModel = new ScanCoinsLogModel();
         mView.setPresenter(this);
     }
 

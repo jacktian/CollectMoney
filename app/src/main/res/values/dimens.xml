@@ -102,7 +102,9 @@
     <dimen name="publish_tasks_item_title_padding_top_bottom">8dp</dimen>
     <dimen name="publish_tasks_item_margin_top">22dp</dimen>
     <dimen name="publish_tasks_button_width">197dp</dimen>
-    <dimen name="publish_tasks_button_height">44dp</dimen>
+    <dimen name="publish_tasks_button_height">46dp</dimen>
+    <dimen name="publish_tasks_button_radius">23dp</dimen>
+    <dimen name="publish_tasks_button_margin">40dp</dimen>
 
     <!--日期选择-->
     <dimen name="picker_default_text_size">12sp</dimen>
@@ -118,14 +120,31 @@
 
     <!--购买金币-->
     <dimen name="buy_coin_pay_type_layout">340dp</dimen>
+    <dimen name="buy_coin_button_height">46dp</dimen>
+    <dimen name="buy_coin_button_radius">23dp</dimen>
+    <dimen name="buy_coin_button_margin">40dp</dimen>
 
     <!--关注店铺-->
     <dimen name="focused_shop_avater_width">60dp</dimen>
     <dimen name="focused_shop_coin_counts_width">52dp</dimen>
     <dimen name="focused_shop_coin_counts_radius">26dp</dimen>
 
-    <!--体现-->
+    <!--提现-->
     <dimen name="withdrawals_button_height">46dp</dimen>
     <dimen name="withdrawals_button_radius">23dp</dimen>
-    <dimen name="withdrawals_button__margin">40dp</dimen>
+    <dimen name="withdrawals_button_margin">40dp</dimen>
+
+    <!--升级商户-->
+    <dimen name="register_business_button_height">46dp</dimen>
+    <dimen name="register_business_button_radius">23dp</dimen>
+    <dimen name="register_business_button_margin">40dp</dimen>
+
+    <!--设置-->
+    <dimen name="setting_logout_button_height">46dp</dimen>
+    <dimen name="setting_logout_button_radius">23dp</dimen>
+    <dimen name="setting_logout_button_margin">40dp</dimen>
+
+    <!--扫码日志-->
+    <dimen name="scan_coin_log_shop_avater_width">44dp</dimen>
+    <dimen name="scan_coin_log_filter_height">38dp</dimen>
 </resources>

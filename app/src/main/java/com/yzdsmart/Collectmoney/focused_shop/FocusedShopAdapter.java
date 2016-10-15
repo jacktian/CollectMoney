@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.FocusedShop;
-import com.yzdsmart.Collectmoney.personal_coin_list.PersonalCoinsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

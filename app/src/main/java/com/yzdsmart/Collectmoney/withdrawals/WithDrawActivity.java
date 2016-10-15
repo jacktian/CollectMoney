@@ -169,7 +169,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
             withdrawMoneyBtn.setEnabled(true);
             withdrawRMBTV.setText("￥" + Float.valueOf(withdrawGoldNumET.getText().toString()) * GOLD_FORMAT_RMB_RATIO);
         } else {
-            withdrawRMBTV.setText("");
+            withdrawRMBTV.setText("￥0");
             withdrawMoneyBtn.setEnabled(false);
         }
     }

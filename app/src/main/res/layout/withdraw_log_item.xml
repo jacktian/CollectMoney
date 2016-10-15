@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="2016-11-11"
+                android:text=""
                 android:textColor="@color/font_grey"
                 android:textSize="@dimen/font_xx_small" />
 
@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="2016-11-11"
+                android:text=""
                 android:textColor="@color/font_grey"
                 android:textSize="@dimen/font_xx_small" />
         </LinearLayout>
@@ -62,7 +62,7 @@
                 android:gravity="center_horizontal"
                 android:text="使用金币"
                 android:textColor="@color/font_grey"
-                android:textSize="@dimen/font_x_small" />
+                android:textSize="@dimen/font_small" />
 
             <TextView
                 android:id="@+id/coin_counts"
@@ -71,7 +71,7 @@
                 android:gravity="center_horizontal"
                 android:text=""
                 android:textColor="@color/font_grey"
-                android:textSize="@dimen/font_x_small" />
+                android:textSize="@dimen/font_small" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -100,7 +100,7 @@
                 android:gravity="center_horizontal"
                 android:text="兑换金额"
                 android:textColor="@color/font_grey"
-                android:textSize="@dimen/font_x_small" />
+                android:textSize="@dimen/font_small" />
 
             <TextView
                 android:id="@+id/rmb_counts"
@@ -108,8 +108,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text=""
-                android:textColor="@color/font_grey"
-                android:textSize="@dimen/font_x_small" />
+                android:textColor="@color/font_red"
+                android:textSize="@dimen/font_small" />
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

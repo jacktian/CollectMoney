@@ -245,133 +245,82 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/to_shop_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/personal_item_panel_margin_top"
-                android:background="@drawable/white_panel_top_bottom_border"
-                android:paddingLeft="@dimen/activity_horizontal_padding"
-                android:paddingRight="@dimen/activity_horizontal_padding">
+                android:background="@android:color/white"
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/personal_panel_item_bg"
-                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingLeft="@dimen/activity_horizontal_padding"
+                    android:paddingRight="@dimen/activity_horizontal_padding"
                     android:paddingTop="@dimen/activity_vertical_padding">
 
                     <ImageView
-                        android:id="@+id/to_shop_detail_arrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:id="@+id/shop_avater"
+                        android:layout_width="@dimen/shop_detail_avater_width"
+                        android:layout_height="@dimen/shop_detail_avater_width"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/right_arrow_light_grey" />
+                        android:src="@mipmap/ic_holder_light" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/shop_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/to_shop_detail_arrow"
-                        android:orientation="vertical">
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_toRightOf="@id/shop_avater"
+                        android:paddingBottom="3dp"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/font_black"
+                        android:textSize="@dimen/font_medium" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <RelativeLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1">
-
-                                <TextView
-                                    android:id="@+id/shop_name_title"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:text="店铺 : "
-                                    android:textColor="@color/grey"
-                                    android:textSize="@dimen/font_medium" />
-
-                                <TextView
-                                    android:id="@+id/shop_name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_toRightOf="@id/shop_name_title"
-                                    android:ellipsize="marquee"
-                                    android:singleLine="true"
-                                    android:text=""
-                                    android:textColor="@color/grey"
-                                    android:textIsSelectable="true"
-                                    android:textSize="@dimen/font_medium" />
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1">
-
-                                <TextView
-                                    android:id="@+id/shop_level_title"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:text="星级 : "
-                                    android:textColor="@color/grey"
-                                    android:textSize="@dimen/font_medium" />
-
-                                <LinearLayout
-                                    android:id="@+id/shop_level"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_toRightOf="@id/shop_level_title"
-                                    android:orientation="horizontal">
-
-                                </LinearLayout>
-
-                            </RelativeLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/activity_vertical_padding"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/shop_address_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="地址 : "
-                                android:textColor="@color/grey"
-                                android:textSize="@dimen/font_medium" />
-
-                            <TextView
-                                android:id="@+id/shop_address"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:ellipsize="marquee"
-                                android:singleLine="true"
-                                android:text=""
-                                android:textColor="@color/grey"
-                                android:textIsSelectable="true"
-                                android:textSize="@dimen/font_medium" />
-                        </LinearLayout>
-                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/shop_gra"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/shop_name"
+                        android:layout_below="@id/shop_name"
+                        android:layout_toRightOf="@id/shop_avater"
+                        android:src="@mipmap/shop_detail_gra_zero_star" />
                 </RelativeLayout>
 
-            </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingLeft="@dimen/activity_horizontal_padding"
+                    android:paddingRight="@dimen/activity_horizontal_padding">
+
+                    <TextView
+                        android:id="@+id/shop_address"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_weight="4"
+                        android:drawableLeft="@mipmap/shop_detail_loc_icon"
+                        android:drawablePadding="@dimen/activity_horizontal_padding"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/font_grey"
+                        android:textSize="@dimen/font_x_small" />
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/shop_focus_visit_panel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/shop_item_panel_margin_top"
-                android:orientation="horizontal">
+                android:background="@drawable/white_panel_bottom_border"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/activity_vertical_padding">
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -384,9 +333,9 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:gravity="center"
-                        android:text="@string/shop_focus_person_counts"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
+                        android:text="我的蚊客"
+                        android:textColor="@color/font_grey"
+                        android:textSize="@dimen/font_small" />
 
                     <TextView
                         android:id="@+id/focus_person_counts"
@@ -398,9 +347,9 @@
                         android:gravity="center"
                         android:maxLines="1"
                         android:text=""
-                        android:textColor="@color/orange"
+                        android:textColor="@color/font_orange"
                         android:textIsSelectable="true"
-                        android:textSize="@dimen/font_x_large" />
+                        android:textSize="@dimen/font_medium" />
 
                 </RelativeLayout>
 
@@ -415,9 +364,9 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:gravity="center"
-                        android:text="@string/shop_left_total_coins"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
+                        android:text="剩余金币"
+                        android:textColor="@color/font_grey"
+                        android:textSize="@dimen/font_small" />
 
                     <TextView
                         android:id="@+id/left_total_coin_counts"
@@ -429,9 +378,9 @@
                         android:gravity="center"
                         android:maxLines="1"
                         android:text=""
-                        android:textColor="@color/orange"
+                        android:textColor="@color/font_orange"
                         android:textIsSelectable="true"
-                        android:textSize="@dimen/font_x_large" />
+                        android:textSize="@dimen/font_medium" />
 
                 </RelativeLayout>
 
@@ -447,8 +396,8 @@
                         android:layout_centerHorizontal="true"
                         android:gravity="center"
                         android:text="@string/shop_visit_person_counts"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
+                        android:textColor="@color/font_grey"
+                        android:textSize="@dimen/font_small" />
 
                     <TextView
                         android:id="@+id/visit_person_counts"
@@ -460,9 +409,9 @@
                         android:gravity="center"
                         android:maxLines="1"
                         android:text=""
-                        android:textColor="@color/orange"
+                        android:textColor="@color/font_orange"
                         android:textIsSelectable="true"
-                        android:textSize="@dimen/font_x_large" />
+                        android:textSize="@dimen/font_medium" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -720,6 +669,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/personal_setting_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/personal_item_panel_margin_top"
@@ -807,249 +757,209 @@
                 </RelativeLayout>
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/business_ope_panel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/personal_item_panel_margin_top"
                 android:background="@drawable/white_panel_top_bottom_border"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/activity_horizontal_padding"
-                android:paddingRight="@dimen/activity_horizontal_padding">
+                android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/to_buy_coins"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/personal_panel_item_bg"
-                    android:paddingBottom="@dimen/activity_vertical_padding"
-                    android:paddingTop="@dimen/activity_vertical_padding">
+                    android:layout_height="87dp"
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/cart_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/coin_icon" />
+                    <LinearLayout
+                        android:id="@+id/to_shop_scanned_log"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/cart_icon"
-                        android:text="@string/buy_coin"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/business_ope_scanned_log" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/right_arrow_light_grey" />
-                </RelativeLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            android:text="我的打赏"
+                            android:textColor="@color/font_black"
+                            android:textSize="@dimen/font_small" />
+                    </LinearLayout>
 
-                <RelativeLayout
-                    android:id="@+id/to_shop_withdraw"
+                    <LinearLayout
+                        android:id="@+id/to_buy_coins"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/white_panel_left_border"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/business_ope_buy_coin" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            android:text="购买金币"
+                            android:textColor="@color/font_black"
+                            android:textSize="@dimen/font_small" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/to_publish_tasks"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/white_panel_left_border"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/business_ope_publish_task" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            android:text="发布任务"
+                            android:textColor="@color/font_black"
+                            android:textSize="@dimen/font_small" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/to_publish_tasks_log"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/white_panel_left_border"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/business_ope_task_detail" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            android:text="任务明细"
+                            android:textColor="@color/font_black"
+                            android:textSize="@dimen/font_small" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/personal_panel_item_top_border_bg"
-                    android:paddingBottom="@dimen/activity_vertical_padding"
-                    android:paddingTop="@dimen/activity_vertical_padding">
+                    android:layout_height="87dp"
+                    android:background="@drawable/white_panel_top_border"
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/to_shop_withdraw_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/withdraw_icon" />
+                    <LinearLayout
+                        android:id="@+id/to_shop_focuser"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/to_shop_withdraw_icon"
-                        android:text="@string/withdraw"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/business_ope_focuser" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/right_arrow_light_grey" />
-                </RelativeLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            android:text="我的蚊客"
+                            android:textColor="@color/font_black"
+                            android:textSize="@dimen/font_small" />
+                    </LinearLayout>
 
-                <RelativeLayout
-                    android:id="@+id/to_shop_withdraw_log"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/personal_panel_item_top_border_bg"
-                    android:paddingBottom="@dimen/activity_vertical_padding"
-                    android:paddingTop="@dimen/activity_vertical_padding">
+                    <LinearLayout
+                        android:id="@+id/to_shop_withdraw"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/white_panel_left_border"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/shop_withdraw_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/withdraw_log_icon" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/business_ope_withdraw" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/shop_withdraw_icon"
-                        android:text="@string/withdraw_log"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            android:text="提现"
+                            android:textColor="@color/font_black"
+                            android:textSize="@dimen/font_small" />
+                    </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/right_arrow_light_grey" />
-                </RelativeLayout>
+                    <LinearLayout
+                        android:id="@+id/to_shop_withdraw_log"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/white_panel_left_border"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/to_publish_tasks"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/personal_panel_item_top_border_bg"
-                    android:paddingBottom="@dimen/activity_vertical_padding"
-                    android:paddingTop="@dimen/activity_vertical_padding">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/business_ope_withdraw_detail" />
 
-                    <ImageView
-                        android:id="@+id/bell_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/bell_icon" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            android:text="提现明细"
+                            android:textColor="@color/font_black"
+                            android:textSize="@dimen/font_small" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/bell_icon"
-                        android:text="@string/publishing_tasks"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
+                    <LinearLayout
+                        android:id="@+id/to_shop_settings"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/white_panel_left_border"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/right_arrow_light_grey" />
-                </RelativeLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/business_ope_setting" />
 
-                <RelativeLayout
-                    android:id="@+id/to_publish_tasks_log"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/personal_panel_item_top_border_bg"
-                    android:paddingBottom="@dimen/activity_vertical_padding"
-                    android:paddingTop="@dimen/activity_vertical_padding">
-
-                    <ImageView
-                        android:id="@+id/bell_icon_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/log_icon" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/bell_icon_1"
-                        android:text="@string/publishing_tasks_log"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/right_arrow_light_grey" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/to_shop_focuser"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/personal_panel_item_top_border_bg"
-                    android:paddingBottom="@dimen/activity_vertical_padding"
-                    android:paddingTop="@dimen/activity_vertical_padding">
-
-                    <ImageView
-                        android:id="@+id/heart_icon_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/star_icon" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/heart_icon_1"
-                        android:text="@string/publishing_focuser"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/right_arrow_light_grey" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/to_shop_scanned_log"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/personal_panel_item_top_border_bg"
-                    android:paddingBottom="@dimen/activity_vertical_padding"
-                    android:paddingTop="@dimen/activity_vertical_padding">
-
-                    <ImageView
-                        android:id="@+id/qr_code_icon_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/qr_code_icon" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_toRightOf="@id/qr_code_icon_1"
-                        android:text="@string/scanned_log"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/right_arrow_light_grey" />
-                </RelativeLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            android:text="设置"
+                            android:textColor="@color/font_black"
+                            android:textSize="@dimen/font_small" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

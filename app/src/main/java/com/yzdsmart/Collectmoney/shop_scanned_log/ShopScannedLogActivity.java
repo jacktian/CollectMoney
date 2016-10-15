@@ -64,14 +64,14 @@ public class ShopScannedLogActivity extends BaseActivity implements ShopScannedL
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
-        centerTitleTV.setText("获取被扫日志列表");
+        centerTitleTV.setText("我的打赏");
 
         new ShopScannedLogPresenter(this, this);
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         dividerPaint = new Paint();
         dividerPaint.setStrokeWidth(1);
-        dividerPaint.setColor(getResources().getColor(R.color.light_grey));
+        dividerPaint.setColor(getResources().getColor(R.color.divider_grey));
         dividerPaint.setAntiAlias(true);
         dividerPaint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
         HorizontalDividerItemDecoration dividerItemDecoration = new HorizontalDividerItemDecoration.Builder(this).paint(dividerPaint).build();

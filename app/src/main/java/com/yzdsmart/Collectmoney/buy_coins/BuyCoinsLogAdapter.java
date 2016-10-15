@@ -60,7 +60,7 @@ public class BuyCoinsLogAdapter extends UltimateViewAdapter<BuyCoinsLogAdapter.V
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.coins_log_item, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.buy_coins_log_item, parent, false);
         BuyCoinsLogAdapter.ViewHolder holder = new BuyCoinsLogAdapter.ViewHolder(itemView);
         return holder;
     }
@@ -84,10 +84,10 @@ public class BuyCoinsLogAdapter extends UltimateViewAdapter<BuyCoinsLogAdapter.V
     public void onBindViewHolder(ViewHolder holder, int position) {
         BuyCoinsLog log = logList.get(position);
         DateTime dateTime = dtf.parseDateTime(log.getCreateTime());
-        holder.coins1TV.setText("" + log.getTotalGold());
-        holder.time1TV.setText(dateTime.toString("yyyy-MM-dd"));
-        holder.time2TV.setText(dateTime.toString("HH:mm:ss"));
-        holder.coins2TV.setText("" + log.getOverGold());
+        holder.coinCountsTV.setText("+" + log.getTotalGold());
+        holder.buyDateTV.setText(dateTime.toString("yyyy-MM-dd"));
+        holder.buyTimeTV.setText(dateTime.toString("HH:mm:ss"));
+        holder.leftCoinCountsTV.setText("" + log.getOverGold());
     }
 
     @Override
@@ -117,17 +117,17 @@ public class BuyCoinsLogAdapter extends UltimateViewAdapter<BuyCoinsLogAdapter.V
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @Nullable
-        @BindView(R.id.coins_1)
-        TextView coins1TV;
+        @BindView(R.id.buy_date)
+        TextView buyDateTV;
         @Nullable
-        @BindView(R.id.time_1)
-        TextView time1TV;
+        @BindView(R.id.buy_time)
+        TextView buyTimeTV;
         @Nullable
-        @BindView(R.id.time_2)
-        TextView time2TV;
+        @BindView(R.id.coin_counts)
+        TextView coinCountsTV;
         @Nullable
-        @BindView(R.id.coins_2)
-        TextView coins2TV;
+        @BindView(R.id.left_coin_counts)
+        TextView leftCoinCountsTV;
 
         public ViewHolder(View itemView) {
             super(itemView);

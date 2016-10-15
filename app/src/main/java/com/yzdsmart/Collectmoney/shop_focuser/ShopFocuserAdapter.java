@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -119,7 +120,7 @@ public class ShopFocuserAdapter extends UltimateViewAdapter<ShopFocuserAdapter.V
         TextView userNameTV;
         @Nullable
         @BindView(R.id.focuser_user_gender)
-        TextView userGenderTV;
+        ImageView userGenderTV;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -135,7 +136,7 @@ public class ShopFocuserAdapter extends UltimateViewAdapter<ShopFocuserAdapter.V
         }
 
         public void setUserGender(String userGender) {
-            userGenderTV.setText(userGender);
+            userGenderTV.setImageDrawable("男".equals(userGender) ? context.getResources().getDrawable(R.mipmap.gender_male_icon) : context.getResources().getDrawable(R.mipmap.gender_female_icon));
         }
     }
 }

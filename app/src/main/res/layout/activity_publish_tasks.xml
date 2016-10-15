@@ -36,15 +36,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/publish_task_left_coins"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/font_medium" />
+                    android:textColor="@color/font_grey"
+                    android:textSize="@dimen/font_xx_small" />
 
                 <TextView
                     android:id="@+id/left_coins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/font_medium" />
+                    android:textColor="@color/font_red"
+                    android:textSize="@dimen/font_xx_small" />
             </LinearLayout>
 
             <TextView
@@ -55,8 +55,8 @@
                 android:paddingRight="@dimen/activity_horizontal_padding"
                 android:paddingTop="@dimen/publish_tasks_item_title_padding_top_bottom"
                 android:text="@string/publish_task_package_title"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/font_medium" />
+                android:textColor="@color/font_black"
+                android:textSize="@dimen/font_xx_small" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -73,8 +73,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
+                    android:drawableLeft="@mipmap/publish_task_package"
+                    android:drawablePadding="5dp"
                     android:text="红包个数"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/font_black"
                     android:textSize="@dimen/font_medium" />
 
                 <EditText
@@ -119,6 +121,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
+                    android:drawableLeft="@mipmap/publish_task_coin"
+                    android:drawablePadding="5dp"
                     android:text="总金额数"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/font_medium" />
@@ -176,6 +180,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
+                    android:drawableLeft="@mipmap/publish_task_start_time"
+                    android:drawablePadding="5dp"
                     android:text="开始时间"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/font_medium" />
@@ -196,14 +202,18 @@
                     android:textColorHint="@color/light_grey"
                     android:textSize="@dimen/font_medium" />
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text=""
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/font_medium" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/publish_task_down_arrow" />
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -222,6 +232,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
+                    android:drawableLeft="@mipmap/publish_task_end_time"
+                    android:drawablePadding="5dp"
                     android:text="结束时间"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/font_medium" />
@@ -242,27 +254,33 @@
                     android:textColorHint="@color/light_grey"
                     android:textSize="@dimen/font_medium" />
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text=""
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/font_medium" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/publish_task_down_arrow" />
+                </RelativeLayout>
             </LinearLayout>
 
             <Button
                 android:id="@+id/publish_task"
-                android:layout_width="@dimen/publish_tasks_button_width"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/publish_tasks_button_height"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/publish_tasks_button_margin"
+                android:layout_marginRight="@dimen/publish_tasks_button_margin"
                 android:layout_marginTop="@dimen/publish_tasks_item_title_margin_top"
-                android:background="@drawable/orange_button_width_disable"
+                android:background="@drawable/publish_task_button_bg"
                 android:enabled="false"
                 android:text="发布任务"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/font_medium" />
+                android:textSize="@dimen/font_large" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

@@ -60,7 +60,7 @@ public class PublishTasksAdapter extends UltimateViewAdapter<PublishTasksAdapter
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.coins_log_item, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.publish_task_log_item, parent, false);
         PublishTasksAdapter.ViewHolder holder = new PublishTasksAdapter.ViewHolder(itemView);
         return holder;
     }
@@ -85,10 +85,10 @@ public class PublishTasksAdapter extends UltimateViewAdapter<PublishTasksAdapter
         PublishTaskLog log = logList.get(position);
         DateTime beginTime = dtf.parseDateTime(log.getBeginTime());
         DateTime endTime = dtf.parseDateTime(log.getEndTime());
-        holder.coins1TV.setText("" + log.getTotalGold());
-        holder.time1TV.setText("起 : " + beginTime.toString("yyyy-MM-dd"));
-        holder.time2TV.setText("止 : " + endTime.toString("yyyy-MM-dd"));
-        holder.coins2TV.setText("" + log.getOverGold());
+        holder.coinCountsTV.setText("-" + log.getTotalGold());
+        holder.startDateTV.setText("起 : " + beginTime.toString("yyyy-MM-dd"));
+        holder.endDateTV.setText("止 : " + endTime.toString("yyyy-MM-dd"));
+        holder.leftCoinCountsTV.setText("" + log.getOverGold());
     }
 
     @Override
@@ -118,17 +118,17 @@ public class PublishTasksAdapter extends UltimateViewAdapter<PublishTasksAdapter
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @Nullable
-        @BindView(R.id.coins_1)
-        TextView coins1TV;
+        @BindView(R.id.start_date)
+        TextView startDateTV;
         @Nullable
-        @BindView(R.id.time_1)
-        TextView time1TV;
+        @BindView(R.id.end_date)
+        TextView endDateTV;
         @Nullable
-        @BindView(R.id.time_2)
-        TextView time2TV;
+        @BindView(R.id.coin_counts)
+        TextView coinCountsTV;
         @Nullable
-        @BindView(R.id.coins_2)
-        TextView coins2TV;
+        @BindView(R.id.left_coin_counts)
+        TextView leftCoinCountsTV;
 
         public ViewHolder(View itemView) {
             super(itemView);

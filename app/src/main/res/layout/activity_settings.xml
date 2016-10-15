@@ -243,15 +243,15 @@
             <Button
                 android:id="@+id/settings_logout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/setting_logout_button_height"
+                android:layout_marginLeft="@dimen/setting_logout_button_margin"
+                android:layout_marginRight="@dimen/setting_logout_button_margin"
                 android:layout_marginTop="@dimen/personal_item_panel_margin_top"
-                android:background="@drawable/white_panel_top_bottom_border"
+                android:background="@drawable/setting_logout_button_bg"
                 android:gravity="center"
-                android:paddingBottom="@dimen/activity_vertical_padding"
-                android:paddingTop="@dimen/activity_vertical_padding"
                 android:text="@string/setting_logout"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/font_medium" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_large" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

@@ -120,7 +120,7 @@
     <string name="register_business_remark">备注:</string>
     <string name="register_business_coor">坐标:</string>
     <string name="refresh_coor">定位</string>
-    <string name="register_business_submit">提交</string>
+    <string name="register_business_submit">确认提交</string>
     <string name="register_business_name_hint">填写商铺名称</string>
     <string name="register_business_pers_hint">填写联系人姓名</string>
     <string name="register_business_tel_hint">填写联系电话</string>

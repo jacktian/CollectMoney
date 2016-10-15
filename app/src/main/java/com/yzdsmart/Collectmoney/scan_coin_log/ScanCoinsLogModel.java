@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.personal_coin_list;
+package com.yzdsmart.Collectmoney.scan_coin_log;
 
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;
@@ -11,7 +11,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by YZD on 2016/9/5.
  */
-public class PersonalCoinsModel {
+public class ScanCoinsLogModel {
     //网络请求监听
     private Subscriber<GetCoinsLogRequestResponse> getCoinsLogSubscriber;
 

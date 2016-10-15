@@ -3,7 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_yellow"
+    android:background="@color/background_grey"
     android:fitsSystemWindows="true">
 
     <include
@@ -30,29 +30,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/shop_focuser_total_person"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/font_medium" />
+                android:textColor="@color/font_grey"
+                android:textSize="@dimen/font_xx_small" />
 
             <TextView
                 android:id="@+id/focuser_counts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textColor="@color/orange"
-                android:textSize="@dimen/font_medium" />
+                android:textColor="@color/font_orange"
+                android:textSize="@dimen/font_xx_small" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/shop_focuser_person"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/font_medium" />
+                android:textColor="@color/font_grey"
+                android:textSize="@dimen/font_xx_small" />
         </LinearLayout>
 
         <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
             android:id="@+id/shop_focuser_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/light_yellow" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

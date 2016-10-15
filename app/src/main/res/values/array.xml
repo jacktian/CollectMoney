@@ -10,4 +10,11 @@
         <item>男</item>
         <item>女</item>
     </array>
+
+    <array name="log_filter_array">
+        <item>所有记录</item>
+        <item>近3个月</item>
+        <item>近6个月</item>
+        <item>近9个月</item>
+    </array>
 </resources>
