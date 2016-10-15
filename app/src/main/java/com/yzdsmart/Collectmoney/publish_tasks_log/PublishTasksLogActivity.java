@@ -15,6 +15,7 @@ import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalD
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.PublishTaskLog;
+import com.yzdsmart.Collectmoney.buy_coins.BuyCoinsActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
@@ -119,11 +120,14 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout})
+    @OnClick({R.id.title_left_operation_layout, R.id.buy_coin})
     void onClick(final View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
+                break;
+            case R.id.buy_coin:
+                openActivity(BuyCoinsActivity.class);
                 break;
         }
     }

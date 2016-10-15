@@ -8,6 +8,8 @@ public class Friendship {
     private String C_Code;//用户内码
     private String C_UserCode;//用户名
     private String CName;//姓名
+    private String CSex;//性别：男或者女（必填）或者空字符串
+    private String CBirthday;//生日  格式为：yyyy-MM-dd 或者空字符串
     private String TCAccount;//云通讯帐号
     private String NickName;//昵称
     private String ImageUrl;//头像
@@ -19,10 +21,12 @@ public class Friendship {
     public Friendship() {
     }
 
-    public Friendship(String c_Code, String c_UserCode, String CName, String TCAccount, String nickName, String imageUrl, String groupName, String remark, Integer gra, Integer sta) {
+    public Friendship(String c_Code, String c_UserCode, String CName, String CSex, String CBirthday, String TCAccount, String nickName, String imageUrl, String groupName, String remark, Integer gra, Integer sta) {
         C_Code = c_Code;
         C_UserCode = c_UserCode;
         this.CName = CName;
+        this.CSex = CSex;
+        this.CBirthday = CBirthday;
         this.TCAccount = TCAccount;
         NickName = nickName;
         ImageUrl = imageUrl;
@@ -54,6 +58,22 @@ public class Friendship {
 
     public void setCName(String CName) {
         this.CName = CName;
+    }
+
+    public String getCSex() {
+        return CSex;
+    }
+
+    public void setCSex(String CSex) {
+        this.CSex = CSex;
+    }
+
+    public String getCBirthday() {
+        return CBirthday;
+    }
+
+    public void setCBirthday(String CBirthday) {
+        this.CBirthday = CBirthday;
     }
 
     public String getTCAccount() {
@@ -118,6 +138,8 @@ public class Friendship {
                 "C_Code:'" + C_Code + '\'' +
                 ", C_UserCode:'" + C_UserCode + '\'' +
                 ", CName:'" + CName + '\'' +
+                ", CSex:'" + CSex + '\'' +
+                ", CBirthday:'" + CBirthday + '\'' +
                 ", TCAccount:'" + TCAccount + '\'' +
                 ", NickName:'" + NickName + '\'' +
                 ", ImageUrl:'" + ImageUrl + '\'' +

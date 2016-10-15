@@ -69,6 +69,8 @@
     <!--设置-->
     <color name="setting_logout_button">#cccccc</color>
 
+    <color name="publish_log_buy_coin_button">#f20044</color>
+
     <!--腾讯云通讯-->
     <color name="tecent_background_gray1">#EBEBEB</color>
     <color name="tecent_background_gray3">#D4D4D4</color>

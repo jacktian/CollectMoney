@@ -20,6 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:padding="@dimen/activity_horizontal_padding">
 
@@ -28,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/publish_log_task_left_coin"
                 android:textColor="@color/font_grey"
-                android:textSize="@dimen/font_xx_small" />
+                android:textSize="@dimen/font_medium" />
 
             <TextView
                 android:id="@+id/tasks_left_coins"
@@ -36,9 +37,26 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:text=""
-                android:textColor="@color/font_red"
-                android:textSize="@dimen/font_xx_small" />
+                android:textColor="@color/font_orange"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="个"
+                android:textColor="@color/font_grey"
+                android:textSize="@dimen/font_medium" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/buy_coin"
+            android:layout_width="@dimen/publish_log_buy_coin_button_width"
+            android:layout_height="@dimen/publish_log_buy_coin_button_height"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/publish_log_buy_coin_button_bg"
+            android:text="购买金币"
+            android:textColor="@color/publish_log_buy_coin_button"
+            android:textSize="@dimen/font_small" />
 
         <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
             android:id="@+id/publish_list"
