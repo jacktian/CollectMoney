@@ -307,6 +307,14 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 bundle = new Bundle();
                 bundle.putInt("identity", 0);
                 bundle.putInt("type", type);
+                switch (type) {
+                    case 0:
+                        bundle.putString("cust_code", SharedPreferencesUtils.getString(this, "cust_code", ""));
+                        break;
+                    case 1:
+                        bundle.putString("cust_code", friend_c_code);
+                        break;
+                }
                 bundle.putParcelableArrayList("galleys", galleyInfoList);
                 openActivity(GalleyPreviewActivity.class, bundle, 0);
                 break;

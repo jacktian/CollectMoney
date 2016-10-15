@@ -227,6 +227,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
             public void onItemClick(int position) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("identity", 1);
+                bundle.putString("cust_code", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""));
                 bundle.putParcelableArrayList("galleys", galleyInfoList);
                 ((BaseActivity) getActivity()).openActivity(GalleyPreviewActivity.class, bundle, 0);
             }

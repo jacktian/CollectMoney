@@ -400,7 +400,7 @@
                         android:text=""
                         android:textColor="@color/orange"
                         android:textIsSelectable="true"
-                        android:textSize="@dimen/font_xlarge" />
+                        android:textSize="@dimen/font_x_large" />
 
                 </RelativeLayout>
 
@@ -431,7 +431,7 @@
                         android:text=""
                         android:textColor="@color/orange"
                         android:textIsSelectable="true"
-                        android:textSize="@dimen/font_xlarge" />
+                        android:textSize="@dimen/font_x_large" />
 
                 </RelativeLayout>
 
@@ -462,7 +462,7 @@
                         android:text=""
                         android:textColor="@color/orange"
                         android:textIsSelectable="true"
-                        android:textSize="@dimen/font_xlarge" />
+                        android:textSize="@dimen/font_x_large" />
 
                 </RelativeLayout>
             </LinearLayout>

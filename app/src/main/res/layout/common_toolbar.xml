@@ -129,6 +129,16 @@
                 android:textColor="@color/grey"
                 android:textSize="@dimen/font_medium"
                 android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/is_atte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:src="@mipmap/shop_detail_not_focus"
+                android:visibility="gone" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 </android.support.design.widget.AppBarLayout>

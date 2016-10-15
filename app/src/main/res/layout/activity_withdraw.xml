@@ -3,7 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_yellow"
+    android:background="@color/background_grey"
     android:fitsSystemWindows="true">
 
     <include
@@ -36,7 +36,7 @@
                     android:layout_width="@dimen/personal_user_avater_width"
                     android:layout_height="@dimen/personal_user_avater_width"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/ccb_logo" />
+                    android:src="@mipmap/withdrawals_ccb_icon" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:text="中国建设银行"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/font_black"
                         android:textSize="@dimen/font_medium" />
 
                     <TextView
@@ -60,8 +60,8 @@
                         android:layout_marginTop="4dp"
                         android:singleLine="true"
                         android:text="尾号1234储蓄卡"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
+                        android:textColor="@color/font_grey"
+                        android:textSize="@dimen/font_x_small" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -69,55 +69,84 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@drawable/white_panel_top_bottom_border"
+                android:background="@android:color/white"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/activity_vertical_padding"
                 android:paddingLeft="@dimen/activity_horizontal_padding"
                 android:paddingRight="@dimen/activity_horizontal_padding"
                 android:paddingTop="@dimen/activity_vertical_padding">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="您当前有"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
-
-                    <TextView
-                        android:id="@+id/coin_counts"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/orange"
-                        android:textSize="@dimen/font_medium" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="金币可提现"
-                        android:textColor="@color/grey"
-                        android:textSize="@dimen/font_medium" />
-                </LinearLayout>
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding"
+                    android:text="提现金币"
+                    android:textColor="@color/font_grey"
+                    android:textSize="@dimen/font_x_small" />
 
                 <EditText
                     android:id="@+id/withdraw_gold_num"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/white_panel_bottom_border"
+                    android:drawableLeft="@mipmap/withdrawals_rmb_coin_icon"
+                    android:drawablePadding="@dimen/activity_horizontal_padding"
                     android:hint="@string/input_withdraw_gold_num"
                     android:imeOptions="actionDone"
                     android:inputType="number"
                     android:maxLength="9"
                     android:paddingBottom="@dimen/activity_vertical_padding"
                     android:paddingTop="@dimen/activity_vertical_padding"
-                    android:textColor="@android:color/black"
-                    android:textColorHint="@color/grey"
-                    android:textSize="@dimen/font_medium" />
+                    android:textColor="@color/font_black"
+                    android:textColorHint="@color/font_grey"
+                    android:textSize="@dimen/font_x_small" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/white_panel_bottom_border"
+                    android:paddingBottom="@dimen/activity_vertical_padding"
+                    android:paddingTop="@dimen/activity_vertical_padding">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="可提现金币数量"
+                            android:textColor="@color/font_grey"
+                            android:textSize="@dimen/font_medium" />
+
+                        <TextView
+                            android:id="@+id/coin_counts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/font_grey"
+                            android:textSize="@dimen/font_medium" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="个"
+                            android:textColor="@color/font_grey"
+                            android:textSize="@dimen/font_medium" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/with_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="全部提现"
+                        android:textColor="@color/font_red"
+                        android:textSize="@dimen/font_medium" />
+                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -125,43 +154,46 @@
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:text="提现金额"
-                    android:textColor="@color/grey"
-                    android:textSize="@dimen/font_medium" />
+                    android:textColor="@color/font_grey"
+                    android:textSize="@dimen/font_x_small" />
 
                 <TextView
                     android:id="@+id/withdraw_rmb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/white_panel_bottom_border"
-                    android:drawableLeft="@mipmap/rmb_icon"
-                    android:paddingBottom="@dimen/activity_vertical_padding"
-                    android:paddingTop="@dimen/activity_vertical_padding"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
                     android:text=""
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/font_xlarge" />
+                    android:textColor="@color/font_red"
+                    android:textSize="@dimen/font_x_large" />
 
                 <TextView
                     android:id="@+id/gold_rmb_ratio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:drawableLeft="@mipmap/withdrawals_noti_icon"
+                    android:drawablePadding="5dp"
                     android:text=""
-                    android:textColor="@color/grey"
+                    android:textColor="@color/font_grey"
                     android:textSize="@dimen/font_medium" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/withdraw_money"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/withdrawals_button_height"
+                android:layout_marginLeft="@dimen/withdrawals_button__margin"
+                android:layout_marginRight="@dimen/withdrawals_button__margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@drawable/white_panel_top_bottom_border"
+                android:background="@drawable/withdrawal_button_bg"
+                android:enabled="false"
                 android:gravity="center"
-                android:paddingBottom="@dimen/activity_vertical_padding"
-                android:paddingTop="@dimen/activity_vertical_padding"
                 android:text="确认提现"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/font_medium" />
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_large" />
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

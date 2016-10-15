@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,6 +49,9 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     @Nullable
     @BindView(R.id.gold_rmb_ratio)
     TextView goldRMBRatioTV;
+    @Nullable
+    @BindView(R.id.withdraw_money)
+    Button withdrawMoneyBtn;
 
     private static final String GET_LEFT_COINS_ACTION_CODE = "1288";
     private static final String SHOP_WITHDRAW_ACTION_CODE = "688";
@@ -129,7 +133,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.withdraw_money})
+    @OnClick({R.id.title_left_operation_layout, R.id.withdraw_money, R.id.with_all})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
@@ -149,6 +153,12 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                         break;
                 }
                 break;
+            case R.id.with_all:
+                if (Float.valueOf(coinCountsTV.getText().toString()) > 0) {
+                    withdrawGoldNumET.setText(coinCountsTV.getText().toString());
+                    withdrawMoneyBtn.setEnabled(true);
+                }
+                break;
         }
     }
 
@@ -156,9 +166,11 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     @OnTextChanged({R.id.withdraw_gold_num})
     void onTextChanged() {
         if (withdrawGoldNumET.getText().toString().length() > 0) {
-            withdrawRMBTV.setText(Float.valueOf(withdrawGoldNumET.getText().toString()) * GOLD_FORMAT_RMB_RATIO + "");
+            withdrawMoneyBtn.setEnabled(true);
+            withdrawRMBTV.setText("￥" + Float.valueOf(withdrawGoldNumET.getText().toString()) * GOLD_FORMAT_RMB_RATIO);
         } else {
             withdrawRMBTV.setText("");
+            withdrawMoneyBtn.setEnabled(false);
         }
     }
 

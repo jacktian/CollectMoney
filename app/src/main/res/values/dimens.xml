@@ -11,7 +11,7 @@
     <dimen name="font_small">13sp</dimen>
     <dimen name="font_medium">15sp</dimen>
     <dimen name="font_large">18sp</dimen>
-    <dimen name="font_xlarge">21sp</dimen>
+    <dimen name="font_x_large">24sp</dimen>
 
     <!--标题栏公共高度-->
     <dimen name="common_toolbar_height">52dp</dimen>
@@ -72,7 +72,8 @@
     <dimen name="recommend_list_item_des_height">24dp</dimen>
     <dimen name="recommend_list_item_des_padding">8dp</dimen>
 
-    <!--商铺详情-->
+    <!--店铺详情-->
+    <dimen name="shop_detail_avater_width">44dp</dimen>
     <dimen name="shop_detail_head_height">35dp</dimen>
     <dimen name="shop_detail_head_width">74dp</dimen>
     <dimen name="shop_detail_head_panel_height">196dp</dimen>
@@ -122,4 +123,9 @@
     <dimen name="focused_shop_avater_width">60dp</dimen>
     <dimen name="focused_shop_coin_counts_width">52dp</dimen>
     <dimen name="focused_shop_coin_counts_radius">26dp</dimen>
+
+    <!--体现-->
+    <dimen name="withdrawals_button_height">46dp</dimen>
+    <dimen name="withdrawals_button_radius">23dp</dimen>
+    <dimen name="withdrawals_button__margin">40dp</dimen>
 </resources>

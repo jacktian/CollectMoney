@@ -46,11 +46,17 @@ import butterknife.Optional;
  */
 public class ShopDetailsActivity extends BaseActivity implements ShopDetailsContract.ShopDetailsView {
     @Nullable
-    @BindViews({R.id.left_title, R.id.center_title})
+    @BindViews({R.id.left_title, R.id.title_logo})
     List<View> hideViews;
+    @Nullable
+    @BindViews({R.id.is_atte})
+    List<View> showViews;
     @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
+    @Nullable
+    @BindView(R.id.center_title)
+    TextView centerTitleTV;
     @Nullable
     @BindView(R.id.title_right_operation)
     ImageView titleRightOpeIV;
@@ -110,6 +116,8 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         shopImageList = new ArrayList<String>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+        ButterKnife.apply(showViews, BUTTERKNIFEVISIBLE);
+        centerTitleTV.setText("店铺详情");
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
         titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.qr_code_scanner_icon));
 
@@ -165,7 +173,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.is_atte, R.id.title_right_operation_layout, R.id.get_more_followers, R.id.route_line})
+    @OnClick({R.id.title_left_operation_layout, R.id.is_atte, R.id.title_right_operation_layout, R.id.get_more_followers, R.id.hotel_address})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
@@ -192,7 +200,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 }
                 mPresenter.getShopFollowers(GET_SHOP_FOLLOWERS_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
                 break;
-            case R.id.route_line:
+            case R.id.hotel_address:
                 if (null == shopCoor || shopCoor.trim().length() <= 0) return;
                 MainActivity.getInstance().planRoute(shopCoor);
                 closeActivity();
@@ -245,7 +253,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         dailyCoinCountsTV.setText("" + shopDetails.getTodayGlodNum());
         visitPersonCountsTV.setText("" + shopDetails.getVisiNum());
         isAtte = shopDetails.getAtte();
-        isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.heart_icon_pink_checked) : getResources().getDrawable(R.mipmap.heart_icon_pink));
+        isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.shop_detail_focused) : getResources().getDrawable(R.mipmap.shop_detail_not_focus));
         shopCoor = shopDetails.getCoor();
         shopImageList.clear();
         shopImageList.addAll(shopDetails.getImageLists());
@@ -278,7 +286,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
             return;
         }
         isAtte = CANCEL_FOCUS_CODE.equals(action) ? false : true;
-        isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.heart_icon_pink_checked) : getResources().getDrawable(R.mipmap.heart_icon_pink));
+        isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.shop_detail_focused) : getResources().getDrawable(R.mipmap.shop_detail_not_focus));
 
         mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
     }

@@ -64,6 +64,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
 
     private Integer identityType;//0 个人 1 商铺
     private Integer userType;//0 自身 1 好友
+    private String custCode;
     private List<GalleyInfo> galleyInfoList;
     private ArrayList<String> deleteGalleys;
     private List<Integer> deleteFileList;
@@ -93,6 +94,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
         deleteFileList = new ArrayList<Integer>();
 
         identityType = getIntent().getExtras().getInt("identity");
+        custCode = getIntent().getExtras().getString("cust_code");
 //        galleyInfoList = getIntent().getExtras().getParcelableArrayList("galleys");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
@@ -127,7 +129,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
 
         switch (identityType) {
             case 0:
-                mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "cust_code", ""));
+                mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", custCode);
                 break;
             case 1:
                 mPresenter.getShopGalley(SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "baza_code", ""));
