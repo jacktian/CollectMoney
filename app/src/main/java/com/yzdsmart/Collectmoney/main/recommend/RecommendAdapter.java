@@ -59,7 +59,7 @@ public class RecommendAdapter extends UltimateViewAdapter<RecommendAdapter.ViewH
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.recommend_list_item, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.recommend_expand_list_item, parent, false);
         RecommendAdapter.ViewHolder holder = new RecommendAdapter.ViewHolder(itemView);
         return holder;
     }

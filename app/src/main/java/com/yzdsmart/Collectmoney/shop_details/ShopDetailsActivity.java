@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -84,6 +85,9 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     @Nullable
     @BindView(R.id.is_atte)
     ImageView isAtteIV;
+    @Nullable
+    @BindView(R.id.shop_avater)
+    ImageView shopAvaterIV;
 
     private static final Integer REQUEST_LOGIN_CODE = 1000;
 
@@ -104,6 +108,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     private ArrayList<Integer> localImages;//默认banner图片
     private ArrayList<String> shopImageList;
 
+    private String shopPhoneNumber;
     private String shopCoor;
     private ShopDetailsContract.ShopDetailsPresenter mPresenter;
 
@@ -140,7 +145,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         mLinearLayoutManager = new LinearLayoutManager(this);
         dividerPaint = new Paint();
         dividerPaint.setStrokeWidth(1);
-        dividerPaint.setColor(getResources().getColor(R.color.light_grey));
+        dividerPaint.setColor(getResources().getColor(R.color.divider_grey));
         dividerPaint.setAntiAlias(true);
         dividerPaint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
         HorizontalDividerItemDecoration dividerItemDecoration = new HorizontalDividerItemDecoration.Builder(this).paint(dividerPaint).build();
@@ -173,7 +178,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.is_atte, R.id.title_right_operation_layout, R.id.get_more_followers, R.id.hotel_address})
+    @OnClick({R.id.title_left_operation_layout, R.id.is_atte, R.id.title_right_operation_layout, R.id.get_more_followers, R.id.hotel_address, R.id.call_shop})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
@@ -204,6 +209,12 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 if (null == shopCoor || shopCoor.trim().length() <= 0) return;
                 MainActivity.getInstance().planRoute(shopCoor);
                 closeActivity();
+                break;
+            case R.id.call_shop:
+                if (null != shopPhoneNumber && !"".equals(shopPhoneNumber)) {
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + shopPhoneNumber));
+                    startActivity(intent);
+                }
                 break;
         }
     }
@@ -252,9 +263,11 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         focusPersonCountsTV.setText("" + shopDetails.getAtteNum());
         dailyCoinCountsTV.setText("" + shopDetails.getTodayGlodNum());
         visitPersonCountsTV.setText("" + shopDetails.getVisiNum());
+        shopPhoneNumber = shopDetails.getTel();
         isAtte = shopDetails.getAtte();
         isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.shop_detail_focused) : getResources().getDrawable(R.mipmap.shop_detail_not_focus));
         shopCoor = shopDetails.getCoor();
+        Glide.with(this).load(shopDetails.getLogoImageUrl()).asBitmap().placeholder(getResources().getDrawable(R.mipmap.ic_holder_light)).error(getResources().getDrawable(R.mipmap.ic_holder_light)).into(shopAvaterIV);
         shopImageList.clear();
         shopImageList.addAll(shopDetails.getImageLists());
         if (shopImageList.size() <= 0) {

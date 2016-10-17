@@ -41,6 +41,13 @@ public interface PersonalContract {
          * @param galleyInfos
          */
         void onGetShopGalley(List<GalleyInfo> galleyInfos);
+
+        /**
+         * 上传店铺头像
+         *
+         * @param relaImageUrl
+         */
+        void onUploadShopAvater(String relaImageUrl);
     }
 
     interface PersonalPresenter extends BasePresenter {
@@ -77,6 +84,16 @@ public interface PersonalContract {
          * @param bazaCode
          */
         void getShopGalley(String action, String submitCode, String bazaCode);
+
+        /**
+         * 上传商铺相册
+         *
+         * @param action
+         * @param fileName
+         * @param fileData
+         * @param bazaCode
+         */
+        void uploadShopAvater(String action, String fileName, String fileData, String bazaCode);
 
         void unRegisterSubscribe();
     }

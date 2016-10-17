@@ -1,8 +1,12 @@
 package com.yzdsmart.Collectmoney.main.personal;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -26,6 +30,7 @@ import com.yzdsmart.Collectmoney.edit_personal_info.EditPersonalInfoActivity;
 import com.yzdsmart.Collectmoney.edit_shop_info.EditShopInfoActivity;
 import com.yzdsmart.Collectmoney.focused_shop.FocusedShopActivity;
 import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
+import com.yzdsmart.Collectmoney.galley.upload.UploadGalleyActivity;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Collectmoney.main.MainActivity;
@@ -41,6 +46,7 @@ import com.yzdsmart.Collectmoney.utils.Utils;
 import com.yzdsmart.Collectmoney.withdrawals.WithDrawActivity;
 import com.yzdsmart.Collectmoney.withdrawals_log.WithDrawLogActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +55,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -148,10 +155,16 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @Nullable
     @BindView(R.id.personal_setting_layout)
     LinearLayout personalSettingLayout;
+    @Nullable
+    @BindView(R.id.shop_avater)
+    ImageView shopAvaterIV;
 
     private static final String SHOP_INFO_ACTION_CODE = "3666";
     private static final String GET_SHOP_GALLEY_ACTION_CODE = "5101";
+    private static final String SHOP_UPLOAD_AVATER_ACTION_CODE = "5001";//上传商铺相册
     private static final String GET_CUST_LEVEL_ACTION_CODE = "612";
+
+    private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
 
     private PersonalContract.PersonalPresenter mPresenter;
 
@@ -163,6 +176,15 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     private ArrayList<Integer> localImages;//默认banner图片
     private ArrayList<String> galleyImages;
     private ArrayList<GalleyInfo> galleyInfoList;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle bundle = msg.getData();
+            mPresenter.uploadShopAvater(SHOP_UPLOAD_AVATER_ACTION_CODE, SharedPreferencesUtils.getString(getActivity(), "baza_code", "") + "0.png", bundle.getString("image"), SharedPreferencesUtils.getString(getActivity(), "baza_code", ""));
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -243,19 +265,29 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.to_personal_detail, R.id.to_settings, R.id.to_shop_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser, R.id.to_withdraw_log, R.id.to_shop_withdraw_log, R.id.to_withdraw, R.id.to_shop_withdraw, R.id.to_shop_detail, R.id.to_shop_scanned_log, R.id.to_personal_galley})
+    @OnClick({R.id.title_left_operation_layout, R.id.user_avater, R.id.to_settings, R.id.shop_avater, R.id.to_shop_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser, R.id.to_withdraw_log, R.id.to_shop_withdraw_log, R.id.to_withdraw, R.id.to_shop_withdraw, R.id.to_shop_detail, R.id.to_shop_scanned_log, R.id.to_personal_galley})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 ((MainActivity) getActivity()).backToFindMoney();
                 break;
-            case R.id.to_personal_detail:
+            case R.id.user_avater:
                 bundle = new Bundle();
                 bundle.putInt("type", 0);//0 个人 1 好友
-//                ((BaseActivity) getActivity()).openActivity(PersonalFriendDetailActivity.class, bundle, 0);
                 ((BaseActivity) getActivity()).openActivity(EditPersonalInfoActivity.class);
+                break;
+            case R.id.to_personal_detail:
+//                bundle = new Bundle();
+//                bundle.putInt("type", 0);//0 个人 1 好友
+//                ((BaseActivity) getActivity()).openActivity(PersonalFriendDetailActivity.class, bundle, 0);
+//                ((BaseActivity) getActivity()).openActivity(EditPersonalInfoActivity.class);
 //                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
+                break;
+            case R.id.shop_avater:
+                // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
+                File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "CollectMoney");
+                startActivityForResult(BGAPhotoPickerActivity.newIntent(getActivity(), takePhotoDir, 1, null, true), REQUEST_CODE_CHOOSE_PHOTO);
                 break;
             case R.id.to_settings:
             case R.id.to_shop_settings:
@@ -378,6 +410,14 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (REQUEST_CODE_CHOOSE_PHOTO == requestCode) {
+            new Thread(new FormatImageRunnable(0, "" + data.getParcelableArrayListExtra("EXTRA_SELECTED_IMAGES").get(0))).start();
+        }
+    }
+
+    @Override
     public void setPresenter(PersonalContract.PersonalPresenter presenter) {
         mPresenter = presenter;
     }
@@ -422,6 +462,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         focusPersonCountsTV.setText("" + shopDetails.getAtteNum());
         leftTotalCoinCountsTV.setText("" + shopDetails.getTotalGlodNum());
         visitPersonCountsTV.setText("" + shopDetails.getVisiNum());
+        Glide.with(this).load(shopDetails.getLogoImageUrl()).asBitmap().placeholder(getActivity().getResources().getDrawable(R.mipmap.ic_holder_light)).error(getActivity().getResources().getDrawable(R.mipmap.ic_holder_light)).into(shopAvaterIV);
     }
 
     @Override
@@ -459,6 +500,12 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         shopImagesBanner.notifyDataSetChanged();
     }
 
+    @Override
+    public void onUploadShopAvater(String relaImageUrl) {
+        System.out.println("------------->" + relaImageUrl);
+        Glide.with(this).load(relaImageUrl).asBitmap().placeholder(getActivity().getResources().getDrawable(R.mipmap.ic_holder_light)).error(getActivity().getResources().getDrawable(R.mipmap.ic_holder_light)).into(shopAvaterIV);
+    }
+
     class ShopGalleyViewHolder implements Holder<String> {
         private ImageView imageView;
 
@@ -472,6 +519,28 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         @Override
         public void UpdateUI(Context context, int position, String data) {
             Glide.with(context).load(data).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.recommend_pre_load)).error(context.getResources().getDrawable(R.mipmap.shop_banner)).into(imageView);
+        }
+    }
+
+    class FormatImageRunnable implements Runnable {
+        private Integer index;
+        private String path;
+
+        public FormatImageRunnable(Integer index, String path) {
+            this.index = index;
+            this.path = path;
+        }
+
+        @Override
+        public void run() {
+            byte[] bytes = Utils.decodeBitmap(path);
+            String image = new String(android.util.Base64.encode(bytes, android.util.Base64.DEFAULT));
+            Message msg = new Message();
+            Bundle bundle = new Bundle();
+            bundle.putInt("index", index);
+            bundle.putString("image", image);
+            msg.setData(bundle);
+            mHandler.sendMessage(msg);
         }
     }
 }

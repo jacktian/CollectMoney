@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recommend_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:padding="@dimen/activity_horizontal_padding">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/recommend_user_avater"
+        android:layout_width="@dimen/recommend_user_avater_width"
+        android:layout_height="@dimen/recommend_user_avater_width"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_holder_light" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/recommend_user_avater">
+
+        <TextView
+            android:id="@+id/recommend_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:ellipsize="marquee"
+            android:focusableInTouchMode="true"
+            android:maxEms="10"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/font_black"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/font_medium" />
+
+        <TextView
+            android:id="@+id/recommend_user_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_toRightOf="@id/recommend_user_name"
+            android:text=""
+            android:textColor="@color/font_grey"
+            android:textSize="@dimen/font_small" />
+
+        <ImageView
+            android:id="@+id/recommend_user_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_toRightOf="@id/recommend_user_age"
+            android:src="@mipmap/gender_male_icon" />
+
+        <TextView
+            android:id="@+id/recommend_user_signature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/recommend_user_name"
+            android:layout_below="@id/recommend_user_name"
+            android:layout_marginTop="6dp"
+            android:text="用户个性签名"
+            android:textColor="@color/font_grey"
+            android:textSize="@dimen/font_xx_small" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

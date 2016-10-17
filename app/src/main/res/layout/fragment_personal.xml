@@ -761,6 +761,7 @@
                 android:id="@+id/business_ope_panel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_marginTop="@dimen/personal_item_panel_margin_top"
                 android:background="@drawable/white_panel_top_bottom_border"
                 android:orientation="vertical">

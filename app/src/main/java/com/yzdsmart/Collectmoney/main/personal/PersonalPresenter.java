@@ -9,6 +9,7 @@ import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.GetGalleyRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.UploadFileRequestResponse;
 
 /**
  * Created by YZD on 2016/8/27.
@@ -113,6 +114,31 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
                     }
                 } else {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void uploadShopAvater(String action, String fileName, String fileData, String bazaCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.uploading));
+        mModel.uploadShopAvater(action, fileName, fileData, bazaCode, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                UploadFileRequestResponse requestResponse = (UploadFileRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onUploadShopAvater(requestResponse.getRelaImageUrl());
                 }
             }
 

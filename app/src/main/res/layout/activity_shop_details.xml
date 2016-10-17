@@ -103,7 +103,7 @@
                         android:background="@color/light_grey" />
 
                     <ImageView
-                        android:id="@+id/is_atte1"
+                        android:id="@+id/call_shop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"

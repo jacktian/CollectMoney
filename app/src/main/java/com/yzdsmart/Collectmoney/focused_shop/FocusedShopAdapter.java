@@ -1,16 +1,21 @@
 package com.yzdsmart.Collectmoney.focused_shop;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
+import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.FocusedShop;
+import com.yzdsmart.Collectmoney.shop_details.ShopDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,12 +82,21 @@ public class FocusedShopAdapter extends UltimateViewAdapter<FocusedShopAdapter.V
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        FocusedShop shop = focusedShops.get(position);
+        final FocusedShop shop = focusedShops.get(position);
+        holder.setShopAvaterIV(shop.getLogoImageUrl());
         holder.setShopName(shop.getName());
         holder.setShopPers(shop.getPers());
         holder.setShopTel(shop.getTel());
         holder.setDailyCoins("" + shop.getTodayGlodNum());
         holder.setShopAddress(shop.getAddr());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("bazaCode", shop.getBazaCode());
+                ((BaseActivity) context).openActivity(ShopDetailsActivity.class, bundle, 0);
+            }
+        });
     }
 
     @Override
@@ -112,6 +126,9 @@ public class FocusedShopAdapter extends UltimateViewAdapter<FocusedShopAdapter.V
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @Nullable
+        @BindView(R.id.focused_shop_avater)
+        ImageView shopAvaterIV;
+        @Nullable
         @BindView(R.id.focused_shop_name)
         TextView shopNameTV;
         @Nullable
@@ -130,6 +147,10 @@ public class FocusedShopAdapter extends UltimateViewAdapter<FocusedShopAdapter.V
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        public void setShopAvaterIV(String shopAvater) {
+            Glide.with(context).load(shopAvater).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.ic_holder_light)).into(shopAvaterIV);
         }
 
         public void setShopName(String shopName) {

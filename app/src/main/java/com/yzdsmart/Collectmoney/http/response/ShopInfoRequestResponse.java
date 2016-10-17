@@ -18,12 +18,13 @@ public class ShopInfoRequestResponse {
     private Integer AtteNum;//关注人次
     private Integer TodayGlodNum;//今日金币数量
     private Integer VisiNum;//访问总人次
+    private String LogoImageUrl;//Logo图片链接
     private List<String> ImageLists;
 
     public ShopInfoRequestResponse() {
     }
 
-    public ShopInfoRequestResponse(String code, String name, String pers, String tel, String addr, String remark, String coor, Boolean isAtte, Integer atteNum, Integer todayGlodNum, Integer visiNum, List<String> imageLists) {
+    public ShopInfoRequestResponse(String code, String name, String pers, String tel, String addr, String remark, String coor, Boolean isAtte, Integer atteNum, Integer todayGlodNum, Integer visiNum, String logoImageUrl, List<String> imageLists) {
         Code = code;
         Name = name;
         Pers = pers;
@@ -35,6 +36,7 @@ public class ShopInfoRequestResponse {
         AtteNum = atteNum;
         TodayGlodNum = todayGlodNum;
         VisiNum = visiNum;
+        LogoImageUrl = logoImageUrl;
         ImageLists = imageLists;
     }
 
@@ -126,6 +128,14 @@ public class ShopInfoRequestResponse {
         VisiNum = visiNum;
     }
 
+    public String getLogoImageUrl() {
+        return LogoImageUrl;
+    }
+
+    public void setLogoImageUrl(String logoImageUrl) {
+        LogoImageUrl = logoImageUrl;
+    }
+
     public List<String> getImageLists() {
         return ImageLists;
     }
@@ -148,6 +158,7 @@ public class ShopInfoRequestResponse {
                 ", AtteNum:" + AtteNum +
                 ", TodayGlodNum:" + TodayGlodNum +
                 ", VisiNum:" + VisiNum +
+                ", LogoImageUrl:" + LogoImageUrl +
                 ", ImageLists:" + ImageLists +
                 '}';
     }

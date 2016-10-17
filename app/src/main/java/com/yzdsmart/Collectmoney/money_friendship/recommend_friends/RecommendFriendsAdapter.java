@@ -7,25 +7,30 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-import com.tencent.TIMConversationType;
+import com.tencent.TIMFriendshipManager;
+import com.tencent.TIMUserProfile;
+import com.tencent.TIMValueCallBack;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.Friendship;
-import com.yzdsmart.Collectmoney.chat.ChatActivity;
-import com.yzdsmart.Collectmoney.money_friendship.friend_list.add.AddFriendActivity;
 import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
-import com.yzdsmart.Collectmoney.tecent_im.bean.FriendshipInfo;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,10 +41,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class RecommendFriendsAdapter extends UltimateViewAdapter<RecommendFriendsAdapter.ViewHolder> {
     private Context context;
     private List<Friendship> friendshipList;
+    private DateTimeFormatter dtf;
 
     public RecommendFriendsAdapter(Context context) {
         this.context = context;
         friendshipList = new ArrayList<Friendship>();
+        dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
     }
 
     /**
@@ -76,7 +83,7 @@ public class RecommendFriendsAdapter extends UltimateViewAdapter<RecommendFriend
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.friendship_friendfuture_list_item, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.recommend_friend_list_item, parent, false);
         RecommendFriendsAdapter.ViewHolder holder = new RecommendFriendsAdapter.ViewHolder(itemView);
         return holder;
     }
@@ -96,6 +103,11 @@ public class RecommendFriendsAdapter extends UltimateViewAdapter<RecommendFriend
         final Friendship friendship = friendshipList.get(position);
         holder.setUserAvater(friendship.getImageUrl());
         holder.setUserName(friendship.getNickName());
+        if (!"".equals(friendship.getCBirthday())) {
+            DateTime birthDay = dtf.parseDateTime(friendship.getCBirthday());
+            holder.setUserAge("(" + (Days.daysBetween(birthDay, new DateTime()).getDays() / 365 + 1) + "岁)");
+        }
+        holder.setUserGender(friendship.getCSex());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,20 +132,24 @@ public class RecommendFriendsAdapter extends UltimateViewAdapter<RecommendFriend
 
     class ViewHolder extends UltimateRecyclerviewViewHolder {
         @Nullable
-        @BindViews({R.id.friend_user_level, R.id.friend_user_diamond_count})
-        List<View> hideViews;
-        @Nullable
-        @BindView(R.id.friend_user_avater)
+        @BindView(R.id.recommend_user_avater)
         CircleImageView userAvaterIV;
         @Nullable
-        @BindView(R.id.friend_user_name)
+        @BindView(R.id.recommend_user_name)
         TextView userNameTV;
+        @Nullable
+        @BindView(R.id.recommend_user_age)
+        TextView userAgeTV;
+        @Nullable
+        @BindView(R.id.recommend_user_gender)
+        ImageView userGenderIV;
+        @Nullable
+        @BindView(R.id.recommend_user_signature)
+        TextView userSignatureTV;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
-            ButterKnife.apply(hideViews, BaseActivity.BUTTERKNIFEGONE);
         }
 
         public void setUserAvater(String userAvater) {
@@ -142,6 +158,34 @@ public class RecommendFriendsAdapter extends UltimateViewAdapter<RecommendFriend
 
         public void setUserName(String userName) {
             userNameTV.setText(userName);
+        }
+
+        public void setUserAge(String userAge) {
+            userAgeTV.setText(userAge);
+        }
+
+        public void setUserGender(String userGender) {
+            userGenderIV.setImageDrawable(userGender.equals("男") ? context.getResources().getDrawable(R.mipmap.gender_male_icon) : context.getResources().getDrawable(R.mipmap.gender_female_icon));
+        }
+
+        public void setUserSignature(String userTCAccount) {
+            //获取用户资料
+            TIMFriendshipManager.getInstance().getUsersProfile(Collections.singletonList(userTCAccount), new TIMValueCallBack<List<TIMUserProfile>>() {
+                @Override
+                public void onError(int code, String desc) {
+                    //错误码code和错误描述desc，可用于定位请求失败原因
+                    //错误码code列表请参见错误码表
+                }
+
+                @Override
+                public void onSuccess(List<TIMUserProfile> result) {
+                    for (TIMUserProfile res : result) {
+//                        Log.e(tag, "identifier: " + res.getIdentifier() + " nickName: " + res.getNickName()
+//                                + " remark: " + res.getRemark());
+                        userSignatureTV.setText("".equals(res.getSelfSignature()) ? "用户个性签名" : res.getSelfSignature());
+                    }
+                }
+            });
         }
     }
 }

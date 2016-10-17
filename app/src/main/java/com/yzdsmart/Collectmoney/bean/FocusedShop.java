@@ -11,11 +11,12 @@ public class FocusedShop {
     private String Pers;//联系人
     private String Tel;//联系电话
     private Integer TodayGlodNum;//当日金币数
+    private String LogoImageUrl;//Logo图片链接
 
     public FocusedShop() {
     }
 
-    public FocusedShop(String bazaCode, String addr, String coor, String name, String pers, String tel, Integer todayGlodNum) {
+    public FocusedShop(String bazaCode, String addr, String coor, String name, String pers, String tel, Integer todayGlodNum, String logoImageUrl) {
         BazaCode = bazaCode;
         Addr = addr;
         Coor = coor;
@@ -23,6 +24,7 @@ public class FocusedShop {
         Pers = pers;
         Tel = tel;
         TodayGlodNum = todayGlodNum;
+        LogoImageUrl = logoImageUrl;
     }
 
     public String getBazaCode() {
@@ -81,6 +83,14 @@ public class FocusedShop {
         TodayGlodNum = todayGlodNum;
     }
 
+    public String getLogoImageUrl() {
+        return LogoImageUrl;
+    }
+
+    public void setLogoImageUrl(String logoImageUrl) {
+        LogoImageUrl = logoImageUrl;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -91,6 +101,7 @@ public class FocusedShop {
                 ", Pers:'" + Pers + '\'' +
                 ", Tel:'" + Tel + '\'' +
                 ", TodayGlodNum:" + TodayGlodNum +
+                ", LogoImageUrl:" + LogoImageUrl +
                 '}';
     }
 }

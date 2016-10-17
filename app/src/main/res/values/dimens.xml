@@ -156,4 +156,7 @@
     <!--扫码日志-->
     <dimen name="scan_coin_log_shop_avater_width">44dp</dimen>
     <dimen name="scan_coin_log_filter_height">38dp</dimen>
+
+    <!--附近-->
+    <dimen name="recommend_user_avater_width">43dp</dimen>
 </resources>
