@@ -9,7 +9,7 @@ android {
         applicationId "com.yzdsmart.Collectmoney"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 71
+        versionCode 81
         versionName "1.0"
         multiDexEnabled true
         ndk {
@@ -40,6 +40,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.soundcloud.android:android-crop:1.0.1@aar'
     compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
+    compile 'com.github.paolorotolo:appintro:4.1.0'
     compile 'cn.bingoogolapple:bga-adapter:1.1.0@aar'
     compile project(':photopicker_library')
     compile 'com.bigkoo:convenientbanner:2.0.5'

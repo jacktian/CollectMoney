@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="transparent">#00000000</color>
+    <color name="half_transparent">#7f000000</color>
 
     <color name="font_red">#f20044</color>
     <color name="font_yellow">#fff100</color>
@@ -28,7 +29,8 @@
     <color name="orange_disable">#f3c5bf</color>
 
     <!--启动页-->
-    <color name="splash_button">#cccccc</color>
+    <color name="splash_button">#f20044</color>
+    <color name="splash_button_press">#ee5983</color>
 
     <!--登陆、注册-->
     <color name="register_login_button">#f20044</color>
@@ -70,6 +72,11 @@
     <color name="setting_logout_button">#cccccc</color>
 
     <color name="publish_log_buy_coin_button">#f20044</color>
+
+    <!--相册删除按钮-->
+    <color name="galley_delete_button">#f20044</color>
+    <color name="galley_delete_button_pressed">#ee5983</color>
+    <color name="galley_delete_button_disable">#cccccc</color>
 
     <!--腾讯云通讯-->
     <color name="tecent_background_gray1">#EBEBEB</color>

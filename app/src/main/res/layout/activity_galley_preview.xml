@@ -17,46 +17,31 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/common_toolbar_height">
 
-        <FrameLayout
-            android:id="@+id/add_galley_layout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            android:visibility="gone">
+        <!--<FrameLayout-->
+        <!--android:id="@+id/delete_galley_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:visibility="visible">-->
 
-            <Button
-                android:id="@+id/add_galley"
-                style="@style/orange_button_with_disable"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="@dimen/button_height"
-                android:layout_gravity="center"
-                android:text="上传照片" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/delete_galley_layout"
+        <Button
+            android:id="@+id/delete_galley"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/galley_delete_button_height"
             android:layout_alignParentBottom="true"
-            android:visibility="gone">
-
-            <Button
-                android:id="@+id/delete_galley"
-                style="@style/orange_button_with_disable"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="@dimen/button_height"
-                android:layout_gravity="center"
-                android:enabled="false"
-                android:text="删除" />
-        </FrameLayout>
+            android:layout_gravity="center"
+            android:background="@drawable/galley_delete_button_bg"
+            android:enabled="false"
+            android:text="删除"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_large" />
+        <!--</FrameLayout>-->
 
         <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
             android:id="@+id/snpl_delete_photos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/delete_galley_layout"
-            android:layout_below="@id/add_galley_layout"
-            app:bga_snpl_isPlusSwitchOpened="false"
+            app:bga_snpl_isPlusSwitchOpened="true"
             app:bga_snpl_isSortable="false"
             app:bga_snpl_itemSpanCount="3" />
     </RelativeLayout>

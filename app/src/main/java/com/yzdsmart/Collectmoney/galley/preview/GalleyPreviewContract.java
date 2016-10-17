@@ -35,6 +35,11 @@ public interface GalleyPreviewContract {
          * 删除商铺图片
          */
         void onDeleteShopGalley();
+
+        /**
+         * 上传图片
+         */
+        void onUploadGalley();
     }
 
     interface GalleyPreviewPresenter extends BasePresenter {
@@ -75,6 +80,26 @@ public interface GalleyPreviewContract {
          * @param fileIdList
          */
         void deleteShopGalley(String action, String submitCode, String bazaCode, List<Integer> fileIdList);
+
+        /**
+         * 上传个人相册
+         *
+         * @param action
+         * @param fileName
+         * @param fileData
+         * @param custCode
+         */
+        void uploadGalley(String action, String fileName, String fileData, String custCode);
+
+        /**
+         * 上传商铺相册
+         *
+         * @param action
+         * @param fileName
+         * @param fileData
+         * @param bazaCode
+         */
+        void uploadShopImage(String action, String fileName, String fileData, String bazaCode);
 
         void unRegisterSubscribe();
     }

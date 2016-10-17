@@ -12,4 +12,10 @@
     <item
         android:drawable="@mipmap/loading_4"
         android:duration="100" />
+    <item
+        android:drawable="@mipmap/loading_5"
+        android:duration="100" />
+    <item
+        android:drawable="@mipmap/loading_6"
+        android:duration="100" />
 </animation-list>

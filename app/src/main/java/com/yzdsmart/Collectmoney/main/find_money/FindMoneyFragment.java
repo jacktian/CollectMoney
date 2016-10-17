@@ -81,6 +81,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Nullable
     @BindView(R.id.find_money_map)
     MapView findMoneyMap;
+    @Nullable
+    @BindView(R.id.market_name)
+    TextView marketNameTV;
 //    @Nullable
 //    @BindView(R.id.loc_scan_coins)
 //    ImageButton locScanCoins;
@@ -115,7 +118,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private Integer page_index = 1;//分页索引 当前页标
     private String qLocation = "";//检索中心点
     private Integer searchType = 0;//0 定位获取商铺列表 1 搜索商场附近商铺列表 2 扫码
-    private InfoWindow marketInfoWindow;
+//    private InfoWindow marketInfoWindow;
 
     private boolean isFirstMapAnimate = true;//是否是点击扫描按钮/商场附近商铺扫描
     private String lastMapStatusLocation = "";//记录地图状态改变后坐标
@@ -541,8 +544,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 locMarker = null;
             }
 //            MarkerOptions locMO = new MarkerOptions().position(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).icons(locGifList).period(10);//动画速度
-            MarkerOptions locMO = new MarkerOptions().position(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_loc_icon));
-            locMarker = (Marker) (mBaiduMap.addOverlay(locMO));//定位图标
+//            MarkerOptions locMO = new MarkerOptions().position(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).icon(BitmapDescriptorFactory.fromResource(R.mipmap.map_loc_icon));
+//            locMarker = (Marker) (mBaiduMap.addOverlay(locMO));//定位图标
 
             if (null != SharedPreferencesUtils.getString(getActivity(), "cust_code", "") && SharedPreferencesUtils.getString(getActivity(), "cust_code", "").length() > 0) {
                 if (uploadCounts == 600) {
@@ -598,10 +601,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             marketMarker.remove();
             marketMarker = null;
         }
-        if (null != marketInfoWindow) {
-            mBaiduMap.hideInfoWindow();
-            marketInfoWindow = null;
-        }
+//        if (null != marketInfoWindow) {
+//            mBaiduMap.hideInfoWindow();
+//            marketInfoWindow = null;
+//        }
+        ButterKnife.apply(marketNameTV, BaseActivity.BUTTERKNIFEGONE);
         if (null != walkingRouteOverlay) {
             walkingRouteOverlay.removeFromMap();
             walkingRouteOverlay = null;
@@ -630,10 +634,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             marketMarker.remove();
             marketMarker = null;
         }
-        if (null != marketInfoWindow) {
-            mBaiduMap.hideInfoWindow();
-            marketInfoWindow = null;
-        }
+//        if (null != marketInfoWindow) {
+//            mBaiduMap.hideInfoWindow();
+//            marketInfoWindow = null;
+//        }
+        ButterKnife.apply(marketNameTV, BaseActivity.BUTTERKNIFEGONE);
         if (null != walkingRouteOverlay) {
             walkingRouteOverlay.removeFromMap();
             walkingRouteOverlay = null;
@@ -649,24 +654,26 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         String mapStatusLocation = decimalFormat.format(latLng.longitude) + "," + decimalFormat.format(latLng.latitude);
         MarkerOptions marketMO = new MarkerOptions().position(new LatLng(Double.valueOf(marketLatitude), Double.valueOf(marketLongitude))).icon(BitmapDescriptorFactory.fromResource(R.mipmap.market_icon));
         marketMarker = (Marker) (mBaiduMap.addOverlay(marketMO));//定位图标
-        View popInfoView = getActivity().getLayoutInflater().inflate(R.layout.market_pop_window, null);
-        TextView marketNameTV = (TextView) popInfoView.findViewById(R.id.market_name);
         marketNameTV.setText(marketName);
-        // 计算与你开发时设定的屏幕大小的纵横比
-        int screenWidth = Utils.deviceWidth(getActivity());
-        int screenHeight = Utils.deviceHeight(getActivity());
-        float ratioWidth = (float) screenWidth / 480;
-        float ratioHeight = (float) screenHeight / 800;
-        float ratio = Math.min(ratioWidth, ratioHeight);
-        //view 坐标 y偏移量
-        marketInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(popInfoView), new LatLng(Double.valueOf(marketLatitude), Double.valueOf(marketLongitude)),//把弹出框的view添加到InfoWindow
-                Math.round(-40 * ratio), new InfoWindow.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick() {
-
-            }
-        });
-        mBaiduMap.showInfoWindow(marketInfoWindow);
+        ButterKnife.apply(marketNameTV, BaseActivity.BUTTERKNIFEVISIBLE);
+//        View popInfoView = getActivity().getLayoutInflater().inflate(R.layout.market_pop_window, null);
+//        TextView marketNameTV = (TextView) popInfoView.findViewById(R.id.market_name);
+//        marketNameTV.setText(marketName);
+//        // 计算与你开发时设定的屏幕大小的纵横比
+//        int screenWidth = Utils.deviceWidth(getActivity());
+//        int screenHeight = Utils.deviceHeight(getActivity());
+//        float ratioWidth = (float) screenWidth / 480;
+//        float ratioHeight = (float) screenHeight / 800;
+//        float ratio = Math.min(ratioWidth, ratioHeight);
+//        //view 坐标 y偏移量
+//        marketInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(popInfoView), new LatLng(Double.valueOf(marketLatitude), Double.valueOf(marketLongitude)),//把弹出框的view添加到InfoWindow
+//                Math.round(-40 * ratio), new InfoWindow.OnInfoWindowClickListener() {
+//            @Override
+//            public void onInfoWindowClick() {
+//
+//            }
+//        });
+//        mBaiduMap.showInfoWindow(marketInfoWindow);
         if ((decimalFormat.format(Double.valueOf(marketLongitude)) + "," + decimalFormat.format(Double.valueOf(marketLatitude))).equals(mapStatusLocation)) {
             mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE);
         } else {

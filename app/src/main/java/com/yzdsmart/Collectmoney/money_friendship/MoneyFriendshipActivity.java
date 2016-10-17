@@ -260,7 +260,7 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
             case R.id.group_list_radio:
                 centerTitleTV.setText("群聊");
                 groupListCTV.setChecked(true);
-                titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.plus_icon));
+                titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.user_add_icon));
                 fragment = fm.findFragmentByTag("group_list");
                 if (null == fragment) {
                     fragment = new GroupListFragment();

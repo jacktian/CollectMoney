@@ -159,4 +159,7 @@
 
     <!--附近-->
     <dimen name="recommend_user_avater_width">43dp</dimen>
+
+    <!--相册-->
+    <dimen name="galley_delete_button_height">44dp</dimen>
 </resources>

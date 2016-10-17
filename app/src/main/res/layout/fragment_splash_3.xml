@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/splash_3" />
+
+    <Button
+        android:id="@+id/start_main"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/splash_button_height"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="@dimen/splash_button_margin"
+        android:layout_marginRight="@dimen/splash_button_margin"
+        android:background="@drawable/splash_button_bg"
+        android:text="立即体验"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_large" />
+</RelativeLayout>

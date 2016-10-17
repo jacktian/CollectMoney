@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 状态栏的颜色 -->
-    <color name="bga_pp_colorPrimaryDark">@android:color/black</color>
+    <color name="bga_pp_colorPrimaryDark">#f20044</color>
     <!-- 导航栏的颜色 -->
-    <color name="bga_pp_navigationBarColor">@android:color/black</color>
+    <color name="bga_pp_navigationBarColor">#f20044</color>
     <!-- Toolbar的颜色 -->
-    <color name="bga_pp_colorPrimary">#303D42</color>
+    <color name="bga_pp_colorPrimary">#f20044</color>
 
     <!-- 图片选择器库里所有Activity界面的背景色 -->
     <color name="bga_pp_activity_bg">#1A1A1A</color>

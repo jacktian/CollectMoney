@@ -4,18 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
-import com.yzdsmart.Collectmoney.galley.upload.UploadGalleyActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
+import com.yzdsmart.Collectmoney.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoViewActivity;
 import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
 
 /**
@@ -53,17 +54,11 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     @BindView(R.id.snpl_delete_photos)
     BGASortableNinePhotoLayout mPhotosSnpl;
     @Nullable
-    @BindView(R.id.add_galley)
-    Button addGalley;
-    @Nullable
     @BindView(R.id.delete_galley)
     Button deleteGalley;
-    @Nullable
-    @BindView(R.id.add_galley_layout)
-    FrameLayout addGalleyLayout;
-    @Nullable
-    @BindView(R.id.delete_galley_layout)
-    FrameLayout deleteGalleyLayout;
+//    @Nullable
+//    @BindView(R.id.delete_galley_layout)
+//    FrameLayout deleteGalleyLayout;
 
     private Integer identityType;//0 个人 1 商铺
     private Integer userType;//0 自身 1 好友
@@ -81,14 +76,33 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     private static final String SHOP_GALLEY_ACTION_CODE = "5101";
     private static final String PERSONAL_GALLEY_DELETE_ACTION_CODE = "4102";
     private static final String SHOP_GALLEY_DELETE_ACTION_CODE = "4201";
+    private static final String PERSONAL_UPLOAD_ACTION_CODE = "2102";//上传个人相册
+    private static final String SHOP_UPLOAD_ACTION_CODE = "5101";//上传商铺相册
 
     private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
+    private static final int REQUEST_CODE_PHOTO_PREVIEW = 2;
 
     private GalleyPreviewContract.GalleyPreviewPresenter mPresenter;
 
     private Handler mHandler = new Handler();
     private Runnable deletePersonalGalleySuccessRunnable;
     private Runnable deleteShopGalleySuccessRunnable;
+
+    private Handler mUploadHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle bundle = msg.getData();
+            switch (identityType) {
+                case 0:
+                    mPresenter.uploadGalley(PERSONAL_UPLOAD_ACTION_CODE, SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "cust_code", "") + bundle.getInt("index") + ".png", bundle.getString("image"), SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "cust_code", ""));
+                    break;
+                case 1:
+                    mPresenter.uploadShopImage(SHOP_UPLOAD_ACTION_CODE, SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "baza_code", "") + bundle.getInt("index") + ".png", bundle.getString("image"), SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "baza_code", ""));
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,11 +127,13 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                         centerTitleTV.setText("我的相册");
                         rightTitleTV.setText("选择");
                         ButterKnife.apply(showViews, BUTTERKNIFEVISIBLE);
-                        ButterKnife.apply(addGalleyLayout, BUTTERKNIFEVISIBLE);
-                        ButterKnife.apply(deleteGalleyLayout, BUTTERKNIFEVISIBLE);
+//                        ButterKnife.apply(deleteGalleyLayout, BUTTERKNIFEVISIBLE);
+                        ButterKnife.apply(deleteGalley, BUTTERKNIFEVISIBLE);
                         break;
                     case 1:
                         centerTitleTV.setText("好友相册");
+                        mPhotosSnpl.setIsPlusSwitchOpened(false);
+                        ButterKnife.apply(deleteGalley, BUTTERKNIFEGONE);
                         break;
                 }
                 break;
@@ -125,8 +141,8 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                 centerTitleTV.setText("商铺相册");
                 rightTitleTV.setText("选择");
                 ButterKnife.apply(showViews, BUTTERKNIFEVISIBLE);
-                ButterKnife.apply(addGalleyLayout, BUTTERKNIFEVISIBLE);
-                ButterKnife.apply(deleteGalleyLayout, BUTTERKNIFEVISIBLE);
+//                ButterKnife.apply(deleteGalleyLayout, BUTTERKNIFEVISIBLE);
+                ButterKnife.apply(deleteGalley, BUTTERKNIFEVISIBLE);
                 break;
         }
 
@@ -194,11 +210,16 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
             mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
         } else if (SHOP_GALLEY_OPERATION_CODE == requestCode && RESULT_OK == resultCode) {
             mPresenter.getShopGalley(SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
+        } else if (REQUEST_CODE_CHOOSE_PHOTO == requestCode && RESULT_OK == resultCode) {
+            ArrayList<String> imageUrls = BGAPhotoPickerActivity.getSelectedImages(data);
+            for (int i = 0; i < imageUrls.size(); i++) {
+                new Thread(new FormatImageRunnable(i, imageUrls.get(i))).start();
+            }
         }
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.right_title, R.id.add_galley, R.id.delete_galley})
+    @OnClick({R.id.title_left_operation_layout, R.id.right_title, R.id.delete_galley})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -211,39 +232,22 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                 if (isGalleyOperated) {
                     rightTitleTV.setText("取消");
                     mPhotosSnpl.setDeleteDrawableResId(R.mipmap.bga_pp_ic_delete);
-                    addGalley.setEnabled(false);
+                    mPhotosSnpl.setIsPlusSwitchOpened(false);
                     deleteGalley.setEnabled(true);
                 } else {
                     rightTitleTV.setText("选择");
                     mPhotosSnpl.setDeleteDrawableResId(0);
                     deleteGalley.setEnabled(false);
-                    addGalley.setEnabled(true);
+                    mPhotosSnpl.setIsPlusSwitchOpened(true);
                 }
                 mPhotosSnpl.refresh();
-                break;
-            case R.id.add_galley:
-                bundle = new Bundle();
-                File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "CollectMoney");
-                switch (identityType) {
-                    case 0:
-                        bundle.putInt("type", 0);
-                        openActivity(UploadGalleyActivity.class, bundle, PERSONAL_GALLEY_OPERATION_CODE);
-                        // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
-//                        startActivityForResult(BGAPhotoPickerActivity.newIntent(this, takePhotoDir, 9, null, true), REQUEST_CODE_CHOOSE_PHOTO);
-                        break;
-                    case 1:
-                        bundle.putInt("type", 1);
-                        openActivity(UploadGalleyActivity.class, bundle, SHOP_GALLEY_OPERATION_CODE);
-//                        startActivityForResult(BGAPhotoPickerActivity.newIntent(this, takePhotoDir, 9, null, true), REQUEST_CODE_CHOOSE_PHOTO);
-                        break;
-                }
                 break;
             case R.id.delete_galley:
                 rightTitleTV.setText("选择");
                 isGalleyOperated = false;
                 mPhotosSnpl.setDeleteDrawableResId(0);
                 deleteGalley.setEnabled(false);
-                addGalley.setEnabled(true);
+                mPhotosSnpl.setIsPlusSwitchOpened(true);
                 deleteFileList.clear();
                 for (String path : mPhotosSnpl.getData()) {
                     for (GalleyInfo galleyInfo : galleyInfoList) {
@@ -266,24 +270,34 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
 
     @Override
     public void onClickAddNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, ArrayList<String> models) {
-
+        // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
+        File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "CollectMoney");
+        switch (identityType) {
+            case 0:
+                startActivityForResult(BGAPhotoPickerActivity.newIntent(this, takePhotoDir, 9, null, true), REQUEST_CODE_CHOOSE_PHOTO);
+                break;
+            case 1:
+                startActivityForResult(BGAPhotoPickerActivity.newIntent(this, takePhotoDir, 5, null, true), REQUEST_CODE_CHOOSE_PHOTO);
+                break;
+        }
     }
 
     @Override
     public void onClickDeleteNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
+        System.out.println(position + "--------" + model + "--------" + models);
         mPhotosSnpl.removeItem(position);
         if (mPhotosSnpl.getData().size() <= 0) {
             rightTitleTV.setText("选择");
             isGalleyOperated = false;
             mPhotosSnpl.setDeleteDrawableResId(0);
             deleteGalley.setEnabled(false);
-            addGalley.setEnabled(true);
+            mPhotosSnpl.setIsPlusSwitchOpened(true);
         }
     }
 
     @Override
     public void onClickNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
-
+        startActivityForResult(BGAPhotoViewActivity.newIntent(this, Integer.MAX_VALUE, models, models, position, false), REQUEST_CODE_PHOTO_PREVIEW);
     }
 
     @Override
@@ -323,7 +337,41 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     }
 
     @Override
+    public void onUploadGalley() {
+        switch (identityType) {
+            case 0:
+                mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", custCode);
+                break;
+            case 1:
+                mPresenter.getShopGalley(SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "baza_code", ""));
+                break;
+        }
+    }
+
+    @Override
     public void setPresenter(GalleyPreviewContract.GalleyPreviewPresenter presenter) {
         mPresenter = presenter;
+    }
+
+    class FormatImageRunnable implements Runnable {
+        private Integer index;
+        private String path;
+
+        public FormatImageRunnable(Integer index, String path) {
+            this.index = index;
+            this.path = path;
+        }
+
+        @Override
+        public void run() {
+            byte[] bytes = Utils.decodeBitmap(path);
+            String image = new String(android.util.Base64.encode(bytes, android.util.Base64.DEFAULT));
+            Message msg = new Message();
+            Bundle bundle = new Bundle();
+            bundle.putInt("index", index);
+            bundle.putString("image", image);
+            msg.setData(bundle);
+            mUploadHandler.sendMessage(msg);
+        }
     }
 }

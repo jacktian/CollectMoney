@@ -3,35 +3,35 @@
                     "featureType": "land",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#fafaf9"
+                              "color": "#fbfbfb"
                     }
           },
           {
                     "featureType": "water",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#d4e7f8"
+                              "color": "#deeefb"
                     }
           },
           {
                     "featureType": "green",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#d6f1ce"
+                              "color": "#e2f4dc"
                     }
           },
           {
                     "featureType": "manmade",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#fafaf9"
+                              "color": "#fbfbfb"
                     }
           },
           {
                     "featureType": "building",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#fafaf9"
+                              "color": "#fbfbfb"
                     }
           },
           {
@@ -45,28 +45,28 @@
                     "featureType": "local",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#fafaf9"
+                              "color": "#fbfbfb"
                     }
           },
           {
                     "featureType": "arterial",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#fcfbd2"
+                              "color": "#fbfbe7"
                     }
           },
           {
                     "featureType": "arterial",
                     "elementType": "geometry.stroke",
                     "stylers": {
-                              "color": "#fbebda"
+                              "color": "#f4e7d9"
                     }
           },
           {
                     "featureType": "highway",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#fce18a"
+                              "color": "#f9e6aa"
                     }
           },
           {
@@ -80,14 +80,14 @@
                     "featureType": "highway",
                     "elementType": "labels.text.fill",
                     "stylers": {
-                              "color": "#bf9000"
+                              "color": "#cc8817"
                     }
           },
           {
                     "featureType": "arterial",
                     "elementType": "labels.text.fill",
                     "stylers": {
-                              "color": "#bf9000"
+                              "color": "#cc8817"
                     }
           },
           {

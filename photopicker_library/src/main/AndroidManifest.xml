@@ -28,5 +28,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/BGAPPTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <!--图片选择预览界面-->
+        <activity
+            android:name="cn.bingoogolapple.photopicker.activity.BGAPhotoViewActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/BGAPPTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 </manifest>

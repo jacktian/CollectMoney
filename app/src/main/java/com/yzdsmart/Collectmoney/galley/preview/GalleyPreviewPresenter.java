@@ -140,6 +140,50 @@ public class GalleyPreviewPresenter implements GalleyPreviewContract.GalleyPrevi
     }
 
     @Override
+    public void uploadGalley(String action, String fileName, String fileData, String custCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.uploading));
+        mModel.uploadGalley(action, fileName, fileData, custCode, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+                mView.onUploadGalley();
+            }
+        });
+    }
+
+    @Override
+    public void uploadShopImage(String action, String fileName, String fileData, String bazaCode) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.uploading));
+        mModel.uploadShopImage(action, fileName, fileData, bazaCode, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+                mView.onUploadGalley();
+            }
+        });
+    }
+
+    @Override
     public void unRegisterSubscribe() {
         mModel.unRegisterSubscribe();
     }
