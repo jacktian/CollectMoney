@@ -64,7 +64,7 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Pro
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         centerTitleTV.setText("详细资料");
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         titleLeftOpeLayout.setOnClickListener(this);
 
         new ProfilePresenter(this, this);

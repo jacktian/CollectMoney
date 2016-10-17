@@ -65,7 +65,7 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         titleLeftOpeLayout.setOnClickListener(this);
         resultImageIV.setOnClickListener(this);
 

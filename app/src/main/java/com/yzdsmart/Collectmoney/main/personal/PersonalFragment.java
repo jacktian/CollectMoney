@@ -1,5 +1,6 @@
 package com.yzdsmart.Collectmoney.main.personal;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -217,7 +218,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
         super.onActivityCreated(savedInstanceState);
 
         ButterKnife.apply(hideViews, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.left_arrow_white));
         titleRightOpeTLIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.grey_mail_icon));
         centerTitleTV.setText(getActivity().getResources().getString(R.string.personal_find));
 
@@ -412,6 +413,7 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 0) return;
         if (REQUEST_CODE_CHOOSE_PHOTO == requestCode) {
             new Thread(new FormatImageRunnable(0, "" + data.getParcelableArrayListExtra("EXTRA_SELECTED_IMAGES").get(0))).start();
         }
@@ -502,7 +504,6 @@ public class PersonalFragment extends BaseFragment implements PersonalContract.P
 
     @Override
     public void onUploadShopAvater(String relaImageUrl) {
-        System.out.println("------------->" + relaImageUrl);
         Glide.with(this).load(relaImageUrl).asBitmap().placeholder(getActivity().getResources().getDrawable(R.mipmap.ic_holder_light)).error(getActivity().getResources().getDrawable(R.mipmap.ic_holder_light)).into(shopAvaterIV);
     }
 

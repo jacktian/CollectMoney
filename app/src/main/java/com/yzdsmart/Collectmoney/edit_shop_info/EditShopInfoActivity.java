@@ -64,7 +64,7 @@ public class EditShopInfoActivity extends BaseActivity implements EditShopInfoCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText("商铺信息");
 
         new EditShopInfoPresenter(this, this);

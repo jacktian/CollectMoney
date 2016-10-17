@@ -60,7 +60,7 @@ public class ChooseFriendActivity extends BaseActivity {
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         centerTitleTV.setText("创建群");
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.confirm_icon));
         titleLeftOpeLayout.setOnClickListener(new View.OnClickListener() {
             @Override

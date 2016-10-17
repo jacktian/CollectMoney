@@ -46,7 +46,7 @@ public class UploadGalleyActivity extends BaseActivity implements UploadGalleyCo
     private Integer pathSize;
     private Integer alreadyUploaded;
 
-    private static final String PERSONAL_UPLOAD_ACTION_CODE = "2102";//上传相册
+    private static final String PERSONAL_UPLOAD_ACTION_CODE = "2102";//上传个人相册
     private static final String SHOP_UPLOAD_ACTION_CODE = "5101";//上传商铺相册
 
     private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
@@ -80,7 +80,7 @@ public class UploadGalleyActivity extends BaseActivity implements UploadGalleyCo
         type = getIntent().getExtras().getInt("type");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
 
         new UploadGalleyPresenter(this, this);
 

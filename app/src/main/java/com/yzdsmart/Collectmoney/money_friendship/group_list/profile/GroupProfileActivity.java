@@ -71,7 +71,7 @@ public class GroupProfileActivity extends BaseActivity implements GroupProfileCo
         isInGroup = GroupInfo.getInstance().isInGroup(identify);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText("聊天设置");
 
         name = (LineControllerView) findViewById(R.id.nameText);

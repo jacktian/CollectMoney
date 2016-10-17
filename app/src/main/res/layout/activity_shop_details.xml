@@ -100,7 +100,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
-                        android:background="@color/light_grey" />
+                        android:background="@color/divider_grey" />
 
                     <ImageView
                         android:id="@+id/call_shop"
@@ -238,6 +238,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
                     android:layout_marginTop="@dimen/activity_vertical_padding"
                     android:drawableBottom="@mipmap/double_down_arrow"
                     android:text="@string/shop_more_followers"

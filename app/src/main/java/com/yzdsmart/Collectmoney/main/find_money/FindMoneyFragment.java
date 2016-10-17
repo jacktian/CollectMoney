@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -160,6 +161,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
         ButterKnife.apply(hideViews, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
         centerTitleTV.setText(getActivity().getResources().getString(R.string.app_name));
+        centerTitleTV.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.find_money_title_logo), null, null, null);
 
 //        locScanCoinsAnim = (AnimationDrawable) locScanCoins.getDrawable();
 

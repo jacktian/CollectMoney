@@ -53,7 +53,7 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         centerTitleTV.setText("群成员");
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         titleLeftOpeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

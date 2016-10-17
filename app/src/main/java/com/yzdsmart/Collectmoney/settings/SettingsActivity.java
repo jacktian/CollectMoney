@@ -61,7 +61,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.S
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText("设置");
 
         new SettingsPresenter(this, this);

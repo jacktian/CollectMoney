@@ -66,7 +66,7 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText("升级商户");
 
         businessCoorET.setText(SharedPreferencesUtils.getString(this, "qLocation", ""));

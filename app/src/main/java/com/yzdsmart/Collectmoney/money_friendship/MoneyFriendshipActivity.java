@@ -62,11 +62,14 @@ import butterknife.Optional;
  */
 public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriendshipContract.MoneyFriendshipView, CustomNestRadioGroup.OnCheckedChangeListener {
     @Nullable
-    @BindViews({R.id.left_title, R.id.center_title, R.id.title_right_operation_layout})
+    @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.title_right_operation_layout)
     FrameLayout titleRightOpeLayout;
+    @Nullable
+    @BindView(R.id.center_title)
+    TextView centerTitleTV;
     @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
@@ -119,7 +122,7 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
         fm = getFragmentManager();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
 
         imBottomTab.setOnCheckedChangeListener(this);
 
@@ -131,6 +134,7 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
     }
 
     private void initView() {
+        centerTitleTV.setText("附近");
         recommendFriendCTV.setChecked(true);
         FragmentTransaction ft = fm.beginTransaction();
         mCurrentFragment = new RecommendFriendsFragment();
@@ -224,6 +228,7 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
         groupListCTV.setChecked(false);
         switch (group.getCheckedRadioButtonId()) {
             case R.id.recommend_friend_radio:
+                centerTitleTV.setText("附近");
                 recommendFriendCTV.setChecked(true);
                 ButterKnife.apply(titleRightOpeLayout, BUTTERKNIFEGONE);
                 fragment = fm.findFragmentByTag("recommend");
@@ -233,6 +238,7 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
                 addOrShowFragment(fragment, "recommend");
                 break;
             case R.id.conversation_radio:
+                centerTitleTV.setText("消息");
                 conversationCTV.setChecked(true);
                 ButterKnife.apply(titleRightOpeLayout, BUTTERKNIFEGONE);
                 fragment = fm.findFragmentByTag("conversation");
@@ -242,6 +248,7 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
                 addOrShowFragment(fragment, "conversation");
                 break;
             case R.id.friend_list_radio:
+                centerTitleTV.setText("通讯录");
                 friendListCTV.setChecked(true);
                 titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.user_add_icon));
                 fragment = fm.findFragmentByTag("friend_list");
@@ -251,6 +258,7 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
                 addOrShowFragment(fragment, "friend_list");
                 break;
             case R.id.group_list_radio:
+                centerTitleTV.setText("群聊");
                 groupListCTV.setChecked(true);
                 titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.plus_icon));
                 fragment = fm.findFragmentByTag("group_list");

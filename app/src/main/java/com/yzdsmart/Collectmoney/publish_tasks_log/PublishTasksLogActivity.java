@@ -67,7 +67,7 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
         logList = new ArrayList<PublishTaskLog>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText("发布任务日志");
 
         new PublishTasksLogPresenter(this, this);

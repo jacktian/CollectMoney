@@ -96,7 +96,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
         dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText("个人资料");
 
         new EditPersonalInfoPresenter(this, this);

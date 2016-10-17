@@ -72,7 +72,7 @@ public class SearchFriendActivity extends BaseActivity implements SearchFriendCo
         profileSummaryList = new ArrayList<ProfileSummary>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         leftTitleTV.setText(getResources().getString(R.string.add_new_friend));
 
         mLinearLayoutManager = new LinearLayoutManager(this);

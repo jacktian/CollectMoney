@@ -3,7 +3,7 @@
     android:id="@+id/edit_info_dialog_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@android:color/white"
     android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_padding">
 
@@ -11,8 +11,8 @@
         android:id="@+id/edit_info_dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sa"
-        android:textColor="@android:color/black"
+        android:text=""
+        android:textColor="@color/font_black"
         android:textSize="@dimen/font_medium" />
     　　
 
@@ -28,10 +28,10 @@
             android:background="@drawable/white_panel_with_border"
             android:imeOptions="actionDone"
             android:inputType="text"
-            android:maxLength="30"
+            android:maxLength="10"
             android:maxLines="1"
             android:text=""
-            android:textColor="@color/grey"
+            android:textColor="@color/font_grey"
             android:textSize="@dimen/font_medium" />
 
         <com.yzdsmart.Collectmoney.views.BetterSpinner
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_height"
             android:background="@drawable/white_panel_with_border"
-            android:textColor="@color/grey"
+            android:textColor="@color/font_grey"
             android:textSize="@dimen/font_medium"
             android:visibility="gone" />
     </FrameLayout>
@@ -66,7 +66,6 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_toLeftOf="@id/edit_confirm"
             android:text="@string/cancel" />
-
 
     </RelativeLayout>
 </LinearLayout>

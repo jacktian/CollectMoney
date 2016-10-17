@@ -70,7 +70,7 @@ public class ScanCoinsLogActivity extends BaseActivity implements ScanCoinsLogCo
         logList = new ArrayList<GetCoinsLog>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText("获取金币详情");
 
         new ScanCoinsLogPresenter(this, this);

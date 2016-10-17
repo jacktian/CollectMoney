@@ -56,7 +56,7 @@ public class AddFriendActivity extends BaseActivity implements View.OnClickListe
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         centerTitleTV.setText("详细资料");
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         titleLeftOpeLayout.setOnClickListener(this);
 
         tvName = (TextView) findViewById(R.id.name);

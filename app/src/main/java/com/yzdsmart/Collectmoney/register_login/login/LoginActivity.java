@@ -163,7 +163,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.login_register_confirm_button, R.id.platform_wechat, R.id.platform_qq, R.id.platform_webo})
+    @OnClick({R.id.title_left_operation_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.login_register_confirm_button})
+//    , R.id.platform_wechat, R.id.platform_qq, R.id.platform_webo
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {

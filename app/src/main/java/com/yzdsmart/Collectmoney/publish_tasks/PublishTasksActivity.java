@@ -82,7 +82,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText("发布任务");
 
         new PublishTasksPresenter(this, this);

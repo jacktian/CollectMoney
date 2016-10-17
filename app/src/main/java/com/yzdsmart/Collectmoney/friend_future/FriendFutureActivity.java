@@ -65,7 +65,7 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
         friendFutureList = new ArrayList<FriendFuture>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         leftTitleTV.setText(getResources().getString(R.string.future_search_new_friend));
         titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.user_add_icon));
 

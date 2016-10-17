@@ -64,7 +64,6 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                System.out.println(position + "-----------" + (localImages.size() - 1));
                 if (position == (localImages.size() - 1)) {
                     ButterKnife.apply(startApp, BUTTERKNIFEVISIBLE);
                 } else {

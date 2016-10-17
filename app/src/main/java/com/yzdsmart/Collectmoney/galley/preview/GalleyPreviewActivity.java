@@ -2,6 +2,7 @@ package com.yzdsmart.Collectmoney.galley.preview;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.galley.upload.UploadGalleyActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
 
 /**
@@ -79,6 +82,8 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     private static final String PERSONAL_GALLEY_DELETE_ACTION_CODE = "4102";
     private static final String SHOP_GALLEY_DELETE_ACTION_CODE = "4201";
 
+    private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
+
     private GalleyPreviewContract.GalleyPreviewPresenter mPresenter;
 
     private Handler mHandler = new Handler();
@@ -99,7 +104,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
 
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         switch (identityType) {
             case 0:
                 userType = getIntent().getExtras().getInt("type");
@@ -218,14 +223,18 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                 break;
             case R.id.add_galley:
                 bundle = new Bundle();
+                File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "CollectMoney");
                 switch (identityType) {
                     case 0:
                         bundle.putInt("type", 0);
                         openActivity(UploadGalleyActivity.class, bundle, PERSONAL_GALLEY_OPERATION_CODE);
+                        // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
+//                        startActivityForResult(BGAPhotoPickerActivity.newIntent(this, takePhotoDir, 9, null, true), REQUEST_CODE_CHOOSE_PHOTO);
                         break;
                     case 1:
                         bundle.putInt("type", 1);
                         openActivity(UploadGalleyActivity.class, bundle, SHOP_GALLEY_OPERATION_CODE);
+//                        startActivityForResult(BGAPhotoPickerActivity.newIntent(this, takePhotoDir, 9, null, true), REQUEST_CODE_CHOOSE_PHOTO);
                         break;
                 }
                 break;

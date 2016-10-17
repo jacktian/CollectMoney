@@ -123,7 +123,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         ButterKnife.apply(showViews, BUTTERKNIFEVISIBLE);
         centerTitleTV.setText("店铺详情");
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.qr_code_scanner_icon));
 
         new ShopDetailsPresenter(this, this);

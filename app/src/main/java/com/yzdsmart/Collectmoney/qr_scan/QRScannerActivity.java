@@ -82,7 +82,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         }
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText(getResources().getString(R.string.qr_scan_title));
 
         new QRScannerPresenter(this, this);

@@ -73,7 +73,7 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
         userType = bundle.getInt("userType");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText("提现日志");
 
         new WithDrawLogPresenter(this, this);

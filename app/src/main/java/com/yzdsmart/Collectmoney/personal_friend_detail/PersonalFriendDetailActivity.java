@@ -175,7 +175,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                     }
                 } else if (state == State.COLLAPSED) {
                     //折叠状态
-                    titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+                    titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
                     switch (type) {
                         case 0:
                             titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.menu_icon));

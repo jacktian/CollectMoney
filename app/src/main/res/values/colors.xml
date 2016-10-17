@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#000000</color>
-    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimary">#f20044</color>
+    <color name="colorPrimaryDark">#f20044</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="transparent">#00000000</color>
@@ -13,7 +13,7 @@
     <color name="font_grey">#999999</color>
 
     <color name="border_grey">#cccccc</color>
-    <color name="divider_grey">#e5e5e5</color>
+    <color name="divider_grey">#f4f4f4</color>
     <color name="background_grey">#f7f7f7</color>
 
     <color name="toolbar_color">#f9f9f9</color>

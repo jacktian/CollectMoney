@@ -33,11 +33,14 @@ import butterknife.Optional;
 
 public class ShopFocuserActivity extends BaseActivity implements ShopFocuserContract.ShopFocuserView {
     @Nullable
-    @BindViews({R.id.left_title, R.id.center_title, R.id.title_right_operation_layout})
+    @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
+    @Nullable
+    @BindView(R.id.center_title)
+    TextView centerTitleTV;
     @Nullable
     @BindView(R.id.focuser_counts)
     TextView focuserCountsTV;
@@ -65,7 +68,8 @@ public class ShopFocuserActivity extends BaseActivity implements ShopFocuserCont
         shopFocuserList = new ArrayList<ShopFocuser>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
+        centerTitleTV.setText("我的蚊客");
 
         new ShopFocuserPresenter(this, this);
 

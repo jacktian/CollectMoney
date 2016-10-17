@@ -151,7 +151,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:checked="false"
-                android:text="消息"
+                android:text="群聊"
                 android:textColor="@color/money_friend_tab"
                 android:textSize="@dimen/font_xx_small" />
         </RelativeLayout>

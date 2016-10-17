@@ -59,7 +59,7 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
         focusedShopList = new ArrayList<FocusedShop>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText(getResources().getString(R.string.focus_shop));
 
         new FocusedShopPresenter(this, this);

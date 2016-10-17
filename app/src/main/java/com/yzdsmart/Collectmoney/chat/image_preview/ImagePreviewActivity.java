@@ -49,7 +49,7 @@ public class ImagePreviewActivity extends BaseActivity {
         path = getIntent().getStringExtra("path");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
 
         showImage();
     }

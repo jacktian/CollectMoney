@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/white"
+    android:background="@color/colorPrimaryDark"
     android:ellipsize="marquee"
     android:gravity="center"
     android:paddingBottom="@dimen/city_list_padding"
     android:paddingTop="@dimen/city_list_padding"
     android:singleLine="true"
-    android:textColor="@color/grey"
+    android:textColor="@android:color/white"
     android:textSize="@dimen/font_medium" />

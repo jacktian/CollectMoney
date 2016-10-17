@@ -77,7 +77,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
         userType = bundle.getInt("userType");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         switch (userType) {
             case 0:
                 centerTitleTV.setText("个人提现");

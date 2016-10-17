@@ -113,7 +113,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
         type = (TIMConversationType) getIntent().getSerializableExtra("type");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
 
         input.setChatView(this);
 

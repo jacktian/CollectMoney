@@ -134,7 +134,7 @@ public class EditActivity extends BaseActivity implements TIMCallBack {
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         centerTitleTV.setText(getIntent().getStringExtra("title"));
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.confirm_icon));
 
         input = (EditText) findViewById(R.id.editContent);

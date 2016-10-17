@@ -74,7 +74,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         logList = new ArrayList<BuyCoinsLog>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText("购买金币");
 
         new BuyCoinsPresenter(this, this);

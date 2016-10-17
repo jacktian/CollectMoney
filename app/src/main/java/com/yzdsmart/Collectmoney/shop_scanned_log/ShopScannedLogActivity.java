@@ -63,7 +63,7 @@ public class ShopScannedLogActivity extends BaseActivity implements ShopScannedL
         scannedLogList = new ArrayList<ScannedLog>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow));
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText("我的打赏");
 
         new ShopScannedLogPresenter(this, this);
