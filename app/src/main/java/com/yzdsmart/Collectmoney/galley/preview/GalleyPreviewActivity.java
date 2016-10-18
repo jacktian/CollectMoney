@@ -231,7 +231,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                 isGalleyOperated = !isGalleyOperated;
                 if (isGalleyOperated) {
                     rightTitleTV.setText("取消");
-                    mPhotosSnpl.setDeleteDrawableResId(R.mipmap.bga_pp_ic_delete);
+                    mPhotosSnpl.setDeleteDrawableResId(R.mipmap.galley_delete_unchecked);
                     mPhotosSnpl.setIsPlusSwitchOpened(false);
                     deleteGalley.setEnabled(true);
                 } else {
@@ -297,6 +297,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
 
     @Override
     public void onClickNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
+        if (isGalleyOperated) return;
         startActivityForResult(BGAPhotoViewActivity.newIntent(this, Integer.MAX_VALUE, models, models, position, false), REQUEST_CODE_PHOTO_PREVIEW);
     }
 

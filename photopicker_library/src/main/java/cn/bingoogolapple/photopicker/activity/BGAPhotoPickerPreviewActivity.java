@@ -143,11 +143,9 @@ public class BGAPhotoPickerPreviewActivity extends BGAPPToolbarActivity implemen
         // 获取右上角按钮文本
         mTopRightBtnText = getString(R.string.bga_pp_confirm);
 
-
         mPhotoPageAdapter = new BGAPhotoPageAdapter(this, this, previewImages);
         mContentHvp.setAdapter(mPhotoPageAdapter);
         mContentHvp.setCurrentItem(currentPosition);
-
 
         // 过2秒隐藏标题栏和底部选择栏
         mToolbar.postDelayed(new Runnable() {
