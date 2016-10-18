@@ -104,6 +104,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     // 定位相关
     private LocationClient mLocClient;
     private boolean isFirstLoc = true; // 是否首次定位
+
     private MyLocationListener locListener = new MyLocationListener();
     private Marker locMarker;
     //路径规划相关
@@ -593,6 +594,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     public void locScanCoins() {
+        if (isFirstLoc) return;
         if (0 == isAlreadyLocScan) {
             isAlreadyLocScan = 1;
         }
@@ -625,6 +627,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     public void getShopListNearByMarket(String marketName, String coor) {
+        if (isFirstLoc) return;
         if (0 == isAlreadyMarketScan) {
             isAlreadyMarketScan = 1;
         }

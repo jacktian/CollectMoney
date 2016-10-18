@@ -21,11 +21,12 @@ public class CustDetailInfoRequestResponse {
     private String CDist;//区
     private String CCountry;//国家
     private String CRemark;//备注
+    private String CNickRemark;//好友备注
 
     public CustDetailInfoRequestResponse() {
     }
 
-    public CustDetailInfoRequestResponse(String c_UserCode, String CName, String CNickName, String CSex, String CBirthday, String CTel, String CIdNo, String CNation, Double CHeight, Double CWeight, String CProfession, String CAddress, String CProv, String CCity, String CDist, String CCountry, String CRemark) {
+    public CustDetailInfoRequestResponse(String c_UserCode, String CName, String CNickName, String CSex, String CBirthday, String CTel, String CIdNo, String CNation, Double CHeight, Double CWeight, String CProfession, String CAddress, String CProv, String CCity, String CDist, String CCountry, String CRemark, String CNickRemark) {
         C_UserCode = c_UserCode;
         this.CName = CName;
         this.CNickName = CNickName;
@@ -43,6 +44,7 @@ public class CustDetailInfoRequestResponse {
         this.CDist = CDist;
         this.CCountry = CCountry;
         this.CRemark = CRemark;
+        this.CNickRemark = CNickRemark;
     }
 
     public String getC_UserCode() {
@@ -181,6 +183,14 @@ public class CustDetailInfoRequestResponse {
         this.CRemark = CRemark;
     }
 
+    public String getCNickRemark() {
+        return CNickRemark;
+    }
+
+    public void setCNickRemark(String CNickRemark) {
+        this.CNickRemark = CNickRemark;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -201,6 +211,7 @@ public class CustDetailInfoRequestResponse {
                 ", CDist:'" + CDist + '\'' +
                 ", CCountry:'" + CCountry + '\'' +
                 ", CRemark:'" + CRemark + '\'' +
+                ", CNickRemark:'" + CNickRemark + '\'' +
                 '}';
     }
 }

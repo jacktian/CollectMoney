@@ -365,6 +365,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
 
     @Override
     public void onGetCustDetailInfo(CustDetailInfoRequestResponse response) {
+        System.out.println(type + "------>" + response);
         switch (type) {
             case 0:
                 if (null != response.getCName() && !"".equals(response.getCName())) {
@@ -376,7 +377,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 }
                 break;
             case 1:
-                if (null != response.getCRemark() && !"".equals(response.getCRemark())) {
+                if (null != response.getCNickRemark() && !"".equals(response.getCNickRemark())) {
                     userRemarkTV.setText(response.getCRemark());
                 } else if (null != response.getCNickName() && !"".equals(response.getCNickName())) {
                     userRemarkTV.setText(response.getCNickName());
@@ -387,7 +388,6 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 }
                 break;
         }
-
         if (null != response.getCBirthday() && !"".equals(response.getCBirthday())) {
             DateTime birthDay = dtf.parseDateTime(response.getCBirthday());
             userAgeTV.setText((Days.daysBetween(birthDay, new DateTime()).getDays() / 365 + 1) + "岁");
@@ -433,12 +433,12 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
             ButterKnife.apply(addFriendBtn, BUTTERKNIFEGONE);
             ButterKnife.apply(titleRightOpeIV, BUTTERKNIFEVISIBLE);
             ButterKnife.apply(msgChatBtn, BUTTERKNIFEVISIBLE);
-            ButterKnife.apply(videoChatBtn, BUTTERKNIFEVISIBLE);
+//            ButterKnife.apply(videoChatBtn, BUTTERKNIFEVISIBLE);
         } else {
             ButterKnife.apply(addFriendBtn, BUTTERKNIFEVISIBLE);
             ButterKnife.apply(titleRightOpeIV, BUTTERKNIFEGONE);
             ButterKnife.apply(msgChatBtn, BUTTERKNIFEGONE);
-            ButterKnife.apply(videoChatBtn, BUTTERKNIFEGONE);
+//            ButterKnife.apply(videoChatBtn, BUTTERKNIFEGONE);
         }
     }
 

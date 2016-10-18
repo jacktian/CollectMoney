@@ -153,7 +153,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
         registerForContextMenu(listView);
         switch (type) {
             case C2C:
-                titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.personal_head_icon));
+                titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.personal_icon));
                 if (FriendshipInfo.getInstance().isFriend(identify)) {
 //                    titleRightOpeLayout.setOnClickListener(new View.OnClickListener() {
 //                        @Override

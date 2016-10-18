@@ -49,6 +49,17 @@
                     android:layout_centerInParent="true"
                     android:background="@mipmap/main_bottom_tab_friend"
                     android:button="@null" />
+
+                <TextView
+                    android:id="@+id/unread_conversation_bubble"
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_toRightOf="@id/money_friend_radio"
+                    android:gravity="center"
+                    android:minWidth="16dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="11sp" />
             </RelativeLayout>
 
         </com.yzdsmart.Collectmoney.views.CustomNestRadioGroup>

@@ -12,20 +12,37 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 
+import com.tencent.TIMConversation;
+import com.tencent.TIMConversationType;
+import com.tencent.TIMGroupPendencyItem;
+import com.tencent.TIMMessage;
 import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.find_money.FindMoneyFragment;
 import com.yzdsmart.Collectmoney.main.recommend.RecommendFragment;
 import com.yzdsmart.Collectmoney.money_friendship.MoneyFriendshipActivity;
+import com.yzdsmart.Collectmoney.money_friendship.conversation.ConversationFragment;
 import com.yzdsmart.Collectmoney.register_login.login.LoginActivity;
+import com.yzdsmart.Collectmoney.tecent_im.bean.Conversation;
+import com.yzdsmart.Collectmoney.tecent_im.bean.CustomMessage;
+import com.yzdsmart.Collectmoney.tecent_im.bean.GroupInfo;
+import com.yzdsmart.Collectmoney.tecent_im.bean.GroupManageConversation;
+import com.yzdsmart.Collectmoney.tecent_im.bean.MessageFactory;
+import com.yzdsmart.Collectmoney.tecent_im.bean.NormalConversation;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.tecent_im.service.TLSService;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.utils.Utils;
 import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -41,6 +58,9 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     @Nullable
     @BindView(R.id.main_bottom_tab)
     CustomNestRadioGroup mainBottomTab;
+    @Nullable
+    @BindView(R.id.unread_conversation_bubble)
+    TextView unreadConversationBubbleTV;
 
     private FragmentManager fm;
     private Fragment mCurrentFragment;
@@ -57,12 +77,20 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         return mainActivity;
     }
 
+    private List<Conversation> conversationList;
+    private List<Conversation> pgConversationList = null;//个人或者群消息
+    private GroupManageConversation groupManageConversation;
+
     public static boolean isForeground = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mainActivity = this;
+
+        conversationList = new LinkedList<Conversation>();
+        pgConversationList = new ArrayList<Conversation>();
 
         fm = getFragmentManager();
 
@@ -95,6 +123,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     @Override
     protected void onResume() {
         isForeground = true;
+        updateUnreadConversationBubble();
         super.onResume();
 //        if (!(mCurrentFragment instanceof FindMoneyFragment)) {
 //            backToFindMoney();
@@ -228,6 +257,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
 
     @Override
     public void imSDKLoginSuccess() {
+        mPresenter.getConversation();
         //退到后台发送通知
         //初始化程序后台后消息推送
 //        PushUtil.getInstance();
@@ -235,8 +265,65 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
 
     @Override
     public void onIMOffline() {
+        JPushInterface.stopPush(this);
         App.getAppInstance().exitApp();
         openActivity(MainActivity.class);
+    }
+
+    @Override
+    public void initConversations(List<TIMConversation> conversationList) {
+        this.conversationList.clear();
+        for (TIMConversation item : conversationList) {
+            switch (item.getType()) {
+                case C2C:
+                case Group:
+                    this.conversationList.add(new NormalConversation(item));
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void updateConversation(TIMMessage message) {
+        if (null == message) {
+            Fragment chatFragment = fm.findFragmentByTag("conversation");
+            if (null != chatFragment) {
+                ((ConversationFragment) chatFragment).updateConversions(conversationList);
+            }
+            return;
+        }
+        if (message.getConversation().getType() == TIMConversationType.System) {
+            mPresenter.getGroupManageLastMessage();
+            return;
+        }
+        if (MessageFactory.getMessage(message) instanceof CustomMessage) return;
+        NormalConversation conversation = new NormalConversation(message.getConversation());
+        Iterator<Conversation> iterator = conversationList.iterator();
+        while (iterator.hasNext()) {
+            Conversation c = iterator.next();
+            if (conversation.equals(c)) {
+                conversation = (NormalConversation) c;
+                iterator.remove();
+                break;
+            }
+        }
+        conversation.setLastMessage(MessageFactory.getMessage(message));
+        conversationList.add(conversation);
+        Collections.sort(conversationList);
+        updateUnreadConversationBubble();
+    }
+
+    @Override
+    public void onGetGroupManageLastMessage(TIMGroupPendencyItem message, long unreadCount) {
+        if (null == groupManageConversation) {
+            groupManageConversation = new GroupManageConversation(message);
+            conversationList.add(groupManageConversation);
+        } else {
+            groupManageConversation.setLastMessage(message);
+        }
+        groupManageConversation.setUnreadCount(unreadCount);
+        Collections.sort(conversationList);
+        updateUnreadConversationBubble();
     }
 
     @Override
@@ -256,14 +343,61 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         imLogin();
     }
 
+
+    public void updateUnreadConversationBubble() {
+        long unreadCount = getTotalConversationUnreadNum();
+        if (unreadCount <= 0) {
+            unreadConversationBubbleTV.setVisibility(View.INVISIBLE);
+        } else {
+            unreadConversationBubbleTV.setVisibility(View.VISIBLE);
+            String unReadStr = String.valueOf(unreadCount);
+            unreadConversationBubbleTV.setBackgroundResource(R.mipmap.tecent_point1);
+            if (unreadCount > 99) {
+                unreadConversationBubbleTV.setBackgroundResource(R.mipmap.tecent_point2);
+                unReadStr = getResources().getString(R.string.time_more);
+            }
+            unreadConversationBubbleTV.setText(unReadStr);
+        }
+    }
+
+    /**
+     * 统计未读信息数
+     *
+     * @return
+     */
+    private long getTotalConversationUnreadNum() {
+        long num = 0;
+        pgConversationList.clear();
+        for (Conversation conversation : conversationList) {
+            if (null != conversation.getType()) {
+                switch (conversation.getType()) {
+                    case C2C:
+                        pgConversationList.add(conversation);
+                        break;
+                    case Group:
+                        if (GroupInfo.getInstance().isInGroup(conversation.getIdentify())) {
+                            pgConversationList.add(conversation);
+                        }
+                        break;
+                }
+            }
+        }
+        for (Conversation conversation : pgConversationList) {
+            num += conversation.getUnreadNum();
+        }
+        return num;
+    }
+
     // 初始化 JPush。如果已经初始化，但没有登录成功，则执行重新登录。
     private void initJPush() {
-        if (null != SharedPreferencesUtils.getString(this, "baza_code", "") && !"".equals(SharedPreferencesUtils.getString(this, "baza_code", ""))) {
-            setAlias(SharedPreferencesUtils.getString(this, "baza_code", "").replaceAll("-", ""));
-        } else if (null != SharedPreferencesUtils.getString(this, "cust_code", "") && !"".equals(SharedPreferencesUtils.getString(this, "cust_code", ""))) {
-            setAlias(SharedPreferencesUtils.getString(this, "cust_code", "").replaceAll("-", ""));
-        } else {
-            return;
+        if (null == SharedPreferencesUtils.getString(this, "push_alias", "") || "".equals(SharedPreferencesUtils.getString(this, "push_alias", ""))) {
+            if (null != SharedPreferencesUtils.getString(this, "baza_code", "") && !"".equals(SharedPreferencesUtils.getString(this, "baza_code", ""))) {
+                setAlias(SharedPreferencesUtils.getString(this, "baza_code", "").replaceAll("-", ""));
+            } else if (null != SharedPreferencesUtils.getString(this, "cust_code", "") && !"".equals(SharedPreferencesUtils.getString(this, "cust_code", ""))) {
+                setAlias(SharedPreferencesUtils.getString(this, "cust_code", "").replaceAll("-", ""));
+            } else {
+                return;
+            }
         }
         JPushInterface.init(App.getAppInstance());
     }
@@ -314,6 +448,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
                 case 0:
                     logs = "Set tag and alias success";
                     // 建议这里往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
+                    SharedPreferencesUtils.setString(MainActivity.this, "push_alias", alias);
                     break;
                 case 6002:
                     logs = "Failed to set alias and tags due to timeout. Try again after 60s.";

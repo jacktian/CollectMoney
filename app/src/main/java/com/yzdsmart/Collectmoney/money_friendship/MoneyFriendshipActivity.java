@@ -416,6 +416,7 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
 
     @Override
     public void onGetUnReadFriendFuture(Integer unreadCount) {
+        if (null == unreadFutureBubbleTV || null == titleRightBubbleTV) return;
         if (unreadCount <= 0) {
             unreadFutureBubbleTV.setVisibility(View.INVISIBLE);
             titleRightBubbleTV.setVisibility(View.GONE);
@@ -436,6 +437,7 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
     }
 
     public void updateUnreadConversationBubble() {
+        if (null == unreadConversationBubbleTV) return;
         long unreadCount = getTotalConversationUnreadNum();
         if (unreadCount <= 0) {
             unreadConversationBubbleTV.setVisibility(View.INVISIBLE);

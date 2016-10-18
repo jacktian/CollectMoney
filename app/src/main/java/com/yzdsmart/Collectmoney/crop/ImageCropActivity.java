@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.soundcloud.android.crop.Crop;
 import com.yzdsmart.Collectmoney.BaseActivity;
@@ -37,11 +38,14 @@ import butterknife.ButterKnife;
  */
 public class ImageCropActivity extends BaseActivity implements View.OnClickListener, ImageCropContract.ImageCropView {
     @Nullable
-    @BindViews({R.id.left_title, R.id.center_title, R.id.title_right_operation})
+    @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
+    @Nullable
+    @BindView(R.id.center_title)
+    TextView centerTitleTV;
     @Nullable
     @BindView(R.id.title_left_operation_layout)
     FrameLayout titleLeftOpeLayout;
@@ -65,6 +69,7 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+        centerTitleTV.setText("上传照片");
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         titleLeftOpeLayout.setOnClickListener(this);
         resultImageIV.setOnClickListener(this);

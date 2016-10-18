@@ -21,6 +21,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by YZD on 2016/9/3.
@@ -88,6 +89,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.S
                 closeActivity();
                 break;
             case R.id.settings_logout:
+                JPushInterface.stopPush(this);
                 SharedPreferencesUtils.clear(this, PreferenceManager.getDefaultSharedPreferences(this));
                 App.getAppInstance().exitApp();
                 openActivity(MainActivity.class);

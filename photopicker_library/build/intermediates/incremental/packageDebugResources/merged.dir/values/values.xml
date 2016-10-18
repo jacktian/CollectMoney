@@ -4,12 +4,12 @@
     <color name="bga_pp_btn_confirm_disabled">#8017C7D1</color>
     <color name="bga_pp_btn_confirm_enabled">#17C7D1</color>
     <color name="bga_pp_btn_confirm_pressed">#CC17C7D1</color>
-    <color name="bga_pp_colorPrimary">#303D42</color>
-    <color name="bga_pp_colorPrimaryDark">@android:color/black</color>
+    <color name="bga_pp_colorPrimary">#f20044</color>
+    <color name="bga_pp_colorPrimaryDark">#f20044</color>
     <color name="bga_pp_loading_progress_centerColor">#17C7D1</color>
     <color name="bga_pp_loading_progress_endColor">#CC17C7D1</color>
     <color name="bga_pp_loading_progress_startColor">@android:color/white</color>
-    <color name="bga_pp_navigationBarColor">@android:color/black</color>
+    <color name="bga_pp_navigationBarColor">#f20044</color>
     <color name="bga_pp_photo_selected_mask">#4D000000</color>
     <declare-styleable name="BGAImageView"><attr name="android:src"/><attr format="boolean" name="bga_iv_isCircle"/><attr format="reference|dimension" name="bga_iv_cornerRadius"/><attr format="boolean" name="bga_iv_isSquare"/><attr format="reference|dimension" name="bga_iv_borderWidth"/><attr format="reference|color" name="bga_iv_borderColor"/></declare-styleable>
     <declare-styleable name="BGASortableNinePhotoLayout"><attr format="boolean" name="bga_snpl_isPlusSwitchOpened"/><attr format="boolean" name="bga_snpl_isSortable"/><attr format="reference" name="bga_snpl_deleteDrawable"/><attr format="integer" name="bga_snpl_maxItemCount"/><attr format="integer" name="bga_snpl_itemSpanCount"/><attr format="boolean" name="bga_snpl_isDeleteDrawableOverlapQuarter"/><attr format="reference" name="bga_snpl_plusDrawable"/></declare-styleable>
@@ -41,11 +41,11 @@
         <item name="android:windowIsFloating">true</item>
     </style>
     <style name="BGAPPTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- 状态栏颜色 -->
+        
         <item name="colorPrimaryDark">@color/bga_pp_colorPrimaryDark</item>
-        <!-- toolbar（actionbar）背景颜色 -->
+        
         <item name="colorPrimary">@color/bga_pp_colorPrimary</item>
-        <!-- 底部导航栏的颜色 -->
+        
         <item name="android:navigationBarColor" ns1:targetApi="lollipop">@color/bga_pp_navigationBarColor</item>
     </style>
 </resources>
