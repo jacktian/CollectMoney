@@ -141,14 +141,15 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
         pendSeq = p;
         decideSeq = d;
         recommendSeq = r;
+        if (futureItems.size() < PAGE_SIZE) {
+            friendFutureRV.disableLoadmore();
+        }
+        if (futureItems.size() <= 0) return;
         friendFutureList.clear();
         for (TIMFriendFutureItem item : futureItems) {
             friendFutureList.add(new FriendFuture(item));
         }
         friendFutureAdapter.appendList(friendFutureList);
-        if (futureItems.size() < PAGE_SIZE) {
-            friendFutureRV.disableLoadmore();
-        }
     }
 
     @Override

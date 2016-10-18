@@ -345,6 +345,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
 
 
     public void updateUnreadConversationBubble() {
+        if (null == unreadConversationBubbleTV) return;
         long unreadCount = getTotalConversationUnreadNum();
         if (unreadCount <= 0) {
             unreadConversationBubbleTV.setVisibility(View.INVISIBLE);
@@ -443,22 +444,21 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
         @Override
         public void gotResult(int code, String alias, Set<String> tags) {
-            String logs;
+//            String logs;
             switch (code) {
                 case 0:
-                    logs = "Set tag and alias success";
+//                    logs = "Set tag and alias success";
                     // 建议这里往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
                     SharedPreferencesUtils.setString(MainActivity.this, "push_alias", alias);
                     break;
                 case 6002:
-                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
+//                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
                     // 延迟 60 秒来调用 Handler 设置别名
                     mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
                     break;
                 default:
-                    logs = "Failed with errorCode = " + code;
+//                    logs = "Failed with errorCode = " + code;
             }
-//            showSnackbar(logs);
         }
     };
     private static final int MSG_SET_ALIAS = 1001;

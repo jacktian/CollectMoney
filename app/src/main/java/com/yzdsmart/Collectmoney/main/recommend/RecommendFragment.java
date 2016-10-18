@@ -147,11 +147,12 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     public void onGetExpandList(List<ExpandListRequestResponse> expands) {
 //        bubbleCountTV.setText("" + expands.size());
         pageIndex++;
-        expandList.clear();
-        expandList.addAll(expands);
-        recommendAdapter.appendList(expandList);
         if (expands.size() < PAGE_SIZE) {
             recommendListRV.disableLoadmore();
         }
+        if (expands.size() <= 0) return;
+        expandList.clear();
+        expandList.addAll(expands);
+        recommendAdapter.appendList(expandList);
     }
 }

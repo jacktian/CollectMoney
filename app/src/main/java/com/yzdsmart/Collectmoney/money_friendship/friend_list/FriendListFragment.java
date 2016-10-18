@@ -111,6 +111,10 @@ public class FriendListFragment extends BaseFragment implements FriendListContra
         this.timeStampNow = timeStampNow;
         this.startIndex = startIndex;
         this.currentStandardSequence = sequence;
+        if (friends.size() < PAGE_SIZE) {
+            friendProfileListRV.disableLoadmore();
+        }
+        if (friends.size() <= 0) return;
         friendshipList.clear();
 //        List<Friendship> list = new ArrayList<Friendship>();
 //        list.add(new Friendship("", "", "", "", "艾伦", "file:///android_asset/album_pic.png", null, null, 1, 2));
@@ -131,9 +135,6 @@ public class FriendListFragment extends BaseFragment implements FriendListContra
 //        friendshipList.addAll(list);
         friendshipList.addAll(friends);
         friendListAdapter.appendList(friendshipList);
-        if (friends.size() < PAGE_SIZE) {
-            friendProfileListRV.disableLoadmore();
-        }
     }
 
     @Override

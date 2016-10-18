@@ -84,6 +84,7 @@ public class RecommendFriendsFragment extends BaseFragment implements RecommendF
 
     @Override
     public void onGetRecommendFriends(List<Friendship> friendships) {
+        if (friendships.size() <= 0) return;
         friendshipList.clear();
         friendshipList.addAll(friendships);
         recommendFriendsAdapter.appendList(friendshipList);

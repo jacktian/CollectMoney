@@ -63,10 +63,10 @@ public class SearchFriendAdapter extends RecyclerView.Adapter<SearchFriendAdapte
      * 清除列表
      */
     public void clearList() {
-        if (null != profileSummaryList) {
+        if (null != profileSummaryList && profileSummaryList.size() > 0) {
             profileSummaryList.clear();
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
     }
 
     @Override

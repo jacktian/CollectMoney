@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.PersonalWithdrawLog;
@@ -58,10 +59,10 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
      * 清除列表
      */
     public void clearPersonalList() {
-        if (null != personalWithdrawLogs) {
+        if (null != personalWithdrawLogs && personalWithdrawLogs.size() > 0) {
             personalWithdrawLogs.clear();
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
     }
 
     /**
@@ -80,17 +81,10 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
      * 清除列表
      */
     public void clearShopList() {
-        if (null != shopWithdrawLogs) {
+        if (null != shopWithdrawLogs && shopWithdrawLogs.size() > 0) {
             shopWithdrawLogs.clear();
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.withdraw_log_item, parent, false);
-        WithDrawLogAdapter.ViewHolder holder = new WithDrawLogAdapter.ViewHolder(itemView);
-        return holder;
     }
 
     @Override
@@ -105,7 +99,25 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        return null;
+        View itemView = LayoutInflater.from(context).inflate(R.layout.withdraw_log_item, parent, false);
+        WithDrawLogAdapter.ViewHolder holder = new WithDrawLogAdapter.ViewHolder(itemView);
+        return holder;
+    }
+
+    @Override
+    public int getAdapterItemCount() {
+        switch (userType) {
+            case 0:
+                return personalWithdrawLogs.size();
+            case 1:
+                return shopWithdrawLogs.size();
+        }
+        return 0;
+    }
+
+    @Override
+    public long generateHeaderId(int position) {
+        return 0;
     }
 
     @Override
@@ -141,34 +153,8 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
 
     }
 
-    @Override
-    public int getItemCount() {
-        switch (userType) {
-            case 0:
-                return personalWithdrawLogs.size();
-            case 1:
-                return shopWithdrawLogs.size();
-        }
-        return 0;
-    }
 
-    @Override
-    public int getAdapterItemCount() {
-        switch (userType) {
-            case 0:
-                return personalWithdrawLogs.size();
-            case 1:
-                return shopWithdrawLogs.size();
-        }
-        return 0;
-    }
-
-    @Override
-    public long generateHeaderId(int position) {
-        return 0;
-    }
-
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends UltimateRecyclerviewViewHolder {
         @Nullable
         @BindView(R.id.withdraw_date)
         TextView withdrawDateTV;

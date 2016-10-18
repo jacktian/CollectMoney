@@ -141,12 +141,13 @@ public class ScanCoinsLogActivity extends BaseActivity implements ScanCoinsLogCo
     public void onGetCoinsLog(List<GetCoinsLog> logList, Integer lastsequence) {
         this.lastsequence = lastsequence;
         pageIndex++;
-        this.logList.clear();
-        this.logList.addAll(logList);
-        personalCoinsAdapter.appendList(this.logList);
         if (logList.size() < PAGE_SIZE) {
             coinListRV.disableLoadmore();
         }
+        if (logList.size() <= 0) return;
+        this.logList.clear();
+        this.logList.addAll(logList);
+        personalCoinsAdapter.appendList(this.logList);
     }
 
     @Override

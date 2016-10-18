@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@android:color/white"
     android:orientation="horizontal"
     android:padding="@dimen/activity_horizontal_padding">
 
@@ -24,7 +24,7 @@
                 android:gravity="center_horizontal"
                 android:singleLine="true"
                 android:text=""
-                android:textColor="@color/grey"
+                android:textColor="@color/font_grey"
                 android:textSize="@dimen/font_xx_small" />
 
             <TextView
@@ -34,7 +34,7 @@
                 android:gravity="center_horizontal"
                 android:singleLine="true"
                 android:text=""
-                android:textColor="@color/grey"
+                android:textColor="@color/font_grey"
                 android:textSize="@dimen/font_xx_small" />
         </LinearLayout>
 

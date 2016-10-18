@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.ScannedLog;
@@ -49,10 +50,10 @@ public class ShopScannedLogAdapter extends UltimateViewAdapter<ShopScannedLogAda
      * 清除列表
      */
     public void clearList() {
-        if (null != scannedLogs) {
+        if (null != scannedLogs && scannedLogs.size() > 0) {
             scannedLogs.clear();
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
     }
 
     @Override
@@ -101,7 +102,7 @@ public class ShopScannedLogAdapter extends UltimateViewAdapter<ShopScannedLogAda
 
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends UltimateRecyclerviewViewHolder {
         @Nullable
         @BindView(R.id.scanner_user_avater)
         CircleImageView scannerAvaterIV;

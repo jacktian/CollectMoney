@@ -128,12 +128,13 @@ public class ShopFocuserActivity extends BaseActivity implements ShopFocuserCont
         pageIndex++;
         focuserCounts += shopFocusers.size();
         focuserCountsTV.setText("" + focuserCounts);
-        shopFocuserList.clear();
-        shopFocuserList.addAll(shopFocusers);
-        shopFocuserAdapter.appendList(shopFocuserList);
         if (shopFocusers.size() < PAGE_SIZE) {
             shopFocuserRV.disableLoadmore();
         }
+        if (shopFocusers.size() <= 0) return;
+        shopFocuserList.clear();
+        shopFocuserList.addAll(shopFocusers);
+        shopFocuserAdapter.appendList(shopFocuserList);
     }
 
     @Override

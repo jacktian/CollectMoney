@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
@@ -52,17 +53,10 @@ public class FocusedShopAdapter extends UltimateViewAdapter<FocusedShopAdapter.V
      * 清除列表
      */
     public void clearList() {
-        if (null != focusedShops) {
+        if (null != focusedShops && focusedShops.size() > 0) {
             focusedShops.clear();
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.focused_shop_item, parent, false);
-        FocusedShopAdapter.ViewHolder holder = new FocusedShopAdapter.ViewHolder(itemView);
-        return holder;
     }
 
     @Override
@@ -77,7 +71,19 @@ public class FocusedShopAdapter extends UltimateViewAdapter<FocusedShopAdapter.V
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        return null;
+        View itemView = LayoutInflater.from(context).inflate(R.layout.focused_shop_item, parent, false);
+        FocusedShopAdapter.ViewHolder holder = new FocusedShopAdapter.ViewHolder(itemView);
+        return holder;
+    }
+
+    @Override
+    public int getAdapterItemCount() {
+        return focusedShops.size();
+    }
+
+    @Override
+    public long generateHeaderId(int position) {
+        return 0;
     }
 
     @Override
@@ -109,22 +115,7 @@ public class FocusedShopAdapter extends UltimateViewAdapter<FocusedShopAdapter.V
 
     }
 
-    @Override
-    public int getItemCount() {
-        return focusedShops.size();
-    }
-
-    @Override
-    public int getAdapterItemCount() {
-        return focusedShops.size();
-    }
-
-    @Override
-    public long generateHeaderId(int position) {
-        return 0;
-    }
-
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends UltimateRecyclerviewViewHolder {
         @Nullable
         @BindView(R.id.focused_shop_avater)
         ImageView shopAvaterIV;

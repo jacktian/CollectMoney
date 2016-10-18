@@ -25,12 +25,6 @@ public class SplashActivity extends AppIntro2 {
     }
 
     @Override
-    protected void onPageSelected(int position) {
-        super.onPageSelected(position);
-        System.out.println(getSlides().size() + "------------->" + position);
-    }
-
-    @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         startMain();

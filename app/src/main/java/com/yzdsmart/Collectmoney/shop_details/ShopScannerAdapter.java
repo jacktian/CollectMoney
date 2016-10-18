@@ -57,10 +57,10 @@ public class ShopScannerAdapter extends RecyclerView.Adapter<ShopScannerAdapter.
      * 清除列表
      */
     public void clearList() {
-        if (null != shopScannerList) {
+        if (null != shopScannerList && shopScannerList.size() > 0) {
             shopScannerList.clear();
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
     }
 
     @Override

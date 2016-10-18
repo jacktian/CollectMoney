@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.PublishTaskLog;
@@ -52,17 +53,10 @@ public class PublishTasksAdapter extends UltimateViewAdapter<PublishTasksAdapter
      * 清除列表
      */
     public void clearList() {
-        if (null != logList) {
+        if (null != logList && logList.size() > 0) {
             logList.clear();
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.publish_task_log_item, parent, false);
-        PublishTasksAdapter.ViewHolder holder = new PublishTasksAdapter.ViewHolder(itemView);
-        return holder;
     }
 
     @Override
@@ -77,7 +71,19 @@ public class PublishTasksAdapter extends UltimateViewAdapter<PublishTasksAdapter
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        return null;
+        View itemView = LayoutInflater.from(context).inflate(R.layout.publish_task_log_item, parent, false);
+        PublishTasksAdapter.ViewHolder holder = new PublishTasksAdapter.ViewHolder(itemView);
+        return holder;
+    }
+
+    @Override
+    public int getAdapterItemCount() {
+        return logList.size();
+    }
+
+    @Override
+    public long generateHeaderId(int position) {
+        return 0;
     }
 
     @Override
@@ -101,22 +107,7 @@ public class PublishTasksAdapter extends UltimateViewAdapter<PublishTasksAdapter
 
     }
 
-    @Override
-    public int getItemCount() {
-        return logList.size();
-    }
-
-    @Override
-    public int getAdapterItemCount() {
-        return logList.size();
-    }
-
-    @Override
-    public long generateHeaderId(int position) {
-        return 0;
-    }
-
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends UltimateRecyclerviewViewHolder {
         @Nullable
         @BindView(R.id.start_date)
         TextView startDateTV;

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.ShopFocuser;
@@ -50,17 +51,10 @@ public class ShopFocuserAdapter extends UltimateViewAdapter<ShopFocuserAdapter.V
      * 清除列表
      */
     public void clearList() {
-        if (null != shopFocusers) {
+        if (null != shopFocusers && shopFocusers.size() > 0) {
             shopFocusers.clear();
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.shop_focuser_list_item, parent, false);
-        ShopFocuserAdapter.ViewHolder holder = new ShopFocuserAdapter.ViewHolder(itemView);
-        return holder;
     }
 
     @Override
@@ -75,7 +69,19 @@ public class ShopFocuserAdapter extends UltimateViewAdapter<ShopFocuserAdapter.V
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        return null;
+        View itemView = LayoutInflater.from(context).inflate(R.layout.shop_focuser_list_item, parent, false);
+        ShopFocuserAdapter.ViewHolder holder = new ShopFocuserAdapter.ViewHolder(itemView);
+        return holder;
+    }
+
+    @Override
+    public int getAdapterItemCount() {
+        return shopFocusers.size();
+    }
+
+    @Override
+    public long generateHeaderId(int position) {
+        return 0;
     }
 
     @Override
@@ -96,22 +102,7 @@ public class ShopFocuserAdapter extends UltimateViewAdapter<ShopFocuserAdapter.V
 
     }
 
-    @Override
-    public int getItemCount() {
-        return shopFocusers.size();
-    }
-
-    @Override
-    public int getAdapterItemCount() {
-        return shopFocusers.size();
-    }
-
-    @Override
-    public long generateHeaderId(int position) {
-        return 0;
-    }
-
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends UltimateRecyclerviewViewHolder {
         @Nullable
         @BindView(R.id.focuser_user_avater)
         CircleImageView userAvaterIV;

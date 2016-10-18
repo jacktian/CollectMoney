@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_grey"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <!--<EditText-->
@@ -28,6 +26,5 @@
     <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
         android:id="@+id/friend_profile_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/activity_vertical_margin" />
+        android:layout_height="match_parent" />
 </LinearLayout>

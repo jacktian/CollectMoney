@@ -178,11 +178,13 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     public void onBuyCoinsLog(List<BuyCoinsLog> logList, Integer lastsequence) {
         this.lastsequence = lastsequence;
         pageIndex++;
-        this.logList.clear();
-        this.logList.addAll(logList);
-        buyCoinsLogAdapter.appendList(this.logList);
         if (logList.size() < PAGE_SIZE) {
             coinListRV.disableLoadmore();
         }
+        if (logList.size() <= 0) return;
+        this.logList.clear();
+        this.logList.addAll(logList);
+        buyCoinsLogAdapter.appendList(this.logList);
+
     }
 }

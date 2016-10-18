@@ -146,11 +146,12 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
     public void onPublishTaskLog(List<PublishTaskLog> logList, Integer lastsequence) {
         this.lastsequence = lastsequence;
         pageIndex++;
-        this.logList.clear();
-        this.logList.addAll(logList);
-        publishTasksAdapter.appendList(this.logList);
         if (logList.size() < PAGE_SIZE) {
             publishListRV.disableLoadmore();
         }
+        if (logList.size() <= 0) return;
+        this.logList.clear();
+        this.logList.addAll(logList);
+        publishTasksAdapter.appendList(this.logList);
     }
 }

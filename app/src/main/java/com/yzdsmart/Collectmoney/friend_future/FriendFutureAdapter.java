@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.tencent.TIMFriendAddResponse;
 import com.tencent.TIMFriendResponseType;
@@ -20,9 +21,7 @@ import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.Friendship;
 import com.yzdsmart.Collectmoney.tecent_im.bean.FriendFuture;
-import com.yzdsmart.Collectmoney.tecent_im.bean.FriendshipInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,17 +62,10 @@ public class FriendFutureAdapter extends UltimateViewAdapter<FriendFutureAdapter
      * 清除列表
      */
     public void clearList() {
-        if (null != friendFutureList) {
+        if (null != friendFutureList && friendFutureList.size() > 0) {
             friendFutureList.clear();
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.friendship_friendfuture_list_item, parent, false);
-        FriendFutureAdapter.ViewHolder holder = new FriendFutureAdapter.ViewHolder(itemView);
-        return holder;
     }
 
     @Override
@@ -88,7 +80,19 @@ public class FriendFutureAdapter extends UltimateViewAdapter<FriendFutureAdapter
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        return null;
+        View itemView = LayoutInflater.from(context).inflate(R.layout.friendship_friendfuture_list_item, parent, false);
+        FriendFutureAdapter.ViewHolder holder = new FriendFutureAdapter.ViewHolder(itemView);
+        return holder;
+    }
+
+    @Override
+    public int getAdapterItemCount() {
+        return friendFutureList.size();
+    }
+
+    @Override
+    public long generateHeaderId(int position) {
+        return 0;
     }
 
     @Override
@@ -124,22 +128,7 @@ public class FriendFutureAdapter extends UltimateViewAdapter<FriendFutureAdapter
 
     }
 
-    @Override
-    public int getItemCount() {
-        return friendFutureList.size();
-    }
-
-    @Override
-    public int getAdapterItemCount() {
-        return friendFutureList.size();
-    }
-
-    @Override
-    public long generateHeaderId(int position) {
-        return 0;
-    }
-
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends UltimateRecyclerviewViewHolder {
         @Nullable
         @BindViews({R.id.friend_user_level, R.id.friend_user_diamond_count})
         List<View> hideViews;

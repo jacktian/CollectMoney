@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -154,24 +153,26 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
     public void onGetPersonalWithdrawLog(List<PersonalWithdrawLog> personalWithdrawLogs, Integer lastsequence) {
         this.lastsequence = lastsequence;
         pageIndex++;
-        personalWithdrawLogList.clear();
-        personalWithdrawLogList.addAll(personalWithdrawLogs);
-        withDrawLogAdapter.appendPersonalLogList(personalWithdrawLogList);
         if (personalWithdrawLogs.size() < PAGE_SIZE) {
             withdrawLogTV.disableLoadmore();
         }
+        if (personalWithdrawLogs.size() <= 0) return;
+        personalWithdrawLogList.clear();
+        personalWithdrawLogList.addAll(personalWithdrawLogs);
+        withDrawLogAdapter.appendPersonalLogList(personalWithdrawLogList);
     }
 
     @Override
     public void onGetShopWithdrawLog(List<ShopWithdrawLog> shopWithdrawLogs, Integer lastsequence) {
         this.lastsequence = lastsequence;
         pageIndex++;
-        shopWithdrawLogList.clear();
-        shopWithdrawLogList.addAll(shopWithdrawLogs);
-        withDrawLogAdapter.appendShopLogList(shopWithdrawLogList);
         if (shopWithdrawLogs.size() < PAGE_SIZE) {
             withdrawLogTV.disableLoadmore();
         }
+        if (shopWithdrawLogs.size() <= 0) return;
+        shopWithdrawLogList.clear();
+        shopWithdrawLogList.addAll(shopWithdrawLogs);
+        withDrawLogAdapter.appendShopLogList(shopWithdrawLogList);
     }
 
     @Override

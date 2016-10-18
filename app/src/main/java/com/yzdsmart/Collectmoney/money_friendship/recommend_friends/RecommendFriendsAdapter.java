@@ -65,10 +65,10 @@ public class RecommendFriendsAdapter extends UltimateViewAdapter<RecommendFriend
      * 清除数据
      */
     public void clearList() {
-        if (null != friendshipList) {
+        if (null != friendshipList && friendshipList.size() > 0) {
             friendshipList.clear();
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
     }
 
     @Override
@@ -169,23 +169,21 @@ public class RecommendFriendsAdapter extends UltimateViewAdapter<RecommendFriend
         }
 
         public void setUserSignature(String userTCAccount) {
-            //获取用户资料
-            TIMFriendshipManager.getInstance().getUsersProfile(Collections.singletonList(userTCAccount), new TIMValueCallBack<List<TIMUserProfile>>() {
-                @Override
-                public void onError(int code, String desc) {
-                    //错误码code和错误描述desc，可用于定位请求失败原因
-                    //错误码code列表请参见错误码表
-                }
-
-                @Override
-                public void onSuccess(List<TIMUserProfile> result) {
-                    for (TIMUserProfile res : result) {
-//                        Log.e(tag, "identifier: " + res.getIdentifier() + " nickName: " + res.getNickName()
-//                                + " remark: " + res.getRemark());
-                        userSignatureTV.setText("".equals(res.getSelfSignature()) ? "用户个性签名" : res.getSelfSignature());
-                    }
-                }
-            });
+//            //获取用户资料
+//            TIMFriendshipManager.getInstance().getUsersProfile(Collections.singletonList(userTCAccount), new TIMValueCallBack<List<TIMUserProfile>>() {
+//                @Override
+//                public void onError(int code, String desc) {
+//                    //错误码code和错误描述desc，可用于定位请求失败原因
+//                    //错误码code列表请参见错误码表
+//                }
+//
+//                @Override
+//                public void onSuccess(List<TIMUserProfile> result) {
+//                    for (TIMUserProfile res : result) {
+//                        userSignatureTV.setText("".equals(res.getSelfSignature()) ? "用户个性签名" : res.getSelfSignature());
+//                    }
+//                }
+//            });
         }
     }
 }

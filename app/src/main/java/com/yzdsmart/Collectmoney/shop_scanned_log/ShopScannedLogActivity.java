@@ -133,11 +133,12 @@ public class ShopScannedLogActivity extends BaseActivity implements ShopScannedL
     public void onGetScannedLog(List<ScannedLog> scannedLogs, Integer lastsequence) {
         this.lastsequence = lastsequence;
         pageIndex++;
-        scannedLogList.clear();
-        scannedLogList.addAll(scannedLogs);
-        shopScannedLogAdapter.appendList(scannedLogList);
         if (scannedLogs.size() < PAGE_SIZE) {
             scannedLogRV.disableLoadmore();
         }
+        if (scannedLogs.size() <= 0) return;
+        scannedLogList.clear();
+        scannedLogList.addAll(scannedLogs);
+        shopScannedLogAdapter.appendList(scannedLogList);
     }
 }

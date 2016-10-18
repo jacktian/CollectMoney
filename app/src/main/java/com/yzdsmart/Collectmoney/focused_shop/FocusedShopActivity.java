@@ -108,12 +108,14 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
     @Override
     public void onGetFocusedShopList(List<FocusedShop> focusedShops) {
         pageIndex++;
-        focusedShopList.clear();
-        focusedShopList.addAll(focusedShops);
-        focusedShopAdapter.appendList(focusedShopList);
         if (focusedShops.size() < PAGE_SIZE) {
             focusedShopRV.disableLoadmore();
         }
+        if (focusedShops.size() <= 0) return;
+        focusedShopList.clear();
+        focusedShopList.addAll(focusedShops);
+        focusedShopAdapter.appendList(focusedShopList);
+
     }
 
     @Override

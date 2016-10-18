@@ -71,10 +71,10 @@ public class FriendListAdapter extends UltimateViewAdapter<FriendListAdapter.Vie
      * 清除数据
      */
     public void clearList() {
-        if (null != friendshipList) {
+        if (null != friendshipList && friendshipList.size() > 0) {
             friendshipList.clear();
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
     }
 
     @Override

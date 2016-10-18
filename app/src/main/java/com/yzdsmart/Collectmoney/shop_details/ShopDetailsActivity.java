@@ -300,16 +300,16 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         }
         isAtte = CANCEL_FOCUS_CODE.equals(action) ? false : true;
         isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.shop_detail_focused) : getResources().getDrawable(R.mipmap.shop_detail_not_focus));
-
         mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
     }
 
     @Override
     public void onGetShopFollowers(List<ShopScanner> shopScanners) {
+        pageIndex++;
+        if (shopScanners.size() <= 0) return;
         shopScannerList.clear();
         shopScannerList.addAll(shopScanners);
         shopScannerAdapter.appenList(shopScannerList);
-        pageIndex++;
     }
 
     class ShopGalleyViewHolder implements Holder<String> {

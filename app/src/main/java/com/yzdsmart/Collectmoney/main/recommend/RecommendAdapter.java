@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
@@ -51,17 +52,10 @@ public class RecommendAdapter extends UltimateViewAdapter<RecommendAdapter.ViewH
      * 清除记录
      */
     public void clearList() {
-        if (null != expandList) {
+        if (null != expandList && expandList.size() > 0) {
             expandList.clear();
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.recommend_expand_list_item, parent, false);
-        RecommendAdapter.ViewHolder holder = new RecommendAdapter.ViewHolder(itemView);
-        return holder;
     }
 
     @Override
@@ -76,11 +70,23 @@ public class RecommendAdapter extends UltimateViewAdapter<RecommendAdapter.ViewH
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        return null;
+        View itemView = LayoutInflater.from(context).inflate(R.layout.recommend_expand_list_item, parent, false);
+        RecommendAdapter.ViewHolder holder = new RecommendAdapter.ViewHolder(itemView);
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public int getAdapterItemCount() {
+        return expandList.size();
+    }
+
+    @Override
+    public long generateHeaderId(int position) {
+        return 0;
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
         holder.setAttractionImg(expandList.get(position).getImageUrl());
         holder.setAttractionName(expandList.get(position).getName());
     }
@@ -95,22 +101,7 @@ public class RecommendAdapter extends UltimateViewAdapter<RecommendAdapter.ViewH
 
     }
 
-    @Override
-    public int getItemCount() {
-        return expandList.size();
-    }
-
-    @Override
-    public int getAdapterItemCount() {
-        return expandList.size();
-    }
-
-    @Override
-    public long generateHeaderId(int position) {
-        return 0;
-    }
-
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends UltimateRecyclerviewViewHolder {
         @Nullable
         @BindView(R.id.recommend_item_image)
         ImageView attractionImgIV;
