@@ -27,8 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:textColor="@android:color/black"
-            android:textSize="17sp" />
+            android:textColor="@color/font_black"
+            android:textSize="@dimen/font_medium" />
 
         <TextView
             android:id="@+id/last_message"
@@ -36,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:singleLine="true"
-            android:textColor="@color/tecent_text_gray1"
-            android:textSize="14sp" />
+            android:textColor="@color/font_grey"
+            android:textSize="@dimen/font_small" />
     </LinearLayout>
 
     <LinearLayout
@@ -51,8 +51,8 @@
             android:id="@+id/message_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/tecent_text_gray1"
-            android:textSize="12sp" />
+            android:textColor="@color/font_grey"
+            android:textSize="@dimen/font_x_small" />
 
         <TextView
             android:id="@+id/unread_num"
@@ -62,8 +62,8 @@
             android:layout_marginTop="3dp"
             android:gravity="center"
             android:minWidth="16dp"
-            android:textColor="@color/white"
-            android:textSize="11sp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_xx_small"
             android:visibility="invisible" />
     </LinearLayout>
 

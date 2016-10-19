@@ -106,7 +106,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
     protected void onResume() {
         super.onResume();
         mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
-        mPresenter.getCustDetailInfo("000000", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
+        mPresenter.getCustDetailInfo("000000", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "cust_code", ""));
     }
 
     @Override

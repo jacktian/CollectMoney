@@ -202,12 +202,12 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         switch (type) {
             case 0:
                 mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
-                mPresenter.getCustDetailInfo("000000", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
+                mPresenter.getCustDetailInfo("000000", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "cust_code", ""));
                 mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
                 break;
             case 1:
                 mPresenter.getCustInfo("000000", friend_c_code);
-                mPresenter.getCustDetailInfo("000000", "000000", friend_c_code);
+                mPresenter.getCustDetailInfo("000000", "000000", friend_c_code, SharedPreferencesUtils.getString(this, "cust_code", ""));
                 mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", friend_c_code);
                 break;
         }

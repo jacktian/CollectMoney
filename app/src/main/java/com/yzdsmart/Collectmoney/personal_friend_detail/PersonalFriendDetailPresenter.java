@@ -89,9 +89,9 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
     }
 
     @Override
-    public void getCustDetailInfo(String actioncode, String submitCode, String custCode) {
+    public void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustDetailInfo(actioncode, submitCode, custCode, new RequestListener() {
+        mModel.getCustDetailInfo(actioncode, submitCode, custCode, selfCustCode, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 CustDetailInfoRequestResponse response = (CustDetailInfoRequestResponse) result;

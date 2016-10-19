@@ -48,9 +48,10 @@ public interface EditPersonalInfoContract {
          * @param actioncode
          * @param submitCode
          * @param custCode
+         * @param selfCustCode
          * @return
          */
-        void getCustDetailInfo(String actioncode, String submitCode, String custCode);
+        void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode);
 
         /**
          * 设置用户详细信息

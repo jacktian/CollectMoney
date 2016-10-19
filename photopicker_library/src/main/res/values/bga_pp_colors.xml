@@ -8,7 +8,7 @@
     <color name="bga_pp_colorPrimary">#f20044</color>
 
     <!-- 图片选择器库里所有Activity界面的背景色 -->
-    <color name="bga_pp_activity_bg">#1A1A1A</color>
+    <color name="bga_pp_activity_bg">#f7f7f7</color>
 
     <!-- 图片处于选中状态时的遮罩层颜色 -->
     <color name="bga_pp_photo_selected_mask">#4D000000</color>

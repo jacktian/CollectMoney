@@ -27,8 +27,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textColor="@color/font_black"
+            android:textSize="@dimen/font_medium" />
 
         <TextView
             android:id="@+id/description"

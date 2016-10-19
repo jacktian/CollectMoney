@@ -150,11 +150,12 @@ public interface RequestService {
      * @param actioncode
      * @param submitCode
      * @param custCode
+     * @param selfCustCode
      * @return
      */
     @FormUrlEncoded
     @POST(Url.CUST)
-    Observable<CustDetailInfoRequestResponse> getCustDetailInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode);
+    Observable<CustDetailInfoRequestResponse> getCustDetailInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("SelfCustCode") String selfCustCode);
 
     /**
      * 设置云通讯用户信息

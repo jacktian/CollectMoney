@@ -42,5 +42,4 @@
         android:src="@mipmap/bga_pp_ic_arrow_down"
         tools:background="#6C9FFC" />
 
-
 </RelativeLayout>

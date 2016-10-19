@@ -73,9 +73,10 @@ public interface PersonalFriendDetailContract {
          * @param actioncode
          * @param submitCode
          * @param custCode
+         * @param selfCustCode
          * @return
          */
-        void getCustDetailInfo(String actioncode, String submitCode, String custCode);
+        void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode);
 
         /**
          * 添加好友

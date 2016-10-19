@@ -239,7 +239,14 @@
                     "endOffset": 1426
                 },
                 "from": {
-                    "file": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\src\\main\\res\\values\\bga_pp_colors.xml"
+                    "file": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\src\\main\\res\\values\\bga_pp_colors.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 339,
+                        "endColumn": 52,
+                        "endOffset": 387
+                    }
                 }
             },
             {
@@ -287,14 +294,7 @@
                     "endOffset": 1668
                 },
                 "from": {
-                    "file": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\src\\main\\res\\values\\bga_pp_colors.xml",
-                    "position": {
-                        "startLine": 7,
-                        "startColumn": 4,
-                        "startOffset": 244,
-                        "endColumn": 53,
-                        "endOffset": 293
-                    }
+                    "file": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\src\\main\\res\\values\\bga_pp_colors.xml"
                 }
             },
             {
@@ -306,14 +306,7 @@
                     "endOffset": 1726
                 },
                 "from": {
-                    "file": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\src\\main\\res\\values\\bga_pp_colors.xml",
-                    "position": {
-                        "startLine": 3,
-                        "startColumn": 4,
-                        "startOffset": 78,
-                        "endColumn": 57,
-                        "endOffset": 131
-                    }
+                    "file": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\src\\main\\res\\values\\bga_pp_colors.xml"
                 }
             },
             {
@@ -361,14 +354,7 @@
                     "endOffset": 2007
                 },
                 "from": {
-                    "file": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\src\\main\\res\\values\\bga_pp_colors.xml",
-                    "position": {
-                        "startLine": 5,
-                        "startColumn": 4,
-                        "startOffset": 158,
-                        "endColumn": 59,
-                        "endOffset": 213
-                    }
+                    "file": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\src\\main\\res\\values\\bga_pp_colors.xml"
                 }
             },
             {

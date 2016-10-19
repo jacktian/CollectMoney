@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="http://schemas.android.com/tools">
-    <color name="bga_pp_activity_bg">#1A1A1A</color>
+    <color name="bga_pp_activity_bg">#f7f7f7</color>
     <color name="bga_pp_btn_confirm_disabled">#8017C7D1</color>
     <color name="bga_pp_btn_confirm_enabled">#17C7D1</color>
     <color name="bga_pp_btn_confirm_pressed">#CC17C7D1</color>

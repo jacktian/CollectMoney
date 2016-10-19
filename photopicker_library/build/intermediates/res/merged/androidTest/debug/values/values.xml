@@ -19,7 +19,7 @@
     <color name="background_floating_material_light">@android:color/white</color>
     <color name="background_material_dark">@color/material_grey_850</color>
     <color name="background_material_light">@color/material_grey_50</color>
-    <color name="bga_pp_activity_bg">#1A1A1A</color>
+    <color name="bga_pp_activity_bg">#f7f7f7</color>
     <color name="bga_pp_btn_confirm_disabled">#8017C7D1</color>
     <color name="bga_pp_btn_confirm_enabled">#17C7D1</color>
     <color name="bga_pp_btn_confirm_pressed">#CC17C7D1</color>

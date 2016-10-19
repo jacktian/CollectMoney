@@ -19,9 +19,10 @@ public interface SettingsContract {
          * @param actioncode
          * @param submitCode
          * @param custCode
+         * @param selfCustCode
          * @return
          */
-        void getCustDetailInfo(String actioncode, String submitCode, String custCode);
+        void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode);
 
         void unRegisterSubscribe();
     }

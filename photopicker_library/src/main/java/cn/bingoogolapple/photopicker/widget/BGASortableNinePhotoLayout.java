@@ -14,8 +14,11 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.androidcommon.adapter.BGAOnRVItemClickListener;
@@ -302,14 +305,25 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
         mDelegate = delegate;
     }
 
+    public void toggleDeleteRes(String model, int deleteResId) {
+        mPhotoAdapter.setDeleteIV(model, deleteResId);
+    }
+
     private class PhotoAdapter extends BGARecyclerViewAdapter<String> {
         private int mImageWidth;
         private int mImageHeight;
+        private Map<String, ImageView> deleteImageViews;
+
+        public void setDeleteIV(String model, int deleteResId) {
+            ImageView deleteIV = deleteImageViews.get(model);
+            deleteIV.setImageDrawable(getResources().getDrawable(deleteResId));
+        }
 
         public PhotoAdapter(RecyclerView recyclerView) {
             super(recyclerView, R.layout.bga_pp_item_nine_photo);
             mImageWidth = BGAPhotoPickerUtil.getScreenWidth(recyclerView.getContext()) / 6;
             mImageHeight = mImageWidth;
+            deleteImageViews = new HashMap<String, ImageView>();
         }
 
         @Override
@@ -331,12 +345,15 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
             if (isPlusItem(position)) {
                 return null;
             }
-
-            return super.getItem(position);
+            if (mIsPlusSwitchOpened) {
+                return super.getItem(position - 1);
+            } else {
+                return super.getItem(position);
+            }
         }
 
         public boolean isPlusItem(int position) {
-            return mIsPlusSwitchOpened && super.getItemCount() < mMaxItemCount && position == getItemCount() - 1;
+            return mIsPlusSwitchOpened && super.getItemCount() < mMaxItemCount && position == 0;
         }
 
         @Override
@@ -348,6 +365,7 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
                 helper.setVisibility(R.id.iv_item_nine_photo_flag, View.GONE);
                 helper.setImageResource(R.id.iv_item_nine_photo_photo, mPlusDrawableResId);
             } else {
+                deleteImageViews.put(model, helper.getImageView(R.id.iv_item_nine_photo_flag));
                 helper.setVisibility(R.id.iv_item_nine_photo_flag, View.VISIBLE);
                 helper.setImageResource(R.id.iv_item_nine_photo_flag, mDeleteDrawableResId);
                 BGAImage.displayImage(mActivity, helper.getImageView(R.id.iv_item_nine_photo_photo), model, R.mipmap.bga_pp_ic_holder_light, R.mipmap.bga_pp_ic_holder_light, mImageWidth, mImageHeight, null);

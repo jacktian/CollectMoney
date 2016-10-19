@@ -65,7 +65,8 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     private String custCode;
     private List<GalleyInfo> galleyInfoList;
     private ArrayList<String> deleteGalleys;
-    private List<Integer> deleteFileList;
+    private List<Integer> deleteFileIdList;
+    private List<String> deleteFilePathList;
 
     private boolean isGalleyOperated = false;
 
@@ -110,12 +111,13 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
 
         galleyInfoList = new ArrayList<GalleyInfo>();
         deleteGalleys = new ArrayList<String>();
-        deleteFileList = new ArrayList<Integer>();
+        deleteFileIdList = new ArrayList<Integer>();
+        deleteFilePathList = new ArrayList<String>();
 
         identityType = getIntent().getExtras().getInt("identity");
         custCode = getIntent().getExtras().getString("cust_code");
 //        galleyInfoList = getIntent().getExtras().getParcelableArrayList("galleys");
-
+        mPhotosSnpl.setMaxItemCount(Integer.MAX_VALUE);
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
 
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
@@ -221,7 +223,6 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     @Optional
     @OnClick({R.id.title_left_operation_layout, R.id.right_title, R.id.delete_galley})
     void onClick(View view) {
-        Bundle bundle;
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
@@ -229,11 +230,12 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
             case R.id.right_title:
                 if (mPhotosSnpl.getData().size() <= 0) return;
                 isGalleyOperated = !isGalleyOperated;
+                deleteFilePathList.clear();
+                deleteFileIdList.clear();
                 if (isGalleyOperated) {
                     rightTitleTV.setText("取消");
-                    mPhotosSnpl.setDeleteDrawableResId(R.mipmap.galley_delete_unchecked);
+                    mPhotosSnpl.setDeleteDrawableResId(R.mipmap.bga_pp_ic_cb_normal);
                     mPhotosSnpl.setIsPlusSwitchOpened(false);
-                    deleteGalley.setEnabled(true);
                 } else {
                     rightTitleTV.setText("选择");
                     mPhotosSnpl.setDeleteDrawableResId(0);
@@ -248,22 +250,25 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                 mPhotosSnpl.setDeleteDrawableResId(0);
                 deleteGalley.setEnabled(false);
                 mPhotosSnpl.setIsPlusSwitchOpened(true);
-                deleteFileList.clear();
-                for (String path : mPhotosSnpl.getData()) {
+                mPhotosSnpl.refresh();
+                deleteFileIdList.clear();
+                for (String path : deleteFilePathList) {
                     for (GalleyInfo galleyInfo : galleyInfoList) {
                         if (galleyInfo.getImageFileUrl().equals(path)) {
-                            deleteFileList.add(galleyInfo.getFileId());
+                            deleteFileIdList.add(galleyInfo.getFileId());
                         }
                     }
                 }
                 switch (identityType) {
                     case 0:
-                        mPresenter.deletePersonalGalley(PERSONAL_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), deleteFileList);
+                        mPresenter.deletePersonalGalley(PERSONAL_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), deleteFileIdList);
                         break;
                     case 1:
-                        mPresenter.deleteShopGalley(SHOP_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), deleteFileList);
+                        mPresenter.deleteShopGalley(SHOP_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), deleteFileIdList);
                         break;
                 }
+                deleteFilePathList.clear();
+                deleteFileIdList.clear();
                 break;
         }
     }
@@ -285,20 +290,32 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     @Override
     public void onClickDeleteNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
         System.out.println(position + "--------" + model + "--------" + models);
-        mPhotosSnpl.removeItem(position);
-        if (mPhotosSnpl.getData().size() <= 0) {
-            rightTitleTV.setText("选择");
-            isGalleyOperated = false;
-            mPhotosSnpl.setDeleteDrawableResId(0);
-            deleteGalley.setEnabled(false);
-            mPhotosSnpl.setIsPlusSwitchOpened(true);
+        if (deleteFilePathList.contains(model)) {
+            deleteFilePathList.remove(model);
+            mPhotosSnpl.toggleDeleteRes(model, R.mipmap.bga_pp_ic_cb_normal);
+        } else {
+            deleteFilePathList.add(model);
+            mPhotosSnpl.toggleDeleteRes(model, R.mipmap.bga_pp_ic_cb_checked);
         }
+        if (deleteFilePathList.size() <= 0) {
+            deleteGalley.setEnabled(false);
+        } else {
+            deleteGalley.setEnabled(true);
+        }
+//        mPhotosSnpl.removeItem(position);
+//        if (mPhotosSnpl.getData().size() <= 0) {
+//            rightTitleTV.setText("选择");
+//            isGalleyOperated = false;
+//            mPhotosSnpl.setDeleteDrawableResId(0);
+//            deleteGalley.setEnabled(false);
+//            mPhotosSnpl.setIsPlusSwitchOpened(true);
+//        }
     }
 
     @Override
     public void onClickNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
         if (isGalleyOperated) return;
-        startActivityForResult(BGAPhotoViewActivity.newIntent(this, Integer.MAX_VALUE, models, models, position, false), REQUEST_CODE_PHOTO_PREVIEW);
+        startActivityForResult(BGAPhotoViewActivity.newIntent(this, Integer.MAX_VALUE, models, models, position - 1, false), REQUEST_CODE_PHOTO_PREVIEW);
     }
 
     @Override

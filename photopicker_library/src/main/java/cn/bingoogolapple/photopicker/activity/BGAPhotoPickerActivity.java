@@ -1,5 +1,6 @@
 package cn.bingoogolapple.photopicker.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -253,6 +254,7 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
     /**
      * 显示只能选择 mMaxChooseCount 张图的提示
      */
+    @SuppressLint("StringFormatMatches")
     private void toastMaxCountTip() {
         BGAPhotoPickerUtil.show(this, getString(R.string.bga_pp_toast_photo_picker_max, mMaxChooseCount));
     }
