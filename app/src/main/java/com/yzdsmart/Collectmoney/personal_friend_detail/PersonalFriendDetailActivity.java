@@ -378,7 +378,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 break;
             case 1:
                 if (null != response.getCNickRemark() && !"".equals(response.getCNickRemark())) {
-                    userRemarkTV.setText(response.getCRemark());
+                    userRemarkTV.setText(response.getCNickRemark());
                 } else if (null != response.getCNickName() && !"".equals(response.getCNickName())) {
                     userRemarkTV.setText(response.getCNickName());
                 } else if (null != response.getCName() && !"".equals(response.getCName())) {

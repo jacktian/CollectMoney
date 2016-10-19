@@ -20,11 +20,13 @@ import android.widget.TextView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.ShopScanner;
+import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.main.personal.ShopImageBannerHolderView;
@@ -107,6 +109,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
     private ArrayList<Integer> localImages;//默认banner图片
     private ArrayList<String> shopImageList;
+    private ArrayList<String> galleyImages;
 
     private String shopPhoneNumber;
     private String shopCoor;
@@ -119,6 +122,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         localImages = new ArrayList<Integer>();
         localImages.add(R.mipmap.shop_banner);
         shopImageList = new ArrayList<String>();
+        galleyImages = new ArrayList<String>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         ButterKnife.apply(showViews, BUTTERKNIFEVISIBLE);
@@ -128,12 +132,23 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
         new ShopDetailsPresenter(this, this);
 
-        shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
+//        shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
+//            @Override
+//            public ShopImageBannerHolderView createHolder() {
+//                return new ShopImageBannerHolderView();
+//            }
+//        }, localImages);
+
+        shopImagesBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public ShopImageBannerHolderView createHolder() {
-                return new ShopImageBannerHolderView();
+            public void onItemClick(int position) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("identity", 1);
+                bundle.putInt("type", 1);
+                bundle.putString("cust_code", bazaCode);
+                openActivity(GalleyPreviewActivity.class, bundle, 0);
             }
-        }, localImages);
+        });
 
         shopScannerList = new ArrayList<ShopScanner>();
         shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "三毛", "http://y3.ifengimg.com/haina/2016_06/048f23be371c78c_w432_h520.jpg", "男", 888, "昨天", "54673646"));
@@ -268,22 +283,31 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.shop_detail_focused) : getResources().getDrawable(R.mipmap.shop_detail_not_focus));
         shopCoor = shopDetails.getCoor();
         Glide.with(this).load(shopDetails.getLogoImageUrl()).asBitmap().placeholder(getResources().getDrawable(R.mipmap.ic_holder_light)).error(getResources().getDrawable(R.mipmap.ic_holder_light)).into(shopAvaterIV);
+        if (shopDetails.getImageLists().size() <= 0) return;
         shopImageList.clear();
         shopImageList.addAll(shopDetails.getImageLists());
         if (shopImageList.size() <= 0) {
-            shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
-                @Override
-                public ShopImageBannerHolderView createHolder() {
-                    return new ShopImageBannerHolderView();
-                }
-            }, localImages);
+            ButterKnife.apply(shopImagesBanner, BUTTERKNIFEGONE);
+//            shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
+//                @Override
+//                public ShopImageBannerHolderView createHolder() {
+//                    return new ShopImageBannerHolderView();
+//                }
+//            }, localImages);
         } else {
+            ButterKnife.apply(shopImagesBanner, BUTTERKNIFEVISIBLE);
+            for (int i = 0; i < shopImageList.size(); i++) {
+                galleyImages.add(shopImageList.get(i));
+                if (i == 3) {
+                    break;
+                }
+            }
             shopImagesBanner.setPages(new CBViewHolderCreator<ShopDetailsActivity.ShopGalleyViewHolder>() {
                 @Override
                 public ShopDetailsActivity.ShopGalleyViewHolder createHolder() {
                     return new ShopDetailsActivity.ShopGalleyViewHolder();
                 }
-            }, shopImageList)
+            }, galleyImages)
                     //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
                     .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
                     //设置指示器的方向
@@ -305,8 +329,8 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
     @Override
     public void onGetShopFollowers(List<ShopScanner> shopScanners) {
-        pageIndex++;
         if (shopScanners.size() <= 0) return;
+        pageIndex++;
         shopScannerList.clear();
         shopScannerList.addAll(shopScanners);
         shopScannerAdapter.appenList(shopScannerList);

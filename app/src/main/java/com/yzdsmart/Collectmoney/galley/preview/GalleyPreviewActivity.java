@@ -115,6 +115,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
         deleteFilePathList = new ArrayList<String>();
 
         identityType = getIntent().getExtras().getInt("identity");
+        userType = getIntent().getExtras().getInt("type");
         custCode = getIntent().getExtras().getString("cust_code");
 //        galleyInfoList = getIntent().getExtras().getParcelableArrayList("galleys");
         mPhotosSnpl.setMaxItemCount(Integer.MAX_VALUE);
@@ -123,7 +124,6 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         switch (identityType) {
             case 0:
-                userType = getIntent().getExtras().getInt("type");
                 switch (userType) {
                     case 0:
                         centerTitleTV.setText("我的相册");
@@ -140,11 +140,21 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                 }
                 break;
             case 1:
-                centerTitleTV.setText("商铺相册");
-                rightTitleTV.setText("选择");
-                ButterKnife.apply(showViews, BUTTERKNIFEVISIBLE);
+                switch (userType) {
+                    case 0:
+                        centerTitleTV.setText("我的商铺相册");
+                        rightTitleTV.setText("选择");
+                        ButterKnife.apply(showViews, BUTTERKNIFEVISIBLE);
 //                ButterKnife.apply(deleteGalleyLayout, BUTTERKNIFEVISIBLE);
-                ButterKnife.apply(deleteGalley, BUTTERKNIFEVISIBLE);
+                        ButterKnife.apply(deleteGalley, BUTTERKNIFEVISIBLE);
+                        break;
+                    case 1:
+                        centerTitleTV.setText("店铺相册");
+                        mPhotosSnpl.setIsPlusSwitchOpened(false);
+                        ButterKnife.apply(deleteGalley, BUTTERKNIFEGONE);
+                        break;
+                }
+
                 break;
         }
 
@@ -155,7 +165,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                 mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", custCode);
                 break;
             case 1:
-                mPresenter.getShopGalley(SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "baza_code", ""));
+                mPresenter.getShopGalley(SHOP_GALLEY_ACTION_CODE, "000000", custCode);
                 break;
         }
 
@@ -235,12 +245,10 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                 if (isGalleyOperated) {
                     rightTitleTV.setText("取消");
                     mPhotosSnpl.setDeleteDrawableResId(R.mipmap.bga_pp_ic_cb_normal);
-                    mPhotosSnpl.setIsPlusSwitchOpened(false);
                 } else {
                     rightTitleTV.setText("选择");
                     mPhotosSnpl.setDeleteDrawableResId(0);
                     deleteGalley.setEnabled(false);
-                    mPhotosSnpl.setIsPlusSwitchOpened(true);
                 }
                 mPhotosSnpl.refresh();
                 break;
@@ -275,6 +283,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
 
     @Override
     public void onClickAddNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, ArrayList<String> models) {
+        if (isGalleyOperated) return;
         // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
         File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "CollectMoney");
         switch (identityType) {
@@ -289,7 +298,6 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
 
     @Override
     public void onClickDeleteNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
-        System.out.println(position + "--------" + model + "--------" + models);
         if (deleteFilePathList.contains(model)) {
             deleteFilePathList.remove(model);
             mPhotosSnpl.toggleDeleteRes(model, R.mipmap.bga_pp_ic_cb_normal);

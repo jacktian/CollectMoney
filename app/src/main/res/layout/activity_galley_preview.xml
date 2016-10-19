@@ -17,13 +17,6 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/common_toolbar_height">
 
-        <!--<FrameLayout-->
-        <!--android:id="@+id/delete_galley_layout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:visibility="visible">-->
-
         <Button
             android:id="@+id/delete_galley"
             android:layout_width="match_parent"
@@ -35,7 +28,6 @@
             android:text="删除"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_large" />
-        <!--</FrameLayout>-->
 
         <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
             android:id="@+id/snpl_delete_photos"
