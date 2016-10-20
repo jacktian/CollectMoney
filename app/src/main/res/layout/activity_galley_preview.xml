@@ -35,7 +35,7 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/galley_delete_button_height"
             app:bga_snpl_isPlusSwitchOpened="true"
-            app:bga_snpl_isSortable="true"
+            app:bga_snpl_isSortable="false"
             app:bga_snpl_itemSpanCount="3" />
     </RelativeLayout>
 

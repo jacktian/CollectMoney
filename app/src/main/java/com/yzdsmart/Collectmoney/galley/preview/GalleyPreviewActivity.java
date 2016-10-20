@@ -72,8 +72,8 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
 
     private static final String PERSONAL_GALLEY_ACTION_CODE = "2102";
     private static final String SHOP_GALLEY_ACTION_CODE = "5101";
-    private static final String PERSONAL_GALLEY_DELETE_ACTION_CODE = "4102";
-    private static final String SHOP_GALLEY_DELETE_ACTION_CODE = "4201";
+    private static final String PERSONAL_GALLEY_DELETE_ACTION_CODE = "4102";//删除个人相册
+    private static final String SHOP_GALLEY_DELETE_ACTION_CODE = "4201";//删除商铺相册
     private static final String PERSONAL_UPLOAD_ACTION_CODE = "2102";//上传个人相册
     private static final String SHOP_UPLOAD_ACTION_CODE = "5101";//上传商铺相册
 
@@ -248,8 +248,6 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                 mPhotosSnpl.setGalleyOperated(false);
                 mPhotosSnpl.setDeleteDrawableResId(0);
                 deleteGalley.setEnabled(false);
-                mPhotosSnpl.setIsPlusSwitchOpened(true);
-                mPhotosSnpl.refresh();
                 deleteFileIdList.clear();
                 for (String path : deleteFilePathList) {
                     for (GalleyInfo galleyInfo : galleyInfoList) {
