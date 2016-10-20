@@ -4,7 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CollectMoney.iml" filepath="$PROJECT_DIR$/CollectMoney.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bdwallet_pay_sdk/bdwallet_pay_sdk.iml" filepath="$PROJECT_DIR$/bdwallet_pay_sdk/bdwallet_pay_sdk.iml" />
       <module fileurl="file://$PROJECT_DIR$/photopicker_library/photopicker_library.iml" filepath="$PROJECT_DIR$/photopicker_library/photopicker_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pingpp/pingpp.iml" filepath="$PROJECT_DIR$/pingpp/pingpp.iml" />
     </modules>
   </component>
 </project>
