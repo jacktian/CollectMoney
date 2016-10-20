@@ -56,9 +56,6 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     @Nullable
     @BindView(R.id.delete_galley)
     Button deleteGalley;
-//    @Nullable
-//    @BindView(R.id.delete_galley_layout)
-//    FrameLayout deleteGalleyLayout;
 
     private Integer identityType;//0 个人 1 商铺
     private Integer userType;//0 自身 1 好友
@@ -117,7 +114,6 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
         identityType = getIntent().getExtras().getInt("identity");
         userType = getIntent().getExtras().getInt("type");
         custCode = getIntent().getExtras().getString("cust_code");
-//        galleyInfoList = getIntent().getExtras().getParcelableArrayList("galleys");
         mPhotosSnpl.setMaxItemCount(Integer.MAX_VALUE);
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
 
@@ -129,7 +125,6 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                         centerTitleTV.setText("我的相册");
                         rightTitleTV.setText("选择");
                         ButterKnife.apply(showViews, BUTTERKNIFEVISIBLE);
-//                        ButterKnife.apply(deleteGalleyLayout, BUTTERKNIFEVISIBLE);
                         ButterKnife.apply(deleteGalley, BUTTERKNIFEVISIBLE);
                         break;
                     case 1:
@@ -145,7 +140,6 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                         centerTitleTV.setText("我的商铺相册");
                         rightTitleTV.setText("选择");
                         ButterKnife.apply(showViews, BUTTERKNIFEVISIBLE);
-//                ButterKnife.apply(deleteGalleyLayout, BUTTERKNIFEVISIBLE);
                         ButterKnife.apply(deleteGalley, BUTTERKNIFEVISIBLE);
                         break;
                     case 1:
@@ -189,12 +183,6 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
         // 设置拖拽排序控件的代理
         mPhotosSnpl.setDelegate(this);
         mPhotosSnpl.setDeleteDrawableResId(0);
-
-//        deleteGalleys.clear();
-//        for (GalleyInfo galleyInfo : galleyInfoList) {
-//            deleteGalleys.add(galleyInfo.getImageFileUrl());
-//        }
-//        mPhotosSnpl.setData(deleteGalleys);
     }
 
     @Override
@@ -244,9 +232,11 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                 deleteFileIdList.clear();
                 if (isGalleyOperated) {
                     rightTitleTV.setText("取消");
+                    mPhotosSnpl.setGalleyOperated(true);
                     mPhotosSnpl.setDeleteDrawableResId(R.mipmap.bga_pp_ic_cb_normal);
                 } else {
                     rightTitleTV.setText("选择");
+                    mPhotosSnpl.setGalleyOperated(false);
                     mPhotosSnpl.setDeleteDrawableResId(0);
                     deleteGalley.setEnabled(false);
                 }
@@ -255,6 +245,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
             case R.id.delete_galley:
                 rightTitleTV.setText("选择");
                 isGalleyOperated = false;
+                mPhotosSnpl.setGalleyOperated(false);
                 mPhotosSnpl.setDeleteDrawableResId(0);
                 deleteGalley.setEnabled(false);
                 mPhotosSnpl.setIsPlusSwitchOpened(true);
@@ -310,14 +301,6 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
         } else {
             deleteGalley.setEnabled(true);
         }
-//        mPhotosSnpl.removeItem(position);
-//        if (mPhotosSnpl.getData().size() <= 0) {
-//            rightTitleTV.setText("选择");
-//            isGalleyOperated = false;
-//            mPhotosSnpl.setDeleteDrawableResId(0);
-//            deleteGalley.setEnabled(false);
-//            mPhotosSnpl.setIsPlusSwitchOpened(true);
-//        }
     }
 
     @Override

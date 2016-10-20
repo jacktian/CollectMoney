@@ -49,6 +49,15 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
     private int mItemSpanCount = 3;
     private int mPlusDrawableResId = R.mipmap.bga_pp_ic_plus;
     private Activity mActivity;
+    private boolean isGalleyOperated = false;
+    private Map<String, Boolean> itemState;
+
+    public void setGalleyOperated(boolean galleyOperated) {
+        isGalleyOperated = galleyOperated;
+        if (!isGalleyOperated) {
+            itemState.clear();
+        }
+    }
 
     public BGASortableNinePhotoLayout(Context context) {
         this(context, null);
@@ -60,6 +69,8 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
 
     public BGASortableNinePhotoLayout(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
+        itemState = new HashMap<String, Boolean>();
 
         setOverScrollMode(OVER_SCROLL_NEVER);
 
@@ -317,6 +328,11 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
         public void setDeleteIV(String model, int deleteResId) {
             ImageView deleteIV = deleteImageViews.get(model);
             deleteIV.setImageDrawable(getResources().getDrawable(deleteResId));
+            if (R.mipmap.bga_pp_ic_cb_normal == deleteResId) {
+                itemState.put(model, false);
+            } else {
+                itemState.put(model, true);
+            }
         }
 
         public PhotoAdapter(RecyclerView recyclerView) {
@@ -367,7 +383,15 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
             } else {
                 deleteImageViews.put(model, helper.getImageView(R.id.iv_item_nine_photo_flag));
                 helper.setVisibility(R.id.iv_item_nine_photo_flag, View.VISIBLE);
-                helper.setImageResource(R.id.iv_item_nine_photo_flag, mDeleteDrawableResId);
+                if (isGalleyOperated) {
+                    if (null == itemState.get(model) || false == itemState.get(model)) {
+                        helper.setImageResource(R.id.iv_item_nine_photo_flag, R.mipmap.bga_pp_ic_cb_normal);
+                    } else {
+                        helper.setImageResource(R.id.iv_item_nine_photo_flag, R.mipmap.bga_pp_ic_cb_checked);
+                    }
+                } else {
+                    helper.setImageResource(R.id.iv_item_nine_photo_flag, mDeleteDrawableResId);
+                }
                 BGAImage.displayImage(mActivity, helper.getImageView(R.id.iv_item_nine_photo_photo), model, R.mipmap.bga_pp_ic_holder_light, R.mipmap.bga_pp_ic_holder_light, mImageWidth, mImageHeight, null);
             }
         }
