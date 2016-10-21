@@ -19,6 +19,8 @@ import android.view.WindowManager;
 import android.widget.CheckedTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
@@ -116,6 +118,11 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (null != savedInstanceState) {
+            mCurrentFragment = getFragmentManager().getFragment(savedInstanceState, "currentFragment");
+        }
+
         conversationList = new LinkedList<Conversation>();
         pgConversationList = new ArrayList<Conversation>();
 
@@ -216,6 +223,28 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
     protected void onDestroy() {
         mPresenter.unRegisterObserver();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        getFragmentManager().putFragment(outState, "currentFragment", mCurrentFragment);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        FragmentTransaction ft = fm.beginTransaction();
+        for (int i = 0; i < imBottomTab.getChildCount(); i++) {
+            RadioButton mTab = (RadioButton) (((RelativeLayout) imBottomTab.getChildAt(i)).getChildAt(0));
+            Fragment fragment = fm.findFragmentByTag((String) mTab.getTag());
+            if (null != fragment) {
+                if (!mTab.isChecked()) {
+                    ft.hide(fragment);
+                }
+            }
+        }
+        ft.commitAllowingStateLoss();
     }
 
     @Override

@@ -12,6 +12,8 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tencent.TIMConversation;
@@ -62,6 +64,9 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     @BindView(R.id.unread_conversation_bubble)
     TextView unreadConversationBubbleTV;
 
+    //连续双击返回键退出程序
+    private Long lastKeyDown = 0l;
+
     private FragmentManager fm;
     private Fragment mCurrentFragment;
 
@@ -86,6 +91,9 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (null != savedInstanceState) {
+            mCurrentFragment = getFragmentManager().getFragment(savedInstanceState, "currentFragment");
+        }
 
         mainActivity = this;
 
@@ -245,9 +253,40 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
                 if (!(mCurrentFragment instanceof FindMoneyFragment)) {
                     backToFindMoney();
                     return true;
+                } else {
+                    Long currentTime = System.currentTimeMillis();
+                    if (1000 > (currentTime - lastKeyDown)) {
+                        App.getAppInstance().exitApp();
+                    } else {
+                        showSnackbar(getResources().getString(R.string.double_click_exit));
+                        lastKeyDown = currentTime;
+                    }
+                    return true;
                 }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        getFragmentManager().putFragment(outState, "currentFragment", mCurrentFragment);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        FragmentTransaction ft = fm.beginTransaction();
+        for (int i = 0; i < mainBottomTab.getChildCount(); i++) {
+            RadioButton mTab = (RadioButton) (((RelativeLayout) mainBottomTab.getChildAt(i)).getChildAt(0));
+            Fragment fragment = fm.findFragmentByTag((String) mTab.getTag());
+            if (null != fragment) {
+                if (!mTab.isChecked()) {
+                    ft.hide(fragment);
+                }
+            }
+        }
+        ft.commitAllowingStateLoss();
     }
 
     @Override
