@@ -61,7 +61,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     private Integer userType;//0 自身 1 好友
     private String custCode;
     private List<GalleyInfo> galleyInfoList;
-    private ArrayList<String> deleteGalleys;
+    private ArrayList<String> galleys;
     private List<Integer> deleteFileIdList;
     private List<String> deleteFilePathList;
 
@@ -107,7 +107,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
         super.onCreate(savedInstanceState);
 
         galleyInfoList = new ArrayList<GalleyInfo>();
-        deleteGalleys = new ArrayList<String>();
+        galleys = new ArrayList<String>();
         deleteFileIdList = new ArrayList<Integer>();
         deleteFilePathList = new ArrayList<String>();
 
@@ -265,7 +265,6 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                         break;
                 }
                 deleteFilePathList.clear();
-                deleteFileIdList.clear();
                 break;
         }
     }
@@ -310,13 +309,14 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     @Override
     public void onGetPersonalGalley(List<GalleyInfo> galleyInfos) {
         galleyInfoList.clear();
-        deleteGalleys.clear();
+        galleys.clear();
+        mPhotosSnpl.removeAllViews();
+        if (galleyInfos.size() <= 0) return;
         galleyInfoList.addAll(galleyInfos);
         for (GalleyInfo galleyInfo : galleyInfoList) {
-            deleteGalleys.add(galleyInfo.getImageFileUrl());
+            galleys.add(galleyInfo.getImageFileUrl());
         }
-        mPhotosSnpl.removeAllViews();
-        mPhotosSnpl.setData(deleteGalleys);
+        mPhotosSnpl.setData(galleys);
     }
 
     @Override
@@ -328,13 +328,13 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     @Override
     public void onGetShopGalley(List<GalleyInfo> galleyInfos) {
         galleyInfoList.clear();
-        deleteGalleys.clear();
+        galleys.clear();
         galleyInfoList.addAll(galleyInfos);
         for (GalleyInfo galleyInfo : galleyInfoList) {
-            deleteGalleys.add(galleyInfo.getImageFileUrl());
+            galleys.add(galleyInfo.getImageFileUrl());
         }
         mPhotosSnpl.removeAllViews();
-        mPhotosSnpl.setData(deleteGalleys);
+        mPhotosSnpl.setData(galleys);
     }
 
     @Override
