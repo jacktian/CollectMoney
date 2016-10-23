@@ -61,13 +61,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.alibaba:fastjson:1.1.54.android'
-    compile files('libs/baidumapapi_base_v4_0_0.jar')
-    compile files('libs/baidumapapi_cloud_v4_0_0.jar')
-    compile files('libs/baidumapapi_map_v4_0_0.jar')
-    compile files('libs/baidumapapi_radar_v4_0_0.jar')
-    compile files('libs/baidumapapi_search_v4_0_0.jar')
-    compile files('libs/baidumapapi_util_v4_0_0.jar')
-    compile files('libs/locSDK_6.23.jar')
+    compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/imsdk.jar')
     compile files('libs/mobilepb.jar')
     compile files('libs/org.apache.http.legacy.jar')
