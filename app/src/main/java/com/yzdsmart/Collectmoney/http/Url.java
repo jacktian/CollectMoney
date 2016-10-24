@@ -25,4 +25,6 @@ public class Url {
     public static final String IMAGE = "Image";
     public static final String SHOP = "Shop";
 
+    public static final String PING_PLUS_PLUS_URL = "http://218.244.151.190/demo/charge";
+
 }

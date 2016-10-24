@@ -29,6 +29,7 @@
             android:textSize="@dimen/font_xx_small" />
 
         <com.yzdsmart.Collectmoney.views.CustomNestRadioGroup
+            android:id="@+id/pay_type_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/white_panel_top_bottom_border"

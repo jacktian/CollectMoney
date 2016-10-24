@@ -14,11 +14,14 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
+import com.pingplusplus.android.PingppLog;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.BuyCoinsLog;
+import com.yzdsmart.Collectmoney.bean.PaymentRequest;
 import com.yzdsmart.Collectmoney.publish_tasks.PublishTasksActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
+import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +35,7 @@ import butterknife.Optional;
 /**
  * Created by YZD on 2016/9/4.
  */
-public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.BuyCoinsView {
+public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.BuyCoinsView, CustomNestRadioGroup.OnCheckedChangeListener {
     @Nullable
     @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout})
     List<View> hideViews;
@@ -52,6 +55,21 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     private static final String BUY_COIN_CODE = "66";
     private static final String BUY_COIN_LOG_CODE = "688";
     private static final Float GOLD_FORMAT_RMB_RATIO = 1.0f;
+
+    /**
+     * 银联支付渠道
+     */
+    private static final String CHANNEL_UPACP = "upacp";
+    /**
+     * 微信支付渠道
+     */
+    private static final String CHANNEL_WECHAT = "wx";
+    /**
+     * 支付宝支付渠道
+     */
+    private static final String CHANNEL_ALIPAY = "alipay";
+
+    private Integer payType = 1;//支付方式 0 银联 1 微信 2 支付宝
 
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
@@ -120,12 +138,18 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
             }
         });
 
+        initPingPlusPlus();
+
         mPresenter.buyCoinsLog(BUY_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
     }
 
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_buy_coins;
+    }
+
+    private void initPingPlusPlus() {
+        PingppLog.DEBUG = true;
     }
 
     @Optional
@@ -141,7 +165,26 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                     return;
                 }
 //                showMoveDialog(this, Integer.valueOf(coinCountsET.getText().toString()));
-                mPresenter.buyCoins(BUY_COIN_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()));
+//                mPresenter.buyCoins(BUY_COIN_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()));
+                orderPayPPP();
+                break;
+        }
+    }
+
+    //订单支付(Ping++)
+    private void orderPayPPP() {
+        Integer amount = Integer.valueOf(coinCountsET.getText().toString());
+        // 支付宝 微信支付 银联
+        PaymentRequest paymentRequest;
+        switch (payType) {
+            case 0:
+                paymentRequest = new PaymentRequest(CHANNEL_UPACP, amount);
+                break;
+            case 1:
+                paymentRequest = new PaymentRequest(CHANNEL_WECHAT, amount);
+                break;
+            case 2:
+                paymentRequest = new PaymentRequest(CHANNEL_ALIPAY, amount);
                 break;
         }
     }
@@ -185,6 +228,17 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         this.logList.clear();
         this.logList.addAll(logList);
         buyCoinsLogAdapter.appendList(this.logList);
+    }
 
+    @Override
+    public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
+        switch (group.getCheckedRadioButtonId()) {
+            case R.id.wechat_pay_radio:
+                payType = 1;
+                break;
+            case R.id.union_pay_radio:
+                payType = 0;
+                break;
+        }
     }
 }
