@@ -60,19 +60,19 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     @BindView(R.id.user_pwd)
     EditText userPasswordET;
 
-    //腾讯
+    //腾讯开始
     public static final String mTecentAppid = "1105651703";
     public static Tencent mTencent;
-    //腾讯
+    //腾讯结束
 
-    //微博
+    //微博开始
     /**
-     * 当前 DEMO 应用的 APP_KEY，第三方应用应该使用自己的 APP_KEY 替换该 APP_KEY
+     * 当前应用的 APP_KEY，第三方应用应该使用自己的 APP_KEY 替换该 APP_KEY
      */
     public static final String APP_KEY = "1371063102";
 
     /**
-     * 当前 DEMO 应用的回调页，第三方应用可以使用自己的回调页。
+     * 当前应用的回调页，第三方应用可以使用自己的回调页。
      * <p>
      * <p>
      * 注：关于授权回调页对移动客户端应用来说对用户是不可见的，所以定义为何种形式都将不影响，
@@ -119,9 +119,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
      * 登陆认证对应的listener
      */
     private AuthListener mLoginListener = new AuthListener();
-    //微博
+    //微博结束
 
-    //微信
+    //微信开始
     private static final String APP_ID = "wx1f0757f65d97d285";
     //IWXAPI是第三方app和微信通信的openapi接口
     private IWXAPI iwxapi;
@@ -132,7 +132,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         iwxapi = WXAPIFactory.createWXAPI(this, APP_ID, true);
         iwxapi.registerApp(APP_ID);
     }
-    //微信
+    //微信结束
 
     private LoginContract.LoginPresenter mPresenter;
 
@@ -145,6 +145,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         centerTitleTV.setText(getResources().getString(R.string.login));
         userPasswordET.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
+        new LoginPresenter(this, this);
+
         //腾讯
         if (null == mTencent) {
             mTencent = Tencent.createInstance(mTecentAppid, App.getAppInstance());
@@ -153,8 +155,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         //微博
         // 创建授权认证信息
         mAuthInfo = new AuthInfo(this, APP_KEY, REDIRECT_URL, SCOPE);
-
-        new LoginPresenter(this, this);
     }
 
     @Override
@@ -163,8 +163,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.login_register_confirm_button})
-//    , R.id.platform_wechat, R.id.platform_qq, R.id.platform_webo
+    @OnClick({R.id.title_left_operation_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.login_register_confirm_button, R.id.platform_wechat, R.id.platform_qq, R.id.platform_webo})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -211,7 +210,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                 if (mSsoHandler != null) {
                     mSsoHandler.authorize(mLoginListener);
                 } else {
-                    showSnackbar("Please setWeiboAuthInfo(...) for first");
+                    showSnackbar("请首先设置微博认证信息");
                 }
                 break;
         }
