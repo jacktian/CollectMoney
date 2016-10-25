@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -20,14 +19,12 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.Overlay;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
@@ -49,12 +46,11 @@ import com.yzdsmart.Collectmoney.BaseFragment;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bd_map.WalkingRouteOverlay;
 import com.yzdsmart.Collectmoney.main.MainActivity;
-import com.yzdsmart.Collectmoney.main.personal.PersonalFragment;
+import com.yzdsmart.Collectmoney.main.recommend.RecommendFragment;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.register_login.login.LoginActivity;
 import com.yzdsmart.Collectmoney.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
-import com.yzdsmart.Collectmoney.utils.Utils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -75,7 +71,7 @@ import butterknife.Optional;
  */
 public class FindMoneyFragment extends BaseFragment implements FindMoneyContract.FindMoneyView, OnGetRoutePlanResultListener {
     @Nullable
-    @BindViews({R.id.left_title, R.id.title_logo})
+    @BindViews({R.id.title_left_operation_layout, R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout})
     List<View> hideViews;
     @Nullable
     @BindView(R.id.center_title)
@@ -221,27 +217,19 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.title_right_operation_layout, R.id.loc_scan_coins})
+    @OnClick({R.id.find_money_scan, R.id.find_money_recommend, R.id.loc_scan_coins})
     void onClick(View view) {
         Fragment fragment;
+        Bundle bundle;
         switch (view.getId()) {
-            case R.id.title_left_operation_layout:
+            case R.id.find_money_scan:
                 if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
                     ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
                     return;
                 }
-                fragment = fm.findFragmentByTag("personal");
-                if (null == fragment) {
-                    fragment = new PersonalFragment();
-                }
-                ((MainActivity) getActivity()).addOrShowFragment(fragment, "personal");
-                break;
-            case R.id.title_right_operation_layout:
-                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
-                    return;
-                }
-                showMoveDialog(getActivity());
+                bundle = new Bundle();
+                bundle.putInt("scanType", 0);
+                ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
                 break;
             case R.id.loc_scan_coins:
                 if (null != marketMarker) {
@@ -257,6 +245,13 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                     overlay.remove();
                 }
                 mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE);
+                break;
+            case R.id.find_money_recommend:
+                fragment = fm.findFragmentByTag("recommend");
+                if (null == fragment) {
+                    fragment = new RecommendFragment();
+                }
+                ((MainActivity) getActivity()).addOrShowFragment(fragment, "recommend");
                 break;
         }
     }

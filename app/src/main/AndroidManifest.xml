@@ -11,11 +11,12 @@
 
     <!-- Required -->
     <permission
-        android:name="com.yzdsmart.Collectmoney.permission.JPUSH_MESSAGE"
+        android:name="${applicationId}.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-    <!-- Required -->
-    <uses-permission android:name="com.yzdsmart.Collectmoney.permission.JPUSH_MESSAGE" />
+    <!-- Required  一些系统要求的权限，如访问网络等-->
+    <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+
     <!-- 允许程序打开网络套接字权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 保持屏幕常亮所需权限 -->
@@ -113,6 +114,11 @@
 
         <activity
             android:name=".register_login.set_info.SetInfoActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".personal.PersonalActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop" />
 
@@ -466,7 +472,7 @@
 
         <!-- User defined.  For test only  用户自定义的广播接收器-->
         <receiver
-            android:name=".jpush.JpushReceiver"
+            android:name=".jpush.MyReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -479,6 +485,14 @@
                 <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
+        <!-- Required Enable it you can get statistics data with channel -->
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="a0c8b782b83671836c5dd547" /> <!--  </>值来自开发者平台取得的AppKey-->
+        <!--极光推送结束-->
 
         <!--ping++开始-->
         <!-- Ping++ SDK -->
@@ -511,15 +525,6 @@
             android:name="com.unionpay.uppay.PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
         <!--ping++结束-->
-
-        <!-- Required Enable it you can get statistics data with channel -->
-        <meta-data
-            android:name="JPUSH_CHANNEL"
-            android:value="developer-default" />
-        <meta-data
-            android:name="JPUSH_APPKEY"
-            android:value="a0c8b782b83671836c5dd547" /> <!--  </>值来自开发者平台取得的AppKey-->
-        <!--极光推送结束-->
 
         <!-- 配置APP ID -->
         <meta-data

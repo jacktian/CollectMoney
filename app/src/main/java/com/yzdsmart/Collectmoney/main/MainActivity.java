@@ -24,9 +24,9 @@ import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.find_money.FindMoneyFragment;
-import com.yzdsmart.Collectmoney.main.recommend.RecommendFragment;
 import com.yzdsmart.Collectmoney.money_friendship.MoneyFriendshipActivity;
 import com.yzdsmart.Collectmoney.money_friendship.conversation.ConversationFragment;
+import com.yzdsmart.Collectmoney.personal.PersonalActivity;
 import com.yzdsmart.Collectmoney.register_login.login.LoginActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.Conversation;
 import com.yzdsmart.Collectmoney.tecent_im.bean.CustomMessage;
@@ -112,8 +112,9 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
 
         imLogin();
 
-        registerMessageReceiver();  // used for receive msg
         initJPush();
+
+        registerMessageReceiver();  // used for receive msg
     }
 
     @Override
@@ -133,9 +134,6 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         isForeground = true;
         updateUnreadConversationBubble();
         super.onResume();
-//        if (!(mCurrentFragment instanceof FindMoneyFragment)) {
-//            backToFindMoney();
-//        }
     }
 
     @Override
@@ -179,12 +177,19 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
         Fragment fragment;
         switch (group.getCheckedRadioButtonId()) {
-            case R.id.recommend_radio:
-                fragment = fm.findFragmentByTag("recommend");
-                if (null == fragment) {
-                    fragment = new RecommendFragment();
+            case R.id.personal_radio:
+                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
+                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    group.clearCheck();
+                    return;
                 }
-                addOrShowFragment(fragment, "recommend");
+                openActivity(PersonalActivity.class);
+                fragment = fm.findFragmentByTag("find");
+                if (null == fragment) {
+                    fragment = new FindMoneyFragment();
+                }
+                addOrShowFragment(fragment, "find");
+                group.clearCheck();
                 break;
             case R.id.money_friend_radio:
                 if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
@@ -444,7 +449,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
 
     //for receive customer msg from jpush server
     private MessageReceiver mMessageReceiver;
-    public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
+    public static final String MESSAGE_RECEIVED_ACTION = "com.yzdsmart.Collectmoney.MESSAGE_RECEIVED_ACTION";
     public static final String KEY_TITLE = "title";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
@@ -483,21 +488,22 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
         @Override
         public void gotResult(int code, String alias, Set<String> tags) {
-//            String logs;
+            String logs;
             switch (code) {
                 case 0:
-//                    logs = "Set tag and alias success";
+                    logs = "Set tag and alias success";
                     // 建议这里往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
                     SharedPreferencesUtils.setString(MainActivity.this, "push_alias", alias);
                     break;
                 case 6002:
-//                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
+                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
                     // 延迟 60 秒来调用 Handler 设置别名
                     mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
                     break;
                 default:
-//                    logs = "Failed with errorCode = " + code;
+                    logs = "Failed with errorCode = " + code;
             }
+            showSnackbar(logs);
         }
     };
     private static final int MSG_SET_ALIAS = 1001;
@@ -514,6 +520,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
                             mAliasCallback);
                     break;
                 default:
+                    break;
             }
         }
     };

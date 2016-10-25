@@ -4,12 +4,12 @@
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_cab_background_top_material.xml"
     },
     {
-        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_switch_thumb_material.xml",
-        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_switch_thumb_material.xml"
-    },
-    {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_vector_test.xml",
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_vector_test.xml"
+    },
+    {
+        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_switch_thumb_material.xml",
+        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_switch_thumb_material.xml"
     },
     {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_light.xml",
@@ -18,6 +18,10 @@
     {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_textfield_search_material.xml",
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_textfield_search_material.xml"
+    },
+    {
+        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\drawable\\design_fab_background.xml",
+        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\design\\24.1.1\\res\\drawable\\design_fab_background.xml"
     },
     {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_spinner_textfield_background_material.xml",
@@ -118,6 +122,10 @@
     {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_tick_mark_material.xml",
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
+    },
+    {
+        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\drawable\\design_snackbar_background.xml",
+        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\design\\24.1.1\\res\\drawable\\design_snackbar_background.xml"
     },
     {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_colored_material.xml",

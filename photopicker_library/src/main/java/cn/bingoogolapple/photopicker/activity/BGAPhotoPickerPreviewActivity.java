@@ -1,12 +1,18 @@
 package cn.bingoogolapple.photopicker.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +40,7 @@ public class BGAPhotoPickerPreviewActivity extends BGAPPToolbarActivity implemen
     private static final String EXTRA_CURRENT_POSITION = "EXTRA_CURRENT_POSITION";
     private static final String EXTRA_IS_FROM_TAKE_PHOTO = "EXTRA_IS_FROM_TAKE_PHOTO";
 
+    private CoordinatorLayout container;
     private TextView mTitleTv;
     private TextView mSubmitTv;
     private BGAHackyViewPager mContentHvp;
@@ -100,6 +107,7 @@ public class BGAPhotoPickerPreviewActivity extends BGAPPToolbarActivity implemen
     @Override
     protected void initView(Bundle savedInstanceState) {
         setNoLinearContentView(R.layout.bga_pp_activity_photo_picker_preview);
+        container = getViewById(R.id.container);
         mContentHvp = getViewById(R.id.hvp_photo_picker_preview_content);
         mChooseRl = getViewById(R.id.rl_photo_picker_preview_choose);
         mChooseTv = getViewById(R.id.tv_photo_picker_preview_choose);
@@ -172,6 +180,7 @@ public class BGAPhotoPickerPreviewActivity extends BGAPPToolbarActivity implemen
         return true;
     }
 
+    @SuppressLint("StringFormatMatches")
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.tv_photo_picker_preview_submit) {
@@ -196,9 +205,9 @@ public class BGAPhotoPickerPreviewActivity extends BGAPPToolbarActivity implemen
                     renderTopRightBtn();
                 } else {
                     // 多选
-
                     if (mMaxChooseCount == mSelectedImages.size()) {
-                        BGAPhotoPickerUtil.show(this, getString(R.string.bga_pp_toast_photo_picker_max, mMaxChooseCount));
+//                        BGAPhotoPickerUtil.show(this, getString(R.string.bga_pp_toast_photo_picker_max, mMaxChooseCount));
+                        showSnackbar(getString(R.string.bga_pp_toast_photo_picker_max, mMaxChooseCount));
                     } else {
                         mSelectedImages.add(currentImage);
                         mChooseTv.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.bga_pp_ic_cb_checked, 0, 0, 0);
@@ -206,6 +215,23 @@ public class BGAPhotoPickerPreviewActivity extends BGAPPToolbarActivity implemen
                     }
                 }
             }
+        }
+    }
+
+    public void showSnackbar(String msg) {
+        if (null != container) {
+            Snackbar mSnackbar = Snackbar.make(container, msg, Snackbar.LENGTH_SHORT);
+            View snackView = mSnackbar.getView();
+            snackView.setBackgroundColor(getResources().getColor(R.color.bga_pp_colorPrimaryDark));
+            TextView snackTV = (TextView) snackView.findViewById(android.support.design.R.id.snackbar_text);
+            if (null != snackTV) {
+                snackTV.setTextColor(Color.WHITE);
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+                    snackTV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                }
+                snackTV.setGravity(Gravity.CENTER_HORIZONTAL);
+            }
+            mSnackbar.show();
         }
     }
 

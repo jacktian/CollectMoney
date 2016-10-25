@@ -64,6 +64,7 @@
     <dimen name="map_ope_margin_left">8dp</dimen>
     <dimen name="map_radar_margin_right">8dp</dimen>
     <dimen name="map_radar_margin_bottom">8dp</dimen>
+    <dimen name="find_money_operation_layout_height">82dp</dimen>
 
     <!--钱圈-->
     <dimen name="search_filter_height">29dp</dimen>

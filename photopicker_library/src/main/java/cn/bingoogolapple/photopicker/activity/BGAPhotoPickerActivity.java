@@ -3,13 +3,18 @@ package cn.bingoogolapple.photopicker.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +43,8 @@ import cn.bingoogolapple.photopicker.util.BGASpaceItemDecoration;
  * 描述:图片选择界面
  */
 public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAOnItemChildClickListener, BGAAsyncTask.Callback<ArrayList<BGAImageFolderModel>> {
+    private CoordinatorLayout container;
+
     private static final String EXTRA_IMAGE_DIR = "EXTRA_IMAGE_DIR";
     private static final String EXTRA_SELECTED_IMAGES = "EXTRA_SELECTED_IMAGES";
     private static final String EXTRA_MAX_CHOOSE_COUNT = "EXTRA_MAX_CHOOSE_COUNT";
@@ -118,6 +125,7 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.bga_pp_activity_photo_picker);
+        container = getViewById(R.id.container);
         mContentRv = getViewById(R.id.rv_photo_picker_content);
     }
 
@@ -256,7 +264,8 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
      */
     @SuppressLint("StringFormatMatches")
     private void toastMaxCountTip() {
-        BGAPhotoPickerUtil.show(this, getString(R.string.bga_pp_toast_photo_picker_max, mMaxChooseCount));
+//        BGAPhotoPickerUtil.show(this, getString(R.string.bga_pp_toast_photo_picker_max, mMaxChooseCount));
+        showSnackbar(getString(R.string.bga_pp_toast_photo_picker_max, mMaxChooseCount));
     }
 
     /**
@@ -267,6 +276,24 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
             startActivityForResult(mImageCaptureManager.getTakePictureIntent(), REQUEST_CODE_TAKE_PHOTO);
         } catch (Exception e) {
             BGAPhotoPickerUtil.show(this, R.string.bga_pp_photo_not_support);
+            showSnackbar(getString(R.string.bga_pp_photo_not_support));
+        }
+    }
+
+    public void showSnackbar(String msg) {
+        if (null != container) {
+            Snackbar mSnackbar = Snackbar.make(container, msg, Snackbar.LENGTH_SHORT);
+            View snackView = mSnackbar.getView();
+            snackView.setBackgroundColor(getResources().getColor(R.color.bga_pp_colorPrimaryDark));
+            TextView snackTV = (TextView) snackView.findViewById(android.support.design.R.id.snackbar_text);
+            if (null != snackTV) {
+                snackTV.setTextColor(Color.WHITE);
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+                    snackTV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                }
+                snackTV.setGravity(Gravity.CENTER_HORIZONTAL);
+            }
+            mSnackbar.show();
         }
     }
 

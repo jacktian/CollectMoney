@@ -56,6 +56,10 @@
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_tab_indicator_material.xml"
     },
     {
+        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_snackbar_background.xml",
+        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\design\\24.1.1\\res\\drawable\\design_snackbar_background.xml"
+    },
+    {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_cab_background_internal_bg.xml",
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\drawable\\abc_cab_background_internal_bg.xml"
     },
@@ -102,6 +106,10 @@
     {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\bga_pp_rotate_progress_bar.xml",
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\bundles\\debug\\res\\drawable\\bga_pp_rotate_progress_bar.xml"
+    },
+    {
+        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\design_fab_background.xml",
+        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\design\\24.1.1\\res\\drawable\\design_fab_background.xml"
     },
     {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_btn_default_mtrl_shape.xml",

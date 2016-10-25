@@ -1,13 +1,11 @@
 package com.yzdsmart.Collectmoney.main.personal;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -31,7 +29,6 @@ import com.yzdsmart.Collectmoney.edit_personal_info.EditPersonalInfoActivity;
 import com.yzdsmart.Collectmoney.edit_shop_info.EditShopInfoActivity;
 import com.yzdsmart.Collectmoney.focused_shop.FocusedShopActivity;
 import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
-import com.yzdsmart.Collectmoney.galley.upload.UploadGalleyActivity;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Collectmoney.main.MainActivity;
