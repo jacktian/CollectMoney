@@ -26,7 +26,7 @@ import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.register_login.login.LoginActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.utils.Utils;
-import com.yzdsmart.Collectmoney.views.GetCoinDialog;
+import com.yzdsmart.Collectmoney.views.StaticDialog;
 
 import java.util.List;
 
@@ -213,7 +213,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
             mQRCodeView.startSpot();
             return;
         }
-        getCoinDialog = new GetCoinDialog(this, setNumToIcon(counts));
+        getCoinDialog = new StaticDialog(this, setNumToIcon(counts));
         getCoinDialog.show();
         Button dialogConfirm = (Button) getCoinDialog.findViewById(R.id.dialog_confirm);
         dialogConfirm.setVisibility(View.VISIBLE);

@@ -17,9 +17,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.utils.IntentUtils;
-import com.yzdsmart.Collectmoney.utils.StatusBarUtil;
 import com.yzdsmart.Collectmoney.utils.Utils;
-import com.yzdsmart.Collectmoney.views.CustomDialog;
+import com.yzdsmart.Collectmoney.views.DynamicDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private Unbinder unbinder = null;
 
-    private CustomDialog customDialog;
+    private DynamicDialog dynamicDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,20 +170,20 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 显示进度条
      */
     public void showProgressDialog(int resourceId, String str) {
-        if (null == customDialog) {
-            customDialog = new CustomDialog(BaseActivity.this, resourceId, str);
+        if (null == dynamicDialog) {
+            dynamicDialog = new DynamicDialog(BaseActivity.this, resourceId, str);
         }
-        customDialog.setCancelable(false);
-        customDialog.show();
+        dynamicDialog.setCancelable(false);
+        dynamicDialog.show();
     }
 
     /**
      * 隐藏进度条
      */
     public void hideProgressDialog() {
-        if (null != customDialog) {
-            customDialog.dismiss();
-            customDialog = null;
+        if (null != dynamicDialog) {
+            dynamicDialog.dismiss();
+            dynamicDialog = null;
         }
     }
 }

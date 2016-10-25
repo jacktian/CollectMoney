@@ -10,12 +10,12 @@ import com.yzdsmart.Collectmoney.R;
 /**
  * Created by YZD on 2016/9/12.
  */
-public class GetCoinDialog extends Dialog {
+public class StaticDialog extends Dialog {
     private Context context;
     private Bitmap bitmap;
     private ImageView getCoinIV;
 
-    public GetCoinDialog(Context context, Bitmap bitmap) {
+    public StaticDialog(Context context, Bitmap bitmap) {
         super(context, R.style.custom_dialog);
         this.context = context;
         this.bitmap = bitmap;

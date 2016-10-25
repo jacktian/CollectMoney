@@ -12,7 +12,7 @@ import com.yzdsmart.Collectmoney.R;
 /**
  * Created by YZD on 2016/5/20.
  */
-public class CustomDialog extends Dialog {
+public class DynamicDialog extends Dialog {
     private Context context;
     private int drawableResourceId;
     private String dialogText;
@@ -20,7 +20,7 @@ public class CustomDialog extends Dialog {
     private TextView loadingTV;
     private AnimationDrawable loadingDrawable;
 
-    public CustomDialog(Context context, int resourceId, String dialogText) {
+    public DynamicDialog(Context context, int resourceId, String dialogText) {
         super(context, R.style.custom_dialog);
         this.context = context;
         this.drawableResourceId = resourceId;
