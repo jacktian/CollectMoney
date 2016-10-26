@@ -241,6 +241,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
             showSnackbar(msg);
             return;
         }
+        JPushInterface.init(App.getAppInstance());
+        JPushInterface.resumePush(App.getAppInstance());
         if (null != SharedPreferencesUtils.getString(this, "baza_code", "") && !"".equals(SharedPreferencesUtils.getString(this, "baza_code", ""))) {
             setAlias(SharedPreferencesUtils.getString(this, "baza_code", "").replaceAll("-", ""));
         } else if (null != SharedPreferencesUtils.getString(this, "cust_code", "") && !"".equals(SharedPreferencesUtils.getString(this, "cust_code", ""))) {
@@ -248,7 +250,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         } else {
             return;
         }
-        JPushInterface.init(App.getAppInstance());
         setResult(RESULT_OK);
         closeActivity();
     }
@@ -324,19 +325,20 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
         @Override
         public void gotResult(int code, String alias, Set<String> tags) {
-            String logs;
+//            String logs;
             switch (code) {
                 case 0:
-                    logs = "Set tag and alias success";
+//                    logs = "Set tag and alias success";
                     // 建议这里往 SharePreference 里写一个成功设置的状态。成功设置一次后，以后不必再次设置了。
+                    SharedPreferencesUtils.setString(LoginActivity.this, "push_alias", alias);
                     break;
                 case 6002:
-                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
+//                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
                     // 延迟 60 秒来调用 Handler 设置别名
                     mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
                     break;
                 default:
-                    logs = "Failed with errorCode = " + code;
+//                    logs = "Failed with errorCode = " + code;
             }
 //            showSnackbar(logs);
         }
@@ -349,9 +351,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
             switch (msg.what) {
                 case MSG_SET_ALIAS:
                     // 调用 JPush 接口来设置别名。
-                    JPushInterface.setAliasAndTags(getApplicationContext(),
+                    JPushInterface.setAlias(getApplicationContext(),
                             (String) msg.obj,
-                            null,
                             mAliasCallback);
                     break;
                 default:

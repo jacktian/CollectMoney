@@ -170,6 +170,10 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
 
     @Override
     public void onUserLogin(boolean flag, String msg) {
+        if (!flag) {
+            showSnackbar(msg);
+            return;
+        }
         App.getAppInstance().exitApp();
         openActivity(MainActivity.class);
     }
