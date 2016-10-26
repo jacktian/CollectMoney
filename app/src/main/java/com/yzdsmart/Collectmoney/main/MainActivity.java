@@ -9,8 +9,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tencent.TIMConversation;
@@ -34,7 +32,6 @@ import com.yzdsmart.Collectmoney.tecent_im.bean.NormalConversation;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.tecent_im.service.TLSService;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
-import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,10 +49,7 @@ import cn.jpush.android.api.TagAliasCallback;
 /**
  * Created by YZD on 2016/8/17.
  */
-public class MainActivity extends BaseActivity implements CustomNestRadioGroup.OnCheckedChangeListener, MainContract.MainView {
-    @Nullable
-    @BindView(R.id.main_bottom_tab)
-    CustomNestRadioGroup mainBottomTab;
+public class MainActivity extends BaseActivity implements MainContract.MainView {
     @Nullable
     @BindView(R.id.unread_conversation_bubble)
     TextView unreadConversationBubbleTV;
@@ -104,8 +98,6 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
 
         new MainPresenter(this, this, tlsService);
 
-        mainBottomTab.setOnCheckedChangeListener(this);
-
         imLogin();
 
         initJPush();
@@ -139,6 +131,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     @Override
     protected void onDestroy() {
         mPresenter.unRegisterObserver();
+        JPushInterface.stopPush(App.getAppInstance());
         super.onDestroy();
     }
 
@@ -151,54 +144,53 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     }
 
     @Optional
-    @OnClick({R.id.loc_scan_coins})
+    @OnClick({R.id.money_friend_radio_layout, R.id.money_friend_radio, R.id.loc_scan_coins, R.id.personal_radio_layout, R.id.personal_radio})
     void onClick(View view) {
+        Fragment fragment;
         switch (view.getId()) {
+            case R.id.money_friend_radio_layout:
+            case R.id.money_friend_radio:
+                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
+                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    return;
+                }
+                openActivity(MoneyFriendshipActivity.class);
+                if (!(mCurrentFragment instanceof FindMoneyFragment)) {
+                    backToFindMoney();
+                }
+                break;
             case R.id.loc_scan_coins:
                 if (!(mCurrentFragment instanceof FindMoneyFragment)) {
                     backToFindMoney();
                 }
-                Fragment fragment = fm.findFragmentByTag("find");
+                fragment = fm.findFragmentByTag("find");
                 if (null != fragment) {
                     ((FindMoneyFragment) fragment).locScanCoins();
+                }
+                break;
+            case R.id.personal_radio_layout:
+            case R.id.personal_radio:
+                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
+                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    return;
+                }
+                openActivity(PersonalActivity.class);
+                if (!(mCurrentFragment instanceof FindMoneyFragment)) {
+                    backToFindMoney();
                 }
                 break;
         }
     }
 
-    @Override
-    public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
-        Fragment fragment;
-        switch (group.getCheckedRadioButtonId()) {
-            case R.id.personal_radio:
-                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
-                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
-                    group.clearCheck();
-                    return;
-                }
-                openActivity(PersonalActivity.class);
-                fragment = fm.findFragmentByTag("find");
-                if (null == fragment) {
-                    fragment = new FindMoneyFragment();
-                }
-                addOrShowFragment(fragment, "find");
-                group.clearCheck();
-                break;
-            case R.id.money_friend_radio:
-                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
-                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
-                    group.clearCheck();
-                    return;
-                }
-                openActivity(MoneyFriendshipActivity.class);
-                fragment = fm.findFragmentByTag("find");
-                if (null == fragment) {
-                    fragment = new FindMoneyFragment();
-                }
-                addOrShowFragment(fragment, "find");
-                group.clearCheck();
-                break;
+    /**
+     * 返回到找钱页
+     */
+    public void backToFindMoney() {
+        Fragment fragment = fm.findFragmentByTag("find");
+        if (null == fragment) {
+            fragment = new FindMoneyFragment();
         }
+        addOrShowFragment(fragment, "find");
     }
 
     /**
@@ -216,18 +208,6 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         }
         ft.commitAllowingStateLoss();
         mCurrentFragment = fragment;
-    }
-
-    /**
-     * 返回到找钱页
-     */
-    public void backToFindMoney() {
-        mainBottomTab.clearCheck();
-        Fragment fragment = fm.findFragmentByTag("find");
-        if (null == fragment) {
-            fragment = new FindMoneyFragment();
-        }
-        addOrShowFragment(fragment, "find");
     }
 
     public void getShopListNearByMarket(String name, String location) {
@@ -272,22 +252,6 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        FragmentTransaction ft = fm.beginTransaction();
-        for (int i = 0; i < mainBottomTab.getChildCount(); i++) {
-            RadioButton mTab = (RadioButton) (((RelativeLayout) mainBottomTab.getChildAt(i)).getChildAt(0));
-            Fragment fragment = fm.findFragmentByTag((String) mTab.getTag());
-            if (null != fragment) {
-                if (!mTab.isChecked()) {
-                    ft.hide(fragment);
-                }
-            }
-        }
-        ft.commitAllowingStateLoss();
-    }
-
-    @Override
     public void chatLoginSuccess() {
         mPresenter.imSDKLogin();
     }
@@ -302,7 +266,7 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
 
     @Override
     public void onIMOffline() {
-        JPushInterface.stopPush(this);
+        JPushInterface.stopPush(App.getAppInstance());
         App.getAppInstance().exitApp();
         openActivity(MainActivity.class);
     }

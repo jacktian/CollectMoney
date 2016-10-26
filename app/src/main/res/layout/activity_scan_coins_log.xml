@@ -22,9 +22,11 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/scan_coin_log_filter_height"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:background="@drawable/white_panel_bottom_border"
+            android:background="@color/colorPrimary"
             android:gravity="center"
-            android:textColor="@color/font_black"
+            android:paddingLeft="@dimen/activity_horizontal_padding"
+            android:paddingRight="@dimen/activity_horizontal_padding"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/font_small" />
 
         <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
