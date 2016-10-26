@@ -40,12 +40,12 @@ public class App extends MultiDexApplication {
                 public void handleNotification(TIMOfflinePushNotification timOfflinePushNotification) {
                     if (timOfflinePushNotification.getGroupReceiveMsgOpt() == TIMGroupReceiveMessageOpt.ReceiveAndNotify) {
                         //消息被设置为需要提醒
-                        timOfflinePushNotification.doNotify(getApplicationContext(), R.mipmap.notification_bell);
+                        timOfflinePushNotification.doNotify(getApplicationContext(), R.mipmap.notification_icon);
                     }
                 }
             });
         }
-        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.setDebugMode(false);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
         CrashReport.initCrashReport(this);
     }

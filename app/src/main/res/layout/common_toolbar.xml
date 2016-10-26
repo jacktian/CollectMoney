@@ -72,8 +72,7 @@
                 android:id="@+id/title_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/cat_logo" />
+                android:layout_centerInParent="true" />
 
             <FrameLayout
                 android:id="@+id/title_right_operation_layout"
