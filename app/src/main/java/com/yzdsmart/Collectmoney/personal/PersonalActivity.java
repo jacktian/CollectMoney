@@ -214,10 +214,10 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         }
         ButterKnife.apply(toggleViews, BaseActivity.BUTTERKNIFEGONE);
 
-        shopImagesBanner.setPages(new CBViewHolderCreator<com.yzdsmart.Collectmoney.main.personal.ShopImageBannerHolderView>() {
+        shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
             @Override
-            public com.yzdsmart.Collectmoney.main.personal.ShopImageBannerHolderView createHolder() {
-                return new com.yzdsmart.Collectmoney.main.personal.ShopImageBannerHolderView();
+            public ShopImageBannerHolderView createHolder() {
+                return new ShopImageBannerHolderView();
             }
         }, localImages);
 
@@ -413,10 +413,10 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         galleyInfoList.addAll(galleyInfos);
         galleyImages.clear();
         if (galleyInfos.size() <= 0) {
-            shopImagesBanner.setPages(new CBViewHolderCreator<com.yzdsmart.Collectmoney.main.personal.ShopImageBannerHolderView>() {
+            shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
                 @Override
-                public com.yzdsmart.Collectmoney.main.personal.ShopImageBannerHolderView createHolder() {
-                    return new com.yzdsmart.Collectmoney.main.personal.ShopImageBannerHolderView();
+                public ShopImageBannerHolderView createHolder() {
+                    return new ShopImageBannerHolderView();
                 }
             }, localImages);
             shopImagesBanner.startTurning(3000);

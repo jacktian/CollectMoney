@@ -29,7 +29,6 @@ import com.yzdsmart.Collectmoney.bean.ShopScanner;
 import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.main.MainActivity;
-import com.yzdsmart.Collectmoney.main.personal.ShopImageBannerHolderView;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
 import com.yzdsmart.Collectmoney.register_login.login.LoginActivity;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
@@ -131,13 +130,6 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.qr_code_scanner_icon));
 
         new ShopDetailsPresenter(this, this);
-
-//        shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
-//            @Override
-//            public ShopImageBannerHolderView createHolder() {
-//                return new ShopImageBannerHolderView();
-//            }
-//        }, localImages);
 
         shopImagesBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -288,12 +280,6 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         shopImageList.addAll(shopDetails.getImageLists());
         if (shopImageList.size() <= 0) {
             ButterKnife.apply(shopImagesBanner, BUTTERKNIFEGONE);
-//            shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
-//                @Override
-//                public ShopImageBannerHolderView createHolder() {
-//                    return new ShopImageBannerHolderView();
-//                }
-//            }, localImages);
         } else {
             ButterKnife.apply(shopImagesBanner, BUTTERKNIFEVISIBLE);
             for (int i = 0; i < shopImageList.size(); i++) {
