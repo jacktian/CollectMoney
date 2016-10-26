@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.galley.preview;
+package com.yzdsmart.Collectmoney.galley;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -34,7 +35,7 @@ import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
  * Created by YZD on 2016/9/21.
  */
 
-public class GalleyPreviewActivity extends BaseActivity implements BGASortableNinePhotoLayout.Delegate, GalleyPreviewContract.GalleyPreviewView {
+public class GalleyActivity extends BaseActivity implements BGASortableNinePhotoLayout.Delegate, GalleyContract.GalleyPreviewView {
     @Nullable
     @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout})
     List<View> hideViews;
@@ -67,20 +68,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
 
     private boolean isGalleyOperated = false;
 
-    private static final Integer PERSONAL_GALLEY_OPERATION_CODE = 1000;
-    private static final Integer SHOP_GALLEY_OPERATION_CODE = 1001;
-
-    private static final String PERSONAL_GALLEY_ACTION_CODE = "2102";
-    private static final String SHOP_GALLEY_ACTION_CODE = "5101";
-    private static final String PERSONAL_GALLEY_DELETE_ACTION_CODE = "4102";//删除个人相册
-    private static final String SHOP_GALLEY_DELETE_ACTION_CODE = "4201";//删除商铺相册
-    private static final String PERSONAL_UPLOAD_ACTION_CODE = "2102";//上传个人相册
-    private static final String SHOP_UPLOAD_ACTION_CODE = "5101";//上传商铺相册
-
-    private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
-    private static final int REQUEST_CODE_PHOTO_PREVIEW = 2;
-
-    private GalleyPreviewContract.GalleyPreviewPresenter mPresenter;
+    private GalleyContract.GalleyPreviewPresenter mPresenter;
 
     private Handler mHandler = new Handler();
     private Runnable deletePersonalGalleySuccessRunnable;
@@ -93,10 +81,10 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
             Bundle bundle = msg.getData();
             switch (identityType) {
                 case 0:
-                    mPresenter.uploadGalley(PERSONAL_UPLOAD_ACTION_CODE, SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "cust_code", "") + bundle.getInt("index") + ".png", bundle.getString("image"), SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "cust_code", ""));
+                    mPresenter.uploadGalley(Constants.PERSONAL_GALLEY_UPLOAD_ACTION_CODE, SharedPreferencesUtils.getString(GalleyActivity.this, "cust_code", "") + bundle.getInt("index") + ".png", bundle.getString("image"), SharedPreferencesUtils.getString(GalleyActivity.this, "cust_code", ""));
                     break;
                 case 1:
-                    mPresenter.uploadShopImage(SHOP_UPLOAD_ACTION_CODE, SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "baza_code", "") + bundle.getInt("index") + ".png", bundle.getString("image"), SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "baza_code", ""));
+                    mPresenter.uploadShopImage(Constants.SHOP_GALLEY_UPLOAD_ACTION_CODE, SharedPreferencesUtils.getString(GalleyActivity.this, "baza_code", "") + bundle.getInt("index") + ".png", bundle.getString("image"), SharedPreferencesUtils.getString(GalleyActivity.this, "baza_code", ""));
                     break;
             }
         }
@@ -152,15 +140,15 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                 break;
         }
 
-        new GalleyPreviewPresenter(this, this);
+        new GalleyPresenter(this, this);
 
         if (Utils.isNetUsable(this)) {
             switch (identityType) {
                 case 0:
-                    mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", custCode);
+                    mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", custCode);
                     break;
                 case 1:
-                    mPresenter.getShopGalley(SHOP_GALLEY_ACTION_CODE, "000000", custCode);
+                    mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", custCode);
                     break;
             }
         } else {
@@ -171,11 +159,11 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
             @Override
             public void run() {
                 hideProgressDialog();
-                if (!Utils.isNetUsable(GalleyPreviewActivity.this)) {
+                if (!Utils.isNetUsable(GalleyActivity.this)) {
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "cust_code", ""));
+                mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyActivity.this, "cust_code", ""));
             }
         };
 
@@ -183,11 +171,11 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
             @Override
             public void run() {
                 hideProgressDialog();
-                if (!Utils.isNetUsable(GalleyPreviewActivity.this)) {
+                if (!Utils.isNetUsable(GalleyActivity.this)) {
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.getShopGalley(SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "baza_code", ""));
+                mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyActivity.this, "baza_code", ""));
             }
         };
 
@@ -218,11 +206,11 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (PERSONAL_GALLEY_OPERATION_CODE == requestCode && RESULT_OK == resultCode) {
-            mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
-        } else if (SHOP_GALLEY_OPERATION_CODE == requestCode && RESULT_OK == resultCode) {
-            mPresenter.getShopGalley(SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
-        } else if (REQUEST_CODE_CHOOSE_PHOTO == requestCode && RESULT_OK == resultCode) {
+        if (Constants.PERSONAL_GALLEY_OPERATION_CODE == requestCode && RESULT_OK == resultCode) {
+            mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
+        } else if (Constants.SHOP_GALLEY_OPERATION_CODE == requestCode && RESULT_OK == resultCode) {
+            mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
+        } else if (Constants.REQUEST_CODE_CHOOSE_PHOTO == requestCode && RESULT_OK == resultCode) {
             ArrayList<String> imageUrls = BGAPhotoPickerActivity.getSelectedImages(data);
             for (int i = 0; i < imageUrls.size(); i++) {
                 new Thread(new FormatImageRunnable(i, imageUrls.get(i))).start();
@@ -273,10 +261,10 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
                 }
                 switch (identityType) {
                     case 0:
-                        mPresenter.deletePersonalGalley(PERSONAL_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), deleteFileIdList);
+                        mPresenter.deletePersonalGalley(Constants.PERSONAL_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), deleteFileIdList);
                         break;
                     case 1:
-                        mPresenter.deleteShopGalley(SHOP_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), deleteFileIdList);
+                        mPresenter.deleteShopGalley(Constants.SHOP_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), deleteFileIdList);
                         break;
                 }
                 mPhotosSnpl.setDeleteDrawableResId(0);
@@ -292,10 +280,10 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
         File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "CollectMoney");
         switch (identityType) {
             case 0:
-                startActivityForResult(BGAPhotoPickerActivity.newIntent(this, takePhotoDir, 9, null, true), REQUEST_CODE_CHOOSE_PHOTO);
+                startActivityForResult(BGAPhotoPickerActivity.newIntent(this, takePhotoDir, 9, null, true), Constants.REQUEST_CODE_CHOOSE_PHOTO);
                 break;
             case 1:
-                startActivityForResult(BGAPhotoPickerActivity.newIntent(this, takePhotoDir, 5, null, true), REQUEST_CODE_CHOOSE_PHOTO);
+                startActivityForResult(BGAPhotoPickerActivity.newIntent(this, takePhotoDir, 5, null, true), Constants.REQUEST_CODE_CHOOSE_PHOTO);
                 break;
         }
     }
@@ -319,7 +307,7 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
     @Override
     public void onClickNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
         if (isGalleyOperated) return;
-        startActivityForResult(BGAPhotoViewActivity.newIntent(this, Integer.MAX_VALUE, models, models, position - 1, false), REQUEST_CODE_PHOTO_PREVIEW);
+        startActivityForResult(BGAPhotoViewActivity.newIntent(this, Integer.MAX_VALUE, models, models, position - 1, false), Constants.REQUEST_CODE_PHOTO_PREVIEW);
     }
 
     @Override
@@ -337,6 +325,11 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
 
     @Override
     public void onDeletePersonalGalley() {
+        rightTitleTV.setText("选择");
+        isGalleyOperated = false;
+        mPhotosSnpl.setGalleyOperated(false);
+        deleteGalley.setEnabled(false);
+        mPhotosSnpl.setDeleteDrawableResId(0);
         showProgressDialog(R.drawable.success, getResources().getString(R.string.delete_success));
         mHandler.postDelayed(deletePersonalGalleySuccessRunnable, 500);
     }
@@ -355,28 +348,42 @@ public class GalleyPreviewActivity extends BaseActivity implements BGASortableNi
 
     @Override
     public void onDeleteShopGalley() {
+        rightTitleTV.setText("选择");
+        isGalleyOperated = false;
+        mPhotosSnpl.setGalleyOperated(false);
+        deleteGalley.setEnabled(false);
+        mPhotosSnpl.setDeleteDrawableResId(0);
         showProgressDialog(R.drawable.success, getResources().getString(R.string.delete_success));
         mHandler.postDelayed(deleteShopGalleySuccessRunnable, 500);
     }
 
     @Override
+    public void onDeleteGalleyFail() {
+        rightTitleTV.setText("选择");
+        isGalleyOperated = false;
+        mPhotosSnpl.setGalleyOperated(false);
+        deleteGalley.setEnabled(false);
+        mPhotosSnpl.setDeleteDrawableResId(0);
+    }
+
+    @Override
     public void onUploadGalley() {
-        if (!Utils.isNetUsable(GalleyPreviewActivity.this)) {
+        if (!Utils.isNetUsable(GalleyActivity.this)) {
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
         switch (identityType) {
             case 0:
-                mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", custCode);
+                mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", custCode);
                 break;
             case 1:
-                mPresenter.getShopGalley(SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyPreviewActivity.this, "baza_code", ""));
+                mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyActivity.this, "baza_code", ""));
                 break;
         }
     }
 
     @Override
-    public void setPresenter(GalleyPreviewContract.GalleyPreviewPresenter presenter) {
+    public void setPresenter(GalleyContract.GalleyPreviewPresenter presenter) {
         mPresenter = presenter;
     }
 

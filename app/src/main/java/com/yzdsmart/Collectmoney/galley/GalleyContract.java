@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.galley.preview;
+package com.yzdsmart.Collectmoney.galley;
 
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;
@@ -10,7 +10,7 @@ import java.util.List;
  * Created by YZD on 2016/9/22.
  */
 
-public interface GalleyPreviewContract {
+public interface GalleyContract {
     interface GalleyPreviewView extends BaseView<GalleyPreviewPresenter> {
         /**
          * 获取个人的图片列表
@@ -20,11 +20,6 @@ public interface GalleyPreviewContract {
         void onGetPersonalGalley(List<GalleyInfo> galleyInfos);
 
         /**
-         * 删除用户个人相册图片
-         */
-        void onDeletePersonalGalley();
-
-        /**
          * 获取商铺图片列表
          *
          * @param galleyInfos
@@ -32,9 +27,19 @@ public interface GalleyPreviewContract {
         void onGetShopGalley(List<GalleyInfo> galleyInfos);
 
         /**
+         * 删除用户个人相册图片
+         */
+        void onDeletePersonalGalley();
+
+        /**
          * 删除商铺图片
          */
         void onDeleteShopGalley();
+
+        /**
+         * 删除相册失败
+         */
+        void onDeleteGalleyFail();
 
         /**
          * 上传图片

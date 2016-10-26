@@ -24,10 +24,9 @@ import com.tencent.TIMMessage;
 import com.tencent.TIMMessageDraft;
 import com.tencent.TIMMessageStatus;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.chat.image_preview.ImagePreviewActivity;
-import com.yzdsmart.Collectmoney.money_friendship.friend_list.add.AddFriendActivity;
-import com.yzdsmart.Collectmoney.money_friendship.friend_list.profile.ProfileActivity;
 import com.yzdsmart.Collectmoney.money_friendship.group_list.profile.GroupProfileActivity;
 import com.yzdsmart.Collectmoney.tecent_im.adapters.ChatAdapter;
 import com.yzdsmart.Collectmoney.tecent_im.bean.CustomMessage;
@@ -88,8 +87,6 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
     VoiceSendingView voiceSendingView;
 
     private ChatContract.ChatPresenter mPresenter;
-
-    private final static String GET_CUST_CODE_ACTION_CODE = "628";
 
     private List<Message> messageList;
     private ChatAdapter adapter;
@@ -551,7 +548,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
      * @param identify
      */
     public void toFriendDetail(String identify) {
-        mPresenter.getCustCode(identify, "000000", GET_CUST_CODE_ACTION_CODE);
+        mPresenter.getCustCode(identify, "000000", Constants.GET_CUST_CODE_ACTION_CODE);
     }
 
     /**

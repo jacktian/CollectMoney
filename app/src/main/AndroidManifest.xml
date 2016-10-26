@@ -270,12 +270,7 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".galley.upload.UploadGalleyActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
-            android:launchMode="singleTop" />
-
-        <activity
-            android:name=".galley.preview.GalleyPreviewActivity"
+            android:name=".galley.GalleyActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop" />
 

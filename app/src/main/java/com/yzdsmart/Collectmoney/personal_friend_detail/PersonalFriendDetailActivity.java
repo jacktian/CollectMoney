@@ -21,12 +21,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tencent.TIMConversationType;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.chat.ChatActivity;
 import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
 import com.yzdsmart.Collectmoney.edit_personal_info.EditPersonalInfoActivity;
-import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
+import com.yzdsmart.Collectmoney.galley.GalleyActivity;
 import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.listener.AppBarOffsetChangeListener;
@@ -110,10 +111,6 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     @Nullable
     @BindView(R.id.video_chat)
     Button videoChatBtn;
-
-    private static final Integer REQUEST_LOGIN_CODE = 1000;
-
-    private static final String PERSONAL_GALLEY_ACTION_CODE = "2102";
 
     private Integer type;//0 个人 1 好友
     private String friend_c_code;
@@ -203,12 +200,12 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
             case 0:
                 mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
                 mPresenter.getCustDetailInfo("000000", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "cust_code", ""));
-                mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
+                mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
                 break;
             case 1:
                 mPresenter.getCustInfo("000000", friend_c_code);
                 mPresenter.getCustDetailInfo("000000", "000000", friend_c_code, SharedPreferencesUtils.getString(this, "cust_code", ""));
-                mPresenter.getPersonalGalley(PERSONAL_GALLEY_ACTION_CODE, "000000", friend_c_code);
+                mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", friend_c_code);
                 break;
         }
     }
@@ -216,7 +213,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
+        if (Constants.REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
             MainActivity.getInstance().chatLogin();
         }
     }
@@ -315,15 +312,14 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                         bundle.putString("cust_code", friend_c_code);
                         break;
                 }
-//                bundle.putParcelableArrayList("galleys", galleyInfoList);
-                openActivity(GalleyPreviewActivity.class, bundle, 0);
+                openActivity(GalleyActivity.class, bundle, 0);
                 break;
             case R.id.add_friend:
                 mPresenter.addFriend(friend_identify);
                 break;
             case R.id.msg_chat:
                 if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
-                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
                     return;
                 }
                 bundle = new Bundle();

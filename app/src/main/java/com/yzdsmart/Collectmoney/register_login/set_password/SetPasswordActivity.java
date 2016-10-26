@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.register_login.set_info.SetInfoActivity;
@@ -49,8 +50,6 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
 
     private Integer opeType;//0 注册 1 忘记密码
     private String userName;
-
-    private static final String FIND_PWD_ACTION_CODE = "1656";
 
     private SetPasswordContract.SetPasswordPresenter mPresenter;
 
@@ -151,7 +150,7 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
                         openActivity(SetInfoActivity.class, bundle, 0);
                         break;
                     case 1:
-                        mPresenter.setPassword(FIND_PWD_ACTION_CODE, userName, userPwdET.getText().toString(), Utils.md5(FIND_PWD_ACTION_CODE + "yzd" + userName));
+                        mPresenter.setPassword(Constants.FIND_PWD_ACTION_CODE, userName, userPwdET.getText().toString(), Utils.md5(Constants.FIND_PWD_ACTION_CODE + "yzd" + userName));
                         break;
                 }
                 break;

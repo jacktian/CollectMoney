@@ -20,13 +20,14 @@ import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.bumptech.glide.Glide;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.buy_coins.BuyCoinsActivity;
 import com.yzdsmart.Collectmoney.edit_personal_info.EditPersonalInfoActivity;
 import com.yzdsmart.Collectmoney.edit_shop_info.EditShopInfoActivity;
 import com.yzdsmart.Collectmoney.focused_shop.FocusedShopActivity;
-import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
+import com.yzdsmart.Collectmoney.galley.GalleyActivity;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Collectmoney.publish_tasks.PublishTasksActivity;
@@ -149,13 +150,6 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
     @BindView(R.id.shop_avater)
     ImageView shopAvaterIV;
 
-    private static final String SHOP_INFO_ACTION_CODE = "3666";
-    private static final String GET_SHOP_GALLEY_ACTION_CODE = "5101";
-    private static final String SHOP_UPLOAD_AVATER_ACTION_CODE = "5001";//上传商铺相册
-    private static final String GET_CUST_LEVEL_ACTION_CODE = "612";
-
-    private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
-
     private PersonalContract.PersonalPresenter mPresenter;
 
     private List<View> toggleViews;
@@ -169,7 +163,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Bundle bundle = msg.getData();
-            mPresenter.uploadShopAvater(SHOP_UPLOAD_AVATER_ACTION_CODE, SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", "") + "0.png", bundle.getString("image"), SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", ""));
+            mPresenter.uploadShopAvater(Constants.SHOP_UPLOAD_AVATER_ACTION_CODE, SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", "") + "0.png", bundle.getString("image"), SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", ""));
         }
     };
 
@@ -198,9 +192,6 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
             toggleViews.add(personalGalleyPanelLayout);
             toggleViews.add(withdrawLayout);
             toggleViews.add(withdrawLogLayout);
-
-//            mPresenter.getShopInfo(SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""), SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
-//            mPresenter.getShopGalley(GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "baza_code", ""));
         } else {
             toggleViews.add(shopImagesBanner);
             toggleViews.add(shopDetailLayout);
@@ -208,9 +199,6 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
             toggleViews.add(businessOpeLayout);
             toggleViews.add(shopWithdrawLayout);
             toggleViews.add(shopWithdrawLogLayout);
-
-//            mPresenter.getCustLevel(SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), "000000");
-//            mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""));
         }
         ButterKnife.apply(toggleViews, BaseActivity.BUTTERKNIFEGONE);
 
@@ -228,7 +216,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 bundle.putInt("identity", 1);
                 bundle.putInt("type", 0);
                 bundle.putString("cust_code", SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", ""));
-                openActivity(GalleyPreviewActivity.class, bundle, 0);
+                openActivity(GalleyActivity.class, bundle, 0);
             }
         });
     }
@@ -242,11 +230,11 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
     public void onResume() {
         super.onResume();
         if (SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", "").trim().length() > 0) {
-            mPresenter.getShopInfo(SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", ""));
-            mPresenter.getShopGalley(GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", ""));
+            mPresenter.getShopInfo(Constants.GET_SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", ""));
+            mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", ""));
             shopImagesBanner.startTurning(3000);
         } else {
-            mPresenter.getCustLevel(SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""), "000000", GET_CUST_LEVEL_ACTION_CODE);
+            mPresenter.getCustLevel(SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""), "000000", Constants.GET_CUST_LEVEL_ACTION_CODE);
             mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""));
         }
     }
@@ -264,7 +252,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 0) return;
-        if (REQUEST_CODE_CHOOSE_PHOTO == requestCode) {
+        if (Constants.REQUEST_CODE_CHOOSE_PHOTO == requestCode) {
             new Thread(new FormatImageRunnable(0, "" + data.getParcelableArrayListExtra("EXTRA_SELECTED_IMAGES").get(0))).start();
         }
     }
@@ -282,17 +270,10 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 bundle.putInt("type", 0);//0 个人 1 好友
                 openActivity(EditPersonalInfoActivity.class);
                 break;
-            case R.id.to_personal_detail:
-//                bundle = new Bundle();
-//                bundle.putInt("type", 0);//0 个人 1 好友
-//                ((BaseActivity) getActivity()).openActivity(PersonalFriendDetailActivity.class, bundle, 0);
-//                ((BaseActivity) getActivity()).openActivity(EditPersonalInfoActivity.class);
-//                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
-                break;
             case R.id.shop_avater:
                 // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
                 File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "CollectMoney");
-                startActivityForResult(BGAPhotoPickerActivity.newIntent(PersonalActivity.this, takePhotoDir, 1, null, true), REQUEST_CODE_CHOOSE_PHOTO);
+                startActivityForResult(BGAPhotoPickerActivity.newIntent(PersonalActivity.this, takePhotoDir, 1, null, true), Constants.REQUEST_CODE_CHOOSE_PHOTO);
                 break;
             case R.id.to_settings:
             case R.id.to_shop_settings:
@@ -300,27 +281,18 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 break;
             case R.id.to_register_business:
                 openActivity(RegisterBusinessActivity.class);
-//                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.to_buy_coins:
                 openActivity(BuyCoinsActivity.class);
-//                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.to_publish_tasks:
                 openActivity(PublishTasksActivity.class);
-//                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.to_personal_coins:
                 openActivity(ScanCoinsLogActivity.class);
-//                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
-//            case R.id.to_money_friend:
-//                ((BaseActivity) getActivity()).openActivity(MoneyFriendshipActivity.class);
-//                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
-//                break;
             case R.id.to_publish_tasks_log:
                 openActivity(PublishTasksLogActivity.class);
-//                backFindMoneyHandler.postDelayed(backFindMoneyRunnable, 1500);
                 break;
             case R.id.to_focused_shop:
                 openActivity(FocusedShopActivity.class);
@@ -359,7 +331,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 bundle.putInt("identity", 0);
                 bundle.putInt("type", 0);
                 bundle.putString("cust_code", SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""));
-                openActivity(GalleyPreviewActivity.class, bundle, 0);
+                openActivity(GalleyActivity.class, bundle, 0);
                 break;
         }
     }

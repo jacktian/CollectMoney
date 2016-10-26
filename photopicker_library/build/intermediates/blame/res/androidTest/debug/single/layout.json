@@ -40,24 +40,24 @@
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\notification_media_action.xml"
     },
     {
-        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\bga_pp_item_nine_photo.xml",
-        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\bundles\\debug\\res\\layout\\bga_pp_item_nine_photo.xml"
-    },
-    {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_navigation_item_subheader.xml",
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\design\\24.1.1\\res\\layout\\design_navigation_item_subheader.xml"
+    },
+    {
+        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\bga_pp_item_nine_photo.xml",
+        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\bundles\\debug\\res\\layout\\bga_pp_item_nine_photo.xml"
     },
     {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_big_media.xml",
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\notification_template_big_media.xml"
     },
     {
-        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\bga_pp_al_photo_preview.xml",
-        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\bundles\\debug\\res\\layout\\bga_pp_al_photo_preview.xml"
-    },
-    {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_layout_snackbar_include.xml",
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\design\\24.1.1\\res\\layout\\design_layout_snackbar_include.xml"
+    },
+    {
+        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\bga_pp_al_photo_preview.xml",
+        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\bundles\\debug\\res\\layout\\bga_pp_al_photo_preview.xml"
     },
     {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_list_menu_item_checkbox.xml",
@@ -204,12 +204,12 @@
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_list_menu_item_radio.xml"
     },
     {
-        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_up_container.xml",
-        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_bar_up_container.xml"
-    },
-    {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_navigation_item.xml",
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\design\\24.1.1\\res\\layout\\design_navigation_item.xml"
+    },
+    {
+        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_bar_up_container.xml",
+        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\abc_action_bar_up_container.xml"
     },
     {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
@@ -228,12 +228,12 @@
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\design\\24.1.1\\res\\layout\\design_navigation_menu_item.xml"
     },
     {
-        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_big_media_narrow.xml",
-        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\notification_template_big_media_narrow.xml"
-    },
-    {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\design_navigation_item_separator.xml",
         "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\design\\24.1.1\\res\\layout\\design_navigation_item_separator.xml"
+    },
+    {
+        "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_big_media_narrow.xml",
+        "source": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.1\\res\\layout\\notification_template_big_media_narrow.xml"
     },
     {
         "merged": "E:\\Workspace\\AndroidStudio\\CollectMoney\\photopicker_library\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_alert_dialog_material.xml",

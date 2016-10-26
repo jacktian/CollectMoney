@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.PublishTaskLog;
 import com.yzdsmart.Collectmoney.buy_coins.BuyCoinsActivity;
@@ -49,8 +50,6 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
 
     private PublishTasksLogContract.PublishTasksLogPresenter mPresenter;
 
-    private static final String GET_TASKS_LEFT_COINS_ACTION_CODE = "7288";
-    private static final String PUBLISH_TASK_LOG_CODE = "2188";
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 15;
     private Integer lastsequence = 0;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
@@ -89,7 +88,7 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
         publishListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                mPresenter.publishTaskLog(PUBLISH_TASK_LOG_CODE, "000000", SharedPreferencesUtils.getString(PublishTasksLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                mPresenter.publishTaskLog(Constants.PUBLISH_TASK_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PublishTasksLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
             }
         });
         publishListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -100,12 +99,12 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
                 lastsequence = 0;
                 pageIndex = 1;
                 publishTasksAdapter.clearList();
-                mPresenter.publishTaskLog(PUBLISH_TASK_LOG_CODE, "000000", SharedPreferencesUtils.getString(PublishTasksLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                mPresenter.publishTaskLog(Constants.PUBLISH_TASK_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PublishTasksLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
             }
         });
 
-        mPresenter.getLeftCoins(GET_TASKS_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
-        mPresenter.publishTaskLog(PUBLISH_TASK_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+        mPresenter.getLeftCoins(Constants.GET_TASKS_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
+        mPresenter.publishTaskLog(Constants.PUBLISH_TASK_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
     }
 
     @Override

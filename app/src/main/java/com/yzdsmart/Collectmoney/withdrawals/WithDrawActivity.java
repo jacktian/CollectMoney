@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -54,11 +55,6 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     @BindView(R.id.withdraw_money)
     Button withdrawMoneyBtn;
 
-    private static final String GET_LEFT_COINS_ACTION_CODE = "1288";
-    private static final String SHOP_WITHDRAW_ACTION_CODE = "688";
-    private static final String PERSONAL_WITHDRAW_ACTION_CODE = "588";
-    private static final String PERSONAL_WITHDRAW_ACTION_TYPE_CODE = "166";
-
     private Float GOLD_FORMAT_RMB_RATIO = 0.0f;
 
     private Integer userType;//0 个人 1 商家
@@ -96,7 +92,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                 mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
                 break;
             case 1:
-                mPresenter.getLeftCoins(GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
+                mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
                 break;
         }
 
@@ -104,7 +100,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
             @Override
             public void run() {
                 hideProgressDialog();
-                mPresenter.getLeftCoins(GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "baza_code", ""));
+                mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "baza_code", ""));
             }
         };
         personalWithdrawSuccessRunnable = new Runnable() {
@@ -148,10 +144,10 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                 }
                 switch (userType) {
                     case 0:
-                        mPresenter.personalWithdrawCoins(PERSONAL_WITHDRAW_ACTION_CODE, PERSONAL_WITHDRAW_ACTION_TYPE_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()));
+                        mPresenter.personalWithdrawCoins(Constants.PERSONAL_WITHDRAW_ACTION_CODE, Constants.PERSONAL_WITHDRAW_ACTION_TYPE_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()));
                         break;
                     case 1:
-                        mPresenter.shopWithdrawCoins(SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()));
+                        mPresenter.shopWithdrawCoins(Constants.SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()));
                         break;
                 }
                 break;

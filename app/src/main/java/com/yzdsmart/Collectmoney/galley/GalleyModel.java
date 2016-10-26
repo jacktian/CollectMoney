@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.galley.preview;
+package com.yzdsmart.Collectmoney.galley;
 
 import com.yzdsmart.Collectmoney.http.RequestAdapter;
 import com.yzdsmart.Collectmoney.http.RequestListener;
@@ -16,7 +16,7 @@ import rx.schedulers.Schedulers;
  * Created by YZD on 2016/9/22.
  */
 
-public class GalleyPreviewModel {
+public class GalleyModel {
     private Subscriber<GetGalleyRequestResponse> getGalleySubscriber;
     private Subscriber<RequestResponse> deletePersonalGalleySubscriber;
     private Subscriber<GetGalleyRequestResponse> getShopGalleySubscriber;

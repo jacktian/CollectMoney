@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.PersonalWithdrawLog;
 import com.yzdsmart.Collectmoney.bean.ShopWithdrawLog;
@@ -47,8 +48,6 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
 
     private Integer userType;//0 个人 1 商家
 
-    private static final String PERSONAL_WITHDRAW_ACTION_CODE = "1668";
-    private static final String SHOP_WITHDRAW_ACTION_CODE = "5688";
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
     private Integer lastsequence = 0;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
@@ -96,10 +95,10 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
                 switch (userType) {
                     case 0:
-                        mPresenter.getPersonalWithdrawLog(PERSONAL_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                        mPresenter.getPersonalWithdrawLog(Constants.PERSONAL_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
                         break;
                     case 1:
-                        mPresenter.getShopWithdrawLog(SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                        mPresenter.getShopWithdrawLog(Constants.SHOP_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
                         break;
                 }
             }
@@ -114,11 +113,11 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
                 switch (userType) {
                     case 0:
                         withDrawLogAdapter.clearPersonalList();
-                        mPresenter.getPersonalWithdrawLog(PERSONAL_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                        mPresenter.getPersonalWithdrawLog(Constants.PERSONAL_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
                         break;
                     case 1:
                         withDrawLogAdapter.clearShopList();
-                        mPresenter.getShopWithdrawLog(SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                        mPresenter.getShopWithdrawLog(Constants.SHOP_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
                         break;
                 }
             }
@@ -126,10 +125,10 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
 
         switch (userType) {
             case 0:
-                mPresenter.getPersonalWithdrawLog(PERSONAL_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                mPresenter.getPersonalWithdrawLog(Constants.PERSONAL_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
                 break;
             case 1:
-                mPresenter.getShopWithdrawLog(SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                mPresenter.getShopWithdrawLog(Constants.SHOP_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
                 break;
         }
     }

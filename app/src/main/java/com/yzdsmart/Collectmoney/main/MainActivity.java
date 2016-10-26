@@ -17,6 +17,7 @@ import com.tencent.TIMGroupPendencyItem;
 import com.tencent.TIMMessage;
 import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.find_money.FindMoneyFragment;
 import com.yzdsmart.Collectmoney.money_friendship.MoneyFriendshipActivity;
@@ -63,8 +64,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     private MainContract.MainPresenter mPresenter;
 
     private TLSService tlsService;
-
-    private static final Integer REQUEST_LOGIN_CODE = 1000;
 
     private static MainActivity mainActivity;
 
@@ -138,7 +137,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
+        if (Constants.REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
             imLogin();
         }
     }
@@ -151,7 +150,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             case R.id.money_friend_radio_layout:
             case R.id.money_friend_radio:
                 if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
-                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
                     return;
                 }
                 openActivity(MoneyFriendshipActivity.class);
@@ -171,7 +170,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             case R.id.personal_radio_layout:
             case R.id.personal_radio:
                 if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
-                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
                     return;
                 }
                 openActivity(PersonalActivity.class);

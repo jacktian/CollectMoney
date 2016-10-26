@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -54,8 +55,6 @@ public class EditShopInfoActivity extends BaseActivity implements EditShopInfoCo
     @BindView(R.id.baza_remark)
     TextView bazaRemarkTV;
 
-    private static final String SHOP_INFO_ACTION_CODE = "3666";
-
     private EditShopInfoContract.EditShopInfoPresenter mPresenter;
 
     private AlertDialog editDialog;
@@ -69,7 +68,7 @@ public class EditShopInfoActivity extends BaseActivity implements EditShopInfoCo
 
         new EditShopInfoPresenter(this, this);
 
-        mPresenter.getShopInfo(SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
+        mPresenter.getShopInfo(Constants.GET_SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
     }
 
     @Override

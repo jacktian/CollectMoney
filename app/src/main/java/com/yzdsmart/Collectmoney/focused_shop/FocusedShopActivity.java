@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.FocusedShop;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -44,7 +45,6 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
 
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
-    private static final String GET_ACTION_CODE = "9212";//获取用户关注的店铺信息
 
     private FocusedShopContract.FocusedShopPresenter mPresenter;
 
@@ -73,7 +73,7 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
         focusedShopRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                mPresenter.getFocusedShopList(GET_ACTION_CODE, "000000", SharedPreferencesUtils.getString(FocusedShopActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
+                mPresenter.getFocusedShopList(Constants.GET_FOCUSED_SHOP_ACTION_CODE, "000000", SharedPreferencesUtils.getString(FocusedShopActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
             }
         });
         focusedShopRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -83,11 +83,11 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
                 focusedShopRV.reenableLoadmore();
                 pageIndex = 1;
                 focusedShopAdapter.clearList();
-                mPresenter.getFocusedShopList(GET_ACTION_CODE, "000000", SharedPreferencesUtils.getString(FocusedShopActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
+                mPresenter.getFocusedShopList(Constants.GET_FOCUSED_SHOP_ACTION_CODE, "000000", SharedPreferencesUtils.getString(FocusedShopActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE);
             }
         });
 
-        mPresenter.getFocusedShopList(GET_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
+        mPresenter.getFocusedShopList(Constants.GET_FOCUSED_SHOP_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
     }
 
     @Override

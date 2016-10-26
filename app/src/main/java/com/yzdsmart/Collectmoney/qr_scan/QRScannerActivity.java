@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.register_login.login.LoginActivity;
@@ -56,10 +57,6 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     private Integer scanType;//0 扫币 1 付款
 
-    private static final Integer REQUEST_LOGIN_CODE = 1000;
-
-    private static final String GET_COIN_ACTION_CODE = "88";
-
     private MediaPlayer mediaPlayer;
     private boolean playBeep;
     private static final float BEEP_VOLUME = 0.10f;
@@ -77,7 +74,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         scanType = getIntent().getExtras().getInt("scanType");
 
         if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
-            openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+            openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
             return;
         }
 
@@ -132,7 +129,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
+        if (Constants.REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
             MainActivity.getInstance().chatLogin();
         }
     }
@@ -193,7 +190,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     @Override
     public void onScanQRCodeSuccess(String result) {
         playBeepSoundAndVibrate();
-        mPresenter.getCoins(GET_COIN_ACTION_CODE, result, Utils.getLocalIpAddress());
+        mPresenter.getCoins(Constants.GET_COIN_ACTION_CODE, result, Utils.getLocalIpAddress());
     }
 
     @Override

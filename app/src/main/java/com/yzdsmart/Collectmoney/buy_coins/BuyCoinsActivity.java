@@ -16,6 +16,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.pingplusplus.android.PingppLog;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.BuyCoinsLog;
 import com.yzdsmart.Collectmoney.bean.PaymentRequest;
@@ -52,8 +53,6 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     @BindView(R.id.coin_list)
     UltimateRecyclerView coinListRV;
 
-    private static final String BUY_COIN_CODE = "66";
-    private static final String BUY_COIN_LOG_CODE = "688";
     private static final Float GOLD_FORMAT_RMB_RATIO = 1.0f;
 
     /**
@@ -123,7 +122,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         coinListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                mPresenter.buyCoinsLog(BUY_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                mPresenter.buyCoinsLog(Constants.BUY_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
             }
         });
         coinListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -134,13 +133,13 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 pageIndex = 1;
                 lastsequence = 0;
                 buyCoinsLogAdapter.clearList();
-                mPresenter.buyCoinsLog(BUY_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                mPresenter.buyCoinsLog(Constants.BUY_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
             }
         });
 
         initPingPlusPlus();
 
-        mPresenter.buyCoinsLog(BUY_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+        mPresenter.buyCoinsLog(Constants.BUY_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
     }
 
     @Override
@@ -165,7 +164,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                     return;
                 }
 //                showMoveDialog(this, Integer.valueOf(coinCountsET.getText().toString()));
-                mPresenter.buyCoins(BUY_COIN_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()));
+                mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()));
 //                orderPayPPP();
                 break;
         }

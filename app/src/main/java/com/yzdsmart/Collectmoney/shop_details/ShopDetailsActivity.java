@@ -24,9 +24,10 @@ import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.ShopScanner;
-import com.yzdsmart.Collectmoney.galley.preview.GalleyPreviewActivity;
+import com.yzdsmart.Collectmoney.galley.GalleyActivity;
 import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.qr_scan.QRScannerActivity;
@@ -90,11 +91,8 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     @BindView(R.id.shop_avater)
     ImageView shopAvaterIV;
 
-    private static final Integer REQUEST_LOGIN_CODE = 1000;
-
     private String bazaCode;//商铺编码
     private Boolean isAtte = false;
-    private static final String GET_SHOP_FOLLOWERS_CODE = "2112";
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
 
@@ -138,7 +136,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 bundle.putInt("identity", 1);
                 bundle.putInt("type", 1);
                 bundle.putString("cust_code", bazaCode);
-                openActivity(GalleyPreviewActivity.class, bundle, 0);
+                openActivity(GalleyActivity.class, bundle, 0);
             }
         });
 
@@ -167,7 +165,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
         mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
 
-        mPresenter.getShopFollowers(GET_SHOP_FOLLOWERS_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
+        mPresenter.getShopFollowers(Constants.GET_SHOP_FOLLOWERS_ACTION_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
     }
 
     @Override
@@ -178,7 +176,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
+        if (Constants.REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
             mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
             MainActivity.getInstance().chatLogin();
         }
@@ -193,24 +191,24 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 break;
             case R.id.is_atte:
                 if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
-                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
                     return;
                 }
                 mPresenter.setFollow(isAtte ? CANCEL_FOCUS_CODE : SET_FOCUS_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), bazaCode);
                 break;
             case R.id.title_right_operation_layout:
                 if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
-                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
                     return;
                 }
                 showMoveDialog(this);
                 break;
             case R.id.get_more_followers:
                 if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
-                    openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
                     return;
                 }
-                mPresenter.getShopFollowers(GET_SHOP_FOLLOWERS_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
+                mPresenter.getShopFollowers(Constants.GET_SHOP_FOLLOWERS_ACTION_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
                 break;
             case R.id.hotel_address:
                 if (null == shopCoor || shopCoor.trim().length() <= 0) return;

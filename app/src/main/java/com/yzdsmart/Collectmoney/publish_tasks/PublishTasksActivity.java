@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.views.pickerview.TimePickerDialog;
@@ -62,8 +63,6 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     @BindView(R.id.publish_task)
     Button publishTaskBtn;
 
-    private static final String GET_LEFT_COINS_ACTION_CODE = "1288";
-
     private PublishTasksContract.PublishTasksPresenter mPresenter;
 
     private Handler mHandler = new Handler();
@@ -97,7 +96,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
             }
         };
 
-        mPresenter.getLeftCoins(GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
+        mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
     }
 
     @Override

@@ -41,18 +41,13 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     @Nullable
     @BindView(R.id.city_recommend_spinner)
     BetterSpinner cityRecommendSpinner;
-    //    @Nullable
-//    @BindView(R.id.title_right_operation_to_left)
-//    ImageView titleRightOpeTLIV;
     @Nullable
     @BindView(R.id.recommend_list)
     UltimateRecyclerView recommendListRV;
-//    @Nullable
-//    @BindView(R.id.bubble_count)
-//    TextView bubbleCountTV;
 
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
+
     private RecommendContract.RecommendPresenter mPresenter;
 
     private String[] cities;
@@ -145,7 +140,6 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 
     @Override
     public void onGetExpandList(List<ExpandListRequestResponse> expands) {
-//        bubbleCountTV.setText("" + expands.size());
         pageIndex++;
         if (expands.size() < PAGE_SIZE) {
             recommendListRV.disableLoadmore();

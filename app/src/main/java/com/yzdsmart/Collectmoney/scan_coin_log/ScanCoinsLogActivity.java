@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.GetCoinsLog;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
@@ -48,7 +49,6 @@ public class ScanCoinsLogActivity extends BaseActivity implements ScanCoinsLogCo
     @BindView(R.id.log_filter)
     BetterSpinner logFilterSpinner;
 
-    private static final String GET_COIN_LOG_CODE = "1666";
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
     private Integer lastsequence = 0;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
@@ -98,7 +98,7 @@ public class ScanCoinsLogActivity extends BaseActivity implements ScanCoinsLogCo
         coinListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                mPresenter.getCoinsLog(GET_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(ScanCoinsLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                mPresenter.getCoinsLog(Constants.GET_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(ScanCoinsLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
             }
         });
         coinListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -109,11 +109,11 @@ public class ScanCoinsLogActivity extends BaseActivity implements ScanCoinsLogCo
                 lastsequence = 0;
                 pageIndex = 1;
                 personalCoinsAdapter.clearList();
-                mPresenter.getCoinsLog(GET_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(ScanCoinsLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                mPresenter.getCoinsLog(Constants.GET_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(ScanCoinsLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
             }
         });
 
-        mPresenter.getCoinsLog(GET_COIN_LOG_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+        mPresenter.getCoinsLog(Constants.GET_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
     }
 
     @Override

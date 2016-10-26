@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.yzdsmart.Collectmoney.App;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.main.MainActivity;
 import com.yzdsmart.Collectmoney.utils.Utils;
@@ -58,8 +59,6 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
     @Nullable
     @BindView(R.id.login_register_confirm_button)
     Button confirmButton;
-
-    private static final String REG_ACTION_CODE = "1688";
 
     private String userName, password;
 
@@ -157,7 +156,7 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
                     nickNameET.setError(getResources().getString(R.string.input_nickname));
                     return;
                 }
-                mPresenter.userRegister(REG_ACTION_CODE, userName, password, (userGenderRG.getCheckedRadioButtonId() == R.id.gender_male) ? "男" : "女", Integer.valueOf(Days.daysBetween(dtf.parseDateTime(userAgeET.getText().toString()), new DateTime()).getDays() / 365 + 1), nickNameET.getText().toString(), Utils.md5(REG_ACTION_CODE + "yzd" + userName));
+                mPresenter.userRegister(Constants.REGISTER_ACTION_CODE, userName, password, (userGenderRG.getCheckedRadioButtonId() == R.id.gender_male) ? "男" : "女", Integer.valueOf(Days.daysBetween(dtf.parseDateTime(userAgeET.getText().toString()), new DateTime()).getDays() / 365 + 1), nickNameET.getText().toString(), Utils.md5(Constants.REGISTER_ACTION_CODE + "yzd" + userName));
                 break;
         }
     }

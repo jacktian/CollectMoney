@@ -1,4 +1,4 @@
-package com.yzdsmart.Collectmoney.galley.preview;
+package com.yzdsmart.Collectmoney.galley;
 
 import android.content.Context;
 
@@ -14,15 +14,15 @@ import java.util.List;
  * Created by YZD on 2016/9/22.
  */
 
-public class GalleyPreviewPresenter implements GalleyPreviewContract.GalleyPreviewPresenter {
+public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
     private Context context;
-    private GalleyPreviewContract.GalleyPreviewView mView;
-    private GalleyPreviewModel mModel;
+    private GalleyContract.GalleyPreviewView mView;
+    private GalleyModel mModel;
 
-    public GalleyPreviewPresenter(Context context, GalleyPreviewContract.GalleyPreviewView mView) {
+    public GalleyPresenter(Context context, GalleyContract.GalleyPreviewView mView) {
         this.context = context;
         this.mView = mView;
-        mModel = new GalleyPreviewModel();
+        mModel = new GalleyModel();
         mView.setPresenter(this);
     }
 
@@ -67,6 +67,7 @@ public class GalleyPreviewPresenter implements GalleyPreviewContract.GalleyPrevi
                     mView.onDeletePersonalGalley();
                 } else {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                    mView.onDeleteGalleyFail();
                 }
             }
 
@@ -74,6 +75,7 @@ public class GalleyPreviewPresenter implements GalleyPreviewContract.GalleyPrevi
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                mView.onDeleteGalleyFail();
             }
 
             @Override
@@ -123,6 +125,7 @@ public class GalleyPreviewPresenter implements GalleyPreviewContract.GalleyPrevi
                     mView.onDeleteShopGalley();
                 } else {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                    mView.onDeleteGalleyFail();
                 }
             }
 
@@ -130,6 +133,7 @@ public class GalleyPreviewPresenter implements GalleyPreviewContract.GalleyPrevi
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                mView.onDeleteGalleyFail();
             }
 
             @Override

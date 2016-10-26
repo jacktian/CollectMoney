@@ -43,6 +43,7 @@ import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.BaseFragment;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bd_map.WalkingRouteOverlay;
 import com.yzdsmart.Collectmoney.main.MainActivity;
@@ -82,11 +83,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Nullable
     @BindView(R.id.market_name)
     TextView marketNameTV;
-//    @Nullable
-//    @BindView(R.id.loc_scan_coins)
-//    ImageButton locScanCoins;
-
-    private static final Integer REQUEST_LOGIN_CODE = 1000;
 
     private FragmentManager fm;
 
@@ -224,7 +220,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         switch (view.getId()) {
             case R.id.find_money_scan:
                 if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, REQUEST_LOGIN_CODE);
+                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
                     return;
                 }
                 bundle = new Bundle();

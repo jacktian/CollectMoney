@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 
 import com.soundcloud.android.crop.Crop;
 import com.yzdsmart.Collectmoney.BaseActivity;
+import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 
@@ -55,9 +55,8 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
 
     Button takePhoto, selectFromGalley;
 
-    private static final String UPLOAD_ACTION_CODE = "2101";//上传头像
+//    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     Uri photoUri;
     private AlertDialog.Builder builder;
     private Dialog dialog;
@@ -88,7 +87,7 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
             beginCrop(result.getData());
         } else if (requestCode == Crop.REQUEST_CROP) {
             handleCrop(resultCode, result);
-        } else if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+        } else if (requestCode == Constants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Uri uri;
             if (result != null && result.getData() != null) {
                 uri = result.getData();
@@ -124,7 +123,7 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
             bitmap.recycle();//释放bitmap
             String image = new String(android.util.Base64.encode(bytes, android.util.Base64.DEFAULT));
 
-            mPresenter.uploadPortrait(UPLOAD_ACTION_CODE, SharedPreferencesUtils.getString(this, "im_account", "") + ".png", image, SharedPreferencesUtils.getString(this, "im_account", ""));
+            mPresenter.uploadPortrait(Constants.PERSONAL_UPLOAD_AVATER_ACTION_CODE, SharedPreferencesUtils.getString(this, "im_account", "") + ".png", image, SharedPreferencesUtils.getString(this, "im_account", ""));
 
             resultImageIV.setImageURI(Crop.getOutput(result));
         } else if (resultCode == Crop.RESULT_ERROR) {
@@ -167,7 +166,7 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
                 photoUri = getContentResolver().insert(
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                startActivityForResult(intent, Constants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
                 break;
             case R.id.select_from_galley:
                 resultImageIV.setImageDrawable(null);
