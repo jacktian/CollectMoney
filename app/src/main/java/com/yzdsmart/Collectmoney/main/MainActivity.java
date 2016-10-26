@@ -3,10 +3,7 @@ package com.yzdsmart.Collectmoney.main;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -37,7 +34,6 @@ import com.yzdsmart.Collectmoney.tecent_im.bean.NormalConversation;
 import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
 import com.yzdsmart.Collectmoney.tecent_im.service.TLSService;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
-import com.yzdsmart.Collectmoney.utils.Utils;
 import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
 
 import java.util.ArrayList;
@@ -113,8 +109,6 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
         imLogin();
 
         initJPush();
-
-        registerMessageReceiver();  // used for receive msg
     }
 
     @Override
@@ -144,7 +138,6 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(mMessageReceiver);
         mPresenter.unRegisterObserver();
         super.onDestroy();
     }
@@ -444,38 +437,6 @@ public class MainActivity extends BaseActivity implements CustomNestRadioGroup.O
                 setAlias(SharedPreferencesUtils.getString(this, "cust_code", "").replaceAll("-", ""));
             } else {
                 return;
-            }
-        }
-    }
-
-    //for receive customer msg from jpush server
-    private MessageReceiver mMessageReceiver;
-    public static final String MESSAGE_RECEIVED_ACTION = "com.yzdsmart.Collectmoney.MESSAGE_RECEIVED_ACTION";
-    public static final String KEY_TITLE = "title";
-    public static final String KEY_MESSAGE = "message";
-    public static final String KEY_EXTRAS = "extras";
-
-    public void registerMessageReceiver() {
-        mMessageReceiver = new MessageReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
-        filter.addAction(MESSAGE_RECEIVED_ACTION);
-        registerReceiver(mMessageReceiver, filter);
-    }
-
-    public class MessageReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
-                String messge = intent.getStringExtra(KEY_MESSAGE);
-                String extras = intent.getStringExtra(KEY_EXTRAS);
-                StringBuilder showMsg = new StringBuilder();
-                showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
-                if (!Utils.isEmpty(extras)) {
-                    showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
-                }
-                showSnackbar(showMsg.toString());
             }
         }
     }
