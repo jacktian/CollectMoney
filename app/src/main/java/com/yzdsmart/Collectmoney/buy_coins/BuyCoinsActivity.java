@@ -1,5 +1,7 @@
 package com.yzdsmart.Collectmoney.buy_coins;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -12,14 +14,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
+import com.pingplusplus.android.Pingpp;
 import com.pingplusplus.android.PingppLog;
 import com.yzdsmart.Collectmoney.BaseActivity;
 import com.yzdsmart.Collectmoney.Constants;
 import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.BuyCoinsLog;
 import com.yzdsmart.Collectmoney.bean.PaymentRequest;
+import com.yzdsmart.Collectmoney.http.response.BuyCoinsPayRequestResponse;
 import com.yzdsmart.Collectmoney.publish_tasks.PublishTasksActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.views.CustomNestRadioGroup;
@@ -164,28 +169,42 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                     return;
                 }
 //                showMoveDialog(this, Integer.valueOf(coinCountsET.getText().toString()));
-                mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()));
-//                orderPayPPP();
+//                mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()));
+                orderPayPPP();
                 break;
         }
     }
 
     //订单支付(Ping++)
     private void orderPayPPP() {
-        Integer amount = Integer.valueOf(coinCountsET.getText().toString());
+        Double amount = Double.valueOf(coinCountsET.getText().toString());
         // 支付宝 微信支付 银联
-        PaymentRequest paymentRequest;
+        PaymentRequest.PayParaBean payPara = null;
         switch (payType) {
             case 0:
-                paymentRequest = new PaymentRequest(CHANNEL_UPACP, amount);
+                payPara = new PaymentRequest.PayParaBean();
+                payPara.setAmount(amount);
+                payPara.setChannel(CHANNEL_UPACP);
+                payPara.setBody("购买金币");
                 break;
             case 1:
-                paymentRequest = new PaymentRequest(CHANNEL_WECHAT, amount);
+                payPara = new PaymentRequest.PayParaBean();
+                payPara.setAmount(amount);
+                payPara.setChannel(CHANNEL_WECHAT);
+                payPara.setBody("购买金币");
                 break;
             case 2:
-                paymentRequest = new PaymentRequest(CHANNEL_ALIPAY, amount);
+                payPara = new PaymentRequest.PayParaBean();
+                payPara.setAmount(amount);
+                payPara.setChannel(CHANNEL_ALIPAY);
+                payPara.setBody("购买金币");
                 break;
         }
+        PaymentRequest request = new PaymentRequest();
+        request.setSubmitCode("000000");
+        request.setPayPara(payPara);
+        Gson gson = new Gson();
+        mPresenter.buyCoinsPay(gson.toJson(request));
     }
 
     @Override
@@ -198,6 +217,26 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     protected void onDestroy() {
         mHandler.removeCallbacks(buySuccessRunnable);
         super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //支付页面返回处理
+        if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getExtras().getString("pay_result");
+                /* 处理返回值
+                 * "success" - payment succeed
+                 * "fail"    - payment failed
+                 * "cancel"  - user canceld
+                 * "invalid" - payment plugin not installed
+                 */
+                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+                showSnackbar(result + "----" + errorMsg + "----" + extraMsg);
+            }
+        }
     }
 
     @Override
@@ -214,6 +253,12 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         showProgressDialog(R.drawable.success, getResources().getString(R.string.loading));
         coinCountsET.setText("");
         mHandler.postDelayed(buySuccessRunnable, 500);
+    }
+
+    @Override
+    public void onBuyCoinsPay(BuyCoinsPayRequestResponse.ChargeBean charge) {
+        Gson gson = new Gson();
+        Pingpp.createPayment(BuyCoinsActivity.this, gson.toJson(charge));
     }
 
     @Override

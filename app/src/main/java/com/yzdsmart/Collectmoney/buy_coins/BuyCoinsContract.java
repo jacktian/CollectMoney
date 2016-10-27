@@ -3,6 +3,8 @@ package com.yzdsmart.Collectmoney.buy_coins;
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;
 import com.yzdsmart.Collectmoney.bean.BuyCoinsLog;
+import com.yzdsmart.Collectmoney.bean.PaymentRequest;
+import com.yzdsmart.Collectmoney.http.response.BuyCoinsPayRequestResponse;
 
 import java.util.List;
 
@@ -18,6 +20,8 @@ public interface BuyCoinsContract {
          * @param msg
          */
         void onBuyCoins(boolean flag, String msg);
+
+        void onBuyCoinsPay(BuyCoinsPayRequestResponse.ChargeBean charge);
 
         /**
          * 指定商铺购买金币日志列表
@@ -38,6 +42,8 @@ public interface BuyCoinsContract {
          * @param goldNum
          */
         void buyCoins(String action, String submitCode, String bazaCode, Integer goldNum);
+
+        void buyCoinsPay(String payPara);
 
         /**
          * 指定商铺购买金币日志列表

@@ -1,7 +1,8 @@
 package com.yzdsmart.Collectmoney.http;
 
 import com.yzdsmart.Collectmoney.bean.ShopScanner;
-import com.yzdsmart.Collectmoney.http.response.BuyCoinLogRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.BuyCoinsLogRequestResponse;
+import com.yzdsmart.Collectmoney.http.response.BuyCoinsPayRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
@@ -29,9 +30,12 @@ import com.yzdsmart.Collectmoney.http.response.WithdrawRequestResponse;
 
 import java.util.List;
 
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -491,6 +495,16 @@ public interface RequestService {
     Observable<RequestResponse> buyCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldNum") Integer goldNum);
 
     /**
+     * 购买金币付款
+     *
+     * @param payPara
+     * @return
+     */
+    @Headers({"Content-Type: application/json", "Accept: application/json"})//需要添加头
+    @POST(Url.PAY)
+    Observable<BuyCoinsPayRequestResponse> buyCoinsPay(@Body RequestBody payPara);
+
+    /**
      * 指定商铺购买金币日志列表
      *
      * @param action
@@ -503,7 +517,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.TASKLOG)
-    Observable<BuyCoinLogRequestResponse> buyCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence);
+    Observable<BuyCoinsLogRequestResponse> buyCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence);
 
     /**
      * 获取店铺剩余金币数

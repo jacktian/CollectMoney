@@ -7,17 +7,17 @@ import java.util.List;
 /**
  * Created by YZD on 2016/9/5.
  */
-public class BuyCoinLogRequestResponse {
+public class BuyCoinsLogRequestResponse {
     private List<BuyCoinsLog> lists;
     private Integer lastsequence;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
     private String ActionStatus;
     private Integer ErrorCode;
     private String ErrorInfo;
 
-    public BuyCoinLogRequestResponse() {
+    public BuyCoinsLogRequestResponse() {
     }
 
-    public BuyCoinLogRequestResponse(List<BuyCoinsLog> lists, Integer lastsequence, String actionStatus, Integer errorCode, String errorInfo) {
+    public BuyCoinsLogRequestResponse(List<BuyCoinsLog> lists, Integer lastsequence, String actionStatus, Integer errorCode, String errorInfo) {
         this.lists = lists;
         this.lastsequence = lastsequence;
         ActionStatus = actionStatus;
