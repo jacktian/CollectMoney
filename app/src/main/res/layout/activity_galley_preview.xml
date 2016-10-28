@@ -29,7 +29,7 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_large" />
 
-        <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
+        <com.yzdsmart.Collectmoney.views.photo_picker.picker.widget.BGASortableNinePhotoLayout
             android:id="@+id/snpl_delete_photos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

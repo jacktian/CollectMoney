@@ -294,6 +294,38 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop" />
 
+        <!--图片预览界面-->
+        <activity
+            android:name=".views.photo_picker.picker.activity.BGAPhotoPreviewActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/BGAPPTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <!--图片选择界面-->
+        <activity
+            android:name=".views.photo_picker.picker.activity.BGAPhotoPickerActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/BGAPPTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <!--图片选择预览界面-->
+        <activity
+            android:name=".views.photo_picker.picker.activity.BGAPhotoPickerPreviewActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/BGAPPTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <!--图片选择预览界面-->
+        <activity
+            android:name=".views.photo_picker.picker.activity.BGAPhotoViewActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/BGAPPTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
         <!--腾讯聊天开始-->
         <!-- 消息收发service -->
         <service

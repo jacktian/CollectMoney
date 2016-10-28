@@ -17,6 +17,9 @@ import com.yzdsmart.Collectmoney.R;
 import com.yzdsmart.Collectmoney.bean.GalleyInfo;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.utils.Utils;
+import com.yzdsmart.Collectmoney.views.photo_picker.picker.activity.BGAPhotoPickerActivity;
+import com.yzdsmart.Collectmoney.views.photo_picker.picker.activity.BGAPhotoViewActivity;
+import com.yzdsmart.Collectmoney.views.photo_picker.picker.widget.BGASortableNinePhotoLayout;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,9 +30,6 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
-import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
-import cn.bingoogolapple.photopicker.activity.BGAPhotoViewActivity;
-import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
 
 /**
  * Created by YZD on 2016/9/21.

@@ -39,6 +39,7 @@ import com.yzdsmart.Collectmoney.shop_focuser.ShopFocuserActivity;
 import com.yzdsmart.Collectmoney.shop_scanned_log.ShopScannedLogActivity;
 import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
 import com.yzdsmart.Collectmoney.utils.Utils;
+import com.yzdsmart.Collectmoney.views.photo_picker.picker.activity.BGAPhotoPickerActivity;
 import com.yzdsmart.Collectmoney.withdrawals.WithDrawActivity;
 import com.yzdsmart.Collectmoney.withdrawals_log.WithDrawLogActivity;
 
@@ -51,7 +52,6 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
-import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**

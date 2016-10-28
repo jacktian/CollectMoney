@@ -1,1 +1,1 @@
-include ':app', ':photopicker_library', ':lib:pingpp'
+include ':app', ':lib:pingpp'
