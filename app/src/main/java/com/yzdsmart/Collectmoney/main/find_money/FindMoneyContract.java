@@ -1,6 +1,6 @@
 package com.yzdsmart.Collectmoney.main.find_money;
 
-import com.baidu.mapapi.map.MarkerOptions;
+import com.amap.api.maps.model.MarkerOptions;
 import com.yzdsmart.Collectmoney.BasePresenter;
 import com.yzdsmart.Collectmoney.BaseView;
 

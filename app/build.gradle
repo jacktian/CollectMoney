@@ -14,7 +14,7 @@ android {
         multiDexEnabled true
         ndk {
             // 选择要添加的对应cpu类型的.so库。
-            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a', 'mips', 'mips64'
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64 - v8a ', 'mips ', 'mips64 ', 'x86 ', 'x86_64'
         }
     }
     buildTypes {
@@ -63,13 +63,7 @@ dependencies {
     provided 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'org.xutils:xutils:3.3.36'
     compile 'com.alibaba:fastjson:1.1.54.android'
-    compile files('libs/baidumapapi_base_v4_1_0.jar')
-    compile files('libs/baidumapapi_cloud_v4_1_0.jar')
-    compile files('libs/baidumapapi_map_v4_1_0.jar')
-    compile files('libs/baidumapapi_radar_v4_1_0.jar')
-    compile files('libs/baidumapapi_search_v4_1_0.jar')
-    compile files('libs/baidumapapi_util_v4_1_0.jar')
-    compile files('libs/locSDK_6.13.jar')
+    compile files('libs/AMap3DMap_4.1.1_AMapNavi_1.9.3_AMapSearch_3.5.0_AMapLocation_3.1.0_20161027.jar')
     compile files('libs/imsdk.jar')
     compile files('libs/mobilepb.jar')
     compile files('libs/org.apache.http.legacy.jar')

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.tencent.TIMGroupReceiveMessageOpt;
 import com.tencent.TIMManager;
 import com.tencent.TIMOfflinePushListener;
@@ -31,7 +30,6 @@ public class App extends MultiDexApplication {
         super.onCreate();
         appContext = this;
         storedActivities = new ArrayList<Activity>();
-        SDKInitializer.initialize(this);
         //云通信离线消息推送，只能在主进程进行离线推送监听器注册
         if (MsfSdkUtils.isMainProcess(this)) {
             // 设置离线推送监听器
