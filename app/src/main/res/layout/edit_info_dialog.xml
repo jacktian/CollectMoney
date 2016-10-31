@@ -34,7 +34,7 @@
             android:textColor="@color/font_grey"
             android:textSize="@dimen/font_medium" />
 
-        <com.yzdsmart.Collectmoney.views.BetterSpinner
+        <com.yzdsmart.Dingdingwen.views.BetterSpinner
             android:id="@+id/edit_info_gender"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_height"

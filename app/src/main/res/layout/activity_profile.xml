@@ -40,28 +40,28 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+        <com.yzdsmart.Dingdingwen.tecent_im.views.LineControllerView
             android:id="@+id/id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:name="@string/profile_id" />
 
-        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+        <com.yzdsmart.Dingdingwen.tecent_im.views.LineControllerView
             android:id="@+id/remark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:canNav="true"
             app:name="@string/profile_remark" />
 
-        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+        <com.yzdsmart.Dingdingwen.tecent_im.views.LineControllerView
             android:id="@+id/blackList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:isSwitch="true"
             app:name="@string/profile_black" />
 
-        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+        <com.yzdsmart.Dingdingwen.tecent_im.views.LineControllerView
             android:id="@+id/group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

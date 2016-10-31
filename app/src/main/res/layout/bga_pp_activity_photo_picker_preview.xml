@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:background="@color/bga_pp_activity_bg">
 
-        <com.yzdsmart.Collectmoney.views.photo_picker.picker.widget.BGAHackyViewPager
+        <com.yzdsmart.Dingdingwen.views.photo_picker.picker.widget.BGAHackyViewPager
             android:id="@+id/hvp_photo_picker_preview_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

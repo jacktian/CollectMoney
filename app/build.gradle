@@ -6,7 +6,7 @@ android {
     buildToolsVersion "24.0.1"
 
     defaultConfig {
-        applicationId "com.yzdsmart.Collectmoney"
+        applicationId "com.yzdsmart.Dingdingwen"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 81

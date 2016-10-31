@@ -17,7 +17,7 @@
         android:layout_marginBottom="@dimen/bottom_tab_height"
         android:layout_marginTop="@dimen/common_toolbar_height" />
 
-    <com.yzdsmart.Collectmoney.views.CustomNestRadioGroup
+    <com.yzdsmart.Dingdingwen.views.CustomNestRadioGroup
         android:id="@+id/im_bottom_tab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_tab_height"
@@ -155,5 +155,5 @@
                 android:textColor="@color/money_friend_tab"
                 android:textSize="@dimen/font_xx_small" />
         </RelativeLayout>
-    </com.yzdsmart.Collectmoney.views.CustomNestRadioGroup>
+    </com.yzdsmart.Dingdingwen.views.CustomNestRadioGroup>
 </android.support.design.widget.CoordinatorLayout>

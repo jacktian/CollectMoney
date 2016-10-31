@@ -40,7 +40,7 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+        <com.yzdsmart.Dingdingwen.tecent_im.views.LineControllerView
             android:id="@+id/id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+        <com.yzdsmart.Dingdingwen.tecent_im.views.LineControllerView
             android:id="@+id/group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

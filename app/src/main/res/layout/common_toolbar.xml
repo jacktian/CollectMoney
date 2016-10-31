@@ -19,7 +19,7 @@
             android:paddingLeft="@dimen/activity_horizontal_padding"
             android:paddingRight="@dimen/activity_horizontal_padding">
 
-            <com.yzdsmart.Collectmoney.views.BetterSpinner
+            <com.yzdsmart.Dingdingwen.views.BetterSpinner
                 android:id="@+id/city_recommend_spinner"
                 android:layout_width="@dimen/recommend_spinner_width"
                 android:layout_height="@dimen/recommend_spinner_height"

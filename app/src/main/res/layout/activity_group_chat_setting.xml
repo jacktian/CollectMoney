@@ -16,40 +16,40 @@
         android:layout_marginTop="@dimen/common_toolbar_height"
         android:orientation="vertical">
 
-        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+        <com.yzdsmart.Dingdingwen.tecent_im.views.LineControllerView
             android:id="@+id/idText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:name="@string/chat_setting_group_id" />
 
-        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+        <com.yzdsmart.Dingdingwen.tecent_im.views.LineControllerView
             android:id="@+id/member"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:canNav="true"
             app:name="@string/chat_setting_group_member" />
 
-        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+        <com.yzdsmart.Dingdingwen.tecent_im.views.LineControllerView
             android:id="@+id/nameText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:name="@string/chat_setting_group_name" />
 
-        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+        <com.yzdsmart.Dingdingwen.tecent_im.views.LineControllerView
             android:id="@+id/groupIntro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:name="@string/chat_setting_group_introduce" />
 
-        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+        <com.yzdsmart.Dingdingwen.tecent_im.views.LineControllerView
             android:id="@+id/messageNotify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:canNav="true"
             app:name="@string/chat_setting_group_msg_alert" />
 
-        <com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView
+        <com.yzdsmart.Dingdingwen.tecent_im.views.LineControllerView
             android:id="@+id/addOpt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -17,7 +17,7 @@
         android:layout_marginTop="@dimen/common_toolbar_height"
         android:orientation="vertical">
 
-        <com.yzdsmart.Collectmoney.views.BetterSpinner
+        <com.yzdsmart.Dingdingwen.views.BetterSpinner
             android:id="@+id/log_filter"
             android:layout_width="match_parent"
             android:layout_height="@dimen/scan_coin_log_filter_height"
