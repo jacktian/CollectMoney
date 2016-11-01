@@ -8,13 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.yzdsmart.Collectmoney.App;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.Constants;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.main.MainActivity;
-import com.yzdsmart.Collectmoney.register_login.set_info.SetInfoActivity;
-import com.yzdsmart.Collectmoney.utils.Utils;
+import com.yzdsmart.Dingdingwen.App;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.Constants;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
+import com.yzdsmart.Dingdingwen.register_login.set_info.SetInfoActivity;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.List;
 

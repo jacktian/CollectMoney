@@ -8,8 +8,8 @@ import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMGroupDetailInfo;
 import com.tencent.TIMGroupMemberRoleType;
 import com.tencent.TIMGroupReceiveMessageOpt;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.money_friendship.group_list.profile.GroupProfileActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.money_friendship.group_list.profile.GroupProfileActivity;
 
 /**
  * 群资料

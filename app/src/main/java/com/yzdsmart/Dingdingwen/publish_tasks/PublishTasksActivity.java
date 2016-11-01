@@ -10,13 +10,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.Constants;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
-import com.yzdsmart.Collectmoney.views.time_picker.TimePickerDialog;
-import com.yzdsmart.Collectmoney.views.time_picker.data.Type;
-import com.yzdsmart.Collectmoney.views.time_picker.listener.OnDateSetListener;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.Constants;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.views.time_picker.TimePickerDialog;
+import com.yzdsmart.Dingdingwen.views.time_picker.data.Type;
+import com.yzdsmart.Dingdingwen.views.time_picker.listener.OnDateSetListener;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
-import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Dingdingwen.R;
 
 /**
  * Created by YZD on 2016/9/12.

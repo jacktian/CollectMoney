@@ -1,10 +1,10 @@
 package com.yzdsmart.Dingdingwen.shop_details;
 
-import com.yzdsmart.Collectmoney.bean.ShopScanner;
-import com.yzdsmart.Collectmoney.http.RequestAdapter;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.RequestResponse;
-import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.bean.ShopScanner;
+import com.yzdsmart.Dingdingwen.http.RequestAdapter;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopInfoRequestResponse;
 
 import java.util.List;
 

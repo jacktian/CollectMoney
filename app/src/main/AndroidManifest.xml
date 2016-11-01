@@ -329,7 +329,7 @@
         <!--高德地图开始-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="8d5ca796a4ab514eff6aed506b64c4e5">//开发者申请的key
+            android:value="298bb350c2abe358cc51fd634bcc81fc">//开发者申请的key
         </meta-data>
         <service android:name="com.amap.api.location.APSService"></service>//定位
         <!--高德地图结束-->
@@ -516,7 +516,7 @@
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="a0c8b782b83671836c5dd547" /> <!--  </>值来自开发者平台取得的AppKey-->
+            android:value="086f9d75e3409649b4551b10" /> <!--值来自开发者平台取得的AppKey-->
         <!--极光推送结束-->
 
         <!--ping++开始-->

@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.PublishTaskLog;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.PublishTaskLog;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

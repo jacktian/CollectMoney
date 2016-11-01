@@ -1,9 +1,9 @@
 package com.yzdsmart.Dingdingwen.withdrawals_log;
 
-import com.yzdsmart.Collectmoney.http.RequestAdapter;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.PersonalWithdrawLogRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.ShopWithdrawLogRequestResponse;
+import com.yzdsmart.Dingdingwen.http.RequestAdapter;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.PersonalWithdrawLogRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopWithdrawLogRequestResponse;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

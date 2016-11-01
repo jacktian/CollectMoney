@@ -15,7 +15,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Dingdingwen.R;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com

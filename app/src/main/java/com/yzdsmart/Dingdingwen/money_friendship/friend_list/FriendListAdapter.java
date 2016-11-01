@@ -16,11 +16,11 @@ import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.Friendship;
-import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
-import com.yzdsmart.Collectmoney.utils.Utils;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.Friendship;
+import com.yzdsmart.Dingdingwen.personal_friend_detail.PersonalFriendDetailActivity;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;

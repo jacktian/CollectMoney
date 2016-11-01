@@ -11,14 +11,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tencent.TIMGroupCacheInfo;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.BaseFragment;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.money_friendship.group_list.profile.GroupProfileActivity;
-import com.yzdsmart.Collectmoney.tecent_im.adapters.ProfileSummaryAdapter;
-import com.yzdsmart.Collectmoney.tecent_im.bean.GroupInfo;
-import com.yzdsmart.Collectmoney.tecent_im.bean.GroupProfile;
-import com.yzdsmart.Collectmoney.tecent_im.bean.ProfileSummary;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.BaseFragment;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.money_friendship.group_list.profile.GroupProfileActivity;
+import com.yzdsmart.Dingdingwen.tecent_im.adapters.ProfileSummaryAdapter;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.GroupInfo;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.GroupProfile;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.ProfileSummary;
 
 import java.util.ArrayList;
 import java.util.Iterator;

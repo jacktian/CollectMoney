@@ -1,6 +1,6 @@
 package com.yzdsmart.Dingdingwen.http.response;
 
-import com.yzdsmart.Collectmoney.bean.GalleyInfo;
+import com.yzdsmart.Dingdingwen.bean.GalleyInfo;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.shop_focuser;
 
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.bean.ShopFocuser;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.bean.ShopFocuser;
 
 import java.util.List;
 

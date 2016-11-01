@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.PersonalWithdrawLog;
-import com.yzdsmart.Collectmoney.bean.ShopWithdrawLog;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.PersonalWithdrawLog;
+import com.yzdsmart.Dingdingwen.bean.ShopWithdrawLog;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

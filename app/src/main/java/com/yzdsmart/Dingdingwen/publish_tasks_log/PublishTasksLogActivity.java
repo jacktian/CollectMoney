@@ -12,12 +12,12 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.Constants;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.PublishTaskLog;
-import com.yzdsmart.Collectmoney.buy_coins.BuyCoinsActivity;
-import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.Constants;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.PublishTaskLog;
+import com.yzdsmart.Dingdingwen.buy_coins.BuyCoinsActivity;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;

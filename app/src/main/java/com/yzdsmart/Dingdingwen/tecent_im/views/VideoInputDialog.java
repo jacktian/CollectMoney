@@ -17,9 +17,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.chat.ChatContract;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.chat.ChatContract;
 
 import java.io.File;
 import java.io.IOException;

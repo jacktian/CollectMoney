@@ -3,7 +3,7 @@ package com.yzdsmart.Dingdingwen.tecent_im.business;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMManager;
 import com.tencent.TIMUser;
-import com.yzdsmart.Collectmoney.tecent_im.Constant;
+import com.yzdsmart.Dingdingwen.tecent_im.Constant;
 
 /**
  * 登录

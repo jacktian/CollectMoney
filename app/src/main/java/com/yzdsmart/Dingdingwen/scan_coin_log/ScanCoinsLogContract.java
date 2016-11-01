@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.scan_coin_log;
 
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.bean.GetCoinsLog;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.bean.GetCoinsLog;
 
 import java.util.List;
 

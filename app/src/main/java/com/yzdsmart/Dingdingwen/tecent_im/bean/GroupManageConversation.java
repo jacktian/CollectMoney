@@ -6,8 +6,8 @@ import android.util.Log;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupPendencyItem;
-import com.yzdsmart.Collectmoney.App;
-import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Dingdingwen.App;
+import com.yzdsmart.Dingdingwen.R;
 
 import java.util.Calendar;
 

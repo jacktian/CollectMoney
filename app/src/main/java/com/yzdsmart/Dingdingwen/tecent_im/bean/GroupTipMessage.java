@@ -6,9 +6,9 @@ import android.view.View;
 import com.tencent.TIMGroupMemberInfo;
 import com.tencent.TIMGroupTipsElem;
 import com.tencent.TIMMessage;
-import com.yzdsmart.Collectmoney.App;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.tecent_im.adapters.ChatAdapter;
+import com.yzdsmart.Dingdingwen.App;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.tecent_im.adapters.ChatAdapter;
 
 import java.util.Iterator;
 import java.util.Map;

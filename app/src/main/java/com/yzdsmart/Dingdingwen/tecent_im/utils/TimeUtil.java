@@ -1,7 +1,7 @@
 package com.yzdsmart.Dingdingwen.tecent_im.utils;
 
-import com.yzdsmart.Collectmoney.App;
-import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Dingdingwen.App;
+import com.yzdsmart.Dingdingwen.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

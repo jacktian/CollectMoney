@@ -5,9 +5,9 @@ import android.os.Bundle;
 
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.chat.ChatActivity;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.chat.ChatActivity;
 
 /**
  * 好友或群聊的会话

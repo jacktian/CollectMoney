@@ -13,7 +13,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import com.yzdsmart.Collectmoney.App;
+import com.yzdsmart.Dingdingwen.App;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

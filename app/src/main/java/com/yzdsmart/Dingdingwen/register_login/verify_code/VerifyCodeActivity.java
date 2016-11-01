@@ -9,10 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.register_login.set_password.SetPasswordActivity;
-import com.yzdsmart.Collectmoney.utils.Utils;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.register_login.set_password.SetPasswordActivity;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import org.joda.time.DateTime;
 

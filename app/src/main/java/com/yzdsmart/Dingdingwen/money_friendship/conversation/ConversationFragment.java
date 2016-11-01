@@ -9,12 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.BaseFragment;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.chat.ChatActivity;
-import com.yzdsmart.Collectmoney.tecent_im.adapters.ConversationAdapter;
-import com.yzdsmart.Collectmoney.tecent_im.bean.Conversation;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.BaseFragment;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.chat.ChatActivity;
+import com.yzdsmart.Dingdingwen.tecent_im.adapters.ConversationAdapter;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.Conversation;
 
 import java.util.LinkedList;
 import java.util.List;

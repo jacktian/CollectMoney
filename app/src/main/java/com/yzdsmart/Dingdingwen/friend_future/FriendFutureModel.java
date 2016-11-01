@@ -5,7 +5,7 @@ import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMGetFriendFutureListSucc;
 import com.tencent.TIMPageDirectionType;
 import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
 
 /**
  * Created by YZD on 2016/9/2.

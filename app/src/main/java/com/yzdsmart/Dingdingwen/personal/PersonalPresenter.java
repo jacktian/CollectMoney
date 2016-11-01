@@ -2,14 +2,14 @@ package com.yzdsmart.Dingdingwen.personal;
 
 import android.content.Context;
 
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.CustLevelRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.GetGalleyRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.UploadFileRequestResponse;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.CustLevelRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.GetGalleyRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopInfoByPersRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.UploadFileRequestResponse;
 
 /**
  * Created by YZD on 2016/10/25.

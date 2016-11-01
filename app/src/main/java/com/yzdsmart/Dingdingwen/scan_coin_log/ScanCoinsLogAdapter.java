@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.GetCoinsLog;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.GetCoinsLog;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

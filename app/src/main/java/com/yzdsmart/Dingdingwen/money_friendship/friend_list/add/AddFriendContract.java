@@ -3,8 +3,8 @@ package com.yzdsmart.Dingdingwen.money_friendship.friend_list.add;
 import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendStatus;
 import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
 
 import java.util.List;
 

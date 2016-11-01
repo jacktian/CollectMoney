@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Dingdingwen.R;
 
 /**
  * 发送语音提示控件

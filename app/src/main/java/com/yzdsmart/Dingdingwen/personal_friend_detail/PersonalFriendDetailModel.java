@@ -8,11 +8,11 @@ import com.tencent.TIMDelFriendType;
 import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.http.RequestAdapter;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.GetGalleyRequestResponse;
+import com.yzdsmart.Dingdingwen.http.RequestAdapter;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.GetGalleyRequestResponse;
 
 import java.util.Collections;
 import java.util.List;

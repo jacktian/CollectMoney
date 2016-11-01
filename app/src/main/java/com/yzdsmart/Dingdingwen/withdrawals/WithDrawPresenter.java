@@ -2,12 +2,12 @@ package com.yzdsmart.Dingdingwen.withdrawals;
 
 import android.content.Context;
 
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.GetCoinRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.WithdrawRequestResponse;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.WithdrawRequestResponse;
 
 /**
  * Created by jacks on 2016/9/23.

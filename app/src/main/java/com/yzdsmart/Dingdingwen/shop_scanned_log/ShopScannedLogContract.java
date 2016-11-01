@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.shop_scanned_log;
 
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.bean.ScannedLog;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.bean.ScannedLog;
 
 import java.util.List;
 

@@ -14,15 +14,15 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.adapter.BGAPhotoPageAdapter;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.imageloader.BGAImage;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.imageloader.BGAImageLoader;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.util.BGAAsyncTask;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.util.BGAPhotoPickerUtil;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.util.BGASavePhotoTask;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.widget.BGAHackyViewPager;
-import com.yzdsmart.Collectmoney.views.photo_picker.view.PhotoViewAttacher;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.adapter.BGAPhotoPageAdapter;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.imageloader.BGAImage;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.imageloader.BGAImageLoader;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.util.BGAAsyncTask;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.util.BGAPhotoPickerUtil;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.util.BGASavePhotoTask;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.widget.BGAHackyViewPager;
+import com.yzdsmart.Dingdingwen.views.photo_picker.view.PhotoViewAttacher;
 
 import java.io.File;
 import java.util.ArrayList;

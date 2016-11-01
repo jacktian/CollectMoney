@@ -2,10 +2,10 @@ package com.yzdsmart.Dingdingwen.scan_coin_log;
 
 import android.content.Context;
 
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.GetCoinsLogRequestResponse;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.GetCoinsLogRequestResponse;
 
 /**
  * Created by YZD on 2016/9/5.

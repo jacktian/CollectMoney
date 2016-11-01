@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.money_friendship.group_list;
 
 import com.tencent.TIMGroupCacheInfo;
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
 
 /**
  * Created by YZD on 2016/8/30.

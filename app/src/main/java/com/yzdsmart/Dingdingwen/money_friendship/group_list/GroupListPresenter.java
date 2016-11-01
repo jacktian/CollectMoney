@@ -3,7 +3,7 @@ package com.yzdsmart.Dingdingwen.money_friendship.group_list;
 import android.content.Context;
 
 import com.tencent.TIMGroupCacheInfo;
-import com.yzdsmart.Collectmoney.tecent_im.event.GroupEvent;
+import com.yzdsmart.Dingdingwen.tecent_im.event.GroupEvent;
 
 import java.util.Observable;
 import java.util.Observer;

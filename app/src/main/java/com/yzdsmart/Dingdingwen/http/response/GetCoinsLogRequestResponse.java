@@ -1,6 +1,6 @@
 package com.yzdsmart.Dingdingwen.http.response;
 
-import com.yzdsmart.Collectmoney.bean.GetCoinsLog;
+import com.yzdsmart.Dingdingwen.bean.GetCoinsLog;
 
 import java.util.List;
 

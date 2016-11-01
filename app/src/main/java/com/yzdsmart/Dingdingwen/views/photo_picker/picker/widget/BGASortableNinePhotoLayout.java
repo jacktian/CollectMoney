@@ -16,10 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.imageloader.BGAImage;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.util.BGAPhotoPickerUtil;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.util.BGASpaceItemDecoration;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.imageloader.BGAImage;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.util.BGAPhotoPickerUtil;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.util.BGASpaceItemDecoration;
 
 import java.util.ArrayList;
 import java.util.HashMap;

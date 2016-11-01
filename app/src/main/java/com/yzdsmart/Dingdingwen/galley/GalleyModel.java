@@ -1,10 +1,10 @@
 package com.yzdsmart.Dingdingwen.galley;
 
-import com.yzdsmart.Collectmoney.http.RequestAdapter;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.GetGalleyRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.RequestResponse;
-import com.yzdsmart.Collectmoney.http.response.UploadFileRequestResponse;
+import com.yzdsmart.Dingdingwen.http.RequestAdapter;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.GetGalleyRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.UploadFileRequestResponse;
 
 import java.util.List;
 

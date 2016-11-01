@@ -10,10 +10,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.chat.ChatActivity;
-import com.yzdsmart.Collectmoney.tecent_im.bean.Message;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.chat.ChatActivity;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.Message;
 
 import java.util.List;
 

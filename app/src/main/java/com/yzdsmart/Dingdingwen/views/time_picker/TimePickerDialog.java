@@ -14,11 +14,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.views.time_picker.config.PickerConfig;
-import com.yzdsmart.Collectmoney.views.time_picker.data.Type;
-import com.yzdsmart.Collectmoney.views.time_picker.data.WheelCalendar;
-import com.yzdsmart.Collectmoney.views.time_picker.listener.OnDateSetListener;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.views.time_picker.config.PickerConfig;
+import com.yzdsmart.Dingdingwen.views.time_picker.data.Type;
+import com.yzdsmart.Dingdingwen.views.time_picker.data.WheelCalendar;
+import com.yzdsmart.Dingdingwen.views.time_picker.listener.OnDateSetListener;
 
 import java.util.Calendar;
 

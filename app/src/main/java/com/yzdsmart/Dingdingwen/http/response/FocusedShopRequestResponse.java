@@ -1,6 +1,6 @@
 package com.yzdsmart.Dingdingwen.http.response;
 
-import com.yzdsmart.Collectmoney.bean.FocusedShop;
+import com.yzdsmart.Dingdingwen.bean.FocusedShop;
 
 import java.util.List;
 

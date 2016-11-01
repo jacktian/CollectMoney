@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.tencent.TIMCustomElem;
 import com.tencent.TIMMessage;
-import com.yzdsmart.Collectmoney.tecent_im.adapters.ChatAdapter;
+import com.yzdsmart.Dingdingwen.tecent_im.adapters.ChatAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;

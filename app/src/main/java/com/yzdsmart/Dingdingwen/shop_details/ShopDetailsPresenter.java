@@ -2,12 +2,12 @@ package com.yzdsmart.Dingdingwen.shop_details;
 
 import android.content.Context;
 
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.ShopScanner;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.RequestResponse;
-import com.yzdsmart.Collectmoney.http.response.ShopInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.ShopScanner;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopInfoRequestResponse;
 
 import java.util.List;
 

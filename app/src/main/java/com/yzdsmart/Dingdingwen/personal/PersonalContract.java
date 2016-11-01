@@ -1,10 +1,10 @@
 package com.yzdsmart.Dingdingwen.personal;
 
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.bean.GalleyInfo;
-import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.bean.GalleyInfo;
+import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopInfoByPersRequestResponse;
 
 import java.util.List;
 

@@ -27,8 +27,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.chat.ChatContract;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.chat.ChatContract;
 
 import java.io.IOException;
 import java.io.InputStream;

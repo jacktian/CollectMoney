@@ -1,9 +1,9 @@
 package com.yzdsmart.Dingdingwen.views.time_picker.data.source;
 
-import com.yzdsmart.Collectmoney.views.time_picker.config.PickerConfig;
-import com.yzdsmart.Collectmoney.views.time_picker.data.WheelCalendar;
-import com.yzdsmart.Collectmoney.views.time_picker.utils.PickerContants;
-import com.yzdsmart.Collectmoney.views.time_picker.utils.Utils;
+import com.yzdsmart.Dingdingwen.views.time_picker.config.PickerConfig;
+import com.yzdsmart.Dingdingwen.views.time_picker.data.WheelCalendar;
+import com.yzdsmart.Dingdingwen.views.time_picker.utils.PickerContants;
+import com.yzdsmart.Dingdingwen.views.time_picker.utils.Utils;
 
 import java.util.Calendar;
 

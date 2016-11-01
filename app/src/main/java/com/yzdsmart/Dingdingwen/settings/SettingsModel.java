@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.settings;
 
-import com.yzdsmart.Collectmoney.http.RequestAdapter;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.RequestAdapter;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

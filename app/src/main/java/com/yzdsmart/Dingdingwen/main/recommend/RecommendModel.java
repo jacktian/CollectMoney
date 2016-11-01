@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.main.recommend;
 
-import com.yzdsmart.Collectmoney.http.RequestAdapter;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
+import com.yzdsmart.Dingdingwen.http.RequestAdapter;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.ExpandListRequestResponse;
 
 import java.util.List;
 

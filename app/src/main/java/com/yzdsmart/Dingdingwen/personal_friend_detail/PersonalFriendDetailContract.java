@@ -1,10 +1,10 @@
 package com.yzdsmart.Dingdingwen.personal_friend_detail;
 
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.bean.GalleyInfo;
-import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.bean.GalleyInfo;
+import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 
 import java.util.List;
 

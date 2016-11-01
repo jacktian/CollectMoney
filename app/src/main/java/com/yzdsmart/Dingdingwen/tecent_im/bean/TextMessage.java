@@ -19,9 +19,9 @@ import com.tencent.TIMFaceElem;
 import com.tencent.TIMMessage;
 import com.tencent.TIMMessageDraft;
 import com.tencent.TIMTextElem;
-import com.yzdsmart.Collectmoney.App;
-import com.yzdsmart.Collectmoney.tecent_im.adapters.ChatAdapter;
-import com.yzdsmart.Collectmoney.tecent_im.utils.EmoticonUtil;
+import com.yzdsmart.Dingdingwen.App;
+import com.yzdsmart.Dingdingwen.tecent_im.adapters.ChatAdapter;
+import com.yzdsmart.Dingdingwen.tecent_im.utils.EmoticonUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

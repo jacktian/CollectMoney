@@ -9,9 +9,9 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.imageloader.BGAImage;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.util.BGAPhotoPickerUtil;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.imageloader.BGAImage;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.util.BGAPhotoPickerUtil;
 
 import java.util.ArrayList;
 import java.util.List;

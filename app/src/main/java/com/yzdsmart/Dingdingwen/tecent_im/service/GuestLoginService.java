@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 
-import com.yzdsmart.Collectmoney.tecent_im.helper.Util;
+import com.yzdsmart.Dingdingwen.tecent_im.helper.Util;
 
 import tencent.tls.platform.TLSErrInfo;
 import tencent.tls.platform.TLSUserInfo;

@@ -2,11 +2,11 @@ package com.yzdsmart.Dingdingwen.edit_shop_info;
 
 import android.content.Context;
 
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.RequestResponse;
-import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopInfoByPersRequestResponse;
 
 /**
  * Created by YZD on 2016/9/25.

@@ -14,11 +14,11 @@ import android.widget.TextView;
 import com.tencent.TIMMessage;
 import com.tencent.TIMSoundElem;
 import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.App;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.tecent_im.adapters.ChatAdapter;
-import com.yzdsmart.Collectmoney.tecent_im.utils.FileUtil;
-import com.yzdsmart.Collectmoney.tecent_im.utils.MediaUtil;
+import com.yzdsmart.Dingdingwen.App;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.tecent_im.adapters.ChatAdapter;
+import com.yzdsmart.Dingdingwen.tecent_im.utils.FileUtil;
+import com.yzdsmart.Dingdingwen.tecent_im.utils.MediaUtil;
 
 import java.io.File;
 import java.io.FileInputStream;

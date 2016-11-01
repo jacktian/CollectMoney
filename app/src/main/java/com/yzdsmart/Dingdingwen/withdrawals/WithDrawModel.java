@@ -1,10 +1,10 @@
 package com.yzdsmart.Dingdingwen.withdrawals;
 
-import com.yzdsmart.Collectmoney.http.RequestAdapter;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.GetCoinRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.WithdrawRequestResponse;
+import com.yzdsmart.Dingdingwen.http.RequestAdapter;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.WithdrawRequestResponse;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

@@ -8,7 +8,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Dingdingwen.R;
 
 /**
  * 提示对话框

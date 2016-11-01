@@ -4,10 +4,10 @@ import android.content.Context;
 
 import com.tencent.TIMCallBack;
 import com.tencent.TIMFriendshipManager;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.UploadFileRequestResponse;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.UploadFileRequestResponse;
 
 /**
  * Created by YZD on 2016/8/24.

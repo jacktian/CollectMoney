@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.ScannedLog;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.ScannedLog;
 
 import java.util.ArrayList;
 import java.util.List;

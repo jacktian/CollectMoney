@@ -6,12 +6,12 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.imageloader.BGAImage;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.util.BGABrowserPhotoViewAttacher;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.util.BGAPhotoPickerUtil;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.widget.BGAImageView;
-import com.yzdsmart.Collectmoney.views.photo_picker.view.PhotoViewAttacher;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.imageloader.BGAImage;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.util.BGABrowserPhotoViewAttacher;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.util.BGAPhotoPickerUtil;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.widget.BGAImageView;
+import com.yzdsmart.Dingdingwen.views.photo_picker.view.PhotoViewAttacher;
 
 import java.util.ArrayList;
 

@@ -9,12 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.BaseFragment;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
-import com.yzdsmart.Collectmoney.main.MainActivity;
-import com.yzdsmart.Collectmoney.views.BetterSpinner;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.BaseFragment;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.response.ExpandListRequestResponse;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
+import com.yzdsmart.Dingdingwen.views.BetterSpinner;
 
 import java.util.ArrayList;
 import java.util.List;

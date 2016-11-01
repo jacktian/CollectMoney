@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.register_login.verify_phone;
 
-import com.yzdsmart.Collectmoney.http.RequestAdapter;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.RequestResponse;
+import com.yzdsmart.Dingdingwen.http.RequestAdapter;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

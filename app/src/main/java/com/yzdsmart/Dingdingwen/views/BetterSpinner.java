@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
-import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Dingdingwen.R;
 
 import java.util.Calendar;
 

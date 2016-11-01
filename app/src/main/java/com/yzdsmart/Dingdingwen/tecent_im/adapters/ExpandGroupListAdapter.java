@@ -8,8 +8,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.tecent_im.bean.FriendProfile;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendProfile;
 
 import java.util.List;
 import java.util.Map;

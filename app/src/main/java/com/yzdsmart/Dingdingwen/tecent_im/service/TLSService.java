@@ -3,7 +3,7 @@ package com.yzdsmart.Dingdingwen.tecent_im.service;
 import android.content.Context;
 import android.widget.Button;
 
-import com.yzdsmart.Collectmoney.tecent_im.helper.Util;
+import com.yzdsmart.Dingdingwen.tecent_im.helper.Util;
 
 import tencent.tls.platform.TLSAccountHelper;
 import tencent.tls.platform.TLSErrInfo;

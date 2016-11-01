@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.shop_focuser;
 
-import com.yzdsmart.Collectmoney.http.RequestAdapter;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.ShopFocuserRequestResponse;
+import com.yzdsmart.Dingdingwen.http.RequestAdapter;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.ShopFocuserRequestResponse;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

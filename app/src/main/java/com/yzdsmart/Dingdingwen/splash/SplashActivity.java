@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.github.paolorotolo.appintro.AppIntro2;
-import com.yzdsmart.Collectmoney.main.MainActivity;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 
 /**
  * Created by YZD on 2016/8/17.

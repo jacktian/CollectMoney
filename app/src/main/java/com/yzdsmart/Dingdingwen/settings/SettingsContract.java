@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.settings;
 
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
 
 /**
  * Created by YZD on 2016/9/3.

@@ -14,10 +14,10 @@ import android.widget.TextView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.tencent.TIMFriendFutureItem;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.search_friend.SearchFriendActivity;
-import com.yzdsmart.Collectmoney.tecent_im.bean.FriendFuture;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.search_friend.SearchFriendActivity;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendFuture;
 
 import java.util.ArrayList;
 import java.util.List;

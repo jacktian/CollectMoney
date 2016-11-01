@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.shop_scanned_log;
 
-import com.yzdsmart.Collectmoney.http.RequestAdapter;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.ScannedLogRequestResponse;
+import com.yzdsmart.Dingdingwen.http.RequestAdapter;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.ScannedLogRequestResponse;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

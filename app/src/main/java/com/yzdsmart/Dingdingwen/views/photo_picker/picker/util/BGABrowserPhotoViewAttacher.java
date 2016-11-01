@@ -4,7 +4,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
-import com.yzdsmart.Collectmoney.views.photo_picker.view.PhotoViewAttacher;
+import com.yzdsmart.Dingdingwen.views.photo_picker.view.PhotoViewAttacher;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com

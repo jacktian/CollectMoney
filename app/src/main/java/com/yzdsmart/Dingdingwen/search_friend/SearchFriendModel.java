@@ -2,11 +2,10 @@ package com.yzdsmart.Dingdingwen.search_friend;
 
 import com.tencent.TIMAddFriendRequest;
 import com.tencent.TIMFriendResult;
-import com.tencent.TIMFriendStatus;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
 
 import java.util.ArrayList;
 import java.util.List;

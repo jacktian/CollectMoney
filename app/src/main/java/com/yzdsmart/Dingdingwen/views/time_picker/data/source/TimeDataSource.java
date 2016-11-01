@@ -1,6 +1,6 @@
 package com.yzdsmart.Dingdingwen.views.time_picker.data.source;
 
-import com.yzdsmart.Collectmoney.views.time_picker.data.WheelCalendar;
+import com.yzdsmart.Dingdingwen.views.time_picker.data.WheelCalendar;
 
 /**
  * Created by jzxiang on 16/6/13.

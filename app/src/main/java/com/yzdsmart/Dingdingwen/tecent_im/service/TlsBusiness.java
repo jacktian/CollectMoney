@@ -2,7 +2,7 @@ package com.yzdsmart.Dingdingwen.tecent_im.service;
 
 import android.content.Context;
 
-import com.yzdsmart.Collectmoney.tecent_im.Constant;
+import com.yzdsmart.Dingdingwen.tecent_im.Constant;
 
 /**
  * 初始化tls登录模块

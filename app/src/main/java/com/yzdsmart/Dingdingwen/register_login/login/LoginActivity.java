@@ -20,12 +20,12 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
-import com.yzdsmart.Collectmoney.App;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.register_login.verify_phone.VerifyPhoneActivity;
-import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
-import com.yzdsmart.Collectmoney.utils.Utils;
+import com.yzdsmart.Dingdingwen.App;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.register_login.verify_phone.VerifyPhoneActivity;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import org.json.JSONObject;
 

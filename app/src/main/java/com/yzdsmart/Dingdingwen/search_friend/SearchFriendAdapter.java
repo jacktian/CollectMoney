@@ -17,10 +17,10 @@ import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMFriendshipProxy;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.chat.ChatActivity;
-import com.yzdsmart.Collectmoney.tecent_im.bean.ProfileSummary;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.chat.ChatActivity;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.ProfileSummary;
 
 import java.util.ArrayList;
 import java.util.Collections;

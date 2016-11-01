@@ -1,9 +1,9 @@
 package com.yzdsmart.Dingdingwen.edit_personal_info;
 
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 
 /**
  * Created by YZD on 2016/9/24.

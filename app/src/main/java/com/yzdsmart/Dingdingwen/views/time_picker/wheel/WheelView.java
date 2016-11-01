@@ -31,10 +31,10 @@ import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.views.time_picker.adapters.WheelViewAdapter;
-import com.yzdsmart.Collectmoney.views.time_picker.config.DefaultConfig;
-import com.yzdsmart.Collectmoney.views.time_picker.config.PickerConfig;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.views.time_picker.adapters.WheelViewAdapter;
+import com.yzdsmart.Dingdingwen.views.time_picker.config.DefaultConfig;
+import com.yzdsmart.Dingdingwen.views.time_picker.config.PickerConfig;
 
 import java.util.LinkedList;
 import java.util.List;

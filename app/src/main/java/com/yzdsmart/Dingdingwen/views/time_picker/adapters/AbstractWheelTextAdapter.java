@@ -23,8 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.views.time_picker.config.PickerConfig;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.views.time_picker.config.PickerConfig;
 
 /**
  * Abstract wheel adapter provides common functionality for adapters.

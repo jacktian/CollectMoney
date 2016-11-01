@@ -4,9 +4,8 @@ import com.tencent.TIMConversation;
 import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMGroupPendencyItem;
 import com.tencent.TIMMessage;
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.bean.Friendship;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
 
 import java.util.List;
 

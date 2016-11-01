@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.galley;
 
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.bean.GalleyInfo;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.bean.GalleyInfo;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.withdrawals;
 
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 
 /**
  * Created by jacks on 2016/9/23.

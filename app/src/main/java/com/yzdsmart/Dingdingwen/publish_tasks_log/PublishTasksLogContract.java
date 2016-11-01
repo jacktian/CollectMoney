@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.publish_tasks_log;
 
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.bean.PublishTaskLog;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.bean.PublishTaskLog;
 
 import java.util.List;
 

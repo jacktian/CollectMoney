@@ -1,6 +1,6 @@
 package com.yzdsmart.Dingdingwen.views.time_picker.config;
 
-import com.yzdsmart.Collectmoney.views.time_picker.data.Type;
+import com.yzdsmart.Dingdingwen.views.time_picker.data.Type;
 
 /**
  * Created by jzxiang on 16/5/15.

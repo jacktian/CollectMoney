@@ -3,8 +3,8 @@ package com.yzdsmart.Dingdingwen.tecent_im.bean;
 import android.content.Context;
 
 import com.tencent.TIMFriendFutureItem;
-import com.yzdsmart.Collectmoney.App;
-import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Dingdingwen.App;
+import com.yzdsmart.Dingdingwen.R;
 
 /**
  * 新朋友会话

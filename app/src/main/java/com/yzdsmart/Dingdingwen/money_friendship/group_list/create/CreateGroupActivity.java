@@ -11,9 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.money_friendship.group_list.choose.ChooseFriendActivity;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.money_friendship.group_list.choose.ChooseFriendActivity;
 
 import java.util.List;
 

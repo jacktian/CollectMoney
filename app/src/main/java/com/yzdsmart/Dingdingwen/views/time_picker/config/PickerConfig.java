@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.views.time_picker.config;
 
-import com.yzdsmart.Collectmoney.views.time_picker.data.Type;
-import com.yzdsmart.Collectmoney.views.time_picker.data.WheelCalendar;
-import com.yzdsmart.Collectmoney.views.time_picker.listener.OnDateSetListener;
+import com.yzdsmart.Dingdingwen.views.time_picker.data.Type;
+import com.yzdsmart.Dingdingwen.views.time_picker.data.WheelCalendar;
+import com.yzdsmart.Dingdingwen.views.time_picker.listener.OnDateSetListener;
 
 /**
  * Created by jzxiang on 16/5/15.

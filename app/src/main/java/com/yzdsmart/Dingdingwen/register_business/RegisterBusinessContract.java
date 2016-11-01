@@ -1,7 +1,7 @@
 package com.yzdsmart.Dingdingwen.register_business;
 
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
 
 /**
  * Created by YZD on 2016/9/4.

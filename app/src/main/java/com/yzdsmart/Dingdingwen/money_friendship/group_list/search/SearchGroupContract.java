@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.money_friendship.group_list.search;
 
 import com.tencent.TIMGroupDetailInfo;
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
 
 import java.util.List;
 

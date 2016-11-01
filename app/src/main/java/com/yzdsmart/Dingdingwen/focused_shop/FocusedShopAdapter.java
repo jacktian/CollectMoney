@@ -13,10 +13,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.FocusedShop;
-import com.yzdsmart.Collectmoney.shop_details.ShopDetailsActivity;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.FocusedShop;
+import com.yzdsmart.Dingdingwen.shop_details.ShopDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -13,12 +13,12 @@ import android.widget.Toast;
 import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendStatus;
 import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.tecent_im.bean.FriendshipInfo;
-import com.yzdsmart.Collectmoney.tecent_im.views.LineControllerView;
-import com.yzdsmart.Collectmoney.tecent_im.views.ListPickerDialog;
-import com.yzdsmart.Collectmoney.tecent_im.views.NotifyDialog;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendshipInfo;
+import com.yzdsmart.Dingdingwen.tecent_im.views.LineControllerView;
+import com.yzdsmart.Dingdingwen.tecent_im.views.ListPickerDialog;
+import com.yzdsmart.Dingdingwen.tecent_im.views.NotifyDialog;
 
 import java.util.Collections;
 import java.util.List;

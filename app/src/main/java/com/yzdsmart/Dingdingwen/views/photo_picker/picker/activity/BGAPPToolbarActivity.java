@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Dingdingwen.R;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com

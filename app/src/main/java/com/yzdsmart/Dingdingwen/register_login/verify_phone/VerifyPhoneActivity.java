@@ -10,10 +10,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.register_login.verify_code.VerifyCodeActivity;
-import com.yzdsmart.Collectmoney.utils.Utils;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.register_login.verify_code.VerifyCodeActivity;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.List;
 

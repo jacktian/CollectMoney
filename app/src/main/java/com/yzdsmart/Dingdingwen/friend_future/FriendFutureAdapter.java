@@ -19,9 +19,9 @@ import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMFutureFriendType;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.tecent_im.bean.FriendFuture;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendFuture;
 
 import java.util.ArrayList;
 import java.util.Collections;

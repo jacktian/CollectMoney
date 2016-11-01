@@ -13,17 +13,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
-import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
-import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
-import com.yzdsmart.Collectmoney.utils.Utils;
-import com.yzdsmart.Collectmoney.views.BetterSpinner;
-import com.yzdsmart.Collectmoney.views.time_picker.TimePickerDialog;
-import com.yzdsmart.Collectmoney.views.time_picker.data.Type;
-import com.yzdsmart.Collectmoney.views.time_picker.listener.OnDateSetListener;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.crop.ImageCropActivity;
+import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
+import com.yzdsmart.Dingdingwen.views.BetterSpinner;
+import com.yzdsmart.Dingdingwen.views.time_picker.TimePickerDialog;
+import com.yzdsmart.Dingdingwen.views.time_picker.data.Type;
+import com.yzdsmart.Dingdingwen.views.time_picker.listener.OnDateSetListener;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;

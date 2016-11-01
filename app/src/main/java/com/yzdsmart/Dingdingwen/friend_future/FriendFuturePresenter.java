@@ -3,9 +3,9 @@ package com.yzdsmart.Dingdingwen.friend_future;
 import android.content.Context;
 
 import com.tencent.TIMGetFriendFutureListSucc;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.tecent_im.event.FriendshipEvent;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.tecent_im.event.FriendshipEvent;
 
 import java.util.Observable;
 import java.util.Observer;

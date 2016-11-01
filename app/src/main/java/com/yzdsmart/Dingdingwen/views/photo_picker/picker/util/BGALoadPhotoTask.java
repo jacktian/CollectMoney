@@ -8,8 +8,8 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.model.BGAImageFolderModel;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.model.BGAImageFolderModel;
 
 import java.io.File;
 import java.util.ArrayList;

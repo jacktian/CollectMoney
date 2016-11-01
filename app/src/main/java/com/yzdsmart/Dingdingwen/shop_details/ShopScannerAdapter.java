@@ -10,13 +10,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.ShopScanner;
-import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
-import com.yzdsmart.Collectmoney.register_login.login.LoginActivity;
-import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
-import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.ShopScanner;
+import com.yzdsmart.Dingdingwen.personal_friend_detail.PersonalFriendDetailActivity;
+import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;

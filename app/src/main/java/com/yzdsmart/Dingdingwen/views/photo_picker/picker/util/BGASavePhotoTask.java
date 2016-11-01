@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 
-import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Dingdingwen.R;
 
 import java.io.File;
 import java.io.FileOutputStream;

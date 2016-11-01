@@ -1,6 +1,6 @@
 package com.yzdsmart.Dingdingwen.main;
 
-import com.yzdsmart.Collectmoney.tecent_im.service.TLSService;
+import com.yzdsmart.Dingdingwen.tecent_im.service.TLSService;
 
 import tencent.tls.platform.TLSPwdLoginListener;
 

@@ -11,15 +11,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.Constants;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.GalleyInfo;
-import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
-import com.yzdsmart.Collectmoney.utils.Utils;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.activity.BGAPhotoPickerActivity;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.activity.BGAPhotoViewActivity;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.widget.BGASortableNinePhotoLayout;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.Constants;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.GalleyInfo;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.activity.BGAPhotoPickerActivity;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.activity.BGAPhotoViewActivity;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.widget.BGASortableNinePhotoLayout;
 
 import java.io.File;
 import java.util.ArrayList;

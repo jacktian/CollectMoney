@@ -3,11 +3,11 @@ package com.yzdsmart.Dingdingwen.qr_scan;
 import android.content.Context;
 import android.net.Uri;
 
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.GetCoinRequestResponse;
-import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
-import com.yzdsmart.Collectmoney.utils.Utils;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 /**
  * Created by YZD on 2016/9/3.

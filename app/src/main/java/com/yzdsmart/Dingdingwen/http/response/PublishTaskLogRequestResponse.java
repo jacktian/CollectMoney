@@ -1,6 +1,6 @@
 package com.yzdsmart.Dingdingwen.http.response;
 
-import com.yzdsmart.Collectmoney.bean.PublishTaskLog;
+import com.yzdsmart.Dingdingwen.bean.PublishTaskLog;
 
 import java.util.List;
 

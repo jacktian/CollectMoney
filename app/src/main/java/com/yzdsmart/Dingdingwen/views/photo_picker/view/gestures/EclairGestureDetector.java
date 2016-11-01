@@ -19,7 +19,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.view.MotionEvent;
 
-import com.yzdsmart.Collectmoney.views.photo_picker.view.Compat;
+import com.yzdsmart.Dingdingwen.views.photo_picker.view.Compat;
 
 @TargetApi(5)
 public class EclairGestureDetector extends CupcakeGestureDetector {

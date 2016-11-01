@@ -35,10 +35,10 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
-import com.yzdsmart.Collectmoney.views.photo_picker.view.gestures.OnGestureListener;
-import com.yzdsmart.Collectmoney.views.photo_picker.view.gestures.VersionedGestureDetector;
-import com.yzdsmart.Collectmoney.views.photo_picker.view.log.LogManager;
-import com.yzdsmart.Collectmoney.views.photo_picker.view.scrollerproxy.ScrollerProxy;
+import com.yzdsmart.Dingdingwen.views.photo_picker.view.gestures.OnGestureListener;
+import com.yzdsmart.Dingdingwen.views.photo_picker.view.gestures.VersionedGestureDetector;
+import com.yzdsmart.Dingdingwen.views.photo_picker.view.log.LogManager;
+import com.yzdsmart.Dingdingwen.views.photo_picker.view.scrollerproxy.ScrollerProxy;
 
 import java.lang.ref.WeakReference;
 

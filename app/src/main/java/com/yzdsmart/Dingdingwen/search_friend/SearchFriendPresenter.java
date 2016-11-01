@@ -6,9 +6,9 @@ import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.tecent_im.event.FriendshipEvent;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.tecent_im.event.FriendshipEvent;
 
 import java.util.Collections;
 import java.util.List;

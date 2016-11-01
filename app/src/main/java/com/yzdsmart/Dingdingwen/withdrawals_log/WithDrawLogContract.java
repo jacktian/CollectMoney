@@ -1,9 +1,9 @@
 package com.yzdsmart.Dingdingwen.withdrawals_log;
 
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.bean.PersonalWithdrawLog;
-import com.yzdsmart.Collectmoney.bean.ShopWithdrawLog;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.bean.PersonalWithdrawLog;
+import com.yzdsmart.Dingdingwen.bean.ShopWithdrawLog;
 
 import java.util.List;
 

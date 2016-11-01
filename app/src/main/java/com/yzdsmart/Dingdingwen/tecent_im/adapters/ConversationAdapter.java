@@ -12,10 +12,10 @@ import com.bumptech.glide.Glide;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.App;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.tecent_im.bean.Conversation;
-import com.yzdsmart.Collectmoney.tecent_im.utils.TimeUtil;
+import com.yzdsmart.Dingdingwen.App;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.Conversation;
+import com.yzdsmart.Dingdingwen.tecent_im.utils.TimeUtil;
 
 import java.util.Collections;
 import java.util.LinkedList;

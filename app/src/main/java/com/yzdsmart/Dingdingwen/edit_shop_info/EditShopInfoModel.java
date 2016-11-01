@@ -1,9 +1,9 @@
 package com.yzdsmart.Dingdingwen.edit_shop_info;
 
-import com.yzdsmart.Collectmoney.http.RequestAdapter;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.RequestResponse;
-import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
+import com.yzdsmart.Dingdingwen.http.RequestAdapter;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopInfoByPersRequestResponse;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

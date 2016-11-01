@@ -1,6 +1,6 @@
 package com.yzdsmart.Dingdingwen.http.response;
 
-import com.yzdsmart.Collectmoney.bean.TecentAccount;
+import com.yzdsmart.Dingdingwen.bean.TecentAccount;
 
 /**
  * Created by YZD on 2016/8/27.

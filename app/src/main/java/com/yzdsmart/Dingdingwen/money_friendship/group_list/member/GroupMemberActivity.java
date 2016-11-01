@@ -11,11 +11,11 @@ import android.widget.TextView;
 import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupMemberInfo;
 import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.tecent_im.adapters.ProfileSummaryAdapter;
-import com.yzdsmart.Collectmoney.tecent_im.bean.GroupMemberProfile;
-import com.yzdsmart.Collectmoney.tecent_im.bean.ProfileSummary;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.tecent_im.adapters.ProfileSummaryAdapter;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.GroupMemberProfile;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.ProfileSummary;
 
 import java.util.ArrayList;
 import java.util.List;

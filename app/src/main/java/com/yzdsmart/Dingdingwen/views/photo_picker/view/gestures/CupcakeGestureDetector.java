@@ -20,7 +20,7 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
 
-import com.yzdsmart.Collectmoney.views.photo_picker.view.log.LogManager;
+import com.yzdsmart.Dingdingwen.views.photo_picker.view.log.LogManager;
 
 public class CupcakeGestureDetector implements GestureDetector {
 

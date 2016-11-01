@@ -2,11 +2,11 @@ package com.yzdsmart.Dingdingwen.galley;
 
 import android.content.Context;
 
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.GetGalleyRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.RequestResponse;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.GetGalleyRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 
 import java.util.List;
 

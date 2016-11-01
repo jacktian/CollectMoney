@@ -11,10 +11,10 @@ import android.widget.EditText;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
-import com.yzdsmart.Collectmoney.BaseFragment;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.Friendship;
-import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.BaseFragment;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.Friendship;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;

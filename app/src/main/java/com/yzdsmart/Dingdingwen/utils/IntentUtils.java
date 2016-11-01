@@ -3,8 +3,8 @@ package com.yzdsmart.Dingdingwen.utils;
 import android.content.Context;
 import android.content.Intent;
 
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
 
 /**
  * Created by YZD on 2016/4/20.

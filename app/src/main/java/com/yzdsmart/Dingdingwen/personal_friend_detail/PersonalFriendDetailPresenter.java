@@ -3,13 +3,13 @@ package com.yzdsmart.Dingdingwen.personal_friend_detail;
 import android.content.Context;
 
 import com.tencent.TIMUserProfile;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.GetGalleyRequestResponse;
-import com.yzdsmart.Collectmoney.tecent_im.event.FriendshipEvent;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.GetGalleyRequestResponse;
+import com.yzdsmart.Dingdingwen.tecent_im.event.FriendshipEvent;
 
 import java.util.List;
 import java.util.Observable;

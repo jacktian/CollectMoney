@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.edit_shop_info;
 
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.http.response.ShopInfoByPersRequestResponse;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.http.response.ShopInfoByPersRequestResponse;
 
 /**
  * Created by YZD on 2016/9/25.

@@ -19,12 +19,12 @@ import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendStatus;
 import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.tecent_im.bean.FriendProfile;
-import com.yzdsmart.Collectmoney.tecent_im.bean.ProfileSummary;
-import com.yzdsmart.Collectmoney.tecent_im.views.NotifyDialog;
-import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendProfile;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.ProfileSummary;
+import com.yzdsmart.Dingdingwen.tecent_im.views.NotifyDialog;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;

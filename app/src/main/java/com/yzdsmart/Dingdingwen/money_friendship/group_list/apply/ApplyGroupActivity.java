@@ -7,8 +7,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tencent.TIMCallBack;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
 
 public class ApplyGroupActivity extends BaseActivity implements ApplyGroupContract.ApplyGroupView, TIMCallBack {
 

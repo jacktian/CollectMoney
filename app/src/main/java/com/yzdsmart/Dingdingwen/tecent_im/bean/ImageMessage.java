@@ -18,12 +18,12 @@ import com.tencent.TIMImageElem;
 import com.tencent.TIMImageType;
 import com.tencent.TIMMessage;
 import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.App;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.chat.image_view.ImageViewActivity;
-import com.yzdsmart.Collectmoney.tecent_im.adapters.ChatAdapter;
-import com.yzdsmart.Collectmoney.tecent_im.utils.FileUtil;
+import com.yzdsmart.Dingdingwen.App;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.chat.image_view.ImageViewActivity;
+import com.yzdsmart.Dingdingwen.tecent_im.adapters.ChatAdapter;
+import com.yzdsmart.Dingdingwen.tecent_im.utils.FileUtil;
 
 import java.io.IOException;
 

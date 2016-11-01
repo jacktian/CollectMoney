@@ -12,9 +12,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.http.response.ExpandListRequestResponse;
-import com.yzdsmart.Collectmoney.main.MainActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.response.ExpandListRequestResponse;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,11 +2,11 @@ package com.yzdsmart.Dingdingwen.publish_tasks_log;
 
 import android.content.Context;
 
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.http.RequestListener;
-import com.yzdsmart.Collectmoney.http.response.GetCoinRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.PublishTaskLogRequestResponse;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.PublishTaskLogRequestResponse;
 
 /**
  * Created by YZD on 2016/9/18.

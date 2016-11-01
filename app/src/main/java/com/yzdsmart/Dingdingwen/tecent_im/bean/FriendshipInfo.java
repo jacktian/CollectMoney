@@ -5,7 +5,7 @@ import android.util.Log;
 import com.tencent.TIMFriendGroup;
 import com.tencent.TIMFriendshipProxy;
 import com.tencent.TIMUserProfile;
-import com.yzdsmart.Collectmoney.tecent_im.event.FriendshipEvent;
+import com.yzdsmart.Dingdingwen.tecent_im.event.FriendshipEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;

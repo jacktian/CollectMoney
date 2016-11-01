@@ -20,7 +20,7 @@ import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yzdsmart.Collectmoney.views.time_picker.config.PickerConfig;
+import com.yzdsmart.Dingdingwen.views.time_picker.config.PickerConfig;
 
 /**
  * Wheel items adapter interface

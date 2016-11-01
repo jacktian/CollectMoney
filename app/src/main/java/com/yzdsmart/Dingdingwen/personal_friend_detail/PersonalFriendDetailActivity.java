@@ -20,23 +20,23 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tencent.TIMConversationType;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.Constants;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.GalleyInfo;
-import com.yzdsmart.Collectmoney.chat.ChatActivity;
-import com.yzdsmart.Collectmoney.crop.ImageCropActivity;
-import com.yzdsmart.Collectmoney.edit_personal_info.EditPersonalInfoActivity;
-import com.yzdsmart.Collectmoney.galley.GalleyActivity;
-import com.yzdsmart.Collectmoney.http.response.CustDetailInfoRequestResponse;
-import com.yzdsmart.Collectmoney.http.response.CustInfoRequestResponse;
-import com.yzdsmart.Collectmoney.listener.AppBarOffsetChangeListener;
-import com.yzdsmart.Collectmoney.main.MainActivity;
-import com.yzdsmart.Collectmoney.register_login.login.LoginActivity;
-import com.yzdsmart.Collectmoney.tecent_im.bean.FriendshipInfo;
-import com.yzdsmart.Collectmoney.tecent_im.bean.UserInfo;
-import com.yzdsmart.Collectmoney.utils.SharedPreferencesUtils;
-import com.yzdsmart.Collectmoney.utils.Utils;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.Constants;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.GalleyInfo;
+import com.yzdsmart.Dingdingwen.chat.ChatActivity;
+import com.yzdsmart.Dingdingwen.crop.ImageCropActivity;
+import com.yzdsmart.Dingdingwen.edit_personal_info.EditPersonalInfoActivity;
+import com.yzdsmart.Dingdingwen.galley.GalleyActivity;
+import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.listener.AppBarOffsetChangeListener;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
+import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendshipInfo;
+import com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -361,7 +361,6 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
 
     @Override
     public void onGetCustDetailInfo(CustDetailInfoRequestResponse response) {
-        System.out.println(type + "------>" + response);
         switch (type) {
             case 0:
                 if (null != response.getCName() && !"".equals(response.getCName())) {

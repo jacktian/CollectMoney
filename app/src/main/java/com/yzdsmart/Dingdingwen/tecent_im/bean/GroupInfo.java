@@ -4,10 +4,10 @@ import com.tencent.TIMGroupAssistant;
 import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMGroupMemberRoleType;
 import com.tencent.TIMGroupReceiveMessageOpt;
-import com.yzdsmart.Collectmoney.App;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.tecent_im.event.GroupEvent;
-import com.yzdsmart.Collectmoney.tecent_im.event.RefreshEvent;
+import com.yzdsmart.Dingdingwen.App;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.tecent_im.event.GroupEvent;
+import com.yzdsmart.Dingdingwen.tecent_im.event.RefreshEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;

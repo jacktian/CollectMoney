@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.money_friendship.friend_list;
 
-import com.yzdsmart.Collectmoney.BasePresenter;
-import com.yzdsmart.Collectmoney.BaseView;
-import com.yzdsmart.Collectmoney.bean.Friendship;
+import com.yzdsmart.Dingdingwen.BasePresenter;
+import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.bean.Friendship;
 
 import java.util.List;
 

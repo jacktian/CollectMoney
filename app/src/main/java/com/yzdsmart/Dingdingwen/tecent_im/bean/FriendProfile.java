@@ -5,8 +5,8 @@ import android.os.Bundle;
 
 import com.tencent.TIMConversationType;
 import com.tencent.TIMUserProfile;
-import com.yzdsmart.Collectmoney.App;
-import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Dingdingwen.App;
+import com.yzdsmart.Dingdingwen.R;
 
 /**
  * 好友资料

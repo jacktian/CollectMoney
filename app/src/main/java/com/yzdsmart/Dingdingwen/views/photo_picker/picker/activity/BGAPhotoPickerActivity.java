@@ -22,16 +22,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.adapter.BGAPhotoPickerAdapter;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.imageloader.BGARVOnScrollListener;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.model.BGAImageFolderModel;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.pw.BGAPhotoFolderPw;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.util.BGAAsyncTask;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.util.BGAImageCaptureManager;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.util.BGALoadPhotoTask;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.util.BGAPhotoPickerUtil;
-import com.yzdsmart.Collectmoney.views.photo_picker.picker.util.BGASpaceItemDecoration;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.adapter.BGAPhotoPickerAdapter;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.imageloader.BGARVOnScrollListener;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.model.BGAImageFolderModel;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.pw.BGAPhotoFolderPw;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.util.BGAAsyncTask;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.util.BGAImageCaptureManager;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.util.BGALoadPhotoTask;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.util.BGAPhotoPickerUtil;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.util.BGASpaceItemDecoration;
 
 import java.io.File;
 import java.util.ArrayList;

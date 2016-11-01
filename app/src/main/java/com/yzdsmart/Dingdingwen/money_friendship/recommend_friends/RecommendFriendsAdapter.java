@@ -13,13 +13,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-import com.tencent.TIMFriendshipManager;
-import com.tencent.TIMUserProfile;
-import com.tencent.TIMValueCallBack;
-import com.yzdsmart.Collectmoney.BaseActivity;
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.bean.Friendship;
-import com.yzdsmart.Collectmoney.personal_friend_detail.PersonalFriendDetailActivity;
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.Friendship;
+import com.yzdsmart.Dingdingwen.personal_friend_detail.PersonalFriendDetailActivity;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -27,7 +24,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;

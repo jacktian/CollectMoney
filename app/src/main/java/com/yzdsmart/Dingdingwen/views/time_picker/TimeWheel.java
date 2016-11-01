@@ -3,14 +3,14 @@ package com.yzdsmart.Dingdingwen.views.time_picker;
 import android.content.Context;
 import android.view.View;
 
-import com.yzdsmart.Collectmoney.R;
-import com.yzdsmart.Collectmoney.views.time_picker.adapters.NumericWheelAdapter;
-import com.yzdsmart.Collectmoney.views.time_picker.config.PickerConfig;
-import com.yzdsmart.Collectmoney.views.time_picker.data.source.TimeRepository;
-import com.yzdsmart.Collectmoney.views.time_picker.utils.PickerContants;
-import com.yzdsmart.Collectmoney.views.time_picker.utils.Utils;
-import com.yzdsmart.Collectmoney.views.time_picker.wheel.OnWheelChangedListener;
-import com.yzdsmart.Collectmoney.views.time_picker.wheel.WheelView;
+import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.views.time_picker.adapters.NumericWheelAdapter;
+import com.yzdsmart.Dingdingwen.views.time_picker.config.PickerConfig;
+import com.yzdsmart.Dingdingwen.views.time_picker.data.source.TimeRepository;
+import com.yzdsmart.Dingdingwen.views.time_picker.utils.PickerContants;
+import com.yzdsmart.Dingdingwen.views.time_picker.utils.Utils;
+import com.yzdsmart.Dingdingwen.views.time_picker.wheel.OnWheelChangedListener;
+import com.yzdsmart.Dingdingwen.views.time_picker.wheel.WheelView;
 
 import java.util.Calendar;
 

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.tencent.TIMGroupMemberInfo;
 import com.tencent.TIMGroupMemberRoleType;
-import com.yzdsmart.Collectmoney.R;
+import com.yzdsmart.Dingdingwen.R;
 
 import java.io.Serializable;
 
