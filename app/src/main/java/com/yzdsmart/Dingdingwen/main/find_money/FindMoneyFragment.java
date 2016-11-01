@@ -54,7 +54,7 @@ import butterknife.Optional;
 /**
  * Created by YZD on 2016/8/17.
  */
-public class FindMoneyFragment extends BaseFragment implements FindMoneyContract.FindMoneyView,  RouteSearch.OnRouteSearchListener {
+public class FindMoneyFragment extends BaseFragment implements FindMoneyContract.FindMoneyView, RouteSearch.OnRouteSearchListener {
     @Nullable
     @BindViews({R.id.title_left_operation_layout, R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout})
     List<View> hideViews;
@@ -234,7 +234,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(GEO_DEFAULT_CITY, 14));
         mUiSettings = mAMap.getUiSettings();
         mUiSettings.setScaleControlsEnabled(true);
-//        mUiSettings.setZoomControlsEnabled(false);
+        mUiSettings.setZoomControlsEnabled(false);
         mRouteSearch = new RouteSearch(getActivity());
         mRouteSearch.setRouteSearchListener(this);
         mAMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
