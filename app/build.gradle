@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         applicationId "com.yzdsmart.Dingdingwen"
@@ -33,10 +33,10 @@ dependencies {
     provided fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:support-v4:24.1.1'
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support:design:24.1.1'
-    compile 'com.android.support:recyclerview-v7:24.1.1'
+    compile 'com.android.support:support-v4:25.0.0'
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:design:25.0.0'
+    compile 'com.android.support:recyclerview-v7:25.0.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.soundcloud.android:android-crop:1.0.1@aar'
     compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
@@ -63,6 +63,7 @@ dependencies {
     provided 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'org.xutils:xutils:3.3.36'
     compile 'com.alibaba:fastjson:1.1.54.android'
+    compile 'pub.devrel:easypermissions:0.2.1'
     compile files('libs/AMap3DMap_4.1.1_AMapNavi_1.9.3_AMapSearch_3.5.0_AMapLocation_3.1.0_20161027.jar')
     compile files('libs/imsdk.jar')
     compile files('libs/mobilepb.jar')

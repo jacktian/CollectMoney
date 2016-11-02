@@ -33,7 +33,6 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
-import com.yzdsmart.Dingdingwen.amap.AMapUtil;
 import com.yzdsmart.Dingdingwen.amap.WalkRouteOverlay;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.main.recommend.RecommendFragment;
@@ -392,7 +391,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         } else {
             LatLng locLatLng = new LatLng(locLatitude, locLongitude);
             float distance = AMapUtils.calculateLineDistance(latLng, locLatLng);
-            if (0.2 > distance) {
+            if (0.5 > distance) {
                 mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE);
                 return;
             }

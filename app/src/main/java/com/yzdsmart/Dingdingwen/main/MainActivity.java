@@ -1,5 +1,6 @@
 package com.yzdsmart.Dingdingwen.main;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -46,14 +47,18 @@ import butterknife.OnClick;
 import butterknife.Optional;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by YZD on 2016/8/17.
  */
-public class MainActivity extends BaseActivity implements MainContract.MainView {
+public class MainActivity extends BaseActivity implements MainContract.MainView, EasyPermissions.PermissionCallbacks {
     @Nullable
     @BindView(R.id.unread_conversation_bubble)
     TextView unreadConversationBubbleTV;
+
+    private static final int REQUEST_PERM_CODE = 1111;//申请权限码
 
     //连续双击返回键退出程序
     private Long lastKeyDown = 0l;
@@ -95,6 +100,8 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         pgConversationList = new ArrayList<Conversation>();
 
         fm = getFragmentManager();
+
+//        getPermissions();//获取手机权限
 
         initView();
 
@@ -456,4 +463,22 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             }
         }
     };
+
+    @Override
+    public void onPermissionsGranted(int i, List<String> list) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int i, List<String> list) {
+
+    }
+
+    @AfterPermissionGranted(REQUEST_PERM_CODE)
+    private void getPermissions() {
+        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.GET_ACCOUNTS, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_PHONE_STATE, Manifest.permission.SEND_SMS, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (!EasyPermissions.hasPermissions(this, perms)) {
+            EasyPermissions.requestPermissions(this, "应用需要手机权限", REQUEST_PERM_CODE, perms);
+        }
+    }
 }
