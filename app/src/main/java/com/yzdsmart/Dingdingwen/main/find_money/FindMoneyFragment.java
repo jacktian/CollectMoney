@@ -12,6 +12,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
@@ -83,7 +84,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     //检索到的位置列表信息
     List<Marker> coinsMarkerList = null;
 
-    //默认城市经纬度119.980524,31.816058
+    //默认城市经纬度31.816058, 119.980524
     private static final LatLng GEO_DEFAULT_CITY = new LatLng(31.816058, 119.980524);
     //定位频率
     private static final Long LOC_TIME = 5000l;//毫秒
@@ -107,6 +108,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private RouteSearch mRouteSearch;
 
     private WalkRouteOverlay walkingRouteOverlay;
+    private boolean isSearchRoute = false;
 
     private AMap mAMap;
     private UiSettings mUiSettings;
@@ -259,7 +261,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
             @Override
             public void onCameraChangeFinish(CameraPosition cameraPosition) {
-                System.out.println(cameraPosition.zoom + "---->" + cameraPosition.target);
                 int zoomLevel = (int) cameraPosition.zoom;
                 switch (zoomLevel) {
                     case 12:
@@ -299,6 +300,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                         isFirstMapAnimate = false;
                         return;
                     }
+                    if (isSearchRoute) {
+                        isSearchRoute = false;
+                        return;
+                    }
                     mPresenter.getShopList("000000", mapStatusLocation, zoomDistance, page_index, PAGE_SIZE);
                 } else {
                     String mapStatusLocation = cameraPosition.target.longitude + "," + cameraPosition.target.latitude;
@@ -308,6 +313,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                         lastMapStatusLocation = mapStatusLocation;
                     }
                     if (isFirstMapAnimate) {
+                        return;
+                    } else if (isSearchRoute) {
+                        isSearchRoute = false;
                         return;
                     } else {
                         mPresenter.getShopList("000000", mapStatusLocation, zoomDistance, page_index, PAGE_SIZE);
@@ -375,12 +383,19 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         for (Marker marker : coinsMarkerList) {
             marker.remove();
         }
+        mAMap.moveCamera(CameraUpdateFactory.zoomTo(15));
         LatLng latLng = mAMap.getCameraPosition().target;
         DecimalFormat decimalFormat = new DecimalFormat(".######");
         String mapStatusLocation = decimalFormat.format(latLng.longitude) + "," + decimalFormat.format(latLng.latitude);
         if (qLocation.equals(mapStatusLocation)) {
             mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE);
         } else {
+            LatLng locLatLng = new LatLng(locLatitude, locLongitude);
+            float distance = AMapUtils.calculateLineDistance(latLng, locLatLng);
+            if (0.2 > distance) {
+                mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE);
+                return;
+            }
             mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(locLatitude, locLongitude), 15));
         }
     }
@@ -416,7 +431,13 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         if ((decimalFormat.format(Double.valueOf(marketLongitude)) + "," + decimalFormat.format(Double.valueOf(marketLatitude))).equals(mapStatusLocation)) {
             mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE);
         } else {
-            mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.valueOf(marketLatitude), Double.valueOf(marketLongitude)), 15));
+            LatLng marketLatLng = new LatLng(Double.valueOf(marketLatitude), Double.valueOf(marketLongitude));
+            float distance = AMapUtils.calculateLineDistance(latLng, marketLatLng);
+            if (0.2 > distance) {
+                mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE);
+                return;
+            }
+            mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marketLatLng, 15));
         }
     }
 
@@ -448,8 +469,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         if (1000 == i) {
             if (null != walkRouteResult && null != walkRouteResult.getPaths()) {
                 if (0 < walkRouteResult.getPaths().size()) {
+                    isSearchRoute = true;
                     WalkPath walkPath = walkRouteResult.getPaths().get(0);
-                    setFromAndToMarker(walkRouteResult.getStartPos(), walkRouteResult.getTargetPos());
                     walkingRouteOverlay = new WalkRouteOverlay(getActivity(), mAMap, walkPath, walkRouteResult.getStartPos(), walkRouteResult.getTargetPos());
                     walkingRouteOverlay.removeFromMap();
                     walkingRouteOverlay.addToMap();
@@ -460,17 +481,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             } else {
                 ((BaseActivity) getActivity()).showSnackbar("未找到规划路线");
             }
-
         }
-    }
-
-    private void setFromAndToMarker(LatLonPoint mStartPoint, LatLonPoint mEndPoint) {
-        mAMap.addMarker(new MarkerOptions()
-                .position(AMapUtil.convertToLatLng(mStartPoint))
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.start)));
-        mAMap.addMarker(new MarkerOptions()
-                .position(AMapUtil.convertToLatLng(mEndPoint))
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.end)));
     }
 
     @Override

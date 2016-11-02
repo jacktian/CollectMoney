@@ -5,11 +5,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -107,6 +102,7 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
 
     private FragmentManager fm;
     private Fragment mCurrentFragment;
+    private String mCurrentTag = "";
 
     private MoneyFriendshipContract.MoneyFriendshipPresenter mPresenter;
 
@@ -120,6 +116,10 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
 
         if (null != savedInstanceState) {
             mCurrentFragment = getFragmentManager().getFragment(savedInstanceState, "currentFragment");
+            mCurrentTag = savedInstanceState.getString("currentTag");
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.add(R.id.layout_frame, mCurrentFragment, mCurrentTag);
+            ft.commitAllowingStateLoss();
         }
 
         conversationList = new LinkedList<Conversation>();
@@ -227,24 +227,25 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         getFragmentManager().putFragment(outState, "currentFragment", mCurrentFragment);
+        outState.putString("currentTag", mCurrentTag);
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        FragmentTransaction ft = fm.beginTransaction();
-        for (int i = 0; i < imBottomTab.getChildCount(); i++) {
-            RadioButton mTab = (RadioButton) (((RelativeLayout) imBottomTab.getChildAt(i)).getChildAt(0));
-            Fragment fragment = fm.findFragmentByTag((String) mTab.getTag());
-            if (null != fragment) {
-                if (!mTab.isChecked()) {
-                    ft.hide(fragment);
-                }
-            }
-        }
-        ft.commitAllowingStateLoss();
-    }
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        FragmentTransaction ft = fm.beginTransaction();
+//        for (int i = 0; i < imBottomTab.getChildCount(); i++) {
+//            RadioButton mTab = (RadioButton) (((RelativeLayout) imBottomTab.getChildAt(i)).getChildAt(0));
+//            Fragment fragment = fm.findFragmentByTag((String) mTab.getTag());
+//            if (null != fragment) {
+//                if (!mTab.isChecked()) {
+//                    ft.hide(fragment);
+//                }
+//            }
+//        }
+//        ft.commitAllowingStateLoss();
+//    }
 
     @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
@@ -311,8 +312,9 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
         } else {
             ft.hide(mCurrentFragment).show(fragment);
         }
-        ft.commit();
+        ft.commitAllowingStateLoss();
         mCurrentFragment = fragment;
+        mCurrentTag = tag;
     }
 
     /**

@@ -60,6 +60,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 
     private FragmentManager fm;
     private Fragment mCurrentFragment;
+    private String mCurrentTag = "";
 
     private MainContract.MainPresenter mPresenter;
 
@@ -82,6 +83,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         super.onCreate(savedInstanceState);
         if (null != savedInstanceState) {
             mCurrentFragment = getFragmentManager().getFragment(savedInstanceState, "currentFragment");
+            mCurrentTag = savedInstanceState.getString("currentTag");
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.add(R.id.layout_frame, mCurrentFragment, mCurrentTag);
+            ft.commitAllowingStateLoss();
         }
 
         mainActivity = this;
@@ -110,7 +115,8 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     private void initView() {
         FragmentTransaction ft = fm.beginTransaction();
         mCurrentFragment = new FindMoneyFragment();
-        ft.add(R.id.layout_frame, mCurrentFragment, "find");
+        mCurrentTag = "find";
+        ft.add(R.id.layout_frame, mCurrentFragment, mCurrentTag);
         ft.commit();
     }
 
@@ -207,6 +213,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         }
         ft.commitAllowingStateLoss();
         mCurrentFragment = fragment;
+        mCurrentTag = tag;
     }
 
     public void getShopListNearByMarket(String name, String location) {
@@ -247,6 +254,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         getFragmentManager().putFragment(outState, "currentFragment", mCurrentFragment);
+        outState.putString("currentTag", mCurrentTag);
         super.onSaveInstanceState(outState);
     }
 
