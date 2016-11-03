@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
@@ -58,7 +59,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     @BindView(R.id.unread_conversation_bubble)
     TextView unreadConversationBubbleTV;
 
-    private static final int REQUEST_PERM_CODE = 1111;//申请权限码
+    private static final int REQUEST_LOCATION_PERM_CODE = 1111;//申请权限码
 
     //连续双击返回键退出程序
     private Long lastKeyDown = 0l;
@@ -101,9 +102,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
 
         fm = getFragmentManager();
 
-//        getPermissions();//获取手机权限
-
         initView();
+
+//        getLocationPermission();//获取手机定位权限
 
         tlsService = TLSService.getInstance();
 
@@ -465,6 +466,13 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     };
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
     public void onPermissionsGranted(int i, List<String> list) {
 
     }
@@ -474,11 +482,11 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
 
     }
 
-    @AfterPermissionGranted(REQUEST_PERM_CODE)
-    private void getPermissions() {
-        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.GET_ACCOUNTS, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_PHONE_STATE, Manifest.permission.SEND_SMS, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        if (!EasyPermissions.hasPermissions(this, perms)) {
-            EasyPermissions.requestPermissions(this, "应用需要手机权限", REQUEST_PERM_CODE, perms);
+    @AfterPermissionGranted(REQUEST_LOCATION_PERM_CODE)
+    private void getLocationPermission() {
+//        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.GET_ACCOUNTS, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_PHONE_STATE, Manifest.permission.SEND_SMS, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (!EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            EasyPermissions.requestPermissions(this, "应用需要手机定位权限", REQUEST_LOCATION_PERM_CODE, Manifest.permission.ACCESS_FINE_LOCATION);
         }
     }
 }
