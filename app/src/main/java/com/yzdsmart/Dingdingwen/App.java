@@ -9,7 +9,6 @@ import com.tencent.TIMGroupReceiveMessageOpt;
 import com.tencent.TIMManager;
 import com.tencent.TIMOfflinePushListener;
 import com.tencent.TIMOfflinePushNotification;
-import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.qalsdk.sdk.MsfSdkUtils;
 
 import java.util.ArrayList;
@@ -45,7 +44,6 @@ public class App extends MultiDexApplication {
         }
         JPushInterface.setDebugMode(false);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
-        CrashReport.initCrashReport(this);
     }
 
     @Override
