@@ -19,7 +19,10 @@ public class WXEntryActivity extends WechatHandlerActivity {
      * 此后点击图标，下面的代码会被执行。Demo仅仅只是打开自己而已，但你可
      * 做点其他的事情，包括根本不打开任何页面
      */
+    @Override
     public void onGetMessageFromWXReq(WXMediaMessage msg) {
+        super.onGetMessageFromWXReq(msg);
+        System.out.println("-----onGetMessageFromWXReq------->" + msg);
         if (msg != null) {
             Intent iLaunchMyself = getPackageManager().getLaunchIntentForPackage(getPackageName());
             startActivity(iLaunchMyself);
@@ -36,7 +39,10 @@ public class WXEntryActivity extends WechatHandlerActivity {
      * <p>
      * 本Demo只是将信息展示出来，但你可做点其他的事情，而不仅仅只是Toast
      */
+    @Override
     public void onShowMessageFromWXReq(WXMediaMessage msg) {
+        super.onShowMessageFromWXReq(msg);
+        System.out.println("-----onShowMessageFromWXReq------->" + msg);
         if (msg != null && msg.mediaObject != null
                 && (msg.mediaObject instanceof WXAppExtendObject)) {
             WXAppExtendObject obj = (WXAppExtendObject) msg.mediaObject;

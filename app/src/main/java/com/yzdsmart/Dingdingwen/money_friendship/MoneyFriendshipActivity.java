@@ -14,8 +14,6 @@ import android.view.WindowManager;
 import android.widget.CheckedTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
@@ -140,12 +138,11 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
     }
 
     private void initView() {
-        centerTitleTV.setText("附近");
-        recommendFriendCTV.setChecked(true);
+        centerTitleTV.setText("消息");
         FragmentTransaction ft = fm.beginTransaction();
-        mCurrentFragment = new RecommendFriendsFragment();
-        ft.add(R.id.layout_frame, new ConversationFragment(), "conversation");
-        ft.add(R.id.layout_frame, mCurrentFragment, "recommend");
+        mCurrentFragment = new ConversationFragment();
+        mCurrentTag = "conversation";
+        ft.add(R.id.layout_frame, mCurrentFragment, mCurrentTag);
         ft.commit();
     }
 

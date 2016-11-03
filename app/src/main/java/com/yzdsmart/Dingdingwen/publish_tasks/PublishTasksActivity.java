@@ -90,7 +90,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
 
         dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
-        ShareSDK.initSDK(this);
+        ShareSDK.initSDK(this, "188d0cc56cba8");
 
         publishTaskRunnable = new Runnable() {
             @Override
@@ -228,6 +228,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     @Override
     protected void onDestroy() {
         mHandler.removeCallbacks(publishTaskRunnable);
+        ShareSDK.stopSDK(this);
         super.onDestroy();
     }
 

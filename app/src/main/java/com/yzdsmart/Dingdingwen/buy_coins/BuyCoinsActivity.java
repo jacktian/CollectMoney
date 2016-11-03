@@ -103,7 +103,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
         new BuyCoinsPresenter(this, this);
 
-        ShareSDK.initSDK(this);
+        ShareSDK.initSDK(this, "188d0cc56cba8");
         initPingPlusPlus();
 
         buySuccessRunnable = new Runnable() {
@@ -179,6 +179,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     }
 
     private void showShare() {
+        ShareSDK.initSDK(this);
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
@@ -249,6 +250,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     @Override
     protected void onDestroy() {
         mHandler.removeCallbacks(buySuccessRunnable);
+        ShareSDK.stopSDK(this);
         super.onDestroy();
     }
 
