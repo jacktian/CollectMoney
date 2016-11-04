@@ -1,6 +1,7 @@
 package com.yzdsmart.Dingdingwen.splash;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,8 @@ public class SplashActivity extends AppIntro2 {
         addSlide(new SplashFragment_1());
         addSlide(new SplashFragment_2());
         addSlide(new SplashFragment_3());
+
+        setIndicatorColor(Color.parseColor("#f20044"), Color.parseColor("#cccccc"));
 
         showSkipButton(false);
         showDoneButton(false);

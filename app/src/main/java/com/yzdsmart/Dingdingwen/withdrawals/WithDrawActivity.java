@@ -180,7 +180,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
             }
             goldRMBRatioTV.setText("1金币=" + GOLD_FORMAT_RMB_RATIO + "元");
             withdrawMoneyBtn.setEnabled(true);
-            DecimalFormat df = new DecimalFormat("#.00");
+            DecimalFormat df = new DecimalFormat("#0.00");
             withdrawRMBTV.setText("￥" + df.format((Float.valueOf(withdrawGoldNumET.getText().toString()) * GOLD_FORMAT_RMB_RATIO)));
         } else {
             withdrawRMBTV.setText("￥0.0");
