@@ -232,7 +232,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private void initMap() {
         if (null != mAMap) return;
         mAMap = findMoneyMap.getMap();
-        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(GEO_DEFAULT_CITY, 14));
+        mAMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(
+                GEO_DEFAULT_CITY,//新的中心点坐标
+                14, //新的缩放级别
+                0, //俯仰角0°~45°（垂直与地图时为0）
+                0  ////偏航角 0~360° (正北方为0)
+        )));
         mUiSettings = mAMap.getUiSettings();
         mUiSettings.setScaleControlsEnabled(true);
         mUiSettings.setZoomControlsEnabled(false);

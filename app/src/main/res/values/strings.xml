@@ -199,6 +199,7 @@
 
     <!--提现-->
     <string name="input_withdraw_gold_num">输入您所需提现的金币数额</string>
+    <string name="withdrawing">正在体现......</string>
 
     <!--提现日志-->
     <string name="withdraw_log_coin_counts">兑换金币数</string>
