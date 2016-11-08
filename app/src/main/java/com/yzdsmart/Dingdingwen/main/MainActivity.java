@@ -1,13 +1,11 @@
 package com.yzdsmart.Dingdingwen.main;
 
-import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
@@ -48,13 +46,12 @@ import butterknife.OnClick;
 import butterknife.Optional;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by YZD on 2016/8/17.
  */
-public class MainActivity extends BaseActivity implements MainContract.MainView, EasyPermissions.PermissionCallbacks {
+public class MainActivity extends BaseActivity implements MainContract.MainView {
+    //    , EasyPermissions.PermissionCallbacks
     @Nullable
     @BindView(R.id.unread_conversation_bubble)
     TextView unreadConversationBubbleTV;
@@ -465,28 +462,28 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         }
     };
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        // EasyPermissions handles the request result.
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-    @Override
-    public void onPermissionsGranted(int i, List<String> list) {
-
-    }
-
-    @Override
-    public void onPermissionsDenied(int i, List<String> list) {
-
-    }
-
-    @AfterPermissionGranted(REQUEST_LOCATION_PERM_CODE)
-    private void getLocationPermission() {
-//        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.GET_ACCOUNTS, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_PHONE_STATE, Manifest.permission.SEND_SMS, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        if (!EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            EasyPermissions.requestPermissions(this, "应用需要手机定位权限", REQUEST_LOCATION_PERM_CODE, Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        // EasyPermissions handles the request result.
+//        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+//    }
+//
+//    @Override
+//    public void onPermissionsGranted(int i, List<String> list) {
+//
+//    }
+//
+//    @Override
+//    public void onPermissionsDenied(int i, List<String> list) {
+//
+//    }
+//
+//    @AfterPermissionGranted(REQUEST_LOCATION_PERM_CODE)
+//    private void getLocationPermission() {
+////        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.GET_ACCOUNTS, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_PHONE_STATE, Manifest.permission.SEND_SMS, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+//        if (!EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+//            EasyPermissions.requestPermissions(this, "应用需要手机定位权限", REQUEST_LOCATION_PERM_CODE, Manifest.permission.ACCESS_FINE_LOCATION);
+//        }
+//    }
 }
