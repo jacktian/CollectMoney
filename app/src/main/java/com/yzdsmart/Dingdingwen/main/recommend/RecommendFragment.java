@@ -14,6 +14,7 @@ import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.response.ExpandListRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.BetterSpinner;
 
@@ -119,7 +120,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
             ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getExpandList("000000", pageIndex, PAGE_SIZE);
+        mPresenter.getExpandList("000000", pageIndex, PAGE_SIZE, "bearer " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
     }
 
     @Override

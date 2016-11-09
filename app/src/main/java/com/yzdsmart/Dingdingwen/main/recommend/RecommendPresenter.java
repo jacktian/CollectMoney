@@ -25,9 +25,9 @@ public class RecommendPresenter implements RecommendContract.RecommendPresenter 
     }
 
     @Override
-    public void getExpandList(String submitCode, Integer pageIndex, Integer pageSize) {
+    public void getExpandList(String submitCode, Integer pageIndex, Integer pageSize, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getExpandList(submitCode, pageIndex, pageSize, new RequestListener() {
+        mModel.getExpandList(submitCode, pageIndex, pageSize, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 List<ExpandListRequestResponse> expands = (List<ExpandListRequestResponse>) result;

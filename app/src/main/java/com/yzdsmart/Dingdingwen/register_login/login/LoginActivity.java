@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.tencent.connect.common.Constants;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -17,6 +18,7 @@ import com.tencent.tauth.UiError;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.register_login.verify_phone.VerifyPhoneActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -244,6 +246,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         } else {
             return;
         }
+        MainActivity.getInstance().getRefreshToken();
         setResult(RESULT_OK);
         closeActivity();
     }

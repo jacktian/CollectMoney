@@ -17,6 +17,8 @@ import com.tencent.TIMValueCallBack;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendshipInfo;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.GroupInfo;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo;
@@ -174,6 +176,59 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
         MessageEvent.getInstance().clear();
         FriendshipInfo.getInstance().clear();
         GroupInfo.getInstance().clear();
+    }
+
+    @Override
+    public void getRefreshToken(String grantType, String userName, String password) {
+        mModel.getRefreshToken(grantType, userName, password, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                GetTokenRequestResponse requestResponse = (GetTokenRequestResponse) result;
+                if (null != requestResponse) {
+                    SharedPreferencesUtils.setString(context, "ddw_refresh_token", requestResponse.getRefresh_token());
+                    SharedPreferencesUtils.setString(context, "ddw_access_token", requestResponse.getAccess_token());
+                    mView.refreshAccessToken();
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        });
+    }
+
+    @Override
+    public void refreshAccessToken(String grantType, String refreshToken) {
+        mModel.refreshAccessToken(grantType, refreshToken, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                GetTokenRequestResponse requestResponse = (GetTokenRequestResponse) result;
+                if (null != requestResponse) {
+                    SharedPreferencesUtils.setString(context, "ddw_refresh_token", requestResponse.getRefresh_token());
+                    SharedPreferencesUtils.setString(context, "ddw_access_token", requestResponse.getAccess_token());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).showSnackbar(err);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void unRegisterSubscribe() {
+        mModel.unRegisterSubscribe();
     }
 
     @Override

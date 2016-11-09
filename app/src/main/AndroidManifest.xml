@@ -94,6 +94,8 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop" />
 
+        <service android:name=".service.RefreshAccessTokenService" />
+
         <activity
             android:name=".register_login.login.LoginActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -396,10 +398,10 @@
         <!--微博开放平台开始-->
         <!-- 必须注册在微博授权，分享微博时候用到 -->
         <!--<activity-->
-            <!--android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"-->
-            <!--android:configChanges="keyboardHidden|orientation"-->
-            <!--android:exported="false"-->
-            <!--android:windowSoftInputMode="adjustResize" />-->
+        <!--android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"-->
+        <!--android:configChanges="keyboardHidden|orientation"-->
+        <!--android:exported="false"-->
+        <!--android:windowSoftInputMode="adjustResize" />-->
         <!--微博开放平台结束-->
 
         <!--微信开放平台开始-->

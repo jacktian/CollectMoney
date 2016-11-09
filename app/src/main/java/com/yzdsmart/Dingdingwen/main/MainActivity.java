@@ -4,8 +4,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
@@ -24,6 +26,7 @@ import com.yzdsmart.Dingdingwen.money_friendship.MoneyFriendshipActivity;
 import com.yzdsmart.Dingdingwen.money_friendship.conversation.ConversationFragment;
 import com.yzdsmart.Dingdingwen.personal.PersonalActivity;
 import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
+import com.yzdsmart.Dingdingwen.service.RefreshAccessTokenService;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.Conversation;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.CustomMessage;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.GroupInfo;
@@ -81,6 +84,19 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 
     public static boolean isForeground = false;
 
+    private Handler mRefreshAccessTokenHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            mPresenter.refreshAccessToken("refresh_token", SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", ""));
+        }
+    };
+    private boolean stopRefreshAccessToken = false;//停止刷新
+    private boolean isFirstRefreshAccessToken = true;//第一次刷新
+
+    private ServiceConnection mConnection;
+    private RefreshAccessTokenService mService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +126,44 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         imLogin();
 
         initJPush();
+
+//        mConnection = new ServiceConnection() {
+//            @Override
+//            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+//                RefreshAccessTokenService.RefreshAccessTokenBinder binder = (RefreshAccessTokenService.RefreshAccessTokenBinder) iBinder;
+//                mService = binder.getService();
+//            }
+//
+//            @Override
+//            public void onServiceDisconnected(ComponentName componentName) {
+//                mService = null;
+//            }
+//        };
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (null != SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "") && SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "").trim().length() > 0) {
+//            Intent intent = new Intent(this, RefreshAccessTokenService.class);
+//            bindService(intent, mConnection, Service.BIND_AUTO_CREATE);
+                    while (!stopRefreshAccessToken) {
+                        try {
+                            if (isFirstRefreshAccessToken) {
+                                isFirstRefreshAccessToken = false;
+                            } else {
+                                Thread.sleep(60000);
+                            }
+                            mRefreshAccessTokenHandler.sendEmptyMessage(0);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
+    }
+
+    public void getRefreshToken() {
+        mPresenter.getRefreshToken("password", SharedPreferencesUtils.getString(this, "cust_code", "").replace("-", ""), SharedPreferencesUtils.getString(this, "password", ""));
     }
 
     @Override
@@ -139,9 +193,19 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        mPresenter.unRegisterSubscribe();
+    }
+
+    @Override
     protected void onDestroy() {
         mPresenter.unRegisterObserver();
         JPushInterface.stopPush(App.getAppInstance());
+        stopRefreshAccessToken = true;
+        if (null != mService) {
+            unbindService(mConnection);
+        }
         super.onDestroy();
     }
 
@@ -337,6 +401,29 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         groupManageConversation.setUnreadCount(unreadCount);
         Collections.sort(conversationList);
         updateUnreadConversationBubble();
+    }
+
+    @Override
+    public void refreshAccessToken() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (null != SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "") && SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "").trim().length() > 0) {
+                    while (true) {
+                        try {
+                            if (isFirstRefreshAccessToken) {
+                                isFirstRefreshAccessToken = false;
+                            } else {
+                                Thread.sleep(60000);
+                            }
+                            mRefreshAccessTokenHandler.sendEmptyMessage(0);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
     }
 
     @Override

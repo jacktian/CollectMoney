@@ -47,6 +47,8 @@ public interface MainContract {
          * @param unreadCount 未读数
          */
         void onGetGroupManageLastMessage(TIMGroupPendencyItem message, long unreadCount);
+
+        void refreshAccessToken();
     }
 
     interface MainPresenter extends BasePresenter {
@@ -75,5 +77,27 @@ public interface MainContract {
         void getGroupManageLastMessage();
 
         void unRegisterObserver();
+
+        /**
+         * 获取refresh token 和 access token
+         *
+         * @param grantType
+         * @param userName
+         * @param password
+         */
+        void getRefreshToken(String grantType, String userName, String password);
+
+        /**
+         * 刷新 access token
+         *
+         * @param grantType
+         * @param refreshToken
+         */
+        void refreshAccessToken(String grantType, String refreshToken);
+
+        /**
+         * 取消网络请求
+         */
+        void unRegisterSubscribe();
     }
 }

@@ -12,6 +12,7 @@ import com.yzdsmart.Dingdingwen.http.response.FriendsRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetCoinsLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetGalleyRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.LoginRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PersonRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PersonalWithdrawLogRequestResponse;
@@ -35,6 +36,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -114,6 +116,29 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.USER)
     Observable<LoginRequestResponse> userLogin(@Field("UserName") String userName, @Field("Password") String password, @Field("LoginCode") String loginCode);
+
+    /**
+     * 获取refresh token 和 access token
+     *
+     * @param grantType
+     * @param userName
+     * @param password
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TOKEN)
+    Observable<GetTokenRequestResponse> getRefreshToken(@Field("grant_type") String grantType, @Field("username") String userName, @Field("password") String password);
+
+    /**
+     * 刷新 access token
+     *
+     * @param grantType
+     * @param refreshToken
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TOKEN)
+    Observable<GetTokenRequestResponse> refreshAccessToken(@Field("grant_type") String grantType, @Field("refresh_token") String refreshToken);
 
     /**
      * 获取用户等级和星级
@@ -662,9 +687,10 @@ public interface RequestService {
      * @param submitCode
      * @param pageIndex
      * @param pageSize
+     * @param authorization
      * @return
      */
     @FormUrlEncoded
     @POST(Url.EXPAND)
-    Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Header("Authorization") String authorization);
 }
