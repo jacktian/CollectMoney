@@ -9,10 +9,12 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
+import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.Friendship;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,10 +72,18 @@ public class RecommendFriendsFragment extends BaseFragment implements RecommendF
             public void onRefresh() {
                 recommendFriendsRV.setRefreshing(false);
                 recommendFriendsAdapter.clearList();
-                mPresenter.getRecommendFriends(RECOMMEND_FRIEND_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), RECOMMEND_NUM);
+                getRecommendFriends();
             }
         });
 
+        getRecommendFriends();
+    }
+
+    private void getRecommendFriends() {
+        if (!Utils.isNetUsable(getActivity())) {
+            ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         mPresenter.getRecommendFriends(RECOMMEND_FRIEND_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), RECOMMEND_NUM);
     }
 

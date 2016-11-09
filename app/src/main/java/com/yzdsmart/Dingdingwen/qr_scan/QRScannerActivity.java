@@ -190,6 +190,11 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     @Override
     public void onScanQRCodeSuccess(String result) {
         playBeepSoundAndVibrate();
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            mQRCodeView.startSpot();
+            return;
+        }
         mPresenter.getCoins(Constants.GET_COIN_ACTION_CODE, result, Utils.getLocalIpAddress());
     }
 

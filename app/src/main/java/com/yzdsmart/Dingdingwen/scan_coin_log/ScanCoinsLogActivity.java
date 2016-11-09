@@ -18,6 +18,7 @@ import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.GetCoinsLog;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.BetterSpinner;
 
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class ScanCoinsLogActivity extends BaseActivity implements ScanCoinsLogCo
         coinListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                mPresenter.getCoinsLog(Constants.GET_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(ScanCoinsLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                getCoinsLog();
             }
         });
         coinListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -109,10 +110,18 @@ public class ScanCoinsLogActivity extends BaseActivity implements ScanCoinsLogCo
                 lastsequence = 0;
                 pageIndex = 1;
                 personalCoinsAdapter.clearList();
-                mPresenter.getCoinsLog(Constants.GET_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(ScanCoinsLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                getCoinsLog();
             }
         });
 
+        getCoinsLog();
+    }
+
+    private void getCoinsLog() {
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         mPresenter.getCoinsLog(Constants.GET_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
     }
 

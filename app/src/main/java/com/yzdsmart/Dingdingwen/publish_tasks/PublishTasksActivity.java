@@ -15,6 +15,7 @@ import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.share_sdk.OnekeyShare;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.time_picker.TimePickerDialog;
 import com.yzdsmart.Dingdingwen.views.time_picker.data.Type;
 import com.yzdsmart.Dingdingwen.views.time_picker.listener.OnDateSetListener;
@@ -100,6 +101,11 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
                 showShare();
             }
         };
+
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
 
         mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
     }

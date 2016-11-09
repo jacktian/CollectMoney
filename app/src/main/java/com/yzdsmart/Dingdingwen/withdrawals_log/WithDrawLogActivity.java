@@ -18,6 +18,7 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.PersonalWithdrawLog;
 import com.yzdsmart.Dingdingwen.bean.ShopWithdrawLog;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +94,10 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
         withdrawLogTV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+                if (!Utils.isNetUsable(WithDrawLogActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
                 switch (userType) {
                     case 0:
                         mPresenter.getPersonalWithdrawLog(Constants.PERSONAL_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
@@ -110,6 +115,10 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
                 withdrawLogTV.reenableLoadmore();
                 lastsequence = 0;
                 pageIndex = 1;
+                if (!Utils.isNetUsable(WithDrawLogActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
                 switch (userType) {
                     case 0:
                         withDrawLogAdapter.clearPersonalList();
@@ -123,6 +132,10 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
             }
         });
 
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         switch (userType) {
             case 0:
                 mPresenter.getPersonalWithdrawLog(Constants.PERSONAL_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);

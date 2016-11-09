@@ -40,6 +40,7 @@ import com.yzdsmart.Dingdingwen.qr_scan.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
 import com.yzdsmart.Dingdingwen.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -308,6 +309,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                         isSearchRoute = false;
                         return;
                     }
+                    if (!Utils.isNetUsable(getActivity())) {
+                        ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
+                        return;
+                    }
                     mPresenter.getShopList("000000", mapStatusLocation, zoomDistance, page_index, PAGE_SIZE);
                 } else {
                     String mapStatusLocation = cameraPosition.target.longitude + "," + cameraPosition.target.latitude;
@@ -322,6 +327,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                         isSearchRoute = false;
                         return;
                     } else {
+                        if (!Utils.isNetUsable(getActivity())) {
+                            ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
+                            return;
+                        }
                         mPresenter.getShopList("000000", mapStatusLocation, zoomDistance, page_index, PAGE_SIZE);
                     }
                 }
@@ -392,11 +401,19 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         DecimalFormat decimalFormat = new DecimalFormat(".######");
         String mapStatusLocation = decimalFormat.format(latLng.longitude) + "," + decimalFormat.format(latLng.latitude);
         if (qLocation.equals(mapStatusLocation)) {
+            if (!Utils.isNetUsable(getActivity())) {
+                ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
+                return;
+            }
             mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE);
         } else {
             LatLng locLatLng = new LatLng(locLatitude, locLongitude);
             float distance = AMapUtils.calculateLineDistance(latLng, locLatLng);
             if (0.5 > distance) {
+                if (!Utils.isNetUsable(getActivity())) {
+                    ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
                 mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE);
                 return;
             }
@@ -433,11 +450,19 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         marketNameTV.setText(marketName);
         ButterKnife.apply(marketNameTV, BaseActivity.BUTTERKNIFEVISIBLE);
         if ((decimalFormat.format(Double.valueOf(marketLongitude)) + "," + decimalFormat.format(Double.valueOf(marketLatitude))).equals(mapStatusLocation)) {
+            if (!Utils.isNetUsable(getActivity())) {
+                ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
+                return;
+            }
             mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE);
         } else {
             LatLng marketLatLng = new LatLng(Double.valueOf(marketLatitude), Double.valueOf(marketLongitude));
             float distance = AMapUtils.calculateLineDistance(latLng, marketLatLng);
             if (0.2 > distance) {
+                if (!Utils.isNetUsable(getActivity())) {
+                    ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
                 mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE);
                 return;
             }
@@ -514,6 +539,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
             if (null != SharedPreferencesUtils.getString(getActivity(), "cust_code", "") && SharedPreferencesUtils.getString(getActivity(), "cust_code", "").length() > 0) {
                 if (uploadCoorCounts == 600) {
+                    if (!Utils.isNetUsable(getActivity())) {
+                        ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
+                        return;
+                    }
                     mPresenter.uploadCoor("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), qLocation);
                     uploadCoorCounts = 0;
                 } else {

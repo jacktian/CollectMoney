@@ -162,6 +162,10 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            if (!Utils.isNetUsable(PersonalActivity.this)) {
+                showSnackbar(getResources().getString(R.string.net_unusable));
+                return;
+            }
             Bundle bundle = msg.getData();
             mPresenter.uploadShopAvater(Constants.SHOP_UPLOAD_AVATER_ACTION_CODE, SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", "") + "0.png", bundle.getString("image"), SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", ""));
         }
@@ -229,6 +233,10 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
     @Override
     public void onResume() {
         super.onResume();
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         if (SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", "").trim().length() > 0) {
             mPresenter.getShopInfo(Constants.GET_SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", ""));
             mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", ""));

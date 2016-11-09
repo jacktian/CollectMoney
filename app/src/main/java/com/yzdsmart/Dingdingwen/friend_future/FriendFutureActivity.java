@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +17,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.search_friend.SearchFriendActivity;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendFuture;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,8 +88,7 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
         friendFutureRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-
-                mPresenter.getFutureFriends(PAGE_SIZE, pendSeq, decideSeq, recommendSeq);
+                getFutureFriends();
             }
         });
         friendFutureRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -101,10 +100,18 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
                 decideSeq = 0;
                 recommendSeq = 0;
                 friendFutureAdapter.clearList();
-                mPresenter.getFutureFriends(PAGE_SIZE, pendSeq, decideSeq, recommendSeq);
+                getFutureFriends();
             }
         });
 
+        getFutureFriends();
+    }
+
+    private void getFutureFriends() {
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         mPresenter.getFutureFriends(PAGE_SIZE, pendSeq, decideSeq, recommendSeq);
     }
 
@@ -158,7 +165,7 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
         decideSeq = 0;
         recommendSeq = 0;
         friendFutureAdapter.clearList();
-        mPresenter.getFutureFriends(PAGE_SIZE, pendSeq, decideSeq, recommendSeq);
+        getFutureFriends();
     }
 
     @Override

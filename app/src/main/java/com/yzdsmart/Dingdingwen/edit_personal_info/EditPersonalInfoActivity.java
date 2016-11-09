@@ -105,6 +105,10 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
     @Override
     protected void onResume() {
         super.onResume();
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
         mPresenter.getCustDetailInfo("000000", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "cust_code", ""));
     }
@@ -218,6 +222,10 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
                             return;
                         }
                         break;
+                }
+                if (!Utils.isNetUsable(EditPersonalInfoActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
                 }
                 switch (editItem) {
                     case 0://姓名

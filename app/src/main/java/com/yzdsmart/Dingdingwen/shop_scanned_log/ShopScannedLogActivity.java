@@ -17,6 +17,7 @@ import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.ScannedLog;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +86,7 @@ public class ShopScannedLogActivity extends BaseActivity implements ShopScannedL
         scannedLogRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                mPresenter.getScannedLog(Constants.GET_SCANNED_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(ShopScannedLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                getScannedLog();
             }
         });
         scannedLogRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -96,10 +97,18 @@ public class ShopScannedLogActivity extends BaseActivity implements ShopScannedL
                 pageIndex = 1;
                 lastsequence = 0;
                 shopScannedLogAdapter.clearList();
-                mPresenter.getScannedLog(Constants.GET_SCANNED_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(ShopScannedLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                getScannedLog();
             }
         });
 
+        getScannedLog();
+    }
+
+    private void getScannedLog() {
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         mPresenter.getScannedLog(Constants.GET_SCANNED_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
     }
 

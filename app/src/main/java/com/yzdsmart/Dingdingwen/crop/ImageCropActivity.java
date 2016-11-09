@@ -22,6 +22,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -111,6 +112,7 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
             byte[] bytes = null;
             ContentResolver contentResolver = getContentResolver();
             try {
+                resultImageIV.setImageURI(Crop.getOutput(result));
                 bitmap = MediaStore.Images.Media.getBitmap(contentResolver, Crop.getOutput(result));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -122,10 +124,11 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
             }
             bitmap.recycle();//释放bitmap
             String image = new String(android.util.Base64.encode(bytes, android.util.Base64.DEFAULT));
-
+            if (!Utils.isNetUsable(this)) {
+                showSnackbar(getResources().getString(R.string.net_unusable));
+                return;
+            }
             mPresenter.uploadPortrait(Constants.PERSONAL_UPLOAD_AVATER_ACTION_CODE, SharedPreferencesUtils.getString(this, "im_account", "") + ".png", image, SharedPreferencesUtils.getString(this, "im_account", ""));
-
-            resultImageIV.setImageURI(Crop.getOutput(result));
         } else if (resultCode == Crop.RESULT_ERROR) {
             showSnackbar(Crop.getError(result).getMessage());
         }

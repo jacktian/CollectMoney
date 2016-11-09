@@ -14,6 +14,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.List;
 
@@ -139,6 +140,10 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
                 String businessAddress = businessAddressET.getText().toString();
                 String businessRemark = businessRemarkET.getText().toString();
                 String businessCoor = businessCoorET.getText().toString();
+                if (!Utils.isNetUsable(this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
                 mPresenter.registerBusiness("000000", SharedPreferencesUtils.getString(this, "cust_code", ""), businessName, businessPers, businessTel, businessAddress, businessRemark, businessCoor);
                 break;
         }

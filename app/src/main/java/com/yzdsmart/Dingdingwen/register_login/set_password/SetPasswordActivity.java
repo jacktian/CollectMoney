@@ -89,6 +89,10 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
             @Override
             public void run() {
                 hideProgressDialog();
+                if (!Utils.isNetUsable(SetPasswordActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
                 mPresenter.userLogin(userName, userPwdET.getText().toString(), "");
             }
         };

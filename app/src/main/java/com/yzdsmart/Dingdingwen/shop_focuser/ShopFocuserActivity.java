@@ -17,6 +17,7 @@ import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.ShopFocuser;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +89,7 @@ public class ShopFocuserActivity extends BaseActivity implements ShopFocuserCont
         shopFocuserRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                mPresenter.getShopFocuser(Constants.GET_SHOP_FOCUSER_ACTION_CODE, "000000", SharedPreferencesUtils.getString(ShopFocuserActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+                getShopFocuser();
             }
         });
         shopFocuserRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -99,10 +100,18 @@ public class ShopFocuserActivity extends BaseActivity implements ShopFocuserCont
                 focuserCounts = 0;
                 pageIndex = 1;
                 shopFocuserAdapter.clearList();
-                mPresenter.getShopFocuser(Constants.GET_SHOP_FOCUSER_ACTION_CODE, "000000", SharedPreferencesUtils.getString(ShopFocuserActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE);
+                getShopFocuser();
             }
         });
 
+        getShopFocuser();
+    }
+
+    private void getShopFocuser() {
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         mPresenter.getShopFocuser(Constants.GET_SHOP_FOCUSER_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE);
     }
 

@@ -78,6 +78,10 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            if (!Utils.isNetUsable(GalleyActivity.this)) {
+                showSnackbar(getResources().getString(R.string.net_unusable));
+                return;
+            }
             Bundle bundle = msg.getData();
             switch (identityType) {
                 case 0:
@@ -207,8 +211,16 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (Constants.PERSONAL_GALLEY_OPERATION_CODE == requestCode && RESULT_OK == resultCode) {
+            if (!Utils.isNetUsable(this)) {
+                showSnackbar(getResources().getString(R.string.net_unusable));
+                return;
+            }
             mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
         } else if (Constants.SHOP_GALLEY_OPERATION_CODE == requestCode && RESULT_OK == resultCode) {
+            if (!Utils.isNetUsable(this)) {
+                showSnackbar(getResources().getString(R.string.net_unusable));
+                return;
+            }
             mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
         } else if (Constants.REQUEST_CODE_CHOOSE_PHOTO == requestCode && RESULT_OK == resultCode) {
             ArrayList<String> imageUrls = BGAPhotoPickerActivity.getSelectedImages(data);
@@ -261,9 +273,17 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
                 }
                 switch (identityType) {
                     case 0:
+                        if (!Utils.isNetUsable(this)) {
+                            showSnackbar(getResources().getString(R.string.net_unusable));
+                            return;
+                        }
                         mPresenter.deletePersonalGalley(Constants.PERSONAL_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), deleteFileIdList);
                         break;
                     case 1:
+                        if (!Utils.isNetUsable(this)) {
+                            showSnackbar(getResources().getString(R.string.net_unusable));
+                            return;
+                        }
                         mPresenter.deleteShopGalley(Constants.SHOP_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), deleteFileIdList);
                         break;
                 }

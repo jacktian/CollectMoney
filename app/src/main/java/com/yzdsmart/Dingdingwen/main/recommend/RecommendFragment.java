@@ -14,6 +14,7 @@ import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.response.ExpandListRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.BetterSpinner;
 
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
         recommendListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                mPresenter.getExpandList("000000", pageIndex, PAGE_SIZE);
+                getExpandList();
             }
         });
         recommendListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -106,10 +107,18 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
                 recommendListRV.reenableLoadmore();
                 pageIndex = 1;
                 recommendAdapter.clearList();
-                mPresenter.getExpandList("000000", pageIndex, PAGE_SIZE);
+                getExpandList();
             }
         });
 
+        getExpandList();
+    }
+
+    private void getExpandList() {
+        if (!Utils.isNetUsable(getActivity())) {
+            ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         mPresenter.getExpandList("000000", pageIndex, PAGE_SIZE);
     }
 

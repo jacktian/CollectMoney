@@ -15,6 +15,7 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.share_sdk.OnekeyShare;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -91,6 +92,33 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
 
         ShareSDK.initSDK(this, "188d0cc56cba8");
 
+        shopWithdrawSuccessRunnable = new Runnable() {
+            @Override
+            public void run() {
+                hideProgressDialog();
+                if (!Utils.isNetUsable(WithDrawActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
+                mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "baza_code", ""));
+            }
+        };
+        personalWithdrawSuccessRunnable = new Runnable() {
+            @Override
+            public void run() {
+                hideProgressDialog();
+                if (!Utils.isNetUsable(WithDrawActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
+                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "cust_code", ""));
+            }
+        };
+
+        if (!Utils.isNetUsable(WithDrawActivity.this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         switch (userType) {
             case 0:
                 mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
@@ -99,21 +127,6 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                 mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
                 break;
         }
-
-        shopWithdrawSuccessRunnable = new Runnable() {
-            @Override
-            public void run() {
-                hideProgressDialog();
-                mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "baza_code", ""));
-            }
-        };
-        personalWithdrawSuccessRunnable = new Runnable() {
-            @Override
-            public void run() {
-                hideProgressDialog();
-                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "cust_code", ""));
-            }
-        };
     }
 
     @Override
@@ -145,6 +158,10 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
             case R.id.withdraw_money:
                 if (!requiredVerify(withdrawGoldNumET)) {
                     withdrawGoldNumET.setError(getResources().getString(R.string.input_withdraw_gold_num));
+                    return;
+                }
+                if (!Utils.isNetUsable(WithDrawActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
                 switch (userType) {

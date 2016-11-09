@@ -25,6 +25,7 @@ import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendProfile;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.ProfileSummary;
 import com.yzdsmart.Dingdingwen.tecent_im.views.NotifyDialog;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -121,6 +122,10 @@ public class SearchFriendActivity extends BaseActivity implements SearchFriendCo
             addFriendAdapter.clearList();
             if (SharedPreferencesUtils.getString(this, "im_account", "").equals("yzd" + searchFilter))
                 return false;
+            if (!Utils.isNetUsable(this)) {
+                showSnackbar(getResources().getString(R.string.net_unusable));
+                return false;
+            }
             mPresenter.searchFriendById("yzd" + searchFilter);
             return true;
         }

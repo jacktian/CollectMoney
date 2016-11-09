@@ -196,6 +196,10 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     @Override
     protected void onResume() {
         super.onResume();
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         switch (type) {
             case 0:
                 mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
@@ -230,6 +234,10 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
             @Override
             public void onClick(View view) {
                 deleteRemarkDialog.dismiss();
+                if (!Utils.isNetUsable(PersonalFriendDetailActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
                 mPresenter.deleteFriend(friend_identify);
             }
         });
@@ -265,6 +273,10 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
             @Override
             public void onClick(View v) {
                 remarkDialog.dismiss();
+                if (!Utils.isNetUsable(PersonalFriendDetailActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
                 mPresenter.remarkFriend(friend_identify, remarkFriendET.getText().toString());
             }
         });
@@ -315,6 +327,10 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 openActivity(GalleyActivity.class, bundle, 0);
                 break;
             case R.id.add_friend:
+                if (!Utils.isNetUsable(this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
                 mPresenter.addFriend(friend_identify);
                 break;
             case R.id.msg_chat:

@@ -93,6 +93,10 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
             @Override
             public void run() {
                 hideProgressDialog();
+                if (!Utils.isNetUsable(SetInfoActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
                 mPresenter.userLogin(userName, password, "");
             }
         };
@@ -154,6 +158,10 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
                 }
                 if (!requiredVerify(nickNameET)) {
                     nickNameET.setError(getResources().getString(R.string.input_nickname));
+                    return;
+                }
+                if (!Utils.isNetUsable(this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
                 mPresenter.userRegister(Constants.REGISTER_ACTION_CODE, userName, password, (userGenderRG.getCheckedRadioButtonId() == R.id.gender_male) ? "男" : "女", Integer.valueOf(Days.daysBetween(dtf.parseDateTime(userAgeET.getText().toString()), new DateTime()).getDays() / 365 + 1), nickNameET.getText().toString(), Utils.md5(Constants.REGISTER_ACTION_CODE + "yzd" + userName));

@@ -28,6 +28,7 @@ import com.yzdsmart.Dingdingwen.http.response.BuyCoinsPayRequestResponse;
 import com.yzdsmart.Dingdingwen.publish_tasks.PublishTasksActivity;
 import com.yzdsmart.Dingdingwen.share_sdk.OnekeyShare;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomNestRadioGroup;
 
 import java.util.ArrayList;
@@ -132,7 +133,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         coinListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                mPresenter.buyCoinsLog(Constants.BUY_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                getBuyCoinsLog();
             }
         });
         coinListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -143,10 +144,18 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 pageIndex = 1;
                 lastsequence = 0;
                 buyCoinsLogAdapter.clearList();
-                mPresenter.buyCoinsLog(Constants.BUY_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                getBuyCoinsLog();
             }
         });
 
+        getBuyCoinsLog();
+    }
+
+    private void getBuyCoinsLog() {
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         mPresenter.buyCoinsLog(Constants.BUY_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
     }
 
@@ -156,7 +165,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     }
 
     private void initPingPlusPlus() {
-        PingppLog.DEBUG = true;
+        PingppLog.DEBUG = false;
     }
 
     @Optional
@@ -169,6 +178,10 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
             case R.id.buy_coin:
                 if (!requiredVerify(coinCountsET)) {
                     coinCountsET.setError(getResources().getString(R.string.buy_coin_coin_count_required));
+                    return;
+                }
+                if (!Utils.isNetUsable(this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
 //                showMoveDialog(this, Integer.valueOf(coinCountsET.getText().toString()));

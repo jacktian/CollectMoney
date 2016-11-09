@@ -68,6 +68,10 @@ public class EditShopInfoActivity extends BaseActivity implements EditShopInfoCo
 
         new EditShopInfoPresenter(this, this);
 
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         mPresenter.getShopInfo(Constants.GET_SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
     }
 
@@ -120,6 +124,10 @@ public class EditShopInfoActivity extends BaseActivity implements EditShopInfoCo
             public void onClick(View v) {
                 if (editInfoContent.getText().toString().length() <= 0) {
                     editInfoContent.setError("请输入" + dialogTitle);
+                    return;
+                }
+                if (!Utils.isNetUsable(EditShopInfoActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
                 switch (editItem) {
