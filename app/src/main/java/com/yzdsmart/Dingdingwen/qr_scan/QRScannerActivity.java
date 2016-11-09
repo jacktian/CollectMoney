@@ -247,13 +247,13 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         float ratioHeight = (float) screenHeight / 800;
 
         float ratio = Math.min(ratioWidth, ratioHeight);
-        int textSize = Math.round(40 * ratio);
+        int textSize = Math.round(38 * ratio);
 
         Paint paint = new Paint();
         paint.setColor(Color.WHITE);
         paint.setAntiAlias(true);
         paint.setTextSize(textSize);
-        float margin = bitmap.getWidth() / 3;
+        float margin = bitmap.getWidth() * 3 / 10;
         canvas.drawText(String.valueOf(num),
                 margin,
                 ((bitmap.getHeight() / 7) * 5), paint);
