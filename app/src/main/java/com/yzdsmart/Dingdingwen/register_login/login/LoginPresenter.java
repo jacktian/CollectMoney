@@ -1,7 +1,6 @@
 package com.yzdsmart.Dingdingwen.register_login.login;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
@@ -31,9 +30,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
             @Override
             public void onSuccess(Object result) {
                 LoginRequestResponse response = (LoginRequestResponse) result;
-                System.out.println("----------------------->" + response);
                 if ("OK".equals(response.getActionStatus())) {
-//                    SharedPreferencesUtils.clear(context, PreferenceManager.getDefaultSharedPreferences(context));
                     SharedPreferencesUtils.setString(context, "baza_code", response.getBazaCode());
                     SharedPreferencesUtils.setString(context, "cust_code", response.getCustCode());
                     SharedPreferencesUtils.setString(context, "password", password);

@@ -36,6 +36,7 @@ import com.yzdsmart.Dingdingwen.tecent_im.bean.NormalConversation;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo;
 import com.yzdsmart.Dingdingwen.tecent_im.service.TLSService;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -88,6 +89,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            if (!Utils.isNetUsable(MainActivity.this)) {
+                showSnackbar(getResources().getString(R.string.net_unusable));
+                return;
+            }
             mPresenter.refreshAccessToken("refresh_token", SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", ""));
         }
     };
@@ -139,27 +144,8 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 //                mService = null;
 //            }
 //        };
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (null != SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "") && SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "").trim().length() > 0) {
-//            Intent intent = new Intent(this, RefreshAccessTokenService.class);
-//            bindService(intent, mConnection, Service.BIND_AUTO_CREATE);
-                    while (!stopRefreshAccessToken) {
-                        try {
-                            if (isFirstRefreshAccessToken) {
-                                isFirstRefreshAccessToken = false;
-                            } else {
-                                Thread.sleep(60000);
-                            }
-                            mRefreshAccessTokenHandler.sendEmptyMessage(0);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }).start();
+
+        refreshAccessToken();
     }
 
     public void getRefreshToken() {
@@ -409,7 +395,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             @Override
             public void run() {
                 if (null != SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "") && SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "").trim().length() > 0) {
-                    while (true) {
+                    while (!stopRefreshAccessToken) {
                         try {
                             if (isFirstRefreshAccessToken) {
                                 isFirstRefreshAccessToken = false;
