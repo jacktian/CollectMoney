@@ -59,7 +59,7 @@ public interface PersonalContract {
          * @param submitcode
          * @param action
          */
-        void getCustLevel(String code, String submitcode, String action);
+        void getCustLevel(String code, String submitcode, String action, String authorization);
 
         /**
          * 获取用户信息
@@ -75,7 +75,7 @@ public interface PersonalContract {
          * @param submitCode
          * @param bazaCode
          */
-        void getShopInfo(String actioncode, String submitCode, String bazaCode);
+        void getShopInfo(String actioncode, String submitCode, String bazaCode, String authorization);
 
         /**
          * 获取商铺图片列表

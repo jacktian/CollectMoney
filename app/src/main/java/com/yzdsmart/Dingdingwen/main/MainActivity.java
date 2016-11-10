@@ -401,10 +401,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                             if (isFirstRefreshAccessToken) {
                                 isFirstRefreshAccessToken = false;
                             } else {
-                                Thread.sleep(60000);
+                                Thread.sleep(3600000);
                             }
                             mRefreshAccessTokenHandler.sendEmptyMessage(0);
-                        } catch (InterruptedException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }

@@ -107,7 +107,7 @@ public class FriendListFragment extends BaseFragment implements FriendListContra
             ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getFriendsList("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), timeStampNow, startIndex, currentStandardSequence, PAGE_SIZE);
+        mPresenter.getFriendsList("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), timeStampNow, startIndex, currentStandardSequence, PAGE_SIZE, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
     }
 
     @Override

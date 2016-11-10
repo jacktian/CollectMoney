@@ -46,6 +46,7 @@ import com.yzdsmart.Dingdingwen.tecent_im.utils.MediaUtil;
 import com.yzdsmart.Dingdingwen.tecent_im.utils.RecorderUtil;
 import com.yzdsmart.Dingdingwen.tecent_im.views.ChatInput;
 import com.yzdsmart.Dingdingwen.tecent_im.views.VoiceSendingView;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -548,7 +549,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
      * @param identify
      */
     public void toFriendDetail(String identify) {
-        mPresenter.getCustCode(identify, "000000", Constants.GET_CUST_CODE_ACTION_CODE);
+        mPresenter.getCustCode(identify, "000000", Constants.GET_CUST_CODE_ACTION_CODE, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     /**

@@ -155,9 +155,9 @@ public class ChatPresenter implements ChatContract.ChatPresenter, Observer {
     }
 
     @Override
-    public void getCustCode(final String code, String submitcode, String action) {
+    public void getCustCode(final String code, String submitcode, String action, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustCode(code, submitcode, action, new RequestListener() {
+        mModel.getCustCode(code, submitcode, action, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ((BaseActivity) context).hideProgressDialog();

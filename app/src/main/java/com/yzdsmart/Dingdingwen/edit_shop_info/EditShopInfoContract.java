@@ -32,7 +32,7 @@ public interface EditShopInfoContract {
          * @param submitCode
          * @param bazaCode
          */
-        void getShopInfo(String actioncode, String submitCode, String bazaCode);
+        void getShopInfo(String actioncode, String submitCode, String bazaCode, String authorization);
 
         /**
          * 设置商铺详细信息

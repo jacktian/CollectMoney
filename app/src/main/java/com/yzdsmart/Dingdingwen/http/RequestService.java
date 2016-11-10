@@ -149,7 +149,7 @@ public interface RequestService {
      * @return
      */
     @GET(Url.CUST)
-    Observable<CustLevelRequestResponse> getCustLevel(@Query("code") String code, @Query("submitcode") String submitcode, @Query("action") String action);
+    Observable<CustLevelRequestResponse> getCustLevel(@Query("code") String code, @Query("submitcode") String submitcode, @Query("action") String action, @Header("Authorization") String authorization);
 
     /**
      * 根据腾讯云通信账号获取用户cust code
@@ -160,7 +160,7 @@ public interface RequestService {
      * @return
      */
     @GET(Url.CUST)
-    Observable<String> getCustCode(@Query("code") String code, @Query("submitcode") String submitcode, @Query("action") String action);
+    Observable<String> getCustCode(@Query("code") String code, @Query("submitcode") String submitcode, @Query("action") String action, @Header("Authorization") String authorization);
 
     /**
      * 获取用户信息
@@ -200,7 +200,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SET_CUST)
-    Observable<RequestResponse> setCustIMInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("TCAccount") String tcAccount, @Field("Profile_Nick") String profile_Nick, @Field("Profile_Image") String profile_Image, @Field("Profile_AllowType") String profile_AllowType, @Field("Profile_SelfSignature") String profile_SelfSignature);
+    Observable<RequestResponse> setCustIMInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("TCAccount") String tcAccount, @Field("Profile_Nick") String profile_Nick, @Field("Profile_Image") String profile_Image, @Field("Profile_AllowType") String profile_AllowType, @Field("Profile_SelfSignature") String profile_SelfSignature, @Header("Authorization") String authorization);
 
     /**
      * 设置用户详细信息
@@ -259,7 +259,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.FRIEND)
-    Observable<FriendsRequestResponse> getFriendsList(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("TimeStampNow") Long timeStampNow, @Field("StartIndex") Integer startIndex, @Field("CurrentStandardSequence") Integer currentStandardSequence, @Field("PageSize") Integer pageSize);
+    Observable<FriendsRequestResponse> getFriendsList(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("TimeStampNow") Long timeStampNow, @Field("StartIndex") Integer startIndex, @Field("CurrentStandardSequence") Integer currentStandardSequence, @Field("PageSize") Integer pageSize, @Header("Authorization") String authorization);
 
     /**
      * 获取系统推荐好友
@@ -360,11 +360,12 @@ public interface RequestService {
      * @param submitCode
      * @param bazaCode
      * @param custCode
+     * @param authorization
      * @return
      */
     @FormUrlEncoded
     @POST(Url.SHOP_LIST)
-    Observable<ShopInfoRequestResponse> getShopInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("CustCode") String custCode);
+    Observable<ShopInfoRequestResponse> getShopInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
 
     /**
      * 设置对店铺关注
@@ -376,7 +377,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SET_FOLLOW)
-    Observable<RequestResponse> setFollow(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode);
+    Observable<RequestResponse> setFollow(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode, @Header("Authorization") String authorization);
 
     /**
      * 上传坐标
@@ -468,11 +469,12 @@ public interface RequestService {
      * @param actioncode
      * @param submitCode
      * @param bazaCode
+     * @param authorization
      * @return
      */
     @FormUrlEncoded
     @POST(Url.SHOP_LIST)
-    Observable<ShopInfoByPersRequestResponse> getShopInfoByPers(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode);
+    Observable<ShopInfoByPersRequestResponse> getShopInfoByPers(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Header("Authorization") String authorization);
 
     /**
      * 设置商铺详细信息
@@ -687,10 +689,9 @@ public interface RequestService {
      * @param submitCode
      * @param pageIndex
      * @param pageSize
-     * @param authorization
      * @return
      */
     @FormUrlEncoded
     @POST(Url.EXPAND)
-    Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Header("Authorization") String authorization);
+    Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
 }

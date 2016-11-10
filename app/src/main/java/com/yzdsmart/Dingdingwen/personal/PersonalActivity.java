@@ -238,11 +238,11 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
             return;
         }
         if (SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", "").trim().length() > 0) {
-            mPresenter.getShopInfo(Constants.GET_SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", ""));
+            mPresenter.getShopInfo(Constants.GET_SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
             mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", ""));
             shopImagesBanner.startTurning(3000);
         } else {
-            mPresenter.getCustLevel(SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""), "000000", Constants.GET_CUST_LEVEL_ACTION_CODE);
+            mPresenter.getCustLevel(SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""), "000000", Constants.GET_CUST_LEVEL_ACTION_CODE, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
             mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""));
         }
     }

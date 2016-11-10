@@ -28,9 +28,9 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
     }
 
     @Override
-    public void getCustLevel(String code, String submitcode, String action) {
+    public void getCustLevel(String code, String submitcode, String action, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustLevel(code, submitcode, action, new RequestListener() {
+        mModel.getCustLevel(code, submitcode, action, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 CustLevelRequestResponse response = (CustLevelRequestResponse) result;
@@ -78,9 +78,9 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
     }
 
     @Override
-    public void getShopInfo(String actioncode, String submitCode, String bazaCode) {
+    public void getShopInfo(String actioncode, String submitCode, String bazaCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getShopInfo(actioncode, submitCode, bazaCode, new RequestListener() {
+        mModel.getShopInfo(actioncode, submitCode, bazaCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ShopInfoByPersRequestResponse requestResponse = (ShopInfoByPersRequestResponse) result;

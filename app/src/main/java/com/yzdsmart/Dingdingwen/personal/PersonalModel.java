@@ -30,7 +30,7 @@ public class PersonalModel {
      * @param code
      * @param submitcode
      */
-    void getCustLevel(String code, String submitcode, String action, final RequestListener listener) {
+    void getCustLevel(String code, String submitcode, String action, String authorization, final RequestListener listener) {
         getCustLevelSubscriber = new Subscriber<CustLevelRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -47,7 +47,7 @@ public class PersonalModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getCustLevel(code, submitcode, action)
+        RequestAdapter.getRequestService().getCustLevel(code, submitcode, action, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getCustLevelSubscriber);
@@ -76,7 +76,7 @@ public class PersonalModel {
                 .subscribe(getCustInfoSubscriber);
     }
 
-    void getShopInfo(String actioncode, String submitCode, String bazaCode, final RequestListener listener) {
+    void getShopInfo(String actioncode, String submitCode, String bazaCode, String authorization, final RequestListener listener) {
         getShopInfoSubscriber = new Subscriber<ShopInfoByPersRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -93,7 +93,7 @@ public class PersonalModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getShopInfoByPers(actioncode, submitCode, bazaCode)
+        RequestAdapter.getRequestService().getShopInfoByPers(actioncode, submitCode, bazaCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getShopInfoSubscriber);

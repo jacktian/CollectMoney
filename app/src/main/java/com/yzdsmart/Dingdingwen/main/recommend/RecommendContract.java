@@ -26,9 +26,8 @@ public interface RecommendContract {
          * @param submitCode
          * @param pageIndex
          * @param pageSize
-         * @param authorization
          */
-        void getExpandList(String submitCode, Integer pageIndex, Integer pageSize, String authorization);
+        void getExpandList(String submitCode, Integer pageIndex, Integer pageSize);
 
         void unRegisterSubscribe();
     }

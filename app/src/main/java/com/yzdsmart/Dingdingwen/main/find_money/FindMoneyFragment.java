@@ -248,6 +248,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             @Override
             public boolean onMarkerClick(Marker marker) {
                 if (coinsMarkerList.contains(marker)) {
+                    if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
+                        ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
+                        return true;
+                    }
                     if (null != marker.getSnippet()) {
                         String bazaCode = marker.getSnippet();
                         Bundle bundle = new Bundle();

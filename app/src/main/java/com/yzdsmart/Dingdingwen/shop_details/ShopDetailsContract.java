@@ -39,8 +39,9 @@ public interface ShopDetailsContract {
          *
          * @param submitCode
          * @param bazaCode
+         * @param authorization
          */
-        void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode);
+        void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode, String authorization);
 
         /**
          * 设置对店铺关注
@@ -50,7 +51,7 @@ public interface ShopDetailsContract {
          * @param custCode
          * @param bazaCode
          */
-        void setFollow(String action, String submitCode, String custCode, String bazaCode);
+        void setFollow(String action, String submitCode, String custCode, String bazaCode, String authorization);
 
         /**
          * 获取指定店铺的获取金币的用户信息

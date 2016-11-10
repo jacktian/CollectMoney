@@ -33,7 +33,7 @@ public interface FriendListContract {
          * @param currentStandardSequence
          * @param pageSize
          */
-        void getFriendsList(String submitCode, String custCode, Long timeStampNow, Integer startIndex, Integer currentStandardSequence, Integer pageSize);
+        void getFriendsList(String submitCode, String custCode, Long timeStampNow, Integer startIndex, Integer currentStandardSequence, Integer pageSize, String authorization);
 
         void unRegisterSubscribe();
     }

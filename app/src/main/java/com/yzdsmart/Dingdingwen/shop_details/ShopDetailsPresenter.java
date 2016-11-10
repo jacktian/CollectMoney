@@ -27,9 +27,9 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
     }
 
     @Override
-    public void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode) {
+    public void getShopInfo(String actioncode, String submitCode, String bazaCode, String custCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getShopInfo(actioncode, submitCode, bazaCode, custCode, new RequestListener() {
+        mModel.getShopInfo(actioncode, submitCode, bazaCode, custCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ShopInfoRequestResponse shopInfo = (ShopInfoRequestResponse) result;
@@ -52,9 +52,9 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
     }
 
     @Override
-    public void setFollow(final String action, String submitCode, String custCode, String bazaCode) {
+    public void setFollow(final String action, String submitCode, String custCode, String bazaCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.setFollow(action, submitCode, custCode, bazaCode, new RequestListener() {
+        mModel.setFollow(action, submitCode, custCode, bazaCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RequestResponse response = (RequestResponse) result;

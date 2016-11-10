@@ -72,7 +72,7 @@ public class EditShopInfoActivity extends BaseActivity implements EditShopInfoCo
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getShopInfo(Constants.GET_SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
+        mPresenter.getShopInfo(Constants.GET_SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override

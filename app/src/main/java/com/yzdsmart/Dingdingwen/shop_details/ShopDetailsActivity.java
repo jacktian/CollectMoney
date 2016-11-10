@@ -97,9 +97,6 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
 
-    private static final String SET_FOCUS_CODE = "66";//取消关注：56    关注：66
-    private static final String CANCEL_FOCUS_CODE = "56";
-
     private LinearLayoutManager mLinearLayoutManager;
     private Paint dividerPaint;
     private List<ShopScanner> shopScannerList;
@@ -168,7 +165,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
+        mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
         mPresenter.getShopFollowers(Constants.GET_SHOP_FOLLOWERS_ACTION_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
     }
 
@@ -181,7 +178,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (Constants.REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
-            mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
+            mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
             MainActivity.getInstance().chatLogin();
         }
     }
@@ -202,7 +199,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.setFollow(isAtte ? CANCEL_FOCUS_CODE : SET_FOCUS_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), bazaCode);
+                mPresenter.setFollow(isAtte ? Constants.CANCEL_FOCUS_CODE : Constants.SET_FOCUS_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), bazaCode, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case R.id.title_right_operation_layout:
                 if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
@@ -318,13 +315,13 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
             showSnackbar(msg);
             return;
         }
-        isAtte = CANCEL_FOCUS_CODE.equals(action) ? false : true;
+        isAtte = Constants.CANCEL_FOCUS_CODE.equals(action) ? false : true;
         isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.shop_detail_focused) : getResources().getDrawable(R.mipmap.shop_detail_not_focus));
         if (!Utils.isNetUsable(this)) {
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""));
+        mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override

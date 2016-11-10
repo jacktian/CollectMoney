@@ -17,7 +17,7 @@ public class RecommendModel {
     //网络请求监听
     private Subscriber<List<ExpandListRequestResponse>> getExpandListSubscriber;
 
-    void getExpandList(String submitCode, Integer pageIndex, Integer pageSize,String authorization, final RequestListener listener) {
+    void getExpandList(String submitCode, Integer pageIndex, Integer pageSize, final RequestListener listener) {
         getExpandListSubscriber = new Subscriber<List<ExpandListRequestResponse>>() {
             @Override
             public void onCompleted() {
@@ -34,7 +34,7 @@ public class RecommendModel {
                 listener.onSuccess(expands);
             }
         };
-        RequestAdapter.getRequestService().getExpandList(submitCode, pageIndex, pageSize,authorization)
+        RequestAdapter.getRequestService().getExpandList(submitCode, pageIndex, pageSize)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getExpandListSubscriber);

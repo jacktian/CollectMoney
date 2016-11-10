@@ -140,7 +140,7 @@ public interface ChatContract {
          * @param submitcode
          * @param action
          */
-        void getCustCode(String code, String submitcode, String action);
+        void getCustCode(String code, String submitcode, String action, String authorization);
 
         void unRegisterObserver();
     }

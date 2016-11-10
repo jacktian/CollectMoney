@@ -15,7 +15,7 @@ public class FriendListModel {
     //网络请求监听
     private Subscriber<FriendsRequestResponse> getFriendsListSubscriber;
 
-    void getFriendsList(String submitCode, String custCode, Long timeStampNow, Integer startIndex, Integer currentStandardSequence, Integer pageSize, final RequestListener listener) {
+    void getFriendsList(String submitCode, String custCode, Long timeStampNow, Integer startIndex, Integer currentStandardSequence, Integer pageSize, String authorization, final RequestListener listener) {
         getFriendsListSubscriber = new Subscriber<FriendsRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -32,7 +32,7 @@ public class FriendListModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getFriendsList(submitCode, custCode, timeStampNow, startIndex, currentStandardSequence, pageSize)
+        RequestAdapter.getRequestService().getFriendsList(submitCode, custCode, timeStampNow, startIndex, currentStandardSequence, pageSize, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getFriendsListSubscriber);
