@@ -27,9 +27,9 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
     }
 
     @Override
-    public void getPersonalGalley(String action, String submitCode, String custCode) {
+    public void getPersonalGalley(String action, String submitCode, String custCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getPersonalGalley(action, submitCode, custCode, new RequestListener() {
+        mModel.getPersonalGalley(action, submitCode, custCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 GetGalleyRequestResponse requestResponse = (GetGalleyRequestResponse) result;
@@ -56,9 +56,9 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
     }
 
     @Override
-    public void deletePersonalGalley(String action, String submitCode, String custCode, List<Integer> fileIdList) {
+    public void deletePersonalGalley(String action, String submitCode, String custCode, List<Integer> fileIdList, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.deleting));
-        mModel.deletePersonalGalley(action, submitCode, custCode, fileIdList, new RequestListener() {
+        mModel.deletePersonalGalley(action, submitCode, custCode, fileIdList, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ((BaseActivity) context).hideProgressDialog();
@@ -85,9 +85,9 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
     }
 
     @Override
-    public void getShopGalley(String action, String submitCode, String bazaCode) {
+    public void getShopGalley(String action, String submitCode, String bazaCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getShopGalley(action, submitCode, bazaCode, new RequestListener() {
+        mModel.getShopGalley(action, submitCode, bazaCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 GetGalleyRequestResponse requestResponse = (GetGalleyRequestResponse) result;
@@ -114,9 +114,9 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
     }
 
     @Override
-    public void deleteShopGalley(String action, String submitCode, String bazaCode, List<Integer> fileIdList) {
+    public void deleteShopGalley(String action, String submitCode, String bazaCode, List<Integer> fileIdList, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.deleting));
-        mModel.deleteShopGalley(action, submitCode, bazaCode, fileIdList, new RequestListener() {
+        mModel.deleteShopGalley(action, submitCode, bazaCode, fileIdList, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ((BaseActivity) context).hideProgressDialog();
@@ -144,9 +144,9 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
     }
 
     @Override
-    public void uploadGalley(String action, String fileName, String fileData, String custCode) {
+    public void uploadGalley(String action, String fileName, String fileData, String custCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.uploading));
-        mModel.uploadGalley(action, fileName, fileData, custCode, new RequestListener() {
+        mModel.uploadGalley(action, fileName, fileData, custCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
             }
@@ -166,9 +166,9 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
     }
 
     @Override
-    public void uploadShopImage(String action, String fileName, String fileData, String bazaCode) {
+    public void uploadShopImage(String action, String fileName, String fileData, String bazaCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.uploading));
-        mModel.uploadShopImage(action, fileName, fileData, bazaCode, new RequestListener() {
+        mModel.uploadShopImage(action, fileName, fileData, bazaCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
             }

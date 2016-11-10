@@ -50,9 +50,9 @@ public class EditShopInfoPresenter implements EditShopInfoContract.EditShopInfoP
     }
 
     @Override
-    public void setShopInfos(final Integer editItem, String submitCode, String bazaCode, String bazaName, String bazaPers, String bazaTel, String bazaAddr, String remark, String coor) {
+    public void setShopInfos(final Integer editItem, String submitCode, String bazaCode, String bazaName, String bazaPers, String bazaTel, String bazaAddr, String remark, String coor, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.setting));
-        mModel.setShopInfos(submitCode, bazaCode, bazaName, bazaPers, bazaTel, bazaAddr, remark, coor, new RequestListener() {
+        mModel.setShopInfos(submitCode, bazaCode, bazaName, bazaPers, bazaTel, bazaAddr, remark, coor, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RequestResponse requestResponse = (RequestResponse) result;

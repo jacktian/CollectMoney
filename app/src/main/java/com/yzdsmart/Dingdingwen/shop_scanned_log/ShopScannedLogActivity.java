@@ -109,7 +109,7 @@ public class ShopScannedLogActivity extends BaseActivity implements ShopScannedL
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getScannedLog(Constants.GET_SCANNED_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+        mPresenter.getScannedLog(Constants.GET_SCANNED_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override

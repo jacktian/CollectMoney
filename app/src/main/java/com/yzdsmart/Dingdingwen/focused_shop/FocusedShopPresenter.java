@@ -24,9 +24,9 @@ public class FocusedShopPresenter implements FocusedShopContract.FocusedShopPres
     }
 
     @Override
-    public void getFocusedShopList(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize) {
+    public void getFocusedShopList(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getFocusedShopList(action, submitCode, custCode, pageIndex, pageSize, new RequestListener() {
+        mModel.getFocusedShopList(action, submitCode, custCode, pageIndex, pageSize, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 FocusedShopRequestResponse requestResponse = (FocusedShopRequestResponse) result;

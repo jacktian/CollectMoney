@@ -31,7 +31,7 @@ public interface ScanCoinsLogContract {
          * @param pageSize
          * @param lastsequence
          */
-        void getCoinsLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize, Integer lastsequence);
+        void getCoinsLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization);
 
         void unRegisterSubscribe();
     }

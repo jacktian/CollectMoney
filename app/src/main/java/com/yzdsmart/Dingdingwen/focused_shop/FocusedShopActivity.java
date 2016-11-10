@@ -94,7 +94,7 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getFocusedShopList(Constants.GET_FOCUSED_SHOP_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE);
+        mPresenter.getFocusedShopList(Constants.GET_FOCUSED_SHOP_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override

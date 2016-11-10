@@ -18,7 +18,6 @@ import com.tencent.tauth.UiError;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
-import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.register_login.verify_phone.VerifyPhoneActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -189,7 +188,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.userLogin(userNameET.getText().toString(), userPasswordET.getText().toString(), "");
+                mPresenter.userLogin(userNameET.getText().toString(), userPasswordET.getText().toString(), "", SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case R.id.platform_wechat:
                 regToWx();
@@ -246,7 +245,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         } else {
             return;
         }
-        MainActivity.getInstance().getRefreshToken();
         setResult(RESULT_OK);
         closeActivity();
     }

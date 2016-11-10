@@ -25,7 +25,7 @@ public interface FocusedShopContract {
          * @param pageIndex
          * @param pageSize
          */
-        void getFocusedShopList(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize);
+        void getFocusedShopList(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize, String authorization);
 
         void unRegisterSubscribe();
     }

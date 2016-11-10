@@ -14,6 +14,7 @@ import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.register_login.set_info.SetInfoActivity;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.List;
@@ -93,7 +94,7 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.userLogin(userName, userPwdET.getText().toString(), "");
+                mPresenter.userLogin(userName, userPwdET.getText().toString(), "", SharedPreferencesUtils.getString(SetPasswordActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(SetPasswordActivity.this, "ddw_access_token", ""));
             }
         };
     }

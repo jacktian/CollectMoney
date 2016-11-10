@@ -23,9 +23,9 @@ public class ScanCoinsLogPresenter implements ScanCoinsLogContract.ScanCoinsLogP
     }
 
     @Override
-    public void getCoinsLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize, Integer lastsequence) {
+    public void getCoinsLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCoinsLog(action, submitCode, custCode, pageIndex, pageSize, lastsequence, new RequestListener() {
+        mModel.getCoinsLog(action, submitCode, custCode, pageIndex, pageSize, lastsequence, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 GetCoinsLogRequestResponse response = (GetCoinsLogRequestResponse) result;

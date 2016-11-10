@@ -132,23 +132,23 @@ public class EditShopInfoActivity extends BaseActivity implements EditShopInfoCo
                 }
                 switch (editItem) {
                     case 0://商铺名称
-                        mPresenter.setShopInfos(editItem, "000000", SharedPreferencesUtils.getString(EditShopInfoActivity.this, "baza_code", ""), editInfoContent.getText().toString(), null, null, null, null, null);
+                        mPresenter.setShopInfos(editItem, "000000", SharedPreferencesUtils.getString(EditShopInfoActivity.this, "baza_code", ""), editInfoContent.getText().toString(), null, null, null, null, null, SharedPreferencesUtils.getString(EditShopInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditShopInfoActivity.this, "ddw_access_token", ""));
                         break;
                     case 1://联系人
-                        mPresenter.setShopInfos(editItem, "000000", SharedPreferencesUtils.getString(EditShopInfoActivity.this, "baza_code", ""), null, editInfoContent.getText().toString(), null, null, null, null);
+                        mPresenter.setShopInfos(editItem, "000000", SharedPreferencesUtils.getString(EditShopInfoActivity.this, "baza_code", ""), null, editInfoContent.getText().toString(), null, null, null, null, SharedPreferencesUtils.getString(EditShopInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditShopInfoActivity.this, "ddw_access_token", ""));
                         break;
                     case 2://联系电话
                         if (!Utils.checkMobile(editInfoContent.getText().toString())) {
                             editInfoContent.setError("请输入正确的电话号码");
                             return;
                         }
-                        mPresenter.setShopInfos(editItem, "000000", SharedPreferencesUtils.getString(EditShopInfoActivity.this, "baza_code", ""), null, null, editInfoContent.getText().toString(), null, null, null);
+                        mPresenter.setShopInfos(editItem, "000000", SharedPreferencesUtils.getString(EditShopInfoActivity.this, "baza_code", ""), null, null, editInfoContent.getText().toString(), null, null, null, SharedPreferencesUtils.getString(EditShopInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditShopInfoActivity.this, "ddw_access_token", ""));
                         break;
                     case 3://商铺地址
-                        mPresenter.setShopInfos(editItem, "000000", SharedPreferencesUtils.getString(EditShopInfoActivity.this, "baza_code", ""), null, null, null, editInfoContent.getText().toString(), null, SharedPreferencesUtils.getString(EditShopInfoActivity.this, "qLocation", ""));
+                        mPresenter.setShopInfos(editItem, "000000", SharedPreferencesUtils.getString(EditShopInfoActivity.this, "baza_code", ""), null, null, null, editInfoContent.getText().toString(), null, SharedPreferencesUtils.getString(EditShopInfoActivity.this, "qLocation", ""), SharedPreferencesUtils.getString(EditShopInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditShopInfoActivity.this, "ddw_access_token", ""));
                         break;
                     case 4://备注
-                        mPresenter.setShopInfos(editItem, "000000", SharedPreferencesUtils.getString(EditShopInfoActivity.this, "baza_code", ""), null, null, null, null, editInfoContent.getText().toString(), null);
+                        mPresenter.setShopInfos(editItem, "000000", SharedPreferencesUtils.getString(EditShopInfoActivity.this, "baza_code", ""), null, null, null, null, editInfoContent.getText().toString(), null, SharedPreferencesUtils.getString(EditShopInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditShopInfoActivity.this, "ddw_access_token", ""));
                         break;
 
                 }

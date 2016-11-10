@@ -26,9 +26,9 @@ public class EditPersonalInfoPresenter implements EditPersonalInfoContract.EditP
     }
 
     @Override
-    public void getCustInfo(String submitcode, String custCode) {
+    public void getCustInfo(String submitcode, String custCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustInfo(submitcode, custCode, new RequestListener() {
+        mModel.getCustInfo(submitcode, custCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 CustInfoRequestResponse requestResponse = (CustInfoRequestResponse) result;
@@ -51,9 +51,9 @@ public class EditPersonalInfoPresenter implements EditPersonalInfoContract.EditP
     }
 
     @Override
-    public void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode) {
+    public void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustDetailInfo(actioncode, submitCode, custCode, selfCustCode, new RequestListener() {
+        mModel.getCustDetailInfo(actioncode, submitCode, custCode, selfCustCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 CustDetailInfoRequestResponse response = (CustDetailInfoRequestResponse) result;
@@ -76,9 +76,9 @@ public class EditPersonalInfoPresenter implements EditPersonalInfoContract.EditP
     }
 
     @Override
-    public void setCustDetailInfo(final Integer editItem, String submitCode, String custCode, String cName, String cNickName, String cSex, String cBirthday, String cTel, String cIdNo, String cNation, Double cHeight, Double cWeight, String cProfession, String cAddress, String cProv, String cCity, String cDist, String cCountry, String cRemark) {
+    public void setCustDetailInfo(final Integer editItem, String submitCode, String custCode, String cName, String cNickName, String cSex, String cBirthday, String cTel, String cIdNo, String cNation, Double cHeight, Double cWeight, String cProfession, String cAddress, String cProv, String cCity, String cDist, String cCountry, String cRemark, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.setting));
-        mModel.setCustDetailInfo(submitCode, custCode, cName, cNickName, cSex, cBirthday, cTel, cIdNo, cNation, cHeight, cWeight, cProfession, cAddress, cProv, cCity, cDist, cCountry, cRemark, new RequestListener() {
+        mModel.setCustDetailInfo(submitCode, custCode, cName, cNickName, cSex, cBirthday, cTel, cIdNo, cNation, cHeight, cWeight, cProfession, cAddress, cProv, cCity, cDist, cCountry, cRemark, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RequestResponse requestResponse = (RequestResponse) result;

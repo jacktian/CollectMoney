@@ -70,8 +70,8 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
     }
 
     @Override
-    public void uploadCoor(String submitCode, String custCode, String coor) {
-        mModel.uploadCoor(submitCode, custCode, coor, new RequestListener() {
+    public void uploadCoor(String submitCode, String custCode, String coor, String authorization) {
+        mModel.uploadCoor(submitCode, custCode, coor, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
 
@@ -90,8 +90,8 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
     }
 
     @Override
-    public void getPersonNearby(String submitCode, String custCode, String coor, Integer pageIndex, Integer pageSize) {
-        mModel.getPersonNearby(submitCode, custCode, coor, pageIndex, pageSize, new RequestListener() {
+    public void getPersonNearby(String submitCode, String custCode, String coor, Integer pageIndex, Integer pageSize, String authorization) {
+        mModel.getPersonNearby(submitCode, custCode, coor, pageIndex, pageSize, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
 

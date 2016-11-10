@@ -79,9 +79,9 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
     }
 
     @Override
-    public void getShopFollowers(String action, String submitCode, String bazaCode, String custCode, Integer pageIndex, Integer pageSize) {
+    public void getShopFollowers(String action, String submitCode, String bazaCode, String custCode, Integer pageIndex, Integer pageSize, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getShopFollowers(action, submitCode, bazaCode, custCode, pageIndex, pageSize, new RequestListener() {
+        mModel.getShopFollowers(action, submitCode, bazaCode, custCode, pageIndex, pageSize, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 List<ShopScanner> shopScanners = (List<ShopScanner>) result;

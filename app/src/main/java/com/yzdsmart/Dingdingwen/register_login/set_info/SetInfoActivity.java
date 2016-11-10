@@ -14,6 +14,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomNestRadioGroup;
 import com.yzdsmart.Dingdingwen.views.time_picker.TimePickerDialog;
@@ -97,7 +98,7 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.userLogin(userName, password, "");
+                mPresenter.userLogin(userName, password, "", SharedPreferencesUtils.getString(SetInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(SetInfoActivity.this, "ddw_access_token", ""));
             }
         };
     }

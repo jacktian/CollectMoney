@@ -47,7 +47,7 @@ public interface EditShopInfoContract {
          * @param remark
          * @param coor
          */
-        void setShopInfos(Integer editItem, String submitCode, String bazaCode, String bazaName, String bazaPers, String bazaTel, String bazaAddr, String remark, String coor);
+        void setShopInfos(Integer editItem, String submitCode, String bazaCode, String bazaName, String bazaPers, String bazaTel, String bazaAddr, String remark, String coor, String authorization);
 
         void unRegisterSubscribe();
     }

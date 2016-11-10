@@ -25,9 +25,9 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
     }
 
     @Override
-    public void buyCoins(String action, String submitCode, String bazaCode, Integer goldNum) {
+    public void buyCoins(String action, String submitCode, String bazaCode, Integer goldNum, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.buyCoins(action, submitCode, bazaCode, goldNum, new RequestListener() {
+        mModel.buyCoins(action, submitCode, bazaCode, goldNum, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ((BaseActivity) context).hideProgressDialog();
@@ -52,9 +52,9 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
     }
 
     @Override
-    public void buyCoinsPay(String payPara) {
+    public void buyCoinsPay(String payPara,String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.buyCoinsPay(payPara, new RequestListener() {
+        mModel.buyCoinsPay(payPara,authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 BuyCoinsPayRequestResponse requestResponse = (BuyCoinsPayRequestResponse) result;
@@ -79,9 +79,9 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
     }
 
     @Override
-    public void buyCoinsLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence) {
+    public void buyCoinsLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.buyCoinsLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, new RequestListener() {
+        mModel.buyCoinsLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 BuyCoinsLogRequestResponse response = (BuyCoinsLogRequestResponse) result;

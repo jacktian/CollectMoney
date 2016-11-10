@@ -24,9 +24,9 @@ public class RecommendFriendsPresenter implements RecommendFriendsContract.Recom
     }
 
     @Override
-    public void getRecommendFriends(String action, String submitCode, String custCode, Integer recomNum) {
+    public void getRecommendFriends(String action, String submitCode, String custCode, Integer recomNum, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getRecommendFriends(action, submitCode, custCode, recomNum, new RequestListener() {
+        mModel.getRecommendFriends(action, submitCode, custCode, recomNum, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RecommendFriendsRequestResponse requestResponse = (RecommendFriendsRequestResponse) result;

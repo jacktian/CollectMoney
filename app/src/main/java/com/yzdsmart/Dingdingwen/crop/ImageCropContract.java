@@ -12,7 +12,7 @@ public class ImageCropContract {
     }
 
     interface ImageCropPresenter extends BasePresenter {
-        void uploadPortrait(String action, String fileName, String fileData, String tcAccount);
+        void uploadPortrait(String action, String fileName, String fileData, String tcAccount, String authorization);
 
         void setFaceUrl(String faceUrl);
 

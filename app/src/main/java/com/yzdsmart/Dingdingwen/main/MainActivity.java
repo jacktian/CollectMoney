@@ -145,6 +145,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 //            }
 //        };
 
+        getRefreshToken();
         refreshAccessToken();
     }
 
@@ -387,30 +388,32 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 
     @Override
     public void getRefreshToken() {
-        mPresenter.getRefreshToken("password", SharedPreferencesUtils.getString(this, "cust_code", "").replace("-", ""), SharedPreferencesUtils.getString(this, "password", ""));
+        if (!Utils.isNetUsable(MainActivity.this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
+        mPresenter.getRefreshToken("password", "182c79dbf8871689878b0de620006ea3", "7ed99e89c4831f169627b5d20a0020f7c1a9b026244e6364ac1c12a9fa2314fe");
     }
 
     @Override
     public void refreshAccessToken() {
-        if (null != SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "") && SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "").trim().length() > 0) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (!stopRefreshAccessToken) {
-                        try {
-                            if (isFirstRefreshAccessToken) {
-                                isFirstRefreshAccessToken = false;
-                            } else {
-                                Thread.sleep(3600000);
-                            }
-                            mRefreshAccessTokenHandler.sendEmptyMessage(0);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!stopRefreshAccessToken) {
+                    try {
+                        if (isFirstRefreshAccessToken) {
+                            isFirstRefreshAccessToken = false;
+                        } else {
+                            Thread.sleep(3600000);
                         }
+                        mRefreshAccessTokenHandler.sendEmptyMessage(0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
-            }).start();
-        }
+            }
+        }).start();
     }
 
     @Override

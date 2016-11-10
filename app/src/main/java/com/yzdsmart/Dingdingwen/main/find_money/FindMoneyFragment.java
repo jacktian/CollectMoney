@@ -547,7 +547,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                         ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
                         return;
                     }
-                    mPresenter.uploadCoor("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), qLocation);
+                    mPresenter.uploadCoor("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), qLocation, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
                     uploadCoorCounts = 0;
                 } else {
                     if (!isFirstLoc) {

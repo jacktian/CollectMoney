@@ -24,7 +24,7 @@ public interface RegisterBusinessContract {
          * @param remark
          * @param coor
          */
-        void registerBusiness(String submitCode, String custCode, String bazaName, String bazaPers, String bazaTel, String bazaAddr, String remark, String coor);
+        void registerBusiness(String submitCode, String custCode, String bazaName, String bazaPers, String bazaTel, String bazaAddr, String remark, String coor, String authorization);
 
         void unRegisterSubscribe();
     }

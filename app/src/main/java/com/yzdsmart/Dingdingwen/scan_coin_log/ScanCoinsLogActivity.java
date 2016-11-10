@@ -122,7 +122,7 @@ public class ScanCoinsLogActivity extends BaseActivity implements ScanCoinsLogCo
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getCoinsLog(Constants.GET_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+        mPresenter.getCoinsLog(Constants.GET_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override

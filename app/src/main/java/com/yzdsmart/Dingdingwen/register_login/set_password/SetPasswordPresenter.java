@@ -53,9 +53,9 @@ public class SetPasswordPresenter implements SetPasswordContract.SetPasswordPres
     }
 
     @Override
-    public void userLogin(String userName, final String password, String loginCode) {
+    public void userLogin(String userName, String password, String loginCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loginning));
-        mModel.userLogin(userName, password, loginCode, new RequestListener() {
+        mModel.userLogin(userName, password, loginCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 LoginRequestResponse response = (LoginRequestResponse) result;
@@ -63,7 +63,6 @@ public class SetPasswordPresenter implements SetPasswordContract.SetPasswordPres
                     SharedPreferencesUtils.clear(context, PreferenceManager.getDefaultSharedPreferences(context));
                     SharedPreferencesUtils.setString(context, "baza_code", response.getBazaCode());
                     SharedPreferencesUtils.setString(context, "cust_code", response.getCustCode());
-                    SharedPreferencesUtils.setString(context, "password", password);
                     SharedPreferencesUtils.setString(context, "im_account", response.getTCInfo().getTCAccount());
                     SharedPreferencesUtils.setString(context, "im_password", response.getTCInfo().getTCPassword());
                     mView.onUserLogin(true, response.getErrorInfo());

@@ -100,10 +100,10 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
                 }
                 switch (userType) {
                     case 0:
-                        mPresenter.getPersonalWithdrawLog(Constants.PERSONAL_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                        mPresenter.getPersonalWithdrawLog(Constants.PERSONAL_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(WithDrawLogActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(WithDrawLogActivity.this, "ddw_access_token", ""));
                         break;
                     case 1:
-                        mPresenter.getShopWithdrawLog(Constants.SHOP_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                        mPresenter.getShopWithdrawLog(Constants.SHOP_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(WithDrawLogActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(WithDrawLogActivity.this, "ddw_access_token", ""));
                         break;
                 }
             }
@@ -122,11 +122,11 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
                 switch (userType) {
                     case 0:
                         withDrawLogAdapter.clearPersonalList();
-                        mPresenter.getPersonalWithdrawLog(Constants.PERSONAL_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                        mPresenter.getPersonalWithdrawLog(Constants.PERSONAL_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(WithDrawLogActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(WithDrawLogActivity.this, "ddw_access_token", ""));
                         break;
                     case 1:
                         withDrawLogAdapter.clearShopList();
-                        mPresenter.getShopWithdrawLog(Constants.SHOP_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                        mPresenter.getShopWithdrawLog(Constants.SHOP_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawLogActivity.this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(WithDrawLogActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(WithDrawLogActivity.this, "ddw_access_token", ""));
                         break;
                 }
             }
@@ -138,10 +138,10 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
         }
         switch (userType) {
             case 0:
-                mPresenter.getPersonalWithdrawLog(Constants.PERSONAL_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                mPresenter.getPersonalWithdrawLog(Constants.PERSONAL_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case 1:
-                mPresenter.getShopWithdrawLog(Constants.SHOP_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+                mPresenter.getShopWithdrawLog(Constants.SHOP_WITHDRAW_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
         }
     }

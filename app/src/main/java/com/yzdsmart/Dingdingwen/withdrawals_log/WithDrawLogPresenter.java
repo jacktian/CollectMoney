@@ -25,9 +25,9 @@ public class WithDrawLogPresenter implements WithDrawLogContract.WithDrawLogPres
     }
 
     @Override
-    public void getPersonalWithdrawLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize, Integer lastsequence) {
+    public void getPersonalWithdrawLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getPersonalWithdrawLog(action, submitCode, custCode, pageIndex, pageSize, lastsequence, new RequestListener() {
+        mModel.getPersonalWithdrawLog(action, submitCode, custCode, pageIndex, pageSize, lastsequence, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 PersonalWithdrawLogRequestResponse requestResponse = (PersonalWithdrawLogRequestResponse) result;
@@ -52,9 +52,9 @@ public class WithDrawLogPresenter implements WithDrawLogContract.WithDrawLogPres
     }
 
     @Override
-    public void getShopWithdrawLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence) {
+    public void getShopWithdrawLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getShopWithdrawLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, new RequestListener() {
+        mModel.getShopWithdrawLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ShopWithdrawLogRequestResponse requestResponse = (ShopWithdrawLogRequestResponse) result;

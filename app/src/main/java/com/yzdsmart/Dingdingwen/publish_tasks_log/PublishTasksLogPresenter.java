@@ -24,9 +24,9 @@ public class PublishTasksLogPresenter implements PublishTasksLogContract.Publish
     }
 
     @Override
-    public void getLeftCoins(String action, String submitCode, String bazaCode) {
+    public void getLeftCoins(String action, String submitCode, String bazaCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getLeftCoins(action, submitCode, bazaCode, new RequestListener() {
+        mModel.getLeftCoins(action, submitCode, bazaCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 GetCoinRequestResponse requestResponse = (GetCoinRequestResponse) result;
@@ -51,9 +51,9 @@ public class PublishTasksLogPresenter implements PublishTasksLogContract.Publish
     }
 
     @Override
-    public void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence) {
+    public void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.publishTaskLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, new RequestListener() {
+        mModel.publishTaskLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 PublishTaskLogRequestResponse response = (PublishTaskLogRequestResponse) result;

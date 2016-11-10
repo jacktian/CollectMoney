@@ -195,7 +195,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
             mQRCodeView.startSpot();
             return;
         }
-        mPresenter.getCoins(Constants.GET_COIN_ACTION_CODE, result, Utils.getLocalIpAddress());
+        mPresenter.getCoins(Constants.GET_COIN_ACTION_CODE, result, Utils.getLocalIpAddress(), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override

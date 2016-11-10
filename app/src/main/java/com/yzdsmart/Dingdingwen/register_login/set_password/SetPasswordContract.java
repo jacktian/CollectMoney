@@ -42,7 +42,7 @@ public interface SetPasswordContract {
          * @param password
          * @param loginCode
          */
-        void userLogin(String userName, String password, String loginCode);
+        void userLogin(String userName, String password, String loginCode, String authorization);
 
         void unRegisterSubscribe();
     }

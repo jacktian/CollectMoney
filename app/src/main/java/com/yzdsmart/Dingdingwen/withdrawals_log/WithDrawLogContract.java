@@ -41,7 +41,7 @@ public interface WithDrawLogContract {
          * @param pageSize
          * @param lastsequence
          */
-        void getPersonalWithdrawLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize, Integer lastsequence);
+        void getPersonalWithdrawLog(String action, String submitCode, String custCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization);
 
         /**
          * 商铺提现日志
@@ -53,7 +53,7 @@ public interface WithDrawLogContract {
          * @param pageSize
          * @param lastsequence
          */
-        void getShopWithdrawLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence);
+        void getShopWithdrawLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization);
 
         void unRegisterSubscribe();
     }

@@ -85,10 +85,10 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
             Bundle bundle = msg.getData();
             switch (identityType) {
                 case 0:
-                    mPresenter.uploadGalley(Constants.PERSONAL_GALLEY_UPLOAD_ACTION_CODE, SharedPreferencesUtils.getString(GalleyActivity.this, "cust_code", "") + bundle.getInt("index") + ".png", bundle.getString("image"), SharedPreferencesUtils.getString(GalleyActivity.this, "cust_code", ""));
+                    mPresenter.uploadGalley(Constants.PERSONAL_GALLEY_UPLOAD_ACTION_CODE, SharedPreferencesUtils.getString(GalleyActivity.this, "cust_code", "") + bundle.getInt("index") + ".png", bundle.getString("image"), SharedPreferencesUtils.getString(GalleyActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(GalleyActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(GalleyActivity.this, "ddw_access_token", ""));
                     break;
                 case 1:
-                    mPresenter.uploadShopImage(Constants.SHOP_GALLEY_UPLOAD_ACTION_CODE, SharedPreferencesUtils.getString(GalleyActivity.this, "baza_code", "") + bundle.getInt("index") + ".png", bundle.getString("image"), SharedPreferencesUtils.getString(GalleyActivity.this, "baza_code", ""));
+                    mPresenter.uploadShopImage(Constants.SHOP_GALLEY_UPLOAD_ACTION_CODE, SharedPreferencesUtils.getString(GalleyActivity.this, "baza_code", "") + bundle.getInt("index") + ".png", bundle.getString("image"), SharedPreferencesUtils.getString(GalleyActivity.this, "baza_code", ""), SharedPreferencesUtils.getString(GalleyActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(GalleyActivity.this, "ddw_access_token", ""));
                     break;
             }
         }
@@ -149,10 +149,10 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
         if (Utils.isNetUsable(this)) {
             switch (identityType) {
                 case 0:
-                    mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", custCode);
+                    mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", custCode, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                     break;
                 case 1:
-                    mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", custCode);
+                    mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", custCode, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                     break;
             }
         } else {
@@ -167,7 +167,7 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyActivity.this, "cust_code", ""));
+                mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(GalleyActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(GalleyActivity.this, "ddw_access_token", ""));
             }
         };
 
@@ -179,7 +179,7 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyActivity.this, "baza_code", ""));
+                mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyActivity.this, "baza_code", ""), SharedPreferencesUtils.getString(GalleyActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(GalleyActivity.this, "ddw_access_token", ""));
             }
         };
 
@@ -215,13 +215,13 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
                 showSnackbar(getResources().getString(R.string.net_unusable));
                 return;
             }
-            mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
+            mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
         } else if (Constants.SHOP_GALLEY_OPERATION_CODE == requestCode && RESULT_OK == resultCode) {
             if (!Utils.isNetUsable(this)) {
                 showSnackbar(getResources().getString(R.string.net_unusable));
                 return;
             }
-            mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
+            mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
         } else if (Constants.REQUEST_CODE_CHOOSE_PHOTO == requestCode && RESULT_OK == resultCode) {
             ArrayList<String> imageUrls = BGAPhotoPickerActivity.getSelectedImages(data);
             for (int i = 0; i < imageUrls.size(); i++) {
@@ -277,14 +277,14 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
                             showSnackbar(getResources().getString(R.string.net_unusable));
                             return;
                         }
-                        mPresenter.deletePersonalGalley(Constants.PERSONAL_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), deleteFileIdList);
+                        mPresenter.deletePersonalGalley(Constants.PERSONAL_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), deleteFileIdList, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                         break;
                     case 1:
                         if (!Utils.isNetUsable(this)) {
                             showSnackbar(getResources().getString(R.string.net_unusable));
                             return;
                         }
-                        mPresenter.deleteShopGalley(Constants.SHOP_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), deleteFileIdList);
+                        mPresenter.deleteShopGalley(Constants.SHOP_GALLEY_DELETE_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), deleteFileIdList, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                         break;
                 }
                 mPhotosSnpl.setDeleteDrawableResId(0);
@@ -394,10 +394,10 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
         }
         switch (identityType) {
             case 0:
-                mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", custCode);
+                mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", custCode, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case 1:
-                mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyActivity.this, "baza_code", ""));
+                mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(GalleyActivity.this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
         }
     }

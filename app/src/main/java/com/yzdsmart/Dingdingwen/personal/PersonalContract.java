@@ -67,7 +67,7 @@ public interface PersonalContract {
          * @param submitcode
          * @param custCode
          */
-        void getCustInfo(String submitcode, String custCode);
+        void getCustInfo(String submitcode, String custCode, String authorization);
 
         /**
          * 商家获取商铺详情
@@ -84,7 +84,7 @@ public interface PersonalContract {
          * @param submitCode
          * @param bazaCode
          */
-        void getShopGalley(String action, String submitCode, String bazaCode);
+        void getShopGalley(String action, String submitCode, String bazaCode, String authorization);
 
         /**
          * 上传商铺相册
@@ -94,7 +94,7 @@ public interface PersonalContract {
          * @param fileData
          * @param bazaCode
          */
-        void uploadShopAvater(String action, String fileName, String fileData, String bazaCode);
+        void uploadShopAvater(String action, String fileName, String fileData, String bazaCode, String authorization);
 
         void unRegisterSubscribe();
     }

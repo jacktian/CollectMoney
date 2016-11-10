@@ -29,7 +29,7 @@ public interface RecommendFriendsContract {
          * @param custCode
          * @param recomNum
          */
-        void getRecommendFriends(String action, String submitCode, String custCode, Integer recomNum);
+        void getRecommendFriends(String action, String submitCode, String custCode, Integer recomNum, String authorization);
 
         void unRegisterSubscribe();
     }

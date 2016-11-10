@@ -30,7 +30,7 @@ public class PersonalFriendDetailModel {
     private Subscriber<CustDetailInfoRequestResponse> getCustDetailSubscriber;
     private Subscriber<GetGalleyRequestResponse> getGalleySubscriber;
 
-    void getCustInfo(String submitcode, String custCode, final RequestListener listener) {
+    void getCustInfo(String submitcode, String custCode, String authorization, final RequestListener listener) {
         getCustInfoSubscriber = new Subscriber<CustInfoRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -47,13 +47,13 @@ public class PersonalFriendDetailModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getCustInfo(submitcode, custCode)
+        RequestAdapter.getRequestService().getCustInfo(submitcode, custCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getCustInfoSubscriber);
     }
 
-    void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode, final RequestListener listener) {
+    void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode, String authorization, final RequestListener listener) {
         getCustDetailSubscriber = new Subscriber<CustDetailInfoRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -70,13 +70,13 @@ public class PersonalFriendDetailModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getCustDetailInfo(actioncode, submitCode, custCode, selfCustCode)
+        RequestAdapter.getRequestService().getCustDetailInfo(actioncode, submitCode, custCode, selfCustCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getCustDetailSubscriber);
     }
 
-    void getPersonalGalley(String action, String submitCode, String custCode, final RequestListener listener) {
+    void getPersonalGalley(String action, String submitCode, String custCode, String authorization, final RequestListener listener) {
         getGalleySubscriber = new Subscriber<GetGalleyRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -93,7 +93,7 @@ public class PersonalFriendDetailModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().getPersonalGalley(action, submitCode, custCode)
+        RequestAdapter.getRequestService().getPersonalGalley(action, submitCode, custCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getGalleySubscriber);

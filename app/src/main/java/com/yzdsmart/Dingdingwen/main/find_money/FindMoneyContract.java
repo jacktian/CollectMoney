@@ -48,7 +48,7 @@ public class FindMoneyContract {
          * @param custCode
          * @param coor
          */
-        void uploadCoor(String submitCode, String custCode, String coor);
+        void uploadCoor(String submitCode, String custCode, String coor, String authorization);
 
         /**
          * 获取当前用户周边用户
@@ -59,7 +59,7 @@ public class FindMoneyContract {
          * @param pageIndex
          * @param pageSize
          */
-        void getPersonNearby(String submitCode, String custCode, String coor, Integer pageIndex, Integer pageSize);
+        void getPersonNearby(String submitCode, String custCode, String coor, Integer pageIndex, Integer pageSize, String authorization);
 
         /**
          * 取消网络请求

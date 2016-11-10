@@ -56,7 +56,7 @@ public interface PersonalFriendDetailContract {
          * @param submitcode
          * @param custCode
          */
-        void getCustInfo(String submitcode, String custCode);
+        void getCustInfo(String submitcode, String custCode, String authorization);
 
         /**
          * 获取个人的图片列表
@@ -65,7 +65,7 @@ public interface PersonalFriendDetailContract {
          * @param submitCode
          * @param custCode
          */
-        void getPersonalGalley(String action, String submitCode, String custCode);
+        void getPersonalGalley(String action, String submitCode, String custCode, String authorization);
 
         /**
          * 获取用户详细信息
@@ -76,7 +76,7 @@ public interface PersonalFriendDetailContract {
          * @param selfCustCode
          * @return
          */
-        void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode);
+        void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode, String authorization);
 
         /**
          * 添加好友

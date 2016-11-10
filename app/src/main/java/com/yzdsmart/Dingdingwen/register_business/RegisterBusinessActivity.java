@@ -144,7 +144,7 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.registerBusiness("000000", SharedPreferencesUtils.getString(this, "cust_code", ""), businessName, businessPers, businessTel, businessAddress, businessRemark, businessCoor);
+                mPresenter.registerBusiness("000000", SharedPreferencesUtils.getString(this, "cust_code", ""), businessName, businessPers, businessTel, businessAddress, businessRemark, businessCoor, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
         }
     }

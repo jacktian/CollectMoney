@@ -53,7 +53,7 @@ public class PersonalModel {
                 .subscribe(getCustLevelSubscriber);
     }
 
-    void getCustInfo(String submitcode, String custCode, final RequestListener listener) {
+    void getCustInfo(String submitcode, String custCode, String authorization, final RequestListener listener) {
         getCustInfoSubscriber = new Subscriber<CustInfoRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -70,7 +70,7 @@ public class PersonalModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getCustInfo(submitcode, custCode)
+        RequestAdapter.getRequestService().getCustInfo(submitcode, custCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getCustInfoSubscriber);
@@ -99,7 +99,7 @@ public class PersonalModel {
                 .subscribe(getShopInfoSubscriber);
     }
 
-    void getShopGalley(String action, String submitCode, String bazaCode, final RequestListener listener) {
+    void getShopGalley(String action, String submitCode, String bazaCode, String authorization, final RequestListener listener) {
         getShopGalleySubscriber = new Subscriber<GetGalleyRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -116,13 +116,13 @@ public class PersonalModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().getShopGalley(action, submitCode, bazaCode)
+        RequestAdapter.getRequestService().getShopGalley(action, submitCode, bazaCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getShopGalleySubscriber);
     }
 
-    void uploadShopAvater(String action, String fileName, String fileData, String bazaCode, final RequestListener listener) {
+    void uploadShopAvater(String action, String fileName, String fileData, String bazaCode, String authorization, final RequestListener listener) {
         uploadShopAvaterSubscriber = new Subscriber<UploadFileRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -139,7 +139,7 @@ public class PersonalModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().uploadShopImage(action, fileName, fileData, bazaCode)
+        RequestAdapter.getRequestService().uploadShopImage(action, fileName, fileData, bazaCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(uploadShopAvaterSubscriber);

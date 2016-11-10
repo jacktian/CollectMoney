@@ -35,9 +35,9 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
     }
 
     @Override
-    public void getCustInfo(String submitcode, String custCode) {
+    public void getCustInfo(String submitcode, String custCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustInfo(submitcode, custCode, new RequestListener() {
+        mModel.getCustInfo(submitcode, custCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 CustInfoRequestResponse requestResponse = (CustInfoRequestResponse) result;
@@ -60,9 +60,9 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
     }
 
     @Override
-    public void getPersonalGalley(String action, String submitCode, String custCode) {
+    public void getPersonalGalley(String action, String submitCode, String custCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getPersonalGalley(action, submitCode, custCode, new RequestListener() {
+        mModel.getPersonalGalley(action, submitCode, custCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 GetGalleyRequestResponse requestResponse = (GetGalleyRequestResponse) result;
@@ -89,9 +89,9 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
     }
 
     @Override
-    public void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode) {
+    public void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustDetailInfo(actioncode, submitCode, custCode, selfCustCode, new RequestListener() {
+        mModel.getCustDetailInfo(actioncode, submitCode, custCode, selfCustCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 CustDetailInfoRequestResponse response = (CustDetailInfoRequestResponse) result;

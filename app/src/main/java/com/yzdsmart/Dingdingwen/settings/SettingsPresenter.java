@@ -23,9 +23,9 @@ public class SettingsPresenter implements SettingsContract.SettingsPresenter {
     }
 
     @Override
-    public void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode) {
+    public void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustDetailInfo(actioncode, submitCode, custCode, selfCustCode, new RequestListener() {
+        mModel.getCustDetailInfo(actioncode, submitCode, custCode, selfCustCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 CustDetailInfoRequestResponse response = (CustDetailInfoRequestResponse) result;

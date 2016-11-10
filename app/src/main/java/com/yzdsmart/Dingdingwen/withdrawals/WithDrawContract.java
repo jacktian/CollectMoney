@@ -46,7 +46,7 @@ public interface WithDrawContract {
          * @param submitcode
          * @param custCode
          */
-        void getCustInfo(String submitcode, String custCode);
+        void getCustInfo(String submitcode, String custCode, String authorization);
 
         /**
          * 获取店铺剩余金币数
@@ -55,7 +55,7 @@ public interface WithDrawContract {
          * @param submitCode
          * @param bazaCode
          */
-        void getLeftCoins(String action, String submitCode, String bazaCode);
+        void getLeftCoins(String action, String submitCode, String bazaCode, String authorization);
 
         /**
          * 商铺提现
@@ -65,7 +65,7 @@ public interface WithDrawContract {
          * @param bazaCode
          * @param goldNum
          */
-        void shopWithdrawCoins(String action, String submitCode, String bazaCode, Integer goldNum);
+        void shopWithdrawCoins(String action, String submitCode, String bazaCode, Integer goldNum, String authorization);
 
         /**
          * 个人提现
@@ -76,7 +76,7 @@ public interface WithDrawContract {
          * @param custCode
          * @param goldNum
          */
-        void personalWithdrawCoins(String action, String actiontype, String submitCode, String custCode, Integer goldNum);
+        void personalWithdrawCoins(String action, String actiontype, String submitCode, String custCode, Integer goldNum, String authorization);
 
         void unRegisterSubscribe();
     }

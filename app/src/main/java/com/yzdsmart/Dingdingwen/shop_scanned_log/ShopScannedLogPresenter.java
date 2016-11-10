@@ -24,9 +24,9 @@ public class ShopScannedLogPresenter implements ShopScannedLogContract.ShopScann
     }
 
     @Override
-    public void getScannedLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence) {
+    public void getScannedLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getScannedLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, new RequestListener() {
+        mModel.getScannedLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ScannedLogRequestResponse requestResponse = (ScannedLogRequestResponse) result;

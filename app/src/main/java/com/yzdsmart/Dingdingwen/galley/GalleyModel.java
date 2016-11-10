@@ -24,7 +24,7 @@ public class GalleyModel {
     private Subscriber<UploadFileRequestResponse> uploadGalleySubscriber;
     private Subscriber<UploadFileRequestResponse> uploadShopImageSubscriber;
 
-    void getPersonalGalley(String action, String submitCode, String custCode, final RequestListener listener) {
+    void getPersonalGalley(String action, String submitCode, String custCode, String authorization, final RequestListener listener) {
         getGalleySubscriber = new Subscriber<GetGalleyRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -41,13 +41,13 @@ public class GalleyModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().getPersonalGalley(action, submitCode, custCode)
+        RequestAdapter.getRequestService().getPersonalGalley(action, submitCode, custCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getGalleySubscriber);
     }
 
-    void deletePersonalGalley(String action, String submitCode, String custCode, List<Integer> fileIdList, final RequestListener listener) {
+    void deletePersonalGalley(String action, String submitCode, String custCode, List<Integer> fileIdList, String authorization, final RequestListener listener) {
         deletePersonalGalleySubscriber = new Subscriber<RequestResponse>() {
             @Override
             public void onCompleted() {
@@ -64,13 +64,13 @@ public class GalleyModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().deletePersonalGalley(action, submitCode, custCode, fileIdList)
+        RequestAdapter.getRequestService().deletePersonalGalley(action, submitCode, custCode, fileIdList, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(deletePersonalGalleySubscriber);
     }
 
-    void getShopGalley(String action, String submitCode, String bazaCode, final RequestListener listener) {
+    void getShopGalley(String action, String submitCode, String bazaCode, String authorization, final RequestListener listener) {
         getShopGalleySubscriber = new Subscriber<GetGalleyRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -87,13 +87,13 @@ public class GalleyModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().getShopGalley(action, submitCode, bazaCode)
+        RequestAdapter.getRequestService().getShopGalley(action, submitCode, bazaCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getShopGalleySubscriber);
     }
 
-    void deleteShopGalley(String action, String submitCode, String bazaCode, List<Integer> fileIdList, final RequestListener listener) {
+    void deleteShopGalley(String action, String submitCode, String bazaCode, List<Integer> fileIdList, String authorization, final RequestListener listener) {
         deleteShopGalleySubscriber = new Subscriber<RequestResponse>() {
             @Override
             public void onCompleted() {
@@ -110,13 +110,13 @@ public class GalleyModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().deleteShopGalley(action, submitCode, bazaCode, fileIdList)
+        RequestAdapter.getRequestService().deleteShopGalley(action, submitCode, bazaCode, fileIdList, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(deleteShopGalleySubscriber);
     }
 
-    void uploadGalley(String action, String fileName, String fileData, String custCode, final RequestListener listener) {
+    void uploadGalley(String action, String fileName, String fileData, String custCode, String authorization, final RequestListener listener) {
         uploadGalleySubscriber = new Subscriber<UploadFileRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -133,13 +133,13 @@ public class GalleyModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().uploadGalley(action, fileName, fileData, custCode)
+        RequestAdapter.getRequestService().uploadGalley(action, fileName, fileData, custCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(uploadGalleySubscriber);
     }
 
-    void uploadShopImage(String action, String fileName, String fileData, String bazaCode, final RequestListener listener) {
+    void uploadShopImage(String action, String fileName, String fileData, String bazaCode, String authorization, final RequestListener listener) {
         uploadShopImageSubscriber = new Subscriber<UploadFileRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -156,7 +156,7 @@ public class GalleyModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().uploadShopImage(action, fileName, fileData, bazaCode)
+        RequestAdapter.getRequestService().uploadShopImage(action, fileName, fileData, bazaCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(uploadShopImageSubscriber);

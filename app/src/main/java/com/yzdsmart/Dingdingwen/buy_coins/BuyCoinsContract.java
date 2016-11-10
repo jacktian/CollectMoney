@@ -40,9 +40,9 @@ public interface BuyCoinsContract {
          * @param bazaCode
          * @param goldNum
          */
-        void buyCoins(String action, String submitCode, String bazaCode, Integer goldNum);
+        void buyCoins(String action, String submitCode, String bazaCode, Integer goldNum, String authorization);
 
-        void buyCoinsPay(String payPara);
+        void buyCoinsPay(String payPara, String authorization);
 
         /**
          * 指定商铺购买金币日志列表
@@ -54,7 +54,7 @@ public interface BuyCoinsContract {
          * @param pageSize
          * @param lastsequence
          */
-        void buyCoinsLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence);
+        void buyCoinsLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization);
 
         void unRegisterSubscribe();
     }

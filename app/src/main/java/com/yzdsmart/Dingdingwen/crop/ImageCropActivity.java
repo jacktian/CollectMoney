@@ -128,7 +128,7 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
                 showSnackbar(getResources().getString(R.string.net_unusable));
                 return;
             }
-            mPresenter.uploadPortrait(Constants.PERSONAL_UPLOAD_AVATER_ACTION_CODE, SharedPreferencesUtils.getString(this, "im_account", "") + ".png", image, SharedPreferencesUtils.getString(this, "im_account", ""));
+            mPresenter.uploadPortrait(Constants.PERSONAL_UPLOAD_AVATER_ACTION_CODE, SharedPreferencesUtils.getString(this, "im_account", "") + ".png", image, SharedPreferencesUtils.getString(this, "im_account", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
         } else if (resultCode == Crop.RESULT_ERROR) {
             showSnackbar(Crop.getError(result).getMessage());
         }

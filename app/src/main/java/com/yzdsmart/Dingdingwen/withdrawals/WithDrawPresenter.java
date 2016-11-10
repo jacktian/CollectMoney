@@ -26,9 +26,9 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
     }
 
     @Override
-    public void getCustInfo(String submitcode, String custCode) {
+    public void getCustInfo(String submitcode, String custCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustInfo(submitcode, custCode, new RequestListener() {
+        mModel.getCustInfo(submitcode, custCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 CustInfoRequestResponse requestResponse = (CustInfoRequestResponse) result;
@@ -51,9 +51,9 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
     }
 
     @Override
-    public void getLeftCoins(String action, String submitCode, String bazaCode) {
+    public void getLeftCoins(String action, String submitCode, String bazaCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getLeftCoins(action, submitCode, bazaCode, new RequestListener() {
+        mModel.getLeftCoins(action, submitCode, bazaCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 GetCoinRequestResponse requestResponse = (GetCoinRequestResponse) result;
@@ -78,9 +78,9 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
     }
 
     @Override
-    public void shopWithdrawCoins(String action, String submitCode, String bazaCode, Integer goldNum) {
+    public void shopWithdrawCoins(String action, String submitCode, String bazaCode, Integer goldNum, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.withdrawing));
-        mModel.shopWithdrawCoins(action, submitCode, bazaCode, goldNum, new RequestListener() {
+        mModel.shopWithdrawCoins(action, submitCode, bazaCode, goldNum, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ((BaseActivity) context).hideProgressDialog();
@@ -106,9 +106,9 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
     }
 
     @Override
-    public void personalWithdrawCoins(String action, String actiontype, String submitCode, String custCode, Integer goldNum) {
+    public void personalWithdrawCoins(String action, String actiontype, String submitCode, String custCode, Integer goldNum, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.withdrawing));
-        mModel.personalWithdrawCoins(action, actiontype, submitCode, custCode, goldNum, new RequestListener() {
+        mModel.personalWithdrawCoins(action, actiontype, submitCode, custCode, goldNum, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ((BaseActivity) context).hideProgressDialog();

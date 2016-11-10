@@ -17,7 +17,7 @@ public class PublishTasksLogModel {
     private Subscriber<PublishTaskLogRequestResponse> publishTaskLogSubscriber;
     private Subscriber<GetCoinRequestResponse> leftCoinsSubscriber;
 
-    void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, final RequestListener listener) {
+    void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization, final RequestListener listener) {
         publishTaskLogSubscriber = new Subscriber<PublishTaskLogRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -34,13 +34,13 @@ public class PublishTasksLogModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().publishTaskLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence)
+        RequestAdapter.getRequestService().publishTaskLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(publishTaskLogSubscriber);
     }
 
-    void getLeftCoins(String action, String submitCode, String bazaCode, final RequestListener listener) {
+    void getLeftCoins(String action, String submitCode, String bazaCode, String authorization, final RequestListener listener) {
         leftCoinsSubscriber = new Subscriber<GetCoinRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -57,7 +57,7 @@ public class PublishTasksLogModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().getLeftCoins(action, submitCode, bazaCode)
+        RequestAdapter.getRequestService().getLeftCoins(action, submitCode, bazaCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(leftCoinsSubscriber);

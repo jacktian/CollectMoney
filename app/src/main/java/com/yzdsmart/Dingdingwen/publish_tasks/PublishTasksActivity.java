@@ -107,7 +107,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
             return;
         }
 
-        mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
+        mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override
@@ -188,7 +188,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
                 String totalCoinAmounts = totalCoinAmountsET.getText().toString();
                 String beginTime = beginTimeET.getText().toString();
                 String endTime = endTimeET.getText().toString();
-                mPresenter.publishTask("000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(totalCoinAmounts), Integer.valueOf(totalCoinCounts), beginTime, endTime);
+                mPresenter.publishTask("000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(totalCoinAmounts), Integer.valueOf(totalCoinCounts), beginTime, endTime, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case R.id.begin_time:
             case R.id.end_time:

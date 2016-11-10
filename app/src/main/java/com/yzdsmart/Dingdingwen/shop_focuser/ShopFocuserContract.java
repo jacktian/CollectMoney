@@ -25,7 +25,7 @@ public interface ShopFocuserContract {
          * @param pageIndex
          * @param pageSize
          */
-        void getShopFocuser(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize);
+        void getShopFocuser(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, String authorization);
 
         void unRegisterSubscribe();
     }

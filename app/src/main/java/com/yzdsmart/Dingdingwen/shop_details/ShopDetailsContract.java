@@ -63,7 +63,7 @@ public interface ShopDetailsContract {
          * @param pageIndex
          * @param pageSize
          */
-        void getShopFollowers(String action, String submitCode, String bazaCode, String custCode, Integer pageIndex, Integer pageSize);
+        void getShopFollowers(String action, String submitCode, String bazaCode, String custCode, Integer pageIndex, Integer pageSize, String authorization);
 
         void unRegisterSubscribe();
     }

@@ -24,9 +24,9 @@ public class PublishTasksPresenter implements PublishTasksContract.PublishTasksP
     }
 
     @Override
-    public void getLeftCoins(String action, String submitCode, String bazaCode) {
+    public void getLeftCoins(String action, String submitCode, String bazaCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getLeftCoins(action, submitCode, bazaCode, new RequestListener() {
+        mModel.getLeftCoins(action, submitCode, bazaCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 GetCoinRequestResponse requestResponse = (GetCoinRequestResponse) result;
@@ -51,9 +51,9 @@ public class PublishTasksPresenter implements PublishTasksContract.PublishTasksP
     }
 
     @Override
-    public void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer totalNum, String beginTime, String endTime) {
+    public void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer totalNum, String beginTime, String endTime, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.publishing));
-        mModel.publishTask(submitCode, bazaCode, totalGold, totalNum, beginTime, endTime, new RequestListener() {
+        mModel.publishTask(submitCode, bazaCode, totalGold, totalNum, beginTime, endTime, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ((BaseActivity) context).hideProgressDialog();

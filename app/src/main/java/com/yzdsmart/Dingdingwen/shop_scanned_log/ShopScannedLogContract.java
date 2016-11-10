@@ -32,7 +32,7 @@ public class ShopScannedLogContract {
          * @param pageSize
          * @param lastsequence
          */
-        void getScannedLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence);
+        void getScannedLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization);
 
         void unRegisterSubscribe();
     }

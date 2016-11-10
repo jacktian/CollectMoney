@@ -55,7 +55,7 @@ public interface GalleyContract {
          * @param submitCode
          * @param custCode
          */
-        void getPersonalGalley(String action, String submitCode, String custCode);
+        void getPersonalGalley(String action, String submitCode, String custCode, String authorization);
 
         /**
          * 删除用户个人相册图片
@@ -65,7 +65,7 @@ public interface GalleyContract {
          * @param custCode
          * @param fileIdList
          */
-        void deletePersonalGalley(String action, String submitCode, String custCode, List<Integer> fileIdList);
+        void deletePersonalGalley(String action, String submitCode, String custCode, List<Integer> fileIdList, String authorization);
 
         /**
          * 获取商铺图片列表
@@ -74,7 +74,7 @@ public interface GalleyContract {
          * @param submitCode
          * @param bazaCode
          */
-        void getShopGalley(String action, String submitCode, String bazaCode);
+        void getShopGalley(String action, String submitCode, String bazaCode, String authorization);
 
         /**
          * 删除商铺图片
@@ -84,7 +84,7 @@ public interface GalleyContract {
          * @param bazaCode
          * @param fileIdList
          */
-        void deleteShopGalley(String action, String submitCode, String bazaCode, List<Integer> fileIdList);
+        void deleteShopGalley(String action, String submitCode, String bazaCode, List<Integer> fileIdList, String authorization);
 
         /**
          * 上传个人相册
@@ -94,7 +94,7 @@ public interface GalleyContract {
          * @param fileData
          * @param custCode
          */
-        void uploadGalley(String action, String fileName, String fileData, String custCode);
+        void uploadGalley(String action, String fileName, String fileData, String custCode, String authorization);
 
         /**
          * 上传商铺相册
@@ -104,7 +104,7 @@ public interface GalleyContract {
          * @param fileData
          * @param bazaCode
          */
-        void uploadShopImage(String action, String fileName, String fileData, String bazaCode);
+        void uploadShopImage(String action, String fileName, String fileData, String bazaCode, String authorization);
 
         void unRegisterSubscribe();
     }

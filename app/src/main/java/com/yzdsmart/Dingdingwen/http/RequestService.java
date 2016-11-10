@@ -115,7 +115,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.USER)
-    Observable<LoginRequestResponse> userLogin(@Field("UserName") String userName, @Field("Password") String password, @Field("LoginCode") String loginCode);
+    Observable<LoginRequestResponse> userLogin(@Field("UserName") String userName, @Field("Password") String password, @Field("LoginCode") String loginCode, @Header("Authorization") String authorization);
 
     /**
      * 获取refresh token 和 access token
@@ -171,7 +171,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.CUST)
-    Observable<CustInfoRequestResponse> getCustInfo(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode);
+    Observable<CustInfoRequestResponse> getCustInfo(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
 
     /**
      * 获取用户详细信息
@@ -184,7 +184,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.CUST)
-    Observable<CustDetailInfoRequestResponse> getCustDetailInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("SelfCustCode") String selfCustCode);
+    Observable<CustDetailInfoRequestResponse> getCustDetailInfo(@Query("actioncode") String actioncode, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("SelfCustCode") String selfCustCode, @Header("Authorization") String authorization);
 
     /**
      * 设置云通讯用户信息
@@ -227,7 +227,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SET_CUST)
-    Observable<RequestResponse> setCustDetailInfo(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("CName") String cName, @Field("CNickName") String cNickName, @Field("CSex") String cSex, @Field("CBirthday") String cBirthday, @Field("CTel") String cTel, @Field("CIdNo") String cIdNo, @Field("CNation") String cNation, @Field("CHeight") Double cHeight, @Field("CWeight") Double cWeight, @Field("CProfession") String cProfession, @Field("CAddress") String cAddress, @Field("CProv") String cProv, @Field("CCity") String cCity, @Field("CDist") String cDist, @Field("CCountry") String cCountry, @Field("CRemark") String cRemark);
+    Observable<RequestResponse> setCustDetailInfo(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("CName") String cName, @Field("CNickName") String cNickName, @Field("CSex") String cSex, @Field("CBirthday") String cBirthday, @Field("CTel") String cTel, @Field("CIdNo") String cIdNo, @Field("CNation") String cNation, @Field("CHeight") Double cHeight, @Field("CWeight") Double cWeight, @Field("CProfession") String cProfession, @Field("CAddress") String cAddress, @Field("CProv") String cProv, @Field("CCity") String cCity, @Field("CDist") String cDist, @Field("CCountry") String cCountry, @Field("CRemark") String cRemark, @Header("Authorization") String authorization);
 
     /**
      * 普通用户升级为商家
@@ -244,7 +244,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.REGISTER)
-    Observable<RegisterBusinessRequestResponse> registerBusiness(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaName") String bazaName, @Field("BazaPers") String bazaPers, @Field("BazaTel") String bazaTel, @Field("BazaAddr") String bazaAddr, @Field("Remark") String remark, @Field("Coor") String coor);
+    Observable<RegisterBusinessRequestResponse> registerBusiness(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaName") String bazaName, @Field("BazaPers") String bazaPers, @Field("BazaTel") String bazaTel, @Field("BazaAddr") String bazaAddr, @Field("Remark") String remark, @Field("Coor") String coor, @Header("Authorization") String authorization);
 
     /**
      * 获取好友的列表(包括其等级和星级）
@@ -272,10 +272,10 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.FRIEND)
-    Observable<RecommendFriendsRequestResponse> getRecommendFriends(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("RecomNum") Integer recomNum);
+    Observable<RecommendFriendsRequestResponse> getRecommendFriends(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("RecomNum") Integer recomNum, @Header("Authorization") String authorization);
 
     /**
-     * 获取商铺关注者
+     * 获取金币
      *
      * @param action
      * @param submitCode
@@ -287,7 +287,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.TASK)
-    Observable<GetCoinRequestResponse> getGoldCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode, @Field("Coor") String coor, @Field("Ip") String ip);
+    Observable<GetCoinRequestResponse> getGoldCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode, @Field("Coor") String coor, @Field("Ip") String ip, @Header("Authorization") String authorization);
 
     /**
      * 上传用户头像
@@ -300,7 +300,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.FILE_UPLOAD)
-    Observable<UploadFileRequestResponse> uploadPortrait(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("TCAccount") String tcAccount);
+    Observable<UploadFileRequestResponse> uploadPortrait(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("TCAccount") String tcAccount, @Header("Authorization") String authorization);
 
     /**
      * 上传个人相册
@@ -313,7 +313,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.FILE_UPLOAD)
-    Observable<UploadFileRequestResponse> uploadGalley(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("CustCode") String custCode);
+    Observable<UploadFileRequestResponse> uploadGalley(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
 
     /**
      * 获取个人的图片列表
@@ -325,7 +325,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.IMAGE)
-    Observable<GetGalleyRequestResponse> getPersonalGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode);
+    Observable<GetGalleyRequestResponse> getPersonalGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
 
     /**
      * 删除个人相册
@@ -338,7 +338,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.IMAGE)
-    Observable<RequestResponse> deletePersonalGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("FileIdList") List<Integer> fileIdList);
+    Observable<RequestResponse> deletePersonalGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("FileIdList") List<Integer> fileIdList, @Header("Authorization") String authorization);
 
     /**
      * 获取周边商铺
@@ -389,7 +389,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.BASE)
-    Observable<RequestResponse> uploadCoor(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("Coor") String coor);
+    Observable<RequestResponse> uploadCoor(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("Coor") String coor, @Header("Authorization") String authorization);
 
     /**
      * 获取当前用户周边用户
@@ -403,7 +403,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.PERSON)
-    Observable<PersonRequestResponse> getPersonNearby(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("Coor") String coor, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<PersonRequestResponse> getPersonNearby(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("Coor") String coor, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Header("Authorization") String authorization);
 
     /**
      * 个人提现
@@ -417,7 +417,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.GOLD)
-    Observable<WithdrawRequestResponse> personalWithdrawCoins(@Query("action") String action, @Query("actiontype") String actiontype, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("GoldNum") Integer goldNum);
+    Observable<WithdrawRequestResponse> personalWithdrawCoins(@Query("action") String action, @Query("actiontype") String actiontype, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("GoldNum") Integer goldNum, @Header("Authorization") String authorization);
 
     /**
      * 个人提现日志
@@ -432,7 +432,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.TASKLOG)
-    Observable<PersonalWithdrawLogRequestResponse> getPersonalWithdrawLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence);
+    Observable<PersonalWithdrawLogRequestResponse> getPersonalWithdrawLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
 
     /**
      * 获取用户关注的店铺信息
@@ -446,7 +446,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.FOLLOW)
-    Observable<FocusedShopRequestResponse> getFocusedShopList(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<FocusedShopRequestResponse> getFocusedShopList(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Header("Authorization") String authorization);
 
     /**
      * 用户获取金币日志列表
@@ -461,7 +461,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.TASKLOG)
-    Observable<GetCoinsLogRequestResponse> getCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence);
+    Observable<GetCoinsLogRequestResponse> getCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
 
     /**
      * 商家获取商铺详情
@@ -491,7 +491,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SHOP)
-    Observable<RequestResponse> setShopInfos(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("BazaName") String bazaName, @Field("BazaPers") String bazaPers, @Field("BazaTel") String bazaTel, @Field("BazaAddr") String bazaAddr, @Field("Remark") String remark, @Field("Coor") String coor);
+    Observable<RequestResponse> setShopInfos(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("BazaName") String bazaName, @Field("BazaPers") String bazaPers, @Field("BazaTel") String bazaTel, @Field("BazaAddr") String bazaAddr, @Field("Remark") String remark, @Field("Coor") String coor, @Header("Authorization") String authorization);
 
     /**
      * 获取指定店铺的获取金币的用户信息
@@ -506,7 +506,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.PERSON)
-    Observable<List<ShopScanner>> getShopFollowers(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<List<ShopScanner>> getShopFollowers(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Header("Authorization") String authorization);
 
     /**
      * 商户充值金币
@@ -519,7 +519,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.GOLD)
-    Observable<RequestResponse> buyCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldNum") Integer goldNum);
+    Observable<RequestResponse> buyCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldNum") Integer goldNum, @Header("Authorization") String authorization);
 
     /**
      * 购买金币付款
@@ -529,7 +529,7 @@ public interface RequestService {
      */
     @Headers({"Content-Type: application/json", "Accept: application/json"})//需要添加头
     @POST(Url.PAY)
-    Observable<BuyCoinsPayRequestResponse> buyCoinsPay(@Body RequestBody payPara);
+    Observable<BuyCoinsPayRequestResponse> buyCoinsPay(@Body RequestBody payPara, @Header("Authorization") String authorization);
 
     /**
      * 指定商铺购买金币日志列表
@@ -544,7 +544,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.TASKLOG)
-    Observable<BuyCoinsLogRequestResponse> buyCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence);
+    Observable<BuyCoinsLogRequestResponse> buyCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
 
     /**
      * 获取店铺剩余金币数
@@ -556,7 +556,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.GOLD)
-    Observable<GetCoinRequestResponse> getLeftCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode);
+    Observable<GetCoinRequestResponse> getLeftCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Header("Authorization") String authorization);
 
     /**
      * 商铺提现
@@ -569,7 +569,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.GOLD)
-    Observable<WithdrawRequestResponse> shopWithdrawCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldNum") Integer goldNum);
+    Observable<WithdrawRequestResponse> shopWithdrawCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldNum") Integer goldNum, @Header("Authorization") String authorization);
 
     /**
      * 商铺提现日志
@@ -584,7 +584,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.TASKLOG)
-    Observable<ShopWithdrawLogRequestResponse> getShopWithdrawLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence);
+    Observable<ShopWithdrawLogRequestResponse> getShopWithdrawLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
 
     /**
      * 商户创建金币任务
@@ -599,7 +599,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.TASK)
-    Observable<RequestResponse> publishTasks(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("TotalGold") Integer totalGold, @Field("TotalNum") Integer totalNum, @Field("BeginTime") String beginTime, @Field("EndTime") String endTime);
+    Observable<RequestResponse> publishTasks(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("TotalGold") Integer totalGold, @Field("TotalNum") Integer totalNum, @Field("BeginTime") String beginTime, @Field("EndTime") String endTime, @Header("Authorization") String authorization);
 
     /**
      * 指定商铺获得发布任务日志列表
@@ -614,7 +614,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.TASKLOG)
-    Observable<PublishTaskLogRequestResponse> publishTaskLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence);
+    Observable<PublishTaskLogRequestResponse> publishTaskLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
 
     /**
      * 上传商铺图片
@@ -627,7 +627,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.FILE_UPLOAD)
-    Observable<UploadFileRequestResponse> uploadShopImage(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("BazaCode") String bazaCode);
+    Observable<UploadFileRequestResponse> uploadShopImage(@Query("action") String action, @Field("FileName") String fileName, @Field("FileData") String fileData, @Field("BazaCode") String bazaCode, @Header("Authorization") String authorization);
 
     /**
      * 获取关注店铺的用户信息
@@ -641,7 +641,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.FOLLOW)
-    Observable<ShopFocuserRequestResponse> getShopFocuser(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<ShopFocuserRequestResponse> getShopFocuser(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Header("Authorization") String authorization);
 
     /**
      * 获取指定商铺被扫码日志
@@ -656,7 +656,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.TASKLOG)
-    Observable<ScannedLogRequestResponse> getScannedLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence);
+    Observable<ScannedLogRequestResponse> getScannedLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
 
     /**
      * 获取商铺图片列表
@@ -668,7 +668,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.IMAGE)
-    Observable<GetGalleyRequestResponse> getShopGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode);
+    Observable<GetGalleyRequestResponse> getShopGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Header("Authorization") String authorization);
 
     /**
      * 删除商铺图片
@@ -681,7 +681,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.IMAGE)
-    Observable<RequestResponse> deleteShopGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("FileIdList") List<Integer> fileIdList);
+    Observable<RequestResponse> deleteShopGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("FileIdList") List<Integer> fileIdList, @Header("Authorization") String authorization);
 
     /**
      * 获取推荐列表

@@ -107,7 +107,7 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getLeftCoins(Constants.GET_TASKS_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
+        mPresenter.getLeftCoins(Constants.GET_TASKS_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
         getPublishTaskLog();
     }
 
@@ -116,7 +116,7 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.publishTaskLog(Constants.PUBLISH_TASK_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence);
+        mPresenter.publishTaskLog(Constants.PUBLISH_TASK_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override

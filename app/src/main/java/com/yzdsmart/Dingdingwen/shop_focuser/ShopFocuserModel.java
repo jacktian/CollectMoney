@@ -16,7 +16,7 @@ public class ShopFocuserModel {
     //网络请求监听
     private Subscriber<ShopFocuserRequestResponse> shopFocuserSubscriber;
 
-    void getShopFocuser(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, final RequestListener listener) {
+    void getShopFocuser(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, String authorization, final RequestListener listener) {
         shopFocuserSubscriber = new Subscriber<ShopFocuserRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -33,7 +33,7 @@ public class ShopFocuserModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().getShopFocuser(action, submitCode, bazaCode, pageIndex, pageSize)
+        RequestAdapter.getRequestService().getShopFocuser(action, submitCode, bazaCode, pageIndex, pageSize, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(shopFocuserSubscriber);

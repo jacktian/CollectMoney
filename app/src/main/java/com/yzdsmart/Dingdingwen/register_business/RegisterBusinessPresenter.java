@@ -23,9 +23,9 @@ public class RegisterBusinessPresenter implements RegisterBusinessContract.Regis
     }
 
     @Override
-    public void registerBusiness(String submitCode, String custCode, String bazaName, String bazaPers, String bazaTel, String bazaAddr, final String remark, String coor) {
+    public void registerBusiness(String submitCode, String custCode, String bazaName, String bazaPers, String bazaTel, String bazaAddr, final String remark, String coor, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.registering_business));
-        mModel.registerBusiness(submitCode, custCode, bazaName, bazaPers, bazaTel, bazaAddr, remark, coor, new RequestListener() {
+        mModel.registerBusiness(submitCode, custCode, bazaName, bazaPers, bazaTel, bazaAddr, remark, coor, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RegisterBusinessRequestResponse response = (RegisterBusinessRequestResponse) result;

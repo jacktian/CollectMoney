@@ -44,7 +44,7 @@ public class FindMoneyModel {
                 .subscribe(getShopListSubscriber);
     }
 
-    void uploadCoor(String submitCode, String custCode, String coor, final RequestListener listener) {
+    void uploadCoor(String submitCode, String custCode, String coor, String authorization, final RequestListener listener) {
         uploadCoorSubscriber = new Subscriber<RequestResponse>() {
             @Override
             public void onCompleted() {
@@ -61,13 +61,13 @@ public class FindMoneyModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().uploadCoor(submitCode, custCode, coor)
+        RequestAdapter.getRequestService().uploadCoor(submitCode, custCode, coor, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(uploadCoorSubscriber);
     }
 
-    void getPersonNearby(String submitCode, String custCode, String coor, Integer pageIndex, Integer pageSize, final RequestListener listener) {
+    void getPersonNearby(String submitCode, String custCode, String coor, Integer pageIndex, Integer pageSize, String authorization, final RequestListener listener) {
         getPersonBearbySubscriber = new Subscriber<PersonRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -84,7 +84,7 @@ public class FindMoneyModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().getPersonNearby(submitCode, custCode, coor, pageIndex, pageSize)
+        RequestAdapter.getRequestService().getPersonNearby(submitCode, custCode, coor, pageIndex, pageSize, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getPersonBearbySubscriber);

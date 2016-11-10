@@ -32,7 +32,7 @@ public interface PublishTasksContract {
          * @param submitCode
          * @param bazaCode
          */
-        void getLeftCoins(String action, String submitCode, String bazaCode);
+        void getLeftCoins(String action, String submitCode, String bazaCode, String authorization);
 
         /**
          * 商户创建金币任务
@@ -44,7 +44,7 @@ public interface PublishTasksContract {
          * @param beginTime
          * @param endTime
          */
-        void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer totalNum, String beginTime, String endTime);
+        void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer totalNum, String beginTime, String endTime, String authorization);
 
         void unRegisterSubscribe();
     }

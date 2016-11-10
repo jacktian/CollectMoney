@@ -40,7 +40,7 @@ public interface EditPersonalInfoContract {
          * @param submitcode
          * @param custCode
          */
-        void getCustInfo(String submitcode, String custCode);
+        void getCustInfo(String submitcode, String custCode, String authorization);
 
         /**
          * 获取用户详细信息
@@ -51,7 +51,7 @@ public interface EditPersonalInfoContract {
          * @param selfCustCode
          * @return
          */
-        void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode);
+        void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode, String authorization);
 
         /**
          * 设置用户详细信息
@@ -76,7 +76,7 @@ public interface EditPersonalInfoContract {
          * @param cCountry
          * @param cRemark
          */
-        void setCustDetailInfo(Integer editItem, String submitCode, String custCode, String cName, String cNickName, String cSex, String cBirthday, String cTel, String cIdNo, String cNation, Double cHeight, Double cWeight, String cProfession, String cAddress, String cProv, String cCity, String cDist, String cCountry, String cRemark);
+        void setCustDetailInfo(Integer editItem, String submitCode, String custCode, String cName, String cNickName, String cSex, String cBirthday, String cTel, String cIdNo, String cNation, Double cHeight, Double cWeight, String cProfession, String cAddress, String cProv, String cCity, String cDist, String cCountry, String cRemark, String authorization);
 
         void unRegisterSubscribe();
     }

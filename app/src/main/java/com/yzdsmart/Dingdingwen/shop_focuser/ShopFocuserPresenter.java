@@ -24,9 +24,9 @@ public class ShopFocuserPresenter implements ShopFocuserContract.ShopFocuserPres
     }
 
     @Override
-    public void getShopFocuser(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize) {
+    public void getShopFocuser(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getShopFocuser(action, submitCode, bazaCode, pageIndex, pageSize, new RequestListener() {
+        mModel.getShopFocuser(action, submitCode, bazaCode, pageIndex, pageSize, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ShopFocuserRequestResponse requestResponse = (ShopFocuserRequestResponse) result;

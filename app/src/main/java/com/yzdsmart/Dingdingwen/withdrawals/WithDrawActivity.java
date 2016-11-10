@@ -100,7 +100,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "baza_code", ""));
+                mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "baza_code", ""), SharedPreferencesUtils.getString(WithDrawActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(WithDrawActivity.this, "ddw_access_token", ""));
             }
         };
         personalWithdrawSuccessRunnable = new Runnable() {
@@ -111,7 +111,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "cust_code", ""));
+                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(WithDrawActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(WithDrawActivity.this, "ddw_access_token", ""));
             }
         };
 
@@ -121,10 +121,10 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
         }
         switch (userType) {
             case 0:
-                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
+                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case 1:
-                mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""));
+                mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
         }
     }
@@ -166,10 +166,10 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                 }
                 switch (userType) {
                     case 0:
-                        mPresenter.personalWithdrawCoins(Constants.PERSONAL_WITHDRAW_ACTION_CODE, Constants.PERSONAL_WITHDRAW_ACTION_TYPE_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()));
+                        mPresenter.personalWithdrawCoins(Constants.PERSONAL_WITHDRAW_ACTION_CODE, Constants.PERSONAL_WITHDRAW_ACTION_TYPE_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                         break;
                     case 1:
-                        mPresenter.shopWithdrawCoins(Constants.SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()));
+                        mPresenter.shopWithdrawCoins(Constants.SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                         break;
                 }
                 break;

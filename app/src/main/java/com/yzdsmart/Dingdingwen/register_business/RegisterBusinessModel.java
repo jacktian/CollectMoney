@@ -15,7 +15,7 @@ public class RegisterBusinessModel {
     //网络请求监听
     private Subscriber<RegisterBusinessRequestResponse> registerBusinessSubscriber;
 
-    void registerBusiness(String submitCode, String custCode, String bazaName, String bazaPers, String bazaTel, String bazaAddr, String remark, String coor, final RequestListener listener) {
+    void registerBusiness(String submitCode, String custCode, String bazaName, String bazaPers, String bazaTel, String bazaAddr, String remark, String coor, String authorization, final RequestListener listener) {
         registerBusinessSubscriber = new Subscriber<RegisterBusinessRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -32,7 +32,7 @@ public class RegisterBusinessModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().registerBusiness(submitCode,custCode,bazaName,bazaPers,bazaTel,bazaAddr,remark,coor)
+        RequestAdapter.getRequestService().registerBusiness(submitCode, custCode, bazaName, bazaPers, bazaTel, bazaAddr, remark, coor, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(registerBusinessSubscriber);

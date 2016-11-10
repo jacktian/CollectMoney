@@ -37,7 +37,7 @@ public interface PublishTasksLogContract {
          * @param submitCode
          * @param bazaCode
          */
-        void getLeftCoins(String action, String submitCode, String bazaCode);
+        void getLeftCoins(String action, String submitCode, String bazaCode, String authorization);
 
         /**
          * 指定商铺获得发布任务日志列表
@@ -49,7 +49,7 @@ public interface PublishTasksLogContract {
          * @param pageSize
          * @param lastsequence
          */
-        void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence);
+        void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization);
 
         void unRegisterSubscribe();
     }

@@ -22,7 +22,7 @@ public interface SettingsContract {
          * @param selfCustCode
          * @return
          */
-        void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode);
+        void getCustDetailInfo(String actioncode, String submitCode, String custCode, String selfCustCode, String authorization);
 
         void unRegisterSubscribe();
     }

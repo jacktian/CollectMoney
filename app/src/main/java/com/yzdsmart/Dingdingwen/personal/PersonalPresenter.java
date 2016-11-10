@@ -53,9 +53,9 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
     }
 
     @Override
-    public void getCustInfo(String submitcode, String custCode) {
+    public void getCustInfo(String submitcode, String custCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustInfo(submitcode, custCode, new RequestListener() {
+        mModel.getCustInfo(submitcode, custCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 CustInfoRequestResponse requestResponse = (CustInfoRequestResponse) result;
@@ -103,9 +103,9 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
     }
 
     @Override
-    public void getShopGalley(String action, String submitCode, String bazaCode) {
+    public void getShopGalley(String action, String submitCode, String bazaCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getShopGalley(action, submitCode, bazaCode, new RequestListener() {
+        mModel.getShopGalley(action, submitCode, bazaCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 GetGalleyRequestResponse requestResponse = (GetGalleyRequestResponse) result;
@@ -132,9 +132,9 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
     }
 
     @Override
-    public void uploadShopAvater(String action, String fileName, String fileData, String bazaCode) {
+    public void uploadShopAvater(String action, String fileName, String fileData, String bazaCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.uploading));
-        mModel.uploadShopAvater(action, fileName, fileData, bazaCode, new RequestListener() {
+        mModel.uploadShopAvater(action, fileName, fileData, bazaCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 UploadFileRequestResponse requestResponse = (UploadFileRequestResponse) result;
