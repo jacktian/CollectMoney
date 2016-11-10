@@ -48,6 +48,14 @@ public interface MainContract {
          */
         void onGetGroupManageLastMessage(TIMGroupPendencyItem message, long unreadCount);
 
+        /**
+         * 获取 refresh token 和 access token
+         */
+        void getRefreshToken();
+
+        /**
+         * 刷新 refresh token 和 access token
+         */
         void refreshAccessToken();
     }
 

@@ -198,6 +198,7 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
 
             @Override
             public void onComplete() {
+
             }
         });
     }
@@ -216,7 +217,9 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
 
             @Override
             public void onError(String err) {
-                ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("400 Bad Request")) {
+                    mView.getRefreshToken();
+                }
             }
 
             @Override

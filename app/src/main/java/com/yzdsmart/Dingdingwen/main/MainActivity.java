@@ -148,10 +148,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         refreshAccessToken();
     }
 
-    public void getRefreshToken() {
-        mPresenter.getRefreshToken("password", SharedPreferencesUtils.getString(this, "cust_code", "").replace("-", ""), SharedPreferencesUtils.getString(this, "password", ""));
-    }
-
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_main;
@@ -390,11 +386,16 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     }
 
     @Override
+    public void getRefreshToken() {
+        mPresenter.getRefreshToken("password", SharedPreferencesUtils.getString(this, "cust_code", "").replace("-", ""), SharedPreferencesUtils.getString(this, "password", ""));
+    }
+
+    @Override
     public void refreshAccessToken() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (null != SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "") && SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "").trim().length() > 0) {
+        if (null != SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "") && SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "").trim().length() > 0) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
                     while (!stopRefreshAccessToken) {
                         try {
                             if (isFirstRefreshAccessToken) {
@@ -408,8 +409,8 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                         }
                     }
                 }
-            }
-        }).start();
+            }).start();
+        }
     }
 
     @Override
@@ -428,7 +429,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     public void chatLogin() {
         imLogin();
     }
-
 
     public void updateUnreadConversationBubble() {
         if (null == unreadConversationBubbleTV) return;
