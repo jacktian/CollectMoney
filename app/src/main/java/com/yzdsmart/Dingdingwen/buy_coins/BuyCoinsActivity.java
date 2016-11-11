@@ -190,8 +190,8 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                     return;
                 }
 //                showMoveDialog(this, Integer.valueOf(coinCountsET.getText().toString()));
-//                mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
-                orderPayPPP();
+                mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+//                orderPayPPP();
                 break;
         }
     }

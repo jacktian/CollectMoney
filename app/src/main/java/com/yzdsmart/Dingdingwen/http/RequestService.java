@@ -527,9 +527,9 @@ public interface RequestService {
      * @param payPara
      * @return
      */
-    @Headers({"Content-Type: application/json", "Accept: application/json"})//需要添加头
+//    @Headers({"Content-Type: application/json", "Accept: application/json"})//需要添加头
     @POST(Url.PAY)
-    Observable<BuyCoinsPayRequestResponse> buyCoinsPay(@Body RequestBody payPara, @Header("Authorization") String authorization);
+    Observable<BuyCoinsPayRequestResponse> buyCoinsPay(@Body RequestBody payPara, @Header("Content-Type") String contentType, @Header("Accept") String accept, @Header("Authorization") String authorization);
 
     /**
      * 指定商铺购买金币日志列表
