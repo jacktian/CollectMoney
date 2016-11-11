@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.utils.IntentUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.DynamicDialog;
@@ -40,6 +41,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResource());
+
+        /** 设置是否对日志信息进行加密, 默认false(不加密). */
+        MobclickAgent.enableEncrypt(true);//6.0.0版本及以后
+
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this);
         App.getAppInstance().storeActivity(this);

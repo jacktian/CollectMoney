@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.R;
@@ -32,6 +33,8 @@ public class FriendListFragment extends BaseFragment implements FriendListContra
     @Nullable
     @BindView(R.id.friend_profile_list)
     UltimateRecyclerView friendProfileListRV;
+
+    private static final String TAG = "FriendListFragment";
 
     private Long timeStampNow = 0l;//上次拉取的时间戳，默认:0
     private Integer startIndex = 0;//下页拉取的起始位置
@@ -108,6 +111,18 @@ public class FriendListFragment extends BaseFragment implements FriendListContra
             return;
         }
         mPresenter.getFriendsList("000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), timeStampNow, startIndex, currentStandardSequence, PAGE_SIZE, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面，"MainScreen"为页面名称，可自定义
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG);
     }
 
     @Override

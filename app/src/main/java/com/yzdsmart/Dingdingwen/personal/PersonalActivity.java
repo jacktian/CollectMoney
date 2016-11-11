@@ -19,6 +19,7 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.bumptech.glide.Glide;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
@@ -150,6 +151,8 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
     @BindView(R.id.shop_avater)
     ImageView shopAvaterIV;
 
+    private static final String TAG = "PersonalActivity";
+
     private PersonalContract.PersonalPresenter mPresenter;
 
     private List<View> toggleViews;
@@ -180,6 +183,8 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         centerTitleTV.setText(getResources().getString(R.string.personal_find));
 
         mPresenter = new PersonalPresenter(this, this);
+
+        MobclickAgent.openActivityDurationTrack(false);
 
         localImages = new ArrayList<Integer>();//默认banner图片
         localImages.add(R.mipmap.shop_banner);
@@ -233,6 +238,8 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
         if (!Utils.isNetUsable(this)) {
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
@@ -245,6 +252,13 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
             mPresenter.getCustLevel(SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""), "000000", Constants.GET_CUST_LEVEL_ACTION_CODE, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
             mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Override

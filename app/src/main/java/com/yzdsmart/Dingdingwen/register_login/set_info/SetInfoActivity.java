@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
@@ -61,6 +62,8 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
     @BindView(R.id.login_register_confirm_button)
     Button confirmButton;
 
+    private static final String TAG = "SetInfoActivity";
+
     private String userName, password;
 
     private SetInfoContract.SetInfoPresenter mPresenter;
@@ -90,6 +93,8 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
 
         new SetInfoPresenter(this, this);
 
+        MobclickAgent.openActivityDurationTrack(false);
+
         registerSuccessRunnable = new Runnable() {
             @Override
             public void run() {
@@ -106,6 +111,20 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_set_info;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Override
@@ -165,7 +184,7 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.userRegister(Constants.REGISTER_ACTION_CODE, userName, password, (userGenderRG.getCheckedRadioButtonId() == R.id.gender_male) ? "男" : "女", Integer.valueOf(Days.daysBetween(dtf.parseDateTime(userAgeET.getText().toString()), new DateTime()).getDays() / 365 + 1), nickNameET.getText().toString(), Utils.md5(Constants.REGISTER_ACTION_CODE + "yzd" + userName));
+                mPresenter.userRegister(Constants.REGISTER_ACTION_CODE, userName, password, (userGenderRG.getCheckedRadioButtonId() == R.id.gender_male) ? "男" : "女", Integer.valueOf(Days.daysBetween(dtf.parseDateTime(userAgeET.getText().toString()), new DateTime()).getDays() / 365 + 1), nickNameET.getText().toString(), Utils.md5(Constants.REGISTER_ACTION_CODE + "yzd" + userName), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
         }
     }

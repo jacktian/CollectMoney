@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.github.paolorotolo.appintro.AppIntro2;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 
 /**
@@ -25,6 +26,18 @@ public class SplashActivity extends AppIntro2 {
 
         showSkipButton(false);
         showDoneButton(false);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);       //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override

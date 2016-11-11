@@ -21,7 +21,7 @@ public class VerifyPhoneModel {
      * @param telNum
      * @param listener
      */
-    void isUserExist(String telNum, final RequestListener listener) {
+    void isUserExist(String telNum, String authorization, final RequestListener listener) {
         isUserExistSubscriber = new Subscriber<RequestResponse>() {
             @Override
             public void onCompleted() {
@@ -38,7 +38,7 @@ public class VerifyPhoneModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().isUserExist(telNum)
+        RequestAdapter.getRequestService().isUserExist(telNum, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(isUserExistSubscriber);

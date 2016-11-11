@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
@@ -55,6 +56,8 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     @BindView(R.id.qr_code_view)
     QRCodeView mQRCodeView;
 
+    private static final String TAG = "QRScannerActivity";
+
     private Integer scanType;//0 扫币 1 付款
 
     private MediaPlayer mediaPlayer;
@@ -84,6 +87,8 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
         new QRScannerPresenter(this, this);
 
+        MobclickAgent.openActivityDurationTrack(false);
+
         playBeep = true;
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         if (AudioManager.RINGER_MODE_NORMAL != audioManager.getRingerMode()) {
@@ -102,11 +107,15 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
         mQRCodeView.startSpotAndShowRect();
     }
 
     @Override
     public void onPause() {
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
         mQRCodeView.stopSpotAndHiddenRect();
         super.onPause();
     }

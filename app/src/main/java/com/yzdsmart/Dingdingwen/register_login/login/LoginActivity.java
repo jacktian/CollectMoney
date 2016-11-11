@@ -15,6 +15,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
@@ -54,6 +55,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     @Nullable
     @BindView(R.id.user_pwd)
     EditText userPasswordET;
+
+    private static final String TAG = "LoginActivity";
 
     //腾讯开始
     public static final String mTecentAppid = "1105651703";
@@ -142,6 +145,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
 
         new LoginPresenter(this, this);
 
+        MobclickAgent.openActivityDurationTrack(false);
+
         //腾讯
         if (null == mTencent) {
             mTencent = Tencent.createInstance(mTecentAppid, App.getAppInstance());
@@ -155,6 +160,20 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_login;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Optional

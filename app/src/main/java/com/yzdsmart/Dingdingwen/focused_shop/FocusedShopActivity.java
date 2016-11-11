@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
@@ -42,6 +43,8 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
     @BindView(R.id.focused_shop_list)
     UltimateRecyclerView focusedShopRV;
 
+    private static final String TAG = "FocusedShopActivity";
+
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
 
@@ -62,6 +65,8 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
         centerTitleTV.setText(getResources().getString(R.string.focus_shop));
 
         new FocusedShopPresenter(this, this);
+
+        MobclickAgent.openActivityDurationTrack(false);
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         focusedShopAdapter = new FocusedShopAdapter(this);
@@ -100,6 +105,20 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_focused_shop;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Optional

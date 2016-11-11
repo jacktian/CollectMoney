@@ -60,7 +60,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.2'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.alibaba:fastjson:1.1.54.android'
-//    compile 'pub.devrel:easypermissions:0.2.1'
+    //    compile 'pub.devrel:easypermissions:0.2.1'
     compile files('libs/AMap3DMap_4.1.1_AMapNavi_1.9.3_AMapSearch_3.5.0_AMapLocation_3.1.0_20161027.jar')
     compile files('libs/imsdk.jar')
     compile files('libs/mobilepb.jar')
@@ -81,4 +81,6 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-2.7.9.jar')
     compile files('libs/ShareSDK-Wechat-Core-2.7.9.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.7.9.jar')
+    compile files('libs/utdid4all-1.0.4.jar')
+    compile files('libs/umeng-analytics-v6.0.4.jar')
 }

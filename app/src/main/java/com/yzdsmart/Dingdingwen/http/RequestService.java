@@ -53,7 +53,7 @@ public interface RequestService {
      * @return
      */
     @GET(Url.USER)
-    Observable<RequestResponse> isUserExist(@Query("tel") String telNum);
+    Observable<RequestResponse> isUserExist(@Query("tel") String telNum, @Header("Authorization") String authorization);
 
     /**
      * 获取短信验证码
@@ -64,7 +64,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SMS)
-    Observable<RequestResponse> getVerifyCode(@Field("Tel") String telNum, @Field("CurrDate") String currDate);
+    Observable<RequestResponse> getVerifyCode(@Field("Tel") String telNum, @Field("CurrDate") String currDate, @Header("Authorization") String authorization);
 
     /**
      * 验证短信验证码
@@ -75,7 +75,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SMS)
-    Observable<RequestResponse> validateVerifyCode(@Query("actioncode") String actioncode, @Field("Tel") String telNum, @Field("Sms_Veri_Code") String verifyCode);
+    Observable<RequestResponse> validateVerifyCode(@Query("actioncode") String actioncode, @Field("Tel") String telNum, @Field("Sms_Veri_Code") String verifyCode, @Header("Authorization") String authorization);
 
     /**
      * 修改密码
@@ -87,7 +87,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.USER)
-    Observable<RequestResponse> setPassword(@Query("actioncode") String actioncode, @Field("UserName") String userName, @Field("Password") String password, @Field("RegCode") String regCode);
+    Observable<RequestResponse> setPassword(@Query("actioncode") String actioncode, @Field("UserName") String userName, @Field("Password") String password, @Field("RegCode") String regCode, @Header("Authorization") String authorization);
 
     /**
      * 用户手机注册信息
@@ -103,7 +103,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.USER)
-    Observable<RequestResponse> userRegister(@Query("actioncode") String actioncode, @Field("UserName") String userName, @Field("Password") String password, @Field("CSex") String cSex, @Field("CAge") Integer cAge, @Field("CNickName") String cNickName, @Field("RegCode") String regCode);
+    Observable<RequestResponse> userRegister(@Query("actioncode") String actioncode, @Field("UserName") String userName, @Field("Password") String password, @Field("CSex") String cSex, @Field("CAge") Integer cAge, @Field("CNickName") String cNickName, @Field("RegCode") String regCode, @Header("Authorization") String authorization);
 
     /**
      * 用户登录
@@ -352,7 +352,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SHOP_LIST)
-    Observable<List<ShopListRequestResponse>> getShopList(@Field("SubmitCode") String submitCode, @Field("Coor") String coor, @Field("Range") Integer range, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<List<ShopListRequestResponse>> getShopList(@Field("SubmitCode") String submitCode, @Field("Coor") String coor, @Field("Range") Integer range, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Header("Authorization") String authorization);
 
     /**
      * 获取商铺详情
@@ -693,5 +693,5 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.EXPAND)
-    Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize);
+    Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Header("Authorization") String authorization);
 }

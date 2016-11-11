@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.tecent_im.adapters.ExpandGroupListAdapter;
@@ -43,6 +44,8 @@ public class ChooseFriendActivity extends BaseActivity {
     @Nullable
     @BindView(R.id.title_right_operation_layout)
     FrameLayout titleRightOpeLayout;
+
+    private static final String TAG = "ChooseFriendActivity";
 
     private ExpandGroupListAdapter mGroupListAdapter;
     private ExpandableListView mGroupListView;
@@ -106,6 +109,8 @@ public class ChooseFriendActivity extends BaseActivity {
             }
         });
         mGroupListAdapter.notifyDataSetChanged();
+
+        MobclickAgent.openActivityDurationTrack(false);
     }
 
     @Override
@@ -113,6 +118,19 @@ public class ChooseFriendActivity extends BaseActivity {
         return R.layout.activity_choose_friend;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
+    }
 
     @Override
     public void onDestroy() {

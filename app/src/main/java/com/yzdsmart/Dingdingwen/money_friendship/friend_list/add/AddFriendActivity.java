@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendStatus;
 import com.tencent.TIMValueCallBack;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendshipInfo;
@@ -44,6 +45,8 @@ public class AddFriendActivity extends BaseActivity implements View.OnClickListe
     @BindView(R.id.center_title)
     TextView centerTitleTV;
 
+    private static final String TAG = "AddFriendActivity";
+
     private TextView tvName, btnAdd;
     private EditText editRemark, editMessage;
     private LineControllerView idField, groupField;
@@ -71,11 +74,27 @@ public class AddFriendActivity extends BaseActivity implements View.OnClickListe
         editRemark = (EditText) findViewById(R.id.editNickname);
 
         new AddFriendPresenter(this, this);
+
+        MobclickAgent.openActivityDurationTrack(false);
     }
 
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_add_friend;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Override

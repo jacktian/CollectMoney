@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
@@ -50,6 +51,8 @@ public class ScanCoinsLogActivity extends BaseActivity implements ScanCoinsLogCo
     @BindView(R.id.log_filter)
     BetterSpinner logFilterSpinner;
 
+    private static final String TAG = "ScanCoinsLogActivity";
+
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
     private Integer lastsequence = 0;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
@@ -75,6 +78,8 @@ public class ScanCoinsLogActivity extends BaseActivity implements ScanCoinsLogCo
         centerTitleTV.setText("获取金币详情");
 
         new ScanCoinsLogPresenter(this, this);
+
+        MobclickAgent.openActivityDurationTrack(false);
 
         logFilters = getResources().getStringArray(R.array.log_filter_array);
         logFilterAdapter = new ArrayAdapter<String>(this,
@@ -128,6 +133,20 @@ public class ScanCoinsLogActivity extends BaseActivity implements ScanCoinsLogCo
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_scan_coins_log;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Override

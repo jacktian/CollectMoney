@@ -17,6 +17,7 @@ import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMGroupPendencyItem;
 import com.tencent.TIMMessage;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
@@ -167,12 +168,14 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         isForeground = true;
         updateUnreadConversationBubble();
         super.onResume();
+        MobclickAgent.onResume(this);       //统计时长
     }
 
     @Override
     protected void onPause() {
         isForeground = false;
         super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override

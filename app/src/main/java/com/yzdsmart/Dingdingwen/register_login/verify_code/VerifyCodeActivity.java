@@ -9,9 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.register_login.set_password.SetPasswordActivity;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import org.joda.time.DateTime;
@@ -46,6 +48,8 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
     @Nullable
     @BindView(R.id.login_register_confirm_button)
     Button nextButton;
+
+    private static final String TAG = "VerifyCodeActivity";
 
     private Integer opeType;//0 注册 1 忘记密码
     private String userName;
@@ -93,11 +97,27 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
         };
 
         new VerifyCodePresenter(this, this);
+
+        MobclickAgent.openActivityDurationTrack(false);
     }
 
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_verify_code;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Optional
@@ -114,7 +134,7 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
                 }
                 getVerifyTV.setEnabled(false);
                 mHandler.post(getVerifyCodeRunnable);
-                mPresenter.getVerifyCode(userName, DateTime.now().toString());
+                mPresenter.getVerifyCode(userName, DateTime.now().toString(), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case R.id.login_register_confirm_button:
                 if (!requiredVerify(verifyCodeET)) {
@@ -125,7 +145,7 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.validateVerifyCode("000000", userName, verifyCodeET.getText().toString());
+                mPresenter.validateVerifyCode("000000", userName, verifyCodeET.getText().toString(), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
         }
     }

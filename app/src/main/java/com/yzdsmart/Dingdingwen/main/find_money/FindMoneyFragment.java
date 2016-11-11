@@ -28,6 +28,7 @@ import com.amap.api.services.route.RideRouteResult;
 import com.amap.api.services.route.RouteSearch;
 import com.amap.api.services.route.WalkPath;
 import com.amap.api.services.route.WalkRouteResult;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
@@ -68,6 +69,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Nullable
     @BindView(R.id.find_money_map)
     MapView findMoneyMap;
+
+    private static final String TAG = "FindMoneyFragment";
 
     private FragmentManager fm;
 
@@ -154,6 +157,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面，"MainScreen"为页面名称，可自定义
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         findMoneyMap.onResume();
         mLocationClient.startLocation();
@@ -175,6 +179,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Override
     public void onPause() {
         super.onPause();
+        MobclickAgent.onPageEnd(TAG);
         //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
         findMoneyMap.onPause();
     }
@@ -317,7 +322,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                         ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
                         return;
                     }
-                    mPresenter.getShopList("000000", mapStatusLocation, zoomDistance, page_index, PAGE_SIZE);
+                    mPresenter.getShopList("000000", mapStatusLocation, zoomDistance, page_index, PAGE_SIZE, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
                 } else {
                     String mapStatusLocation = cameraPosition.target.longitude + "," + cameraPosition.target.latitude;
                     if (mapStatusLocation.equals(lastMapStatusLocation)) {
@@ -335,7 +340,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                             ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
                             return;
                         }
-                        mPresenter.getShopList("000000", mapStatusLocation, zoomDistance, page_index, PAGE_SIZE);
+                        mPresenter.getShopList("000000", mapStatusLocation, zoomDistance, page_index, PAGE_SIZE, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
                     }
                 }
             }
@@ -409,7 +414,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
                 return;
             }
-            mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE);
+            mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
         } else {
             LatLng locLatLng = new LatLng(locLatitude, locLongitude);
             float distance = AMapUtils.calculateLineDistance(latLng, locLatLng);
@@ -418,7 +423,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                     ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE);
+                mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
                 return;
             }
             mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(locLatitude, locLongitude), 15));
@@ -458,7 +463,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
                 return;
             }
-            mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE);
+            mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
         } else {
             LatLng marketLatLng = new LatLng(Double.valueOf(marketLatitude), Double.valueOf(marketLongitude));
             float distance = AMapUtils.calculateLineDistance(latLng, marketLatLng);
@@ -467,7 +472,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                     ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE);
+                mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
                 return;
             }
             mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marketLatLng, 15));

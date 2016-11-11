@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
@@ -49,6 +50,8 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
     @BindView(R.id.tasks_left_coins)
     TextView tasksLeftCoinsTV;
 
+    private static final String TAG = "PublishTasksLogActivity";
+
     private PublishTasksLogContract.PublishTasksLogPresenter mPresenter;
 
     private Integer pageIndex = 1;
@@ -71,6 +74,8 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
         centerTitleTV.setText("发布任务日志");
 
         new PublishTasksLogPresenter(this, this);
+
+        MobclickAgent.openActivityDurationTrack(false);
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         dividerPaint = new Paint();
@@ -122,6 +127,20 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_publish_tasks_log;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Override

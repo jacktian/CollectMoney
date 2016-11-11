@@ -10,9 +10,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.register_login.verify_code.VerifyCodeActivity;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.List;
@@ -44,6 +46,8 @@ public class VerifyPhoneActivity extends BaseActivity implements VerifyPhoneCont
     @BindView(R.id.login_register_confirm_button)
     Button nextButton;
 
+    private static final String TAG = "VerifyPhoneActivity";
+
     private Integer opeType;//0 注册 1 忘记密码
     private VerifyPhoneContract.VerifyPhonePresenter mPresenter;
 
@@ -68,11 +72,27 @@ public class VerifyPhoneActivity extends BaseActivity implements VerifyPhoneCont
         nextButton.setText(getResources().getString(R.string.next_step));
 
         new VerifyPhonePresenter(this, this);
+
+        MobclickAgent.openActivityDurationTrack(false);
     }
 
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_verify_phone;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Optional
@@ -95,7 +115,7 @@ public class VerifyPhoneActivity extends BaseActivity implements VerifyPhoneCont
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.isUserExist(userNameET.getText().toString());
+                mPresenter.isUserExist(userNameET.getText().toString(), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
         }
     }

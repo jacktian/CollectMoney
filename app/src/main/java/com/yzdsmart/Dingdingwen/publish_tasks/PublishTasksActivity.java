@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
@@ -66,6 +67,8 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     @BindView(R.id.publish_task)
     Button publishTaskBtn;
 
+    private static final String TAG = "PublishTasksActivity";
+
     private PublishTasksContract.PublishTasksPresenter mPresenter;
 
     private Handler mHandler = new Handler();
@@ -88,6 +91,8 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
         centerTitleTV.setText("发布任务");
 
         new PublishTasksPresenter(this, this);
+
+        MobclickAgent.openActivityDurationTrack(false);
 
         dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -113,6 +118,20 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_publish_tasks;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Optional

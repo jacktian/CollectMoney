@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tencent.TIMGroupCacheInfo;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.R;
@@ -38,6 +39,8 @@ public class GroupListFragment extends BaseFragment implements GroupListContract
     @Nullable
     @BindView(R.id.search_filter)
     EditText searchFilterET;
+
+    private static final String TAG = "GroupListFragment";
 
     private String type;
     private List<ProfileSummary> list;
@@ -98,6 +101,18 @@ public class GroupListFragment extends BaseFragment implements GroupListContract
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面，"MainScreen"为页面名称，可自定义
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG);
     }
 
     @Override

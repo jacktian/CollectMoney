@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 
@@ -41,6 +42,8 @@ public class ImagePreviewActivity extends BaseActivity {
     @BindView(R.id.isOri)
     CheckBox isOriCB;
 
+    private static final String TAG = "ImagePreviewActivity";
+
     private String path;
 
     @Override
@@ -51,12 +54,28 @@ public class ImagePreviewActivity extends BaseActivity {
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
 
+        MobclickAgent.openActivityDurationTrack(false);
+
         showImage();
     }
 
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_image_preview;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Optional

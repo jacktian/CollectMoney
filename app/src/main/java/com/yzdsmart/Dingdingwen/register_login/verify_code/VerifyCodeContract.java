@@ -32,7 +32,7 @@ public interface VerifyCodeContract {
          * @param telNum
          * @param currDate
          */
-        void getVerifyCode(String telNum, String currDate);
+        void getVerifyCode(String telNum, String currDate, String authorization);
 
         /**
          * 验证短信验证码
@@ -40,7 +40,7 @@ public interface VerifyCodeContract {
          * @param telNum
          * @param verifyCode
          */
-        void validateVerifyCode(String actioncode, String telNum, String verifyCode);
+        void validateVerifyCode(String actioncode, String telNum, String verifyCode, String authorization);
 
         void unRegisterSubscribe();
     }

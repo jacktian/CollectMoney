@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
@@ -55,6 +56,8 @@ public class EditShopInfoActivity extends BaseActivity implements EditShopInfoCo
     @BindView(R.id.baza_remark)
     TextView bazaRemarkTV;
 
+    private static final String TAG = "EditShopInfoActivity";
+
     private EditShopInfoContract.EditShopInfoPresenter mPresenter;
 
     private AlertDialog editDialog;
@@ -68,6 +71,8 @@ public class EditShopInfoActivity extends BaseActivity implements EditShopInfoCo
 
         new EditShopInfoPresenter(this, this);
 
+        MobclickAgent.openActivityDurationTrack(false);
+
         if (!Utils.isNetUsable(this)) {
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
@@ -78,6 +83,20 @@ public class EditShopInfoActivity extends BaseActivity implements EditShopInfoCo
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_edit_shop_info;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Optional

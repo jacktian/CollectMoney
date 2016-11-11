@@ -17,6 +17,7 @@ import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendResult;
 import com.tencent.TIMFriendStatus;
 import com.tencent.TIMValueCallBack;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.chat.ChatActivity;
@@ -48,14 +49,13 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Pro
     @BindView(R.id.center_title)
     TextView centerTitleTV;
 
-    private static final String TAG = ProfileActivity.class.getSimpleName();
+    private static final String TAG = "ProfileActivity";
 
     private final int CHANGE_CATEGORY_CODE = 100;
     private final int CHANGE_REMARK_CODE = 200;
 
     private ProfileContract.ProfilePresenter mPresenter;
     private String identify, categoryStr;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +69,28 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Pro
 
         new ProfilePresenter(this, this);
 
+        MobclickAgent.openActivityDurationTrack(false);
+
         showProfile(identify);
     }
 
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_profile;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     /**

@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.tecent_im.utils.FileUtil;
@@ -25,6 +26,9 @@ public class ImageViewActivity extends BaseActivity {
     @Nullable
     @BindView(R.id.view_image_view)
     ImageView viewImageView;
+
+    private static final String TAG = "ImageViewActivity";
+
     private String currentImageName;
     private Bitmap viewImage;
 
@@ -36,11 +40,27 @@ public class ImageViewActivity extends BaseActivity {
         if (null != viewImage) {
             viewImageView.setImageBitmap(viewImage);
         }
+
+        MobclickAgent.openActivityDurationTrack(false);
     }
 
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_image_view;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     private Bitmap getImage(String path) {

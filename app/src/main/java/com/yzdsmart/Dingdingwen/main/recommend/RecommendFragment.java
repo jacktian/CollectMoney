@@ -9,11 +9,13 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.response.ExpandListRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.BetterSpinner;
 
@@ -45,6 +47,8 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     @Nullable
     @BindView(R.id.recommend_list)
     UltimateRecyclerView recommendListRV;
+
+    private static final String TAG = "RecommendFragment";
 
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
@@ -119,12 +123,19 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
             ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getExpandList("000000", pageIndex, PAGE_SIZE);
+        mPresenter.getExpandList("000000", pageIndex, PAGE_SIZE, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面，"MainScreen"为页面名称，可自定义
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG);
     }
 
     @Override

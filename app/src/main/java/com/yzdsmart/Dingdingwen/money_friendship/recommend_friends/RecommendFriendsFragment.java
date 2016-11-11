@@ -9,8 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
+import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.Friendship;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
@@ -30,7 +32,8 @@ public class RecommendFriendsFragment extends BaseFragment implements RecommendF
     @BindView(R.id.recommend_friends_list)
     UltimateRecyclerView recommendFriendsRV;
 
-    private static final String RECOMMEND_FRIEND_ACTION_CODE = "8566";
+    private static final String TAG = "RecommendFriendsFragment";
+
     private static final Integer RECOMMEND_NUM = 10;//获取数量
 
     private RecommendFriendsContract.RecommendFriendsPresenter mPresenter;
@@ -79,12 +82,24 @@ public class RecommendFriendsFragment extends BaseFragment implements RecommendF
         getRecommendFriends();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面，"MainScreen"为页面名称，可自定义
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG);
+    }
+
     private void getRecommendFriends() {
         if (!Utils.isNetUsable(getActivity())) {
             ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getRecommendFriends(RECOMMEND_FRIEND_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), RECOMMEND_NUM, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
+        mPresenter.getRecommendFriends(Constants.RECOMMEND_FRIEND_ACTION_CODE, "000000", SharedPreferencesUtils.getString(getActivity(), "cust_code", ""), RECOMMEND_NUM, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
     }
 
     @Override

@@ -35,7 +35,7 @@ public interface SetInfoContract {
          * @param cNickName
          * @param regCode
          */
-        void userRegister(String actioncode, String userName, String password, String cSex, Integer cAge, String cNickName, String regCode);
+        void userRegister(String actioncode, String userName, String password, String cSex, Integer cAge, String cNickName, String regCode, String authorization);
 
         /**
          * 用户登录

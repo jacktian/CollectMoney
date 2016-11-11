@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.tencent.TIMGroupManager;
 import com.tencent.TIMGroupMemberInfo;
 import com.tencent.TIMValueCallBack;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.tecent_im.adapters.ProfileSummaryAdapter;
@@ -43,6 +44,8 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
     ListView listView;
     String groupId, type;
 
+    private static final String TAG = "GroupMemberActivity";
+
     private GroupMemberContract.GroupMemberPresenter mPresenter;
 
     @Override
@@ -63,6 +66,8 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
 
         new GroupMemberPresenter(this, this);
 
+        MobclickAgent.openActivityDurationTrack(false);
+
         listView = (ListView) findViewById(R.id.list);
         adapter = new ProfileSummaryAdapter(this, R.layout.tecent_item_profile_summary, list);
         listView.setAdapter(adapter);
@@ -72,6 +77,20 @@ public class GroupMemberActivity extends BaseActivity implements GroupMemberCont
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_group_member;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Override

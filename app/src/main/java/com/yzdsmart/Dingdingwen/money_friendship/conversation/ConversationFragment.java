@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.R;
@@ -28,6 +29,8 @@ public class ConversationFragment extends BaseFragment {
     @Nullable
     @BindView(R.id.conversation_list)
     RecyclerView conversationListRV;
+
+    private static final String TAG = "ConversationFragment";
 
     private List<Conversation> conversationList;
     private LinearLayoutManager mLinearLayoutManager;
@@ -60,6 +63,18 @@ public class ConversationFragment extends BaseFragment {
     @Override
     public int getLayoutResource() {
         return R.layout.fragment_conversation;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面，"MainScreen"为页面名称，可自定义
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG);
     }
 
     @Override

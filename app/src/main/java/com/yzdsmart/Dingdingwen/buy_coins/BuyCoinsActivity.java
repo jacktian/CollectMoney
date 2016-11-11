@@ -19,6 +19,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.pingplusplus.android.Pingpp;
 import com.pingplusplus.android.PingppLog;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
@@ -60,6 +61,8 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     @Nullable
     @BindView(R.id.coin_list)
     UltimateRecyclerView coinListRV;
+
+    private static final String TAG = "BuyCoinsActivity";
 
     private static final Float GOLD_FORMAT_RMB_RATIO = 1.0f;
 
@@ -106,6 +109,8 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
         ShareSDK.initSDK(this, "188d0cc56cba8");
         initPingPlusPlus();
+
+        MobclickAgent.openActivityDurationTrack(false);
 
         buySuccessRunnable = new Runnable() {
             @Override
@@ -252,6 +257,20 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         request.setPayPara(payPara);
         Gson gson = new Gson();
         mPresenter.buyCoinsPay(gson.toJson(request), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Override

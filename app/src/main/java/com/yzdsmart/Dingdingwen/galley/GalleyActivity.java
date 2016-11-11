@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
@@ -57,6 +58,8 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
     @Nullable
     @BindView(R.id.delete_galley)
     Button deleteGalley;
+
+    private static final String TAG = "GalleyActivity";
 
     private Integer identityType;//0 个人 1 商铺
     private Integer userType;//0 自身 1 好友
@@ -146,6 +149,8 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
 
         new GalleyPresenter(this, this);
 
+        MobclickAgent.openActivityDurationTrack(false);
+
         if (Utils.isNetUsable(this)) {
             switch (identityType) {
                 case 0:
@@ -192,6 +197,20 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_galley_preview;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Override

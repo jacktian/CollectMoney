@@ -31,9 +31,9 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
     }
 
     @Override
-    public void getShopList(String submitCode, String coor, Integer range, Integer pageIndex, Integer pageSize) {
+    public void getShopList(String submitCode, String coor, Integer range, Integer pageIndex, Integer pageSize, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getShopList(submitCode, coor, range, pageIndex, pageSize, new RequestListener() {
+        mModel.getShopList(submitCode, coor, range, pageIndex, pageSize, authorization, new RequestListener() {
                     @Override
                     public void onSuccess(Object result) {
                         List<ShopListRequestResponse> shopList = (List<ShopListRequestResponse>) result;

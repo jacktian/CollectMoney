@@ -23,9 +23,9 @@ public class VerifyCodePresenter implements VerifyCodeContract.VerifyCodePresent
     }
 
     @Override
-    public void getVerifyCode(String telNum, String currDate) {
+    public void getVerifyCode(String telNum, String currDate, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getVerifyCode(telNum, currDate, new RequestListener() {
+        mModel.getVerifyCode(telNum, currDate, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RequestResponse response = (RequestResponse) result;
@@ -50,9 +50,9 @@ public class VerifyCodePresenter implements VerifyCodeContract.VerifyCodePresent
     }
 
     @Override
-    public void validateVerifyCode(String actioncode, String telNum, String verifyCode) {
+    public void validateVerifyCode(String actioncode, String telNum, String verifyCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.validating));
-        mModel.validateVerifyCode(actioncode, telNum, verifyCode, new RequestListener() {
+        mModel.validateVerifyCode(actioncode, telNum, verifyCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RequestResponse response = (RequestResponse) result;

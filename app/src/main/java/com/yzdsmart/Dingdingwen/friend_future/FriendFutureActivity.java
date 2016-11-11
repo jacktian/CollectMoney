@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.tencent.TIMFriendFutureItem;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.search_friend.SearchFriendActivity;
@@ -48,6 +49,8 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
     @BindView(R.id.friend_future_list)
     UltimateRecyclerView friendFutureRV;
 
+    private static final String TAG = "FriendFutureActivity";
+
     private static final int PAGE_SIZE = 10;
     private long pendSeq = 0, decideSeq = 0, recommendSeq = 0;
 
@@ -70,6 +73,8 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
         titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.user_add_icon));
 
         new FriendFuturePresenter(this, this);
+
+        MobclickAgent.openActivityDurationTrack(false);
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         dividerPaint = new Paint();
@@ -118,6 +123,20 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_friend_future;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Override

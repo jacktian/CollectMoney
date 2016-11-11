@@ -23,6 +23,7 @@ import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
@@ -92,6 +93,8 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     @BindView(R.id.shop_avater)
     ImageView shopAvaterIV;
 
+    private static final String TAG = "ShopDetailsActivity";
+
     private String bazaCode;//商铺编码
     private Boolean isAtte = false;
     private Integer pageIndex = 1;
@@ -126,6 +129,8 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         titleRightOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.qr_code_scanner_icon));
 
         new ShopDetailsPresenter(this, this);
+
+        MobclickAgent.openActivityDurationTrack(false);
 
         shopImagesBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -172,6 +177,20 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_shop_details;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Override
@@ -288,6 +307,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         if (shopImageList.size() <= 0) {
             ButterKnife.apply(shopImagesBanner, BUTTERKNIFEGONE);
         } else {
+            galleyImages.clear();
             ButterKnife.apply(shopImagesBanner, BUTTERKNIFEVISIBLE);
             for (int i = 0; i < shopImageList.size(); i++) {
                 galleyImages.add(shopImageList.get(i));

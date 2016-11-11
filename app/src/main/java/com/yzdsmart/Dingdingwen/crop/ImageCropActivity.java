@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.soundcloud.android.crop.Crop;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
@@ -56,6 +57,8 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
 
     Button takePhoto, selectFromGalley;
 
+    private static final String TAG = "ImageCropActivity";
+
 //    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 
     Uri photoUri;
@@ -75,6 +78,8 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
         resultImageIV.setOnClickListener(this);
 
         new ImageCropPresenter(this, this);
+
+        MobclickAgent.openActivityDurationTrack(false);
     }
 
     @Override
@@ -132,6 +137,20 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
         } else if (resultCode == Crop.RESULT_ERROR) {
             showSnackbar(Crop.getError(result).getMessage());
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Override

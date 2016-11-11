@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
@@ -49,6 +50,8 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
     @BindView(R.id.login_register_confirm_button)
     Button confirmButton;
 
+    private static final String TAG = "SetPasswordActivity";
+
     private Integer opeType;//0 注册 1 忘记密码
     private String userName;
 
@@ -86,6 +89,8 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
 
         new SetPasswordPresenter(this, this);
 
+        MobclickAgent.openActivityDurationTrack(false);
+
         setPwdSuccessRunnable = new Runnable() {
             @Override
             public void run() {
@@ -102,6 +107,20 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_set_password;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Optional
@@ -155,7 +174,7 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
                         openActivity(SetInfoActivity.class, bundle, 0);
                         break;
                     case 1:
-                        mPresenter.setPassword(Constants.FIND_PWD_ACTION_CODE, userName, userPwdET.getText().toString(), Utils.md5(Constants.FIND_PWD_ACTION_CODE + "yzd" + userName));
+                        mPresenter.setPassword(Constants.FIND_PWD_ACTION_CODE, userName, userPwdET.getText().toString(), Utils.md5(Constants.FIND_PWD_ACTION_CODE + "yzd" + userName), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                         break;
                 }
                 break;

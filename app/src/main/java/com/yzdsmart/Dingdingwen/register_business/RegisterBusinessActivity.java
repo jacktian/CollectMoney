@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
@@ -56,6 +57,8 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
     @BindView(R.id.business_coor)
     EditText businessCoorET;
 
+    private static final String TAG = "RegisterBusinessActivity";
+
     private RegisterBusinessContract.RegisterBusinessPresenter mPresenter;
 
     private Handler mHandler = new Handler();
@@ -73,6 +76,8 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
 
         new RegisterBusinessPresenter(this, this);
 
+        MobclickAgent.openActivityDurationTrack(false);
+
         closeRunnable = new Runnable() {
             @Override
             public void run() {
@@ -85,6 +90,20 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_register_business;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Override

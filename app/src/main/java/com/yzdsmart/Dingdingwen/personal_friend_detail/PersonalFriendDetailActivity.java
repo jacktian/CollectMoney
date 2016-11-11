@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tencent.TIMConversationType;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
@@ -112,6 +113,8 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     @BindView(R.id.video_chat)
     Button videoChatBtn;
 
+    private static final String TAG = "PersonalFriendDetailActivity";
+
     private Integer type;//0 个人 1 好友
     private String friend_c_code;
     private String friend_identify;
@@ -156,6 +159,8 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 break;
         }
 
+        MobclickAgent.openActivityDurationTrack(false);
+
         appbarLayout.addOnOffsetChangedListener(new AppBarOffsetChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
@@ -196,6 +201,8 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
         if (!Utils.isNetUsable(this)) {
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
@@ -212,6 +219,13 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 mPresenter.getPersonalGalley(Constants.GET_PERSONAL_GALLEY_ACTION_CODE, "000000", friend_c_code, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Override

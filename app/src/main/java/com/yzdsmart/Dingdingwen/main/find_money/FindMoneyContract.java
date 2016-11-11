@@ -39,7 +39,7 @@ public class FindMoneyContract {
          * @param pageIndex
          * @param pageSize
          */
-        void getShopList(String submitCode, String coor, Integer range, Integer pageIndex, Integer pageSize);
+        void getShopList(String submitCode, String coor, Integer range, Integer pageIndex, Integer pageSize, String authorization);
 
         /**
          * 上传坐标

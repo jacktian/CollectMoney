@@ -27,9 +27,9 @@ public class SetInfoPresenter implements SetInfoContract.SetInfoPresenter {
     }
 
     @Override
-    public void userRegister(String actioncode, String userName, String password, String cSex, Integer cAge, String cNickName, final String regCode) {
+    public void userRegister(String actioncode, String userName, String password, String cSex, Integer cAge, String cNickName, final String regCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.registering));
-        mModel.userRegister(actioncode, userName, password, cSex, cAge, cNickName, regCode, new RequestListener() {
+        mModel.userRegister(actioncode, userName, password, cSex, cAge, cNickName, regCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ((BaseActivity) context).hideProgressDialog();

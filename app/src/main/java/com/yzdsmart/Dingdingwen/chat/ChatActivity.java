@@ -23,6 +23,7 @@ import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
 import com.tencent.TIMMessageDraft;
 import com.tencent.TIMMessageStatus;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
@@ -86,6 +87,8 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
     @Nullable
     @BindView(R.id.voice_sending)
     VoiceSendingView voiceSendingView;
+
+    private static final String TAG = "ChatActivity";
 
     private ChatContract.ChatPresenter mPresenter;
 
@@ -195,6 +198,8 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
                 centerTitleTV.setText(GroupInfo.getInstance().getGroupName(identify));
                 break;
         }
+
+        MobclickAgent.openActivityDurationTrack(false);
     }
 
     @Override
@@ -213,8 +218,17 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
         //退出聊天界面时输入框有内容，保存草稿
         if (input.getText().length() > 0) {
             TextMessage message = new TextMessage(input.getText());

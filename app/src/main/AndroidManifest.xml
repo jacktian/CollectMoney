@@ -588,18 +588,13 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!--ShareSDK结束-->
 
-        <!-- 配置APP ID -->
+        <!-- 友盟配置APP ID -->
         <meta-data
-            android:name="BUGLY_APPID"
-            android:value="1400013572" />
-        <!-- 配置APP版本号 -->
+            android:name="UMENG_APPKEY"
+            android:value="58251f48cae7e712470021e0" />
         <meta-data
-            android:name="BUGLY_APP_VERSION"
-            android:value="2.2.2" />
-        <!-- 配置Bugly调试模式（true或者false）-->
-        <meta-data
-            android:name="BUGLY_ENABLE_DEBUG"
-            android:value="false" />
+            android:name="UMENG_CHANNEL"
+            android:value="Channel ID" />
     </application>
 
 </manifest>

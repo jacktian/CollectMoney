@@ -22,6 +22,7 @@ import com.tencent.TIMConversationType;
 import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMGroupPendencyItem;
 import com.tencent.TIMMessage;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.friend_future.FriendFutureActivity;
@@ -205,8 +206,15 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);       //统计时长
         updateUnreadConversationBubble();
         updateUnreadFriendFutureBubble();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override
