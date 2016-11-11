@@ -4,26 +4,18 @@ package com.yzdsmart.Dingdingwen.bean;
  * Created by YZD on 2016/10/27.
  */
 
-public class PaymentRequest {
+public class BuyCoinParameter {
 
     /**
      * SubmitCode :
-     * CustCode :
-     * PayPara : {"Order_No":"1222221","Amount":3,"Channel":"wx","Currency":"cny","Subject":"test","Body":"121212","Client_IP":"127.0.0.1"}
+     * BazaCode : WTQzMDM0
+     * GoldNum : 3
+     * PayPara : {"Amount":3,"Channel":"wx","Currency":"cny","Subject":"叮叮蚊支付","Body":"充值金币","Client_IP":"127.0.0.1"}
      */
 
     private String SubmitCode;
-    private String CustCode;
-    /**
-     * Order_No : 1222221
-     * Amount : 3.0
-     * Channel : wx
-     * Currency : cny
-     * Subject : test
-     * Body : 121212
-     * Client_IP : 127.0.0.1
-     */
-
+    private String BazaCode;
+    private int GoldNum;
     private PayParaBean PayPara;
 
     public String getSubmitCode() {
@@ -34,12 +26,20 @@ public class PaymentRequest {
         this.SubmitCode = SubmitCode;
     }
 
-    public String getCustCode() {
-        return CustCode;
+    public String getBazaCode() {
+        return BazaCode;
     }
 
-    public void setCustCode(String CustCode) {
-        this.CustCode = CustCode;
+    public void setBazaCode(String BazaCode) {
+        this.BazaCode = BazaCode;
+    }
+
+    public int getGoldNum() {
+        return GoldNum;
+    }
+
+    public void setGoldNum(int GoldNum) {
+        this.GoldNum = GoldNum;
     }
 
     public PayParaBean getPayPara() {
@@ -51,21 +51,21 @@ public class PaymentRequest {
     }
 
     public static class PayParaBean {
-        private String Order_No;
+        /**
+         * Amount : 3.0
+         * Channel : wx
+         * Currency : cny
+         * Subject : 叮叮蚊支付
+         * Body : 充值金币
+         * Client_IP : 127.0.0.1
+         */
+
         private double Amount;
         private String Channel;
         private String Currency;
         private String Subject;
         private String Body;
         private String Client_IP;
-
-        public String getOrder_No() {
-            return Order_No;
-        }
-
-        public void setOrder_No(String Order_No) {
-            this.Order_No = Order_No;
-        }
 
         public double getAmount() {
             return Amount;

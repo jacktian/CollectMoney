@@ -7,7 +7,6 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.BuyCoinsLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.BuyCoinsPayRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 
 /**
  * Created by YZD on 2016/9/4.
@@ -24,14 +23,40 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
         mView.setPresenter(this);
     }
 
+    //    @Override
+//    public void buyCoins(String action, String submitCode, String bazaCode, Integer goldNum, String authorization) {
+//        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+//        mModel.buyCoins(action, submitCode, bazaCode, goldNum, authorization, new RequestListener() {
+//            @Override
+//            public void onSuccess(Object result) {
+//                ((BaseActivity) context).hideProgressDialog();
+//                RequestResponse response = (RequestResponse) result;
+//                if ("OK".equals(response.getActionStatus())) {
+//                    mView.onBuyCoins(true, context.getResources().getString(R.string.buy_coin_success));
+//                } else {
+//                    mView.onBuyCoins(false, response.getErrorInfo());
+//                }
+//            }
+//
+//            @Override
+//            public void onError(String err) {
+//                ((BaseActivity) context).hideProgressDialog();
+//                ((BaseActivity) context).showSnackbar(err);
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//            }
+//        });
+//    }
     @Override
-    public void buyCoins(String action, String submitCode, String bazaCode, Integer goldNum, String authorization) {
+    public void buyCoins(String action, String buyCoinPara, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.buyCoins(action, submitCode, bazaCode, goldNum, authorization, new RequestListener() {
+        mModel.buyCoins(action, buyCoinPara, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ((BaseActivity) context).hideProgressDialog();
-                RequestResponse response = (RequestResponse) result;
+                BuyCoinsPayRequestResponse response = (BuyCoinsPayRequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
                     mView.onBuyCoins(true, context.getResources().getString(R.string.buy_coin_success));
                 } else {
@@ -52,9 +77,9 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
     }
 
     @Override
-    public void buyCoinsPay(String payPara,String authorization) {
+    public void buyCoinsPay(String payPara, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.buyCoinsPay(payPara,authorization, new RequestListener() {
+        mModel.buyCoinsPay(payPara, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 BuyCoinsPayRequestResponse requestResponse = (BuyCoinsPayRequestResponse) result;

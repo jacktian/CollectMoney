@@ -23,8 +23,8 @@ import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.BuyCoinParameter;
 import com.yzdsmart.Dingdingwen.bean.BuyCoinsLog;
-import com.yzdsmart.Dingdingwen.bean.PaymentRequest;
 import com.yzdsmart.Dingdingwen.http.response.BuyCoinsPayRequestResponse;
 import com.yzdsmart.Dingdingwen.publish_tasks.PublishTasksActivity;
 import com.yzdsmart.Dingdingwen.share_sdk.OnekeyShare;
@@ -61,6 +61,9 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     @Nullable
     @BindView(R.id.coin_list)
     UltimateRecyclerView coinListRV;
+    @Nullable
+    @BindView(R.id.pay_type_group)
+    CustomNestRadioGroup payTypeGroup;
 
     private static final String TAG = "BuyCoinsActivity";
 
@@ -104,11 +107,13 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText("购买金币");
+        payTypeGroup.setOnCheckedChangeListener(this);
 
         new BuyCoinsPresenter(this, this);
 
         ShareSDK.initSDK(this, "188d0cc56cba8");
-        initPingPlusPlus();
+
+//        initPingPlusPlus();
 
         MobclickAgent.openActivityDurationTrack(false);
 
@@ -189,8 +194,34 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
+                Double amount = Double.valueOf(coinCountsET.getText().toString());
+                // 支付宝 微信支付 银联
+                BuyCoinParameter.PayParaBean payPara = new BuyCoinParameter.PayParaBean();
+                payPara.setCurrency("cny");
+                payPara.setAmount(amount);
+                payPara.setSubject("叮叮蚊支付");
+                payPara.setBody("充值金币");
+                payPara.setClient_IP("127.0.0.1");
+                switch (payType) {
+                    case 0:
+                        payPara.setChannel(CHANNEL_UPACP);
+                        break;
+                    case 1:
+                        payPara.setChannel(CHANNEL_WECHAT);
+                        break;
+                    case 2:
+                        payPara.setChannel(CHANNEL_ALIPAY);
+                        break;
+                }
+                BuyCoinParameter request = new BuyCoinParameter();
+                request.setSubmitCode("000000");
+                request.setBazaCode(SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""));
+                request.setGoldNum(Integer.valueOf(coinCountsET.getText().toString()));
+                request.setPayPara(payPara);
+                Gson gson = new Gson();
 //                showMoveDialog(this, Integer.valueOf(coinCountsET.getText().toString()));
-                mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+//                mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, gson.toJson(request), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
 //                orderPayPPP();
                 break;
         }
@@ -231,28 +262,28 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     private void orderPayPPP() {
         Double amount = Double.valueOf(coinCountsET.getText().toString());
         // 支付宝 微信支付 银联
-        PaymentRequest.PayParaBean payPara = null;
+        BuyCoinParameter.PayParaBean payPara = null;
         switch (payType) {
             case 0:
-                payPara = new PaymentRequest.PayParaBean();
+                payPara = new BuyCoinParameter.PayParaBean();
                 payPara.setAmount(amount);
                 payPara.setChannel(CHANNEL_UPACP);
                 payPara.setBody("购买金币");
                 break;
             case 1:
-                payPara = new PaymentRequest.PayParaBean();
+                payPara = new BuyCoinParameter.PayParaBean();
                 payPara.setAmount(amount);
                 payPara.setChannel(CHANNEL_WECHAT);
                 payPara.setBody("购买金币");
                 break;
             case 2:
-                payPara = new PaymentRequest.PayParaBean();
+                payPara = new BuyCoinParameter.PayParaBean();
                 payPara.setAmount(amount);
                 payPara.setChannel(CHANNEL_ALIPAY);
                 payPara.setBody("购买金币");
                 break;
         }
-        PaymentRequest request = new PaymentRequest();
+        BuyCoinParameter request = new BuyCoinParameter();
         request.setSubmitCode("000000");
         request.setPayPara(payPara);
         Gson gson = new Gson();
@@ -343,6 +374,8 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
     @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
+        System.out.println("------>" + group.getCheckedRadioButtonId());
+
         switch (group.getCheckedRadioButtonId()) {
             case R.id.wechat_pay_radio:
                 payType = 1;

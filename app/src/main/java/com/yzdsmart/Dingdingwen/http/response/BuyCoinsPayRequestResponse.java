@@ -1,7 +1,5 @@
 package com.yzdsmart.Dingdingwen.http.response;
 
-import java.util.List;
-
 /**
  * Created by YZD on 2016/10/27.
  */
@@ -12,42 +10,12 @@ public class BuyCoinsPayRequestResponse {
      * ActionStatus : OK
      * ErrorCode : 0
      * ErrorInfo :
-     * Charge : {"id":"ch_zDCur5yPizHKennTC4jLCSC0","object":"charge","created":1477470170,"livemode":false,"paid":false,"refunded":false,"app":"app_1Gqj58ynP0mHeX1q","channel":"wx","order_no":"1222221","client_ip":"127.0.0.1","amount":3,"amount_settle":3,"currency":"cny","subject":"test","body":"121212","extra":{},"time_paid":null,"time_expire":1477477370,"time_settle":null,"transaction_no":null,"refunds":{"object":"list","url":"/v1/charges/ch_zDCur5yPizHKennTC4jLCSC0/refunds","has_more":false,"data":[]},"amount_refunded":0,"failure_code":null,"failure_msg":null,"metadata":{},"credential":{"object":"credential","wx":{"appId":"wxmdq1co8ckmhsgw1g","partnerId":"1223185601","prepayId":"1101000000161026os4yl0satmpkcux1","nonceStr":"c3990e5318b0fec63e2a9aaa2270b71c","timeStamp":1477470170,"packageValue":"Sign=WXPay","sign":"221ec51f9db548189313a109ee1f36057ae19db2"}},"description":null}
+     * Charge : {"id":"ch_58iDK0u5iDyPOunfHS9ufTS4","object":"charge","created":1478848025,"livemode":false,"paid":false,"refunded":false,"app":"app_1Gqj58ynP0mHeX1q","channel":"wx","order_no":"20161111150632423C4J","client_ip":"127.0.0.1","amount":3,"amount_settle":3,"currency":"cny","subject":"叮叮蚊支付","body":"充值金币","extra":{},"time_paid":null,"time_expire":1478855225,"time_settle":null,"transaction_no":null,"refunds":{"object":"list","url":"/v1/charges/ch_58iDK0u5iDyPOunfHS9ufTS4/refunds","has_more":false,"data":[]},"amount_refunded":0,"failure_code":null,"failure_msg":null,"metadata":{},"credential":{"object":"credential","wx":{"appId":"wxp4ihq5y1sytowvjl","partnerId":"1238560201","prepayId":"1101000000161111unhwx1i1u5ggbdar","nonceStr":"b7a42472e7db8b89f870b69aa961a32d","timeStamp":1478848025,"packageValue":"Sign=WXPay","sign":"93985fe34315b751ce77222c540b73822a49f9de"}},"description":null}
      */
 
     private String ActionStatus;
     private int ErrorCode;
     private String ErrorInfo;
-    /**
-     * id : ch_zDCur5yPizHKennTC4jLCSC0
-     * object : charge
-     * created : 1477470170
-     * livemode : false
-     * paid : false
-     * refunded : false
-     * app : app_1Gqj58ynP0mHeX1q
-     * channel : wx
-     * order_no : 1222221
-     * client_ip : 127.0.0.1
-     * amount : 3
-     * amount_settle : 3
-     * currency : cny
-     * subject : test
-     * body : 121212
-     * extra : {}
-     * time_paid : null
-     * time_expire : 1477477370
-     * time_settle : null
-     * transaction_no : null
-     * refunds : {"object":"list","url":"/v1/charges/ch_zDCur5yPizHKennTC4jLCSC0/refunds","has_more":false,"data":[]}
-     * amount_refunded : 0
-     * failure_code : null
-     * failure_msg : null
-     * metadata : {}
-     * credential : {"object":"credential","wx":{"appId":"wxmdq1co8ckmhsgw1g","partnerId":"1223185601","prepayId":"1101000000161026os4yl0satmpkcux1","nonceStr":"c3990e5318b0fec63e2a9aaa2270b71c","timeStamp":1477470170,"packageValue":"Sign=WXPay","sign":"221ec51f9db548189313a109ee1f36057ae19db2"}}
-     * description : null
-     */
-
     private ChargeBean Charge;
 
     public String getActionStatus() {
@@ -83,6 +51,36 @@ public class BuyCoinsPayRequestResponse {
     }
 
     public static class ChargeBean {
+        /**
+         * id : ch_58iDK0u5iDyPOunfHS9ufTS4
+         * object : charge
+         * created : 1478848025
+         * livemode : false
+         * paid : false
+         * refunded : false
+         * app : app_1Gqj58ynP0mHeX1q
+         * channel : wx
+         * order_no : 20161111150632423C4J
+         * client_ip : 127.0.0.1
+         * amount : 3
+         * amount_settle : 3
+         * currency : cny
+         * subject : 叮叮蚊支付
+         * body : 充值金币
+         * extra : {}
+         * time_paid : null
+         * time_expire : 1478855225
+         * time_settle : null
+         * transaction_no : null
+         * refunds : {"object":"list","url":"/v1/charges/ch_58iDK0u5iDyPOunfHS9ufTS4/refunds","has_more":false,"data":[]}
+         * amount_refunded : 0
+         * failure_code : null
+         * failure_msg : null
+         * metadata : {}
+         * credential : {"object":"credential","wx":{"appId":"wxp4ihq5y1sytowvjl","partnerId":"1238560201","prepayId":"1101000000161111unhwx1i1u5ggbdar","nonceStr":"b7a42472e7db8b89f870b69aa961a32d","timeStamp":1478848025,"packageValue":"Sign=WXPay","sign":"93985fe34315b751ce77222c540b73822a49f9de"}}
+         * description : null
+         */
+
         private String id;
         private String object;
         private int created;
@@ -98,26 +96,16 @@ public class BuyCoinsPayRequestResponse {
         private String currency;
         private String subject;
         private String body;
+        private ExtraBean extra;
         private Object time_paid;
         private int time_expire;
         private Object time_settle;
         private Object transaction_no;
-        /**
-         * object : list
-         * url : /v1/charges/ch_zDCur5yPizHKennTC4jLCSC0/refunds
-         * has_more : false
-         * data : []
-         */
-
         private RefundsBean refunds;
         private int amount_refunded;
         private Object failure_code;
         private Object failure_msg;
-        /**
-         * object : credential
-         * wx : {"appId":"wxmdq1co8ckmhsgw1g","partnerId":"1223185601","prepayId":"1101000000161026os4yl0satmpkcux1","nonceStr":"c3990e5318b0fec63e2a9aaa2270b71c","timeStamp":1477470170,"packageValue":"Sign=WXPay","sign":"221ec51f9db548189313a109ee1f36057ae19db2"}
-         */
-
+        private MetadataBean metadata;
         private CredentialBean credential;
         private Object description;
 
@@ -241,6 +229,14 @@ public class BuyCoinsPayRequestResponse {
             this.body = body;
         }
 
+        public ExtraBean getExtra() {
+            return extra;
+        }
+
+        public void setExtra(ExtraBean extra) {
+            this.extra = extra;
+        }
+
         public Object getTime_paid() {
             return time_paid;
         }
@@ -305,6 +301,14 @@ public class BuyCoinsPayRequestResponse {
             this.failure_msg = failure_msg;
         }
 
+        public MetadataBean getMetadata() {
+            return metadata;
+        }
+
+        public void setMetadata(MetadataBean metadata) {
+            this.metadata = metadata;
+        }
+
         public CredentialBean getCredential() {
             return credential;
         }
@@ -321,57 +325,22 @@ public class BuyCoinsPayRequestResponse {
             this.description = description;
         }
 
+        public static class ExtraBean {
+        }
+
         public static class RefundsBean {
-            private String object;
-            private String url;
-            private boolean has_more;
-            private List<?> data;
+        }
 
-            public String getObject() {
-                return object;
-            }
-
-            public void setObject(String object) {
-                this.object = object;
-            }
-
-            public String getUrl() {
-                return url;
-            }
-
-            public void setUrl(String url) {
-                this.url = url;
-            }
-
-            public boolean isHas_more() {
-                return has_more;
-            }
-
-            public void setHas_more(boolean has_more) {
-                this.has_more = has_more;
-            }
-
-            public List<?> getData() {
-                return data;
-            }
-
-            public void setData(List<?> data) {
-                this.data = data;
-            }
+        public static class MetadataBean {
         }
 
         public static class CredentialBean {
-            private String object;
             /**
-             * appId : wxmdq1co8ckmhsgw1g
-             * partnerId : 1223185601
-             * prepayId : 1101000000161026os4yl0satmpkcux1
-             * nonceStr : c3990e5318b0fec63e2a9aaa2270b71c
-             * timeStamp : 1477470170
-             * packageValue : Sign=WXPay
-             * sign : 221ec51f9db548189313a109ee1f36057ae19db2
+             * object : credential
+             * wx : {"appId":"wxp4ihq5y1sytowvjl","partnerId":"1238560201","prepayId":"1101000000161111unhwx1i1u5ggbdar","nonceStr":"b7a42472e7db8b89f870b69aa961a32d","timeStamp":1478848025,"packageValue":"Sign=WXPay","sign":"93985fe34315b751ce77222c540b73822a49f9de"}
              */
 
+            private String object;
             private WxBean wx;
 
             public String getObject() {
@@ -391,6 +360,16 @@ public class BuyCoinsPayRequestResponse {
             }
 
             public static class WxBean {
+                /**
+                 * appId : wxp4ihq5y1sytowvjl
+                 * partnerId : 1238560201
+                 * prepayId : 1101000000161111unhwx1i1u5ggbdar
+                 * nonceStr : b7a42472e7db8b89f870b69aa961a32d
+                 * timeStamp : 1478848025
+                 * packageValue : Sign=WXPay
+                 * sign : 93985fe34315b751ce77222c540b73822a49f9de
+                 */
+
                 private String appId;
                 private String partnerId;
                 private String prepayId;

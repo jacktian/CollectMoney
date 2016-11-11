@@ -40,7 +40,8 @@ public interface BuyCoinsContract {
          * @param bazaCode
          * @param goldNum
          */
-        void buyCoins(String action, String submitCode, String bazaCode, Integer goldNum, String authorization);
+//        void buyCoins(String action, String submitCode, String bazaCode, Integer goldNum, String authorization);
+        void buyCoins(String action, String buyCoinPara, String authorization);
 
         void buyCoinsPay(String payPara, String authorization);
 

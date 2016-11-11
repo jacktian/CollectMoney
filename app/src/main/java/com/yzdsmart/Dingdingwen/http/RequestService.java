@@ -37,7 +37,6 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -517,9 +516,10 @@ public interface RequestService {
      * @param goldNum
      * @return
      */
-    @FormUrlEncoded
+//    @FormUrlEncoded
     @POST(Url.GOLD)
-    Observable<RequestResponse> buyCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldNum") Integer goldNum, @Header("Authorization") String authorization);
+//    Observable<RequestResponse> buyCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldNum") Integer goldNum, @Header("Authorization") String authorization);
+    Observable<BuyCoinsPayRequestResponse> buyCoins(@Query("action") String action, @Body RequestBody buyCoinPara, @Header("Content-Type") String contentType, @Header("Accept") String accept, @Header("Authorization") String authorization);
 
     /**
      * 购买金币付款
