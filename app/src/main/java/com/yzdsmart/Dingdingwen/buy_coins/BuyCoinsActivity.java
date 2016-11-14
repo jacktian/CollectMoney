@@ -67,6 +67,8 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
     private static final String TAG = "BuyCoinsActivity";
 
+    private Gson gson = new Gson();
+
     private static final Float GOLD_FORMAT_RMB_RATIO = 1.0f;
 
     /**
@@ -218,7 +220,6 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 request.setBazaCode(SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""));
                 request.setGoldNum(Integer.valueOf(coinCountsET.getText().toString()));
                 request.setPayPara(payPara);
-                Gson gson = new Gson();
 //                showMoveDialog(this, Integer.valueOf(coinCountsET.getText().toString()));
 //                mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, gson.toJson(request), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
@@ -343,14 +344,15 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     }
 
     @Override
-    public void onBuyCoins(boolean flag, String msg) {
+    public void onBuyCoins(boolean flag, String msg, BuyCoinsPayRequestResponse.ChargeBean charge) {
         if (!flag) {
             showSnackbar(msg);
             return;
         }
-        showProgressDialog(R.drawable.success, getResources().getString(R.string.loading));
-        coinCountsET.setText("");
-        mHandler.postDelayed(buySuccessRunnable, 500);
+//        showProgressDialog(R.drawable.success, getResources().getString(R.string.loading));
+//        coinCountsET.setText("");
+//        mHandler.postDelayed(buySuccessRunnable, 500);
+        Pingpp.createPayment(BuyCoinsActivity.this, gson.toJson(charge));
     }
 
     @Override

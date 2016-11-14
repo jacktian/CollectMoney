@@ -395,7 +395,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getRefreshToken("password", "182c79dbf8871689878b0de620006ea3", "7ed99e89c4831f169627b5d20a0020f7c1a9b026244e6364ac1c12a9fa2314fe");
+        mPresenter.getRefreshToken("password", Utils.getDeviceId(this), "8e2f773d58c51c3a1854c059af34b49f");
     }
 
     @Override

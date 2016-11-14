@@ -46,6 +46,41 @@ import rx.Observable;
  */
 public interface RequestService {
     /**
+     * 注册应用进行认证
+     *
+     * @param AppCode   app唯一编码
+     * @param appId     app编号
+     * @param appSecret app加密码
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.APPREG)
+    Observable<RequestResponse> appRegister(@Field("AppCode") String AppCode, @Field("AppId") String appId, @Field("AppSecret") String appSecret);
+
+    /**
+     * 获取refresh token 和 access token
+     *
+     * @param grantType
+     * @param userName
+     * @param password
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TOKEN)
+    Observable<GetTokenRequestResponse> getRefreshToken(@Field("grant_type") String grantType, @Field("username") String userName, @Field("password") String password);
+
+    /**
+     * 刷新 access token
+     *
+     * @param grantType
+     * @param refreshToken
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TOKEN)
+    Observable<GetTokenRequestResponse> refreshAccessToken(@Field("grant_type") String grantType, @Field("refresh_token") String refreshToken);
+
+    /**
      * 校验手机号码是否已注册
      *
      * @param telNum
@@ -115,29 +150,6 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.USER)
     Observable<LoginRequestResponse> userLogin(@Field("UserName") String userName, @Field("Password") String password, @Field("LoginCode") String loginCode, @Header("Authorization") String authorization);
-
-    /**
-     * 获取refresh token 和 access token
-     *
-     * @param grantType
-     * @param userName
-     * @param password
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Url.TOKEN)
-    Observable<GetTokenRequestResponse> getRefreshToken(@Field("grant_type") String grantType, @Field("username") String userName, @Field("password") String password);
-
-    /**
-     * 刷新 access token
-     *
-     * @param grantType
-     * @param refreshToken
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Url.TOKEN)
-    Observable<GetTokenRequestResponse> refreshAccessToken(@Field("grant_type") String grantType, @Field("refresh_token") String refreshToken);
 
     /**
      * 获取用户等级和星级

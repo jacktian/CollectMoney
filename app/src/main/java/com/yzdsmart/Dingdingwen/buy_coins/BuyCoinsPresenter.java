@@ -58,9 +58,9 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
                 ((BaseActivity) context).hideProgressDialog();
                 BuyCoinsPayRequestResponse response = (BuyCoinsPayRequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
-                    mView.onBuyCoins(true, context.getResources().getString(R.string.buy_coin_success));
+                    mView.onBuyCoins(true, context.getResources().getString(R.string.buy_coin_success), response.getCharge());
                 } else {
-                    mView.onBuyCoins(false, response.getErrorInfo());
+                    mView.onBuyCoins(false, response.getErrorInfo(), null);
                 }
             }
 

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -297,5 +298,22 @@ public class Utils {
         if (s.trim().length() == 0)
             return true;
         return false;
+    }
+
+    /**
+     * 获取设备的唯一标识，deviceId
+     *
+     * @param context context
+     * @return String
+     */
+    public static String getDeviceId(Context context) {
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(
+                Context.TELEPHONY_SERVICE);
+        String deviceId = tm.getDeviceId();
+        if (deviceId == null) {
+            return "-";
+        } else {
+            return deviceId;
+        }
     }
 }

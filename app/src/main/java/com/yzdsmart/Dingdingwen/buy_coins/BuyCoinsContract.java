@@ -18,7 +18,7 @@ public interface BuyCoinsContract {
          * @param flag
          * @param msg
          */
-        void onBuyCoins(boolean flag, String msg);
+        void onBuyCoins(boolean flag, String msg, BuyCoinsPayRequestResponse.ChargeBean charge);
 
         void onBuyCoinsPay(BuyCoinsPayRequestResponse.ChargeBean charge);
 
