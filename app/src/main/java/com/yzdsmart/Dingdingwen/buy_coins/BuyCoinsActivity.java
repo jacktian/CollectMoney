@@ -374,8 +374,6 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
     @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
-        System.out.println("------>" + group.getCheckedRadioButtonId());
-
         switch (group.getCheckedRadioButtonId()) {
             case R.id.wechat_pay_radio:
                 payType = 1;
