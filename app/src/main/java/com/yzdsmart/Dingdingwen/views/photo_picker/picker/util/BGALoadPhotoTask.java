@@ -26,7 +26,6 @@ public class BGALoadPhotoTask extends BGAAsyncTask<Void, ArrayList<BGAImageFolde
     private Context mContext;
     private boolean mTakePhotoEnabled;
 
-
     public BGALoadPhotoTask(Callback<ArrayList<BGAImageFolderModel>> callback, Context context, boolean takePhotoEnabled) {
         super(callback);
         mContext = context.getApplicationContext();
@@ -44,7 +43,11 @@ public class BGALoadPhotoTask extends BGAAsyncTask<Void, ArrayList<BGAImageFolde
     @Override
     protected ArrayList<BGAImageFolderModel> doInBackground(Void... voids) {
         ArrayList<BGAImageFolderModel> imageFolderModels = new ArrayList();
+
         BGAImageFolderModel allImageFolderModel = new BGAImageFolderModel(mTakePhotoEnabled);
+        allImageFolderModel.name = mContext.getString(R.string.bga_pp_all_image);
+        imageFolderModels.add(allImageFolderModel);
+
         HashMap<String, BGAImageFolderModel> imageFolderModelMap = new HashMap<>();
 
         Cursor cursor = null;
@@ -58,7 +61,6 @@ public class BGALoadPhotoTask extends BGAAsyncTask<Void, ArrayList<BGAImageFolde
 
                     if (!TextUtils.isEmpty(imagePath) && isImageFile(imagePath)) {
                         if (firstInto) {
-                            allImageFolderModel.name = mContext.getString(R.string.bga_pp_all_image);
                             allImageFolderModel.coverPath = imagePath;
                             firstInto = false;
                         }
@@ -94,9 +96,6 @@ public class BGALoadPhotoTask extends BGAAsyncTask<Void, ArrayList<BGAImageFolde
                         }
                     }
                 }
-
-                // 添加所有图片目录
-                imageFolderModels.add(allImageFolderModel);
 
                 // 添加其他图片目录
                 Iterator<Map.Entry<String, BGAImageFolderModel>> iterator = imageFolderModelMap.entrySet().iterator();
