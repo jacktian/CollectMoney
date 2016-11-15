@@ -60,6 +60,10 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
         }
     }
 
+    public boolean ismIsPlusSwitchOpened() {
+        return mIsPlusSwitchOpened;
+    }
+
     public BGASortableNinePhotoLayout(Context context) {
         this(context, null);
     }

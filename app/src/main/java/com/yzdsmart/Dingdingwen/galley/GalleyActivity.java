@@ -346,7 +346,11 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
     @Override
     public void onClickNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
         if (isGalleyOperated) return;
-        startActivityForResult(BGAPhotoViewActivity.newIntent(this, Integer.MAX_VALUE, models, models, position - 1, false), Constants.REQUEST_CODE_PHOTO_PREVIEW);
+        if (mPhotosSnpl.ismIsPlusSwitchOpened()) {
+            startActivityForResult(BGAPhotoViewActivity.newIntent(this, Integer.MAX_VALUE, models, models, position - 1, false), Constants.REQUEST_CODE_PHOTO_PREVIEW);
+        } else {
+            startActivityForResult(BGAPhotoViewActivity.newIntent(this, Integer.MAX_VALUE, models, models, position, false), Constants.REQUEST_CODE_PHOTO_PREVIEW);
+        }
     }
 
     @Override
