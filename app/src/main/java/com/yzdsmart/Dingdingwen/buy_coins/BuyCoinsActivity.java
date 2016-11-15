@@ -28,6 +28,7 @@ import com.yzdsmart.Dingdingwen.bean.BuyCoinsLog;
 import com.yzdsmart.Dingdingwen.http.response.BuyCoinsPayRequestResponse;
 import com.yzdsmart.Dingdingwen.publish_tasks.PublishTasksActivity;
 import com.yzdsmart.Dingdingwen.share_sdk.OnekeyShare;
+import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomNestRadioGroup;
@@ -203,7 +204,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 payPara.setAmount(amount);
                 payPara.setSubject("叮叮蚊支付");
                 payPara.setBody("充值金币");
-                payPara.setClient_IP("127.0.0.1");
+                payPara.setClient_IP(NetworkUtils.getIPAddress(true));
                 switch (payType) {
                     case 0:
                         payPara.setChannel(CHANNEL_UPACP);

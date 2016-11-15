@@ -3,6 +3,7 @@ package com.yzdsmart.Dingdingwen.tecent_im.utils;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
@@ -11,11 +12,12 @@ import com.tencent.TIMGroupReceiveMessageOpt;
 import com.tencent.TIMMessage;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.R;
-import com.yzdsmart.Dingdingwen.main.MainActivity;
+import com.yzdsmart.Dingdingwen.money_friendship.MoneyFriendshipActivity;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.CustomMessage;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.Message;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.MessageFactory;
 import com.yzdsmart.Dingdingwen.tecent_im.event.MessageEvent;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -24,6 +26,7 @@ import java.util.Observer;
  * 在线消息通知展示
  */
 public class PushUtil implements Observer {
+    private static Context context;
 
     private static int pushNum = 0;
 
@@ -35,8 +38,9 @@ public class PushUtil implements Observer {
         MessageEvent.getInstance().addObserver(this);
     }
 
-    public static PushUtil getInstance() {
+    public static PushUtil getInstance(Context ctx) {
         if (null == instance) {
+            context = ctx;
             instance = new PushUtil();
         }
         return instance;
@@ -57,7 +61,7 @@ public class PushUtil implements Observer {
         contentStr = message.getSummary();
         NotificationManager mNotificationManager = (NotificationManager) App.getAppInstance().getSystemService(App.getAppInstance().NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(App.getAppInstance());
-        Intent notificationIntent = new Intent(App.getAppInstance(), MainActivity.class);
+        Intent notificationIntent = new Intent(App.getAppInstance(), MoneyFriendshipActivity.class);
         notificationIntent.putExtra("isNotification", true);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -102,7 +106,7 @@ public class PushUtil implements Observer {
     public void update(Observable observable, Object data) {
         if (observable instanceof MessageEvent) {
             TIMMessage msg = (TIMMessage) data;
-            if (msg != null) {
+            if (msg != null && Utils.isBackground(context)) {
                 PushNotify(msg);
             }
         }

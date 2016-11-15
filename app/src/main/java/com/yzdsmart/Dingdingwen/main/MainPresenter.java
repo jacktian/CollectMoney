@@ -169,7 +169,7 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
         FriendshipEvent.getInstance().deleteObserver(this);
         //解除群关系监听
         GroupEvent.getInstance().deleteObserver(this);
-        PushUtil.getInstance().release();
+        PushUtil.getInstance(context).release();
 
         TlsBusiness.logout(UserInfo.getInstance().getId());
         UserInfo.getInstance().setId(null);

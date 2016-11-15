@@ -36,6 +36,7 @@ import com.yzdsmart.Dingdingwen.tecent_im.bean.MessageFactory;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.NormalConversation;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo;
 import com.yzdsmart.Dingdingwen.tecent_im.service.TLSService;
+import com.yzdsmart.Dingdingwen.tecent_im.utils.PushUtil;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
@@ -83,8 +84,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     private List<Conversation> conversationList;
     private List<Conversation> pgConversationList = null;//个人或者群消息
     private GroupManageConversation groupManageConversation;
-
-    public static boolean isForeground = false;
 
     private Handler mRefreshAccessTokenHandler = new Handler() {
         @Override
@@ -165,15 +164,16 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 
     @Override
     protected void onResume() {
-        isForeground = true;
-        updateUnreadConversationBubble();
         super.onResume();
+        if (null != UserInfo.getInstance().getId()) {
+            PushUtil.getInstance(this).reset();
+            updateUnreadConversationBubble();
+        }
         MobclickAgent.onResume(this);       //统计时长
     }
 
     @Override
     protected void onPause() {
-        isForeground = false;
         super.onPause();
         MobclickAgent.onPause(this);
     }
@@ -320,10 +320,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 
     @Override
     public void imSDKLoginSuccess() {
-        mPresenter.getConversation();
         //退到后台发送通知
         //初始化程序后台后消息推送
-//        PushUtil.getInstance();
+        PushUtil.getInstance(this);
+        mPresenter.getConversation();
     }
 
     @Override

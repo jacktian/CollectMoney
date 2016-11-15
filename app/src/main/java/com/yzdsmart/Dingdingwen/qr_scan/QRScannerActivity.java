@@ -26,6 +26,7 @@ import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
+import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.StaticDialog;
@@ -204,7 +205,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
             mQRCodeView.startSpot();
             return;
         }
-        mPresenter.getCoins(Constants.GET_COIN_ACTION_CODE, result, Utils.getLocalIpAddress(), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+        mPresenter.getCoins(Constants.GET_COIN_ACTION_CODE, result, NetworkUtils.getIPAddress(true), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override
