@@ -333,7 +333,13 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                  */
                 String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
                 String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
-                showSnackbar(result + "----" + errorMsg + "----" + extraMsg);
+                System.out.println(result + "----" + errorMsg + "----" + extraMsg);
+                if ("success".equals(result)) {
+                    coinCountsET.setText("");
+                    showSnackbar("购买金币支付成功");
+                } else {
+                    showSnackbar("购买金币支付失败");
+                }
             }
         }
     }
