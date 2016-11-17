@@ -93,7 +93,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                 showSnackbar(getResources().getString(R.string.net_unusable));
                 return;
             }
-            mPresenter.refreshAccessToken("refresh_token", SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", ""));
+            if (SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "") != null && SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "").trim().length() > 0) {
+                mPresenter.refreshAccessToken("refresh_token", SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", ""));
+            }
         }
     };
     private boolean stopRefreshAccessToken = false;//停止刷新
@@ -395,6 +397,8 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
+        if (SharedPreferencesUtils.getString(this, "ddw_refresh_token", "") != null && SharedPreferencesUtils.getString(this, "ddw_refresh_token", "").trim().length() > 0)
+            return;
         mPresenter.getRefreshToken("password", Utils.getDeviceId(this), "8e2f773d58c51c3a1854c059af34b49f");
     }
 

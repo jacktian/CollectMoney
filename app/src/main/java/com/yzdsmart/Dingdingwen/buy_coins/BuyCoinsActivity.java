@@ -188,21 +188,18 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 getShopPayLog();
             }
         });
-        shopPayLogAdapter.setOnItemClickListener(new ShopPayLogAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                ShopPayLog log = logList.get(position);
-                if ("未支付".equals(log.getPayStatus())) {
-                    if (!Utils.isNetUsable(BuyCoinsActivity.this)) {
-                        showSnackbar(getResources().getString(R.string.net_unusable));
-                        return;
-                    }
-                    mPresenter.getNotPayCharge("000000", log.getChargeId(), SharedPreferencesUtils.getString(BuyCoinsActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(BuyCoinsActivity.this, "ddw_access_token", ""));
-                }
-            }
-        });
 
         getShopPayLog();
+    }
+
+    public void getNotPayCharge(ShopPayLog log) {
+        if ("未支付".equals(log.getPayStatus())) {
+            if (!Utils.isNetUsable(BuyCoinsActivity.this)) {
+                showSnackbar(getResources().getString(R.string.net_unusable));
+                return;
+            }
+            mPresenter.getNotPayCharge("000000", log.getChargeId(), SharedPreferencesUtils.getString(BuyCoinsActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(BuyCoinsActivity.this, "ddw_access_token", ""));
+        }
     }
 
     private void getBuyCoinsLog() {

@@ -39,16 +39,6 @@ class ShopPayLogAdapter extends UltimateViewAdapter<ShopPayLogAdapter.ViewHolder
         dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-    }
-
-    private OnItemClickListener mOnItemClickListener;
-
-    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
-        this.mOnItemClickListener = mOnItemClickListener;
-    }
-
     /**
      * 添加列表
      *
@@ -100,23 +90,19 @@ class ShopPayLogAdapter extends UltimateViewAdapter<ShopPayLogAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        // 如果设置了回调，则设置点击事件
-        if (null != mOnItemClickListener) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = holder.getLayoutPosition();
-                    mOnItemClickListener.onItemClick(holder.itemView, pos);
-                }
-            });
-        }
-        ShopPayLog log = logList.get(position);
+        final ShopPayLog log = logList.get(position);
         DateTime dateTime = dtf.parseDateTime(log.getCreateTime());
         holder.coinCountsTV.setText("+" + log.getGold());
         holder.payDateTV.setText(dateTime.toString("yyyy-MM-dd"));
         holder.payTimeTV.setText(dateTime.toString("HH:mm:ss"));
         holder.payAmountTV.setText("" + log.getAmount());
         holder.chargeStateIV.setImageDrawable(("未支付".equals(log.getPayStatus())) ? context.getResources().getDrawable(R.mipmap.charge_not_pay) : context.getResources().getDrawable(R.mipmap.charge_already_pay));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((BuyCoinsActivity) context).getNotPayCharge(log);
+            }
+        });
     }
 
     @Override
