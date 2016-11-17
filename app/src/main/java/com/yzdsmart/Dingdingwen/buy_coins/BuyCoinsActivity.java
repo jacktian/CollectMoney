@@ -25,7 +25,7 @@ import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.BuyCoinParameter;
 import com.yzdsmart.Dingdingwen.bean.BuyCoinsLog;
-import com.yzdsmart.Dingdingwen.http.response.BuyCoinsPayRequestResponse;
+import com.yzdsmart.Dingdingwen.bean.ShopPayLog;
 import com.yzdsmart.Dingdingwen.publish_tasks.PublishTasksActivity;
 import com.yzdsmart.Dingdingwen.share_sdk.OnekeyShare;
 import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
@@ -93,8 +93,12 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
     private LinearLayoutManager mLinearLayoutManager;
     private Paint dividerPaint;
-    private List<BuyCoinsLog> logList;
-    private BuyCoinsLogAdapter buyCoinsLogAdapter;
+
+//    private List<BuyCoinsLog> logList;
+//    private BuyCoinsLogAdapter buyCoinsLogAdapter;
+
+    private List<ShopPayLog> logList;
+    private ShopPayLogAdapter shopPayLogAdapter;
 
     private BuyCoinsContract.BuyCoinsPresenter mPresenter;
 
@@ -105,7 +109,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        logList = new ArrayList<BuyCoinsLog>();
+        logList = new ArrayList<ShopPayLog>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
@@ -137,16 +141,40 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         dividerPaint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
         HorizontalDividerItemDecoration dividerItemDecoration = new HorizontalDividerItemDecoration.Builder(this).paint(dividerPaint).build();
 
-        buyCoinsLogAdapter = new BuyCoinsLogAdapter(this);
+//        buyCoinsLogAdapter = new BuyCoinsLogAdapter(this);
+//        coinListRV.setHasFixedSize(true);
+//        coinListRV.setLayoutManager(mLinearLayoutManager);
+//        coinListRV.addItemDecoration(dividerItemDecoration);
+//        coinListRV.setAdapter(buyCoinsLogAdapter);
+//        coinListRV.reenableLoadmore();
+//        coinListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+//            @Override
+//            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+//                getBuyCoinsLog();
+//            }
+//        });
+//        coinListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                coinListRV.setRefreshing(false);
+//                coinListRV.reenableLoadmore();
+//                pageIndex = 1;
+//                lastsequence = 0;
+//                buyCoinsLogAdapter.clearList();
+//                getBuyCoinsLog();
+//            }
+//        });
+
+        shopPayLogAdapter = new ShopPayLogAdapter(this);
         coinListRV.setHasFixedSize(true);
         coinListRV.setLayoutManager(mLinearLayoutManager);
         coinListRV.addItemDecoration(dividerItemDecoration);
-        coinListRV.setAdapter(buyCoinsLogAdapter);
+        coinListRV.setAdapter(shopPayLogAdapter);
         coinListRV.reenableLoadmore();
         coinListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                getBuyCoinsLog();
+                getShopPayLog();
             }
         });
         coinListRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -156,12 +184,25 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 coinListRV.reenableLoadmore();
                 pageIndex = 1;
                 lastsequence = 0;
-                buyCoinsLogAdapter.clearList();
-                getBuyCoinsLog();
+                shopPayLogAdapter.clearList();
+                getShopPayLog();
+            }
+        });
+        shopPayLogAdapter.setOnItemClickListener(new ShopPayLogAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ShopPayLog log = logList.get(position);
+                if ("未支付".equals(log.getPayStatus())) {
+                    if (!Utils.isNetUsable(BuyCoinsActivity.this)) {
+                        showSnackbar(getResources().getString(R.string.net_unusable));
+                        return;
+                    }
+                    mPresenter.getNotPayCharge("000000", log.getChargeId(), SharedPreferencesUtils.getString(BuyCoinsActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(BuyCoinsActivity.this, "ddw_access_token", ""));
+                }
             }
         });
 
-        getBuyCoinsLog();
+        getShopPayLog();
     }
 
     private void getBuyCoinsLog() {
@@ -170,6 +211,14 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
             return;
         }
         mPresenter.buyCoinsLog(Constants.BUY_COIN_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+    }
+
+    private void getShopPayLog() {
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
+        mPresenter.getShopPayLog(Constants.SHOP_PAY_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override
@@ -351,7 +400,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     }
 
     @Override
-    public void onBuyCoins(boolean flag, String msg, BuyCoinsPayRequestResponse.ChargeBean charge) {
+    public void onBuyCoins(boolean flag, String msg, Object charge) {
         if (!flag) {
             showSnackbar(msg);
             return;
@@ -363,13 +412,25 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     }
 
     @Override
-    public void onBuyCoinsPay(BuyCoinsPayRequestResponse.ChargeBean charge) {
-        Gson gson = new Gson();
+    public void onBuyCoinsPay(Object charge) {
         Pingpp.createPayment(BuyCoinsActivity.this, gson.toJson(charge));
     }
 
     @Override
     public void onBuyCoinsLog(List<BuyCoinsLog> logList, Integer lastsequence) {
+//        this.lastsequence = lastsequence;
+//        pageIndex++;
+//        if (logList.size() < PAGE_SIZE) {
+//            coinListRV.disableLoadmore();
+//        }
+//        if (logList.size() <= 0) return;
+//        this.logList.clear();
+//        this.logList.addAll(logList);
+//        buyCoinsLogAdapter.appendList(this.logList);
+    }
+
+    @Override
+    public void onShopPayLog(List<ShopPayLog> logList, Integer lastsequence) {
         this.lastsequence = lastsequence;
         pageIndex++;
         if (logList.size() < PAGE_SIZE) {
@@ -378,7 +439,12 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         if (logList.size() <= 0) return;
         this.logList.clear();
         this.logList.addAll(logList);
-        buyCoinsLogAdapter.appendList(this.logList);
+        shopPayLogAdapter.appendList(this.logList);
+    }
+
+    @Override
+    public void onGetNotPayCharge(Object charge) {
+        Pingpp.createPayment(BuyCoinsActivity.this, gson.toJson(charge));
     }
 
     @Override

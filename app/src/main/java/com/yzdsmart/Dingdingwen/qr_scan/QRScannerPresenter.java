@@ -6,6 +6,7 @@ import android.net.Uri;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
@@ -43,6 +44,9 @@ public class QRScannerPresenter implements QRScannerContract.QRScannerPresenter 
             @Override
             public void onError(String err) {
                 mView.onGetCoins(false, context.getResources().getString(R.string.get_coins_error), null);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override

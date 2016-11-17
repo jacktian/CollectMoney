@@ -6,6 +6,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 
 /**
  * Created by YZD on 2016/9/3.
@@ -38,6 +39,9 @@ public class SettingsPresenter implements SettingsContract.SettingsPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override

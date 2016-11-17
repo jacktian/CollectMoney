@@ -8,6 +8,7 @@ import com.tencent.TIMUserProfile;
 import com.tencent.TIMValueCallBack;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.tecent_im.event.FriendshipEvent;
 
 import java.util.Collections;
@@ -43,6 +44,9 @@ public class SearchFriendPresenter implements SearchFriendContract.AddFriendPres
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override

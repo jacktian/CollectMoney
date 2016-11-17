@@ -3,7 +3,8 @@ package com.yzdsmart.Dingdingwen.buy_coins;
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.BuyCoinsLogRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.BuyCoinsPayRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.PayRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopPayLogRequestResponse;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -16,9 +17,11 @@ import rx.schedulers.Schedulers;
  */
 public class BuyCoinsModel {
     //网络请求监听
-    private Subscriber<BuyCoinsPayRequestResponse> buyCoinsSubscriber;
-    private Subscriber<BuyCoinsPayRequestResponse> buyCoinsPaySubscriber;
+    private Subscriber<PayRequestResponse> buyCoinsSubscriber;
+    private Subscriber<PayRequestResponse> buyCoinsPaySubscriber;
     private Subscriber<BuyCoinsLogRequestResponse> buyCoinsLogSubscriber;
+    private Subscriber<ShopPayLogRequestResponse> shopPayLogSubscriber;
+    private Subscriber<PayRequestResponse> notPayChargeSubscriber;
 
     //    void buyCoins(String action, String submitCode, String bazaCode, Integer goldNum, String authorization, final RequestListener listener) {
 //        buyCoinsSubscriber = new Subscriber<RequestResponse>() {
@@ -43,7 +46,7 @@ public class BuyCoinsModel {
 //                .subscribe(buyCoinsSubscriber);
 //    }
     void buyCoins(String action, String buyCoinPara, String authorization, final RequestListener listener) {
-        buyCoinsSubscriber = new Subscriber<BuyCoinsPayRequestResponse>() {
+        buyCoinsSubscriber = new Subscriber<PayRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -55,7 +58,7 @@ public class BuyCoinsModel {
             }
 
             @Override
-            public void onNext(BuyCoinsPayRequestResponse response) {
+            public void onNext(PayRequestResponse response) {
                 listener.onSuccess(response);
             }
         };
@@ -67,7 +70,7 @@ public class BuyCoinsModel {
     }
 
     void buyCoinsPay(String payPara, String authorization, final RequestListener listener) {
-        buyCoinsPaySubscriber = new Subscriber<BuyCoinsPayRequestResponse>() {
+        buyCoinsPaySubscriber = new Subscriber<PayRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -79,7 +82,7 @@ public class BuyCoinsModel {
             }
 
             @Override
-            public void onNext(BuyCoinsPayRequestResponse requestResponse) {
+            public void onNext(PayRequestResponse requestResponse) {
                 listener.onSuccess(requestResponse);
             }
         };
@@ -113,6 +116,52 @@ public class BuyCoinsModel {
                 .subscribe(buyCoinsLogSubscriber);
     }
 
+    void getShopPayLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization, final RequestListener listener) {
+        shopPayLogSubscriber = new Subscriber<ShopPayLogRequestResponse>() {
+            @Override
+            public void onCompleted() {
+                listener.onComplete();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                listener.onError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(ShopPayLogRequestResponse requestResponse) {
+                listener.onSuccess(requestResponse);
+            }
+        };
+        RequestAdapter.getRequestService().getShopPayLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, authorization)
+                .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
+                .observeOn(AndroidSchedulers.mainThread())//回调到主线程
+                .subscribe(shopPayLogSubscriber);
+    }
+
+    void getNotPayCharge(String submitCode, String chargeId, String authorization, final RequestListener listener) {
+        notPayChargeSubscriber = new Subscriber<PayRequestResponse>() {
+            @Override
+            public void onCompleted() {
+                listener.onComplete();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                listener.onError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(PayRequestResponse requestResponse) {
+                listener.onSuccess(requestResponse);
+            }
+        };
+        RequestAdapter.getRequestService().getNotPayCharge(submitCode, chargeId, authorization)
+                .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
+                .observeOn(AndroidSchedulers.mainThread())//回调到主线程
+                .subscribe(notPayChargeSubscriber);
+    }
+
     void unRegisterSubscribe() {
         //解除引用关系，以避免内存泄露的发生
         if (null != buyCoinsSubscriber) {
@@ -123,6 +172,12 @@ public class BuyCoinsModel {
         }
         if (null != buyCoinsLogSubscriber) {
             buyCoinsLogSubscriber.unsubscribe();
+        }
+        if (null != shopPayLogSubscriber) {
+            shopPayLogSubscriber.unsubscribe();
+        }
+        if (null != notPayChargeSubscriber) {
+            notPayChargeSubscriber.unsubscribe();
         }
     }
 }

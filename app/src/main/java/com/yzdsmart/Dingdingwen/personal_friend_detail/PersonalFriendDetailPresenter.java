@@ -9,6 +9,7 @@ import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetGalleyRequestResponse;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.tecent_im.event.FriendshipEvent;
 
 import java.util.List;
@@ -50,6 +51,9 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override
@@ -79,6 +83,9 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override
@@ -104,6 +111,9 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override
@@ -127,6 +137,9 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override
@@ -151,6 +164,9 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override
@@ -175,6 +191,9 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override

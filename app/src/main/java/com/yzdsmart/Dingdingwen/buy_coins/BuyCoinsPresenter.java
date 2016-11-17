@@ -6,7 +6,9 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.BuyCoinsLogRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.BuyCoinsPayRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.PayRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopPayLogRequestResponse;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 
 /**
  * Created by YZD on 2016/9/4.
@@ -56,7 +58,7 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
             @Override
             public void onSuccess(Object result) {
                 ((BaseActivity) context).hideProgressDialog();
-                BuyCoinsPayRequestResponse response = (BuyCoinsPayRequestResponse) result;
+                PayRequestResponse response = (PayRequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
                     mView.onBuyCoins(true, context.getResources().getString(R.string.buy_coin_success), response.getCharge());
                 } else {
@@ -68,6 +70,9 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override
@@ -82,7 +87,7 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
         mModel.buyCoinsPay(payPara, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                BuyCoinsPayRequestResponse requestResponse = (BuyCoinsPayRequestResponse) result;
+                PayRequestResponse requestResponse = (PayRequestResponse) result;
                 if ("OK".equals(requestResponse.getActionStatus())) {
                     mView.onBuyCoinsPay(requestResponse.getCharge());
                 } else {
@@ -94,6 +99,9 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override
@@ -121,6 +129,68 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void getShopPayLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.getShopPayLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, authorization, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                ShopPayLogRequestResponse response = (ShopPayLogRequestResponse) result;
+                if ("OK".equals(response.getActionStatus())) {
+                    mView.onShopPayLog(response.getLists(), response.getLastsequence());
+                } else {
+                    ((BaseActivity) context).showSnackbar(response.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void getNotPayCharge(String submitCode, String chargeId, String authorization) {
+        mModel.getNotPayCharge(submitCode, chargeId, authorization, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                PayRequestResponse response = (PayRequestResponse) result;
+                if ("OK".equals(response.getActionStatus())) {
+                    mView.onGetNotPayCharge(response.getCharge());
+                } else {
+                    ((BaseActivity) context).showSnackbar(response.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override

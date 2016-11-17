@@ -14,6 +14,7 @@ import com.tencent.TIMValueCallBack;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.personal_friend_detail.PersonalFriendDetailActivity;
 import com.yzdsmart.Dingdingwen.tecent_im.event.MessageEvent;
 import com.yzdsmart.Dingdingwen.tecent_im.event.RefreshEvent;
@@ -177,6 +178,9 @@ public class ChatPresenter implements ChatContract.ChatPresenter, Observer {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override

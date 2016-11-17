@@ -50,4 +50,6 @@ public class Constants {
     public static final String PERSONAL_GALLEY_UPLOAD_ACTION_CODE = "2102";//上传个人相册
     public static final String SHOP_GALLEY_UPLOAD_ACTION_CODE = "5101";//上传商铺相册
 
+    public static final String SHOP_PAY_LOG_ACTION_CODE = "816";//获取指定商铺支付日志
+
 }

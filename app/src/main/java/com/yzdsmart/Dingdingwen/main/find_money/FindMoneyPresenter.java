@@ -11,6 +11,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.ShopListRequestResponse;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,9 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
                     public void onError(String err) {
                         ((BaseActivity) context).hideProgressDialog();
                         ((BaseActivity) context).showSnackbar(err);
+                        if (err.contains("HTTP 401 Unauthorized")) {
+                            MainActivity.getInstance().refreshAccessToken();
+                        }
                     }
 
                     @Override
@@ -79,7 +83,9 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
 
             @Override
             public void onError(String err) {
-
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override
@@ -99,7 +105,9 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
 
             @Override
             public void onError(String err) {
-
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override

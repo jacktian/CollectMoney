@@ -8,6 +8,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.UploadFileRequestResponse;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 
 /**
  * Created by YZD on 2016/8/24.
@@ -43,6 +44,9 @@ public class ImageCropPresenter implements ImageCropContract.ImageCropPresenter 
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar("上传头像异常!");
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override
@@ -64,6 +68,7 @@ public class ImageCropPresenter implements ImageCropContract.ImageCropPresenter 
 
             @Override
             public void onSuccess() {
+
             }
         });
     }

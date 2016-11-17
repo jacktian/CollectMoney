@@ -2,7 +2,6 @@ package com.yzdsmart.Dingdingwen.http;
 
 import com.yzdsmart.Dingdingwen.bean.ShopScanner;
 import com.yzdsmart.Dingdingwen.http.response.BuyCoinsLogRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.BuyCoinsPayRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustLevelRequestResponse;
@@ -14,6 +13,7 @@ import com.yzdsmart.Dingdingwen.http.response.GetCoinsLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetGalleyRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.LoginRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.PayRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PersonRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PersonalWithdrawLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PublishTaskLogRequestResponse;
@@ -25,6 +25,7 @@ import com.yzdsmart.Dingdingwen.http.response.ShopFocuserRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopListRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopPayLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopWithdrawLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.UploadFileRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.WithdrawRequestResponse;
@@ -531,7 +532,7 @@ public interface RequestService {
 //    @FormUrlEncoded
     @POST(Url.GOLD)
 //    Observable<RequestResponse> buyCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldNum") Integer goldNum, @Header("Authorization") String authorization);
-    Observable<BuyCoinsPayRequestResponse> buyCoins(@Query("action") String action, @Body RequestBody buyCoinPara, @Header("Content-Type") String contentType, @Header("Accept") String accept, @Header("Authorization") String authorization);
+    Observable<PayRequestResponse> buyCoins(@Query("action") String action, @Body RequestBody buyCoinPara, @Header("Content-Type") String contentType, @Header("Accept") String accept, @Header("Authorization") String authorization);
 
     /**
      * 购买金币付款
@@ -541,7 +542,7 @@ public interface RequestService {
      */
 //    @Headers({"Content-Type: application/json", "Accept: application/json"})//需要添加头
     @POST(Url.PAY)
-    Observable<BuyCoinsPayRequestResponse> buyCoinsPay(@Body RequestBody payPara, @Header("Content-Type") String contentType, @Header("Accept") String accept, @Header("Authorization") String authorization);
+    Observable<PayRequestResponse> buyCoinsPay(@Body RequestBody payPara, @Header("Content-Type") String contentType, @Header("Accept") String accept, @Header("Authorization") String authorization);
 
     /**
      * 指定商铺购买金币日志列表
@@ -694,6 +695,34 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.IMAGE)
     Observable<RequestResponse> deleteShopGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("FileIdList") List<Integer> fileIdList, @Header("Authorization") String authorization);
+
+    /**
+     * 获取指定商铺支付日志
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param pageIndex
+     * @param pageSize
+     * @param lastsequence
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASKLOG)
+    Observable<ShopPayLogRequestResponse> getShopPayLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
+
+    /**
+     * 获取支付单据
+     *
+     * @param submitCode
+     * @param chargeId
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.PAY)
+    Observable<PayRequestResponse> getNotPayCharge(@Field("SubmitCode") String submitCode, @Field("ChargeId") String chargeId, @Header("Authorization") String authorization);
 
     /**
      * 获取推荐列表

@@ -4,7 +4,9 @@ import android.content.Context;
 
 import com.tencent.TIMGetFriendFutureListSucc;
 import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.tecent_im.event.FriendshipEvent;
 
 import java.util.Observable;
@@ -30,6 +32,7 @@ public class FriendFuturePresenter implements FriendFutureContract.FriendFutureP
 
     @Override
     public void getFutureFriends(int pageSize, long pendSeq, long decideSeq, long recommendSeq) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
         mModel.getFutureFriends(pageSize, pendSeq, decideSeq, recommendSeq, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -39,12 +42,16 @@ public class FriendFuturePresenter implements FriendFutureContract.FriendFutureP
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar("获取朋友异常!");
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

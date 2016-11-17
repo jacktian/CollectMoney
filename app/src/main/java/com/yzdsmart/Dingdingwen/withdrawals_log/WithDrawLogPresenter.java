@@ -7,6 +7,7 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.PersonalWithdrawLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopWithdrawLogRequestResponse;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 
 /**
  * Created by YZD on 2016/9/24.
@@ -42,6 +43,9 @@ public class WithDrawLogPresenter implements WithDrawLogContract.WithDrawLogPres
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override
@@ -69,6 +73,9 @@ public class WithDrawLogPresenter implements WithDrawLogContract.WithDrawLogPres
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("HTTP 401 Unauthorized")) {
+                    MainActivity.getInstance().refreshAccessToken();
+                }
             }
 
             @Override

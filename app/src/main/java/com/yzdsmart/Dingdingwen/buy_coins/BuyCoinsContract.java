@@ -3,7 +3,7 @@ package com.yzdsmart.Dingdingwen.buy_coins;
 import com.yzdsmart.Dingdingwen.BasePresenter;
 import com.yzdsmart.Dingdingwen.BaseView;
 import com.yzdsmart.Dingdingwen.bean.BuyCoinsLog;
-import com.yzdsmart.Dingdingwen.http.response.BuyCoinsPayRequestResponse;
+import com.yzdsmart.Dingdingwen.bean.ShopPayLog;
 
 import java.util.List;
 
@@ -18,9 +18,9 @@ public interface BuyCoinsContract {
          * @param flag
          * @param msg
          */
-        void onBuyCoins(boolean flag, String msg, BuyCoinsPayRequestResponse.ChargeBean charge);
+        void onBuyCoins(boolean flag, String msg, Object charge);
 
-        void onBuyCoinsPay(BuyCoinsPayRequestResponse.ChargeBean charge);
+        void onBuyCoinsPay(Object charge);
 
         /**
          * 指定商铺购买金币日志列表
@@ -29,6 +29,16 @@ public interface BuyCoinsContract {
          * @param lastsequence
          */
         void onBuyCoinsLog(List<BuyCoinsLog> logList, Integer lastsequence);
+
+        /**
+         * 指定商铺购买金币日志列表
+         *
+         * @param logList
+         * @param lastsequence
+         */
+        void onShopPayLog(List<ShopPayLog> logList, Integer lastsequence);
+
+        void onGetNotPayCharge(Object charge);
     }
 
     interface BuyCoinsPresenter extends BasePresenter {
@@ -56,6 +66,28 @@ public interface BuyCoinsContract {
          * @param lastsequence
          */
         void buyCoinsLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization);
+
+        /**
+         * 获取指定商铺支付日志
+         *
+         * @param action
+         * @param submitCode
+         * @param bazaCode
+         * @param pageIndex
+         * @param pageSize
+         * @param lastsequence
+         * @param authorization
+         */
+        void getShopPayLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization);
+
+        /**
+         * 获取支付单据
+         *
+         * @param submitCode
+         * @param chargeId
+         * @param authorization
+         */
+        void getNotPayCharge(String submitCode, String chargeId, String authorization);
 
         void unRegisterSubscribe();
     }
