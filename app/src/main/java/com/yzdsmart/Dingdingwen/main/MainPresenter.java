@@ -1,7 +1,6 @@
 package com.yzdsmart.Dingdingwen.main;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 
 import com.tencent.TIMCallBack;
 import com.tencent.TIMConversation;
@@ -272,13 +271,19 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
                 //离线状态下被其他终端踢下线
                 System.out.println("--------------------------------" + context.getResources().getString(R.string.kick_logout));
                 unRegisterObserver();
-                SharedPreferencesUtils.clear(context, PreferenceManager.getDefaultSharedPreferences(context));
+                SharedPreferencesUtils.remove(context, "baza_code");
+                SharedPreferencesUtils.remove(context, "cust_code");
+                SharedPreferencesUtils.remove(context, "im_account");
+                SharedPreferencesUtils.remove(context, "im_password");
                 mView.onIMOffline();
                 break;
             default:
                 System.out.println("--------------------------------" + context.getResources().getString(R.string.login_error));
                 unRegisterObserver();
-                SharedPreferencesUtils.clear(context, PreferenceManager.getDefaultSharedPreferences(context));
+                SharedPreferencesUtils.remove(context, "baza_code");
+                SharedPreferencesUtils.remove(context, "cust_code");
+                SharedPreferencesUtils.remove(context, "im_account");
+                SharedPreferencesUtils.remove(context, "im_password");
                 mView.onIMOffline();
                 break;
         }
@@ -301,7 +306,10 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
                 //别的设备登录,强行退出
                 ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.logout_warning));
                 unRegisterObserver();
-                SharedPreferencesUtils.clear(context, PreferenceManager.getDefaultSharedPreferences(context));
+                SharedPreferencesUtils.remove(context, "baza_code");
+                SharedPreferencesUtils.remove(context, "cust_code");
+                SharedPreferencesUtils.remove(context, "im_account");
+                SharedPreferencesUtils.remove(context, "im_password");
                 mView.onIMOffline();
             }
 
@@ -310,7 +318,10 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
                 //票据过期，需要重新登录
                 ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.user_sig_warning));
                 unRegisterObserver();
-                SharedPreferencesUtils.clear(context, PreferenceManager.getDefaultSharedPreferences(context));
+                SharedPreferencesUtils.remove(context, "baza_code");
+                SharedPreferencesUtils.remove(context, "cust_code");
+                SharedPreferencesUtils.remove(context, "im_account");
+                SharedPreferencesUtils.remove(context, "im_password");
                 mView.onIMOffline();
             }
         });

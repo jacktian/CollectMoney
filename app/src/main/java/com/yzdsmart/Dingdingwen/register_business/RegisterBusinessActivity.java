@@ -2,7 +2,6 @@ package com.yzdsmart.Dingdingwen.register_business;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
@@ -179,7 +178,10 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
         if (!flag) {
             return;
         }
-        SharedPreferencesUtils.clear(this, PreferenceManager.getDefaultSharedPreferences(this));
+        SharedPreferencesUtils.remove(this, "baza_code");
+        SharedPreferencesUtils.remove(this, "cust_code");
+        SharedPreferencesUtils.remove(this, "im_account");
+        SharedPreferencesUtils.remove(this, "im_password");
         mHandler.postDelayed(closeRunnable, 1500);
     }
 }

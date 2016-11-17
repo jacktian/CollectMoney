@@ -1,7 +1,6 @@
 package com.yzdsmart.Dingdingwen.register_login.set_info;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
@@ -62,7 +61,6 @@ public class SetInfoPresenter implements SetInfoContract.SetInfoPresenter {
             public void onSuccess(Object result) {
                 LoginRequestResponse response = (LoginRequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
-                    SharedPreferencesUtils.clear(context, PreferenceManager.getDefaultSharedPreferences(context));
                     SharedPreferencesUtils.setString(context, "baza_code", response.getBazaCode());
                     SharedPreferencesUtils.setString(context, "cust_code", response.getCustCode());
                     SharedPreferencesUtils.setString(context, "im_account", response.getTCInfo().getTCAccount());

@@ -484,7 +484,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     // 初始化 JPush。如果已经初始化，但没有登录成功，则执行重新登录。
     private void initJPush() {
         JPushInterface.init(App.getAppInstance());
-        JPushInterface.resumePush(App.getAppInstance());
         if (null == SharedPreferencesUtils.getString(this, "push_alias", "") || "".equals(SharedPreferencesUtils.getString(this, "push_alias", ""))) {
             if (null != SharedPreferencesUtils.getString(this, "baza_code", "") && !"".equals(SharedPreferencesUtils.getString(this, "baza_code", ""))) {
                 setAlias(SharedPreferencesUtils.getString(this, "baza_code", "").replaceAll("-", ""));
@@ -494,6 +493,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                 return;
             }
         }
+        if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0)
+            return;
+        JPushInterface.resumePush(App.getAppInstance());
     }
 
     // 这是来自 JPush Example 的设置别名的 Activity 里的代码。一般 App 的设置的调用入口，在任何方便的地方调用都可以。

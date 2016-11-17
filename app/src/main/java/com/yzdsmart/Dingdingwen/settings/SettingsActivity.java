@@ -1,12 +1,13 @@
 package com.yzdsmart.Dingdingwen.settings;
 
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tencent.TIMCallBack;
+import com.tencent.TIMManager;
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
@@ -108,10 +109,23 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.S
                 closeActivity();
                 break;
             case R.id.settings_logout:
-                JPushInterface.stopPush(this);
-                SharedPreferencesUtils.clear(this, PreferenceManager.getDefaultSharedPreferences(this));
-                App.getAppInstance().exitApp();
-                openActivity(MainActivity.class);
+                TIMManager.getInstance().logout(new TIMCallBack() {
+                    @Override
+                    public void onError(int i, String s) {
+                        showSnackbar("退出登录失败");
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        JPushInterface.stopPush(App.getAppInstance());
+                        SharedPreferencesUtils.remove(SettingsActivity.this, "baza_code");
+                        SharedPreferencesUtils.remove(SettingsActivity.this, "cust_code");
+                        SharedPreferencesUtils.remove(SettingsActivity.this, "im_account");
+                        SharedPreferencesUtils.remove(SettingsActivity.this, "im_password");
+                        App.getAppInstance().exitApp();
+                        openActivity(MainActivity.class);
+                    }
+                });
                 break;
         }
     }
