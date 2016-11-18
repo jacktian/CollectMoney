@@ -61,7 +61,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.alibaba:fastjson:1.1.54.android'
     //compile 'pub.devrel:easypermissions:0.2.1'
-    compile files('libs/AMap3DMap_4.1.1_AMapNavi_1.9.3_AMapSearch_3.5.0_AMapLocation_3.1.0_20161027.jar')
+    compile files('libs/AMap3DMap_4.1.2_AMapNavi_1.9.3_AMapSearch_3.6.0_AMapLocation_3.1.0_20161114.jar')
     compile files('libs/imsdk.jar')
     compile files('libs/mobilepb.jar')
     compile files('libs/org.apache.http.legacy.jar')

@@ -43,8 +43,8 @@ public class WithDrawLogPresenter implements WithDrawLogContract.WithDrawLogPres
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 
@@ -73,8 +73,8 @@ public class WithDrawLogPresenter implements WithDrawLogContract.WithDrawLogPres
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 

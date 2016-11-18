@@ -57,6 +57,8 @@ public interface MainContract {
          * 刷新 refresh token 和 access token
          */
         void refreshAccessToken();
+
+        void updateAccessToken();
     }
 
     interface MainPresenter extends BasePresenter {

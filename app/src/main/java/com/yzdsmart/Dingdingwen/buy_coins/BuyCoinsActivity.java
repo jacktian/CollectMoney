@@ -379,13 +379,21 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                  * "invalid" - payment plugin not installed
                  */
                 String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
-                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
-                System.out.println(result + "----" + errorMsg + "----" + extraMsg);
+//                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+//                System.out.println(result + "----" + errorMsg + "----" + extraMsg);
                 if ("success".equals(result)) {
                     coinCountsET.setText("");
                     showSnackbar("购买金币支付成功");
                 } else {
-                    showSnackbar("购买金币支付失败");
+                    if ("invalid_credential".equals(errorMsg)) {
+                        showSnackbar("订单已过期");
+                    } else if ("user_cancelled".equals(errorMsg)) {
+                        showSnackbar("支付已取消");
+                    } else if ("wx_app_not_installed".equals(errorMsg)) {
+                        showSnackbar("您未安装微信");
+                    } else {
+                        showSnackbar("购买金币支付失败");
+                    }
                 }
             }
         }

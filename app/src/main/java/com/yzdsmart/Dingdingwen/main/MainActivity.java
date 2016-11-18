@@ -95,11 +95,12 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             }
             if (SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "") != null && SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", "").trim().length() > 0) {
                 mPresenter.refreshAccessToken("refresh_token", SharedPreferencesUtils.getString(MainActivity.this, "ddw_refresh_token", ""));
+            } else {
+                getRefreshToken();
             }
         }
     };
     private boolean stopRefreshAccessToken = false;//停止刷新
-    private boolean isFirstRefreshAccessToken = true;//第一次刷新
 
     private ServiceConnection mConnection;
     private RefreshAccessTokenService mService;
@@ -397,8 +398,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        if (SharedPreferencesUtils.getString(this, "ddw_refresh_token", "") != null && SharedPreferencesUtils.getString(this, "ddw_refresh_token", "").trim().length() > 0)
-            return;
         mPresenter.getRefreshToken("password", Utils.getDeviceId(this), "8e2f773d58c51c3a1854c059af34b49f");
     }
 
@@ -409,11 +408,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             public void run() {
                 while (!stopRefreshAccessToken) {
                     try {
-                        if (isFirstRefreshAccessToken) {
-                            isFirstRefreshAccessToken = false;
-                        } else {
-                            Thread.sleep(3600000);
-                        }
+                        Thread.sleep(3600000);
                         mRefreshAccessTokenHandler.sendEmptyMessage(0);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -421,6 +416,11 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                 }
             }
         }).start();
+    }
+
+    @Override
+    public void updateAccessToken() {
+        mRefreshAccessTokenHandler.sendEmptyMessage(0);
     }
 
     @Override

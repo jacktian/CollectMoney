@@ -47,8 +47,8 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 
@@ -80,8 +80,8 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
                 mView.onDeleteGalleyFail();
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 
@@ -111,8 +111,8 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 
@@ -144,8 +144,8 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
                 mView.onDeleteGalleyFail();
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 
@@ -168,8 +168,8 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 
@@ -193,6 +193,9 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
+                }
             }
 
             @Override

@@ -70,8 +70,8 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 
@@ -99,8 +99,8 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 
@@ -129,8 +129,8 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 
@@ -159,8 +159,8 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 
@@ -173,6 +173,7 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
 
     @Override
     public void getNotPayCharge(String submitCode, String chargeId, String authorization) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
         mModel.getNotPayCharge(submitCode, chargeId, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -188,8 +189,8 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(err);
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 

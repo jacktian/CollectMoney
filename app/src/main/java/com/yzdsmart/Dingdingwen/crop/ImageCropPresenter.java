@@ -44,8 +44,8 @@ public class ImageCropPresenter implements ImageCropContract.ImageCropPresenter 
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar("上传头像异常!");
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 

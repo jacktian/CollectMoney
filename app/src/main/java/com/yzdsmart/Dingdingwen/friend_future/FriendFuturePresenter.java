@@ -44,8 +44,8 @@ public class FriendFuturePresenter implements FriendFutureContract.FriendFutureP
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar("获取朋友异常!");
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 

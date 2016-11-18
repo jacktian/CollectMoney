@@ -187,7 +187,6 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
                     SharedPreferencesUtils.setString(context, "ddw_refresh_token", requestResponse.getRefresh_token());
                     SharedPreferencesUtils.setString(context, "ddw_access_token", requestResponse.getAccess_token());
                     SharedPreferencesUtils.setString(context, "ddw_token_type", requestResponse.getToken_type());
-                    mView.refreshAccessToken();
                 }
             }
 

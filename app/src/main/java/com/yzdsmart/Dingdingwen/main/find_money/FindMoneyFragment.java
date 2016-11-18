@@ -405,7 +405,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         for (Marker marker : coinsMarkerList) {
             marker.remove();
         }
-        mAMap.moveCamera(CameraUpdateFactory.zoomTo(15));
+        mAMap.moveCamera(CameraUpdateFactory.zoomTo(17));
         LatLng latLng = mAMap.getCameraPosition().target;
         DecimalFormat decimalFormat = new DecimalFormat(".######");
         String mapStatusLocation = decimalFormat.format(latLng.longitude) + "," + decimalFormat.format(latLng.latitude);
@@ -426,7 +426,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 mPresenter.getShopList("000000", qLocation, zoomDistance, page_index, PAGE_SIZE, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
                 return;
             }
-            mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(locLatitude, locLongitude), 15));
+            mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(locLatitude, locLongitude), 17));
         }
     }
 
@@ -448,7 +448,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         for (Marker marker : coinsMarkerList) {
             marker.remove();
         }
-        mAMap.moveCamera(CameraUpdateFactory.zoomTo(15));
+        mAMap.moveCamera(CameraUpdateFactory.zoomTo(17));
         String marketLongitude = coor.split(",")[0];
         String marketLatitude = coor.split(",")[1];
         LatLng latLng = mAMap.getCameraPosition().target;
@@ -475,7 +475,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 mPresenter.getShopList("000000", coor, zoomDistance, page_index, PAGE_SIZE, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
                 return;
             }
-            mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marketLatLng, 15));
+            mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marketLatLng, 17));
         }
     }
 
@@ -507,12 +507,26 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         if (1000 == i) {
             if (null != walkRouteResult && null != walkRouteResult.getPaths()) {
                 if (0 < walkRouteResult.getPaths().size()) {
+                    DecimalFormat decimalFormat = new DecimalFormat("0.##");
                     isSearchRoute = true;
                     WalkPath walkPath = walkRouteResult.getPaths().get(0);
                     walkingRouteOverlay = new WalkRouteOverlay(getActivity(), mAMap, walkPath, walkRouteResult.getStartPos(), walkRouteResult.getTargetPos());
                     walkingRouteOverlay.removeFromMap();
                     walkingRouteOverlay.addToMap();
                     walkingRouteOverlay.zoomToSpan();
+                    String planDistance;
+                    String planDuration;
+                    if (walkPath.getDistance() / 1000 < 1) {
+                        planDistance = walkPath.getDistance() + "米";
+                    } else {
+                        planDistance = decimalFormat.format(walkPath.getDistance() / 1000) + "公里";
+                    }
+                    if (walkPath.getDuration() / 3600 < 1) {
+                        planDuration = decimalFormat.format(walkPath.getDuration() / 60) + "分钟";
+                    } else {
+                        planDuration = decimalFormat.format(walkPath.getDuration() / 3600) + "小时";
+                    }
+                    ((BaseActivity) getActivity()).showSnackbar("步行\t" + planDuration + "\t" + planDistance);
                 } else {
                     ((BaseActivity) getActivity()).showSnackbar("未找到规划路线");
                 }

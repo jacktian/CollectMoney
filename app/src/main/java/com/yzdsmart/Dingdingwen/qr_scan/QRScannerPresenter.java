@@ -44,8 +44,8 @@ public class QRScannerPresenter implements QRScannerContract.QRScannerPresenter 
             @Override
             public void onError(String err) {
                 mView.onGetCoins(false, context.getResources().getString(R.string.get_coins_error), null);
-                if (err.contains("HTTP 401 Unauthorized")) {
-                    MainActivity.getInstance().refreshAccessToken();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
                 }
             }
 
