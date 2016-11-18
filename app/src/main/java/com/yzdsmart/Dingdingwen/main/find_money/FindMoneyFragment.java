@@ -507,7 +507,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         if (1000 == i) {
             if (null != walkRouteResult && null != walkRouteResult.getPaths()) {
                 if (0 < walkRouteResult.getPaths().size()) {
-                    DecimalFormat decimalFormat = new DecimalFormat("0.##");
+                    DecimalFormat decimalFormat = new DecimalFormat("0.#");
                     isSearchRoute = true;
                     WalkPath walkPath = walkRouteResult.getPaths().get(0);
                     walkingRouteOverlay = new WalkRouteOverlay(getActivity(), mAMap, walkPath, walkRouteResult.getStartPos(), walkRouteResult.getTargetPos());
@@ -519,12 +519,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                     if (walkPath.getDistance() / 1000 < 1) {
                         planDistance = walkPath.getDistance() + "米";
                     } else {
-                        planDistance = decimalFormat.format(walkPath.getDistance() / 1000) + "公里";
+                        planDistance = decimalFormat.format(walkPath.getDistance() / 1000d) + "公里";
                     }
                     if (walkPath.getDuration() / 3600 < 1) {
-                        planDuration = decimalFormat.format(walkPath.getDuration() / 60) + "分钟";
+                        planDuration = decimalFormat.format(walkPath.getDuration() / 60d) + "分钟";
                     } else {
-                        planDuration = decimalFormat.format(walkPath.getDuration() / 3600) + "小时";
+                        planDuration = decimalFormat.format(walkPath.getDuration() / 3600d) + "小时";
                     }
                     ((BaseActivity) getActivity()).showSnackbar("步行\t" + planDuration + "\t" + planDistance);
                 } else {

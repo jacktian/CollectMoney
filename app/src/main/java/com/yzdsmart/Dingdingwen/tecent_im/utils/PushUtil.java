@@ -106,7 +106,7 @@ public class PushUtil implements Observer {
     public void update(Observable observable, Object data) {
         if (observable instanceof MessageEvent) {
             TIMMessage msg = (TIMMessage) data;
-            if (msg != null && Utils.isBackground(context)) {
+            if (msg != null && Utils.isAppIsInBackground(context)) {
                 PushNotify(msg);
             }
         }

@@ -2,16 +2,20 @@ package com.yzdsmart.Dingdingwen.utils;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+
+import com.jaredrummler.android.processes.AndroidProcesses;
+import com.jaredrummler.android.processes.models.AndroidAppProcess;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -320,32 +324,62 @@ public class Utils {
         }
     }
 
-    public static boolean isBackground(Context context) {
-        ActivityManager activityManager = (ActivityManager) context
-                .getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager
-                .getRunningAppProcesses();
-        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
-            if (appProcess.processName.equals(context.getPackageName())) {
-                /*
-                BACKGROUND=400 EMPTY=500 FOREGROUND=100
-                GONE=1000 PERCEPTIBLE=130 SERVICE=300 ISIBLE=200
-                 */
-                Log.i(context.getPackageName(), "此appimportace ="
-                        + appProcess.importance
-                        + ",context.getClass().getName()="
-                        + context.getClass().getName());
-                if (appProcess.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                    Log.i(context.getPackageName(), "处于后台"
-                            + appProcess.processName);
-                    return true;
-                } else {
-                    Log.i(context.getPackageName(), "处于前台"
-                            + appProcess.processName);
-                    return false;
-                }
+    public static boolean isForeground(Context context) {
+//        List<ActivityManager.RunningAppProcessInfo> appProcesses = AndroidProcesses.getRunningAppProcessInfo(context);
+//        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+//            if (appProcess.processName.equals(context.getPackageName())) {
+//                /*
+//                BACKGROUND=400 EMPTY=500 FOREGROUND=100
+//                GONE=1000 PERCEPTIBLE=130 SERVICE=300 ISIBLE=200
+//                 */
+//                Log.i(context.getPackageName(), "此appimportace ="
+//                        + appProcess.importance
+//                        + ",context.getClass().getName()="
+//                        + context.getClass().getName());
+//                if (appProcess.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+//                    Log.i(context.getPackageName(), "处于后台"
+//                            + appProcess.processName);
+//                    return true;
+//                } else {
+//                    Log.i(context.getPackageName(), "处于前台"
+//                            + appProcess.processName);
+//                    return false;
+//                }
+//            }
+//        }
+        List<AndroidAppProcess> processes = AndroidProcesses.getRunningAppProcesses();
+        for (AndroidAppProcess process : processes) {
+            String processName = process.name;
+            if (processName.equals(context.getPackageName())) {
+                return process.foreground;
             }
         }
         return false;
+    }
+
+    public static boolean isAppIsInBackground(Context context) {
+        boolean isInBackground = true;
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
+            List<ActivityManager.RunningAppProcessInfo> runningProcesses = am.getRunningAppProcesses();
+            for (ActivityManager.RunningAppProcessInfo processInfo : runningProcesses) {
+                //前台程序
+                if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                    for (String activeProcess : processInfo.pkgList) {
+                        if (activeProcess.equals(context.getPackageName())) {
+                            isInBackground = false;
+                        }
+                    }
+                }
+            }
+        } else {
+            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+            ComponentName componentInfo = taskInfo.get(0).topActivity;
+            if (componentInfo.getPackageName().equals(context.getPackageName())) {
+                isInBackground = false;
+            }
+        }
+
+        return isInBackground;
     }
 }
