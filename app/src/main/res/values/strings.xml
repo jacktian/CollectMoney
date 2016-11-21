@@ -50,6 +50,10 @@
     <string name="find_money">找钱</string>
     <string name="money_friendship">钱圈</string>
 
+    <string name="route_plane_type">规划方式</string>
+    <string name="route_plane_duration">规划时间</string>
+    <string name="route_plane_distance">规划距离</string>
+
     <!--找钱-->
     <string name="find_money_scan_coin">扫币</string>
     <string name="find_money_pay_coin">付款</string>

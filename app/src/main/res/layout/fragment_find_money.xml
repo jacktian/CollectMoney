@@ -10,6 +10,7 @@
         android:layout_height="@dimen/common_toolbar_height" />
 
     <LinearLayout
+        android:id="@+id/find_operation_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/find_money_operation_layout_height"
         android:background="@color/colorPrimary"
@@ -71,6 +72,104 @@
                 android:src="@mipmap/find_money_recommend_icon" />
         </RelativeLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/route_plane_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_horizontal_padding">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/plane_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:ellipsize="marquee"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text="步行"
+                android:textColor="@android:color/white"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/plane_type"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:text="@string/route_plane_type"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_x_small" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/plane_duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:ellipsize="marquee"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/plane_duration"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:text="@string/route_plane_duration"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_x_small" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/plane_distance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:ellipsize="marquee"
+                android:gravity="center_horizontal"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/plane_distance"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:text="@string/route_plane_distance"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_x_small" />
+        </RelativeLayout>
     </LinearLayout>
 
     <FrameLayout

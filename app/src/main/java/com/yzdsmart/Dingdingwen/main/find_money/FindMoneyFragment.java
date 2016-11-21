@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -69,6 +70,21 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Nullable
     @BindView(R.id.find_money_map)
     MapView findMoneyMap;
+    @Nullable
+    @BindView(R.id.find_operation_layout)
+    LinearLayout findOperationLayout;
+    @Nullable
+    @BindView(R.id.route_plane_layout)
+    LinearLayout routePlaneLayout;
+    @Nullable
+    @BindView(R.id.plane_type)
+    TextView planeTypeTV;
+    @Nullable
+    @BindView(R.id.plane_duration)
+    TextView planeDurationTV;
+    @Nullable
+    @BindView(R.id.plane_distance)
+    TextView planeDistanceTV;
 
     private static final String TAG = "FindMoneyFragment";
 
@@ -109,6 +125,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private Marker marketMarker;//商场Marker
 
     private RouteSearch mRouteSearch;
+    private boolean isOnRoutePlane = false;
 
     private WalkRouteOverlay walkingRouteOverlay;
     private boolean isSearchRoute = false;
@@ -145,6 +162,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         ButterKnife.apply(hideViews, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
         centerTitleTV.setText(getActivity().getResources().getString(R.string.app_name));
         centerTitleTV.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.find_money_title_logo), null, null, null);
+        ButterKnife.apply(findOperationLayout, isOnRoutePlane ? ((BaseActivity) getActivity()).BUTTERKNIFEGONE : ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
+        ButterKnife.apply(routePlaneLayout, isOnRoutePlane ? ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE : ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
 
         findMoneyMap.onCreate(savedInstanceState);
 
@@ -211,11 +230,17 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     @Optional
-    @OnClick({R.id.find_money_scan, R.id.find_money_recommend, R.id.loc_scan_coins})
+    @OnClick({R.id.center_title, R.id.find_money_scan, R.id.find_money_recommend, R.id.loc_scan_coins})
     void onClick(View view) {
         Fragment fragment;
         Bundle bundle;
         switch (view.getId()) {
+            case R.id.center_title:
+                if (!isOnRoutePlane) return;
+                isOnRoutePlane = false;
+                ButterKnife.apply(findOperationLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
+                ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
+                break;
             case R.id.find_money_scan:
                 if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
                     ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
@@ -245,7 +270,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 0  ////偏航角 0~360° (正北方为0)
         )));
         mUiSettings = mAMap.getUiSettings();
-        mUiSettings.setScaleControlsEnabled(true);
+        mUiSettings.setScaleControlsEnabled(false);
         mUiSettings.setZoomControlsEnabled(false);
         mRouteSearch = new RouteSearch(getActivity());
         mRouteSearch.setRouteSearchListener(this);
@@ -398,6 +423,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             marketMarker = null;
         }
         ButterKnife.apply(marketNameTV, BaseActivity.BUTTERKNIFEGONE);
+        if (isOnRoutePlane) {
+            isOnRoutePlane = false;
+            ButterKnife.apply(findOperationLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
+            ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
+        }
         if (null != walkingRouteOverlay) {
             walkingRouteOverlay.removeFromMap();
             walkingRouteOverlay = null;
@@ -441,6 +471,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             marketMarker = null;
         }
         ButterKnife.apply(marketNameTV, BaseActivity.BUTTERKNIFEGONE);
+        if (isOnRoutePlane) {
+            isOnRoutePlane = false;
+            ButterKnife.apply(findOperationLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
+            ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
+        }
         if (null != walkingRouteOverlay) {
             walkingRouteOverlay.removeFromMap();
             walkingRouteOverlay = null;
@@ -526,7 +561,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                     } else {
                         planDuration = decimalFormat.format(walkPath.getDuration() / 3600d) + "小时";
                     }
-                    ((BaseActivity) getActivity()).showSnackbar("步行\t" + planDuration + "\t" + planDistance);
+                    planeDurationTV.setText(planDuration);
+                    planeDistanceTV.setText(planDistance);
+                    isOnRoutePlane = true;
+                    ButterKnife.apply(findOperationLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
+                    ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
                 } else {
                     ((BaseActivity) getActivity()).showSnackbar("未找到规划路线");
                 }
