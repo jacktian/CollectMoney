@@ -350,6 +350,7 @@ public class Utils {
         List<AndroidAppProcess> processes = AndroidProcesses.getRunningAppProcesses();
         for (AndroidAppProcess process : processes) {
             String processName = process.name;
+            System.out.println(processName + "---->" + process.foreground);
             if (processName.equals(context.getPackageName())) {
                 return process.foreground;
             }
@@ -357,7 +358,13 @@ public class Utils {
         return false;
     }
 
-    public static boolean isAppIsInBackground(Context context) {
+    /**
+     * 判断程序是否在前台运行
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isAppInBackground(Context context) {
         boolean isInBackground = true;
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
@@ -379,7 +386,30 @@ public class Utils {
                 isInBackground = false;
             }
         }
-
         return isInBackground;
+    }
+
+    /**
+     * 程序是否在前台运行
+     */
+    public static boolean isAppOnForeground(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getApplicationContext()
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        String packageName = context.getApplicationContext().getPackageName();
+        /**
+         * 获取Android设备中所有正在运行的App
+         */
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager
+                .getRunningAppProcesses();
+        if (appProcesses == null)
+            return false;
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            // The name of the process that this object is associated with.
+            if (appProcess.processName.equals(packageName)
+                    && appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.utils.IntentUtils;
@@ -59,6 +60,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     //获取页面布局
     protected abstract int getLayoutResource();
+
+    private final static String TAG = "Activity";
 
     @Override
     protected void onDestroy() {
