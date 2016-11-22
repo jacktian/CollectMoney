@@ -40,7 +40,7 @@ public class ScanCoinsLogPresenter implements ScanCoinsLogContract.ScanCoinsLogP
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(err);
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_scan_coin_log));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

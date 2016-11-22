@@ -192,7 +192,7 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
 
             @Override
             public void onError(String err) {
-                ((BaseActivity) context).showSnackbar(err);
+//                ((BaseActivity) context).showSnackbar(err);
             }
 
             @Override

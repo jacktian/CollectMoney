@@ -43,7 +43,7 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(err);
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_info));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -71,7 +71,7 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(err);
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_info));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -99,7 +99,7 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(err);
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_info));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -131,7 +131,7 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(err);
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_galley));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -159,7 +159,7 @@ public class PersonalPresenter implements PersonalContract.PersonalPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(err);
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_upload_shop_avater));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

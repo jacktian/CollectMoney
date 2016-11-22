@@ -347,7 +347,7 @@
     <string name="profile_del_fail">删除好友失败</string>
     <string name="profile_black_succ">加入黑名单成功</string>
     <string name="change_group_error">修改分组失败</string>
-    <!-- Add newfriend activity -->
+    <!-- Add new friend activity -->
     <string name="title_addfri">添加好友</string>
     <string name="add_detail_ID">帐号ID</string>
     <string name="add_detail_name">备注名</string>
@@ -374,4 +374,48 @@
     <!--微博登录-->
     <string name="weibosdk_demo_token_to_string_format_1">Token：%1$s \n有效期：%2$s</string>
     <string name="weibosdk_demo_toast_auth_canceled">取消授权</string>
+
+    <!--异常-->
+    <string name="error_get_shop_list">获取商铺列表异常</string>
+    <string name="error_get_expand_shop_list">获取推荐商铺列表异常</string>
+    <string name="error_user_login">用户登录异常</string>
+    <string name="error_user_exist">检验用户是否已注册异常</string>
+    <string name="error_get_verify_code">获取验证码异常</string>
+    <string name="error_validate_verify_code">校验验证码异常</string>
+    <string name="error_set_password">设置密码异常</string>
+    <string name="error_user_register">用户注册异常</string>
+    <string name="error_get_cust_code">获取用户内码异常</string>
+    <string name="error_upload_portrait">上传头像异常</string>
+    <string name="error_buy_coin">购买金币异常</string>
+    <string name="error_buy_coin_pay">获取支付订单信息异常</string>
+    <string name="error_buy_coin_log">获取购买金币日志异常</string>
+    <string name="error_buy_coin_pay_log">获取商家支付日志异常</string>
+    <string name="error_get_not_pay_charge">获取未支付订单信息异常</string>
+    <string name="error_get_cust_info">获取用户信息异常</string>
+    <string name="error_get_cust_detail_info">获取用户详细信息异常</string>
+    <string name="error_get_shop_info">获取商铺信息异常</string>
+    <string name="error_set_shop_info">设置商铺信息异常</string>
+    <string name="error_get_focused_shop">获取关注商铺列表异常</string>
+    <string name="error_get_friend">获取好友异常</string>
+    <string name="error_get_personal_galley">获取个人相册异常</string>
+    <string name="error_delete_personal_galley">删除个人相片异常</string>
+    <string name="error_get_shop_galley">获取店铺相册异常</string>
+    <string name="error_delete_shop_galley">删除店铺相片异常</string>
+    <string name="error_upload_galley">上传相片异常</string>
+    <string name="error_get_recommend_friend">获取推荐好友列表异常</string>
+    <string name="error_upload_shop_avater">上传店铺头像异常</string>
+    <string name="error_add_friend">添加好友异常</string>
+    <string name="error_delete_friend">删除好友异常</string>
+    <string name="error_remark_friend">添加好友备注异常</string>
+    <string name="error_get_left_coins">获取剩余金币异常</string>
+    <string name="error_publish_task">发布任务异常</string>
+    <string name="error_get_publish_task_log">获取任务日志异常</string>
+    <string name="error_register_business">升级商户异常</string>
+    <string name="error_get_scan_coin_log">获取扫币日志异常</string>
+    <string name="error_set_follow">关注店铺异常</string>
+    <string name="error_get_shop_follower">获取店铺关注者列表异常</string>
+    <string name="error_get_shop_focuser">获取店铺蚊客列表异常</string>
+    <string name="error_get_shop_scanned_log">获取店铺打赏者列表异常</string>
+    <string name="error_withdraw">提现异常</string>
+    <string name="error_get_withdraw_log">获取提现日志异常</string>
 </resources>

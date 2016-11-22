@@ -44,7 +44,7 @@ public class SetInfoPresenter implements SetInfoContract.SetInfoPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(err);
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_user_register));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -78,7 +78,7 @@ public class SetInfoPresenter implements SetInfoContract.SetInfoPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(err);
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_user_login));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

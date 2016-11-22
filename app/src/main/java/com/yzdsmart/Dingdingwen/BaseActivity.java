@@ -15,7 +15,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.utils.IntentUtils;
@@ -75,6 +74,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         @Override
         public void apply(View view, int index) {
             view.setVisibility(View.GONE);
+        }
+    };
+
+    //隐藏控件
+    public static final ButterKnife.Action<View> BUTTERKNIFEINVISIBLE = new ButterKnife.Action<View>() {
+
+        @Override
+        public void apply(View view, int index) {
+            view.setVisibility(View.INVISIBLE);
         }
     };
 

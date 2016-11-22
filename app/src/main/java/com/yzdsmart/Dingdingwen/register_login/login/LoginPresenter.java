@@ -45,7 +45,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(err);
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_user_login));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

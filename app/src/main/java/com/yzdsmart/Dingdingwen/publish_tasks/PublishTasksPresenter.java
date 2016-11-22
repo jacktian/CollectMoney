@@ -41,7 +41,7 @@ public class PublishTasksPresenter implements PublishTasksContract.PublishTasksP
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(err);
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_left_coins));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -72,7 +72,7 @@ public class PublishTasksPresenter implements PublishTasksContract.PublishTasksP
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(err);
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_publish_task));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

@@ -36,14 +36,14 @@ public class ImageCropPresenter implements ImageCropContract.ImageCropPresenter 
                 if ("OK".equals(response.getActionStatus())) {
                     mView.onUploadPortraitSuccess(response.getRelaImageUrl());
                 } else {
-                    ((BaseActivity) context).showSnackbar("上传头像失败!");
+                    ((BaseActivity) context).showSnackbar(response.getErrorInfo());
                 }
             }
 
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar("上传头像异常!");
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_upload_portrait));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

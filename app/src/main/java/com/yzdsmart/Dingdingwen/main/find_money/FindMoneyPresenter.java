@@ -59,7 +59,7 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
                     @Override
                     public void onError(String err) {
                         ((BaseActivity) context).hideProgressDialog();
-                        ((BaseActivity) context).showSnackbar(err);
+                        ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_list));
                         if (err.contains("401 Unauthorized")) {
                             MainActivity.getInstance().updateAccessToken();
                         }
