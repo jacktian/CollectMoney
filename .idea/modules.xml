@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/CollectMoney.iml" filepath="$PROJECT_DIR$/CollectMoney.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/pingpp/pingpp.iml" filepath="$PROJECT_DIR$/lib/pingpp/pingpp.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/pingpp/pingpp.iml" filepath="$PROJECT_DIR$/lib/pingpp/pingpp.iml" />
     </modules>
   </component>

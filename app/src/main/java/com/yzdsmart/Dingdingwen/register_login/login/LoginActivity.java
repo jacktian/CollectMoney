@@ -9,7 +9,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.tencent.connect.UserInfo;
+import com.tencent.connect.auth.QQToken;
 import com.tencent.connect.common.Constants;
+import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.tauth.IUiListener;
@@ -25,6 +28,7 @@ import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -35,6 +39,10 @@ import butterknife.OnClick;
 import butterknife.Optional;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
 
 /**
  * Created by YZD on 2016/8/17.
@@ -147,6 +155,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
 
         MobclickAgent.openActivityDurationTrack(false);
 
+        ShareSDK.initSDK(this, "188d0cc56cba8");
+
         //腾讯
         if (null == mTencent) {
             mTencent = Tencent.createInstance(mTecentAppid, App.getAppInstance());
@@ -211,11 +221,56 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                 break;
             case R.id.platform_wechat:
                 regToWx();
+                SendAuth.Req req = new SendAuth.Req();
+                req.scope = "snsapi_userinfo";
+                iwxapi.sendReq(req);
+//                ShareSDK.initSDK(this);
+//                Platform platformWeChat = ShareSDK.getPlatform(this, Wechat.NAME);
+////                platformWeChat.SSOSetting(false);  //设置false表示使用SSO授权方式
+//                platformWeChat.setPlatformActionListener(new PlatformActionListener() {
+//                    @Override
+//                    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+//                        showSnackbar("wechat complete" + platform.getDb().exportData());
+//                        System.out.println("--->" + platform.getDb().exportData());
+//                    }
+//
+//                    @Override
+//                    public void onError(Platform platform, int i, Throwable throwable) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancel(Platform platform, int i) {
+//
+//                    }
+//                }); // 设置分享事件回调
+//                platformWeChat.showUser(null);//授权并获取用户信息
                 break;
             case R.id.platform_qq:
                 if (!mTencent.isSessionValid()) {
                     mTencent.login(this, "all", tecentLoginListener);
                 }
+//                ShareSDK.initSDK(this);
+//                Platform platformQQ = ShareSDK.getPlatform(this, QQ.NAME);
+////                platformQQ.SSOSetting(false);  //设置false表示使用SSO授权方式
+//                platformQQ.setPlatformActionListener(new PlatformActionListener() {
+//                    @Override
+//                    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+//                        showSnackbar("qq complete" + platform.getDb().exportData());
+//                        System.out.println("--->" + platform.getDb().exportData());
+//                    }
+//
+//                    @Override
+//                    public void onError(Platform platform, int i, Throwable throwable) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancel(Platform platform, int i) {
+//
+//                    }
+//                }); // 设置分享事件回调
+//                platformQQ.showUser(null);//授权并获取用户信息
                 break;
             case R.id.platform_webo:
 //                if (null == mSsoHandler && mAuthInfo != null) {
@@ -226,6 +281,27 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
 //                } else {
 //                    showSnackbar("请首先设置微博认证信息");
 //                }
+                ShareSDK.initSDK(this);
+                Platform platformWeiBo = ShareSDK.getPlatform(this, SinaWeibo.NAME);
+//                platformWeiBo.SSOSetting(false);  //设置false表示使用SSO授权方式
+                platformWeiBo.setPlatformActionListener(new PlatformActionListener() {
+                    @Override
+                    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                        showSnackbar("weibo complete" + platform.getDb().exportData());
+                        System.out.println("--->" + platform.getDb().exportData());
+                    }
+
+                    @Override
+                    public void onError(Platform platform, int i, Throwable throwable) {
+                        showSnackbar("weibo error");
+                    }
+
+                    @Override
+                    public void onCancel(Platform platform, int i) {
+                        showSnackbar("weibo cancel");
+                    }
+                }); // 设置分享事件回调
+                platformWeiBo.showUser(null);//授权并获取用户信息
                 break;
         }
     }
@@ -242,6 +318,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
             Tencent.onActivityResultData(requestCode, resultCode, data, tecentLoginListener);
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void getUserInfo() {
+        QQToken qqToken = mTencent.getQQToken();
+        UserInfo info = new UserInfo(App.getAppInstance(), qqToken);
+        info.getUserInfo(tecentInfoListener);
     }
 
     @Override
@@ -269,6 +351,18 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     }
 
     IUiListener tecentLoginListener = new BaseUiListener() {
+        @Override
+        protected void doComplete(JSONObject values) {
+            showSnackbar("AuthorSwitch_SDK:" + values);
+            getUserInfo();
+//            initOpenidAndToken(values);
+//            updateUserInfo();
+//            updateLoginButton();
+        }
+    };
+
+
+    IUiListener tecentInfoListener = new BaseUiListener() {
         @Override
         protected void doComplete(JSONObject values) {
             showSnackbar("AuthorSwitch_SDK:" + values);
@@ -301,12 +395,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
 
         @Override
         public void onError(UiError e) {
-            showSnackbar("onError: " + e.errorDetail);
+            showSnackbar("异常: " + e.errorDetail);
         }
 
         @Override
         public void onCancel() {
-            showSnackbar("onCancel");
+            showSnackbar("取消");
         }
     }
 
