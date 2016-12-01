@@ -108,13 +108,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (null != savedInstanceState) {
-            mCurrentFragment = getFragmentManager().getFragment(savedInstanceState, "currentFragment");
-            mCurrentTag = savedInstanceState.getString("currentTag");
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.add(R.id.layout_frame, mCurrentFragment, mCurrentTag);
-            ft.commitAllowingStateLoss();
-        }
 
         mainActivity = this;
 
@@ -122,6 +115,14 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         pgConversationList = new ArrayList<Conversation>();
 
         fm = getFragmentManager();
+
+        if (null != savedInstanceState) {
+            mCurrentFragment = getFragmentManager().getFragment(savedInstanceState, "currentFragment");
+            mCurrentTag = savedInstanceState.getString("currentTag");
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.add(R.id.layout_frame, mCurrentFragment, mCurrentTag);
+            ft.commitAllowingStateLoss();
+        }
 
         initView();
 

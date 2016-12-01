@@ -22,11 +22,21 @@
 #包明不混合大小写
 -dontusemixedcaseclassnames
 
-#不去忽略非公共的库类
+#指定不去忽略非公共库的类
 -dontskipnonpubliclibraryclasses
 
- #优化  不优化输入的类文件
--dontoptimize
+#指定不去忽略非公共库的类
+-dontskipnonpubliclibraryclassmembers
+
+#保护注解
+-keepattributes *Annotation*
+
+#抛出异常时保留代码行号
+-keepattributes SourceFile,LineNumberTable
+
+#避免混淆泛型 如果混淆报错建议关掉
+-keepattributes Signature
+-keepattributes EnclosingMethod
 
  #预校验
 -dontpreverify
@@ -34,11 +44,11 @@
  #混淆时是否记录日志
 -verbose
 
+#忽略警告
+-ignorewarning
+
  # 混淆时所采用的算法
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
-
-#保护注解
--keepattributes *Annotation*
 
 # 保持哪些类不被混淆
 -keep public class * extends android.app.Fragment
@@ -50,27 +60,36 @@
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
 -keep public class com.android.vending.licensing.ILicensingService
-#如果有引用v4包可以添加下面这行
--keep public class * extends android.support.v4.app.Fragment
-
-#忽略警告
--ignorewarning
-
-##记录生成的日志数据,gradle build时在本项目根目录输出##
-#apk 包内所有 class 的内部结构
--dump proguard/class_files.txt
-#未混淆的类和成员
--printseeds proguard/seeds.txt
-#列出从 apk 中删除的代码
--printusage proguard/unused.txt
-#混淆前后的映射
--printmapping proguard/mapping.txt
-########记录生成的日志数据，gradle build时 在本项目根目录输出-end######
-
 #如果引用了v4或者v7包
 -dontwarn android.support.**
+#保留support下的所有类及其内部类
+-keep class android.support.** {*;}
+-keep public class * extends android.support.v4.**
+-keep public class * extends android.support.v7.**
+-keep public class * extends android.support.annotation.**
+-keep class * extends android.**{*;}
 
-####混淆保护自己项目的部分代码以及引用的第三方jar包library-end####
+#保持自定义控件类不被混淆
+-keepclassmembers class * extends android.app.Activity {
+   public void *(android.view.View);
+}
+
+-keep public class * extends android.view.View {
+    public <init>(android.content.Context);
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+    public void set*(...);
+    *** get*();
+}
+
+#不混淆资源类
+-keepclassmembers class **.R$* {*;}
+
+#保持枚举 enum 类不被混淆
+-keepclassmembers enum * {
+  public static **[] values();
+  public static ** valueOf(java.lang.String);
+}
 
 #保持 native 方法不被混淆
 -keepclasseswithmembernames class * {
@@ -85,18 +104,6 @@
 #保持自定义控件类不被混淆
 -keepclasseswithmembers class * {
     public <init>(android.content.Context, android.util.AttributeSet, int);
-}
-
-#保持自定义控件类不被混淆
--keepclassmembers class * extends android.app.Activity {
-   public void *(android.view.View);
-}
-
--keep public class * extends android.view.View {
-    public <init>(android.content.Context);
-    public <init>(android.content.Context, android.util.AttributeSet);
-    public <init>(android.content.Context, android.util.AttributeSet, int);
-    public void set*(...);
 }
 
 #保持 Parcelable 不被混淆
@@ -120,27 +127,39 @@
     java.lang.Object readResolve();
 }
 
-#保持枚举 enum 类不被混淆
--keepclassmembers enum * {
-  public static **[] values();
-  public static ** valueOf(java.lang.String);
-}
-
 -keepclassmembers class * {
     public void *ButtonClicked(android.view.View);
+    void *(**On*Event);
+    void *(**On*Listener);
 }
 
-#不混淆资源类
--keepclassmembers class **.R$* {
-    public static <fields>;
+#移除log代码
+-assumenosideeffects class android.util.Log {
+    public static *** v(...);
+    public static *** i(...);
+    public static *** d(...);
+    public static *** w(...);
+    public static *** e(...);
 }
 
-#避免混淆泛型 如果混淆报错建议关掉
--keepattributes Signature
+##记录生成的日志数据,gradle build时在本项目根目录输出##
+#apk 包内所有 class 的内部结构
+-dump proguard/class_files.txt
+#未混淆的类和成员
+-printseeds proguard/seeds.txt
+#列出从 apk 中删除的代码
+-printusage proguard/unused.txt
+#混淆前后的映射
+-printmapping proguard/mapping.txt
+########记录生成的日志数据，gradle build时 在本项目根目录输出-end######
 
 #############################################################################################
 ########################                 以上通用           ##################################
 #############################################################################################
+
+#对于实体类我们不能混淆
+-keep public class com.yzdsmart.Dingdingwen.bean.** {*;}
+-keep class com.yzdsmart.Dingdingwen.http.response.** {*;}
 
 #######################     常用第三方模块的混淆选项         ###################################
 ## ----------------------------------
@@ -158,13 +177,51 @@
     @butterknife.* <methods>;
 }
 
--keep class rx.**{*;}       #不混淆某个包内的所有文件
--keep class retrofit2.**{*;}       #不混淆某个包内的所有文件
--keep class okhttp3.**{*;}       #不混淆某个包内的所有文件
--keep class okio.**{*;}       #不混淆某个包内的所有文件
+## ----------------------------------
+##      rxjava、rxandroid相关
+## ----------------------------------
+-dontwarn sun.misc.**
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+    long producerIndex;
+    long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
 
 ## ----------------------------------
-##      Mob相关
+##      retroift相关
+## ----------------------------------
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+
+## ----------------------------------
+##      OkHttp3相关
+## ----------------------------------
+-dontwarn okhttp3.**
+-keep class okhttp3.** {*;}
+
+## ----------------------------------
+##      Okio相关
+## ----------------------------------
+-dontwarn okio.**
+-keep class okio.** {*;}
+-keep public class org.codehaus.* { *; }
+-keep public class java.nio.* { *; }
+
+## ----------------------------------
+##      fastjson相关
+## ----------------------------------
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.** {*;}
+
+## ----------------------------------
+##      sharesdk相关
 ## ----------------------------------
 -keep class android.net.http.SslError
 -keep class android.webkit.**{*;}
@@ -180,12 +237,11 @@
 ##      Gson相关
 ## ----------------------------------
 #如果用用到Gson解析包的，直接添加下面这几行就能成功混淆，不然会报错。
+-keep class com.google.**{*;}
 # Gson specific classes
--keep class sun.misc.Unsafe { *; }
+-keep class sun.misc.Unsafe {*;}
 # Application classes that will be serialized/deserialized over Gson
 -dontwarn com.google.**
--keep class com.google.gson.** {*;}
--keep class com.google.protobuf.** {*;}
 
 ## ----------------------------------
 ##      Glide相关
@@ -195,7 +251,12 @@
   **[] $VALUES;
   public *;
 }
-#-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+
+## ----------------------------------
+##      joda相关
+## ----------------------------------
+-dontwarn org.joda.time.**
+-keep class org.joda.time.** { *; }
 
 ## ----------------------------------
 ##      高德地图相关
@@ -226,6 +287,9 @@
 ## ----------------------------------
 -keep class com.tencent.**{*;}
 -dontwarn com.tencent.**
+
+-keep class com.qq.**{*;}
+-dontwarn com.qq.**
 
 -keep class tencent.**{*;}
 -dontwarn tencent.**
@@ -261,9 +325,6 @@
 ## ----------------------------------
 ##      jpush相关
 ## ----------------------------------
--dontoptimize
--dontpreverify
-
 -dontwarn cn.jpush.**
 -keep class cn.jpush.** { *; }
 
@@ -278,7 +339,8 @@
     public static final int *;
 }
 
--keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
+-dontwarn org.apache.http.**
+-keep class org.apache.http.** { *; }
+
+-dontwarn cn.bingoogolapple.**
+-keep class cn.bingoogolapple.** { *; }

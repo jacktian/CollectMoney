@@ -112,6 +112,10 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        conversationList = new LinkedList<Conversation>();
+        pgConversationList = new ArrayList<Conversation>();
+
+        fm = getFragmentManager();
 
         if (null != savedInstanceState) {
             mCurrentFragment = getFragmentManager().getFragment(savedInstanceState, "currentFragment");
@@ -120,11 +124,6 @@ public class MoneyFriendshipActivity extends BaseActivity implements MoneyFriend
             ft.add(R.id.layout_frame, mCurrentFragment, mCurrentTag);
             ft.commitAllowingStateLoss();
         }
-
-        conversationList = new LinkedList<Conversation>();
-        pgConversationList = new ArrayList<Conversation>();
-
-        fm = getFragmentManager();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));

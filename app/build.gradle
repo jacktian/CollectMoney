@@ -26,11 +26,11 @@ android {
     buildTypes {
         release {
             //混淆
-            minifyEnabled false
-//            //Zipalign优化
-//            zipAlignEnabled true
-//            // 移除无用的resource文件
-//            shrinkResources true
+            minifyEnabled true
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
             //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明，后一个文件是自己的定义混淆文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -73,7 +73,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.alibaba:fastjson:1.1.54.android'
     //compile 'pub.devrel:easypermissions:0.2.1'
-    compile 'com.jaredrummler:android-processes:1.0.8'
+//    compile 'com.jaredrummler:android-processes:1.0.9'
     compile files('libs/AMap3DMap_4.1.2_AMapNavi_1.9.3_AMapSearch_3.6.0_AMapLocation_3.1.0_20161114.jar')
     compile files('libs/imsdk.jar')
     compile files('libs/mobilepb.jar')
