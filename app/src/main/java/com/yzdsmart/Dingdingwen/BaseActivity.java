@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
@@ -32,10 +34,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Nullable
     @BindView(R.id.container)
     CoordinatorLayout container;
+    @Nullable
+    @BindView(R.id.background_bag_layout)
+    protected RelativeLayout backgroundBagLayout;
 
     private Unbinder unbinder = null;
 
     private DynamicDialog dynamicDialog;
+
+    protected BottomSheetBehavior backgroundBagBottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             setSupportActionBar(toolBar);
         }
 
+        initBackgroundBagPlatform();
     }
 
     //获取页面布局
@@ -200,6 +208,28 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (null != dynamicDialog) {
             dynamicDialog.dismiss();
             dynamicDialog = null;
+        }
+    }
+
+    public void initBackgroundBagPlatform() {
+        if (null != container && null != backgroundBagLayout) {
+            backgroundBagBottomSheetBehavior = BottomSheetBehavior.from(backgroundBagLayout);
+            // change the state of the bottom sheet
+//            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            backgroundBagBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            // set callback for changes
+//            bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+//                @Override
+//                public void onStateChanged(@NonNull View bottomSheet, int newState) {
+//
+//                }
+//
+//                @Override
+//                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+//
+//                }
+//            });
         }
     }
 }

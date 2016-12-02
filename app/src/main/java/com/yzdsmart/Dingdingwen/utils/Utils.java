@@ -14,9 +14,6 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.jaredrummler.android.processes.AndroidProcesses;
-import com.jaredrummler.android.processes.models.AndroidAppProcess;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -347,14 +344,16 @@ public class Utils {
 //                }
 //            }
 //        }
-        List<AndroidAppProcess> processes = AndroidProcesses.getRunningAppProcesses();
-        for (AndroidAppProcess process : processes) {
-            String processName = process.name;
-            System.out.println(processName + "---->" + process.foreground);
-            if (processName.equals(context.getPackageName())) {
-                return process.foreground;
-            }
-        }
+
+
+//        List<AndroidAppProcess> processes = AndroidProcesses.getRunningAppProcesses();
+//        for (AndroidAppProcess process : processes) {
+//            String processName = process.name;
+//            System.out.println(processName + "---->" + process.foreground);
+//            if (processName.equals(context.getPackageName())) {
+//                return process.foreground;
+//            }
+//        }
         return false;
     }
 

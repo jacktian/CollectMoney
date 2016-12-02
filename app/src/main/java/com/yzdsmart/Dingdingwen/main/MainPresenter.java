@@ -16,6 +16,7 @@ import com.tencent.TIMValueCallBack;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.BackgroundBag;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendshipInfo;
@@ -227,6 +228,20 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
 
             }
         });
+    }
+
+    @Override
+    public void getBackgroundBag() {
+        List<BackgroundBag> backgroundBags = new ArrayList<BackgroundBag>();
+        for (int i = 0; i < 30; i++) {
+            backgroundBags.add(new BackgroundBag(0, 99));
+        }
+        backgroundBags.add(new BackgroundBag(0, 54));
+        for (int i = 0; i < 30; i++) {
+            backgroundBags.add(new BackgroundBag(1, 99));
+        }
+        backgroundBags.add(new BackgroundBag(1, 78));
+        mView.onGetBackgroundBag(backgroundBags);
     }
 
     @Override

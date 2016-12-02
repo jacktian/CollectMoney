@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -230,7 +231,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     @Optional
-    @OnClick({R.id.center_title, R.id.find_money_scan, R.id.find_money_recommend, R.id.loc_scan_coins})
+    @OnClick({R.id.center_title, R.id.find_money_scan, R.id.find_money_bag, R.id.find_money_recommend, R.id.loc_scan_coins})
     void onClick(View view) {
         Fragment fragment;
         Bundle bundle;
@@ -242,6 +243,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
                 break;
             case R.id.find_money_scan:
+                if (BottomSheetBehavior.STATE_EXPANDED == ((MainActivity) getActivity()).getBackgroundBagState()) {
+                    ((MainActivity) getActivity()).hideBackgroundBagBehavior();
+                    return;
+                }
                 if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
                     ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
                     return;
@@ -250,7 +255,17 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 bundle.putInt("scanType", 0);
                 ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
                 break;
+            case R.id.find_money_bag:
+                if (BottomSheetBehavior.STATE_EXPANDED == ((MainActivity) getActivity()).getBackgroundBagState()) {
+                    return;
+                }
+                ((MainActivity) getActivity()).showBackgroundBag();
+                break;
             case R.id.find_money_recommend:
+                if (BottomSheetBehavior.STATE_EXPANDED == ((MainActivity) getActivity()).getBackgroundBagState()) {
+                    ((MainActivity) getActivity()).hideBackgroundBagBehavior();
+                    return;
+                }
                 fragment = fm.findFragmentByTag("recommend");
                 if (null == fragment) {
                     fragment = new RecommendFragment();

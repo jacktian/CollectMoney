@@ -5,6 +5,7 @@ import com.tencent.TIMGroupPendencyItem;
 import com.tencent.TIMMessage;
 import com.yzdsmart.Dingdingwen.BasePresenter;
 import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.bean.BackgroundBag;
 
 import java.util.List;
 
@@ -58,6 +59,8 @@ public interface MainContract {
          */
         void refreshAccessToken();
 
+        void onGetBackgroundBag(List<BackgroundBag> bagList);
+
         void updateAccessToken();
     }
 
@@ -104,6 +107,8 @@ public interface MainContract {
          * @param refreshToken
          */
         void refreshAccessToken(String grantType, String refreshToken);
+
+        void getBackgroundBag();
 
         /**
          * 取消网络请求

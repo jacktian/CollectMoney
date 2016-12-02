@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/activity_vertical_padding">
+
+    <ImageView
+        android:id="@+id/bag_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/background_bag_diamond" />
+
+    <TextView
+        android:id="@+id/bag_counts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="@dimen/activity_vertical_padding"
+        android:text="99个"
+        android:textColor="@color/font_grey"
+        android:textSize="@dimen/font_small" />
+</LinearLayout>

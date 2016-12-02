@@ -9,10 +9,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMGroupPendencyItem;
@@ -22,6 +26,7 @@ import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.BackgroundBag;
 import com.yzdsmart.Dingdingwen.main.find_money.FindMoneyFragment;
 import com.yzdsmart.Dingdingwen.money_friendship.MoneyFriendshipActivity;
 import com.yzdsmart.Dingdingwen.money_friendship.conversation.ConversationFragment;
@@ -61,8 +66,11 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     @Nullable
     @BindView(R.id.unread_conversation_bubble)
     TextView unreadConversationBubbleTV;
+    @Nullable
+    @BindView(R.id.background_bag_list)
+    UltimateRecyclerView backgroundBagRV;
 
-    private static final int REQUEST_LOCATION_PERM_CODE = 1111;//申请权限码
+//    private static final int REQUEST_LOCATION_PERM_CODE = 1111;//申请权限码
 
     //连续双击返回键退出程序
     private Long lastKeyDown = 0l;
@@ -105,6 +113,11 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     private ServiceConnection mConnection;
     private RefreshAccessTokenService mService;
 
+    private GridLayoutManager mGridLayoutManager;
+    //    private LinearLayoutManager mLinearLayoutManager;
+    private BackgroundBagAdapter bagAdapter;
+    private boolean isFirstLoadBag = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,6 +144,22 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         tlsService = TLSService.getInstance();
 
         new MainPresenter(this, this, tlsService);
+
+        bagAdapter = new BackgroundBagAdapter(this);
+        backgroundBagRV.setAdapter(bagAdapter);
+        mGridLayoutManager = new GridLayoutManager(this, 5);
+        backgroundBagRV.setLayoutManager(mGridLayoutManager);
+        backgroundBagRV.setHasFixedSize(true);
+        backgroundBagRV.setSaveEnabled(true);
+        backgroundBagRV.setClipToPadding(false);
+        backgroundBagRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                backgroundBagRV.setRefreshing(false);
+                bagAdapter.clearList();
+                mPresenter.getBackgroundBag();
+            }
+        });
 
         imLogin();
 
@@ -208,7 +237,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     }
 
     @Optional
-    @OnClick({R.id.money_friend_radio_layout, R.id.money_friend_radio, R.id.loc_scan_coins, R.id.personal_radio_layout, R.id.personal_radio})
+    @OnClick({R.id.money_friend_radio_layout, R.id.money_friend_radio, R.id.loc_scan_coins, R.id.personal_radio_layout, R.id.personal_radio, R.id.background_bag_layout, R.id.quit_background_bag})
     void onClick(View view) {
         Fragment fragment;
         switch (view.getId()) {
@@ -242,6 +271,11 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                 if (!(mCurrentFragment instanceof FindMoneyFragment)) {
                     backToFindMoney();
                 }
+                break;
+            case R.id.quit_background_bag:
+                backgroundBagBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                break;
+            case R.id.background_bag_layout:
                 break;
         }
     }
@@ -293,6 +327,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
+                if (BottomSheetBehavior.STATE_EXPANDED == backgroundBagBottomSheetBehavior.getState()) {
+                    backgroundBagBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                    return true;
+                }
                 if (!(mCurrentFragment instanceof FindMoneyFragment)) {
                     backToFindMoney();
                     return true;
@@ -420,6 +458,11 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     }
 
     @Override
+    public void onGetBackgroundBag(List<BackgroundBag> bagList) {
+        bagAdapter.appendList(bagList);
+    }
+
+    @Override
     public void updateAccessToken() {
         mRefreshAccessTokenHandler.sendEmptyMessage(0);
     }
@@ -484,6 +527,37 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             num += conversation.getUnreadNum();
         }
         return num;
+    }
+
+    public void showBackgroundBag() {
+        if (null != backgroundBagBottomSheetBehavior) {
+            backgroundBagBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            if (isFirstLoadBag) {
+                isFirstLoadBag = false;
+                mPresenter.getBackgroundBag();
+            }
+        }
+    }
+
+    /**
+     * 获取底部弹出框状态
+     *
+     * @return
+     */
+    public int getBackgroundBagState() {
+        if (null != backgroundBagBottomSheetBehavior) {
+            return backgroundBagBottomSheetBehavior.getState();
+        }
+        return -1;
+    }
+
+    /**
+     * 隐藏底部框
+     */
+    public void hideBackgroundBagBehavior() {
+        if (null != backgroundBagBottomSheetBehavior) {
+            backgroundBagBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        }
     }
 
     // 初始化 JPush。如果已经初始化，但没有登录成功，则执行重新登录。
