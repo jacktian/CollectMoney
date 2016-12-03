@@ -1,9 +1,13 @@
 package com.yzdsmart.Dingdingwen.main.recommend;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
@@ -39,7 +43,9 @@ public class RecommendFragment extends BaseFragment {
 //    UltimateRecyclerView recommendListRV;
     @Nullable
     @BindView(R.id.recommend_webview)
-    WebView recommendWebview;
+    WebView recommendWebView;
+
+    private WebSettings recommendSettings;
 
     private static final String TAG = "RecommendFragment";
 
@@ -110,8 +116,41 @@ public class RecommendFragment extends BaseFragment {
 //
 //        getExpandList();
 
-//        recommendWebview.loadUrl("file:///android_asset/discover/discover.html");
-        recommendWebview.loadUrl("http://192.168.0.171/example/discover/discover.html");
+        loadPage();
+    }
+
+    @SuppressLint("JavascriptInterface")
+    private void loadPage() {
+        recommendSettings = recommendWebView.getSettings();
+        //设置编码
+        recommendSettings.setDefaultTextEncodingName("UTF-8");
+        //启用支持javascript
+        recommendSettings.setJavaScriptEnabled(true);
+        recommendSettings.setAllowFileAccess(true);
+        recommendSettings.setAllowFileAccess(true);
+        recommendSettings.setAllowContentAccess(true);
+        recommendSettings.setDomStorageEnabled(true);
+        recommendWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条风格，为0指滚动条不占用空间，直接覆盖在网页上
+        recommendWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (100 == newProgress) {
+
+                }
+            }
+        });
+        recommendWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // 重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边
+                view.loadUrl(url);
+                //如果不需要其他对点击链接事件的处理返回true，否则返回false
+                return true;
+            }
+        });
+        recommendWebView.clearHistory();
+        recommendWebView.clearCache(true);
+        recommendWebView.loadUrl("file:///android_asset/discover/discover.html");
     }
 
 //    private void getExpandList() {
