@@ -9,10 +9,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -66,9 +67,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     @Nullable
     @BindView(R.id.unread_conversation_bubble)
     TextView unreadConversationBubbleTV;
-    @Nullable
-    @BindView(R.id.background_bag_list)
-    UltimateRecyclerView backgroundBagRV;
 
 //    private static final int REQUEST_LOCATION_PERM_CODE = 1111;//申请权限码
 
@@ -114,9 +112,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     private RefreshAccessTokenService mService;
 
     private GridLayoutManager mGridLayoutManager;
-    //    private LinearLayoutManager mLinearLayoutManager;
     private BackgroundBagAdapter bagAdapter;
     private boolean isFirstLoadBag = true;
+    private BottomSheetDialog backgroundBagBottomSheetDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,29 +135,18 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             ft.commitAllowingStateLoss();
         }
 
+        bagAdapter = new BackgroundBagAdapter(this);
+        mGridLayoutManager = new GridLayoutManager(this, 5);
+
         initView();
+
+        initBackgroundBagBottomSheetDialog();
 
 //        getLocationPermission();//获取手机定位权限
 
         tlsService = TLSService.getInstance();
 
         new MainPresenter(this, this, tlsService);
-
-        bagAdapter = new BackgroundBagAdapter(this);
-        backgroundBagRV.setAdapter(bagAdapter);
-        mGridLayoutManager = new GridLayoutManager(this, 5);
-        backgroundBagRV.setLayoutManager(mGridLayoutManager);
-        backgroundBagRV.setHasFixedSize(true);
-        backgroundBagRV.setSaveEnabled(true);
-        backgroundBagRV.setClipToPadding(false);
-        backgroundBagRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                backgroundBagRV.setRefreshing(false);
-                bagAdapter.clearList();
-                mPresenter.getBackgroundBag();
-            }
-        });
 
         imLogin();
 
@@ -272,11 +259,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                     backToFindMoney();
                 }
                 break;
-            case R.id.quit_background_bag:
-                backgroundBagBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                break;
-            case R.id.background_bag_layout:
-                break;
         }
     }
 
@@ -327,10 +309,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                if (BottomSheetBehavior.STATE_EXPANDED == backgroundBagBottomSheetBehavior.getState()) {
-                    backgroundBagBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                    return true;
-                }
                 if (!(mCurrentFragment instanceof FindMoneyFragment)) {
                     backToFindMoney();
                     return true;
@@ -530,34 +508,38 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     }
 
     public void showBackgroundBag() {
-        if (null != backgroundBagBottomSheetBehavior) {
-            backgroundBagBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            if (isFirstLoadBag) {
-                isFirstLoadBag = false;
+        backgroundBagBottomSheetDialog.show();
+        if (isFirstLoadBag) {
+            isFirstLoadBag = false;
+            mPresenter.getBackgroundBag();
+        }
+    }
+
+    private void initBackgroundBagBottomSheetDialog() {
+        backgroundBagBottomSheetDialog = new BottomSheetDialog(this, R.style.background_bag_dialog);
+        View view = LayoutInflater.from(this).inflate(R.layout.background_bag_layout, null);
+        final UltimateRecyclerView backgroundBagRV = (UltimateRecyclerView) view.findViewById(R.id.background_bag_list);
+        backgroundBagRV.setAdapter(bagAdapter);
+        backgroundBagRV.setLayoutManager(mGridLayoutManager);
+        backgroundBagRV.setHasFixedSize(true);
+        backgroundBagRV.setSaveEnabled(true);
+        backgroundBagRV.setClipToPadding(false);
+        backgroundBagRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                backgroundBagRV.setRefreshing(false);
+                bagAdapter.clearList();
                 mPresenter.getBackgroundBag();
             }
-        }
-    }
-
-    /**
-     * 获取底部弹出框状态
-     *
-     * @return
-     */
-    public int getBackgroundBagState() {
-        if (null != backgroundBagBottomSheetBehavior) {
-            return backgroundBagBottomSheetBehavior.getState();
-        }
-        return -1;
-    }
-
-    /**
-     * 隐藏底部框
-     */
-    public void hideBackgroundBagBehavior() {
-        if (null != backgroundBagBottomSheetBehavior) {
-            backgroundBagBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        }
+        });
+        view.findViewById(R.id.quit_background_bag).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                backgroundBagBottomSheetDialog.dismiss();
+            }
+        });
+        backgroundBagBottomSheetDialog.setContentView(view);
+        backgroundBagBottomSheetDialog.setCancelable(false);
     }
 
     // 初始化 JPush。如果已经初始化，但没有登录成功，则执行重新登录。

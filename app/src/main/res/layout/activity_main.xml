@@ -77,6 +77,4 @@
 
     </FrameLayout>
 
-    <include layout="@layout/background_bag_layout" />
-
 </android.support.design.widget.CoordinatorLayout>
