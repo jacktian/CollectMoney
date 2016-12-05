@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
-import com.github.paolorotolo.appintro.AppIntro2;
+import com.github.paolorotolo.appintro.AppIntro;
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
@@ -17,21 +17,31 @@ import com.yzdsmart.Dingdingwen.utils.Utils;
 /**
  * Created by YZD on 2016/8/17.
  */
-public class SplashActivity extends AppIntro2 implements SplashContract.SplashView {
+public class SplashActivity extends AppIntro implements SplashContract.SplashView {
     private SplashContract.SplashPresenter mPresenter;
 
     @Override
-    public void init(@Nullable Bundle savedInstanceState) {
-        super.init(savedInstanceState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        addSlide(new SplashFragment_1());
-        addSlide(new SplashFragment_2());
-        addSlide(new SplashFragment_3());
+        Fragment splash_1 = new SplashFragment_1();
+        Fragment splash_2 = new SplashFragment_2();
+        Fragment splash_3 = new SplashFragment_3();
+
+        addSlide(splash_1);
+        addSlide(splash_2);
+        addSlide(splash_3);
+
+        // OPTIONAL METHODS
+        // Override bar/separator color.
+//        setBarColor(Color.parseColor("#3F51B5"));
+        setSeparatorColor(Color.TRANSPARENT);
+
+        // Hide Skip/Done button.
+        showSkipButton(false);
+        setProgressButtonEnabled(false);
 
         setIndicatorColor(Color.parseColor("#f20044"), Color.parseColor("#cccccc"));
-
-        showSkipButton(false);
-        showDoneButton(false);
 
         new SplashPresenter(this, this);
 
@@ -60,18 +70,6 @@ public class SplashActivity extends AppIntro2 implements SplashContract.SplashVi
     protected void onStop() {
         super.onStop();
         mPresenter.unRegisterSubscribe();
-    }
-
-    @Override
-    public void onSkipPressed(Fragment currentFragment) {
-        super.onSkipPressed(currentFragment);
-        startMain();
-    }
-
-    @Override
-    public void onDonePressed(Fragment currentFragment) {
-        super.onDonePressed(currentFragment);
-        startMain();
     }
 
     public void startMain() {
