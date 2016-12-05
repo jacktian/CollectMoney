@@ -16,61 +16,37 @@
         android:background="@color/colorPrimary"
         android:orientation="horizontal">
 
-        <RelativeLayout
+        <ImageButton
+            android:id="@+id/find_money_scan"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@mipmap/find_money_scan_icon" />
 
-            <ImageButton
-                android:id="@+id/find_money_scan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@null"
-                android:src="@mipmap/find_money_scan_icon" />
-        </RelativeLayout>
-
-        <RelativeLayout
+        <ImageButton
+            android:id="@+id/find_money_pay"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@mipmap/find_money_pay_icon" />
 
-            <ImageButton
-                android:id="@+id/find_money_pay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@null"
-                android:src="@mipmap/find_money_pay_icon" />
-        </RelativeLayout>
-
-        <RelativeLayout
+        <ImageButton
+            android:id="@+id/find_money_bag"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@mipmap/find_money_bag_icon" />
 
-            <ImageButton
-                android:id="@+id/find_money_bag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@null"
-                android:src="@mipmap/find_money_bag_icon" />
-        </RelativeLayout>
-
-        <RelativeLayout
+        <ImageButton
+            android:id="@+id/find_money_recommend"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:id="@+id/find_money_recommend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@null"
-                android:src="@mipmap/find_money_recommend_icon" />
-        </RelativeLayout>
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@mipmap/find_money_recommend_icon" />
 
     </LinearLayout>
 

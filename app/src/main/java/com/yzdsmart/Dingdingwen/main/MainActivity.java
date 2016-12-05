@@ -517,8 +517,8 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 
     private void initBackgroundBagBottomSheetDialog() {
         backgroundBagBottomSheetDialog = new BottomSheetDialog(this, R.style.background_bag_dialog);
-        View view = LayoutInflater.from(this).inflate(R.layout.background_bag_layout, null);
-        final UltimateRecyclerView backgroundBagRV = (UltimateRecyclerView) view.findViewById(R.id.background_bag_list);
+        View backgroundBagView = LayoutInflater.from(this).inflate(R.layout.background_bag_layout, null);
+        final UltimateRecyclerView backgroundBagRV = (UltimateRecyclerView) backgroundBagView.findViewById(R.id.background_bag_list);
         backgroundBagRV.setAdapter(bagAdapter);
         backgroundBagRV.setLayoutManager(mGridLayoutManager);
         backgroundBagRV.setHasFixedSize(true);
@@ -532,13 +532,13 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                 mPresenter.getBackgroundBag();
             }
         });
-        view.findViewById(R.id.quit_background_bag).setOnClickListener(new View.OnClickListener() {
+        backgroundBagView.findViewById(R.id.quit_background_bag).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 backgroundBagBottomSheetDialog.dismiss();
             }
         });
-        backgroundBagBottomSheetDialog.setContentView(view);
+        backgroundBagBottomSheetDialog.setContentView(backgroundBagView);
         backgroundBagBottomSheetDialog.setCancelable(false);
     }
 

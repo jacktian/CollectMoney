@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Dingdingwen.R;
@@ -113,7 +114,7 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
         }
 
         public void setBagType(Integer bagType) {
-            bagTypeIV.setImageDrawable(bagType == 0 ? context.getResources().getDrawable(R.mipmap.background_bag_coin) : context.getResources().getDrawable(R.mipmap.background_bag_diamond));
+            Glide.with(context).load(bagType == 0 ? R.mipmap.background_bag_coin : R.mipmap.background_bag_diamond).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.background_bag_holder_light)).error(context.getResources().getDrawable(R.mipmap.background_bag_holder_light)).into(bagTypeIV);
         }
 
         public void setBagCounts(Integer bagCounts) {
