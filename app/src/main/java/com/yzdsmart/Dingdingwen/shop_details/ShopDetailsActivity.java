@@ -31,7 +31,7 @@ import com.yzdsmart.Dingdingwen.bean.ShopScanner;
 import com.yzdsmart.Dingdingwen.galley.GalleyActivity;
 import com.yzdsmart.Dingdingwen.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
-import com.yzdsmart.Dingdingwen.qr_scan.QRScannerActivity;
+import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;

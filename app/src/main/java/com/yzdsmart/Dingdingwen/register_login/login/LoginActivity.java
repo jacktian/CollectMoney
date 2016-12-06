@@ -3,21 +3,17 @@ package com.yzdsmart.Dingdingwen.register_login.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.tencent.connect.UserInfo;
-import com.tencent.connect.auth.QQToken;
-import com.tencent.connect.common.Constants;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
-import com.tencent.tauth.UiError;
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
@@ -26,9 +22,10 @@ import com.yzdsmart.Dingdingwen.register_login.verify_phone.VerifyPhoneActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
-import org.json.JSONObject;
-
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -38,7 +35,12 @@ import butterknife.OnClick;
 import butterknife.Optional;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
 
 /**
  * Created by YZD on 2016/8/17.
@@ -61,9 +63,14 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     EditText userPasswordET;
 
     private static final String TAG = "LoginActivity";
+    private static final int MSG_USER_ID_FOUND = 1;
+    private static final int MSG_LOGIN = 2;
+    private static final int MSG_AUTH_CANCEL = 3;
+    private static final int MSG_AUTH_ERROR = 4;
+    private static final int MSG_AUTH_COMPLETE = 5;
 
     //腾讯开始
-    public static final String mTecentAppid = "1105651703";
+    public static final String mTecentAppid = "1105651765";
     public static Tencent mTencent;
     //腾讯结束
 
@@ -141,6 +148,35 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
 
     private LoginContract.LoginPresenter mPresenter;
 
+    private Handler authLoginHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MSG_USER_ID_FOUND: {
+                    showSnackbar("-------用户信息已存在，正在跳转登录操作…--------");
+                }
+                break;
+                case MSG_LOGIN: {
+                    showSnackbar("-------使用" + msg.obj + "帐号登录中…--------");
+                }
+                break;
+                case MSG_AUTH_CANCEL: {
+                    showSnackbar("-------MSG_AUTH_CANCEL--------");
+                }
+                break;
+                case MSG_AUTH_ERROR: {
+                    showSnackbar("-------MSG_AUTH_ERROR--------");
+                }
+                break;
+                case MSG_AUTH_COMPLETE: {
+                    showSnackbar("--------MSG_AUTH_COMPLETE-------");
+                }
+                break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,7 +190,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
 
         MobclickAgent.openActivityDurationTrack(false);
 
-        ShareSDK.initSDK(this, "188d0cc56cba8");
+        ShareSDK.initSDK(this);
 
         //腾讯
 //        if (null == mTencent) {
@@ -183,6 +219,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         super.onPause();
         MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ShareSDK.stopSDK(this);
+        super.onDestroy();
     }
 
     @Optional
@@ -221,52 +263,70 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
             case R.id.platform_wechat:
 //                regToWx();
 //                ShareSDK.initSDK(this);
-//                Platform platformWeChat = ShareSDK.getPlatform(this, Wechat.NAME);
-////                platformWeChat.SSOSetting(false);  //设置false表示使用SSO授权方式
-//                platformWeChat.setPlatformActionListener(new PlatformActionListener() {
-//                    @Override
-//                    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-//                        showSnackbar("wechat complete" + platform.getDb().exportData());
-//                        System.out.println("--->" + platform.getDb().exportData());
-//                    }
-//
-//                    @Override
-//                    public void onError(Platform platform, int i, Throwable throwable) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancel(Platform platform, int i) {
-//
-//                    }
-//                }); // 设置分享事件回调
-//                platformWeChat.showUser(null);//授权并获取用户信息
+                Platform platformWeChat = ShareSDK.getPlatform(this, Wechat.NAME);
+                platformWeChat.SSOSetting(false);  //设置false表示使用SSO授权方式
+                platformWeChat.setPlatformActionListener(new PlatformActionListener() {
+                    @Override
+                    public void onComplete(Platform platform, int i, HashMap<String, Object> res) {
+                        showSnackbar("wechat complete" + platform.getDb().exportData());
+                        System.out.println("wechat-------->" + platform.getDb().exportData());
+                        //遍历Map
+                        Iterator ite = res.entrySet().iterator();
+                        while (ite.hasNext()) {
+                            Map.Entry entry = (Map.Entry) ite.next();
+                            Object key = entry.getKey();
+                            Object value = entry.getValue();
+                            System.out.println(key + "------:------" + value);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Platform platform, int i, Throwable throwable) {
+                        showSnackbar("wechat error" + platform.getDb().exportData());
+                    }
+
+                    @Override
+                    public void onCancel(Platform platform, int i) {
+
+                    }
+                }); // 设置分享事件回调
+//                platformWeChat.authorize();
+                platformWeChat.showUser(null);//授权并获取用户信息
                 break;
             case R.id.platform_qq:
 //                if (!mTencent.isSessionValid()) {
 //                    mTencent.login(this, "all", tecentLoginListener);
 //                }
 //                ShareSDK.initSDK(this);
-//                Platform platformQQ = ShareSDK.getPlatform(this, QQ.NAME);
-////                platformQQ.SSOSetting(false);  //设置false表示使用SSO授权方式
-//                platformQQ.setPlatformActionListener(new PlatformActionListener() {
-//                    @Override
-//                    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-//                        showSnackbar("qq complete" + platform.getDb().exportData());
-//                        System.out.println("--->" + platform.getDb().exportData());
-//                    }
-//
-//                    @Override
-//                    public void onError(Platform platform, int i, Throwable throwable) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancel(Platform platform, int i) {
-//
-//                    }
-//                }); // 设置分享事件回调
-//                platformQQ.showUser(null);//授权并获取用户信息
+                Platform platformQQ = ShareSDK.getPlatform(this, QQ.NAME);
+                platformQQ.SSOSetting(false);  //设置false表示使用SSO授权方式
+                platformQQ.setPlatformActionListener(new PlatformActionListener() {
+                    @Override
+                    public void onComplete(Platform platform, int i, HashMap<String, Object> res) {
+                        showSnackbar("qq complete" + platform.getDb().exportData());
+                        System.out.println("qq-------->" + platform.getDb().exportData());
+                        //遍历Map
+                        Iterator ite = res.entrySet().iterator();
+                        while (ite.hasNext()) {
+                            Map.Entry entry = (Map.Entry) ite.next();
+                            Object key = entry.getKey();
+                            Object value = entry.getValue();
+                            System.out.println(key + "------:------" + value);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Platform platform, int i, Throwable throwable) {
+                        showSnackbar("qq error" + platform.getDb().exportData());
+                    }
+
+                    @Override
+                    public void onCancel(Platform platform, int i) {
+
+                    }
+                }); // 设置分享事件回调
+//                platformQQ.authorize();
+                platformQQ.showUser(null);//授权并获取用户信息
                 break;
             case R.id.platform_webo:
 //                if (null == mSsoHandler && mAuthInfo != null) {
@@ -278,25 +338,35 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
 //                    showSnackbar("请首先设置微博认证信息");
 //                }
 //                ShareSDK.initSDK(this);
-//                Platform platformWeiBo = ShareSDK.getPlatform(this, SinaWeibo.NAME);
-////                platformWeiBo.SSOSetting(false);  //设置false表示使用SSO授权方式
-//                platformWeiBo.setPlatformActionListener(new PlatformActionListener() {
-//                    @Override
-//                    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-//                        showSnackbar("weibo complete" + platform.getDb().exportData());
-//                    }
-//
-//                    @Override
-//                    public void onError(Platform platform, int i, Throwable throwable) {
-//                        showSnackbar("weibo error");
-//                    }
-//
-//                    @Override
-//                    public void onCancel(Platform platform, int i) {
-//                        showSnackbar("weibo cancel");
-//                    }
-//                }); // 设置分享事件回调
-//                platformWeiBo.showUser(null);//授权并获取用户信息
+                Platform platformWeiBo = ShareSDK.getPlatform(this, SinaWeibo.NAME);
+                platformWeiBo.SSOSetting(false);  //设置false表示使用SSO授权方式
+                platformWeiBo.setPlatformActionListener(new PlatformActionListener() {
+                    @Override
+                    public void onComplete(Platform platform, int i, HashMap<String, Object> res) {
+                        showSnackbar("weibo complete" + platform.getDb().exportData());
+                        System.out.println("weibo-------->" + platform.getDb().exportData());
+                        //遍历Map
+                        Iterator ite = res.entrySet().iterator();
+                        while (ite.hasNext()) {
+                            Map.Entry entry = (Map.Entry) ite.next();
+                            Object key = entry.getKey();
+                            Object value = entry.getValue();
+                            System.out.println(key + "： " + value);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Platform platform, int i, Throwable throwable) {
+                        showSnackbar("weibo error" + platform.getDb().exportData());
+                    }
+
+                    @Override
+                    public void onCancel(Platform platform, int i) {
+                        showSnackbar("weibo cancel");
+                    }
+                }); // 设置分享事件回调
+//                platformWeiBo.authorize();
+                platformWeiBo.showUser(null);//授权并获取用户信息
                 break;
         }
     }
@@ -309,17 +379,17 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.REQUEST_LOGIN) {
-            Tencent.onActivityResultData(requestCode, resultCode, data, tecentLoginListener);
-        }
+//        if (requestCode == Constants.REQUEST_LOGIN) {
+//            Tencent.onActivityResultData(requestCode, resultCode, data, tecentLoginListener);
+//        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void getUserInfo() {
-        QQToken qqToken = mTencent.getQQToken();
-        UserInfo info = new UserInfo(App.getAppInstance(), qqToken);
-        info.getUserInfo(tecentInfoListener);
-    }
+//    private void getUserInfo() {
+//        QQToken qqToken = mTencent.getQQToken();
+//        UserInfo info = new UserInfo(App.getAppInstance(), qqToken);
+//        info.getUserInfo(tecentInfoListener);
+//    }
 
     @Override
     public void setPresenter(LoginContract.LoginPresenter presenter) {
@@ -345,73 +415,73 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         closeActivity();
     }
 
-    IUiListener tecentLoginListener = new BaseUiListener() {
-        @Override
-        protected void doComplete(JSONObject values) {
-            try {
-                int ret = values.getInt("ret");
-                if (ret == 0) {
-                    String openID = values.getString("openid");
-                    String accessToken = values.getString("access_token");
-                    String expires = values.getString("expires_in");
-                    mTencent.setOpenId(openID);
-                    mTencent.setAccessToken(accessToken, expires);
-                    getUserInfo();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//    IUiListener tecentLoginListener = new BaseUiListener() {
+//        @Override
+//        protected void doComplete(JSONObject values) {
+//            try {
+//                int ret = values.getInt("ret");
+//                if (ret == 0) {
+//                    String openID = values.getString("openid");
+//                    String accessToken = values.getString("access_token");
+//                    String expires = values.getString("expires_in");
+//                    mTencent.setOpenId(openID);
+//                    mTencent.setAccessToken(accessToken, expires);
+//                    getUserInfo();
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+////            initOpenidAndToken(values);
+////            updateUserInfo();
+////            updateLoginButton();
+//        }
+//    };
 
-//            initOpenidAndToken(values);
-//            updateUserInfo();
-//            updateLoginButton();
-        }
-    };
 
-
-    IUiListener tecentInfoListener = new BaseUiListener() {
-        @Override
-        protected void doComplete(JSONObject values) {
-            showSnackbar("Author_Info_SDK:" + values);
-            if (null != mTencent) {
-                mTencent.logout(App.getAppInstance());
-            }
-//            initOpenidAndToken(values);
-//            updateUserInfo();
-//            updateLoginButton();
-        }
-    };
-
-    private class BaseUiListener implements IUiListener {
-
-        @Override
-        public void onComplete(Object response) {
-            if (null == response) {
-                showSnackbar("返回为空,登录失败");
-                return;
-            }
-            JSONObject jsonResponse = (JSONObject) response;
-            if (null != jsonResponse && jsonResponse.length() == 0) {
-                showSnackbar("返回为空,登录失败");
-                return;
-            }
-            doComplete((JSONObject) response);
-        }
-
-        protected void doComplete(JSONObject values) {
-
-        }
-
-        @Override
-        public void onError(UiError e) {
-            showSnackbar("异常: " + e.errorDetail);
-        }
-
-        @Override
-        public void onCancel() {
-            showSnackbar("取消");
-        }
-    }
+//    IUiListener tecentInfoListener = new BaseUiListener() {
+//        @Override
+//        protected void doComplete(JSONObject values) {
+//            showSnackbar("Author_Info_SDK:" + values);
+//            if (null != mTencent) {
+//                mTencent.logout(App.getAppInstance());
+//            }
+////            initOpenidAndToken(values);
+////            updateUserInfo();
+////            updateLoginButton();
+//        }
+//    };
+//
+//    private class BaseUiListener implements IUiListener {
+//
+//        @Override
+//        public void onComplete(Object response) {
+//            if (null == response) {
+//                showSnackbar("返回为空,登录失败");
+//                return;
+//            }
+//            JSONObject jsonResponse = (JSONObject) response;
+//            if (null != jsonResponse && jsonResponse.length() == 0) {
+//                showSnackbar("返回为空,登录失败");
+//                return;
+//            }
+//            doComplete((JSONObject) response);
+//        }
+//
+//        protected void doComplete(JSONObject values) {
+//
+//        }
+//
+//        @Override
+//        public void onError(UiError e) {
+//            showSnackbar("异常: " + e.errorDetail);
+//        }
+//
+//        @Override
+//        public void onCancel() {
+//            showSnackbar("取消");
+//        }
+//    }
 
 //    /**
 //     * 登入按钮的监听器，接收授权结果。

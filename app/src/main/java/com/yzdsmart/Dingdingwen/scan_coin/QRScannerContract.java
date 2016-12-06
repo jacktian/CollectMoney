@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.qr_scan;
+package com.yzdsmart.Dingdingwen.scan_coin;
 
 import com.yzdsmart.Dingdingwen.BasePresenter;
 import com.yzdsmart.Dingdingwen.BaseView;

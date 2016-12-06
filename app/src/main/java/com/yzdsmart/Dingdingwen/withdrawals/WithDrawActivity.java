@@ -95,7 +95,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
 
         MobclickAgent.openActivityDurationTrack(false);
 
-        ShareSDK.initSDK(this, "188d0cc56cba8");
+        ShareSDK.initSDK(this);
 
         shopWithdrawSuccessRunnable = new Runnable() {
             @Override
@@ -261,7 +261,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
      * 显示分享九宫格
      */
     private void showShare() {
-        ShareSDK.initSDK(this);
+//        ShareSDK.initSDK(this);
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();

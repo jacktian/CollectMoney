@@ -167,7 +167,7 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".qr_scan.QRScannerActivity"
+            android:name=".scan_coin.QRScannerActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop" />
 
@@ -384,7 +384,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="tencent1105651703" />
+                <data android:scheme="tencent1105651765" />
             </intent-filter>
         </activity>
         <activity
@@ -562,7 +562,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
             <!-- QQ和QQ空间分享 QQ登录的回调必须要配置的 -->
             <intent-filter>
-                <data android:scheme="tencent100371282" />
+                <data android:scheme="tencent1105651765" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />

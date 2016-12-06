@@ -1,9 +1,5 @@
 package com.yzdsmart.Dingdingwen.wxapi;
 
-import android.content.Intent;
-import android.widget.Toast;
-
-import cn.sharesdk.wechat.utils.WXAppExtendObject;
 import cn.sharesdk.wechat.utils.WXMediaMessage;
 import cn.sharesdk.wechat.utils.WechatHandlerActivity;
 
@@ -23,10 +19,10 @@ public class WXPayEntryActivity extends WechatHandlerActivity {
     public void onGetMessageFromWXReq(WXMediaMessage msg) {
         super.onGetMessageFromWXReq(msg);
         System.out.println("-----onGetMessageFromWXReq------->" + msg);
-        if (msg != null) {
-            Intent iLaunchMyself = getPackageManager().getLaunchIntentForPackage(getPackageName());
-            startActivity(iLaunchMyself);
-        }
+//        if (msg != null) {
+//            Intent iLaunchMyself = getPackageManager().getLaunchIntentForPackage(getPackageName());
+//            startActivity(iLaunchMyself);
+//        }
     }
 
     /**
@@ -43,10 +39,10 @@ public class WXPayEntryActivity extends WechatHandlerActivity {
     public void onShowMessageFromWXReq(WXMediaMessage msg) {
         super.onShowMessageFromWXReq(msg);
         System.out.println("-----onShowMessageFromWXReq------->" + msg);
-        if (msg != null && msg.mediaObject != null
-                && (msg.mediaObject instanceof WXAppExtendObject)) {
-            WXAppExtendObject obj = (WXAppExtendObject) msg.mediaObject;
-            Toast.makeText(this, obj.extInfo, Toast.LENGTH_SHORT).show();
-        }
+//        if (msg != null && msg.mediaObject != null
+//                && (msg.mediaObject instanceof WXAppExtendObject)) {
+//            WXAppExtendObject obj = (WXAppExtendObject) msg.mediaObject;
+//            Toast.makeText(this, obj.extInfo, Toast.LENGTH_SHORT).show();
+//        }
     }
 }

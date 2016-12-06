@@ -32,6 +32,7 @@
 		this.timer=0,
 		this.ajaxRefresh=!1,
 		this.ajaxLoader=!1,
+		this.count=0,
 		this.init()
 	}
 	
@@ -40,30 +41,34 @@
 		this.page.addEventListener("touchstart",function(e){
 			e.preventDefault(),
 			a.startY = e.touches[0].clientY,
+			a.originY=a.startY,
 			a.touchstartY === 0 ? a.ajaxRefresh=!0 : a.ajaxRefresh=!1,
 			a.touchstartY === a.buttom ? a.ajaxLoader=!0 : a.ajaxLoader=!1
 		}),
 		this.page.addEventListener("touchmove",function(e){
-			e.preventDefault(),
-			a.MY = e.changedTouches[0].clientY;
-			a.moveY=a.MY-a.startY,
+			e.preventDefault();
+			a.MY = e.changedTouches[0].clientY-a.originY,
+			a.originY=e.changedTouches[0].clientY,
+			a.moveY=a.MY,
 			a.end=!1,
-			a.translateMove()	
+			a.translateMove(),
+			a.count++
 		}),
 		this.page.addEventListener("touchend",function(e){
-			e.preventDefault(),
-			a.moveY=e.changedTouches[0].clientY-a.startY,
+			e.preventDefault();
+			a.count < 8 && (a.moveY =2*(e.changedTouches[0].clientY-a.startY)),
 			a.end=!0,
-			a.translateMove()	
+			a.translateMove(),
+			a.count=0
 		})
 	},
 	c.prototype.translateMove=function(){
-				this.touchstartY+=0.6*this.moveY,
-				this.touchstartY > this.top && (this.touchstartY = this.end?((this.touchstartY>(this.top+60))?this.refresh():this.top)
-				:(this.touchstartY >(this.top+60)?(this.top+60):this.touchstartY)),
-				this.touchstartY < this.buttom && (this.touchstartY = this.end?((this.touchstartY<(this.buttom-60))?this.loader():this.buttom)
-				:(this.touchstartY <(this.buttom-60)?(this.buttom-60):this.touchstartY)),
-				this.moveY !=0 && z(".mainPage").css({
+				this.touchstartY+=this.moveY,
+				this.touchstartY > this.top && (this.touchstartY = this.end?((this.touchstartY>=(this.top+60))?this.refresh():this.top)
+				:(this.touchstartY >=(this.top+60)?(this.top+60):this.touchstartY)),
+				this.touchstartY < this.buttom && (this.touchstartY = this.end?((this.touchstartY <= (this.buttom-60))?this.loader():this.buttom)
+				:(this.touchstartY <= (this.buttom-60)?(this.buttom-60):this.touchstartY)),
+				this.moveY !==0 && z(".mainPage").css({
 					"-webkit-transform": "translate3d(0px,"+ this.touchstartY + "px,0px)",
 					"-webkit-transition": "-webkit-transform 0.2s cubic-bezier(0.33, 0.66, 0.66, 1)"
 				});
@@ -133,7 +138,6 @@
 					z(".freshtext1").text('正在加载'),
 					z(".loader").hide();
 				},400)
-				
 			}
 		});			
 		}
