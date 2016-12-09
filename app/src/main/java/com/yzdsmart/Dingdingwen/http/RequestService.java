@@ -141,6 +141,22 @@ public interface RequestService {
     Observable<RequestResponse> userRegister(@Query("actioncode") String actioncode, @Field("UserName") String userName, @Field("Password") String password, @Field("CSex") String cSex, @Field("CAge") Integer cAge, @Field("CNickName") String cNickName, @Field("RegCode") String regCode, @Header("Authorization") String authorization);
 
     /**
+     * 第三方注册
+     *
+     * @param actioncode
+     * @param userName
+     * @param password
+     * @param cSex
+     * @param cAge
+     * @param cNickName
+     * @param otherElec
+     * @param platformExportData
+     * @return
+     */
+    @POST(Url.USER)
+    Observable<LoginRequestResponse> thirdPlatformRegister(@Query("actioncode") String actioncode, @Header("Content-Type") String contentType, @Header("Accept") String accept, @Body RequestBody platformExportData, @Header("Authorization") String authorization);
+
+    /**
      * 用户登录
      *
      * @param userName
@@ -151,6 +167,19 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.USER)
     Observable<LoginRequestResponse> userLogin(@Field("UserName") String userName, @Field("Password") String password, @Field("LoginCode") String loginCode, @Header("Authorization") String authorization);
+
+    /**
+     * 第三方登录
+     *
+     * @param userName
+     * @param otherElec
+     * @param loginCode
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.USER)
+    Observable<LoginRequestResponse> thirdPlatformLogin(@Field("UserName") String userName, @Field("OtherElec") String otherElec, @Field("LoginCode") String loginCode, @Header("Authorization") String authorization);
 
     /**
      * 获取用户等级和星级
@@ -524,9 +553,6 @@ public interface RequestService {
      * 商户充值金币
      *
      * @param action
-     * @param submitCode
-     * @param bazaCode
-     * @param goldNum
      * @return
      */
 //    @FormUrlEncoded

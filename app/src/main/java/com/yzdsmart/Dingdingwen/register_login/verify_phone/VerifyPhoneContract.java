@@ -24,7 +24,7 @@ public interface VerifyPhoneContract {
          * @param telNum
          */
         void isUserExist(String telNum, String authorization);
-
+        
         void unRegisterSubscribe();
     }
 }

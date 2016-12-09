@@ -84,6 +84,26 @@ public class VerifyCodePresenter implements VerifyCodeContract.VerifyCodePresent
     }
 
     @Override
+    public void thirdPlatformRegister(String actioncode, String userName, String password, String cSex, Integer cAge, String cNickName, String otherElec, String platformExportData, String regCode, String authorization) {
+        mModel.thirdPlatformRegister(actioncode, userName, password, cSex, cAge, cNickName, otherElec, platformExportData, regCode, authorization, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+
+            }
+
+            @Override
+            public void onError(String err) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
     public void unRegisterSubscribe() {
         mModel.unRegisterSubscribe();
     }

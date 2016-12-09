@@ -59,6 +59,44 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
     }
 
     @Override
+    public void thirdPlatformLogin(String userName, String otherElec, String loginCode, String authorization) {
+//        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loginning));
+        mModel.thirdPlatformLogin(userName, otherElec, loginCode, authorization, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                LoginRequestResponse requestResponse = (LoginRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    SharedPreferencesUtils.setString(context, "baza_code", requestResponse.getBazaCode());
+                    SharedPreferencesUtils.setString(context, "cust_code", requestResponse.getCustCode());
+                    SharedPreferencesUtils.setString(context, "im_account", requestResponse.getTCInfo().getTCAccount());
+                    SharedPreferencesUtils.setString(context, "im_password", requestResponse.getTCInfo().getTCPassword());
+                    mView.onThirdPlatformLoginSuccess(requestResponse);
+                } else if ("FAIL".equals(requestResponse.getActionStatus())) {
+                    if ("1199".equals("" + requestResponse.getErrorCode())) {
+                        mView.onThirdPlatformNotBindPhone();
+                    } else {
+                        ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_user_login));
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
     public void unRegisterSubscribe() {
         mModel.unRegisterSubscribe();
     }

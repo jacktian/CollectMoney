@@ -51,7 +51,7 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
 
     private static final String TAG = "VerifyCodeActivity";
 
-    private Integer opeType;//0 注册 1 忘记密码
+    private Integer opeType;//0 注册 1 忘记密码 2 第三方注册
     private String userName;
     private VerifyCodeContract.VerifyCodePresenter mPresenter;
 
@@ -59,27 +59,46 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
     private Runnable getVerifyCodeRunnable;
     private Integer countDownTime = 60;//获取短信验证码倒计时
 
+    private String exportData;
+    private String gender;
+    private String nickName;
+    private Integer age;
+    private String platForm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        userNameET.setEnabled(false);
         verifyCodeET.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         Bundle bundle = getIntent().getExtras();
         opeType = bundle.getInt("opeType");
         userName = bundle.getString("userName");
-        userNameET.setText(userName);
+        exportData = bundle.getString("exportData");
+        gender = bundle.getString("gender");
+        nickName = bundle.getString("nickName");
+        platForm = bundle.getString("platForm");
+        age = bundle.getInt("age");
+        if (null != userName) {
+            userNameET.setText(userName);
+        }
         switch (opeType) {
             case 0:
                 centerTitleTV.setText(getResources().getString(R.string.register));
+                userNameET.setEnabled(false);
+                nextButton.setText(getResources().getString(R.string.next_step));
                 break;
             case 1:
                 centerTitleTV.setText(getResources().getString(R.string.forget_pwd));
+                userNameET.setEnabled(false);
+                nextButton.setText(getResources().getString(R.string.next_step));
+                break;
+            case 2:
+                centerTitleTV.setText(getResources().getString(R.string.bind_phone));
+                nextButton.setText(getResources().getString(R.string.confirm));
                 break;
         }
-        nextButton.setText(getResources().getString(R.string.next_step));
 
         getVerifyCodeRunnable = new Runnable() {
             @Override
@@ -134,7 +153,7 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
                 }
                 getVerifyTV.setEnabled(false);
                 mHandler.post(getVerifyCodeRunnable);
-                mPresenter.getVerifyCode(userName, DateTime.now().toString(), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                mPresenter.getVerifyCode(userNameET.getText().toString(), DateTime.now().toString(), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case R.id.login_register_confirm_button:
                 if (!requiredVerify(verifyCodeET)) {
@@ -145,7 +164,9 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.validateVerifyCode("000000", userName, verifyCodeET.getText().toString(), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+//                mPresenter.validateVerifyCode("000000", userNameET.getText().toString(), verifyCodeET.getText().toString(), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                mPresenter.thirdPlatformRegister("1692", userNameET.getText().toString(), userNameET.getText().toString(), gender, age, nickName, "qq", exportData, Utils.md5("1692yzd" + userNameET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+
                 break;
         }
     }
@@ -189,6 +210,10 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
         Bundle bundle = new Bundle();
         bundle.putInt("opeType", opeType);
         bundle.putString("userName", userNameET.getText().toString());
+        if (2 == opeType) {
+//            mPresenter.thirdPlatformRegister("1692", userNameET.getText().toString(), userNameET.getText().toString(), gender, age, nickName, platForm, exportData, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+            return;
+        }
         openActivity(SetPasswordActivity.class, bundle, 0);
     }
 }

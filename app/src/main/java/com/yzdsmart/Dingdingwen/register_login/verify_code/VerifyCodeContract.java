@@ -42,6 +42,8 @@ public interface VerifyCodeContract {
          */
         void validateVerifyCode(String actioncode, String telNum, String verifyCode, String authorization);
 
+        void thirdPlatformRegister(String actioncode, String userName, String password, String cSex, Integer cAge, String cNickName, String otherElec, String platformExportData,String regCode, String authorization);
+
         void unRegisterSubscribe();
     }
 }

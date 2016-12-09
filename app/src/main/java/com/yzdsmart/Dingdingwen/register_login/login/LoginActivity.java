@@ -8,10 +8,14 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.response.LoginRequestResponse;
+import com.yzdsmart.Dingdingwen.register_login.verify_code.VerifyCodeActivity;
 import com.yzdsmart.Dingdingwen.register_login.verify_phone.VerifyPhoneActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -60,6 +64,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
 
     private LoginContract.LoginPresenter mPresenter;
 
+    private String thirdPlatformExportData;
+    private String gender;
+    private Integer age;
+    private String nickName;
+    private String platForm;
+    private Bundle bundle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +81,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         userPasswordET.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         new LoginPresenter(this, this);
+
+        bundle = new Bundle();
 
         MobclickAgent.openActivityDurationTrack(false);
 
@@ -142,14 +155,17 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                     public void onComplete(Platform platform, int i, HashMap<String, Object> res) {
                         showSnackbar("wechat complete" + platform.getDb().exportData());
                         System.out.println("wechat-------->" + platform.getDb().exportData());
+                        thirdPlatformExportData = platform.getDb().exportData();
+                        JSONObject exportData = JSON.parseObject(platform.getDb().exportData());
+                        mPresenter.thirdPlatformLogin(exportData.getString("userID"), "wx", "", SharedPreferencesUtils.getString(LoginActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(LoginActivity.this, "ddw_access_token", ""));
                         //遍历Map
-                        Iterator ite = res.entrySet().iterator();
-                        while (ite.hasNext()) {
-                            Map.Entry entry = (Map.Entry) ite.next();
-                            Object key = entry.getKey();
-                            Object value = entry.getValue();
-                            System.out.println(key + "------:------" + value);
-                        }
+//                        Iterator ite = res.entrySet().iterator();
+//                        while (ite.hasNext()) {
+//                            Map.Entry entry = (Map.Entry) ite.next();
+//                            Object key = entry.getKey();
+//                            Object value = entry.getValue();
+//                            System.out.println(key + "------:------" + value);
+//                        }
                     }
 
                     @Override
@@ -165,20 +181,28 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                 platformWeChat.showUser(null);//授权并获取用户信息
                 break;
             case R.id.platform_qq:
+                platForm = "qq";
                 Platform platformQQ = ShareSDK.getPlatform(this, QQ.NAME);
                 platformQQ.SSOSetting(false);  //设置false表示使用SSO授权方式
                 platformQQ.setPlatformActionListener(new PlatformActionListener() {
                     @Override
                     public void onComplete(Platform platform, int i, HashMap<String, Object> res) {
                         showSnackbar("qq complete" + platform.getDb().exportData());
-                        System.out.println("qq-------->" + platform.getDb().exportData());
-                        //遍历Map
+                        thirdPlatformExportData = platform.getDb().exportData();
+                        JSONObject exportData = JSON.parseObject(platform.getDb().exportData());
+                        mPresenter.thirdPlatformLogin(exportData.getString("userID"), "qq", "", SharedPreferencesUtils.getString(LoginActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(LoginActivity.this, "ddw_access_token", ""));
+//                        //遍历Map
                         Iterator ite = res.entrySet().iterator();
                         while (ite.hasNext()) {
                             Map.Entry entry = (Map.Entry) ite.next();
                             Object key = entry.getKey();
                             Object value = entry.getValue();
                             System.out.println(key + "------:------" + value);
+                            if (key.equals("gender")) {
+                                gender = "" + entry.getValue();
+                            } else if (key.equals("nickname")) {
+                                nickName = "" + entry.getValue();
+                            }
                         }
                     }
 
@@ -202,14 +226,17 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                     public void onComplete(Platform platform, int i, HashMap<String, Object> res) {
                         showSnackbar("weibo complete" + platform.getDb().exportData());
                         System.out.println("weibo-------->" + platform.getDb().exportData());
+                        thirdPlatformExportData = platform.getDb().exportData();
+                        JSONObject exportData = JSON.parseObject(platform.getDb().exportData());
+                        mPresenter.thirdPlatformLogin(exportData.getString("userID"), "wb", "", SharedPreferencesUtils.getString(LoginActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(LoginActivity.this, "ddw_access_token", ""));
                         //遍历Map
-                        Iterator ite = res.entrySet().iterator();
-                        while (ite.hasNext()) {
-                            Map.Entry entry = (Map.Entry) ite.next();
-                            Object key = entry.getKey();
-                            Object value = entry.getValue();
-                            System.out.println(key + "： " + value);
-                        }
+//                        Iterator ite = res.entrySet().iterator();
+//                        while (ite.hasNext()) {
+//                            Map.Entry entry = (Map.Entry) ite.next();
+//                            Object key = entry.getKey();
+//                            Object value = entry.getValue();
+//                            System.out.println(key + "： " + value);
+//                        }
                     }
 
                     @Override
@@ -255,6 +282,33 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         }
         setResult(RESULT_OK);
         closeActivity();
+    }
+
+    @Override
+    public void onThirdPlatformLoginSuccess(LoginRequestResponse requestResponse) {
+        JPushInterface.init(App.getAppInstance());
+        JPushInterface.resumePush(App.getAppInstance());
+        if (null != SharedPreferencesUtils.getString(this, "baza_code", "") && !"".equals(SharedPreferencesUtils.getString(this, "baza_code", ""))) {
+            setAlias(SharedPreferencesUtils.getString(this, "baza_code", "").replaceAll("-", ""));
+        } else if (null != SharedPreferencesUtils.getString(this, "cust_code", "") && !"".equals(SharedPreferencesUtils.getString(this, "cust_code", ""))) {
+            setAlias(SharedPreferencesUtils.getString(this, "cust_code", "").replaceAll("-", ""));
+        } else {
+            return;
+        }
+        setResult(RESULT_OK);
+        closeActivity();
+    }
+
+    @Override
+    public void onThirdPlatformNotBindPhone() {
+        showSnackbar("没有绑定手机号");
+        bundle.putInt("opeType", 2);
+        bundle.putString("gender", (null == gender || "".equals(gender)) ? "男" : gender);
+        bundle.putInt("age", null == age ? 18 : age);
+        bundle.putString("nickName", nickName);
+        bundle.putString("platform", platForm);
+        bundle.putString("exportData", thirdPlatformExportData);
+        openActivity(VerifyCodeActivity.class, bundle, 0);
     }
 
     // 这是来自 JPush Example 的设置别名的 Activity 里的代码。一般 App 的设置的调用入口，在任何方便的地方调用都可以。

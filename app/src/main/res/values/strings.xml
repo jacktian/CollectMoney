@@ -45,6 +45,7 @@
     <string name="validating">正在校验......</string>
     <string name="registering">正在注册......</string>
     <string name="register_success">注册成功</string>
+    <string name="bind_phone">绑定手机</string>
 
     <!--主界面-->
     <string name="recommend">推荐</string>

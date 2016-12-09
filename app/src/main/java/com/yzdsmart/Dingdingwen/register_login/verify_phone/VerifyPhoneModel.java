@@ -2,8 +2,11 @@ package com.yzdsmart.Dingdingwen.register_login.verify_phone;
 
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.LoginRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -43,6 +46,7 @@ public class VerifyPhoneModel {
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(isUserExistSubscriber);
     }
+
 
     void unRegisterSubscribe() {
         //解除引用关系，以避免内存泄露的发生
