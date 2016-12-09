@@ -153,8 +153,10 @@ public interface RequestService {
      * @param platformExportData
      * @return
      */
+    @FormUrlEncoded
     @POST(Url.USER)
-    Observable<LoginRequestResponse> thirdPlatformRegister(@Query("actioncode") String actioncode, @Header("Content-Type") String contentType, @Header("Accept") String accept, @Body RequestBody platformExportData, @Header("Authorization") String authorization);
+//    Observable<LoginRequestResponse> thirdPlatformRegister(@Query("actioncode") String actioncode, @Header("Content-Type") String contentType, @Header("Accept") String accept, @Body RequestBody platformExportData, @Header("Authorization") String authorization);
+    Observable<LoginRequestResponse> thirdPlatformRegister(@Query("actioncode") String actioncode, @Field("UserName") String userName, @Field("Password") String password, @Field("CSex") String cSex, @Field("CAge") Integer cAge, @Field("CNickName") String cNickName, @Field("OtherElec") String otherElec, @Field("ElecInfo") String elecInfo, @Field("RegCode") String regCode, @Header("Authorization") String authorization);
 
     /**
      * 用户登录

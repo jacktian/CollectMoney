@@ -1,12 +1,12 @@
 package com.yzdsmart.Dingdingwen.register_login.verify_code;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.LoginRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -90,9 +90,10 @@ public class VerifyCodeModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        String str = "{ \"UserName\": \"" + userName + "\",\"Password\": \"" + password + "\",\"CSex\": \"" + cSex + "\",\"CAge\": " + cAge + ",\"CNickName\":\"" + cNickName + "\",\"OtherElec\":\"" + otherElec + "\" ,\"ElecInfo\":" + platformExportData + ",\"RegCode\": \"" + regCode + "\"}";
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), str);
-        RequestAdapter.getRequestService().thirdPlatformRegister(actioncode, "application/json", "application/json", body, authorization)
+//        String str = "{ \"UserName\": \"" + userName + "\",\"Password\": \"" + password + "\",\"CSex\": \"" + cSex + "\",\"CAge\": " + cAge + ",\"CNickName\":\"" + cNickName + "\",\"OtherElec\":\"" + otherElec + "\" ,\"ElecInfo\":" + platformExportData + ",\"RegCode\": \"" + regCode + "\"}";
+//        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), str);
+        JSONObject exportData = JSON.parseObject(platformExportData);
+        RequestAdapter.getRequestService().thirdPlatformRegister(actioncode, userName, password, cSex, cAge, cNickName, otherElec, exportData.getString("userID"), regCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(thirdPlatformRegisterSubscriber);
