@@ -90,6 +90,6 @@ public class App extends MultiDexApplication {
                 activity.finish();
             }
         }
-        storedActivities.clear();
+        System.exit(0);
     }
 }

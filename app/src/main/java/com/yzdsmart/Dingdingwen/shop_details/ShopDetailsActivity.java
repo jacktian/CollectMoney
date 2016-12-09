@@ -31,8 +31,8 @@ import com.yzdsmart.Dingdingwen.bean.ShopScanner;
 import com.yzdsmart.Dingdingwen.galley.GalleyActivity;
 import com.yzdsmart.Dingdingwen.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
-import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
+import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -240,8 +240,8 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 break;
             case R.id.hotel_address:
                 if (null == shopCoor || shopCoor.trim().length() <= 0) return;
+                openActivityClear(MainActivity.class, null, 0);
                 MainActivity.getInstance().planRoute(shopCoor);
-                closeActivity();
                 break;
             case R.id.call_shop:
                 if (null != shopPhoneNumber && !"".equals(shopPhoneNumber)) {

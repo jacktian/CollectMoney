@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
-import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
@@ -219,7 +218,6 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
 
     @Override
     public void onUserLogin(boolean flag, String msg) {
-        App.getAppInstance().exitApp();
-        openActivity(MainActivity.class);
+        openActivityClear(MainActivity.class, null, 0);
     }
 }

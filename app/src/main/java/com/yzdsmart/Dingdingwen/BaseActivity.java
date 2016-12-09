@@ -64,6 +64,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         unbinder.unbind();
+        App.getAppInstance().removeActivity(this);
         super.onDestroy();
     }
 
@@ -120,11 +121,27 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * 工具类打开activity,并携带参数
+     */
+    public void openActivityClear(Class<?> pClass, Bundle pBundle, int requestCode) {
+        Intent intent = new Intent(this, pClass);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        if (null != pBundle) {
+            intent.putExtras(pBundle);
+        }
+        if (0 == requestCode) {
+            IntentUtils.startActivity(this, intent, 0);
+        } else {
+            IntentUtils.startActivity(this, intent, requestCode);
+        }
+    }
+
     /**
      * 关闭当前Activity
      */
     public void closeActivity() {
-        App.getAppInstance().removeActivity(this);
         finish();
         overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
     }

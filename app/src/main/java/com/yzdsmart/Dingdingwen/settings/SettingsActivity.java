@@ -109,21 +109,23 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.S
                 closeActivity();
                 break;
             case R.id.settings_logout:
+                showProgressDialog(R.drawable.loading, getResources().getString(R.string.logout));
                 TIMManager.getInstance().logout(new TIMCallBack() {
                     @Override
                     public void onError(int i, String s) {
+                        hideProgressDialog();
                         showSnackbar("退出登录失败");
                     }
 
                     @Override
                     public void onSuccess() {
+                        hideProgressDialog();
                         JPushInterface.stopPush(App.getAppInstance());
                         SharedPreferencesUtils.remove(SettingsActivity.this, "baza_code");
                         SharedPreferencesUtils.remove(SettingsActivity.this, "cust_code");
                         SharedPreferencesUtils.remove(SettingsActivity.this, "im_account");
                         SharedPreferencesUtils.remove(SettingsActivity.this, "im_password");
-                        App.getAppInstance().exitApp();
-                        openActivity(MainActivity.class);
+                        openActivityClear(MainActivity.class, null, 0);
                     }
                 });
                 break;

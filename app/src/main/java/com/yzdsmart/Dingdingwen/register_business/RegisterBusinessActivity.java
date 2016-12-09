@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
-import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
@@ -80,8 +79,7 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
         closeRunnable = new Runnable() {
             @Override
             public void run() {
-                App.getAppInstance().exitApp();
-                openActivity(MainActivity.class);
+                openActivityClear(MainActivity.class, null, 0);
             }
         };
     }

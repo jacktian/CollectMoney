@@ -10,6 +10,7 @@
     <string name="upload_success">上传成功</string>
     <string name="deleting">正在删除......</string>
     <string name="delete_success">删除成功</string>
+    <string name="logout">退出登录......</string>
 
     <!--登录、注册、忘记密码-->
     <string name="input_phone_num">输入手机号</string>

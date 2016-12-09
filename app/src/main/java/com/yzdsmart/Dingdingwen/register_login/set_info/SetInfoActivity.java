@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
-import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
@@ -201,8 +200,7 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
             showSnackbar(msg);
             return;
         }
-        App.getAppInstance().exitApp();
-        openActivity(MainActivity.class);
+        openActivityClear(MainActivity.class, null, 0);
     }
 
     @Override
