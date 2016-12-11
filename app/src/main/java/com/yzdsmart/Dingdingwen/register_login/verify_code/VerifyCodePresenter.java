@@ -5,6 +5,7 @@ import android.content.Context;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.LoginRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 
@@ -85,20 +86,30 @@ public class VerifyCodePresenter implements VerifyCodeContract.VerifyCodePresent
 
     @Override
     public void thirdPlatformRegister(String actioncode, String userName, String password, String cSex, Integer cAge, String cNickName, String otherElec, String platformExportData, String regCode, String authorization) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.registering));
         mModel.thirdPlatformRegister(actioncode, userName, password, cSex, cAge, cNickName, otherElec, platformExportData, regCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-
+                LoginRequestResponse requestResponse = (LoginRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    ((BaseActivity) context).showSnackbar("注册成功");
+                } else {
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                }
             }
 
             @Override
             public void onError(String err) {
-
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar("注册异常");
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
+                }
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

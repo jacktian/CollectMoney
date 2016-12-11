@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.register_login.set_password.SetPasswordActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
@@ -25,6 +26,11 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
 
 /**
  * Created by YZD on 2016/8/26.
@@ -59,12 +65,6 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
     private Runnable getVerifyCodeRunnable;
     private Integer countDownTime = 60;//获取短信验证码倒计时
 
-    private String exportData;
-    private String gender;
-    private String nickName;
-    private Integer age;
-    private String platForm;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +75,6 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
         Bundle bundle = getIntent().getExtras();
         opeType = bundle.getInt("opeType");
         userName = bundle.getString("userName");
-        exportData = bundle.getString("exportData");
-        gender = bundle.getString("gender");
-        nickName = bundle.getString("nickName");
-        platForm = bundle.getString("platForm");
-        age = bundle.getInt("age");
         if (null != userName) {
             userNameET.setText(userName);
         }
@@ -164,9 +159,7 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-//                mPresenter.validateVerifyCode("000000", userNameET.getText().toString(), verifyCodeET.getText().toString(), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
-                mPresenter.thirdPlatformRegister("1692", userNameET.getText().toString(), userNameET.getText().toString(), gender, age, nickName, "qq", exportData, Utils.md5("1692yzd" + userNameET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
-
+                mPresenter.validateVerifyCode("000000", userNameET.getText().toString(), verifyCodeET.getText().toString(), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
         }
     }
@@ -180,6 +173,9 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
     @Override
     protected void onDestroy() {
         mHandler.removeCallbacks(getVerifyCodeRunnable);
+        if (null != SharedPreferencesUtils.getString(VerifyCodeActivity.this, "platform", "") && SharedPreferencesUtils.getString(VerifyCodeActivity.this, "platform", "").length() > 0) {
+            cancelThirdPlatformLogin();
+        }
         super.onDestroy();
     }
 
@@ -207,13 +203,34 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
             showSnackbar(msg);
             return;
         }
+        if (null != SharedPreferencesUtils.getString(this, "platform", "") && SharedPreferencesUtils.getString(this, "platform", "").length() > 0) {
+            mPresenter.thirdPlatformRegister(Constants.THIRD_PLATFORM_ACTION_CODE, userNameET.getText().toString(), userNameET.getText().toString(), SharedPreferencesUtils.getString(this, "userGender", ""), 18, SharedPreferencesUtils.getString(this, "userNickName", ""), SharedPreferencesUtils.getString(this, "platform", ""), SharedPreferencesUtils.getString(this, "exportData", ""), Utils.md5(Constants.THIRD_PLATFORM_ACTION_CODE + "yzd" + userNameET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putInt("opeType", opeType);
         bundle.putString("userName", userNameET.getText().toString());
-        if (2 == opeType) {
-//            mPresenter.thirdPlatformRegister("1692", userNameET.getText().toString(), userNameET.getText().toString(), gender, age, nickName, platForm, exportData, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
-            return;
-        }
         openActivity(SetPasswordActivity.class, bundle, 0);
+    }
+
+    private void cancelThirdPlatformLogin() {
+        String platformName = SharedPreferencesUtils.getString(VerifyCodeActivity.this, "platform", "");
+        if (null != platformName && platformName.length() > 0) {
+            Platform platform = null;
+            if ("qq".equals(platformName)) {
+                platform = ShareSDK.getPlatform(VerifyCodeActivity.this, QQ.NAME);
+            } else if ("wb".equals(platformName)) {
+                platform = ShareSDK.getPlatform(VerifyCodeActivity.this, SinaWeibo.NAME);
+            } else if ("wx".equals(platformName)) {
+                platform = ShareSDK.getPlatform(VerifyCodeActivity.this, Wechat.NAME);
+            }
+            if (platform.isAuthValid()) {
+                platform.removeAccount(true);
+            }
+            SharedPreferencesUtils.remove(VerifyCodeActivity.this, "platform");
+            SharedPreferencesUtils.remove(VerifyCodeActivity.this, "exportData");
+            SharedPreferencesUtils.remove(VerifyCodeActivity.this, "userGender");
+            SharedPreferencesUtils.remove(VerifyCodeActivity.this, "userNickName");
+        }
     }
 }

@@ -24,6 +24,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
 import cn.jpush.android.api.JPushInterface;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
 
 /**
  * Created by YZD on 2016/9/3.
@@ -73,6 +78,8 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.S
 
         MobclickAgent.openActivityDurationTrack(false);
 
+        ShareSDK.initSDK(this);
+
 //        mPresenter.getCustDetailInfo("000000", "000000", SharedPreferencesUtils.getString(this, "cust_code", ""));
     }
 
@@ -121,6 +128,24 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.S
                     public void onSuccess() {
                         hideProgressDialog();
                         JPushInterface.stopPush(App.getAppInstance());
+                        String platformName = SharedPreferencesUtils.getString(SettingsActivity.this, "platform", "");
+                        if (null != platformName && platformName.length() > 0) {
+                            Platform platform = null;
+                            if ("qq".equals(platformName)) {
+                                platform = ShareSDK.getPlatform(SettingsActivity.this, QQ.NAME);
+                            } else if ("wb".equals(platformName)) {
+                                platform = ShareSDK.getPlatform(SettingsActivity.this, SinaWeibo.NAME);
+                            } else if ("wx".equals(platformName)) {
+                                platform = ShareSDK.getPlatform(SettingsActivity.this, Wechat.NAME);
+                            }
+                            if (platform.isAuthValid()) {
+                                platform.removeAccount(true);
+                            }
+                            SharedPreferencesUtils.remove(SettingsActivity.this, "platform");
+                            SharedPreferencesUtils.remove(SettingsActivity.this, "exportData");
+                            SharedPreferencesUtils.remove(SettingsActivity.this, "userGender");
+                            SharedPreferencesUtils.remove(SettingsActivity.this, "userNickName");
+                        }
                         SharedPreferencesUtils.remove(SettingsActivity.this, "baza_code");
                         SharedPreferencesUtils.remove(SettingsActivity.this, "cust_code");
                         SharedPreferencesUtils.remove(SettingsActivity.this, "im_account");

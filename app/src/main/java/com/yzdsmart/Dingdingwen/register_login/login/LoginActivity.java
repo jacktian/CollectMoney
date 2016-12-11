@@ -21,9 +21,7 @@ import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -65,10 +63,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     private LoginContract.LoginPresenter mPresenter;
 
     private String thirdPlatformExportData;
-    private String gender;
-    private Integer age;
-    private String nickName;
-    private String platForm;
+    private String userGender;
+    private String userNickName;
+    private String platFormName;
     private Bundle bundle;
 
     @Override
@@ -80,9 +77,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         centerTitleTV.setText(getResources().getString(R.string.login));
         userPasswordET.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
-        new LoginPresenter(this, this);
-
         bundle = new Bundle();
+
+        new LoginPresenter(this, this);
 
         MobclickAgent.openActivityDurationTrack(false);
 
@@ -148,16 +145,21 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                 mPresenter.userLogin(userNameET.getText().toString(), userPasswordET.getText().toString(), "", SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case R.id.platform_wechat:
+                platFormName = "wx";
                 Platform platformWeChat = ShareSDK.getPlatform(this, Wechat.NAME);
                 platformWeChat.SSOSetting(false);  //设置false表示使用SSO授权方式
                 platformWeChat.setPlatformActionListener(new PlatformActionListener() {
                     @Override
                     public void onComplete(Platform platform, int i, HashMap<String, Object> res) {
-                        showSnackbar("wechat complete" + platform.getDb().exportData());
-                        System.out.println("wechat-------->" + platform.getDb().exportData());
                         thirdPlatformExportData = platform.getDb().exportData();
                         JSONObject exportData = JSON.parseObject(platform.getDb().exportData());
-                        mPresenter.thirdPlatformLogin(exportData.getString("userID"), "wx", "", SharedPreferencesUtils.getString(LoginActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(LoginActivity.this, "ddw_access_token", ""));
+                        userGender = exportData.getString("gender").equals("1") ? "女" : "男";
+                        userNickName = exportData.getString("nickname");
+                        SharedPreferencesUtils.setString(LoginActivity.this, "exportData", thirdPlatformExportData);
+                        SharedPreferencesUtils.setString(LoginActivity.this, "platform", platFormName);
+                        SharedPreferencesUtils.setString(LoginActivity.this, "userGender", userGender);
+                        SharedPreferencesUtils.setString(LoginActivity.this, "userNickName", userNickName);
+                        thirdPlatformLogin(exportData.getString("userID"), platFormName);
                         //遍历Map
 //                        Iterator ite = res.entrySet().iterator();
 //                        while (ite.hasNext()) {
@@ -170,88 +172,81 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
 
                     @Override
                     public void onError(Platform platform, int i, Throwable throwable) {
-                        showSnackbar("wechat error" + platform.getDb().exportData());
+
                     }
 
                     @Override
                     public void onCancel(Platform platform, int i) {
-
+                        showSnackbar("取消登录");
                     }
                 }); // 设置分享事件回调
                 platformWeChat.showUser(null);//授权并获取用户信息
                 break;
             case R.id.platform_qq:
-                platForm = "qq";
+                platFormName = "qq";
                 Platform platformQQ = ShareSDK.getPlatform(this, QQ.NAME);
                 platformQQ.SSOSetting(false);  //设置false表示使用SSO授权方式
                 platformQQ.setPlatformActionListener(new PlatformActionListener() {
                     @Override
                     public void onComplete(Platform platform, int i, HashMap<String, Object> res) {
-                        showSnackbar("qq complete" + platform.getDb().exportData());
                         thirdPlatformExportData = platform.getDb().exportData();
                         JSONObject exportData = JSON.parseObject(platform.getDb().exportData());
-                        mPresenter.thirdPlatformLogin(exportData.getString("userID"), "qq", "", SharedPreferencesUtils.getString(LoginActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(LoginActivity.this, "ddw_access_token", ""));
-//                        //遍历Map
-                        Iterator ite = res.entrySet().iterator();
-                        while (ite.hasNext()) {
-                            Map.Entry entry = (Map.Entry) ite.next();
-                            Object key = entry.getKey();
-                            Object value = entry.getValue();
-                            System.out.println(key + "------:------" + value);
-                            if (key.equals("gender")) {
-                                gender = "" + entry.getValue();
-                            } else if (key.equals("nickname")) {
-                                nickName = "" + entry.getValue();
-                            }
-                        }
+                        userGender = exportData.getString("gender").equals("1") ? "女" : "男";
+                        userNickName = exportData.getString("nickname");
+                        SharedPreferencesUtils.setString(LoginActivity.this, "exportData", thirdPlatformExportData);
+                        SharedPreferencesUtils.setString(LoginActivity.this, "platform", platFormName);
+                        SharedPreferencesUtils.setString(LoginActivity.this, "userGender", userGender);
+                        SharedPreferencesUtils.setString(LoginActivity.this, "userNickName", userNickName);
+                        thirdPlatformLogin(exportData.getString("userID"), platFormName);
                     }
 
                     @Override
                     public void onError(Platform platform, int i, Throwable throwable) {
-                        showSnackbar("qq error" + platform.getDb().exportData());
+
                     }
 
                     @Override
                     public void onCancel(Platform platform, int i) {
-
+                        showSnackbar("取消登录");
                     }
                 }); // 设置分享事件回调
                 platformQQ.showUser(null);//授权并获取用户信息
                 break;
             case R.id.platform_webo:
+                platFormName = "wb";
                 Platform platformWeiBo = ShareSDK.getPlatform(this, SinaWeibo.NAME);
                 platformWeiBo.SSOSetting(false);  //设置false表示使用SSO授权方式
                 platformWeiBo.setPlatformActionListener(new PlatformActionListener() {
                     @Override
                     public void onComplete(Platform platform, int i, HashMap<String, Object> res) {
-                        showSnackbar("weibo complete" + platform.getDb().exportData());
-                        System.out.println("weibo-------->" + platform.getDb().exportData());
                         thirdPlatformExportData = platform.getDb().exportData();
                         JSONObject exportData = JSON.parseObject(platform.getDb().exportData());
-                        mPresenter.thirdPlatformLogin(exportData.getString("userID"), "wb", "", SharedPreferencesUtils.getString(LoginActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(LoginActivity.this, "ddw_access_token", ""));
-                        //遍历Map
-//                        Iterator ite = res.entrySet().iterator();
-//                        while (ite.hasNext()) {
-//                            Map.Entry entry = (Map.Entry) ite.next();
-//                            Object key = entry.getKey();
-//                            Object value = entry.getValue();
-//                            System.out.println(key + "： " + value);
-//                        }
+                        userGender = exportData.getString("gender").equals("1") ? "女" : "男";
+                        userNickName = exportData.getString("nickname");
+                        SharedPreferencesUtils.setString(LoginActivity.this, "exportData", thirdPlatformExportData);
+                        SharedPreferencesUtils.setString(LoginActivity.this, "platform", platFormName);
+                        SharedPreferencesUtils.setString(LoginActivity.this, "userGender", userGender);
+                        SharedPreferencesUtils.setString(LoginActivity.this, "userNickName", userNickName);
+                        thirdPlatformLogin(exportData.getString("userID"), platFormName);
                     }
 
                     @Override
                     public void onError(Platform platform, int i, Throwable throwable) {
-                        showSnackbar("weibo error" + platform.getDb().exportData());
+
                     }
 
                     @Override
                     public void onCancel(Platform platform, int i) {
-                        showSnackbar("weibo cancel");
+                        showSnackbar("取消登录");
                     }
                 }); // 设置分享事件回调
                 platformWeiBo.showUser(null);//授权并获取用户信息
                 break;
         }
+    }
+
+    private void thirdPlatformLogin(String userID, String platform) {
+        mPresenter.thirdPlatformLogin(userID, platform, "", SharedPreferencesUtils.getString(LoginActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(LoginActivity.this, "ddw_access_token", ""));
     }
 
     @Override
@@ -303,11 +298,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     public void onThirdPlatformNotBindPhone() {
         showSnackbar("没有绑定手机号");
         bundle.putInt("opeType", 2);
-        bundle.putString("gender", (null == gender || "".equals(gender)) ? "男" : gender);
-        bundle.putInt("age", null == age ? 18 : age);
-        bundle.putString("nickName", nickName);
-        bundle.putString("platform", platForm);
-        bundle.putString("exportData", thirdPlatformExportData);
         openActivity(VerifyCodeActivity.class, bundle, 0);
     }
 
