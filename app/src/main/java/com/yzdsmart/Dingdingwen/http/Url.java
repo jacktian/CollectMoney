@@ -29,5 +29,6 @@ public class Url {
 
     public static final String TOKEN = "token";
     public static final String APPREG = "AppReg";
+    public static final String CHECK_CARD = "CheckCard";
 
 }

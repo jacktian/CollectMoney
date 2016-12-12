@@ -7,6 +7,7 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ValidateBankCardRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.WithdrawRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 
@@ -137,6 +138,26 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void validateBankCard(String submitCode, String bandCardNum, String authorization) {
+        mModel.validateBankCard(submitCode, bandCardNum, authorization, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                ValidateBankCardRequestResponse requestResponse = (ValidateBankCardRequestResponse) result;
+            }
+
+            @Override
+            public void onError(String err) {
+
             }
 
             @Override

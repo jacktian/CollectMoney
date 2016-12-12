@@ -28,6 +28,7 @@ import com.yzdsmart.Dingdingwen.http.response.ShopListRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopPayLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopWithdrawLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.UploadFileRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ValidateBankCardRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.WithdrawRequestResponse;
 
 import java.util.List;
@@ -761,4 +762,15 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.EXPAND)
     Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Header("Authorization") String authorization);
+
+    /**
+     * 校验银行卡
+     *
+     * @param submitCode
+     * @param bandCardNum
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.CHECK_CARD)
+    Observable<ValidateBankCardRequestResponse> validateBankCard(@Field("SubmitCode") String submitCode, @Field("BandCardNum") String bandCardNum, @Header("Authorization") String authorization);
 }
