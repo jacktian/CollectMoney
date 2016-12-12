@@ -52,6 +52,6 @@ public class Constants {
 
     public static final String SHOP_PAY_LOG_ACTION_CODE = "816";//获取指定商铺支付日志
 
-    public static final String THIRD_PLATFORM_ACTION_CODE = "1692";//获取指定商铺支付日志
+    public static final String THIRD_PLATFORM_ACTION_CODE = "1693";//获取指定商铺支付日志
 
 }

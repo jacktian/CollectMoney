@@ -349,8 +349,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     @Override
     public void onIMOffline() {
         JPushInterface.stopPush(App.getAppInstance());
-        App.getAppInstance().exitApp();
-        openActivity(MainActivity.class);
+        openActivityClear(MainActivity.class, null, 0);
     }
 
     @Override

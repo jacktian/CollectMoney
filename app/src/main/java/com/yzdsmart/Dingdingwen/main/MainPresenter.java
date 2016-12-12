@@ -38,6 +38,11 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
 import tencent.tls.platform.TLSErrInfo;
 import tencent.tls.platform.TLSPwdLoginListener;
 import tencent.tls.platform.TLSUserInfo;
@@ -284,21 +289,11 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
             case 6208:
                 //离线状态下被其他终端踢下线
                 System.out.println("--------------------------------" + context.getResources().getString(R.string.kick_logout));
-                unRegisterObserver();
-                SharedPreferencesUtils.remove(context, "baza_code");
-                SharedPreferencesUtils.remove(context, "cust_code");
-                SharedPreferencesUtils.remove(context, "im_account");
-                SharedPreferencesUtils.remove(context, "im_password");
-                mView.onIMOffline();
+                logoutError();
                 break;
             default:
                 System.out.println("--------------------------------" + context.getResources().getString(R.string.login_error));
-                unRegisterObserver();
-                SharedPreferencesUtils.remove(context, "baza_code");
-                SharedPreferencesUtils.remove(context, "cust_code");
-                SharedPreferencesUtils.remove(context, "im_account");
-                SharedPreferencesUtils.remove(context, "im_password");
-                mView.onIMOffline();
+                logoutError();
                 break;
         }
     }
@@ -319,26 +314,43 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
             public void onForceOffline() {
                 //别的设备登录,强行退出
                 ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.logout_warning));
-                unRegisterObserver();
-                SharedPreferencesUtils.remove(context, "baza_code");
-                SharedPreferencesUtils.remove(context, "cust_code");
-                SharedPreferencesUtils.remove(context, "im_account");
-                SharedPreferencesUtils.remove(context, "im_password");
-                mView.onIMOffline();
+                logoutError();
             }
 
             @Override
             public void onUserSigExpired() {
                 //票据过期，需要重新登录
                 ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.user_sig_warning));
-                unRegisterObserver();
-                SharedPreferencesUtils.remove(context, "baza_code");
-                SharedPreferencesUtils.remove(context, "cust_code");
-                SharedPreferencesUtils.remove(context, "im_account");
-                SharedPreferencesUtils.remove(context, "im_password");
-                mView.onIMOffline();
+                logoutError();
             }
         });
         mView.imSDKLoginSuccess();
+    }
+
+    private void logoutError() {
+        unRegisterObserver();
+        String platformName = SharedPreferencesUtils.getString(context, "platform", "");
+        if (null != platformName && platformName.length() > 0) {
+            Platform platform = null;
+            if ("qq".equals(platformName)) {
+                platform = ShareSDK.getPlatform(context, QQ.NAME);
+            } else if ("wb".equals(platformName)) {
+                platform = ShareSDK.getPlatform(context, SinaWeibo.NAME);
+            } else if ("wx".equals(platformName)) {
+                platform = ShareSDK.getPlatform(context, Wechat.NAME);
+            }
+            if (platform.isAuthValid()) {
+                platform.removeAccount(true);
+            }
+            SharedPreferencesUtils.remove(context, "platform");
+            SharedPreferencesUtils.remove(context, "exportData");
+            SharedPreferencesUtils.remove(context, "userGender");
+            SharedPreferencesUtils.remove(context, "userNickName");
+        }
+        SharedPreferencesUtils.remove(context, "baza_code");
+        SharedPreferencesUtils.remove(context, "cust_code");
+        SharedPreferencesUtils.remove(context, "im_account");
+        SharedPreferencesUtils.remove(context, "im_password");
+        mView.onIMOffline();
     }
 }
