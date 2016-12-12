@@ -38,8 +38,8 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.amap.WalkRouteOverlay;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.main.recommend.RecommendFragment;
-import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
+import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -417,6 +417,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     public void locScanCoins() {
+        if (null == qLocation || qLocation.length() <= 0) {
+            ((BaseActivity) getActivity()).showSnackbar("定位异常,重新定位");
+            mLocationClient.startLocation();
+            return;
+        }
         if (isFirstLoc) return;
         if (0 == isAlreadyLocScan) {
             isAlreadyLocScan = 1;
@@ -518,6 +523,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     public void planRoute(String coor) {
+        if (null == qLocation || qLocation.length() <= 0) {
+            ((BaseActivity) getActivity()).showSnackbar("定位异常,重新定位");
+            mLocationClient.startLocation();
+            return;
+        }
         if (null != walkingRouteOverlay) {
             walkingRouteOverlay.removeFromMap();
             walkingRouteOverlay = null;

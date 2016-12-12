@@ -10,16 +10,18 @@ public class ShopWithdrawLog {
     private String Cash;//提现金额（人民币）
     private String TimeStr;//时间间隔
     private String CreateTime;//操作时间
+    private String PayStatus;//支付状态
 
     public ShopWithdrawLog() {
     }
 
-    public ShopWithdrawLog(String bazaCode, Integer gold, String cash, String timeStr, String createTime) {
+    public ShopWithdrawLog(String bazaCode, Integer gold, String cash, String timeStr, String createTime, String payStatus) {
         BazaCode = bazaCode;
         Gold = gold;
         Cash = cash;
         TimeStr = timeStr;
         CreateTime = createTime;
+        PayStatus = payStatus;
     }
 
     public String getBazaCode() {
@@ -62,6 +64,14 @@ public class ShopWithdrawLog {
         CreateTime = createTime;
     }
 
+    public String getPayStatus() {
+        return PayStatus;
+    }
+
+    public void setPayStatus(String payStatus) {
+        PayStatus = payStatus;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -70,6 +80,7 @@ public class ShopWithdrawLog {
                 ", Cash:'" + Cash + '\'' +
                 ", TimeStr:'" + TimeStr + '\'' +
                 ", CreateTime:'" + CreateTime + '\'' +
+                ", PayStatus:'" + PayStatus + '\'' +
                 '}';
     }
 }

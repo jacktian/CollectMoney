@@ -60,7 +60,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
 
     @Override
     public void thirdPlatformLogin(String userName, String otherElec, String loginCode, String authorization) {
-//        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loginning));
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loginning));
         mModel.thirdPlatformLogin(userName, otherElec, loginCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

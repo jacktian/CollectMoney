@@ -8,6 +8,7 @@ import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.LoginRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 
 /**
  * Created by YZD on 2016/8/26.
@@ -93,6 +94,11 @@ public class VerifyCodePresenter implements VerifyCodeContract.VerifyCodePresent
                 LoginRequestResponse requestResponse = (LoginRequestResponse) result;
                 if ("OK".equals(requestResponse.getActionStatus())) {
                     ((BaseActivity) context).showSnackbar("注册成功");
+                    SharedPreferencesUtils.setString(context, "baza_code", requestResponse.getBazaCode());
+                    SharedPreferencesUtils.setString(context, "cust_code", requestResponse.getCustCode());
+                    SharedPreferencesUtils.setString(context, "im_account", requestResponse.getTCInfo().getTCAccount());
+                    SharedPreferencesUtils.setString(context, "im_password", requestResponse.getTCInfo().getTCPassword());
+                    mView.onThirdPlatformRegister();
                 } else {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
                 }

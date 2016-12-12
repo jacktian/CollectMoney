@@ -22,6 +22,11 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
 
 /**
  * Created by YZD on 2016/9/4.
@@ -175,6 +180,24 @@ public class RegisterBusinessActivity extends BaseActivity implements RegisterBu
         showSnackbar(msg);
         if (!flag) {
             return;
+        }
+        String platformName = SharedPreferencesUtils.getString(this, "platform", "");
+        if (null != platformName && platformName.length() > 0) {
+            Platform platform = null;
+            if ("qq".equals(platformName)) {
+                platform = ShareSDK.getPlatform(this, QQ.NAME);
+            } else if ("wb".equals(platformName)) {
+                platform = ShareSDK.getPlatform(this, SinaWeibo.NAME);
+            } else if ("wx".equals(platformName)) {
+                platform = ShareSDK.getPlatform(this, Wechat.NAME);
+            }
+            if (platform.isAuthValid()) {
+                platform.removeAccount(true);
+            }
+            SharedPreferencesUtils.remove(this, "platform");
+            SharedPreferencesUtils.remove(this, "exportData");
+            SharedPreferencesUtils.remove(this, "userGender");
+            SharedPreferencesUtils.remove(this, "userNickName");
         }
         SharedPreferencesUtils.remove(this, "baza_code");
         SharedPreferencesUtils.remove(this, "cust_code");

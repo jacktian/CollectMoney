@@ -3,6 +3,7 @@ package com.yzdsmart.Dingdingwen.register_login.verify_code;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.register_login.set_password.SetPasswordActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -139,6 +141,9 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
+                if (null != SharedPreferencesUtils.getString(VerifyCodeActivity.this, "platform", "") && SharedPreferencesUtils.getString(VerifyCodeActivity.this, "platform", "").length() > 0) {
+                    cancelThirdPlatformLogin();
+                }
                 closeActivity();
                 break;
             case R.id.get_verify_button:
@@ -173,10 +178,20 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
     @Override
     protected void onDestroy() {
         mHandler.removeCallbacks(getVerifyCodeRunnable);
-        if (null != SharedPreferencesUtils.getString(VerifyCodeActivity.this, "platform", "") && SharedPreferencesUtils.getString(VerifyCodeActivity.this, "platform", "").length() > 0) {
-            cancelThirdPlatformLogin();
-        }
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                if (null != SharedPreferencesUtils.getString(VerifyCodeActivity.this, "platform", "") && SharedPreferencesUtils.getString(VerifyCodeActivity.this, "platform", "").length() > 0) {
+                    cancelThirdPlatformLogin();
+                    return true;
+                }
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -211,6 +226,11 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
         bundle.putInt("opeType", opeType);
         bundle.putString("userName", userNameET.getText().toString());
         openActivity(SetPasswordActivity.class, bundle, 0);
+    }
+
+    @Override
+    public void onThirdPlatformRegister() {
+        openActivityClear(MainActivity.class, null, 0);
     }
 
     private void cancelThirdPlatformLogin() {

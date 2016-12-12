@@ -40,8 +40,6 @@ public class LoginModel {
     }
 
     void thirdPlatformLogin(String userName, String otherElec, String loginCode, String authorization, final RequestListener listener) {
-        System.out.println("----->" + userName + "---" + otherElec + "---" + authorization);
-
         thirdPlatformLoginSubscriber = new Subscriber<LoginRequestResponse>() {
             @Override
             public void onCompleted() {

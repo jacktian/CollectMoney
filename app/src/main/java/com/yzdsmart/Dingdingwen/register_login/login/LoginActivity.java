@@ -2,6 +2,7 @@ package com.yzdsmart.Dingdingwen.register_login.login;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -67,6 +68,14 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     private String userNickName;
     private String platFormName;
     private Bundle bundle;
+    private Handler thirdPlatformLoginHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle bundle = msg.getData();
+            thirdPlatformLogin(bundle.getString("userID"), bundle.getString("platFormName"));
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +123,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     @Optional
     @OnClick({R.id.title_left_operation_layout, R.id.forget_pwd_link, R.id.new_user_link, R.id.login_register_confirm_button, R.id.platform_wechat, R.id.platform_qq, R.id.platform_webo})
     void onClick(View view) {
-        Bundle bundle;
+        final Bundle bundle;
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
@@ -159,7 +168,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                         SharedPreferencesUtils.setString(LoginActivity.this, "platform", platFormName);
                         SharedPreferencesUtils.setString(LoginActivity.this, "userGender", userGender);
                         SharedPreferencesUtils.setString(LoginActivity.this, "userNickName", userNickName);
-                        thirdPlatformLogin(exportData.getString("userID"), platFormName);
+                        Bundle loginBundle = new Bundle();
+                        loginBundle.putString("userID", exportData.getString("userID"));
+                        loginBundle.putString("platFormName", platFormName);
+                        Message loginMsg = new Message();
+                        loginMsg.setData(loginBundle);
+                        thirdPlatformLoginHandler.sendMessage(loginMsg);
                         //遍历Map
 //                        Iterator ite = res.entrySet().iterator();
 //                        while (ite.hasNext()) {
@@ -197,7 +211,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                         SharedPreferencesUtils.setString(LoginActivity.this, "platform", platFormName);
                         SharedPreferencesUtils.setString(LoginActivity.this, "userGender", userGender);
                         SharedPreferencesUtils.setString(LoginActivity.this, "userNickName", userNickName);
-                        thirdPlatformLogin(exportData.getString("userID"), platFormName);
+//                        thirdPlatformLogin(exportData.getString("userID"), platFormName);
+                        Bundle loginBundle = new Bundle();
+                        loginBundle.putString("userID", exportData.getString("userID"));
+                        loginBundle.putString("platFormName", platFormName);
+                        Message loginMsg = new Message();
+                        loginMsg.setData(loginBundle);
+                        thirdPlatformLoginHandler.sendMessage(loginMsg);
                     }
 
                     @Override
@@ -227,7 +247,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                         SharedPreferencesUtils.setString(LoginActivity.this, "platform", platFormName);
                         SharedPreferencesUtils.setString(LoginActivity.this, "userGender", userGender);
                         SharedPreferencesUtils.setString(LoginActivity.this, "userNickName", userNickName);
-                        thirdPlatformLogin(exportData.getString("userID"), platFormName);
+//                        thirdPlatformLogin(exportData.getString("userID"), platFormName);
+                        Bundle loginBundle = new Bundle();
+                        loginBundle.putString("userID", exportData.getString("userID"));
+                        loginBundle.putString("platFormName", platFormName);
+                        Message loginMsg = new Message();
+                        loginMsg.setData(loginBundle);
+                        thirdPlatformLoginHandler.sendMessage(loginMsg);
                     }
 
                     @Override
@@ -246,6 +272,10 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     }
 
     private void thirdPlatformLogin(String userID, String platform) {
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         mPresenter.thirdPlatformLogin(userID, platform, "", SharedPreferencesUtils.getString(LoginActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(LoginActivity.this, "ddw_access_token", ""));
     }
 
