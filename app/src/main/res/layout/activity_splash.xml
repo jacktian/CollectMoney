@@ -6,30 +6,50 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.bigkoo.convenientbanner.ConvenientBanner
-            android:id="@+id/splash_banner"
+        <cn.bingoogolapple.bgabanner.BGAGuideLinkageLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:canLoop="true" />
+            android:layout_height="match_parent">
+
+            <cn.bingoogolapple.bgabanner.BGABanner
+                android:id="@+id/banner_guide_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:banner_pageChangeDuration="500"
+                app:banner_pointAutoPlayAble="false"
+                app:banner_pointContainerBackground="@android:color/transparent"
+                app:banner_pointDrawable="@drawable/splash_point_hollow"
+                app:banner_pointTopBottomMargin="15dp"
+                app:banner_transitionEffect="fade" />
+
+            <cn.bingoogolapple.bgabanner.BGABanner
+                android:id="@+id/banner_guide_foreground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:banner_pageChangeDuration="500"
+                app:banner_pointAutoPlayAble="false"
+                app:banner_pointContainerBackground="@android:color/transparent"
+                app:banner_pointDrawable="@drawable/splash_point_hollow"
+                app:banner_pointTopBottomMargin="15dp"
+                app:banner_transitionEffect="alpha" />
+        </cn.bingoogolapple.bgabanner.BGAGuideLinkageLayout>
 
         <Button
-            android:id="@+id/start_app"
+            android:id="@+id/start_main"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/splash_button_height"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="60dp"
             android:layout_marginLeft="@dimen/splash_button_margin"
             android:layout_marginRight="@dimen/splash_button_margin"
             android:background="@drawable/splash_button_bg"
-            android:text="进入程序"
+            android:text="立即体验"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_large"
             android:visibility="gone" />
-    </FrameLayout>
-
-
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

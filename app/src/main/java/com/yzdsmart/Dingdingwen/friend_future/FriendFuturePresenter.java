@@ -36,6 +36,7 @@ public class FriendFuturePresenter implements FriendFutureContract.FriendFutureP
         mModel.getFutureFriends(pageSize, pendSeq, decideSeq, recommendSeq, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
+                ((BaseActivity) context).hideProgressDialog();
                 TIMGetFriendFutureListSucc listSucc = (TIMGetFriendFutureListSucc) result;
                 mView.onGetFutureFriends(listSucc.getItems(), listSucc.getMeta().getPendencySeq(), listSucc.getMeta().getDecideSeq(), listSucc.getMeta().getRecommendSeq());
             }
