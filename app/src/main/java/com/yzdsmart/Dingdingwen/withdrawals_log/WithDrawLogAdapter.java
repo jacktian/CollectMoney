@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Dingdingwen.R;
@@ -131,6 +133,7 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
                 dateTime = dtf.parseDateTime(personalLog.getCreateTime());
                 holder.setWithdrawDate(dateTime.toString("yyyy-MM-dd"));
                 holder.setWithdrawTime(dateTime.toString("HH:mm:ss"));
+                holder.setLogState(("异常".equals(personalLog.getPayStatus())) ? R.mipmap.log_state_error : R.mipmap.log_state_success);
                 break;
             case 1:
                 ShopWithdrawLog shopLog = shopWithdrawLogs.get(position);
@@ -139,6 +142,7 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
                 dateTime = dtf.parseDateTime(shopLog.getCreateTime());
                 holder.setWithdrawDate(dateTime.toString("yyyy-MM-dd"));
                 holder.setWithdrawTime(dateTime.toString("HH:mm:ss"));
+                holder.setLogState(("异常".equals(shopLog.getPayStatus())) ? R.mipmap.log_state_error : R.mipmap.log_state_success);
                 break;
         }
     }
@@ -153,7 +157,6 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
 
     }
 
-
     class ViewHolder extends UltimateRecyclerviewViewHolder {
         @Nullable
         @BindView(R.id.withdraw_date)
@@ -167,6 +170,9 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
         @Nullable
         @BindView(R.id.rmb_counts)
         TextView rmbCountsTV;
+        @Nullable
+        @BindView(R.id.log_state)
+        ImageView logStateIV;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -189,5 +195,8 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
             rmbCountsTV.setText(rmbCounts);
         }
 
+        public void setLogState(int resId) {
+            Glide.with(context).load(resId).asBitmap().error(R.mipmap.ic_holder_light).into(logStateIV);
+        }
     }
 }

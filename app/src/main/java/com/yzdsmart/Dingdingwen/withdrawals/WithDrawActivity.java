@@ -44,6 +44,9 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
     @Nullable
+    @BindView(R.id.right_title)
+    TextView rightTitleTV;
+    @Nullable
     @BindView(R.id.coin_counts)
     TextView coinCountsTV;
     @Nullable
@@ -79,6 +82,8 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
         userType = bundle.getInt("userType");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+        rightTitleTV.setText("卡包");
+        ButterKnife.apply(rightTitleTV, BUTTERKNIFEVISIBLE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         switch (userType) {
             case 0:

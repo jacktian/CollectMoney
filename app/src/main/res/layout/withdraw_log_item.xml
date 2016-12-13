@@ -111,5 +111,12 @@
                 android:textColor="@color/font_red"
                 android:textSize="@dimen/font_small" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/log_state"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 </LinearLayout>
