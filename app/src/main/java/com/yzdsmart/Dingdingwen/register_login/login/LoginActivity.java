@@ -154,6 +154,10 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                 mPresenter.userLogin(userNameET.getText().toString(), userPasswordET.getText().toString(), "", SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case R.id.platform_wechat:
+                if (!Utils.isNetUsable(this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
                 platFormName = "wx";
                 Platform platformWeChat = ShareSDK.getPlatform(this, Wechat.NAME);
                 platformWeChat.SSOSetting(false);  //设置false表示使用SSO授权方式
@@ -164,10 +168,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                         JSONObject exportData = JSON.parseObject(platform.getDb().exportData());
                         userGender = exportData.getString("gender").equals("1") ? "女" : "男";
                         userNickName = exportData.getString("nickname");
-                        SharedPreferencesUtils.setString(LoginActivity.this, "exportData", thirdPlatformExportData);
-                        SharedPreferencesUtils.setString(LoginActivity.this, "platform", platFormName);
-                        SharedPreferencesUtils.setString(LoginActivity.this, "userGender", userGender);
-                        SharedPreferencesUtils.setString(LoginActivity.this, "userNickName", userNickName);
+                        storePlatformInfo(platFormName, thirdPlatformExportData, userGender, userNickName);
                         Bundle loginBundle = new Bundle();
                         loginBundle.putString("userID", exportData.getString("userID"));
                         loginBundle.putString("platFormName", platFormName);
@@ -197,6 +198,10 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                 platformWeChat.showUser(null);//授权并获取用户信息
                 break;
             case R.id.platform_qq:
+                if (!Utils.isNetUsable(this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
                 platFormName = "qq";
                 Platform platformQQ = ShareSDK.getPlatform(this, QQ.NAME);
                 platformQQ.SSOSetting(false);  //设置false表示使用SSO授权方式
@@ -207,11 +212,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                         JSONObject exportData = JSON.parseObject(platform.getDb().exportData());
                         userGender = exportData.getString("gender").equals("1") ? "女" : "男";
                         userNickName = exportData.getString("nickname");
-                        SharedPreferencesUtils.setString(LoginActivity.this, "exportData", thirdPlatformExportData);
-                        SharedPreferencesUtils.setString(LoginActivity.this, "platform", platFormName);
-                        SharedPreferencesUtils.setString(LoginActivity.this, "userGender", userGender);
-                        SharedPreferencesUtils.setString(LoginActivity.this, "userNickName", userNickName);
-//                        thirdPlatformLogin(exportData.getString("userID"), platFormName);
+                        storePlatformInfo(platFormName, thirdPlatformExportData, userGender, userNickName);
                         Bundle loginBundle = new Bundle();
                         loginBundle.putString("userID", exportData.getString("userID"));
                         loginBundle.putString("platFormName", platFormName);
@@ -233,6 +234,10 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                 platformQQ.showUser(null);//授权并获取用户信息
                 break;
             case R.id.platform_webo:
+                if (!Utils.isNetUsable(this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
                 platFormName = "wb";
                 Platform platformWeiBo = ShareSDK.getPlatform(this, SinaWeibo.NAME);
                 platformWeiBo.SSOSetting(false);  //设置false表示使用SSO授权方式
@@ -243,11 +248,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                         JSONObject exportData = JSON.parseObject(platform.getDb().exportData());
                         userGender = exportData.getString("gender").equals("1") ? "女" : "男";
                         userNickName = exportData.getString("nickname");
-                        SharedPreferencesUtils.setString(LoginActivity.this, "exportData", thirdPlatformExportData);
-                        SharedPreferencesUtils.setString(LoginActivity.this, "platform", platFormName);
-                        SharedPreferencesUtils.setString(LoginActivity.this, "userGender", userGender);
-                        SharedPreferencesUtils.setString(LoginActivity.this, "userNickName", userNickName);
-//                        thirdPlatformLogin(exportData.getString("userID"), platFormName);
+                        storePlatformInfo(platFormName, thirdPlatformExportData, userGender, userNickName);
                         Bundle loginBundle = new Bundle();
                         loginBundle.putString("userID", exportData.getString("userID"));
                         loginBundle.putString("platFormName", platFormName);
@@ -269,6 +270,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                 platformWeiBo.showUser(null);//授权并获取用户信息
                 break;
         }
+    }
+
+    private void storePlatformInfo(String platFormName, String thirdPlatformExportData, String userGender, String userNickName) {
+        SharedPreferencesUtils.setString(LoginActivity.this, "exportData", thirdPlatformExportData);
+        SharedPreferencesUtils.setString(LoginActivity.this, "platform", platFormName);
+        SharedPreferencesUtils.setString(LoginActivity.this, "userGender", userGender);
+        SharedPreferencesUtils.setString(LoginActivity.this, "userNickName", userNickName);
     }
 
     private void thirdPlatformLogin(String userID, String platform) {

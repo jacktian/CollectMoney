@@ -28,7 +28,7 @@ public class Url {
     public static final String PAY = "Api/Pay";
 
     public static final String TOKEN = "token";
-    public static final String APPREG = "AppReg";
+    public static final String APP_REG = "AppReg";
     public static final String CHECK_CARD = "CheckCard";
 
 }

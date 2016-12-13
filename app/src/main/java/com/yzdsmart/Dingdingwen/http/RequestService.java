@@ -56,7 +56,7 @@ public interface RequestService {
      * @return
      */
     @FormUrlEncoded
-    @POST(Url.APPREG)
+    @POST(Url.APP_REG)
     Observable<RequestResponse> appRegister(@Field("AppCode") String AppCode, @Field("AppId") String appId, @Field("AppSecret") String appSecret);
 
     /**
