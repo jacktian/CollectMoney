@@ -41,7 +41,7 @@ public class VerifyCodeModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getVerifyCode(telNum, currDate, authorization)
+        RequestAdapter.getDDWRequestService().getVerifyCode(telNum, currDate, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getVerifyCodeSubscriber);
@@ -64,7 +64,7 @@ public class VerifyCodeModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().validateVerifyCode(actioncode, telNum, verifyCode, authorization)
+        RequestAdapter.getDDWRequestService().validateVerifyCode(actioncode, telNum, verifyCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(verifyVerifyCodeSubscriber);
@@ -88,7 +88,7 @@ public class VerifyCodeModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().thirdPlatformRegister(actioncode, userName, password, cSex, cAge, cNickName, otherElec, platformExportData, regCode, authorization)
+        RequestAdapter.getDDWRequestService().thirdPlatformRegister(actioncode, userName, password, cSex, cAge, cNickName, otherElec, platformExportData, regCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(thirdPlatformRegisterSubscriber);

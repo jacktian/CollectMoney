@@ -11,10 +11,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by YZD on 2016/4/27.
  */
 public class RequestAdapter {
-    public static RequestService mRequestService = null;
+    public static RequestService mDDWRequestService = null;
 
-    public static RequestService getRequestService() {
-        if (null == mRequestService) {
+    public static RequestService getDDWRequestService() {
+        if (null == mDDWRequestService) {
             Gson gson = new GsonBuilder().setLenient().create();
             Retrofit mRetrofit = new Retrofit.Builder().baseUrl(Url.BASE_URL)
                     .client(OkHttpClientUtils.getOkHttpClient())
@@ -23,8 +23,8 @@ public class RequestAdapter {
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();
-            mRequestService = mRetrofit.create(RequestService.class);
+            mDDWRequestService = mRetrofit.create(RequestService.class);
         }
-        return mRequestService;
+        return mDDWRequestService;
     }
 }

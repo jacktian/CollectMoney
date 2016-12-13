@@ -7,18 +7,20 @@ import com.alibaba.fastjson.JSONArray;
  */
 
 public class ValidateBankCardRequestResponse {
-    private String bank;
-    private Boolean validated;
-    private String cardType;
-    private String key;
+    private String bank;//银行代码
+    private String bankname;//银行名称
+    private Boolean validated;//验证结果
+    private String cardType;//卡类型
+    private String key;//卡号
     private JSONArray messages;
-    private String stat;
+    private String stat;//执行结果
 
     public ValidateBankCardRequestResponse() {
     }
 
-    public ValidateBankCardRequestResponse(String bank, Boolean validated, String cardType, String key, JSONArray messages, String stat) {
+    public ValidateBankCardRequestResponse(String bank, String bankname, Boolean validated, String cardType, String key, JSONArray messages, String stat) {
         this.bank = bank;
+        this.bankname = bankname;
         this.validated = validated;
         this.cardType = cardType;
         this.key = key;
@@ -32,6 +34,14 @@ public class ValidateBankCardRequestResponse {
 
     public void setBank(String bank) {
         this.bank = bank;
+    }
+
+    public String getBankname() {
+        return bankname;
+    }
+
+    public void setBankname(String bankname) {
+        this.bankname = bankname;
     }
 
     public Boolean getValidated() {

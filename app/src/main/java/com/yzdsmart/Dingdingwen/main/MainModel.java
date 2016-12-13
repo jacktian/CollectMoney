@@ -51,7 +51,7 @@ public class MainModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getRefreshToken(grantType, userName, password)
+        RequestAdapter.getDDWRequestService().getRefreshToken(grantType, userName, password)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getRefreshTokenSubscriber);
@@ -74,7 +74,7 @@ public class MainModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().refreshAccessToken(grantType, refreshToken)
+        RequestAdapter.getDDWRequestService().refreshAccessToken(grantType, refreshToken)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(refreshAccessTokenSubscriber);

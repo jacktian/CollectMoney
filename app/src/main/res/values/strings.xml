@@ -420,4 +420,5 @@
     <string name="error_get_shop_scanned_log">获取店铺打赏者列表异常</string>
     <string name="error_withdraw">提现异常</string>
     <string name="error_get_withdraw_log">获取提现日志异常</string>
+    <string name="error_get_bank_card_list">获取银行卡异常</string>
 </resources>

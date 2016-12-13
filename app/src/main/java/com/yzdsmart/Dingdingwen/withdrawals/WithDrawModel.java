@@ -40,7 +40,7 @@ public class WithDrawModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getCustInfo(submitcode, custCode, authorization)
+        RequestAdapter.getDDWRequestService().getCustInfo(submitcode, custCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getCustInfoSubscriber);
@@ -63,7 +63,7 @@ public class WithDrawModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().getLeftCoins(action, submitCode, bazaCode, authorization)
+        RequestAdapter.getDDWRequestService().getLeftCoins(action, submitCode, bazaCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(leftCoinsSubscriber);
@@ -86,7 +86,7 @@ public class WithDrawModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().shopWithdrawCoins(action, submitCode, bazaCode, goldNum, authorization)
+        RequestAdapter.getDDWRequestService().shopWithdrawCoins(action, submitCode, bazaCode, goldNum, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(shopWithdrawSubscriber);
@@ -109,13 +109,13 @@ public class WithDrawModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().personalWithdrawCoins(action, actiontype, submitCode, custCode, goldNum, authorization)
+        RequestAdapter.getDDWRequestService().personalWithdrawCoins(action, actiontype, submitCode, custCode, goldNum, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(personalWithdrawSubscriber);
     }
 
-    void validateBankCard(String submitCode, String bandCardNum, String authorization, final RequestListener listener) {
+    void validateBankCard(String submitCode, String bankCardNum, String authorization, final RequestListener listener) {
         validateBankCardSubscriber = new Subscriber<ValidateBankCardRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -132,7 +132,7 @@ public class WithDrawModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().validateBankCard(submitCode, bandCardNum, authorization)
+        RequestAdapter.getDDWRequestService().validateBankCard(submitCode, bankCardNum, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(validateBankCardSubscriber);

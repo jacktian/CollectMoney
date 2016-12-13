@@ -1,5 +1,6 @@
 package com.yzdsmart.Dingdingwen.http;
 
+import com.yzdsmart.Dingdingwen.bean.BankCard;
 import com.yzdsmart.Dingdingwen.bean.ShopScanner;
 import com.yzdsmart.Dingdingwen.http.response.BuyCoinsLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
@@ -767,10 +768,23 @@ public interface RequestService {
      * 校验银行卡
      *
      * @param submitCode
-     * @param bandCardNum
+     * @param bankCardNum
+     * @param authorization
      * @return
      */
     @FormUrlEncoded
     @POST(Url.CHECK_CARD)
-    Observable<ValidateBankCardRequestResponse> validateBankCard(@Field("SubmitCode") String submitCode, @Field("BandCardNum") String bandCardNum, @Header("Authorization") String authorization);
+    Observable<ValidateBankCardRequestResponse> validateBankCard(@Field("SubmitCode") String submitCode, @Field("BankCardNum") String bankCardNum, @Header("Authorization") String authorization);
+
+    /**
+     * 获取绑定银行卡数据
+     *
+     * @param submitCode
+     * @param custCode
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.CUST + "/GetBankList")
+    Observable<List<BankCard>> getBankCardList(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
 }

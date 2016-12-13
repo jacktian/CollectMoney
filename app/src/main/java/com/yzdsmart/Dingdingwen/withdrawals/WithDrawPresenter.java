@@ -148,8 +148,8 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
     }
 
     @Override
-    public void validateBankCard(String submitCode, String bandCardNum, String authorization) {
-        mModel.validateBankCard(submitCode, bandCardNum, authorization, new RequestListener() {
+    public void validateBankCard(String submitCode, String bankCardNum, String authorization) {
+        mModel.validateBankCard(submitCode, bankCardNum, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ValidateBankCardRequestResponse requestResponse = (ValidateBankCardRequestResponse) result;

@@ -13,6 +13,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.card_bag.CardBagActivity;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.share_sdk.OnekeyShare;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
@@ -173,11 +174,14 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.withdraw_money, R.id.with_all})
+    @OnClick({R.id.title_left_operation_layout, R.id.right_title, R.id.withdraw_money, R.id.with_all})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
+                break;
+            case R.id.right_title:
+                openActivity(CardBagActivity.class);
                 break;
             case R.id.withdraw_money:
                 if (!requiredVerify(withdrawGoldNumET)) {
@@ -196,7 +200,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
 //                        mPresenter.shopWithdrawCoins(Constants.SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
 //                        break;
 //                }
-                mPresenter.validateBankCard("", "1234567891234567890", SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                mPresenter.validateBankCard("000000", "1234567891234567890", SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case R.id.with_all:
                 if (Float.valueOf(coinCountsTV.getText().toString()) > 0) {

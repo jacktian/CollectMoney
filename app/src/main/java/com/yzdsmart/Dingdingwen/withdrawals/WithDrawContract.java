@@ -78,7 +78,7 @@ public interface WithDrawContract {
          */
         void personalWithdrawCoins(String action, String actiontype, String submitCode, String custCode, Integer goldNum, String authorization);
 
-        void validateBankCard(String submitCode, String bandCardNum, String authorization);
+        void validateBankCard(String submitCode, String bankCardNum, String authorization);
 
         void unRegisterSubscribe();
     }

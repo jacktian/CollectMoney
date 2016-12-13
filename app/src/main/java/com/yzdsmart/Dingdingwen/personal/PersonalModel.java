@@ -47,7 +47,7 @@ public class PersonalModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getCustLevel(code, submitcode, action, authorization)
+        RequestAdapter.getDDWRequestService().getCustLevel(code, submitcode, action, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getCustLevelSubscriber);
@@ -70,7 +70,7 @@ public class PersonalModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getCustInfo(submitcode, custCode, authorization)
+        RequestAdapter.getDDWRequestService().getCustInfo(submitcode, custCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getCustInfoSubscriber);
@@ -93,7 +93,7 @@ public class PersonalModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getShopInfoByPers(actioncode, submitCode, bazaCode, authorization)
+        RequestAdapter.getDDWRequestService().getShopInfoByPers(actioncode, submitCode, bazaCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getShopInfoSubscriber);
@@ -116,7 +116,7 @@ public class PersonalModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().getShopGalley(action, submitCode, bazaCode, authorization)
+        RequestAdapter.getDDWRequestService().getShopGalley(action, submitCode, bazaCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getShopGalleySubscriber);
@@ -139,7 +139,7 @@ public class PersonalModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().uploadShopImage(action, fileName, fileData, bazaCode, authorization)
+        RequestAdapter.getDDWRequestService().uploadShopImage(action, fileName, fileData, bazaCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(uploadShopAvaterSubscriber);

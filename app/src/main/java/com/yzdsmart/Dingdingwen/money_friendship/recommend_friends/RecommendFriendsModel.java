@@ -33,7 +33,7 @@ public class RecommendFriendsModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getRequestService().getRecommendFriends(action, submitCode, custCode, recomNum, authorization)
+        RequestAdapter.getDDWRequestService().getRecommendFriends(action, submitCode, custCode, recomNum, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getRecommendFriendsSubscriber);

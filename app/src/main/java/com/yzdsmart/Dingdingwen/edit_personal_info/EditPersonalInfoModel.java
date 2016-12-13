@@ -37,7 +37,7 @@ public class EditPersonalInfoModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getCustInfo(submitcode, custCode, authorization)
+        RequestAdapter.getDDWRequestService().getCustInfo(submitcode, custCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getCustInfoSubscriber);
@@ -60,7 +60,7 @@ public class EditPersonalInfoModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().getCustDetailInfo(actioncode, submitCode, custCode, selfCustCode, authorization)
+        RequestAdapter.getDDWRequestService().getCustDetailInfo(actioncode, submitCode, custCode, selfCustCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getCustDetailSubscriber);
@@ -83,7 +83,7 @@ public class EditPersonalInfoModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getRequestService().setCustDetailInfo(submitCode, custCode, cName, cNickName, cSex, cBirthday, cTel, cIdNo, cNation, cHeight, cWeight, cProfession, cAddress, cProv, cCity, cDist, cCountry, cRemark, authorization)
+        RequestAdapter.getDDWRequestService().setCustDetailInfo(submitCode, custCode, cName, cNickName, cSex, cBirthday, cTel, cIdNo, cNation, cHeight, cWeight, cProfession, cAddress, cProv, cCity, cDist, cCountry, cRemark, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(setCustDetailSubscriber);

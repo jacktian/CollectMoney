@@ -1,23 +1,25 @@
-package com.yzdsmart.Dingdingwen.shop_scanned_log;
+package com.yzdsmart.Dingdingwen.card_bag;
 
+import com.yzdsmart.Dingdingwen.bean.BankCard;
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
-import com.yzdsmart.Dingdingwen.http.response.ScannedLogRequestResponse;
+
+import java.util.List;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by YZD on 2016/10/9.
+ * Created by YZD on 2016/12/13.
  */
 
-public class ShopScannedLogModel {
+public class CardBagModel {
     //网络请求监听
-    private Subscriber<ScannedLogRequestResponse> getScannedLogSubscriber;
+    private Subscriber<List<BankCard>> getBankCardListSubscriber;
 
-    void getScannedLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization, final RequestListener listener) {
-        getScannedLogSubscriber = new Subscriber<ScannedLogRequestResponse>() {
+    void getBankCardList(String submitCode, String custCode, String authorization, final RequestListener listener) {
+        getBankCardListSubscriber = new Subscriber<List<BankCard>>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -29,20 +31,20 @@ public class ShopScannedLogModel {
             }
 
             @Override
-            public void onNext(ScannedLogRequestResponse requestResponse) {
-                listener.onSuccess(requestResponse);
+            public void onNext(List<BankCard> bankCardList) {
+                listener.onSuccess(bankCardList);
             }
         };
-        RequestAdapter.getDDWRequestService().getScannedLog(action, submitCode, bazaCode, pageIndex, pageSize, lastsequence, authorization)
+        RequestAdapter.getDDWRequestService().getBankCardList(submitCode, custCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
-                .subscribe(getScannedLogSubscriber);
+                .subscribe(getBankCardListSubscriber);
     }
 
     void unRegisterSubscribe() {
         //解除引用关系，以避免内存泄露的发生
-        if (null != getScannedLogSubscriber) {
-            getScannedLogSubscriber.unsubscribe();
+        if (null != getBankCardListSubscriber) {
+            getBankCardListSubscriber.unsubscribe();
         }
     }
 }
