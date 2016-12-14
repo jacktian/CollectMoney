@@ -71,22 +71,16 @@ public interface WithDrawContract {
          * 商铺提现
          *
          * @param action
-         * @param submitCode
-         * @param bazaCode
-         * @param goldNum
          */
-        void shopWithdrawCoins(String action, String submitCode, String bazaCode, Integer goldNum, String authorization);
+        void shopWithdrawCoins(String action, String shopWithdrawPara, String authorization);
 
         /**
          * 个人提现
          *
          * @param action
          * @param actiontype
-         * @param submitCode
-         * @param custCode
-         * @param goldNum
          */
-        void personalWithdrawCoins(String action, String actiontype, String submitCode, String custCode, Integer goldNum, String authorization);
+        void personalWithdrawCoins(String action, String actiontype, String personalWithdrawPara, String authorization);
 
         /**
          * 获取绑定银行卡数据

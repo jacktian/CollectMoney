@@ -453,14 +453,10 @@ public interface RequestService {
      *
      * @param action
      * @param actiontype
-     * @param submitCode
-     * @param custCode
-     * @param goldNum
      * @return
      */
-    @FormUrlEncoded
     @POST(Url.GOLD)
-    Observable<WithdrawRequestResponse> personalWithdrawCoins(@Query("action") String action, @Query("actiontype") String actiontype, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("GoldNum") Integer goldNum, @Header("Authorization") String authorization);
+    Observable<WithdrawRequestResponse> personalWithdrawCoins(@Query("action") String action, @Query("actiontype") String actiontype, @Body RequestBody personalWithdrawPara, @Header("Content-Type") String contentType, @Header("Accept") String accept, @Header("Authorization") String authorization);
 
     /**
      * 个人提现日志
@@ -603,14 +599,10 @@ public interface RequestService {
      * 商铺提现
      *
      * @param action
-     * @param submitCode
-     * @param bazaCode
-     * @param goldNum
      * @return
      */
-    @FormUrlEncoded
     @POST(Url.GOLD)
-    Observable<WithdrawRequestResponse> shopWithdrawCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldNum") Integer goldNum, @Header("Authorization") String authorization);
+    Observable<WithdrawRequestResponse> shopWithdrawCoins(@Query("action") String action, @Body RequestBody shopWithdrawPara, @Header("Content-Type") String contentType, @Header("Accept") String accept, @Header("Authorization") String authorization);
 
     /**
      * 商铺提现日志

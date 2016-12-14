@@ -12,11 +12,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.BankCard;
+import com.yzdsmart.Dingdingwen.bean.PersonalWithdrawParameter;
+import com.yzdsmart.Dingdingwen.bean.ShopWithdrawParameter;
 import com.yzdsmart.Dingdingwen.card_bag.CardBagActivity;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.share_sdk.OnekeyShare;
@@ -78,6 +81,8 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
 
     private static final String TAG = "WithDrawActivity";
 
+    private Gson gson = new Gson();
+
     private Float GOLD_FORMAT_RMB_RATIO = 0.0f;
 
     private Integer userType;//0 个人 1 商家
@@ -87,6 +92,8 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     private Handler mHandler = new Handler();
     private Runnable shopWithdrawSuccessRunnable;
     private Runnable personalWithdrawSuccessRunnable;
+
+    private BankCard selectedBankCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,10 +199,10 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
         super.onActivityResult(requestCode, resultCode, data);
         if (Constants.REQUEST_BANK_CARD_NUM_CODE == requestCode && RESULT_OK == resultCode) {
             Bundle bundle = data.getExtras();
-            BankCard bankCard = bundle.getParcelable("bankCard");
+            selectedBankCard = bundle.getParcelable("bankCard");
             ButterKnife.apply(bankLogoLayout, BUTTERKNIFEVISIBLE);
-            Glide.with(this).load("https://apimg.alipay.com/combo.png?d=cashier&t=" + bankCard.getBankCode()).asBitmap().override(Math.round(Utils.getScreenRatio(this) * 151), Math.round(Utils.getScreenRatio(this) * 43)).into(bankLogoIV);
-            cardNumTV.setText(Utils.cardIdHide(bankCard.getBankCardNum()));
+            Glide.with(this).load("https://apimg.alipay.com/combo.png?d=cashier&t=" + selectedBankCard.getBankCode()).asBitmap().override(Math.round(Utils.getScreenRatio(this) * 151), Math.round(Utils.getScreenRatio(this) * 43)).into(bankLogoIV);
+            cardNumTV.setText(Utils.cardIdHide(selectedBankCard.getBankCardNum()));
         }
     }
 
@@ -214,16 +221,38 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                     withdrawGoldNumET.setError(getResources().getString(R.string.input_withdraw_gold_num));
                     return;
                 }
+                if (null == selectedBankCard) {
+                    showSnackbar("请选择银行卡");
+                    return;
+                }
                 if (!Utils.isNetUsable(WithDrawActivity.this)) {
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
                 switch (userType) {
                     case 0:
-                        mPresenter.personalWithdrawCoins(Constants.PERSONAL_WITHDRAW_ACTION_CODE, Constants.PERSONAL_WITHDRAW_ACTION_TYPE_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                        PersonalWithdrawParameter personalWithdrawParameter = new PersonalWithdrawParameter();
+                        personalWithdrawParameter.setSubmitCode("");
+                        personalWithdrawParameter.setCustCode(SharedPreferencesUtils.getString(this, "cust_code", ""));
+                        personalWithdrawParameter.setGoldNum(Integer.valueOf(withdrawGoldNumET.getText().toString()));
+                        PersonalWithdrawParameter.PayInfoBean personalPayInfoBean = new PersonalWithdrawParameter.PayInfoBean();
+                        personalPayInfoBean.setBankCode(selectedBankCard.getBankCode());
+                        personalPayInfoBean.setBankCardNum(selectedBankCard.getBankCardNum());
+                        personalPayInfoBean.setCustName(selectedBankCard.getCustName());
+                        personalWithdrawParameter.setPayInfo(personalPayInfoBean);
+                        mPresenter.personalWithdrawCoins(Constants.PERSONAL_WITHDRAW_ACTION_CODE, Constants.PERSONAL_WITHDRAW_ACTION_TYPE_CODE, gson.toJson(personalWithdrawParameter), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                         break;
                     case 1:
-                        mPresenter.shopWithdrawCoins(Constants.SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                        ShopWithdrawParameter shopWithdrawParameter = new ShopWithdrawParameter();
+                        shopWithdrawParameter.setSubmitCode("");
+                        shopWithdrawParameter.setBazaCode(SharedPreferencesUtils.getString(this, "baza_code", ""));
+                        shopWithdrawParameter.setGoldNum(Integer.valueOf(withdrawGoldNumET.getText().toString()));
+                        ShopWithdrawParameter.PayInfoBean shopPayInfoBean = new ShopWithdrawParameter.PayInfoBean();
+                        shopPayInfoBean.setBankCode(selectedBankCard.getBankCode());
+                        shopPayInfoBean.setBankCardNum(selectedBankCard.getBankCardNum());
+                        shopPayInfoBean.setCustName(selectedBankCard.getCustName());
+                        shopWithdrawParameter.setPayInfo(shopPayInfoBean);
+                        mPresenter.shopWithdrawCoins(Constants.SHOP_WITHDRAW_ACTION_CODE, gson.toJson(shopWithdrawParameter), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                         break;
                 }
                 break;
@@ -294,9 +323,9 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
             return;
         }
         ButterKnife.apply(bankLogoLayout, BUTTERKNIFEVISIBLE);
-        BankCard bankCard = bankCards.get(0);
-        Glide.with(this).load("https://apimg.alipay.com/combo.png?d=cashier&t=" + bankCard.getBankCode()).asBitmap().override(Math.round(Utils.getScreenRatio(this) * 151), Math.round(Utils.getScreenRatio(this) * 43)).into(bankLogoIV);
-        cardNumTV.setText(Utils.cardIdHide(bankCard.getBankCardNum()));
+        selectedBankCard = bankCards.get(0);
+        Glide.with(this).load("https://apimg.alipay.com/combo.png?d=cashier&t=" + selectedBankCard.getBankCode()).asBitmap().override(Math.round(Utils.getScreenRatio(this) * 151), Math.round(Utils.getScreenRatio(this) * 43)).into(bankLogoIV);
+        cardNumTV.setText(Utils.cardIdHide(selectedBankCard.getBankCardNum()));
     }
 
     @Override

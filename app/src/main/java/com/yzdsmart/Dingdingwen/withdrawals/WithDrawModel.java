@@ -9,6 +9,8 @@ import com.yzdsmart.Dingdingwen.http.response.WithdrawRequestResponse;
 
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -71,7 +73,7 @@ public class WithDrawModel {
                 .subscribe(leftCoinsSubscriber);
     }
 
-    void shopWithdrawCoins(String action, String submitCode, String bazaCode, Integer goldNum, String authorization, final RequestListener listener) {
+    void shopWithdrawCoins(String action, String shopWithdrawPara, String authorization, final RequestListener listener) {
         shopWithdrawSubscriber = new Subscriber<WithdrawRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -88,13 +90,14 @@ public class WithDrawModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getDDWRequestService().shopWithdrawCoins(action, submitCode, bazaCode, goldNum, authorization)
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), shopWithdrawPara);
+        RequestAdapter.getDDWRequestService().shopWithdrawCoins(action, body, "application/json", "application/json", authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(shopWithdrawSubscriber);
     }
 
-    void personalWithdrawCoins(String action, String actiontype, String submitCode, String custCode, Integer goldNum, String authorization, final RequestListener listener) {
+    void personalWithdrawCoins(String action, String actiontype, String personalWithdrawPara, String authorization, final RequestListener listener) {
         personalWithdrawSubscriber = new Subscriber<WithdrawRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -111,7 +114,8 @@ public class WithDrawModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getDDWRequestService().personalWithdrawCoins(action, actiontype, submitCode, custCode, goldNum, authorization)
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), personalWithdrawPara);
+        RequestAdapter.getDDWRequestService().personalWithdrawCoins(action, actiontype,  body, "application/json", "application/json",  authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(personalWithdrawSubscriber);

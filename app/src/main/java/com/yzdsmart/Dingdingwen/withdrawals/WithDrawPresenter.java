@@ -88,9 +88,9 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
     }
 
     @Override
-    public void shopWithdrawCoins(String action, String submitCode, String bazaCode, Integer goldNum, String authorization) {
+    public void shopWithdrawCoins(String action, String shopWithdrawPara, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.withdrawing));
-        mModel.shopWithdrawCoins(action, submitCode, bazaCode, goldNum, authorization, new RequestListener() {
+        mModel.shopWithdrawCoins(action, shopWithdrawPara, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ((BaseActivity) context).hideProgressDialog();
@@ -119,9 +119,9 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
     }
 
     @Override
-    public void personalWithdrawCoins(String action, String actiontype, String submitCode, String custCode, Integer goldNum, String authorization) {
+    public void personalWithdrawCoins(String action, String actiontype, String personalWithdrawPara, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.withdrawing));
-        mModel.personalWithdrawCoins(action, actiontype, submitCode, custCode, goldNum, authorization, new RequestListener() {
+        mModel.personalWithdrawCoins(action, actiontype, personalWithdrawPara, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 ((BaseActivity) context).hideProgressDialog();

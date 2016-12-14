@@ -1,83 +1,53 @@
 package com.yzdsmart.Dingdingwen.bean;
 
 /**
- * Created by YZD on 2016/9/24.
+ * Created by YZD on 2016/12/14.
  */
 
-public class ShopWithdrawLog {
+public class ShopWithdrawParameter {
 
     /**
+     * SubmitCode :
      * BazaCode : WTAzNDI5
-     * Gold : 1
-     * Cash : 0.94
+     * GoldNum : 1
      * PayInfo : {"BankCode":"ICBC","BankCardNum":"6217231105000722122","CustName":"王海"}
-     * TimeStr : 12小时前
-     * PayStatus : 异常
-     * CreateTime : 2016-09-23 20:37:50
      */
 
+    private String SubmitCode;
     private String BazaCode;
-    private int Gold;
-    private double Cash;
+    private int GoldNum;
     private PayInfoBean PayInfo;
-    private String TimeStr;
-    private String PayStatus;
-    private String CreateTime;
+
+    public void setSubmitCode(String SubmitCode) {
+        this.SubmitCode = SubmitCode;
+    }
 
     public void setBazaCode(String BazaCode) {
         this.BazaCode = BazaCode;
     }
 
-    public void setGold(int Gold) {
-        this.Gold = Gold;
-    }
-
-    public void setCash(double Cash) {
-        this.Cash = Cash;
+    public void setGoldNum(int GoldNum) {
+        this.GoldNum = GoldNum;
     }
 
     public void setPayInfo(PayInfoBean PayInfo) {
         this.PayInfo = PayInfo;
     }
 
-    public void setTimeStr(String TimeStr) {
-        this.TimeStr = TimeStr;
-    }
-
-    public void setPayStatus(String PayStatus) {
-        this.PayStatus = PayStatus;
-    }
-
-    public void setCreateTime(String CreateTime) {
-        this.CreateTime = CreateTime;
+    public String getSubmitCode() {
+        return SubmitCode;
     }
 
     public String getBazaCode() {
         return BazaCode;
     }
 
-    public int getGold() {
-        return Gold;
-    }
-
-    public double getCash() {
-        return Cash;
+    public int getGoldNum() {
+        return GoldNum;
     }
 
     public PayInfoBean getPayInfo() {
         return PayInfo;
-    }
-
-    public String getTimeStr() {
-        return TimeStr;
-    }
-
-    public String getPayStatus() {
-        return PayStatus;
-    }
-
-    public String getCreateTime() {
-        return CreateTime;
     }
 
     public static class PayInfoBean {
