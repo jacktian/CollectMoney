@@ -249,15 +249,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         Bitmap bitmap = bd.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
         Canvas canvas = new Canvas(bitmap);
 
-        // 字体大小随分辨率大小变化
-        // 计算与你开发时设定的屏幕大小的纵横比
-        int screenWidth = Utils.deviceWidth(this);
-        int screenHeight = Utils.deviceHeight(this);
-        float ratioWidth = (float) screenWidth / 480;
-        float ratioHeight = (float) screenHeight / 800;
-
-        float ratio = Math.min(ratioWidth, ratioHeight);
-        int textSize = Math.round(38 * ratio);
+        int textSize = Math.round(38 * Utils.getScreenRatio(this));
 
         Paint paint = new Paint();
         paint.setColor(Color.WHITE);

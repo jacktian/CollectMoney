@@ -787,4 +787,19 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.CUST + "/GetBankList")
     Observable<List<BankCard>> getBankCardList(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
+
+    /**
+     * 绑定银行卡
+     *
+     * @param submitCode
+     * @param custCode
+     * @param bankCode
+     * @param bankCardNum
+     * @param custName
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.CUST + "/BindBank")
+    Observable<RequestResponse> bindBankCard(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BankCode") String bankCode, @Field("BankCardNum") String bankCardNum, @Field("CustName") String custName, @Header("Authorization") String authorization);
 }

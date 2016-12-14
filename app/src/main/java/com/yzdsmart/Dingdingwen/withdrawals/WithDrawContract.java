@@ -2,7 +2,10 @@ package com.yzdsmart.Dingdingwen.withdrawals;
 
 import com.yzdsmart.Dingdingwen.BasePresenter;
 import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.bean.BankCard;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
+
+import java.util.List;
 
 /**
  * Created by jacks on 2016/9/23.
@@ -37,6 +40,13 @@ public interface WithDrawContract {
          * @param withdrawRMB
          */
         void onPersonalWithdrawCoins(String withdrawRMB);
+
+        /**
+         * 获取绑定银行卡数据
+         *
+         * @param bankCards
+         */
+        void onGetBankCardList(List<BankCard> bankCards);
     }
 
     interface WithDrawPresenter extends BasePresenter {
@@ -78,7 +88,14 @@ public interface WithDrawContract {
          */
         void personalWithdrawCoins(String action, String actiontype, String submitCode, String custCode, Integer goldNum, String authorization);
 
-        void validateBankCard(String submitCode, String bankCardNum, String authorization);
+        /**
+         * 获取绑定银行卡数据
+         *
+         * @param submitCode
+         * @param custCode
+         * @param authorization
+         */
+        void getBankCardList(String submitCode, String custCode, String authorization);
 
         void unRegisterSubscribe();
     }

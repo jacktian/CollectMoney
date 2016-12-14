@@ -104,6 +104,15 @@ public class Utils {
         return context.getResources().getIdentifier(name, "mipmap", context.getPackageName());
     }
 
+    /**
+     * 银行卡号，保留最后4位，其他星号替换
+     *
+     * @param cardId 卡号
+     * @return
+     */
+    public static String cardIdHide(String cardId) {
+        return cardId.replaceAll("\\d{15}(\\d{3})", "**** **** **** **** $1");
+    }
 
     /**
      * MD5加密
@@ -135,6 +144,18 @@ public class Utils {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static float getScreenRatio(Context context) {
+        // 字体大小随分辨率大小变化
+        // 计算与你开发时设定的屏幕大小的纵横比
+        int screenWidth = Utils.deviceWidth(context);
+        int screenHeight = Utils.deviceHeight(context);
+        float ratioWidth = (float) screenWidth / 480;
+        float ratioHeight = (float) screenHeight / 800;
+
+        float ratio = Math.min(ratioWidth, ratioHeight);
+        return ratio;
     }
 
     public static String getLocalIpAddress() {

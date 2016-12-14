@@ -1,11 +1,13 @@
 package com.yzdsmart.Dingdingwen.withdrawals;
 
+import com.yzdsmart.Dingdingwen.bean.BankCard;
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.ValidateBankCardRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.WithdrawRequestResponse;
+
+import java.util.List;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -21,7 +23,7 @@ public class WithDrawModel {
     private Subscriber<GetCoinRequestResponse> leftCoinsSubscriber;
     private Subscriber<WithdrawRequestResponse> shopWithdrawSubscriber;
     private Subscriber<WithdrawRequestResponse> personalWithdrawSubscriber;
-    private Subscriber<ValidateBankCardRequestResponse> validateBankCardSubscriber;
+    private Subscriber<List<BankCard>> getBankCardListSubscriber;
 
     void getCustInfo(String submitcode, String custCode, String authorization, final RequestListener listener) {
         getCustInfoSubscriber = new Subscriber<CustInfoRequestResponse>() {
@@ -115,8 +117,8 @@ public class WithDrawModel {
                 .subscribe(personalWithdrawSubscriber);
     }
 
-    void validateBankCard(String submitCode, String bankCardNum, String authorization, final RequestListener listener) {
-        validateBankCardSubscriber = new Subscriber<ValidateBankCardRequestResponse>() {
+    void getBankCardList(String submitCode, String custCode, String authorization, final RequestListener listener) {
+        getBankCardListSubscriber = new Subscriber<List<BankCard>>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -128,14 +130,14 @@ public class WithDrawModel {
             }
 
             @Override
-            public void onNext(ValidateBankCardRequestResponse requestResponse) {
-                listener.onSuccess(requestResponse);
+            public void onNext(List<BankCard> bankCardList) {
+                listener.onSuccess(bankCardList);
             }
         };
-        RequestAdapter.getDDWRequestService().validateBankCard(submitCode, bankCardNum, authorization)
+        RequestAdapter.getDDWRequestService().getBankCardList(submitCode, custCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
-                .subscribe(validateBankCardSubscriber);
+                .subscribe(getBankCardListSubscriber);
     }
 
     void unRegisterSubscribe() {
@@ -152,8 +154,8 @@ public class WithDrawModel {
         if (null != personalWithdrawSubscriber) {
             personalWithdrawSubscriber.unsubscribe();
         }
-        if (null != validateBankCardSubscriber) {
-            validateBankCardSubscriber.unsubscribe();
+        if (null != getBankCardListSubscriber) {
+            getBankCardListSubscriber.unsubscribe();
         }
     }
 }

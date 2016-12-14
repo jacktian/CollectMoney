@@ -4,12 +4,14 @@ import android.content.Context;
 
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.BankCard;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.ValidateBankCardRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.WithdrawRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
+
+import java.util.List;
 
 /**
  * Created by jacks on 2016/9/23.
@@ -148,21 +150,27 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
     }
 
     @Override
-    public void validateBankCard(String submitCode, String bankCardNum, String authorization) {
-        mModel.validateBankCard(submitCode, bankCardNum, authorization, new RequestListener() {
+    public void getBankCardList(String submitCode, String custCode, String authorization) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.getBankCardList(submitCode, custCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                ValidateBankCardRequestResponse requestResponse = (ValidateBankCardRequestResponse) result;
+                List<BankCard> bankCards = (List<BankCard>) result;
+                mView.onGetBankCardList(bankCards);
             }
 
             @Override
             public void onError(String err) {
-
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_bank_card_list));
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
+                }
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

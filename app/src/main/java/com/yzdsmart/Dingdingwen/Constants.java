@@ -6,6 +6,8 @@ package com.yzdsmart.Dingdingwen;
 
 public class Constants {
     public static final Integer REQUEST_LOGIN_CODE = 1000;
+    public static final Integer REQUEST_BIND_BANK_CARD_CODE = 1111;
+    public static final Integer REQUEST_BANK_CARD_NUM_CODE = 1222;
     public static final String REGISTER_ACTION_CODE = "1688";
     public static final String FIND_PWD_ACTION_CODE = "1656";
 

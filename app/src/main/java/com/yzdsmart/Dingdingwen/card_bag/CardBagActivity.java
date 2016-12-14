@@ -1,5 +1,6 @@
 package com.yzdsmart.Dingdingwen.card_bag;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +11,10 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.BankCard;
+import com.yzdsmart.Dingdingwen.bind_bank_card.BindBankCardActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
@@ -60,6 +63,7 @@ public class CardBagActivity extends BaseActivity implements CardBagContract.Car
 
         addBankCard = new BankCard();
         addBankCard.setBankCode("ADD_BANK_CARD");
+        addBankCard.setBankCardNum("点击添加银行卡");
 
         new CardBagPresenter(this, this);
 
@@ -69,6 +73,8 @@ public class CardBagActivity extends BaseActivity implements CardBagContract.Car
         cardbagItemsRV.setHasFixedSize(true);
         cardbagItemsRV.setLayoutManager(mLinearLayoutManager);
         cardbagItemsRV.setAdapter(cardBagAdapter);
+
+        getBankCardList();
     }
 
     @Override
@@ -91,12 +97,6 @@ public class CardBagActivity extends BaseActivity implements CardBagContract.Car
         super.onResume();
         MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
         MobclickAgent.onResume(this);          //统计时长
-        if (!Utils.isNetUsable(this)) {
-            showSnackbar(getResources().getString(R.string.net_unusable));
-            return;
-        }
-        mPresenter.getBankCardList("", SharedPreferencesUtils.getString(CardBagActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
-
     }
 
     @Override
@@ -113,12 +113,43 @@ public class CardBagActivity extends BaseActivity implements CardBagContract.Car
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (Constants.REQUEST_BIND_BANK_CARD_CODE == requestCode && RESULT_OK == resultCode) {
+            getBankCardList();
+        }
+    }
+
+    @Override
     public void setPresenter(CardBagContract.CardBagPresenter presenter) {
         mPresenter = presenter;
     }
 
+    public void toBindBankCard() {
+        openActivity(BindBankCardActivity.class, null, Constants.REQUEST_BIND_BANK_CARD_CODE);
+    }
+
+    public void returnSelectedBankCard(BankCard bankCard) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("bankCard", bankCard);
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
+        closeActivity();
+    }
+
     @Override
     public void onGetBankCardList(List<BankCard> bankCards) {
-        showSnackbar("共有" + bankCards.size() + "张银行卡");
+        bankCards.add(0, addBankCard);
+        cardBagAdapter.clearList();
+        cardBagAdapter.appendList(bankCards);
+    }
+
+    private void getBankCardList() {
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
+        mPresenter.getBankCardList("", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 }

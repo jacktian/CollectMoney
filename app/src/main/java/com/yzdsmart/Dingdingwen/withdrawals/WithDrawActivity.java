@@ -1,5 +1,6 @@
 package com.yzdsmart.Dingdingwen.withdrawals;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -7,12 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.BankCard;
 import com.yzdsmart.Dingdingwen.card_bag.CardBagActivity;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.share_sdk.OnekeyShare;
@@ -62,6 +66,15 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     @Nullable
     @BindView(R.id.withdraw_money)
     Button withdrawMoneyBtn;
+    @Nullable
+    @BindView(R.id.bank_logo_layout)
+    LinearLayout bankLogoLayout;
+    @Nullable
+    @BindView(R.id.bank_logo)
+    ImageView bankLogoIV;
+    @Nullable
+    @BindView(R.id.card_num)
+    TextView cardNumTV;
 
     private static final String TAG = "WithDrawActivity";
 
@@ -138,6 +151,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                 mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
         }
+        mPresenter.getBankCardList("", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override
@@ -173,6 +187,18 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
         super.onDestroy();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (Constants.REQUEST_BANK_CARD_NUM_CODE == requestCode && RESULT_OK == resultCode) {
+            Bundle bundle = data.getExtras();
+            BankCard bankCard = bundle.getParcelable("bankCard");
+            ButterKnife.apply(bankLogoLayout, BUTTERKNIFEVISIBLE);
+            Glide.with(this).load("https://apimg.alipay.com/combo.png?d=cashier&t=" + bankCard.getBankCode()).asBitmap().override(Math.round(Utils.getScreenRatio(this) * 151), Math.round(Utils.getScreenRatio(this) * 43)).into(bankLogoIV);
+            cardNumTV.setText(Utils.cardIdHide(bankCard.getBankCardNum()));
+        }
+    }
+
     @Optional
     @OnClick({R.id.title_left_operation_layout, R.id.right_title, R.id.withdraw_money, R.id.with_all})
     void onClick(View view) {
@@ -181,7 +207,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                 closeActivity();
                 break;
             case R.id.right_title:
-                openActivity(CardBagActivity.class);
+                openActivity(CardBagActivity.class, null, Constants.REQUEST_BANK_CARD_NUM_CODE);
                 break;
             case R.id.withdraw_money:
                 if (!requiredVerify(withdrawGoldNumET)) {
@@ -192,15 +218,14 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-//                switch (userType) {
-//                    case 0:
-//                        mPresenter.personalWithdrawCoins(Constants.PERSONAL_WITHDRAW_ACTION_CODE, Constants.PERSONAL_WITHDRAW_ACTION_TYPE_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
-//                        break;
-//                    case 1:
-//                        mPresenter.shopWithdrawCoins(Constants.SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
-//                        break;
-//                }
-                mPresenter.validateBankCard("000000", "1234567891234567890", SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                switch (userType) {
+                    case 0:
+                        mPresenter.personalWithdrawCoins(Constants.PERSONAL_WITHDRAW_ACTION_CODE, Constants.PERSONAL_WITHDRAW_ACTION_TYPE_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                        break;
+                    case 1:
+                        mPresenter.shopWithdrawCoins(Constants.SHOP_WITHDRAW_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), Integer.valueOf(withdrawGoldNumET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                        break;
+                }
                 break;
             case R.id.with_all:
                 if (Float.valueOf(coinCountsTV.getText().toString()) > 0) {
@@ -263,6 +288,18 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     }
 
     @Override
+    public void onGetBankCardList(List<BankCard> bankCards) {
+        if (0 == bankCards.size()) {
+            showSnackbar("您当前还没有绑定银行卡,点击卡包添加");
+            return;
+        }
+        ButterKnife.apply(bankLogoLayout, BUTTERKNIFEVISIBLE);
+        BankCard bankCard = bankCards.get(0);
+        Glide.with(this).load("https://apimg.alipay.com/combo.png?d=cashier&t=" + bankCard.getBankCode()).asBitmap().override(Math.round(Utils.getScreenRatio(this) * 151), Math.round(Utils.getScreenRatio(this) * 43)).into(bankLogoIV);
+        cardNumTV.setText(Utils.cardIdHide(bankCard.getBankCardNum()));
+    }
+
+    @Override
     public void setPresenter(WithDrawContract.WithDrawPresenter presenter) {
         mPresenter = presenter;
     }
@@ -271,7 +308,6 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
      * 显示分享九宫格
      */
     private void showShare() {
-//        ShareSDK.initSDK(this);
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();

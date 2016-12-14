@@ -15,5 +15,7 @@
         android:id="@+id/card_bag_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/common_toolbar_height"></android.support.v7.widget.RecyclerView>
+        android:layout_marginTop="@dimen/common_toolbar_height"
+        android:paddingLeft="@dimen/activity_horizontal_padding"
+        android:paddingRight="@dimen/activity_horizontal_padding" />
 </android.support.design.widget.CoordinatorLayout>

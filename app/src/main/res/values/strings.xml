@@ -205,7 +205,7 @@
 
     <!--提现-->
     <string name="input_withdraw_gold_num">输入您所需提现的金币数额</string>
-    <string name="withdrawing">正在体现......</string>
+    <string name="withdrawing">正在提现......</string>
 
     <!--提现日志-->
     <string name="withdraw_log_coin_counts">兑换金币数</string>
@@ -218,6 +218,11 @@
     <string name="baza_tel">联系电话:</string>
     <string name="baza_address">商铺地址:</string>
     <string name="baza_remark">备注:</string>
+
+    <!--绑定银行卡-->
+    <string name="bind_bank_card_validating">正在校验......</string>
+    <string name="bind_bank_card_fail">此账号不存在,重新输入</string>
+    <string name="bind_bank_binding">正在绑定......</string>
 
     <!-- 腾讯聊天 -->
     <string name="logout_warning">您的账号在其他设备登录,请重新登陆</string>
@@ -421,4 +426,6 @@
     <string name="error_withdraw">提现异常</string>
     <string name="error_get_withdraw_log">获取提现日志异常</string>
     <string name="error_get_bank_card_list">获取银行卡异常</string>
+    <string name="error_validate_bank_card">校验银行卡异常</string>
+    <string name="error_bind_bank_card">绑定银行卡异常</string>
 </resources>
