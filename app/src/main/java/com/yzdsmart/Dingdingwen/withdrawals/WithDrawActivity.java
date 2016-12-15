@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -52,9 +54,6 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
     @Nullable
-    @BindView(R.id.right_title)
-    TextView rightTitleTV;
-    @Nullable
     @BindView(R.id.coin_counts)
     TextView coinCountsTV;
     @Nullable
@@ -69,9 +68,6 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     @Nullable
     @BindView(R.id.withdraw_money)
     Button withdrawMoneyBtn;
-    @Nullable
-    @BindView(R.id.bank_logo_layout)
-    LinearLayout bankLogoLayout;
     @Nullable
     @BindView(R.id.bank_logo)
     ImageView bankLogoIV;
@@ -103,8 +99,6 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
         userType = bundle.getInt("userType");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
-        rightTitleTV.setText("卡包");
-        ButterKnife.apply(rightTitleTV, BUTTERKNIFEVISIBLE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         switch (userType) {
             case 0:
@@ -200,20 +194,23 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
         if (Constants.REQUEST_BANK_CARD_NUM_CODE == requestCode && RESULT_OK == resultCode) {
             Bundle bundle = data.getExtras();
             selectedBankCard = bundle.getParcelable("bankCard");
-            ButterKnife.apply(bankLogoLayout, BUTTERKNIFEVISIBLE);
             Glide.with(this).load("https://apimg.alipay.com/combo.png?d=cashier&t=" + selectedBankCard.getBankCode()).asBitmap().override(Math.round(Utils.getScreenRatio(this) * 151), Math.round(Utils.getScreenRatio(this) * 43)).into(bankLogoIV);
             cardNumTV.setText(Utils.cardIdHide(selectedBankCard.getBankCardNum()));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
+            bankLogoIV.setLayoutParams(params);
+            cardNumTV.setLayoutParams(params);
         }
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.right_title, R.id.withdraw_money, R.id.with_all})
+    @OnClick({R.id.title_left_operation_layout, R.id.bank_logo_layout, R.id.withdraw_money, R.id.with_all})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
                 break;
-            case R.id.right_title:
+            case R.id.bank_logo_layout:
                 openActivity(CardBagActivity.class, null, Constants.REQUEST_BANK_CARD_NUM_CODE);
                 break;
             case R.id.withdraw_money:
@@ -322,10 +319,13 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
             showSnackbar("您当前还没有绑定银行卡,点击卡包添加");
             return;
         }
-        ButterKnife.apply(bankLogoLayout, BUTTERKNIFEVISIBLE);
         selectedBankCard = bankCards.get(0);
         Glide.with(this).load("https://apimg.alipay.com/combo.png?d=cashier&t=" + selectedBankCard.getBankCode()).asBitmap().override(Math.round(Utils.getScreenRatio(this) * 151), Math.round(Utils.getScreenRatio(this) * 43)).into(bankLogoIV);
         cardNumTV.setText(Utils.cardIdHide(selectedBankCard.getBankCardNum()));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
+        bankLogoIV.setLayoutParams(params);
+        cardNumTV.setLayoutParams(params);
     }
 
     @Override
