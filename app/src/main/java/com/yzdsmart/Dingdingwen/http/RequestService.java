@@ -3,6 +3,7 @@ package com.yzdsmart.Dingdingwen.http;
 import com.yzdsmart.Dingdingwen.bean.BankCard;
 import com.yzdsmart.Dingdingwen.bean.ShopScanner;
 import com.yzdsmart.Dingdingwen.http.response.BuyCoinsLogRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.CoinTypeRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustLevelRequestResponse;
@@ -594,6 +595,18 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.GOLD)
     Observable<GetCoinRequestResponse> getLeftCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Header("Authorization") String authorization);
+
+    /**
+     * 获取商铺金币类型
+     *
+     * @param submitCode
+     * @param bazaCode
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.GOLD + "/GetTypelist")
+    Observable<CoinTypeRequestResponse> getShopCoinTypes(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Header("Authorization") String authorization);
 
     /**
      * 商铺提现

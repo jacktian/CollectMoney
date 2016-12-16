@@ -29,7 +29,7 @@ import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
 import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
-import com.yzdsmart.Dingdingwen.views.StaticDialog;
+import com.yzdsmart.Dingdingwen.views.ScanCoinDialog;
 
 import java.util.List;
 
@@ -225,7 +225,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
             mQRCodeView.startSpot();
             return;
         }
-        getCoinDialog = new StaticDialog(this, setNumToIcon(counts));
+        getCoinDialog = new ScanCoinDialog(this, 0, "", counts);
         getCoinDialog.show();
         Button dialogConfirm = (Button) getCoinDialog.findViewById(R.id.dialog_confirm);
         dialogConfirm.setVisibility(View.VISIBLE);

@@ -26,6 +26,7 @@ import com.yzdsmart.Dingdingwen.card_bag.CardBagActivity;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
+import com.yzdsmart.Dingdingwen.views.BetterSpinner;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -52,6 +53,9 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
+    @Nullable
+    @BindView(R.id.coin_types)
+    BetterSpinner coinTypesBS;
     @Nullable
     @BindView(R.id.coin_counts)
     TextView coinCountsTV;

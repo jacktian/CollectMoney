@@ -51,6 +51,12 @@
                     android:textSize="@dimen/font_small" />
             </LinearLayout>
 
+            <com.yzdsmart.Dingdingwen.views.BetterSpinner
+                android:id="@+id/coin_types"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_panel_bottom_border" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
