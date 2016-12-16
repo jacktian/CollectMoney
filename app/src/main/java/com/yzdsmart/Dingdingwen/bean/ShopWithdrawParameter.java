@@ -10,12 +10,14 @@ public class ShopWithdrawParameter {
      * SubmitCode :
      * BazaCode : WTAzNDI5
      * GoldNum : 1
+     * GoldType : 0
      * PayInfo : {"BankCode":"ICBC","BankCardNum":"6217231105000722122","CustName":"王海"}
      */
 
     private String SubmitCode;
     private String BazaCode;
     private int GoldNum;
+    private int GoldType;
     private PayInfoBean PayInfo;
 
     public void setSubmitCode(String SubmitCode) {
@@ -28,6 +30,10 @@ public class ShopWithdrawParameter {
 
     public void setGoldNum(int GoldNum) {
         this.GoldNum = GoldNum;
+    }
+
+    public void setGoldType(int GoldType) {
+        this.GoldType = GoldType;
     }
 
     public void setPayInfo(PayInfoBean PayInfo) {
@@ -44,6 +50,10 @@ public class ShopWithdrawParameter {
 
     public int getGoldNum() {
         return GoldNum;
+    }
+
+    public int getGoldType() {
+        return GoldType;
     }
 
     public PayInfoBean getPayInfo() {

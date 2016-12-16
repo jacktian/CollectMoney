@@ -231,6 +231,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                         personalWithdrawParameter.setSubmitCode("");
                         personalWithdrawParameter.setCustCode(SharedPreferencesUtils.getString(this, "cust_code", ""));
                         personalWithdrawParameter.setGoldNum(Integer.valueOf(withdrawGoldNumET.getText().toString()));
+                        personalWithdrawParameter.setGoldType(0);
                         PersonalWithdrawParameter.PayInfoBean personalPayInfoBean = new PersonalWithdrawParameter.PayInfoBean();
                         personalPayInfoBean.setBankCode(selectedBankCard.getBankCode());
                         personalPayInfoBean.setBankCardNum(selectedBankCard.getBankCardNum());
@@ -243,6 +244,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                         shopWithdrawParameter.setSubmitCode("");
                         shopWithdrawParameter.setBazaCode(SharedPreferencesUtils.getString(this, "baza_code", ""));
                         shopWithdrawParameter.setGoldNum(Integer.valueOf(withdrawGoldNumET.getText().toString()));
+                        shopWithdrawParameter.setGoldType(0);
                         ShopWithdrawParameter.PayInfoBean shopPayInfoBean = new ShopWithdrawParameter.PayInfoBean();
                         shopPayInfoBean.setBankCode(selectedBankCard.getBankCode());
                         shopPayInfoBean.setBankCardNum(selectedBankCard.getBankCardNum());

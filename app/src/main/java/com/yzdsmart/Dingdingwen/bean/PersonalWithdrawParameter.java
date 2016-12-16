@@ -10,12 +10,14 @@ public class PersonalWithdrawParameter {
      * SubmitCode :
      * CustCode : 67dd44de-dfca-4bdc-aa5e-7c5f0e68c91a
      * GoldNum : 2
+     * GoldType : 0
      * PayInfo : {"BankCode":"ICBC","BankCardNum":"6217231105000722122","CustName":"王海"}
      */
 
     private String SubmitCode;
     private String CustCode;
     private int GoldNum;
+    private int GoldType;
     private PayInfoBean PayInfo;
 
     public void setSubmitCode(String SubmitCode) {
@@ -28,6 +30,10 @@ public class PersonalWithdrawParameter {
 
     public void setGoldNum(int GoldNum) {
         this.GoldNum = GoldNum;
+    }
+
+    public void setGoldType(int GoldType) {
+        this.GoldType = GoldType;
     }
 
     public void setPayInfo(PayInfoBean PayInfo) {
@@ -44,6 +50,10 @@ public class PersonalWithdrawParameter {
 
     public int getGoldNum() {
         return GoldNum;
+    }
+
+    public int getGoldType() {
+        return GoldType;
     }
 
     public PayInfoBean getPayInfo() {

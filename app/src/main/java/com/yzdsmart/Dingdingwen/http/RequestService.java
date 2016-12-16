@@ -632,7 +632,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.TASK)
-    Observable<RequestResponse> publishTasks(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("TotalGold") Integer totalGold, @Field("TotalNum") Integer totalNum, @Field("BeginTime") String beginTime, @Field("EndTime") String endTime, @Header("Authorization") String authorization);
+    Observable<RequestResponse> publishTasks(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("TotalGold") Integer totalGold, @Field("TotalNum") Integer totalNum, @Field("GoldType") Integer goldType, @Field("BeginTime") String beginTime, @Field("EndTime") String endTime, @Header("Authorization") String authorization);
 
     /**
      * 指定商铺获得发布任务日志列表

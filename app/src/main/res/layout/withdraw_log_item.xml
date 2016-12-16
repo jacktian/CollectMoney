@@ -84,7 +84,7 @@
             android:id="@+id/amount_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/withdrawals_log_amount_icon" />
+            android:src="@mipmap/withdrawals_log_rmb_icon" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -114,8 +114,8 @@
 
         <ImageView
             android:id="@+id/log_state"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="64dp"
+            android:layout_height="46dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true" />
     </RelativeLayout>

@@ -50,7 +50,7 @@
                 android:id="@+id/coin_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/withdrawals_log_coin_icon" />
+                android:src="@mipmap/withdrawals_log_rmb_icon" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

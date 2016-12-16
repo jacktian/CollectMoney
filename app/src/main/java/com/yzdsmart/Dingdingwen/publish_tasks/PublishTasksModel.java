@@ -17,7 +17,7 @@ public class PublishTasksModel {
     private Subscriber<RequestResponse> publishTaskSubscriber;
     private Subscriber<GetCoinRequestResponse> leftCoinsSubscriber;
 
-    void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer totalNum, String beginTime, String endTime, String authorization, final RequestListener listener) {
+    void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer totalNum, Integer goldType, String beginTime, String endTime, String authorization, final RequestListener listener) {
         publishTaskSubscriber = new Subscriber<RequestResponse>() {
             @Override
             public void onCompleted() {
@@ -34,7 +34,7 @@ public class PublishTasksModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getDDWRequestService().publishTasks(submitCode, bazaCode, totalGold, totalNum, beginTime, endTime, authorization)
+        RequestAdapter.getDDWRequestService().publishTasks(submitCode, bazaCode, totalGold, totalNum, goldType, beginTime, endTime, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(publishTaskSubscriber);

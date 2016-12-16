@@ -124,26 +124,34 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        DateTime dateTime;
+        DateTime dateTime = null;
+        String payStatus = "";
         switch (userType) {
             case 0:
                 PersonalWithdrawLog personalLog = personalWithdrawLogs.get(position);
                 holder.setCoinCounts("-" + personalLog.getGold());
                 holder.setRmbCounts("+" + personalLog.getCash());
                 dateTime = dtf.parseDateTime(personalLog.getCreateTime());
-                holder.setWithdrawDate(dateTime.toString("yyyy-MM-dd"));
-                holder.setWithdrawTime(dateTime.toString("HH:mm:ss"));
-                holder.setLogState(("异常".equals(personalLog.getPayStatus())) ? R.mipmap.log_state_error : R.mipmap.log_state_success);
+                payStatus = personalLog.getPayStatus();
                 break;
             case 1:
                 ShopWithdrawLog shopLog = shopWithdrawLogs.get(position);
                 holder.setCoinCounts("-" + shopLog.getGold());
                 holder.setRmbCounts("+" + shopLog.getCash());
                 dateTime = dtf.parseDateTime(shopLog.getCreateTime());
-                holder.setWithdrawDate(dateTime.toString("yyyy-MM-dd"));
-                holder.setWithdrawTime(dateTime.toString("HH:mm:ss"));
-                holder.setLogState(("异常".equals(shopLog.getPayStatus())) ? R.mipmap.log_state_error : R.mipmap.log_state_success);
+                payStatus = shopLog.getPayStatus();
                 break;
+        }
+        holder.setWithdrawDate(dateTime.toString("yyyy-MM-dd"));
+        holder.setWithdrawTime(dateTime.toString("HH:mm:ss"));
+        if ("异常".equals(payStatus)) {
+            holder.setLogState(R.mipmap.withdraw_error);
+        } else if ("未支付".equals(payStatus)) {
+            holder.setLogState(R.mipmap.withdraw_wait);
+        } else if ("已经支付".equals(payStatus)) {
+            holder.setLogState(R.mipmap.withdraw_finish);
+        } else if ("退款".equals(payStatus)) {
+            holder.setLogState(R.mipmap.withdraw_return);
         }
     }
 

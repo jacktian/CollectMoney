@@ -44,7 +44,7 @@ public interface PublishTasksContract {
          * @param beginTime
          * @param endTime
          */
-        void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer totalNum, String beginTime, String endTime, String authorization);
+        void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer totalNum, Integer goldType, String beginTime, String endTime, String authorization);
 
         void unRegisterSubscribe();
     }
