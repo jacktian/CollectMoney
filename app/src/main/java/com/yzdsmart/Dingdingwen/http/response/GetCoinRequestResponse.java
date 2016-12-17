@@ -4,7 +4,8 @@ package com.yzdsmart.Dingdingwen.http.response;
  * Created by YZD on 2016/9/3.
  */
 public class GetCoinRequestResponse {
-    private Integer GoldNum;//本次获得金币
+    private Float GoldNum;//本次获得金币
+    private String GoldLogoUrl;//金币图片
     private String ActionStatus;
     private Integer ErrorCode;
     private String ErrorInfo;
@@ -12,19 +13,28 @@ public class GetCoinRequestResponse {
     public GetCoinRequestResponse() {
     }
 
-    public GetCoinRequestResponse(Integer goldNum, String actionStatus, Integer errorCode, String errorInfo) {
+    public GetCoinRequestResponse(Float goldNum, String goldLogoUrl, String actionStatus, Integer errorCode, String errorInfo) {
         GoldNum = goldNum;
+        GoldLogoUrl = goldLogoUrl;
         ActionStatus = actionStatus;
         ErrorCode = errorCode;
         ErrorInfo = errorInfo;
     }
 
-    public Integer getGoldNum() {
+    public Float getGoldNum() {
         return GoldNum;
     }
 
-    public void setGoldNum(Integer goldNum) {
+    public void setGoldNum(Float goldNum) {
         GoldNum = goldNum;
+    }
+
+    public String getGoldLogoUrl() {
+        return GoldLogoUrl;
+    }
+
+    public void setGoldLogoUrl(String goldLogoUrl) {
+        GoldLogoUrl = goldLogoUrl;
     }
 
     public String getActionStatus() {
@@ -49,15 +59,5 @@ public class GetCoinRequestResponse {
 
     public void setErrorInfo(String errorInfo) {
         ErrorInfo = errorInfo;
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                "GoldNum:" + GoldNum +
-                ", ActionStatus:'" + ActionStatus + '\'' +
-                ", ErrorCode:" + ErrorCode +
-                ", ErrorInfo:'" + ErrorInfo + '\'' +
-                '}';
     }
 }

@@ -46,9 +46,6 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
     @Nullable
     @BindView(R.id.publish_list)
     UltimateRecyclerView publishListRV;
-    @Nullable
-    @BindView(R.id.tasks_left_coins)
-    TextView tasksLeftCoinsTV;
 
     private static final String TAG = "PublishTasksLogActivity";
 
@@ -108,11 +105,6 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
                 getPublishTaskLog();
             }
         });
-        if (!Utils.isNetUsable(this)) {
-            showSnackbar(getResources().getString(R.string.net_unusable));
-            return;
-        }
-        mPresenter.getLeftCoins(Constants.GET_TASKS_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
         getPublishTaskLog();
     }
 
@@ -157,7 +149,9 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
                 closeActivity();
                 break;
             case R.id.buy_coin:
-                openActivity(BuyCoinsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("userType", 1);
+                openActivity(BuyCoinsActivity.class, bundle, 0);
                 break;
         }
     }
@@ -165,11 +159,6 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
     @Override
     public void setPresenter(PublishTasksLogContract.PublishTasksLogPresenter presenter) {
         mPresenter = presenter;
-    }
-
-    @Override
-    public void onGetLeftCoins(Integer counts) {
-        tasksLeftCoinsTV.setText(" " + counts);
     }
 
     @Override

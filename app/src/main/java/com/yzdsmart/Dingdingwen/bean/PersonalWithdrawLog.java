@@ -17,7 +17,7 @@ public class PersonalWithdrawLog {
      */
 
     private String CustCode;
-    private int Gold;
+    private float Gold;
     private String Cash;
     private PayInfoBean PayInfo;
     private String TimeStr;
@@ -56,7 +56,7 @@ public class PersonalWithdrawLog {
         return CustCode;
     }
 
-    public int getGold() {
+    public float getGold() {
         return Gold;
     }
 

@@ -1,6 +1,6 @@
 package com.yzdsmart.Dingdingwen.http.response;
 
-import com.yzdsmart.Dingdingwen.bean.Coin;
+import com.yzdsmart.Dingdingwen.bean.CoinType;
 
 import java.util.List;
 
@@ -20,12 +20,12 @@ public class CoinTypeRequestResponse {
     private String ActionStatus;
     private int ErrorCode;
     private String ErrorInfo;
-    private List<Coin> Lists;
+    private List<CoinType> Lists;
 
     public CoinTypeRequestResponse() {
     }
 
-    public CoinTypeRequestResponse(String actionStatus, int errorCode, String errorInfo, List<Coin> lists) {
+    public CoinTypeRequestResponse(String actionStatus, int errorCode, String errorInfo, List<CoinType> lists) {
         ActionStatus = actionStatus;
         ErrorCode = errorCode;
         ErrorInfo = errorInfo;
@@ -56,11 +56,11 @@ public class CoinTypeRequestResponse {
         ErrorInfo = errorInfo;
     }
 
-    public List<Coin> getLists() {
+    public List<CoinType> getLists() {
         return Lists;
     }
 
-    public void setLists(List<Coin> lists) {
+    public void setLists(List<CoinType> lists) {
         Lists = lists;
     }
 }

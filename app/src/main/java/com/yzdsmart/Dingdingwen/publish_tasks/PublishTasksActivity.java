@@ -5,15 +5,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.CoinType;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.time_picker.TimePickerDialog;
@@ -24,6 +27,8 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,6 +54,9 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     @Nullable
     @BindView(R.id.left_coins)
     TextView leftCoinsTV;
+    @Nullable
+    @BindView(R.id.coin_types)
+    Spinner coinTypesBS;
     @Nullable
     @BindView(R.id.total_coin_counts)
     EditText totalCoinCountsET;
@@ -80,9 +88,16 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     private boolean packageBeginPass = false;
     private boolean packageEndPass = false;
 
+    private CoinTypesAdapter coinTypesAdapter;
+    private CoinType defaultCoinType;
+    private CoinType selectedType;
+    private List<CoinType> coinTypeList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        coinTypeList = new ArrayList<CoinType>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
@@ -102,12 +117,31 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
             }
         };
 
-        if (!Utils.isNetUsable(this)) {
+        defaultCoinType = new CoinType(0, "普通金币", "");
+        coinTypesAdapter = new CoinTypesAdapter(this);
+        coinTypesBS.setAdapter(coinTypesAdapter);
+        coinTypesBS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedType = coinTypeList.get(i);
+                if (!Utils.isNetUsable(PublishTasksActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
+                mPresenter.getShopLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PublishTasksActivity.this, "baza_code", ""), selectedType.getGoldType(), SharedPreferencesUtils.getString(PublishTasksActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(PublishTasksActivity.this, "ddw_access_token", ""));
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        if (!Utils.isNetUsable(PublishTasksActivity.this)) {
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-
-        mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+        mPresenter.getShopCoinTypes("", SharedPreferencesUtils.getString(this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override
@@ -257,7 +291,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     }
 
     @Override
-    public void onGetLeftCoins(Integer counts) {
+    public void onGetShopLeftCoins(Float counts) {
         leftCoinsTV.setText(" " + counts);
     }
 
@@ -269,6 +303,19 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
         }
         showProgressDialog(R.drawable.success, getResources().getString(R.string.publish_success));
         mHandler.postDelayed(publishTaskRunnable, 500);
+    }
+
+    @Override
+    public void onGetCoinTypes(List<CoinType> coinTypes) {
+        coinTypeList.clear();
+        coinTypesAdapter.clearList();
+        if (0 == coinTypes.size()) {
+            coinTypeList.add(defaultCoinType);
+            coinTypesAdapter.appendList(Collections.singletonList(defaultCoinType));
+        } else {
+            coinTypeList.addAll(coinTypes);
+            coinTypesAdapter.appendList(coinTypes);
+        }
     }
 
 }

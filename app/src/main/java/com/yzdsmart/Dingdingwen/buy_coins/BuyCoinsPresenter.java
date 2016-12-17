@@ -6,6 +6,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.BuyCoinsLogRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.CoinTypeRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PayRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopPayLogRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
@@ -189,6 +190,36 @@ public class BuyCoinsPresenter implements BuyCoinsContract.BuyCoinsPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_not_pay_charge));
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void getShopCoinTypes(String submitCode, String bazaCode, String authorization) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.getShopCoinTypes(submitCode, bazaCode, authorization, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                CoinTypeRequestResponse requestResponse = (CoinTypeRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onGetCoinTypes(requestResponse.getLists());
+                } else {
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_coin_types));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

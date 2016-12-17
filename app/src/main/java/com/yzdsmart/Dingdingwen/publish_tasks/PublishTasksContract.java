@@ -2,6 +2,9 @@ package com.yzdsmart.Dingdingwen.publish_tasks;
 
 import com.yzdsmart.Dingdingwen.BasePresenter;
 import com.yzdsmart.Dingdingwen.BaseView;
+import com.yzdsmart.Dingdingwen.bean.CoinType;
+
+import java.util.List;
 
 /**
  * Created by YZD on 2016/9/4.
@@ -13,7 +16,7 @@ public interface PublishTasksContract {
          *
          * @param counts
          */
-        void onGetLeftCoins(Integer counts);
+        void onGetShopLeftCoins(Float counts);
 
         /**
          * 商户创建金币任务
@@ -22,6 +25,13 @@ public interface PublishTasksContract {
          * @param msg
          */
         void onPublishTask(boolean flag, String msg);
+
+        /**
+         * 获取金币类型
+         *
+         * @param coinTypes
+         */
+        void onGetCoinTypes(List<CoinType> coinTypes);
     }
 
     interface PublishTasksPresenter extends BasePresenter {
@@ -32,7 +42,7 @@ public interface PublishTasksContract {
          * @param submitCode
          * @param bazaCode
          */
-        void getLeftCoins(String action, String submitCode, String bazaCode, String authorization);
+        void getShopLeftCoins(String action, String submitCode, String bazaCode, Integer goldType, String authorization);
 
         /**
          * 商户创建金币任务
@@ -45,6 +55,15 @@ public interface PublishTasksContract {
          * @param endTime
          */
         void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer totalNum, Integer goldType, String beginTime, String endTime, String authorization);
+
+        /**
+         * 获取商铺金币类型
+         *
+         * @param submitCode
+         * @param bazaCode
+         * @param authorization
+         */
+        void getShopCoinTypes(String submitCode, String bazaCode, String authorization);
 
         void unRegisterSubscribe();
     }

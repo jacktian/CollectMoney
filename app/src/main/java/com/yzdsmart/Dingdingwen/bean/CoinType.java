@@ -4,15 +4,15 @@ package com.yzdsmart.Dingdingwen.bean;
  * Created by YZD on 2016/12/16.
  */
 
-public class Coin {
+public class CoinType {
     private Integer GoldType;
     private String GoldName;
     private String LogoLink;
 
-    public Coin() {
+    public CoinType() {
     }
 
-    public Coin(Integer goldType, String goldName, String logoLink) {
+    public CoinType(Integer goldType, String goldName, String logoLink) {
         GoldType = goldType;
         GoldName = goldName;
         LogoLink = logoLink;

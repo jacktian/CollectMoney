@@ -35,15 +35,15 @@ public class QRScannerPresenter implements QRScannerContract.QRScannerPresenter 
             public void onSuccess(Object result) {
                 GetCoinRequestResponse response = (GetCoinRequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
-                    mView.onGetCoins(true, null, response.getGoldNum());
+                    mView.onGetCoins(true, null, response.getGoldNum(), response.getGoldLogoUrl());
                 } else {
-                    mView.onGetCoins(false, response.getErrorInfo(), null);
+                    mView.onGetCoins(false, response.getErrorInfo(), null, null);
                 }
             }
 
             @Override
             public void onError(String err) {
-                mView.onGetCoins(false, context.getResources().getString(R.string.get_coins_error), null);
+                mView.onGetCoins(false, context.getResources().getString(R.string.get_coins_error), null, null);
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

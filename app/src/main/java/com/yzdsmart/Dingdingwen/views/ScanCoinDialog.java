@@ -13,16 +13,14 @@ import com.yzdsmart.Dingdingwen.R;
  */
 public class ScanCoinDialog extends Dialog {
     private Context context;
-    private Integer coinType;
     private String coinLogo;
-    private Integer coinCounts;
+    private Float coinCounts;
     private ImageView coinTypeIV;
     private TextView coinCountsTV;
 
-    public ScanCoinDialog(Context context, Integer coinType, String coinLogo, Integer coinCounts) {
+    public ScanCoinDialog(Context context, String coinLogo, Float coinCounts) {
         super(context, R.style.custom_dialog);
         this.context = context;
-        this.coinType = coinType;
         this.coinLogo = coinLogo;
         this.coinCounts = coinCounts;
         this.setContentView(R.layout.scan_coin_dialog);
@@ -33,7 +31,7 @@ public class ScanCoinDialog extends Dialog {
         super.show();
         coinTypeIV = (ImageView) findViewById(R.id.coin_type);
         coinCountsTV = (TextView) findViewById(R.id.coin_counts);
-        Glide.with(context).load(0 == coinType ? R.mipmap.yzd_coin : coinLogo).asBitmap().into(coinTypeIV);
+        Glide.with(context).load("".equals(coinLogo) ? R.mipmap.yzd_coin : coinLogo).asBitmap().placeholder(R.mipmap.ic_holder_light).error(R.mipmap.ic_holder_light).into(coinTypeIV);
         coinCountsTV.setText(coinCounts + "个");
     }
 }

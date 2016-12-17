@@ -305,7 +305,13 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 openActivity(RegisterBusinessActivity.class);
                 break;
             case R.id.to_buy_coins:
-                openActivity(BuyCoinsActivity.class);
+                bundle = new Bundle();
+                if (SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", "").trim().length() > 0) {
+                    bundle.putInt("userType", 1);
+                } else {
+                    bundle.putInt("userType", 0);
+                }
+                openActivity(BuyCoinsActivity.class, bundle, 0);
                 break;
             case R.id.to_publish_tasks:
                 openActivity(PublishTasksActivity.class);

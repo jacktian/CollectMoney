@@ -10,8 +10,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -25,6 +27,7 @@ import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.BuyCoinParameter;
 import com.yzdsmart.Dingdingwen.bean.BuyCoinsLog;
+import com.yzdsmart.Dingdingwen.bean.CoinType;
 import com.yzdsmart.Dingdingwen.bean.ShopPayLog;
 import com.yzdsmart.Dingdingwen.publish_tasks.PublishTasksActivity;
 import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
@@ -33,6 +36,7 @@ import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomNestRadioGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,6 +59,9 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
     @Nullable
+    @BindView(R.id.coin_types)
+    Spinner coinTypesBS;
+    @Nullable
     @BindView(R.id.coin_counts)
     EditText coinCountsET;
     @Nullable
@@ -65,6 +72,8 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     CustomNestRadioGroup payTypeGroup;
 
     private static final String TAG = "BuyCoinsActivity";
+
+    private Integer userType;//0 个人 1 商家
 
     private Gson gson = new Gson();
 
@@ -103,15 +112,32 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     private Handler mHandler = new Handler();
     private Runnable buySuccessRunnable;
 
+    private CoinTypesAdapter coinTypesAdapter;
+    private CoinType defaultCoinType;
+    private CoinType selectedType;
+    private List<CoinType> coinTypeList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         logList = new ArrayList<ShopPayLog>();
+        coinTypeList = new ArrayList<CoinType>();
+
+        Bundle bundle = getIntent().getExtras();
+
+        userType = bundle.getInt("userType");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
-        centerTitleTV.setText("购买金币");
+        switch (userType) {
+            case 0:
+                centerTitleTV.setText("个人购买金币");
+                break;
+            case 1:
+                centerTitleTV.setText("商铺购买金币");
+                break;
+        }
         payTypeGroup.setOnCheckedChangeListener(this);
 
         new BuyCoinsPresenter(this, this);
@@ -119,6 +145,21 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 //        initPingPlusPlus();
 
         MobclickAgent.openActivityDurationTrack(false);
+
+        defaultCoinType = new CoinType(0, "普通金币", "");
+        coinTypesAdapter = new CoinTypesAdapter(this);
+        coinTypesBS.setAdapter(coinTypesAdapter);
+        coinTypesBS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedType = coinTypeList.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         buySuccessRunnable = new Runnable() {
             @Override
@@ -185,6 +226,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
             }
         });
 
+        getCoinTypes();
         getShopPayLog();
     }
 
@@ -195,6 +237,21 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 return;
             }
             mPresenter.getNotPayCharge("000000", log.getChargeId(), SharedPreferencesUtils.getString(BuyCoinsActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(BuyCoinsActivity.this, "ddw_access_token", ""));
+        }
+    }
+
+    private void getCoinTypes() {
+        switch (userType) {
+            case 0:
+                coinTypesAdapter.appendList(Collections.singletonList(defaultCoinType));
+                break;
+            case 1:
+                if (!Utils.isNetUsable(BuyCoinsActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
+                mPresenter.getShopCoinTypes("", SharedPreferencesUtils.getString(this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                break;
         }
     }
 
@@ -235,6 +292,10 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                     coinCountsET.setError(getResources().getString(R.string.buy_coin_coin_count_required));
                     return;
                 }
+                if (null == selectedType) {
+                    showSnackbar("请选择金币类型");
+                    return;
+                }
                 if (!Utils.isNetUsable(this)) {
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
@@ -262,7 +323,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 buyCoinParameter.setSubmitCode("000000");
                 buyCoinParameter.setBazaCode(SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""));
                 buyCoinParameter.setGoldNum(Integer.valueOf(coinCountsET.getText().toString()));
-                buyCoinParameter.setGoldType(0);
+                buyCoinParameter.setGoldType(selectedType.getGoldType());
                 buyCoinParameter.setPayPara(payPara);
 //                showMoveDialog(this, Integer.valueOf(coinCountsET.getText().toString()));
 //                mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
@@ -415,6 +476,19 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     @Override
     public void onGetNotPayCharge(Object charge) {
         Pingpp.createPayment(BuyCoinsActivity.this, gson.toJson(charge));
+    }
+
+    @Override
+    public void onGetCoinTypes(List<CoinType> coinTypes) {
+        coinTypeList.clear();
+        coinTypesAdapter.clearList();
+        if (0 == coinTypes.size()) {
+            coinTypeList.add(defaultCoinType);
+            coinTypesAdapter.appendList(Collections.singletonList(defaultCoinType));
+        } else {
+            coinTypeList.addAll(coinTypes);
+            coinTypesAdapter.appendList(coinTypes);
+        }
     }
 
     @Override

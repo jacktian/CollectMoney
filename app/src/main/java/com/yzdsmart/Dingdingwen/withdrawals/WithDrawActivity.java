@@ -7,10 +7,12 @@ import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -20,15 +22,17 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.BankCard;
+import com.yzdsmart.Dingdingwen.bean.CoinType;
 import com.yzdsmart.Dingdingwen.bean.PersonalWithdrawParameter;
 import com.yzdsmart.Dingdingwen.bean.ShopWithdrawParameter;
 import com.yzdsmart.Dingdingwen.card_bag.CardBagActivity;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
-import com.yzdsmart.Dingdingwen.views.BetterSpinner;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,7 +59,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     ImageView titleLeftOpeIV;
     @Nullable
     @BindView(R.id.coin_types)
-    BetterSpinner coinTypesBS;
+    Spinner coinTypesBS;
     @Nullable
     @BindView(R.id.coin_counts)
     TextView coinCountsTV;
@@ -93,10 +97,17 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     private Runnable personalWithdrawSuccessRunnable;
 
     private BankCard selectedBankCard;
+    private CoinTypesAdapter coinTypesAdapter;
+    private CoinType defaultCoinType;
+    private CoinType selectedType;
+    private List<CoinType> coinTypeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        coinTypeList = new ArrayList<CoinType>();
+
         Bundle bundle = getIntent().getExtras();
 
         userType = bundle.getInt("userType");
@@ -120,26 +131,41 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
 
         ShareSDK.initSDK(this);
 
+        defaultCoinType = new CoinType(0, "普通金币", "");
+        coinTypesAdapter = new CoinTypesAdapter(this);
+        coinTypesBS.setAdapter(coinTypesAdapter);
+        coinTypesBS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedType = coinTypeList.get(i);
+                switch (userType) {
+                    case 0:
+                        getPersonalLeftCoins();
+                        break;
+                    case 1:
+                        getShopLeftCoins();
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         shopWithdrawSuccessRunnable = new Runnable() {
             @Override
             public void run() {
                 hideProgressDialog();
-                if (!Utils.isNetUsable(WithDrawActivity.this)) {
-                    showSnackbar(getResources().getString(R.string.net_unusable));
-                    return;
-                }
-                mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "baza_code", ""), SharedPreferencesUtils.getString(WithDrawActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(WithDrawActivity.this, "ddw_access_token", ""));
+                getShopLeftCoins();
             }
         };
         personalWithdrawSuccessRunnable = new Runnable() {
             @Override
             public void run() {
                 hideProgressDialog();
-                if (!Utils.isNetUsable(WithDrawActivity.this)) {
-                    showSnackbar(getResources().getString(R.string.net_unusable));
-                    return;
-                }
-                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(WithDrawActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(WithDrawActivity.this, "ddw_access_token", ""));
+                getPersonalLeftCoins();
             }
         };
 
@@ -149,13 +175,29 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
         }
         switch (userType) {
             case 0:
-                mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                mPresenter.getPersonalCoinTypes("", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case 1:
-                mPresenter.getLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                mPresenter.getShopCoinTypes("", SharedPreferencesUtils.getString(this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
         }
         mPresenter.getBankCardList("", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+    }
+
+    private void getShopLeftCoins() {
+        if (!Utils.isNetUsable(WithDrawActivity.this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
+        mPresenter.getShopLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(WithDrawActivity.this, "baza_code", ""), selectedType.getGoldType(), SharedPreferencesUtils.getString(WithDrawActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(WithDrawActivity.this, "ddw_access_token", ""));
+    }
+
+    private void getPersonalLeftCoins() {
+        if (!Utils.isNetUsable(WithDrawActivity.this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
+        mPresenter.getPersonalLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, Constants.PERSONAL_WITHDRAW_ACTION_TYPE_CODE, "", SharedPreferencesUtils.getString(this, "cust_code", ""), selectedType.getGoldType(), SharedPreferencesUtils.getString(WithDrawActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(WithDrawActivity.this, "ddw_access_token", ""));
     }
 
     @Override
@@ -225,6 +267,10 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                     showSnackbar("请选择银行卡");
                     return;
                 }
+                if (null == selectedType) {
+                    showSnackbar("请选择金币类型");
+                    return;
+                }
                 if (!Utils.isNetUsable(WithDrawActivity.this)) {
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
@@ -235,7 +281,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                         personalWithdrawParameter.setSubmitCode("");
                         personalWithdrawParameter.setCustCode(SharedPreferencesUtils.getString(this, "cust_code", ""));
                         personalWithdrawParameter.setGoldNum(Integer.valueOf(withdrawGoldNumET.getText().toString()));
-                        personalWithdrawParameter.setGoldType(0);
+                        personalWithdrawParameter.setGoldType(selectedType.getGoldType());
                         PersonalWithdrawParameter.PayInfoBean personalPayInfoBean = new PersonalWithdrawParameter.PayInfoBean();
                         personalPayInfoBean.setBankCode(selectedBankCard.getBankCode());
                         personalPayInfoBean.setBankCardNum(selectedBankCard.getBankCardNum());
@@ -248,7 +294,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                         shopWithdrawParameter.setSubmitCode("");
                         shopWithdrawParameter.setBazaCode(SharedPreferencesUtils.getString(this, "baza_code", ""));
                         shopWithdrawParameter.setGoldNum(Integer.valueOf(withdrawGoldNumET.getText().toString()));
-                        shopWithdrawParameter.setGoldType(0);
+                        shopWithdrawParameter.setGoldType(selectedType.getGoldType());
                         ShopWithdrawParameter.PayInfoBean shopPayInfoBean = new ShopWithdrawParameter.PayInfoBean();
                         shopPayInfoBean.setBankCode(selectedBankCard.getBankCode());
                         shopPayInfoBean.setBankCardNum(selectedBankCard.getBankCardNum());
@@ -296,7 +342,12 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     }
 
     @Override
-    public void onGetLeftCoins(Integer counts) {
+    public void onGetPersonalLeftCoins(Float counts) {
+        coinCountsTV.setText("" + counts);
+    }
+
+    @Override
+    public void onGetShopLeftCoins(Float counts) {
         coinCountsTV.setText("" + counts);
     }
 
@@ -331,6 +382,19 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
         params.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
         bankLogoIV.setLayoutParams(params);
         cardNumTV.setLayoutParams(params);
+    }
+
+    @Override
+    public void onGetCoinTypes(List<CoinType> coinTypes) {
+        coinTypeList.clear();
+        coinTypesAdapter.clearList();
+        if (0 == coinTypes.size()) {
+            coinTypeList.add(defaultCoinType);
+            coinTypesAdapter.appendList(Collections.singletonList(defaultCoinType));
+        } else {
+            coinTypeList.addAll(coinTypes);
+            coinTypesAdapter.appendList(coinTypes);
+        }
     }
 
     @Override

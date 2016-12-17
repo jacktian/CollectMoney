@@ -17,7 +17,7 @@ public class ShopWithdrawLog {
      */
 
     private String BazaCode;
-    private int Gold;
+    private float Gold;
     private double Cash;
     private PayInfoBean PayInfo;
     private String TimeStr;
@@ -56,7 +56,7 @@ public class ShopWithdrawLog {
         return BazaCode;
     }
 
-    public int getGold() {
+    public float getGold() {
         return Gold;
     }
 

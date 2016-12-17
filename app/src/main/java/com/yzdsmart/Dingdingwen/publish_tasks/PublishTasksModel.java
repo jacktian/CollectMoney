@@ -2,6 +2,7 @@ package com.yzdsmart.Dingdingwen.publish_tasks;
 
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.CoinTypeRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 
@@ -15,7 +16,8 @@ import rx.schedulers.Schedulers;
 public class PublishTasksModel {
     //网络请求监听
     private Subscriber<RequestResponse> publishTaskSubscriber;
-    private Subscriber<GetCoinRequestResponse> leftCoinsSubscriber;
+    private Subscriber<GetCoinRequestResponse> shopLeftCoinsSubscriber;
+    private Subscriber<CoinTypeRequestResponse> getShopCoinTypesSubscriber;
 
     void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer totalNum, Integer goldType, String beginTime, String endTime, String authorization, final RequestListener listener) {
         publishTaskSubscriber = new Subscriber<RequestResponse>() {
@@ -40,8 +42,8 @@ public class PublishTasksModel {
                 .subscribe(publishTaskSubscriber);
     }
 
-    void getLeftCoins(String action, String submitCode, String bazaCode, String authorization, final RequestListener listener) {
-        leftCoinsSubscriber = new Subscriber<GetCoinRequestResponse>() {
+    void getShopLeftCoins(String action, String submitCode, String bazaCode, Integer goldType, String authorization, final RequestListener listener) {
+        shopLeftCoinsSubscriber = new Subscriber<GetCoinRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -57,10 +59,33 @@ public class PublishTasksModel {
                 listener.onSuccess(response);
             }
         };
-        RequestAdapter.getDDWRequestService().getLeftCoins(action, submitCode, bazaCode, authorization)
+        RequestAdapter.getDDWRequestService().getShopLeftCoins(action, submitCode, bazaCode, goldType, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
-                .subscribe(leftCoinsSubscriber);
+                .subscribe(shopLeftCoinsSubscriber);
+    }
+
+    void getShopCoinTypes(String submitCode, String bazaCode, String authorization, final RequestListener listener) {
+        getShopCoinTypesSubscriber = new Subscriber<CoinTypeRequestResponse>() {
+            @Override
+            public void onCompleted() {
+                listener.onComplete();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                listener.onError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(CoinTypeRequestResponse requestResponse) {
+                listener.onSuccess(requestResponse);
+            }
+        };
+        RequestAdapter.getDDWRequestService().getShopCoinTypes(submitCode, bazaCode, authorization)
+                .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
+                .observeOn(AndroidSchedulers.mainThread())//回调到主线程
+                .subscribe(getShopCoinTypesSubscriber);
     }
 
     void unRegisterSubscribe() {
@@ -68,8 +93,11 @@ public class PublishTasksModel {
         if (null != publishTaskSubscriber) {
             publishTaskSubscriber.unsubscribe();
         }
-        if (null != leftCoinsSubscriber) {
-            leftCoinsSubscriber.unsubscribe();
+        if (null != shopLeftCoinsSubscriber) {
+            shopLeftCoinsSubscriber.unsubscribe();
+        }
+        if (null != getShopCoinTypesSubscriber) {
+            getShopCoinTypesSubscriber.unsubscribe();
         }
     }
 }

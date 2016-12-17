@@ -47,6 +47,24 @@
                     android:textSize="@dimen/font_xx_small" />
             </LinearLayout>
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/publish_tasks_item_title_padding_top_bottom"
+                android:paddingLeft="@dimen/activity_horizontal_padding"
+                android:paddingRight="@dimen/activity_horizontal_padding"
+                android:paddingTop="@dimen/publish_tasks_item_title_padding_top_bottom"
+                android:text="请选择金币类型"
+                android:textColor="@color/font_black"
+                android:textSize="@dimen/font_xx_small" />
+
+            <Spinner
+                android:id="@+id/coin_types"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"></Spinner>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

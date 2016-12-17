@@ -3,6 +3,7 @@ package com.yzdsmart.Dingdingwen.buy_coins;
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.BuyCoinsLogRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.CoinTypeRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PayRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopPayLogRequestResponse;
 
@@ -22,6 +23,7 @@ public class BuyCoinsModel {
     private Subscriber<BuyCoinsLogRequestResponse> buyCoinsLogSubscriber;
     private Subscriber<ShopPayLogRequestResponse> shopPayLogSubscriber;
     private Subscriber<PayRequestResponse> notPayChargeSubscriber;
+    private Subscriber<CoinTypeRequestResponse> getShopCoinTypesSubscriber;
 
     //    void buyCoins(String action, String submitCode, String bazaCode, Integer goldNum, String authorization, final RequestListener listener) {
 //        buyCoinsSubscriber = new Subscriber<RequestResponse>() {
@@ -162,6 +164,29 @@ public class BuyCoinsModel {
                 .subscribe(notPayChargeSubscriber);
     }
 
+    void getShopCoinTypes(String submitCode, String bazaCode, String authorization, final RequestListener listener) {
+        getShopCoinTypesSubscriber = new Subscriber<CoinTypeRequestResponse>() {
+            @Override
+            public void onCompleted() {
+                listener.onComplete();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                listener.onError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(CoinTypeRequestResponse requestResponse) {
+                listener.onSuccess(requestResponse);
+            }
+        };
+        RequestAdapter.getDDWRequestService().getShopCoinTypes(submitCode, bazaCode, authorization)
+                .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
+                .observeOn(AndroidSchedulers.mainThread())//回调到主线程
+                .subscribe(getShopCoinTypesSubscriber);
+    }
+
     void unRegisterSubscribe() {
         //解除引用关系，以避免内存泄露的发生
         if (null != buyCoinsSubscriber) {
@@ -178,6 +203,9 @@ public class BuyCoinsModel {
         }
         if (null != notPayChargeSubscriber) {
             notPayChargeSubscriber.unsubscribe();
+        }
+        if (null != getShopCoinTypesSubscriber) {
+            getShopCoinTypesSubscriber.unsubscribe();
         }
     }
 }

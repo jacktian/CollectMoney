@@ -219,13 +219,13 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     }
 
     @Override
-    public void onGetCoins(boolean flag, String msg, Integer counts) {
+    public void onGetCoins(boolean flag, String msg, Float counts, String coinLogo) {
         if (!flag) {
             showSnackbar(msg);
             mQRCodeView.startSpot();
             return;
         }
-        getCoinDialog = new ScanCoinDialog(this, 0, "", counts);
+        getCoinDialog = new ScanCoinDialog(this, null == coinLogo ? "" : coinLogo, counts);
         getCoinDialog.show();
         Button dialogConfirm = (Button) getCoinDialog.findViewById(R.id.dialog_confirm);
         dialogConfirm.setVisibility(View.VISIBLE);

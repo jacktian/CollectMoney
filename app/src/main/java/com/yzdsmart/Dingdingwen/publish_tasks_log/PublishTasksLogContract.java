@@ -13,13 +13,6 @@ public interface PublishTasksLogContract {
     interface PublishTasksLogView extends BaseView<PublishTasksLogPresenter> {
 
         /**
-         * 获取店铺任务剩余金币数
-         *
-         * @param counts
-         */
-        void onGetLeftCoins(Integer counts);
-
-        /**
          * 指定商铺获得发布任务日志列表
          *
          * @param logList
@@ -30,14 +23,6 @@ public interface PublishTasksLogContract {
     }
 
     interface PublishTasksLogPresenter extends BasePresenter {
-        /**
-         * 获取店铺任务剩余金币数
-         *
-         * @param action
-         * @param submitCode
-         * @param bazaCode
-         */
-        void getLeftCoins(String action, String submitCode, String bazaCode, String authorization);
 
         /**
          * 指定商铺获得发布任务日志列表

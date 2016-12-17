@@ -450,6 +450,21 @@ public interface RequestService {
     Observable<PersonRequestResponse> getPersonNearby(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("Coor") String coor, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Header("Authorization") String authorization);
 
     /**
+     * 获取个人金币总数
+     *
+     * @param action
+     * @param actiontype
+     * @param submitCode
+     * @param custCode
+     * @param goldType
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.GOLD)
+    Observable<GetCoinRequestResponse> getPersonalLeftCoins(@Query("action") String action, @Query("actiontype") String actiontype, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("GoldType") Integer goldType, @Header("Authorization") String authorization);
+
+    /**
      * 个人提现
      *
      * @param action
@@ -502,6 +517,18 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.TASKLOG)
     Observable<GetCoinsLogRequestResponse> getCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
+
+    /**
+     * 获取个人金币类型
+     *
+     * @param submitCode
+     * @param custCode
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.GOLD + "/GetTypelist")
+    Observable<CoinTypeRequestResponse> getPersonalCoinTypes(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
 
     /**
      * 商家获取商铺详情
@@ -585,7 +612,7 @@ public interface RequestService {
     Observable<BuyCoinsLogRequestResponse> buyCoinsLog(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
 
     /**
-     * 获取店铺剩余金币数
+     * 获取商铺总金币数（不包括任务执行剩余金币，即可以使用或发布任务的金币总数）
      *
      * @param action
      * @param submitCode
@@ -594,7 +621,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.GOLD)
-    Observable<GetCoinRequestResponse> getLeftCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Header("Authorization") String authorization);
+    Observable<GetCoinRequestResponse> getShopLeftCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldType") Integer goldType, @Header("Authorization") String authorization);
 
     /**
      * 获取商铺金币类型

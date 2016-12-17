@@ -3,6 +3,7 @@ package com.yzdsmart.Dingdingwen.buy_coins;
 import com.yzdsmart.Dingdingwen.BasePresenter;
 import com.yzdsmart.Dingdingwen.BaseView;
 import com.yzdsmart.Dingdingwen.bean.BuyCoinsLog;
+import com.yzdsmart.Dingdingwen.bean.CoinType;
 import com.yzdsmart.Dingdingwen.bean.ShopPayLog;
 
 import java.util.List;
@@ -39,6 +40,14 @@ public interface BuyCoinsContract {
         void onShopPayLog(List<ShopPayLog> logList, Integer lastsequence);
 
         void onGetNotPayCharge(Object charge);
+
+
+        /**
+         * 获取金币类型
+         *
+         * @param coinTypes
+         */
+        void onGetCoinTypes(List<CoinType> coinTypes);
     }
 
     interface BuyCoinsPresenter extends BasePresenter {
@@ -88,6 +97,15 @@ public interface BuyCoinsContract {
          * @param authorization
          */
         void getNotPayCharge(String submitCode, String chargeId, String authorization);
+
+        /**
+         * 获取商铺金币类型
+         *
+         * @param submitCode
+         * @param bazaCode
+         * @param authorization
+         */
+        void getShopCoinTypes(String submitCode, String bazaCode, String authorization);
 
         void unRegisterSubscribe();
     }

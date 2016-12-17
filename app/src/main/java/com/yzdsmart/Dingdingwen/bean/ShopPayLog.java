@@ -19,8 +19,8 @@ public class ShopPayLog {
 
     private int Id;
     private String BazaCode;
-    private int Amount;
-    private int Gold;
+    private float Amount;
+    private float Gold;
     private String OpType;
     private String PayStatus;
     private String ChargeId;
@@ -42,17 +42,18 @@ public class ShopPayLog {
         this.BazaCode = BazaCode;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return Amount;
+    }
+
+    public float getGold() {
+        return Gold;
     }
 
     public void setAmount(int Amount) {
         this.Amount = Amount;
     }
 
-    public int getGold() {
-        return Gold;
-    }
 
     public void setGold(int Gold) {
         this.Gold = Gold;
