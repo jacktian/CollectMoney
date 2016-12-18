@@ -1,13 +1,11 @@
 package com.yzdsmart.Dingdingwen.scan_coin;
 
 import android.content.Context;
-import android.net.Uri;
 
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
-import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
 /**
@@ -26,10 +24,7 @@ public class QRScannerPresenter implements QRScannerContract.QRScannerPresenter 
     }
 
     @Override
-    public void getCoins(String actionCode, String scannerResult, String ip, String authorization) {
-        String retaCode = Uri.parse(scannerResult).getQueryParameter("RetaCode");
-        String coor = SharedPreferencesUtils.getString(context, "qLocation", "");
-        String custCode = SharedPreferencesUtils.getString(context, "cust_code", "");
+    public void getCoins(String actionCode, String retaCode, String custCode, String coor, String ip, String authorization) {
         mModel.getCoins(actionCode, Utils.md5(retaCode + "yzd" + custCode), custCode, retaCode, coor, ip, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {

@@ -106,7 +106,7 @@
                         android:background="@drawable/white_panel_bottom_border"
                         android:hint="@string/input_withdraw_gold_num"
                         android:imeOptions="actionDone"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:maxLength="9"
                         android:textColor="@color/font_black"
                         android:textColorHint="@color/font_grey"

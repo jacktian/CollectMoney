@@ -2,7 +2,6 @@ package com.yzdsmart.Dingdingwen.scan_coin;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -11,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
@@ -24,8 +24,7 @@ import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
-import com.yzdsmart.Dingdingwen.main.MainActivity;
-import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
+import com.yzdsmart.Dingdingwen.payment.PaymentActivity;
 import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -76,11 +75,6 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         super.onCreate(savedInstanceState);
 
         scanType = getIntent().getExtras().getInt("scanType");
-
-        if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
-            openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
-            return;
-        }
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
@@ -134,14 +128,6 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         }
         mQRCodeView.onDestroy();
         super.onDestroy();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (Constants.REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
-            MainActivity.getInstance().chatLogin();
-        }
     }
 
     @Optional
@@ -200,12 +186,27 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     @Override
     public void onScanQRCodeSuccess(String result) {
         playBeepSoundAndVibrate();
-        if (!Utils.isNetUsable(this)) {
-            showSnackbar(getResources().getString(R.string.net_unusable));
+        String retaCode = Uri.parse(result).getQueryParameter("RetaCode");
+        if (null == retaCode || "".equals(retaCode)) {
+            showSnackbar("商铺不存在");
             mQRCodeView.startSpot();
             return;
         }
-        mPresenter.getCoins(Constants.GET_COIN_ACTION_CODE, result, NetworkUtils.getIPAddress(true), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+        switch (scanType) {
+            case 0:
+                if (!Utils.isNetUsable(this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    mQRCodeView.startSpot();
+                    return;
+                }
+                mPresenter.getCoins(Constants.GET_COIN_ACTION_CODE, retaCode, SharedPreferencesUtils.getString(QRScannerActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(QRScannerActivity.this, "qLocation", ""), NetworkUtils.getIPAddress(true), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                break;
+            case 1:
+                Bundle bundle = new Bundle();
+                bundle.putString("bazaCode", retaCode);
+                openActivity(PaymentActivity.class, bundle, 0);
+                break;
+        }
     }
 
     @Override

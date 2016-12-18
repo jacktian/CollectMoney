@@ -91,7 +91,7 @@
     <string name="buy_coin_counts">购买币数</string>
     <string name="buy_coin_time">交易时间</string>
     <string name="buy_coin_left_counts">剩余币数</string>
-    <string name="buy_coin_success">购买金币成功</string>
+    <string name="buy_coin_success">提交购买金币订单成功</string>
     <string name="buy_coin_coin_count_required">请输入购买金币数</string>
     <string name="buy_coin_pay_type">请选择支付方式</string>
     <string name="buy_coin_pay_wechat">微信支付</string>
@@ -146,6 +146,16 @@
     <!--扫码-->
     <string name="qr_scan_title">扫码</string>
     <string name="get_coins_error">获取金币失败,请重新扫码获取!</string>
+
+    <!--付款-->
+    <string name="payment_title">付款</string>
+    <string name="payment_all_amount_title">消费总额</string>
+    <string name="payment_left_coin_counts_title">金币数量</string>
+    <string name="payment_use_coin_pay_title">使用金币支付</string>
+    <string name="payment_actual_pay_title">实付金额</string>
+    <string name="payment_pay_amount_hint">请询问服务员后输入</string>
+    <string name="payment_coin_counts_hint">请输入金币个数</string>
+    <string name="payment_submit_payment_success">提交付款订单成功</string>
 
     <!--用户详情-->
     <string name="detail_user_name">用户名 : </string>
@@ -430,4 +440,5 @@
     <string name="error_bind_bank_card">绑定银行卡异常</string>
     <string name="error_get_coin_types">获取金币类型异常</string>
     <string name="error_get_background_bag">获取背包异常</string>
+    <string name="error_get_shop_discount">获取商铺折扣异常</string>
 </resources>

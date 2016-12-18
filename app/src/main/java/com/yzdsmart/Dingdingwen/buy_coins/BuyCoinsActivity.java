@@ -361,7 +361,6 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         BuyCoinParameter request = new BuyCoinParameter();
         request.setSubmitCode("000000");
         request.setPayPara(payPara);
-        Gson gson = new Gson();
         mPresenter.buyCoinsPay(gson.toJson(request), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 

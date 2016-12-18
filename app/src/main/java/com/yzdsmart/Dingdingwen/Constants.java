@@ -21,6 +21,7 @@ public class Constants {
     public static final String PERSONAL_WITHDRAW_ACTION_TYPE_CODE = "166";
     public static final String PERSONAL_WITHDRAW_LOG_ACTION_CODE = "1668";
     public static final String PERSONAL_BACKGROUND_BAG_ACTION_CODE = "1516";
+    public static final String PERSONAL_PAYMENT_ACTION_CODE = "388";
 
     public static final String RECOMMEND_FRIEND_ACTION_CODE = "8566";
 

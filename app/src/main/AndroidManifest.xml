@@ -308,6 +308,11 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop" />
 
+        <activity
+            android:name=".payment.PaymentActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop" />
+
         <!--图片预览界面-->
         <activity
             android:name=".views.photo_picker.picker.activity.BGAPhotoPreviewActivity"
@@ -343,9 +348,8 @@
         <!--高德地图开始-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="298bb350c2abe358cc51fd634bcc81fc">//开发者申请的key
-        </meta-data>
-        <service android:name="com.amap.api.location.APSService"></service>//定位
+            android:value="298bb350c2abe358cc51fd634bcc81fc"></meta-data>
+        <service android:name="com.amap.api.location.APSService"></service>
         <!--高德地图结束-->
 
         <!--腾讯聊天开始-->

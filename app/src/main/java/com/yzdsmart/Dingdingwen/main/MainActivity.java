@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     @BindView(R.id.unread_conversation_bubble)
     TextView unreadConversationBubbleTV;
 
-//    private static final int REQUEST_LOCATION_PERM_CODE = 1111;//申请权限码
+    private UltimateRecyclerView backgroundBagRV;
 
     //连续双击返回键退出程序
     private Long lastKeyDown = 0l;
@@ -436,11 +436,12 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 
     @Override
     public void onGetBackgroundBag(List<CoinType> coinTypes) {
-        bagAdapter.appendList(coinTypes);
-//        if (coinTypes.size() == 0) {
-//            onDismissBackgroundBag();
-//            showSnackbar("您的背包中还没有物品");
-//        }
+        if (coinTypes.size() == 0) {
+            backgroundBagRV.showEmptyView();
+        } else {
+            backgroundBagRV.hideEmptyView();
+            bagAdapter.appendList(coinTypes);
+        }
     }
 
     @Override
@@ -526,13 +527,12 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     private void initBackgroundBagBottomSheetDialog() {
         backgroundBagBottomSheetDialog = new BottomSheetDialog(this, R.style.background_bag_dialog);
         View backgroundBagView = LayoutInflater.from(this).inflate(R.layout.background_bag_layout, null);
-        final UltimateRecyclerView backgroundBagRV = (UltimateRecyclerView) backgroundBagView.findViewById(R.id.background_bag_list);
+        backgroundBagRV = (UltimateRecyclerView) backgroundBagView.findViewById(R.id.background_bag_list);
         backgroundBagRV.setAdapter(bagAdapter);
         backgroundBagRV.setLayoutManager(mGridLayoutManager);
         backgroundBagRV.setHasFixedSize(true);
         backgroundBagRV.setSaveEnabled(true);
         backgroundBagRV.setClipToPadding(false);
-        backgroundBagRV.setEmptyView(R.layout.recycler_view_empty, R.id.empty_notification);
         backgroundBagRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

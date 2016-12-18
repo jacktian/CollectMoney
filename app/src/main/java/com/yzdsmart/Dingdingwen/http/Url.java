@@ -31,5 +31,7 @@ public class Url {
     public static final String TOKEN = "token";
     public static final String APP_REG = "AppReg";
     public static final String CHECK_CARD = "CheckCard";
+    public static final String SHOP_DISCOUNT = "ShopDiscount";
+    public static final String SHOP_PAY = "ShopPay";
 
 }

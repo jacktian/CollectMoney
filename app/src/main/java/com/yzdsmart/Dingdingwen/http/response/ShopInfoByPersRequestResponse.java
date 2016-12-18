@@ -15,7 +15,7 @@ public class ShopInfoByPersRequestResponse {
     private String Remark;//备注
     private String Coor; //坐标
     private Integer AtteNum;//关注人次
-    private Integer TotalGlodNum;//商铺剩余总金币数量
+    private Float TotalGlodNum;//商铺剩余总金币数量
     private Integer VisiNum;//访问总人次
     private String LogoImageUrl;//Logo图片链接
     private List<String> ImageLists;
@@ -23,7 +23,7 @@ public class ShopInfoByPersRequestResponse {
     public ShopInfoByPersRequestResponse() {
     }
 
-    public ShopInfoByPersRequestResponse(String code, String name, String pers, String tel, String addr, String remark, String coor, Integer atteNum, Integer totalGlodNum, Integer visiNum, String logoImageUrl, List<String> imageLists) {
+    public ShopInfoByPersRequestResponse(String code, String name, String pers, String tel, String addr, String remark, String coor, Integer atteNum, Float totalGlodNum, Integer visiNum, String logoImageUrl, List<String> imageLists) {
         Code = code;
         Name = name;
         Pers = pers;
@@ -102,11 +102,11 @@ public class ShopInfoByPersRequestResponse {
         AtteNum = atteNum;
     }
 
-    public Integer getTotalGlodNum() {
+    public Float getTotalGlodNum() {
         return TotalGlodNum;
     }
 
-    public void setTotalGlodNum(Integer totalGlodNum) {
+    public void setTotalGlodNum(Float totalGlodNum) {
         TotalGlodNum = totalGlodNum;
     }
 

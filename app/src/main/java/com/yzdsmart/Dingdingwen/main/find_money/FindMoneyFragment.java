@@ -230,7 +230,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     @Optional
-    @OnClick({R.id.center_title, R.id.find_money_scan, R.id.find_money_bag, R.id.find_money_recommend, R.id.loc_scan_coins})
+    @OnClick({R.id.center_title, R.id.find_money_scan, R.id.find_money_pay, R.id.find_money_bag, R.id.find_money_recommend, R.id.loc_scan_coins})
     void onClick(View view) {
         Fragment fragment;
         Bundle bundle;
@@ -248,6 +248,15 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 }
                 bundle = new Bundle();
                 bundle.putInt("scanType", 0);
+                ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
+                break;
+            case R.id.find_money_pay:
+                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
+                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
+                    return;
+                }
+                bundle = new Bundle();
+                bundle.putInt("scanType", 1);
                 ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
                 break;
             case R.id.find_money_bag:

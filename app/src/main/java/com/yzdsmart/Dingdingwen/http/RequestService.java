@@ -24,6 +24,7 @@ import com.yzdsmart.Dingdingwen.http.response.RecommendFriendsRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RegisterBusinessRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ScannedLogRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopDiscountRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopFocuserRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopInfoRequestResponse;
@@ -546,6 +547,19 @@ public interface RequestService {
     Observable<CoinTypeRequestResponse> getPersonalCoinTypes(@Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
 
     /**
+     * 个人去商铺消费支付
+     *
+     * @param action
+     * @param paymentPara
+     * @param contentType
+     * @param accept
+     * @param authorization
+     * @return
+     */
+    @POST(Url.SHOP_PAY)
+    Observable<PayRequestResponse> submitPayment(@Query("action") String action, @Body RequestBody paymentPara, @Header("Content-Type") String contentType, @Header("Accept") String accept, @Header("Authorization") String authorization);
+
+    /**
      * 商家获取商铺详情
      *
      * @param actioncode
@@ -811,6 +825,18 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.GOLD)
     Observable<BackgroundBagRequestResponse> shopBackgroundBag(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Header("Authorization") String authorization);
+
+    /**
+     * 获取商铺打折列表
+     *
+     * @param submitCode
+     * @param bazaCode
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.SHOP_DISCOUNT)
+    Observable<ShopDiscountRequestResponse> getShopDiscounts(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Header("Authorization") String authorization);
 
     /**
      * 获取推荐列表

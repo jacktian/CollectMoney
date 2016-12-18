@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
@@ -54,9 +55,11 @@ public class BindBankCardActivity extends BaseActivity implements BindBankCardCo
     @BindView(R.id.bind_card)
     Button bindCardBtn;
 
+    private final static String TAG = "";
+
     private BindBankCardContract.BindBankCardPresenter mPresenter;
 
-    private String bankCode = "";
+    private String bankCode = "BindBankCardActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +70,27 @@ public class BindBankCardActivity extends BaseActivity implements BindBankCardCo
         centerTitleTV.setText("添加银行卡");
 
         new BindBankCardPresenter(this, this);
+
+        MobclickAgent.openActivityDurationTrack(false);
     }
 
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_bind_bank_card;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
+        MobclickAgent.onPause(this);
     }
 
     @Optional

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_panel_bottom_border"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_padding">
+
+    <TextView
+        android:id="@+id/discount_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/font_grey"
+        android:textSize="@dimen/font_medium" />
+</LinearLayout>

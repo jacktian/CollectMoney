@@ -24,7 +24,7 @@ public interface QRScannerContract {
          * @param scannerResult 扫描可以获取商铺内码
          * @param ip
          */
-        void getCoins(String actionCode, String scannerResult, String ip, String authorization);
+        void getCoins(String actionCode, String retaCode, String custCode, String coor, String ip, String authorization);
 
         void unRegisterSubscribe();
     }

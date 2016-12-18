@@ -67,6 +67,8 @@ public class CardBagActivity extends BaseActivity implements CardBagContract.Car
 
         new CardBagPresenter(this, this);
 
+        MobclickAgent.openActivityDurationTrack(false);
+
         mLinearLayoutManager = new LinearLayoutManager(this);
         cardBagAdapter = new CardBagAdapter(this);
         cardBagAdapter.appendList(Collections.singletonList(addBankCard));

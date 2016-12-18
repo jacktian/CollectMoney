@@ -11,13 +11,13 @@ public class CustInfoRequestResponse {
     private String ImageUrl;//头像URL
     private String Area;//所在地区  例如：江苏 常州
     private Integer OperNum;//操作次数：找钱，扫码（现在还没有获取）
-    private Integer GoldNum;//金币数（现在还没有获取）
+    private Float GoldNum;//金币数（现在还没有获取）
     private Integer FriendNum;//朋友数量（现在还没有获取）
 
     public CustInfoRequestResponse() {
     }
 
-    public CustInfoRequestResponse(String c_Code, String c_UserCode, String CName, String nickName, String imageUrl, String area, Integer operNum, Integer goldNum, Integer friendNum) {
+    public CustInfoRequestResponse(String c_Code, String c_UserCode, String CName, String nickName, String imageUrl, String area, Integer operNum, Float goldNum, Integer friendNum) {
         C_Code = c_Code;
         C_UserCode = c_UserCode;
         this.CName = CName;
@@ -85,11 +85,11 @@ public class CustInfoRequestResponse {
         OperNum = operNum;
     }
 
-    public Integer getGoldNum() {
+    public Float getGoldNum() {
         return GoldNum;
     }
 
-    public void setGoldNum(Integer goldNum) {
+    public void setGoldNum(Float goldNum) {
         GoldNum = goldNum;
     }
 
