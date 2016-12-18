@@ -6,14 +6,16 @@ package com.yzdsmart.Dingdingwen.bean;
 
 public class CoinType {
     private Integer GoldType;
+    private Float GCount;
     private String GoldName;
     private String LogoLink;
 
     public CoinType() {
     }
 
-    public CoinType(Integer goldType, String goldName, String logoLink) {
+    public CoinType(Integer goldType, Float GCount, String goldName, String logoLink) {
         GoldType = goldType;
+        this.GCount = GCount;
         GoldName = goldName;
         LogoLink = logoLink;
     }
@@ -24,6 +26,14 @@ public class CoinType {
 
     public void setGoldType(Integer goldType) {
         GoldType = goldType;
+    }
+
+    public Float getGCount() {
+        return GCount;
+    }
+
+    public void setGCount(Float GCount) {
+        this.GCount = GCount;
     }
 
     public String getGoldName() {

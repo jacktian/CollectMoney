@@ -5,7 +5,7 @@ import com.tencent.TIMGroupPendencyItem;
 import com.tencent.TIMMessage;
 import com.yzdsmart.Dingdingwen.BasePresenter;
 import com.yzdsmart.Dingdingwen.BaseView;
-import com.yzdsmart.Dingdingwen.bean.BackgroundBag;
+import com.yzdsmart.Dingdingwen.bean.CoinType;
 
 import java.util.List;
 
@@ -59,7 +59,14 @@ public interface MainContract {
          */
         void refreshAccessToken();
 
-        void onGetBackgroundBag(List<BackgroundBag> bagList);
+        /**
+         * 获取个人金币列表（背包功能）
+         *
+         * @param coinTypes
+         */
+        void onGetBackgroundBag(List<CoinType> coinTypes);
+
+        void onDismissBackgroundBag();
 
         void updateAccessToken();
     }
@@ -108,7 +115,26 @@ public interface MainContract {
          */
         void refreshAccessToken(String grantType, String refreshToken);
 
-        void getBackgroundBag();
+        /**
+         * 获取个人金币列表（背包功能）
+         *
+         * @param action
+         * @param actiontype
+         * @param submitCode
+         * @param custCode
+         * @param authorization
+         */
+        void personalBackgroundBag(String action, String actiontype, String submitCode, String custCode, String authorization);
+
+        /**
+         * 获取商铺金币列表（背包功能）
+         *
+         * @param action
+         * @param submitCode
+         * @param bazaCode
+         * @param authorization
+         */
+        void shopBackgroundBag(String action, String submitCode, String bazaCode, String authorization);
 
         /**
          * 取消网络请求

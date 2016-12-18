@@ -8,17 +8,19 @@ public class Constants {
     public static final Integer REQUEST_LOGIN_CODE = 1000;
     public static final Integer REQUEST_BIND_BANK_CARD_CODE = 1111;
     public static final Integer REQUEST_BANK_CARD_NUM_CODE = 1222;
+    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+
     public static final String REGISTER_ACTION_CODE = "1688";
     public static final String FIND_PWD_ACTION_CODE = "1656";
 
     public final static String GET_CUST_CODE_ACTION_CODE = "628";
     public static final String GET_CUST_LEVEL_ACTION_CODE = "612";
-    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     public static final String PERSONAL_UPLOAD_AVATER_ACTION_CODE = "2101";//上传头像
     public static final String GET_FOCUSED_SHOP_ACTION_CODE = "9212";//获取用户关注的店铺信息
     public static final String PERSONAL_WITHDRAW_ACTION_CODE = "588";
     public static final String PERSONAL_WITHDRAW_ACTION_TYPE_CODE = "166";
     public static final String PERSONAL_WITHDRAW_LOG_ACTION_CODE = "1668";
+    public static final String PERSONAL_BACKGROUND_BAG_ACTION_CODE = "1516";
 
     public static final String RECOMMEND_FRIEND_ACTION_CODE = "8566";
 

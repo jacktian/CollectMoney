@@ -2,6 +2,7 @@ package com.yzdsmart.Dingdingwen.http;
 
 import com.yzdsmart.Dingdingwen.bean.BankCard;
 import com.yzdsmart.Dingdingwen.bean.ShopScanner;
+import com.yzdsmart.Dingdingwen.http.response.BackgroundBagRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.BuyCoinsLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CoinTypeRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
@@ -475,6 +476,20 @@ public interface RequestService {
     Observable<WithdrawRequestResponse> personalWithdrawCoins(@Query("action") String action, @Query("actiontype") String actiontype, @Body RequestBody personalWithdrawPara, @Header("Content-Type") String contentType, @Header("Accept") String accept, @Header("Authorization") String authorization);
 
     /**
+     * 获取个人金币列表（背包功能）
+     *
+     * @param action
+     * @param actiontype
+     * @param submitCode
+     * @param custCode
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.GOLD)
+    Observable<BackgroundBagRequestResponse> personalBackgroundBag(@Query("action") String action, @Query("actiontype") String actiontype, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
+
+    /**
      * 个人提现日志
      *
      * @param action
@@ -783,6 +798,19 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.PAY)
     Observable<PayRequestResponse> getNotPayCharge(@Field("SubmitCode") String submitCode, @Field("ChargeId") String chargeId, @Header("Authorization") String authorization);
+
+    /**
+     * 获取商铺金币列表（背包功能）
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.GOLD)
+    Observable<BackgroundBagRequestResponse> shopBackgroundBag(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Header("Authorization") String authorization);
 
     /**
      * 获取推荐列表

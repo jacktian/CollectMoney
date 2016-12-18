@@ -429,4 +429,5 @@
     <string name="error_validate_bank_card">校验银行卡异常</string>
     <string name="error_bind_bank_card">绑定银行卡异常</string>
     <string name="error_get_coin_types">获取金币类型异常</string>
+    <string name="error_get_background_bag">获取背包异常</string>
 </resources>

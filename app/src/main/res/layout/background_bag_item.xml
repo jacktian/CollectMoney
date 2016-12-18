@@ -8,13 +8,13 @@
     android:paddingTop="@dimen/activity_vertical_padding">
 
     <ImageView
-        android:id="@+id/bag_type"
+        android:id="@+id/coin_logo"
         android:layout_width="37dp"
         android:layout_height="37dp"
         android:src="@mipmap/background_bag_coin" />
 
     <TextView
-        android:id="@+id/bag_counts"
+        android:id="@+id/coin_counts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"

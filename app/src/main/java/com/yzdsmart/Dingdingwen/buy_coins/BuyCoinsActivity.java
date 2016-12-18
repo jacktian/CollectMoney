@@ -146,7 +146,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
         MobclickAgent.openActivityDurationTrack(false);
 
-        defaultCoinType = new CoinType(0, "普通金币", "");
+        defaultCoinType = new CoinType(0, 0f, "普通金币", "");
         coinTypesAdapter = new CoinTypesAdapter(this);
         coinTypesBS.setAdapter(coinTypesAdapter);
         coinTypesBS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

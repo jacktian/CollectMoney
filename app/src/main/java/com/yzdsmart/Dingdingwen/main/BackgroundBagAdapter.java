@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Dingdingwen.R;
-import com.yzdsmart.Dingdingwen.bean.BackgroundBag;
+import com.yzdsmart.Dingdingwen.bean.CoinType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +27,11 @@ import butterknife.ButterKnife;
 
 public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapter.ViewHolder> {
     private Context context;
-    private List<BackgroundBag> bagList;
+    private List<CoinType> coinTypeList;
 
     public BackgroundBagAdapter(Context context) {
         this.context = context;
-        bagList = new ArrayList<BackgroundBag>();
+        coinTypeList = new ArrayList<CoinType>();
     }
 
     /**
@@ -39,9 +39,9 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
      *
      * @param list
      */
-    public void appendList(List<BackgroundBag> list) {
-        if (null != bagList) {
-            bagList.addAll(list);
+    public void appendList(List<CoinType> list) {
+        if (null != coinTypeList) {
+            coinTypeList.addAll(list);
         }
         notifyDataSetChanged();
     }
@@ -50,8 +50,8 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
      * 清除记录
      */
     public void clearList() {
-        if (null != bagList && bagList.size() > 0) {
-            bagList.clear();
+        if (null != coinTypeList && coinTypeList.size() > 0) {
+            coinTypeList.clear();
             notifyDataSetChanged();
         }
     }
@@ -68,14 +68,14 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.background_bg_adapter, parent, false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.background_bag_item, parent, false);
         BackgroundBagAdapter.ViewHolder holder = new BackgroundBagAdapter.ViewHolder(itemView);
         return holder;
     }
 
     @Override
     public int getAdapterItemCount() {
-        return bagList.size();
+        return coinTypeList.size();
     }
 
     @Override
@@ -85,9 +85,9 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        BackgroundBag backgroundBag = bagList.get(position);
-        holder.setBagType(backgroundBag.getType());
-        holder.setBagCounts(backgroundBag.getCounts());
+        CoinType coinType = coinTypeList.get(position);
+        holder.setCoinLogo(coinType.getLogoLink());
+        holder.setCoinCounts(coinType.getGCount());
     }
 
     @Override
@@ -102,23 +102,23 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
 
     class ViewHolder extends UltimateRecyclerviewViewHolder {
         @Nullable
-        @BindView(R.id.bag_type)
-        ImageView bagTypeIV;
+        @BindView(R.id.coin_logo)
+        ImageView coinLogoIV;
         @Nullable
-        @BindView(R.id.bag_counts)
-        TextView bagCountsTV;
+        @BindView(R.id.coin_counts)
+        TextView coinCountsTV;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void setBagType(Integer bagType) {
-            Glide.with(context).load(bagType == 0 ? R.mipmap.background_bag_coin : R.mipmap.background_bag_diamond).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.background_bag_holder_light)).error(context.getResources().getDrawable(R.mipmap.background_bag_holder_light)).into(bagTypeIV);
+        public void setCoinLogo(String logoUrl) {
+            Glide.with(context).load((null == logoUrl || "".equals(logoUrl)) ? R.mipmap.yzd_coin : logoUrl).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.ic_holder_light)).into(coinLogoIV);
         }
 
-        public void setBagCounts(Integer bagCounts) {
-            bagCountsTV.setText(bagCounts + "个");
+        public void setCoinCounts(Float coinCounts) {
+            coinCountsTV.setText(coinCounts + "个");
         }
     }
 }

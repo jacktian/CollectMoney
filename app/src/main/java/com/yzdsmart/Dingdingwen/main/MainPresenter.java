@@ -16,8 +16,8 @@ import com.tencent.TIMValueCallBack;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
-import com.yzdsmart.Dingdingwen.bean.BackgroundBag;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
+import com.yzdsmart.Dingdingwen.http.response.BackgroundBagRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendshipInfo;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.GroupInfo;
@@ -69,9 +69,11 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
 
     @Override
     public void chatLogin(String im_name, String im_pwd) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loginning));
         mModel.chatLogin(im_name, im_pwd, new TLSPwdLoginListener() {
             @Override
             public void OnPwdLoginSuccess(TLSUserInfo tlsUserInfo) {
+                ((BaseActivity) context).hideProgressDialog();
                 TLSService.getInstance().setLastErrno(0);
                 String id = TLSService.getInstance().getLastUserIdentifier();
                 UserInfo.getInstance().setId(id);
@@ -81,16 +83,17 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
 
             @Override
             public void OnPwdLoginReaskImgcodeSuccess(byte[] bytes) {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
 
             @Override
             public void OnPwdLoginNeedImgcode(byte[] bytes, TLSErrInfo tlsErrInfo) {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
 
             @Override
             public void OnPwdLoginFail(TLSErrInfo tlsErrInfo) {
+                ((BaseActivity) context).hideProgressDialog();
                 TLSService.getInstance().setLastErrno(-1);
                 ((BaseActivity) context).showSnackbar(String.format("%s: %s",
                         tlsErrInfo.ErrCode == TLSErrInfo.TIMEOUT ?
@@ -99,6 +102,7 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
 
             @Override
             public void OnPwdLoginTimeout(TLSErrInfo tlsErrInfo) {
+                ((BaseActivity) context).hideProgressDialog();
                 TLSService.getInstance().setLastErrno(-1);
                 ((BaseActivity) context).showSnackbar(String.format("%s: %s",
                         tlsErrInfo.ErrCode == TLSErrInfo.TIMEOUT ?
@@ -236,17 +240,67 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
     }
 
     @Override
-    public void getBackgroundBag() {
-        List<BackgroundBag> backgroundBags = new ArrayList<BackgroundBag>();
-        for (int i = 0; i < 30; i++) {
-            backgroundBags.add(new BackgroundBag(0, 99));
-        }
-        backgroundBags.add(new BackgroundBag(0, 54));
-        for (int i = 0; i < 30; i++) {
-            backgroundBags.add(new BackgroundBag(1, 99));
-        }
-        backgroundBags.add(new BackgroundBag(1, 78));
-        mView.onGetBackgroundBag(backgroundBags);
+    public void personalBackgroundBag(String action, String actiontype, String submitCode, String custCode, String authorization) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.personalBackgroundBag(action, actiontype, submitCode, custCode, authorization, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                BackgroundBagRequestResponse requestResponse = (BackgroundBagRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onGetBackgroundBag(requestResponse.getLists());
+                } else {
+                    mView.onDismissBackgroundBag();
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                mView.onDismissBackgroundBag();
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_background_bag));
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void shopBackgroundBag(String action, String submitCode, String bazaCode, String authorization) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.shopBackgroundBag(action, submitCode, bazaCode, authorization, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                BackgroundBagRequestResponse requestResponse = (BackgroundBagRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onGetBackgroundBag(requestResponse.getLists());
+                } else {
+                    mView.onDismissBackgroundBag();
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                mView.onDismissBackgroundBag();
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_background_bag));
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
     }
 
     @Override
@@ -288,11 +342,9 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
         switch (i) {
             case 6208:
                 //离线状态下被其他终端踢下线
-                System.out.println("--------------------------------" + context.getResources().getString(R.string.kick_logout));
                 logoutError();
                 break;
             default:
-                System.out.println("--------------------------------" + context.getResources().getString(R.string.login_error));
                 logoutError();
                 break;
         }

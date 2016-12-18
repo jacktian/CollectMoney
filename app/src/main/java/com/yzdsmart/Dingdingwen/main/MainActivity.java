@@ -27,7 +27,7 @@ import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
-import com.yzdsmart.Dingdingwen.bean.BackgroundBag;
+import com.yzdsmart.Dingdingwen.bean.CoinType;
 import com.yzdsmart.Dingdingwen.main.find_money.FindMoneyFragment;
 import com.yzdsmart.Dingdingwen.money_friendship.MoneyFriendshipActivity;
 import com.yzdsmart.Dingdingwen.money_friendship.conversation.ConversationFragment;
@@ -435,8 +435,17 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     }
 
     @Override
-    public void onGetBackgroundBag(List<BackgroundBag> bagList) {
-        bagAdapter.appendList(bagList);
+    public void onGetBackgroundBag(List<CoinType> coinTypes) {
+        bagAdapter.appendList(coinTypes);
+//        if (coinTypes.size() == 0) {
+//            onDismissBackgroundBag();
+//            showSnackbar("您的背包中还没有物品");
+//        }
+    }
+
+    @Override
+    public void onDismissBackgroundBag() {
+        backgroundBagBottomSheetDialog.dismiss();
     }
 
     @Override
@@ -510,7 +519,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         backgroundBagBottomSheetDialog.show();
         if (isFirstLoadBag) {
             isFirstLoadBag = false;
-            mPresenter.getBackgroundBag();
+            getBackgroundBag();
         }
     }
 
@@ -523,12 +532,13 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         backgroundBagRV.setHasFixedSize(true);
         backgroundBagRV.setSaveEnabled(true);
         backgroundBagRV.setClipToPadding(false);
+        backgroundBagRV.setEmptyView(R.layout.recycler_view_empty, R.id.empty_notification);
         backgroundBagRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 backgroundBagRV.setRefreshing(false);
                 bagAdapter.clearList();
-                mPresenter.getBackgroundBag();
+                getBackgroundBag();
             }
         });
         backgroundBagView.findViewById(R.id.quit_background_bag).setOnClickListener(new View.OnClickListener() {
@@ -539,6 +549,18 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         });
         backgroundBagBottomSheetDialog.setContentView(backgroundBagView);
         backgroundBagBottomSheetDialog.setCancelable(false);
+    }
+
+    private void getBackgroundBag() {
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
+        if (SharedPreferencesUtils.getString(MainActivity.this, "baza_code", "").trim().length() > 0) {
+            mPresenter.shopBackgroundBag(Constants.PERSONAL_BACKGROUND_BAG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(MainActivity.this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+        } else {
+            mPresenter.personalBackgroundBag(Constants.PERSONAL_BACKGROUND_BAG_ACTION_CODE, Constants.PERSONAL_WITHDRAW_ACTION_TYPE_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+        }
     }
 
     // 初始化 JPush。如果已经初始化，但没有登录成功，则执行重新登录。

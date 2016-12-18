@@ -251,6 +251,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
                 break;
             case R.id.find_money_bag:
+                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
+                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
+                    return;
+                }
                 ((MainActivity) getActivity()).showBackgroundBag();
                 break;
             case R.id.find_money_recommend:
