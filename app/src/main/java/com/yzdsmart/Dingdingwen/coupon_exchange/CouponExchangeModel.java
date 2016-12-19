@@ -1,28 +1,27 @@
-package com.yzdsmart.Dingdingwen.payment;
+package com.yzdsmart.Dingdingwen.coupon_exchange;
 
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.PayRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.ShopDiscountRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopExchangeRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopInfoByPersRequestResponse;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by YZD on 2016/12/18.
+ * Created by YZD on 2016/12/19.
  */
 
-public class PaymentModel {
+public class CouponExchangeModel {
     //网络请求监听
     private Subscriber<CustInfoRequestResponse> getCustInfoSubscriber;
     private Subscriber<ShopInfoByPersRequestResponse> getShopInfoSubscriber;
-    private Subscriber<ShopDiscountRequestResponse> getShopDiscountsSubscriber;
-    private Subscriber<PayRequestResponse> submitPaymentSubscriber;
+    private Subscriber<ShopExchangeRequestResponse> getShopExchangeSubscriber;
+    private Subscriber<ShopExchangeRequestResponse> getCoinExchangeSubscriber;
+    private Subscriber<RequestResponse> exchangeCouponSubscriber;
 
     void getCustInfo(String submitcode, String custCode, String authorization, final RequestListener listener) {
         getCustInfoSubscriber = new Subscriber<CustInfoRequestResponse>() {
@@ -70,8 +69,8 @@ public class PaymentModel {
                 .subscribe(getShopInfoSubscriber);
     }
 
-    void getShopDiscounts(String submitCode, String bazaCode, String authorization, final RequestListener listener) {
-        getShopDiscountsSubscriber = new Subscriber<ShopDiscountRequestResponse>() {
+    void getShopExchangeList(String action, String submitCode, String bazaCode, String custCode, String authorization, final RequestListener listener) {
+        getShopExchangeSubscriber = new Subscriber<ShopExchangeRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -83,18 +82,18 @@ public class PaymentModel {
             }
 
             @Override
-            public void onNext(ShopDiscountRequestResponse requestResponse) {
+            public void onNext(ShopExchangeRequestResponse requestResponse) {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getDDWRequestService().getShopDiscounts(submitCode, bazaCode, authorization)
+        RequestAdapter.getDDWRequestService().getShopExchangeList(action, submitCode, bazaCode, custCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
-                .subscribe(getShopDiscountsSubscriber);
+                .subscribe(getShopExchangeSubscriber);
     }
 
-    void submitPayment(String action, String paymentPara, String authorization, final RequestListener listener) {
-        submitPaymentSubscriber = new Subscriber<PayRequestResponse>() {
+    void getCoinExchangeList(String action, String submitCode, Integer goldType, String custCode, String authorization, final RequestListener listener) {
+        getCoinExchangeSubscriber = new Subscriber<ShopExchangeRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -106,15 +105,37 @@ public class PaymentModel {
             }
 
             @Override
-            public void onNext(PayRequestResponse response) {
-                listener.onSuccess(response);
+            public void onNext(ShopExchangeRequestResponse requestResponse) {
+                listener.onSuccess(requestResponse);
             }
         };
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), paymentPara);
-        RequestAdapter.getDDWRequestService().submitPayment(action, body, "application/json", "application/json", authorization)
+        RequestAdapter.getDDWRequestService().getCoinExchangeList(action, submitCode, goldType, custCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
-                .subscribe(submitPaymentSubscriber);
+                .subscribe(getCoinExchangeSubscriber);
+    }
+
+    void exchangeCoupon(String submitCode, Integer exchangeId, String custCode, String authorization, final RequestListener listener) {
+        exchangeCouponSubscriber = new Subscriber<RequestResponse>() {
+            @Override
+            public void onCompleted() {
+                listener.onComplete();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                listener.onError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(RequestResponse requestResponse) {
+                listener.onSuccess(requestResponse);
+            }
+        };
+        RequestAdapter.getDDWRequestService().exchangeCoupon(submitCode, exchangeId, custCode, authorization)
+                .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
+                .observeOn(AndroidSchedulers.mainThread())//回调到主线程
+                .subscribe(exchangeCouponSubscriber);
     }
 
     void unRegisterSubscribe() {
@@ -125,11 +146,14 @@ public class PaymentModel {
         if (null != getShopInfoSubscriber) {
             getShopInfoSubscriber.unsubscribe();
         }
-        if (null != getShopDiscountsSubscriber) {
-            getShopDiscountsSubscriber.unsubscribe();
+        if (null != getShopExchangeSubscriber) {
+            getShopExchangeSubscriber.unsubscribe();
         }
-        if (null != submitPaymentSubscriber) {
-            submitPaymentSubscriber.unsubscribe();
+        if (null != getCoinExchangeSubscriber) {
+            getCoinExchangeSubscriber.unsubscribe();
+        }
+        if (null != exchangeCouponSubscriber) {
+            exchangeCouponSubscriber.unsubscribe();
         }
     }
 }

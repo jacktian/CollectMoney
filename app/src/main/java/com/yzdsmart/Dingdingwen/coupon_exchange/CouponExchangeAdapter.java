@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.main;
+package com.yzdsmart.Dingdingwen.coupon_exchange;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Dingdingwen.R;
-import com.yzdsmart.Dingdingwen.bean.CoinType;
+import com.yzdsmart.Dingdingwen.bean.CouponBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,16 +22,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by YZD on 2016/12/2.
+ * Created by YZD on 2016/12/19.
  */
 
-public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapter.ViewHolder> {
+public class CouponExchangeAdapter extends UltimateViewAdapter<CouponExchangeAdapter.ViewHolder> {
     private Context context;
-    private List<CoinType> coinTypeList;
+    private List<CouponBean> couponBeanList;
 
-    public BackgroundBagAdapter(Context context) {
+    public CouponExchangeAdapter(Context context) {
         this.context = context;
-        coinTypeList = new ArrayList<CoinType>();
+        couponBeanList = new ArrayList<CouponBean>();
     }
 
     /**
@@ -39,9 +39,9 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
      *
      * @param list
      */
-    public void appendList(List<CoinType> list) {
-        if (null != coinTypeList) {
-            coinTypeList.addAll(list);
+    public void appendList(List<CouponBean> list) {
+        if (null != couponBeanList) {
+            couponBeanList.addAll(list);
         }
         notifyDataSetChanged();
     }
@@ -50,8 +50,8 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
      * 清除记录
      */
     public void clearList() {
-        if (null != coinTypeList && coinTypeList.size() > 0) {
-            coinTypeList.clear();
+        if (null != couponBeanList && couponBeanList.size() > 0) {
+            couponBeanList.clear();
             notifyDataSetChanged();
         }
     }
@@ -68,14 +68,14 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.background_bag_item, parent, false);
-        BackgroundBagAdapter.ViewHolder holder = new BackgroundBagAdapter.ViewHolder(itemView);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.coupon_exchange_item, parent, false);
+        CouponExchangeAdapter.ViewHolder holder = new CouponExchangeAdapter.ViewHolder(itemView);
         return holder;
     }
 
     @Override
     public int getAdapterItemCount() {
-        return coinTypeList.size();
+        return couponBeanList.size();
     }
 
     @Override
@@ -85,13 +85,16 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final CoinType coinType = coinTypeList.get(position);
-        holder.setCoinLogo(coinType.getLogoLink());
-        holder.setCoinCounts(coinType.getGCount());
+        final CouponBean couponBean = couponBeanList.get(position);
+        holder.setCoinLogo(couponBean.getLogoLink());
+        holder.setCoinCounts(couponBean.getGoldNum());
+        holder.setCoinName(couponBean.getGoldName());
+        holder.setCouponContent(couponBean.getShow());
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) context).exchangeCoupon(coinType.getGoldType());
+                ((CouponExchangeActivity) context).exchangeCoupon(couponBean);
             }
         });
     }
@@ -113,18 +116,32 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
         @Nullable
         @BindView(R.id.coin_counts)
         TextView coinCountsTV;
+        @Nullable
+        @BindView(R.id.coin_name)
+        TextView coinNameTV;
+        @Nullable
+        @BindView(R.id.coupon_content)
+        TextView couponContentTV;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void setCoinLogo(String logoUrl) {
-            Glide.with(context).load((null == logoUrl || "".equals(logoUrl)) ? R.mipmap.yzd_coin : logoUrl).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.ic_holder_light)).into(coinLogoIV);
+        public void setCoinLogo(String coinLogo) {
+            Glide.with(context).load((null == coinLogo || "".equals(coinLogo)) ? R.mipmap.yzd_coin : coinLogo).asBitmap().placeholder(R.mipmap.ic_holder_light).error(R.mipmap.ic_holder_light).into(coinLogoIV);
         }
 
-        public void setCoinCounts(Float coinCounts) {
-            coinCountsTV.setText(coinCounts + "个");
+        public void setCoinCounts(Integer coinCounts) {
+            coinCountsTV.setText(coinCounts + "");
+        }
+
+        public void setCoinName(String coinName) {
+            coinNameTV.setText(coinName);
+        }
+
+        public void setCouponContent(String couponContent) {
+            couponContentTV.setText(couponContent);
         }
     }
 }

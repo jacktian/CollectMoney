@@ -157,6 +157,10 @@
     <string name="payment_coin_counts_hint">请输入金币个数</string>
     <string name="payment_submit_payment_success">提交付款订单成功</string>
 
+    <!--兑换-->
+    <string name="exchange_title">兑换</string>
+    <string name="exchange_all_coin_title">总金币数</string>
+
     <!--用户详情-->
     <string name="detail_user_name">用户名 : </string>
     <string name="detail_change_money_times">找钱次数</string>
@@ -441,4 +445,7 @@
     <string name="error_get_coin_types">获取金币类型异常</string>
     <string name="error_get_background_bag">获取背包异常</string>
     <string name="error_get_shop_discount">获取商铺折扣异常</string>
+    <string name="error_get_shop_coupon">获取商铺优惠券异常</string>
+    <string name="error_get_coin_coupon">获取金币优惠券异常</string>
+    <string name="error_exchange_coupon">兑换优惠券异常</string>
 </resources>

@@ -56,6 +56,8 @@ public class Constants {
     public static final String SHOP_GALLEY_UPLOAD_ACTION_CODE = "5101";//上传商铺相册
 
     public static final String SHOP_PAY_LOG_ACTION_CODE = "816";//获取指定商铺支付日志
+    public static final String SHOP_COUPON_ACTION_CODE = "211";//获取指定商铺兑换列表
+    public static final String COIN_COUPON_ACTION_CODE = "232";//获取指定商铺兑换列表
 
     public static final String THIRD_PLATFORM_ACTION_CODE = "1692";//获取指定商铺支付日志
 

@@ -33,5 +33,7 @@ public class Url {
     public static final String CHECK_CARD = "CheckCard";
     public static final String SHOP_DISCOUNT = "ShopDiscount";
     public static final String SHOP_PAY = "ShopPay";
+    public static final String SHOP_EXCHANGE_LIST = "ShopExchangeList";
+    public static final String SHOP_EXCHANGE = "ShopExchange";
 
 }

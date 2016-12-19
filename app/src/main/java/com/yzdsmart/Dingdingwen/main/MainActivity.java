@@ -28,6 +28,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.CoinType;
+import com.yzdsmart.Dingdingwen.coupon_exchange.CouponExchangeActivity;
 import com.yzdsmart.Dingdingwen.main.find_money.FindMoneyFragment;
 import com.yzdsmart.Dingdingwen.money_friendship.MoneyFriendshipActivity;
 import com.yzdsmart.Dingdingwen.money_friendship.conversation.ConversationFragment;
@@ -303,6 +304,13 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         if (null != fragment) {
             ((FindMoneyFragment) fragment).planRoute(coor);
         }
+    }
+
+    public void exchangeCoupon(Integer goldType) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("couponType", 1);
+        bundle.putInt("goldType", goldType);
+        openActivity(CouponExchangeActivity.class, bundle, 0);
     }
 
     @Override

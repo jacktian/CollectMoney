@@ -16,7 +16,8 @@
         android:layout_marginTop="5dp"
         android:gravity="center"
         android:text="@string/find_money_scan_coin"
-        android:textColor="@color/grey" />
+        android:textColor="@color/font_grey"
+        android:textSize="@dimen/font_medium" />
 
     <View
         android:layout_width="match_parent"
@@ -30,5 +31,6 @@
         android:layout_marginLeft="10dp"
         android:gravity="center"
         android:text="@string/find_money_pay_coin"
-        android:textColor="@color/grey" />
+        android:textColor="@color/font_grey"
+        android:textSize="@dimen/font_medium" />
 </LinearLayout>

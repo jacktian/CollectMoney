@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.payment;
+package com.yzdsmart.Dingdingwen.coupon_exchange;
 
 import android.content.Context;
 
@@ -6,24 +6,24 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.PayRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.ShopDiscountRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopExchangeRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 
 /**
- * Created by YZD on 2016/12/18.
+ * Created by YZD on 2016/12/19.
  */
 
-public class PaymentPresenter implements PaymentContract.PaymentPresenter {
+public class CouponExchangePresenter implements CouponExchangeContract.CouponExchangePresenter {
     private Context context;
-    private PaymentContract.PaymentView mView;
-    private PaymentModel mModel;
+    private CouponExchangeContract.CouponExchangeView mView;
+    private CouponExchangeModel mModel;
 
-    public PaymentPresenter(Context context, PaymentContract.PaymentView mView) {
+    public CouponExchangePresenter(Context context, CouponExchangeContract.CouponExchangeView mView) {
         this.context = context;
         this.mView = mView;
-        mModel = new PaymentModel();
+        mModel = new CouponExchangeModel();
         mView.setPresenter(this);
     }
 
@@ -84,14 +84,14 @@ public class PaymentPresenter implements PaymentContract.PaymentPresenter {
     }
 
     @Override
-    public void getShopDiscounts(String submitCode, String bazaCode, String authorization) {
+    public void getShopExchangeList(String action, String submitCode, String bazaCode, String custCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getShopDiscounts(submitCode, bazaCode, authorization, new RequestListener() {
+        mModel.getShopExchangeList(action, submitCode, bazaCode, custCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                ShopDiscountRequestResponse requestResponse = (ShopDiscountRequestResponse) result;
+                ShopExchangeRequestResponse requestResponse = (ShopExchangeRequestResponse) result;
                 if ("OK".equals(requestResponse.getActionStatus())) {
-                    mView.onGetShopDiscounts(requestResponse.getLists());
+                    mView.onGetExchangeList(requestResponse.getLists());
                 } else {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
                 }
@@ -100,7 +100,7 @@ public class PaymentPresenter implements PaymentContract.PaymentPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_discount));
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_coupon));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -114,24 +114,23 @@ public class PaymentPresenter implements PaymentContract.PaymentPresenter {
     }
 
     @Override
-    public void submitPayment(String action, String paymentPara, String authorization) {
+    public void getCoinExchangeList(String action, String submitCode, Integer goldType, String custCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.submitPayment(action, paymentPara, authorization, new RequestListener() {
+        mModel.getCoinExchangeList(action, submitCode, goldType, custCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                ((BaseActivity) context).hideProgressDialog();
-                PayRequestResponse response = (PayRequestResponse) result;
-                if ("OK".equals(response.getActionStatus())) {
-                    mView.onSubmitPayment(true, context.getResources().getString(R.string.payment_submit_payment_success), response.getCharge());
+                ShopExchangeRequestResponse requestResponse = (ShopExchangeRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onGetExchangeList(requestResponse.getLists());
                 } else {
-                    mView.onSubmitPayment(false, response.getErrorInfo(), null);
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
                 }
             }
 
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_buy_coin));
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_coin_coupon));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -139,7 +138,37 @@ public class PaymentPresenter implements PaymentContract.PaymentPresenter {
 
             @Override
             public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
 
+    @Override
+    public void exchangeCoupon(String submitCode, Integer exchangeId, String custCode, String authorization) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.exchangeCoupon(submitCode, exchangeId, custCode, authorization, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                RequestResponse requestResponse = (RequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onExchangeCoupon();
+                } else {
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_exchange_coupon));
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

@@ -25,6 +25,7 @@ import com.yzdsmart.Dingdingwen.http.response.RegisterBusinessRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ScannedLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopDiscountRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopExchangeRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopFocuserRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopInfoRequestResponse;
@@ -558,6 +559,47 @@ public interface RequestService {
      */
     @POST(Url.SHOP_PAY)
     Observable<PayRequestResponse> submitPayment(@Query("action") String action, @Body RequestBody paymentPara, @Header("Content-Type") String contentType, @Header("Accept") String accept, @Header("Authorization") String authorization);
+
+    /**
+     * 获取指定商铺兑换列表
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param custCode
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.SHOP_EXCHANGE_LIST)
+    Observable<ShopExchangeRequestResponse> getShopExchangeList(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
+
+    /**
+     * 获取指定商铺兑换列表
+     *
+     * @param action
+     * @param submitCode
+     * @param goldType
+     * @param custCode
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.SHOP_EXCHANGE_LIST)
+    Observable<ShopExchangeRequestResponse> getCoinExchangeList(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("GoldType") Integer goldType, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
+
+    /**
+     * 兑换商品
+     *
+     * @param submitCode
+     * @param exchangeId
+     * @param custCode
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.SHOP_EXCHANGE)
+    Observable<RequestResponse> exchangeCoupon(@Field("SubmitCode") String submitCode, @Field("ExchangeId") Integer exchangeId, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
 
     /**
      * 商家获取商铺详情

@@ -17,11 +17,13 @@ import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.PaymentParameter;
 import com.yzdsmart.Dingdingwen.bean.ShopDiscount;
+import com.yzdsmart.Dingdingwen.coupon_exchange.CouponExchangeActivity;
 import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomNestRadioGroup;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +84,10 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
 
     private Gson gson = new Gson();
 
+    private DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+
+    private float discountPrice = 0f;
+
     /**
      * 银联支付渠道
      */
@@ -127,10 +133,9 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 shopDiscount = shopDiscountList.get(i);
                 if (payAmountET.getText().toString().trim().length() > 0) {
-                    float discountPrice = 0f;
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Float.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta());
+                            discountPrice = Float.valueOf(decimalFormat.format(Float.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
                             break;
                         case 45:
                             discountPrice = (Float.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0f;
@@ -160,7 +165,11 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             return;
         }
         mPresenter.getShopDiscounts("", bazaCode, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
-        mPresenter.getCustInfo("", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+        if (SharedPreferencesUtils.getString(PaymentActivity.this, "baza_code", "").trim().length() > 0) {
+            mPresenter.getShopInfo(Constants.GET_SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PaymentActivity.this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+        } else {
+            mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(PaymentActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+        }
     }
 
     @Override
@@ -189,11 +198,18 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.confirm_payment})
+    @OnClick({R.id.title_left_operation_layout, R.id.right_title, R.id.confirm_payment})
     void onClick(View view) {
+        Bundle bundle;
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
                 closeActivity();
+                break;
+            case R.id.right_title:
+                bundle = new Bundle();
+                bundle.putInt("couponType", 0);
+                bundle.putString("bazaCode", bazaCode);
+                openActivity(CouponExchangeActivity.class, bundle, 0);
                 break;
             case R.id.confirm_payment:
                 if (!Utils.isNetUsable(this)) {
@@ -222,7 +238,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 paymentParameter.setBazaCode(bazaCode);
                 paymentParameter.setCustCode(SharedPreferencesUtils.getString(PaymentActivity.this, "cust_code", ""));
                 paymentParameter.setUseGold(coinCountsET.getText().toString().trim().length() > 0 ? Float.valueOf(coinCountsET.getText().toString().trim()) : 0f);
-                paymentParameter.setDiscount((Float.valueOf(payAmountET.getText().toString().trim()) - Float.valueOf(coinCountsET.getText().toString().trim().length() > 0 ? Float.valueOf(coinCountsET.getText().toString().trim()) : 0) - Float.valueOf(actualAmountTV.getText().toString().trim())));
+                paymentParameter.setDiscount(discountPrice);
                 paymentParameter.setTotal(Float.valueOf(payAmountET.getText().toString().trim()));
                 paymentParameter.setPayPara(payInfoBean);
                 mPresenter.submitPayment(Constants.PERSONAL_PAYMENT_ACTION_CODE, gson.toJson(paymentParameter), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
@@ -242,10 +258,9 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                     actualAmountTV.setText(s.toString());
                 }
             } else {
-                float discountPrice = 0f;
                 switch (shopDiscount.getDisType()) {
                     case 23:
-                        discountPrice = Float.valueOf(s.toString().trim()) * (1 - shopDiscount.getDiscReta());
+                        discountPrice = Float.valueOf(decimalFormat.format(Float.valueOf(s.toString().trim()) * (1 - shopDiscount.getDiscReta())));
                         break;
                     case 45:
                         discountPrice = (Float.valueOf(s.toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0f;
@@ -272,13 +287,15 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     void onCoinCountChanged(CharSequence s, int i, int j, int k) {
         if (payAmountET.getText().toString().trim().length() > 0) {
             if (s.toString().trim().length() > 0) {
+                if (Float.valueOf(s.toString().trim()) > Float.valueOf(leftCoinCountsTV.getText().toString().trim())) {
+                    coinCountsET.setText(leftCoinCountsTV.getText().toString().trim());
+                }
                 if (null == shopDiscount) {
                     actualAmountTV.setText((Float.valueOf(payAmountET.getText().toString().trim()) - Float.valueOf(s.toString().trim())) + "");
                 } else {
-                    float discountPrice = 0f;
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Float.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta());
+                            discountPrice = Float.valueOf(decimalFormat.format(Float.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
                             break;
                         case 45:
                             discountPrice = (Float.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0f;
@@ -298,7 +315,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                     float discountPrice = 0f;
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Float.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta());
+                            discountPrice = Float.valueOf(decimalFormat.format(Float.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
                             break;
                         case 45:
                             discountPrice = (Float.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0f;
@@ -317,6 +334,11 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
 
     @Override
     public void onGetCustInfo(Float goldNum) {
+        leftCoinCountsTV.setText("" + goldNum);
+    }
+
+    @Override
+    public void onGetShopInfo(Float goldNum) {
         leftCoinCountsTV.setText("" + goldNum);
     }
 

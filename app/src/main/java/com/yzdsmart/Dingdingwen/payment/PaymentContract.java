@@ -13,11 +13,18 @@ import java.util.List;
 public interface PaymentContract {
     interface PaymentView extends BaseView<PaymentPresenter> {
         /**
-         * 获取金币数
+         * 获取用户信息
          *
          * @param goldNum
          */
         void onGetCustInfo(Float goldNum);
+
+        /**
+         * 商家获取商铺详情
+         *
+         * @param goldNum
+         */
+        void onGetShopInfo(Float goldNum);
 
         /**
          * 获取商铺打折列表
@@ -38,6 +45,14 @@ public interface PaymentContract {
          * @param authorization
          */
         void getCustInfo(String submitcode, String custCode, String authorization);
+
+        /**
+         * 商家获取商铺详情
+         *
+         * @param submitCode
+         * @param bazaCode
+         */
+        void getShopInfo(String actioncode, String submitCode, String bazaCode, String authorization);
 
         /**
          * 获取商铺打折列表
