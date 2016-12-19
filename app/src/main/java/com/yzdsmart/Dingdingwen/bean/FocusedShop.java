@@ -10,21 +10,10 @@ public class FocusedShop {
     private String Name;//商铺名称
     private String Pers;//联系人
     private String Tel;//联系电话
-    private Integer TodayGlodNum;//当日金币数
+    private Double TodayGlodNum;//当日金币数
     private String LogoImageUrl;//Logo图片链接
 
     public FocusedShop() {
-    }
-
-    public FocusedShop(String bazaCode, String addr, String coor, String name, String pers, String tel, Integer todayGlodNum, String logoImageUrl) {
-        BazaCode = bazaCode;
-        Addr = addr;
-        Coor = coor;
-        Name = name;
-        Pers = pers;
-        Tel = tel;
-        TodayGlodNum = todayGlodNum;
-        LogoImageUrl = logoImageUrl;
     }
 
     public String getBazaCode() {
@@ -75,11 +64,11 @@ public class FocusedShop {
         Tel = tel;
     }
 
-    public Integer getTodayGlodNum() {
+    public Double getTodayGlodNum() {
         return TodayGlodNum;
     }
 
-    public void setTodayGlodNum(Integer todayGlodNum) {
+    public void setTodayGlodNum(Double todayGlodNum) {
         TodayGlodNum = todayGlodNum;
     }
 

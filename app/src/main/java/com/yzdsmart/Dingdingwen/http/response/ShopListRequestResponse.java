@@ -7,18 +7,10 @@ public class ShopListRequestResponse {
     private String Code;//商铺编码
     private String Name;//商铺名称
     private String Addr;//商铺地址
-    private Integer ReleGold;//当日金币数
+    private Double ReleGold;//当日金币数
     private String Coor;//坐标
 
     public ShopListRequestResponse() {
-    }
-
-    public ShopListRequestResponse(String code, String name, String addr, Integer releGold, String coor) {
-        Code = code;
-        Name = name;
-        Addr = addr;
-        ReleGold = releGold;
-        Coor = coor;
     }
 
     public String getCode() {
@@ -45,11 +37,11 @@ public class ShopListRequestResponse {
         Addr = addr;
     }
 
-    public Integer getReleGold() {
+    public Double getReleGold() {
         return ReleGold;
     }
 
-    public void setReleGold(Integer releGold) {
+    public void setReleGold(Double releGold) {
         ReleGold = releGold;
     }
 

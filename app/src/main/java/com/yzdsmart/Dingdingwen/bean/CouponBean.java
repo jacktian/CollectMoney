@@ -15,57 +15,57 @@ public class CouponBean {
      */
 
     private String ExchangeId;//兑换内码
-    private int GoldType; //金币类型，默认一站地金币：0
+    private Integer GoldType; //金币类型，默认一站地金币：0
     private String GoldName;//金币名称
     private String LogoLink; //金币logo url
-    private int GoldNum;//兑换所需金币数
+    private Double GoldNum;//兑换所需金币数
     private String Show;//兑换商品说明
-
-    public void setExchangeId(String ExchangeId) {
-        this.ExchangeId = ExchangeId;
-    }
-
-    public void setGoldType(int GoldType) {
-        this.GoldType = GoldType;
-    }
-
-    public void setGoldName(String GoldName) {
-        this.GoldName = GoldName;
-    }
-
-    public void setLogoLink(String LogoLink) {
-        this.LogoLink = LogoLink;
-    }
-
-    public void setGoldNum(int GoldNum) {
-        this.GoldNum = GoldNum;
-    }
-
-    public void setShow(String Show) {
-        this.Show = Show;
-    }
 
     public String getExchangeId() {
         return ExchangeId;
     }
 
-    public int getGoldType() {
+    public void setExchangeId(String exchangeId) {
+        ExchangeId = exchangeId;
+    }
+
+    public Integer getGoldType() {
         return GoldType;
+    }
+
+    public void setGoldType(Integer goldType) {
+        GoldType = goldType;
     }
 
     public String getGoldName() {
         return GoldName;
     }
 
+    public void setGoldName(String goldName) {
+        GoldName = goldName;
+    }
+
     public String getLogoLink() {
         return LogoLink;
     }
 
-    public int getGoldNum() {
+    public void setLogoLink(String logoLink) {
+        LogoLink = logoLink;
+    }
+
+    public Double getGoldNum() {
         return GoldNum;
+    }
+
+    public void setGoldNum(Double goldNum) {
+        GoldNum = goldNum;
     }
 
     public String getShow() {
         return Show;
+    }
+
+    public void setShow(String show) {
+        Show = show;
     }
 }

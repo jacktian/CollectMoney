@@ -110,7 +110,7 @@ public class ShopScannerAdapter extends RecyclerView.Adapter<ShopScannerAdapter.
             scannerNameTV.setText(followerName);
         }
 
-        public void setCoinCounts(Integer coinCounts) {
+        public void setCoinCounts(Double coinCounts) {
             coinCountsTV.setText("" + coinCounts);
         }
 

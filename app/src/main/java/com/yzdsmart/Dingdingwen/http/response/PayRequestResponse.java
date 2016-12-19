@@ -14,7 +14,7 @@ public class PayRequestResponse {
      */
 
     private String ActionStatus;
-    private int ErrorCode;
+    private Integer ErrorCode;
     private String ErrorInfo;
     private Object Charge;
 
@@ -22,24 +22,24 @@ public class PayRequestResponse {
         return ActionStatus;
     }
 
-    public void setActionStatus(String ActionStatus) {
-        this.ActionStatus = ActionStatus;
+    public void setActionStatus(String actionStatus) {
+        ActionStatus = actionStatus;
     }
 
-    public int getErrorCode() {
+    public Integer getErrorCode() {
         return ErrorCode;
     }
 
-    public void setErrorCode(int ErrorCode) {
-        this.ErrorCode = ErrorCode;
+    public void setErrorCode(Integer errorCode) {
+        ErrorCode = errorCode;
     }
 
     public String getErrorInfo() {
         return ErrorInfo;
     }
 
-    public void setErrorInfo(String ErrorInfo) {
-        this.ErrorInfo = ErrorInfo;
+    public void setErrorInfo(String errorInfo) {
+        ErrorInfo = errorInfo;
     }
 
     public Object getCharge() {
@@ -49,5 +49,4 @@ public class PayRequestResponse {
     public void setCharge(Object charge) {
         Charge = charge;
     }
-
 }

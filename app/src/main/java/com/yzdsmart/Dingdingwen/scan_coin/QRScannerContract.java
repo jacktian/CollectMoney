@@ -13,7 +13,7 @@ public interface QRScannerContract {
          * @param msg    获取金币返回信息
          * @param counts 获得金币数
          */
-        void onGetCoins(boolean flag, String msg, Float counts, String coinLogo);
+        void onGetCoins(boolean flag, String msg, Double counts, String coinLogo);
     }
 
     interface QRScannerPresenter extends BasePresenter {

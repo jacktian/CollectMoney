@@ -19,9 +19,9 @@ public class PaymentParameter {
     private String SubmitCode;
     private String BazaCode;
     private String CustCode;
-    private float UseGold;
-    private float Discount;
-    private float Total;
+    private Double UseGold;
+    private Double Discount;
+    private Double Total;
     private PayParaBean PayPara;
 
     public String getSubmitCode() {
@@ -48,27 +48,27 @@ public class PaymentParameter {
         CustCode = custCode;
     }
 
-    public float getUseGold() {
+    public Double getUseGold() {
         return UseGold;
     }
 
-    public void setUseGold(float useGold) {
+    public void setUseGold(Double useGold) {
         UseGold = useGold;
     }
 
-    public float getDiscount() {
+    public Double getDiscount() {
         return Discount;
     }
 
-    public void setDiscount(float discount) {
+    public void setDiscount(Double discount) {
         Discount = discount;
     }
 
-    public float getTotal() {
+    public Double getTotal() {
         return Total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(Double total) {
         Total = total;
     }
 
@@ -90,18 +90,18 @@ public class PaymentParameter {
          * Client_IP : 127.0.0.1
          */
 
-        private float Amount;
+        private Double Amount;
         private String Channel;
         private String Currency;
         private String Subject;
         private String Body;
         private String Client_IP;
 
-        public float getAmount() {
+        public Double getAmount() {
             return Amount;
         }
 
-        public void setAmount(float amount) {
+        public void setAmount(Double amount) {
             Amount = amount;
         }
 

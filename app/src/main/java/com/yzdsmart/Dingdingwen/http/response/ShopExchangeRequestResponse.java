@@ -18,7 +18,7 @@ public class ShopExchangeRequestResponse {
      */
 
     private String ActionStatus;
-    private int ErrorCode;
+    private Integer ErrorCode;
     private String ErrorInfo;
     private List<CouponBean> lists;
 
@@ -30,11 +30,11 @@ public class ShopExchangeRequestResponse {
         ActionStatus = actionStatus;
     }
 
-    public int getErrorCode() {
+    public Integer getErrorCode() {
         return ErrorCode;
     }
 
-    public void setErrorCode(int errorCode) {
+    public void setErrorCode(Integer errorCode) {
         ErrorCode = errorCode;
     }
 

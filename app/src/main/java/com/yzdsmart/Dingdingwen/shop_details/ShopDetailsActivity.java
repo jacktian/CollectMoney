@@ -144,9 +144,9 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         });
 
         shopScannerList = new ArrayList<ShopScanner>();
-        shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "三毛", "http://y3.ifengimg.com/haina/2016_06/048f23be371c78c_w432_h520.jpg", "男", 888, "昨天", "54673646"));
-        shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "小黄", "http://p3.ifengimg.com/a/2016_39/7c512d79019b613_size46_w604_h595.jpg", "女", 123, "08:30", "8964648465"));
-        shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "丫头", "http://d.ifengimg.com/mw978_mh598/p2.ifengimg.com/a/2016_39/d476f58859c90a0_size491_w439_h661.png", "女", 546, "三天前", "2136658"));
+        shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "三毛", "http://y3.ifengimg.com/haina/2016_06/048f23be371c78c_w432_h520.jpg", "男", 888d, "昨天", "54673646"));
+        shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "小黄", "http://p3.ifengimg.com/a/2016_39/7c512d79019b613_size46_w604_h595.jpg", "女", 123d, "08:30", "8964648465"));
+        shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "丫头", "http://d.ifengimg.com/mw978_mh598/p2.ifengimg.com/a/2016_39/d476f58859c90a0_size491_w439_h661.png", "女", 546d, "三天前", "2136658"));
 
         bazaCode = getIntent().getExtras().getString("bazaCode");
 

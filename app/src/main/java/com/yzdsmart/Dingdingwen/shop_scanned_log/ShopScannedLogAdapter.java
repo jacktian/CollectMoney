@@ -129,7 +129,7 @@ public class ShopScannedLogAdapter extends UltimateViewAdapter<ShopScannedLogAda
             scannerNameTV.setText(followerName);
         }
 
-        public void setCoinCounts(Float coinCounts) {
+        public void setCoinCounts(Double coinCounts) {
             coinCountsTV.setText("" + coinCounts);
         }
 

@@ -144,7 +144,7 @@ public class CouponExchangePresenter implements CouponExchangeContract.CouponExc
     }
 
     @Override
-    public void exchangeCoupon(String submitCode, Integer exchangeId, String custCode, String authorization) {
+    public void exchangeCoupon(String submitCode, String exchangeId, String custCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
         mModel.exchangeCoupon(submitCode, exchangeId, custCode, authorization, new RequestListener() {
             @Override

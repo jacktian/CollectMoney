@@ -220,7 +220,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     }
 
     @Override
-    public void onGetCoins(boolean flag, String msg, Float counts, String coinLogo) {
+    public void onGetCoins(boolean flag, String msg, Double counts, String coinLogo) {
         if (!flag) {
             showSnackbar(msg);
             mQRCodeView.startSpot();
@@ -235,6 +235,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
             public void onClick(View v) {
                 if (null != getCoinDialog) {
                     getCoinDialog.dismiss();
+                    getCoinDialog = null;
                 }
                 closeActivity();
             }

@@ -17,14 +17,14 @@ public interface PaymentContract {
          *
          * @param goldNum
          */
-        void onGetCustInfo(Float goldNum);
+        void onGetCustInfo(Double goldNum);
 
         /**
          * 商家获取商铺详情
          *
          * @param goldNum
          */
-        void onGetShopInfo(Float goldNum);
+        void onGetShopInfo(Double goldNum);
 
         /**
          * 获取商铺打折列表

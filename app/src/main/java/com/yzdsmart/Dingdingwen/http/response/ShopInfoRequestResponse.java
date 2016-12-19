@@ -16,28 +16,12 @@ public class ShopInfoRequestResponse {
     private String Coor; //坐标
     private Boolean IsAtte;//当前用户是否关注
     private Integer AtteNum;//关注人次
-    private Integer TodayGlodNum;//今日金币数量
+    private Double TodayGlodNum;//今日金币数量
     private Integer VisiNum;//访问总人次
     private String LogoImageUrl;//Logo图片链接
     private List<String> ImageLists;
 
     public ShopInfoRequestResponse() {
-    }
-
-    public ShopInfoRequestResponse(String code, String name, String pers, String tel, String addr, String remark, String coor, Boolean isAtte, Integer atteNum, Integer todayGlodNum, Integer visiNum, String logoImageUrl, List<String> imageLists) {
-        Code = code;
-        Name = name;
-        Pers = pers;
-        Tel = tel;
-        Addr = addr;
-        Remark = remark;
-        Coor = coor;
-        IsAtte = isAtte;
-        AtteNum = atteNum;
-        TodayGlodNum = todayGlodNum;
-        VisiNum = visiNum;
-        LogoImageUrl = logoImageUrl;
-        ImageLists = imageLists;
     }
 
     public String getCode() {
@@ -112,11 +96,11 @@ public class ShopInfoRequestResponse {
         AtteNum = atteNum;
     }
 
-    public Integer getTodayGlodNum() {
+    public Double getTodayGlodNum() {
         return TodayGlodNum;
     }
 
-    public void setTodayGlodNum(Integer todayGlodNum) {
+    public void setTodayGlodNum(Double todayGlodNum) {
         TodayGlodNum = todayGlodNum;
     }
 

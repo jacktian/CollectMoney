@@ -17,14 +17,14 @@ public interface CouponExchangeContract {
          *
          * @param coinCounts
          */
-        void onGetCustInfo(Float coinCounts);
+        void onGetCustInfo(Double coinCounts);
 
         /**
          * 商家获取商铺详情
          *
          * @param coinCounts
          */
-        void onGetShopInfo(Float coinCounts);
+        void onGetShopInfo(Double coinCounts);
 
         /**
          * 指定商铺兑换列表
@@ -86,7 +86,7 @@ public interface CouponExchangeContract {
          * @param custCode
          * @param authorization
          */
-        void exchangeCoupon(String submitCode, Integer exchangeId, String custCode, String authorization);
+        void exchangeCoupon(String submitCode, String exchangeId, String custCode, String authorization);
 
         void unRegisterSubscribe();
     }

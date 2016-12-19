@@ -16,48 +16,48 @@ public class ShopWithdrawParameter {
 
     private String SubmitCode;
     private String BazaCode;
-    private int GoldNum;
-    private int GoldType;
+    private Double GoldNum;
+    private Integer GoldType;
     private PayInfoBean PayInfo;
-
-    public void setSubmitCode(String SubmitCode) {
-        this.SubmitCode = SubmitCode;
-    }
-
-    public void setBazaCode(String BazaCode) {
-        this.BazaCode = BazaCode;
-    }
-
-    public void setGoldNum(int GoldNum) {
-        this.GoldNum = GoldNum;
-    }
-
-    public void setGoldType(int GoldType) {
-        this.GoldType = GoldType;
-    }
-
-    public void setPayInfo(PayInfoBean PayInfo) {
-        this.PayInfo = PayInfo;
-    }
 
     public String getSubmitCode() {
         return SubmitCode;
+    }
+
+    public void setSubmitCode(String submitCode) {
+        SubmitCode = submitCode;
     }
 
     public String getBazaCode() {
         return BazaCode;
     }
 
-    public int getGoldNum() {
+    public void setBazaCode(String bazaCode) {
+        BazaCode = bazaCode;
+    }
+
+    public Double getGoldNum() {
         return GoldNum;
     }
 
-    public int getGoldType() {
+    public void setGoldNum(Double goldNum) {
+        GoldNum = goldNum;
+    }
+
+    public Integer getGoldType() {
         return GoldType;
+    }
+
+    public void setGoldType(Integer goldType) {
+        GoldType = goldType;
     }
 
     public PayInfoBean getPayInfo() {
         return PayInfo;
+    }
+
+    public void setPayInfo(PayInfoBean payInfo) {
+        PayInfo = payInfo;
     }
 
     public static class PayInfoBean {

@@ -131,7 +131,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
 
         ShareSDK.initSDK(this);
 
-        defaultCoinType = new CoinType(0, 0f, "普通金币", "");
+        defaultCoinType = new CoinType(0, 0d, "普通金币", "");
         coinTypesAdapter = new CoinTypesAdapter(this);
         coinTypesBS.setAdapter(coinTypesAdapter);
         coinTypesBS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -280,7 +280,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                         PersonalWithdrawParameter personalWithdrawParameter = new PersonalWithdrawParameter();
                         personalWithdrawParameter.setSubmitCode("");
                         personalWithdrawParameter.setCustCode(SharedPreferencesUtils.getString(this, "cust_code", ""));
-                        personalWithdrawParameter.setGoldNum(Integer.valueOf(withdrawGoldNumET.getText().toString()));
+                        personalWithdrawParameter.setGoldNum(Double.valueOf(withdrawGoldNumET.getText().toString()));
                         personalWithdrawParameter.setGoldType(selectedType.getGoldType());
                         PersonalWithdrawParameter.PayInfoBean personalPayInfoBean = new PersonalWithdrawParameter.PayInfoBean();
                         personalPayInfoBean.setBankCode(selectedBankCard.getBankCode());
@@ -293,7 +293,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                         ShopWithdrawParameter shopWithdrawParameter = new ShopWithdrawParameter();
                         shopWithdrawParameter.setSubmitCode("");
                         shopWithdrawParameter.setBazaCode(SharedPreferencesUtils.getString(this, "baza_code", ""));
-                        shopWithdrawParameter.setGoldNum(Integer.valueOf(withdrawGoldNumET.getText().toString()));
+                        shopWithdrawParameter.setGoldNum(Double.valueOf(withdrawGoldNumET.getText().toString()));
                         shopWithdrawParameter.setGoldType(selectedType.getGoldType());
                         ShopWithdrawParameter.PayInfoBean shopPayInfoBean = new ShopWithdrawParameter.PayInfoBean();
                         shopPayInfoBean.setBankCode(selectedBankCard.getBankCode());
@@ -342,12 +342,12 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     }
 
     @Override
-    public void onGetPersonalLeftCoins(Float counts) {
+    public void onGetPersonalLeftCoins(Double counts) {
         coinCountsTV.setText("" + counts);
     }
 
     @Override
-    public void onGetShopLeftCoins(Float counts) {
+    public void onGetShopLeftCoins(Double counts) {
         coinCountsTV.setText("" + counts);
     }
 

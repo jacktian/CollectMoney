@@ -15,18 +15,11 @@ public class ShopDiscount {
      */
 
     private Integer DisType;
-    private Float DiscReta;
-    private Float FullPrice;
-    private Float DiscPrice;
+    private Double DiscReta;
+    private Double FullPrice;
+    private Double DiscPrice;
 
     public ShopDiscount() {
-    }
-
-    public ShopDiscount(Integer disType, Float discReta, Float fullPrice, Float discPrice) {
-        DisType = disType;
-        DiscReta = discReta;
-        FullPrice = fullPrice;
-        DiscPrice = discPrice;
     }
 
     public Integer getDisType() {
@@ -37,27 +30,27 @@ public class ShopDiscount {
         DisType = disType;
     }
 
-    public Float getDiscReta() {
+    public Double getDiscReta() {
         return DiscReta;
     }
 
-    public void setDiscReta(Float discReta) {
+    public void setDiscReta(Double discReta) {
         DiscReta = discReta;
     }
 
-    public Float getFullPrice() {
+    public Double getFullPrice() {
         return FullPrice;
     }
 
-    public void setFullPrice(Float fullPrice) {
+    public void setFullPrice(Double fullPrice) {
         FullPrice = fullPrice;
     }
 
-    public Float getDiscPrice() {
+    public Double getDiscPrice() {
         return DiscPrice;
     }
 
-    public void setDiscPrice(Float discPrice) {
+    public void setDiscPrice(Double discPrice) {
         DiscPrice = discPrice;
     }
 }

@@ -1,5 +1,6 @@
 package com.yzdsmart.Dingdingwen.coupon_exchange;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,6 +17,7 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.CouponBean;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
+import com.yzdsmart.Dingdingwen.views.ExchangeCouponDialog;
 
 import java.util.List;
 
@@ -56,6 +58,8 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
 
     private LinearLayoutManager mLinearLayoutManager;
     private CouponExchangeAdapter couponExchangeAdapter;
+
+    private Dialog exchangeCouponDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,17 +166,41 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
         }
     }
 
-    public void exchangeCoupon(CouponBean couponBean) {
-        showSnackbar(couponBean.getGoldName() + "---" + couponBean.getShow());
+    public void exchangeCoupon(final CouponBean couponBean) {
+        exchangeCouponDialog = new ExchangeCouponDialog(this, couponBean);
+        exchangeCouponDialog.show();
+        exchangeCouponDialog.findViewById(R.id.dialog_confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null != exchangeCouponDialog) {
+                    exchangeCouponDialog.dismiss();
+                    exchangeCouponDialog = null;
+                }
+                if (!Utils.isNetUsable(CouponExchangeActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
+                mPresenter.exchangeCoupon("000000", couponBean.getExchangeId(), SharedPreferencesUtils.getString(CouponExchangeActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(CouponExchangeActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(CouponExchangeActivity.this, "ddw_access_token", ""));
+            }
+        });
+        exchangeCouponDialog.findViewById(R.id.dialog_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null != exchangeCouponDialog) {
+                    exchangeCouponDialog.dismiss();
+                    exchangeCouponDialog = null;
+                }
+            }
+        });
     }
 
     @Override
-    public void onGetCustInfo(Float coinCounts) {
+    public void onGetCustInfo(Double coinCounts) {
         coinCountsTV.setText("" + coinCounts);
     }
 
     @Override
-    public void onGetShopInfo(Float coinCounts) {
+    public void onGetShopInfo(Double coinCounts) {
         coinCountsTV.setText("" + coinCounts);
     }
 
@@ -183,7 +211,7 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
 
     @Override
     public void onExchangeCoupon() {
-
+        getCoinCounts();
     }
 
     @Override

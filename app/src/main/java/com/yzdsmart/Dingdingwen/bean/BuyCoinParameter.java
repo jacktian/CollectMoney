@@ -16,48 +16,48 @@ public class BuyCoinParameter {
 
     private String SubmitCode;
     private String BazaCode;
-    private int GoldNum;
-    private int GoldType;
+    private Double GoldNum;
+    private Integer GoldType;
     private PayParaBean PayPara;
-
-    public void setSubmitCode(String SubmitCode) {
-        this.SubmitCode = SubmitCode;
-    }
-
-    public void setBazaCode(String BazaCode) {
-        this.BazaCode = BazaCode;
-    }
-
-    public void setGoldNum(int GoldNum) {
-        this.GoldNum = GoldNum;
-    }
-
-    public void setGoldType(int GoldType) {
-        this.GoldType = GoldType;
-    }
-
-    public void setPayPara(PayParaBean PayPara) {
-        this.PayPara = PayPara;
-    }
 
     public String getSubmitCode() {
         return SubmitCode;
+    }
+
+    public void setSubmitCode(String submitCode) {
+        SubmitCode = submitCode;
     }
 
     public String getBazaCode() {
         return BazaCode;
     }
 
-    public int getGoldNum() {
+    public void setBazaCode(String bazaCode) {
+        BazaCode = bazaCode;
+    }
+
+    public Double getGoldNum() {
         return GoldNum;
     }
 
-    public int getGoldType() {
+    public void setGoldNum(Double goldNum) {
+        GoldNum = goldNum;
+    }
+
+    public Integer getGoldType() {
         return GoldType;
+    }
+
+    public void setGoldType(Integer goldType) {
+        GoldType = goldType;
     }
 
     public PayParaBean getPayPara() {
         return PayPara;
+    }
+
+    public void setPayPara(PayParaBean payPara) {
+        PayPara = payPara;
     }
 
     public static class PayParaBean {
@@ -70,59 +70,59 @@ public class BuyCoinParameter {
          * Client_IP : 127.0.0.1
          */
 
-        private double Amount;
+        private Double Amount;
         private String Channel;
         private String Currency;
         private String Subject;
         private String Body;
         private String Client_IP;
 
-        public void setAmount(double Amount) {
-            this.Amount = Amount;
-        }
-
-        public void setChannel(String Channel) {
-            this.Channel = Channel;
-        }
-
-        public void setCurrency(String Currency) {
-            this.Currency = Currency;
-        }
-
-        public void setSubject(String Subject) {
-            this.Subject = Subject;
-        }
-
-        public void setBody(String Body) {
-            this.Body = Body;
-        }
-
-        public void setClient_IP(String Client_IP) {
-            this.Client_IP = Client_IP;
-        }
-
-        public double getAmount() {
+        public Double getAmount() {
             return Amount;
+        }
+
+        public void setAmount(Double amount) {
+            Amount = amount;
         }
 
         public String getChannel() {
             return Channel;
         }
 
+        public void setChannel(String channel) {
+            Channel = channel;
+        }
+
         public String getCurrency() {
             return Currency;
+        }
+
+        public void setCurrency(String currency) {
+            Currency = currency;
         }
 
         public String getSubject() {
             return Subject;
         }
 
+        public void setSubject(String subject) {
+            Subject = subject;
+        }
+
         public String getBody() {
             return Body;
         }
 
+        public void setBody(String body) {
+            Body = body;
+        }
+
         public String getClient_IP() {
             return Client_IP;
+        }
+
+        public void setClient_IP(String client_IP) {
+            Client_IP = client_IP;
         }
     }
 }

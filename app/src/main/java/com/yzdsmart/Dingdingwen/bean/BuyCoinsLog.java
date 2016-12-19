@@ -5,18 +5,11 @@ package com.yzdsmart.Dingdingwen.bean;
  */
 public class BuyCoinsLog {
     private String BazaCode;//商铺编码（加密）
-    private Float TotalGold;//购买的金币数
-    private Float OverGold;//剩余未使用金币
+    private Double TotalGold;//购买的金币数
+    private Double OverGold;//剩余未使用金币
     private String CreateTime;//创建日期
 
     public BuyCoinsLog() {
-    }
-
-    public BuyCoinsLog(String bazaCode, Float totalGold, Float overGold, String createTime) {
-        BazaCode = bazaCode;
-        TotalGold = totalGold;
-        OverGold = overGold;
-        CreateTime = createTime;
     }
 
     public String getBazaCode() {
@@ -27,19 +20,19 @@ public class BuyCoinsLog {
         BazaCode = bazaCode;
     }
 
-    public Float getTotalGold() {
+    public Double getTotalGold() {
         return TotalGold;
     }
 
-    public void setTotalGold(Float totalGold) {
+    public void setTotalGold(Double totalGold) {
         TotalGold = totalGold;
     }
 
-    public Float getOverGold() {
+    public Double getOverGold() {
         return OverGold;
     }
 
-    public void setOverGold(Float overGold) {
+    public void setOverGold(Double overGold) {
         OverGold = overGold;
     }
 

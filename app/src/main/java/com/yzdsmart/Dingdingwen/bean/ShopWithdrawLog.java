@@ -17,67 +17,67 @@ public class ShopWithdrawLog {
      */
 
     private String BazaCode;
-    private float Gold;
-    private double Cash;
+    private Double Gold;
+    private Double Cash;
     private PayInfoBean PayInfo;
     private String TimeStr;
     private String PayStatus;
     private String CreateTime;
 
-    public void setBazaCode(String BazaCode) {
-        this.BazaCode = BazaCode;
-    }
-
-    public void setGold(int Gold) {
-        this.Gold = Gold;
-    }
-
-    public void setCash(double Cash) {
-        this.Cash = Cash;
-    }
-
-    public void setPayInfo(PayInfoBean PayInfo) {
-        this.PayInfo = PayInfo;
-    }
-
-    public void setTimeStr(String TimeStr) {
-        this.TimeStr = TimeStr;
-    }
-
-    public void setPayStatus(String PayStatus) {
-        this.PayStatus = PayStatus;
-    }
-
-    public void setCreateTime(String CreateTime) {
-        this.CreateTime = CreateTime;
-    }
-
     public String getBazaCode() {
         return BazaCode;
     }
 
-    public float getGold() {
+    public void setBazaCode(String bazaCode) {
+        BazaCode = bazaCode;
+    }
+
+    public Double getGold() {
         return Gold;
     }
 
-    public double getCash() {
+    public void setGold(Double gold) {
+        Gold = gold;
+    }
+
+    public Double getCash() {
         return Cash;
+    }
+
+    public void setCash(Double cash) {
+        Cash = cash;
     }
 
     public PayInfoBean getPayInfo() {
         return PayInfo;
     }
 
+    public void setPayInfo(PayInfoBean payInfo) {
+        PayInfo = payInfo;
+    }
+
     public String getTimeStr() {
         return TimeStr;
+    }
+
+    public void setTimeStr(String timeStr) {
+        TimeStr = timeStr;
     }
 
     public String getPayStatus() {
         return PayStatus;
     }
 
+    public void setPayStatus(String payStatus) {
+        PayStatus = payStatus;
+    }
+
     public String getCreateTime() {
         return CreateTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        CreateTime = createTime;
     }
 
     public static class PayInfoBean {

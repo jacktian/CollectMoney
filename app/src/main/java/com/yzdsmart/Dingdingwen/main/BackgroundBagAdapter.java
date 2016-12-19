@@ -123,7 +123,7 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
             Glide.with(context).load((null == logoUrl || "".equals(logoUrl)) ? R.mipmap.yzd_coin : logoUrl).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.ic_holder_light)).into(coinLogoIV);
         }
 
-        public void setCoinCounts(Float coinCounts) {
+        public void setCoinCounts(Double coinCounts) {
             coinCountsTV.setText(coinCounts + "个");
         }
     }

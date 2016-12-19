@@ -8,14 +8,14 @@ public class ShopScanner {
     private String CustPwdName;//用户隐藏的部分姓名
     private String ImageUrl;//用户的头像Url
     private String CustSex;//用户性别
-    private Integer GoldNum;//获取的金币
+    private Double GoldNum;//获取的金币
     private String TimeStr;//时间间隔
     private String TCAccount;//用户云通讯用户
 
     public ShopScanner() {
     }
 
-    public ShopScanner(String custCode, String custPwdName, String imageUrl, String custSex, Integer goldNum, String timeStr, String TCAccount) {
+    public ShopScanner(String custCode, String custPwdName, String imageUrl, String custSex, Double goldNum, String timeStr, String TCAccount) {
         CustCode = custCode;
         CustPwdName = custPwdName;
         ImageUrl = imageUrl;
@@ -57,11 +57,11 @@ public class ShopScanner {
         CustSex = custSex;
     }
 
-    public Integer getGoldNum() {
+    public Double getGoldNum() {
         return GoldNum;
     }
 
-    public void setGoldNum(Integer goldNum) {
+    public void setGoldNum(Double goldNum) {
         GoldNum = goldNum;
     }
 

@@ -86,7 +86,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
 
     private DecimalFormat decimalFormat = new DecimalFormat("#0.00");
 
-    private float discountPrice = 0f;
+    private Double discountPrice = 0d;
 
     /**
      * 银联支付渠道
@@ -135,21 +135,21 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 if (payAmountET.getText().toString().trim().length() > 0) {
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Float.valueOf(decimalFormat.format(Float.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                            discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
                             break;
                         case 45:
-                            discountPrice = (Float.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0f;
+                            discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0f;
                             break;
                     }
                     if (coinCountsET.getText().toString().trim().length() > 0) {
-                        if ((Float.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Float.valueOf(coinCountsET.getText().toString().trim())) < 0) {
-                            coinCountsET.setText((Float.valueOf(payAmountET.getText().toString().trim()) - discountPrice) + "");
+                        if ((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(coinCountsET.getText().toString().trim())) < 0) {
+                            coinCountsET.setText((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice) + "");
                             actualAmountTV.setText("0");
                         } else {
-                            actualAmountTV.setText((Float.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Float.valueOf(coinCountsET.getText().toString().trim())) + "");
+                            actualAmountTV.setText((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(coinCountsET.getText().toString().trim())) + "");
                         }
                     } else {
-                        actualAmountTV.setText((Float.valueOf(payAmountET.getText().toString().trim()) - discountPrice) + "");
+                        actualAmountTV.setText((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice) + "");
                     }
                 }
             }
@@ -217,7 +217,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                     return;
                 }
                 PaymentParameter.PayParaBean payInfoBean = new PaymentParameter.PayParaBean();
-                payInfoBean.setAmount(Float.valueOf(actualAmountTV.getText().toString().trim()));
+                payInfoBean.setAmount(Double.valueOf(actualAmountTV.getText().toString().trim()));
                 payInfoBean.setCurrency("cny");
                 payInfoBean.setSubject("叮叮蚊消费支付");
                 payInfoBean.setBody("消费支付");
@@ -237,9 +237,9 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 paymentParameter.setSubmitCode("0000000");
                 paymentParameter.setBazaCode(bazaCode);
                 paymentParameter.setCustCode(SharedPreferencesUtils.getString(PaymentActivity.this, "cust_code", ""));
-                paymentParameter.setUseGold(coinCountsET.getText().toString().trim().length() > 0 ? Float.valueOf(coinCountsET.getText().toString().trim()) : 0f);
+                paymentParameter.setUseGold(coinCountsET.getText().toString().trim().length() > 0 ? Double.valueOf(coinCountsET.getText().toString().trim()) : 0d);
                 paymentParameter.setDiscount(discountPrice);
-                paymentParameter.setTotal(Float.valueOf(payAmountET.getText().toString().trim()));
+                paymentParameter.setTotal(Double.valueOf(payAmountET.getText().toString().trim()));
                 paymentParameter.setPayPara(payInfoBean);
                 mPresenter.submitPayment(Constants.PERSONAL_PAYMENT_ACTION_CODE, gson.toJson(paymentParameter), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
@@ -253,28 +253,28 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             confirmPayBtn.setEnabled(true);
             if (null == shopDiscount) {
                 if (coinCountsET.getText().toString().trim().length() > 0) {
-                    actualAmountTV.setText((Float.valueOf(s.toString().trim()) - Float.valueOf(coinCountsET.getText().toString().trim())) + "");
+                    actualAmountTV.setText((Double.valueOf(s.toString().trim()) - Double.valueOf(coinCountsET.getText().toString().trim())) + "");
                 } else {
                     actualAmountTV.setText(s.toString());
                 }
             } else {
                 switch (shopDiscount.getDisType()) {
                     case 23:
-                        discountPrice = Float.valueOf(decimalFormat.format(Float.valueOf(s.toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                        discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(s.toString().trim()) * (1 - shopDiscount.getDiscReta())));
                         break;
                     case 45:
-                        discountPrice = (Float.valueOf(s.toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0f;
+                        discountPrice = (Double.valueOf(s.toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0d;
                         break;
                 }
                 if (coinCountsET.getText().toString().trim().length() > 0) {
-                    if ((Float.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Float.valueOf(coinCountsET.getText().toString().trim())) < 0) {
-                        coinCountsET.setText((Float.valueOf(s.toString().trim()) - discountPrice) + "");
+                    if ((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(coinCountsET.getText().toString().trim())) < 0) {
+                        coinCountsET.setText((Double.valueOf(s.toString().trim()) - discountPrice) + "");
                         actualAmountTV.setText("0");
                     } else {
-                        actualAmountTV.setText((Float.valueOf(s.toString().trim()) - discountPrice - Float.valueOf(coinCountsET.getText().toString().trim())) + "");
+                        actualAmountTV.setText((Double.valueOf(s.toString().trim()) - discountPrice - Double.valueOf(coinCountsET.getText().toString().trim())) + "");
                     }
                 } else {
-                    actualAmountTV.setText((Float.valueOf(s.toString().trim()) - discountPrice) + "");
+                    actualAmountTV.setText((Double.valueOf(s.toString().trim()) - discountPrice) + "");
                 }
             }
         } else {
@@ -287,41 +287,40 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     void onCoinCountChanged(CharSequence s, int i, int j, int k) {
         if (payAmountET.getText().toString().trim().length() > 0) {
             if (s.toString().trim().length() > 0) {
-                if (Float.valueOf(s.toString().trim()) > Float.valueOf(leftCoinCountsTV.getText().toString().trim())) {
+                if (Double.valueOf(s.toString().trim()) > Double.valueOf(leftCoinCountsTV.getText().toString().trim())) {
                     coinCountsET.setText(leftCoinCountsTV.getText().toString().trim());
                 }
                 if (null == shopDiscount) {
-                    actualAmountTV.setText((Float.valueOf(payAmountET.getText().toString().trim()) - Float.valueOf(s.toString().trim())) + "");
+                    actualAmountTV.setText((Double.valueOf(payAmountET.getText().toString().trim()) - Double.valueOf(s.toString().trim())) + "");
                 } else {
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Float.valueOf(decimalFormat.format(Float.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                            discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
                             break;
                         case 45:
-                            discountPrice = (Float.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0f;
+                            discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0d;
                             break;
                     }
-                    if ((Float.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Float.valueOf(s.toString().trim())) < 0) {
-                        coinCountsET.setText((Float.valueOf(payAmountET.getText().toString().trim()) - discountPrice) + "");
+                    if ((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(s.toString().trim())) < 0) {
+                        coinCountsET.setText((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice) + "");
                         actualAmountTV.setText("0");
                     } else {
-                        actualAmountTV.setText((Float.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Float.valueOf(s.toString().trim())) + "");
+                        actualAmountTV.setText((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(s.toString().trim())) + "");
                     }
                 }
             } else {
                 if (null == shopDiscount) {
                     actualAmountTV.setText(payAmountET.getText().toString());
                 } else {
-                    float discountPrice = 0f;
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Float.valueOf(decimalFormat.format(Float.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                            discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
                             break;
                         case 45:
-                            discountPrice = (Float.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0f;
+                            discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0d;
                             break;
                     }
-                    actualAmountTV.setText((Float.valueOf(payAmountET.getText().toString()) - discountPrice) + "");
+                    actualAmountTV.setText((Double.valueOf(payAmountET.getText().toString()) - discountPrice) + "");
                 }
             }
         }
@@ -333,12 +332,12 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     }
 
     @Override
-    public void onGetCustInfo(Float goldNum) {
+    public void onGetCustInfo(Double goldNum) {
         leftCoinCountsTV.setText("" + goldNum);
     }
 
     @Override
-    public void onGetShopInfo(Float goldNum) {
+    public void onGetShopInfo(Double goldNum) {
         leftCoinCountsTV.setText("" + goldNum);
     }
 

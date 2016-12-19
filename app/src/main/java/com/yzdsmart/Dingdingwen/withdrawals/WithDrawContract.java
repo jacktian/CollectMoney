@@ -26,14 +26,14 @@ public interface WithDrawContract {
          *
          * @param counts
          */
-        void onGetPersonalLeftCoins(Float counts);
+        void onGetPersonalLeftCoins(Double counts);
 
         /**
          * 获取店铺剩余金币数
          *
          * @param counts
          */
-        void onGetShopLeftCoins(Float counts);
+        void onGetShopLeftCoins(Double counts);
 
         /**
          * 商铺提现

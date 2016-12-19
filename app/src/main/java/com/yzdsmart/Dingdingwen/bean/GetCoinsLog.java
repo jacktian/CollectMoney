@@ -7,20 +7,11 @@ public class GetCoinsLog {
     private String BazaCode;//获取金币的商铺编码（加密）
     private String BazaName;//获取商铺名称
     private String LogoImageUrl;//Logo图片链接
-    private Float GetGold;//获取金币数
+    private Double GetGold;//获取金币数
     private String TimeStr;//时间间隔
     private String CreateTime;//获取金币的时间
 
     public GetCoinsLog() {
-    }
-
-    public GetCoinsLog(String bazaCode, String bazaName, String logoImageUrl, Float getGold, String timeStr, String createTime) {
-        BazaCode = bazaCode;
-        BazaName = bazaName;
-        LogoImageUrl = logoImageUrl;
-        GetGold = getGold;
-        TimeStr = timeStr;
-        CreateTime = createTime;
     }
 
     public String getBazaCode() {
@@ -47,11 +38,11 @@ public class GetCoinsLog {
         LogoImageUrl = logoImageUrl;
     }
 
-    public Float getGetGold() {
+    public Double getGetGold() {
         return GetGold;
     }
 
-    public void setGetGold(Float getGold) {
+    public void setGetGold(Double getGold) {
         GetGold = getGold;
     }
 

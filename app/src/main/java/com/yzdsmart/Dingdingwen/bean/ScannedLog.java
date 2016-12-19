@@ -10,22 +10,11 @@ public class ScannedLog {
     private String ImageUrl;//头像路径
     private String CSex;//用户性别
     private String CAge;//用户年龄
-    private Float Gold;//获取金币
+    private Double Gold;//获取金币
     private String TimeStr;//时间间隔
     private String CreateTime;//扫码日期
 
     public ScannedLog() {
-    }
-
-    public ScannedLog(String custCode, String CNickName, String imageUrl, String CSex, String CAge, Float gold, String timeStr, String createTime) {
-        CustCode = custCode;
-        this.CNickName = CNickName;
-        ImageUrl = imageUrl;
-        this.CSex = CSex;
-        this.CAge = CAge;
-        Gold = gold;
-        TimeStr = timeStr;
-        CreateTime = createTime;
     }
 
     public String getCustCode() {
@@ -68,11 +57,11 @@ public class ScannedLog {
         this.CAge = CAge;
     }
 
-    public Float getGold() {
+    public Double getGold() {
         return Gold;
     }
 
-    public void setGold(Float gold) {
+    public void setGold(Double gold) {
         Gold = gold;
     }
 

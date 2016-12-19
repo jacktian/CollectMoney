@@ -5,22 +5,13 @@ package com.yzdsmart.Dingdingwen.bean;
  */
 public class PublishTaskLog {
     private String BazaCode;//商铺编码（加密）
-    private Float TotalGold;//发布的总金币数
-    private Float OverGold;//剩余金币
+    private Double TotalGold;//发布的总金币数
+    private Double OverGold;//剩余金币
     private String BeginTime;//开始日期
     private String EndTime;//结束日期
     private String CreateTime;//创建日期
 
     public PublishTaskLog() {
-    }
-
-    public PublishTaskLog(String bazaCode, Float totalGold, Float overGold, String beginTime, String endTime, String createTime) {
-        BazaCode = bazaCode;
-        TotalGold = totalGold;
-        OverGold = overGold;
-        BeginTime = beginTime;
-        EndTime = endTime;
-        CreateTime = createTime;
     }
 
     public String getBazaCode() {
@@ -31,19 +22,19 @@ public class PublishTaskLog {
         BazaCode = bazaCode;
     }
 
-    public Float getTotalGold() {
+    public Double getTotalGold() {
         return TotalGold;
     }
 
-    public void setTotalGold(Float totalGold) {
+    public void setTotalGold(Double totalGold) {
         TotalGold = totalGold;
     }
 
-    public Float getOverGold() {
+    public Double getOverGold() {
         return OverGold;
     }
 
-    public void setOverGold(Float overGold) {
+    public void setOverGold(Double overGold) {
         OverGold = overGold;
     }
 

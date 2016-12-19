@@ -146,7 +146,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
         MobclickAgent.openActivityDurationTrack(false);
 
-        defaultCoinType = new CoinType(0, 0f, "普通金币", "");
+        defaultCoinType = new CoinType(0, 0d, "普通金币", "");
         coinTypesAdapter = new CoinTypesAdapter(this);
         coinTypesBS.setAdapter(coinTypesAdapter);
         coinTypesBS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -322,7 +322,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 BuyCoinParameter buyCoinParameter = new BuyCoinParameter();
                 buyCoinParameter.setSubmitCode("000000");
                 buyCoinParameter.setBazaCode(SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""));
-                buyCoinParameter.setGoldNum(Integer.valueOf(coinCountsET.getText().toString()));
+                buyCoinParameter.setGoldNum(Double.valueOf(coinCountsET.getText().toString()));
                 buyCoinParameter.setGoldType(selectedType.getGoldType());
                 buyCoinParameter.setPayPara(payPara);
 //                showMoveDialog(this, Integer.valueOf(coinCountsET.getText().toString()));

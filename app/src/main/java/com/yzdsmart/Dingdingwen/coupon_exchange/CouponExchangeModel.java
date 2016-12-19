@@ -115,7 +115,7 @@ public class CouponExchangeModel {
                 .subscribe(getCoinExchangeSubscriber);
     }
 
-    void exchangeCoupon(String submitCode, Integer exchangeId, String custCode, String authorization, final RequestListener listener) {
+    void exchangeCoupon(String submitCode, String exchangeId, String custCode, String authorization, final RequestListener listener) {
         exchangeCouponSubscriber = new Subscriber<RequestResponse>() {
             @Override
             public void onCompleted() {

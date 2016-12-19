@@ -117,7 +117,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
             }
         };
 
-        defaultCoinType = new CoinType(0, 0f, "普通金币", "");
+        defaultCoinType = new CoinType(0, 0d, "普通金币", "");
         coinTypesAdapter = new CoinTypesAdapter(this);
         coinTypesBS.setAdapter(coinTypesAdapter);
         coinTypesBS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -291,7 +291,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     }
 
     @Override
-    public void onGetShopLeftCoins(Float counts) {
+    public void onGetShopLeftCoins(Double counts) {
         leftCoinsTV.setText(" " + counts);
     }
 

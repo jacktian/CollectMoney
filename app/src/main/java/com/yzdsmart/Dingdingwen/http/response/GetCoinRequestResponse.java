@@ -4,7 +4,7 @@ package com.yzdsmart.Dingdingwen.http.response;
  * Created by YZD on 2016/9/3.
  */
 public class GetCoinRequestResponse {
-    private Float GoldNum;//本次获得金币
+    private Double GoldNum;//本次获得金币
     private String GoldLogoUrl;//金币图片
     private String ActionStatus;
     private Integer ErrorCode;
@@ -13,19 +13,11 @@ public class GetCoinRequestResponse {
     public GetCoinRequestResponse() {
     }
 
-    public GetCoinRequestResponse(Float goldNum, String goldLogoUrl, String actionStatus, Integer errorCode, String errorInfo) {
-        GoldNum = goldNum;
-        GoldLogoUrl = goldLogoUrl;
-        ActionStatus = actionStatus;
-        ErrorCode = errorCode;
-        ErrorInfo = errorInfo;
-    }
-
-    public Float getGoldNum() {
+    public Double getGoldNum() {
         return GoldNum;
     }
 
-    public void setGoldNum(Float goldNum) {
+    public void setGoldNum(Double goldNum) {
         GoldNum = goldNum;
     }
 

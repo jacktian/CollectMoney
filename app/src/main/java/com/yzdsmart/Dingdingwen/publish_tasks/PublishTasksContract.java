@@ -16,7 +16,7 @@ public interface PublishTasksContract {
          *
          * @param counts
          */
-        void onGetShopLeftCoins(Float counts);
+        void onGetShopLeftCoins(Double counts);
 
         /**
          * 商户创建金币任务

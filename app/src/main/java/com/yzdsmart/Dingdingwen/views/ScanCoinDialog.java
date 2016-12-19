@@ -14,11 +14,11 @@ import com.yzdsmart.Dingdingwen.R;
 public class ScanCoinDialog extends Dialog {
     private Context context;
     private String coinLogo;
-    private Float coinCounts;
+    private Double coinCounts;
     private ImageView coinTypeIV;
     private TextView coinCountsTV;
 
-    public ScanCoinDialog(Context context, String coinLogo, Float coinCounts) {
+    public ScanCoinDialog(Context context, String coinLogo, Double coinCounts) {
         super(context, R.style.custom_dialog);
         this.context = context;
         this.coinLogo = coinLogo;

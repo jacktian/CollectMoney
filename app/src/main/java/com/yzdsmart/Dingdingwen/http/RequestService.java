@@ -599,7 +599,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.SHOP_EXCHANGE)
-    Observable<RequestResponse> exchangeCoupon(@Field("SubmitCode") String submitCode, @Field("ExchangeId") Integer exchangeId, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
+    Observable<RequestResponse> exchangeCoupon(@Field("SubmitCode") String submitCode, @Field("ExchangeId") String exchangeId, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
 
     /**
      * 商家获取商铺详情
