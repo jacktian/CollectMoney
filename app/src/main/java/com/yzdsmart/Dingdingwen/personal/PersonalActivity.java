@@ -45,6 +45,7 @@ import com.yzdsmart.Dingdingwen.withdrawals.WithDrawActivity;
 import com.yzdsmart.Dingdingwen.withdrawals_log.WithDrawLogActivity;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,6 +154,8 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
 
     private static final String TAG = "PersonalActivity";
 
+    private DecimalFormat decimalFormat;
+
     private PersonalContract.PersonalPresenter mPresenter;
 
     private List<View> toggleViews;
@@ -178,6 +181,8 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        decimalFormat = new DecimalFormat("#0.00");
+
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText(getResources().getString(R.string.personal_find));
@@ -187,7 +192,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         MobclickAgent.openActivityDurationTrack(false);
 
         localImages = new ArrayList<Integer>();//默认banner图片
-        localImages.add(R.mipmap.shop_banner);
+        localImages.add(R.mipmap.shop_default_banner);
         galleyImages = new ArrayList<String>();
         galleyInfoList = new ArrayList<GalleyInfo>();
 
@@ -390,9 +395,9 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
             name = requestResponse.getC_UserCode();
         }
         userNameTV.setText(name);
-        userAccountCoinTV.setText(" " + requestResponse.getGoldNum());
+        userAccountCoinTV.setText(decimalFormat.format(requestResponse.getGoldNum()));
         changeMoneyTimesTV.setText("" + requestResponse.getOperNum());
-        coinCountsTV.setText("" + requestResponse.getGoldNum());
+        coinCountsTV.setText(decimalFormat.format(requestResponse.getGoldNum()));
         getFriendCountsTV.setText("" + requestResponse.getFriendNum());
         Glide.with(this).load(requestResponse.getImageUrl() == null ? "" : requestResponse.getImageUrl()).asBitmap().placeholder(getResources().getDrawable(R.mipmap.ic_holder_light)).error(getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
     }
@@ -402,7 +407,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         shopNameTV.setText(shopDetails.getName());
         shopAddressTV.setText(shopDetails.getAddr());
         focusPersonCountsTV.setText("" + shopDetails.getAtteNum());
-        leftTotalCoinCountsTV.setText("" + shopDetails.getTotalGlodNum());
+        leftTotalCoinCountsTV.setText(decimalFormat.format(shopDetails.getTotalGlodNum()));
         visitPersonCountsTV.setText("" + shopDetails.getVisiNum());
         Glide.with(this).load(shopDetails.getLogoImageUrl()).asBitmap().placeholder(getResources().getDrawable(R.mipmap.ic_holder_light)).error(getResources().getDrawable(R.mipmap.ic_holder_light)).into(shopAvaterIV);
     }
@@ -419,7 +424,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                     return new ShopImageBannerHolderView();
                 }
             }, localImages);
-            shopImagesBanner.startTurning(3000);
+            shopImagesBanner.stopTurning();
         } else {
             for (int i = 0; i < galleyInfos.size(); i++) {
                 galleyImages.add(galleyInfos.get(i).getImageFileUrl());
@@ -459,7 +464,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
 
         @Override
         public void UpdateUI(Context context, int position, String data) {
-            Glide.with(context).load(data).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.recommend_pre_load)).error(context.getResources().getDrawable(R.mipmap.shop_banner)).into(imageView);
+            Glide.with(context).load(data).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.recommend_pre_load)).error(context.getResources().getDrawable(R.mipmap.shop_default_banner)).into(imageView);
         }
     }
 

@@ -84,6 +84,8 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
 
     private static final String TAG = "WithDrawActivity";
 
+    private DecimalFormat decimalFormat;
+
     private Gson gson = new Gson();
 
     private Float GOLD_FORMAT_RMB_RATIO = 0.0f;
@@ -105,6 +107,8 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        decimalFormat = new DecimalFormat("#0.00");
 
         coinTypeList = new ArrayList<CoinType>();
 
@@ -338,17 +342,17 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
 
     @Override
     public void onGetCustInfo(CustInfoRequestResponse response) {
-        coinCountsTV.setText("" + response.getGoldNum());
+        coinCountsTV.setText(decimalFormat.format(response.getGoldNum()));
     }
 
     @Override
     public void onGetPersonalLeftCoins(Double counts) {
-        coinCountsTV.setText("" + counts);
+        coinCountsTV.setText(decimalFormat.format(counts));
     }
 
     @Override
     public void onGetShopLeftCoins(Double counts) {
-        coinCountsTV.setText("" + counts);
+        coinCountsTV.setText(decimalFormat.format(counts));
     }
 
     @Override

@@ -20,6 +20,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
     private List<PersonalWithdrawLog> personalWithdrawLogs;
     private List<ShopWithdrawLog> shopWithdrawLogs;
     private DateTimeFormatter dtf;
+    private DecimalFormat decimalFormat;
 
     public WithDrawLogAdapter(Integer userType, Context context) {
         this.userType = userType;
@@ -43,6 +45,7 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
         personalWithdrawLogs = new ArrayList<PersonalWithdrawLog>();
         shopWithdrawLogs = new ArrayList<ShopWithdrawLog>();
         dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        decimalFormat = new DecimalFormat("#0.00");
     }
 
     /**
@@ -129,15 +132,15 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
         switch (userType) {
             case 0:
                 PersonalWithdrawLog personalLog = personalWithdrawLogs.get(position);
-                holder.setCoinCounts("-" + personalLog.getGold());
-                holder.setRmbCounts("+" + personalLog.getCash());
+                holder.setCoinCounts("-" + decimalFormat.format(personalLog.getGold()));
+                holder.setRmbCounts("+" + decimalFormat.format(Double.valueOf(personalLog.getCash())));
                 dateTime = dtf.parseDateTime(personalLog.getCreateTime());
                 payStatus = personalLog.getPayStatus();
                 break;
             case 1:
                 ShopWithdrawLog shopLog = shopWithdrawLogs.get(position);
-                holder.setCoinCounts("-" + shopLog.getGold());
-                holder.setRmbCounts("+" + shopLog.getCash());
+                holder.setCoinCounts("-" + decimalFormat.format(shopLog.getGold()));
+                holder.setRmbCounts("+" + decimalFormat.format(Double.valueOf(shopLog.getCash())));
                 dateTime = dtf.parseDateTime(shopLog.getCreateTime());
                 payStatus = shopLog.getPayStatus();
                 break;

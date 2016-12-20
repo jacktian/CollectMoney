@@ -16,6 +16,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="2dp"
         android:gravity="center"
+        android:maxLength="5"
         android:text=""
         android:textColor="@android:color/white"
         android:textSize="@dimen/font_xx_small" />

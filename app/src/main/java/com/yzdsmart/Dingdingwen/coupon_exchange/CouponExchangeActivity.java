@@ -55,7 +55,7 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
     private String bazaCode;
     private Integer goldType;
 
-    private DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");//格式化设置
+    private DecimalFormat decimalFormat;
 
     private CouponExchangeContract.CouponExchangePresenter mPresenter;
 
@@ -67,6 +67,8 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        decimalFormat = new DecimalFormat("#0.00");//格式化设置
 
         Bundle bundle = getIntent().getExtras();
 

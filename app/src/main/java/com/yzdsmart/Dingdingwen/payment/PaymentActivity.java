@@ -84,7 +84,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
 
     private Gson gson = new Gson();
 
-    private DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+    private DecimalFormat decimalFormat;
 
     private Double discountPrice = 0d;
 
@@ -111,9 +111,11 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        bazaCode = getIntent().getExtras().getString("bazaCode");
+        decimalFormat = new DecimalFormat("#0.00");
 
         shopDiscountList = new ArrayList<ShopDiscount>();
+
+        bazaCode = getIntent().getExtras().getString("bazaCode");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
@@ -143,13 +145,13 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                     }
                     if (coinCountsET.getText().toString().trim().length() > 0) {
                         if ((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(coinCountsET.getText().toString().trim())) < 0) {
-                            coinCountsET.setText((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice) + "");
+                            coinCountsET.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice));
                             actualAmountTV.setText("0");
                         } else {
-                            actualAmountTV.setText((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(coinCountsET.getText().toString().trim())) + "");
+                            actualAmountTV.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(coinCountsET.getText().toString().trim())));
                         }
                     } else {
-                        actualAmountTV.setText((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice) + "");
+                        actualAmountTV.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice));
                     }
                 }
             }
@@ -253,7 +255,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             confirmPayBtn.setEnabled(true);
             if (null == shopDiscount) {
                 if (coinCountsET.getText().toString().trim().length() > 0) {
-                    actualAmountTV.setText((Double.valueOf(s.toString().trim()) - Double.valueOf(coinCountsET.getText().toString().trim())) + "");
+                    actualAmountTV.setText(decimalFormat.format(Double.valueOf(s.toString().trim()) - Double.valueOf(coinCountsET.getText().toString().trim())));
                 } else {
                     actualAmountTV.setText(s.toString());
                 }
@@ -268,13 +270,13 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 }
                 if (coinCountsET.getText().toString().trim().length() > 0) {
                     if ((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(coinCountsET.getText().toString().trim())) < 0) {
-                        coinCountsET.setText((Double.valueOf(s.toString().trim()) - discountPrice) + "");
+                        coinCountsET.setText(decimalFormat.format(Double.valueOf(s.toString().trim()) - discountPrice));
                         actualAmountTV.setText("0");
                     } else {
-                        actualAmountTV.setText((Double.valueOf(s.toString().trim()) - discountPrice - Double.valueOf(coinCountsET.getText().toString().trim())) + "");
+                        actualAmountTV.setText(decimalFormat.format(Double.valueOf(s.toString().trim()) - discountPrice - Double.valueOf(coinCountsET.getText().toString().trim())));
                     }
                 } else {
-                    actualAmountTV.setText((Double.valueOf(s.toString().trim()) - discountPrice) + "");
+                    actualAmountTV.setText(decimalFormat.format(Double.valueOf(s.toString().trim()) - discountPrice));
                 }
             }
         } else {
@@ -291,7 +293,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                     coinCountsET.setText(leftCoinCountsTV.getText().toString().trim());
                 }
                 if (null == shopDiscount) {
-                    actualAmountTV.setText((Double.valueOf(payAmountET.getText().toString().trim()) - Double.valueOf(s.toString().trim())) + "");
+                    actualAmountTV.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) - Double.valueOf(s.toString().trim())));
                 } else {
                     switch (shopDiscount.getDisType()) {
                         case 23:
@@ -302,10 +304,10 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                             break;
                     }
                     if ((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(s.toString().trim())) < 0) {
-                        coinCountsET.setText((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice) + "");
+                        coinCountsET.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice));
                         actualAmountTV.setText("0");
                     } else {
-                        actualAmountTV.setText((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(s.toString().trim())) + "");
+                        actualAmountTV.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(s.toString().trim())));
                     }
                 }
             } else {
@@ -320,7 +322,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                             discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0d;
                             break;
                     }
-                    actualAmountTV.setText((Double.valueOf(payAmountET.getText().toString()) - discountPrice) + "");
+                    actualAmountTV.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString()) - discountPrice));
                 }
             }
         }
@@ -333,12 +335,12 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
 
     @Override
     public void onGetCustInfo(Double goldNum) {
-        leftCoinCountsTV.setText("" + goldNum);
+        leftCoinCountsTV.setText(decimalFormat.format(goldNum));
     }
 
     @Override
     public void onGetShopInfo(Double goldNum) {
-        leftCoinCountsTV.setText("" + goldNum);
+        leftCoinCountsTV.setText(decimalFormat.format(goldNum));
     }
 
     @Override

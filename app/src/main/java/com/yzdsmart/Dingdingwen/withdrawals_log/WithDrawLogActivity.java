@@ -21,6 +21,7 @@ import com.yzdsmart.Dingdingwen.bean.ShopWithdrawLog;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 

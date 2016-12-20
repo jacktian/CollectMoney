@@ -13,6 +13,7 @@ import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.ShopListRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +24,14 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
     private Context context;
     private FindMoneyContract.FindMoneyView mView;
     private FindMoneyModel mModel;
+    private DecimalFormat decimalFormat;
 
     public FindMoneyPresenter(Context context, FindMoneyContract.FindMoneyView mView) {
         this.context = context;
         this.mView = mView;
         mModel = new FindMoneyModel();
         mView.setPresenter(this);
+        decimalFormat = new DecimalFormat("#0.00");
     }
 
     @Override
@@ -48,7 +51,7 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
                                 LatLng point = new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]));
                                 View packageView = ((BaseActivity) context).getLayoutInflater().inflate(R.layout.red_package_icon, null);
                                 TextView amountTV = (TextView) packageView.findViewById(R.id.package_amount);
-                                amountTV.setText("" + shop.getReleGold());
+                                amountTV.setText(decimalFormat.format(shop.getReleGold()));
                                 options = new MarkerOptions().position(point).snippet(shop.getCode()).icon(BitmapDescriptorFactory.fromView(packageView));
                                 optionsList.add(options);
                             }

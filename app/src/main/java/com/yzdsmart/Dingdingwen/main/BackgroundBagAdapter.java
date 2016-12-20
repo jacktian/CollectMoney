@@ -15,6 +15,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.CoinType;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +28,12 @@ import butterknife.ButterKnife;
 
 public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapter.ViewHolder> {
     private Context context;
+    private DecimalFormat decimalFormat;
     private List<CoinType> coinTypeList;
 
     public BackgroundBagAdapter(Context context) {
         this.context = context;
+        decimalFormat = new DecimalFormat("#0.00");//格式化设置
         coinTypeList = new ArrayList<CoinType>();
     }
 
@@ -124,7 +127,7 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
         }
 
         public void setCoinCounts(Double coinCounts) {
-            coinCountsTV.setText(coinCounts + "个");
+            coinCountsTV.setText(decimalFormat.format(coinCounts) + "个");
         }
     }
 }

@@ -17,6 +17,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +31,13 @@ public class PublishTasksAdapter extends UltimateViewAdapter<PublishTasksAdapter
     private Context context;
     private List<PublishTaskLog> logList;
     private DateTimeFormatter dtf;
+    private DecimalFormat decimalFormat;
 
     public PublishTasksAdapter(Context context) {
         this.context = context;
         logList = new ArrayList<PublishTaskLog>();
         dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
+        decimalFormat = new DecimalFormat("#0.00");
     }
 
     /**
@@ -91,10 +94,10 @@ public class PublishTasksAdapter extends UltimateViewAdapter<PublishTasksAdapter
         PublishTaskLog log = logList.get(position);
         DateTime beginTime = dtf.parseDateTime(log.getBeginTime());
         DateTime endTime = dtf.parseDateTime(log.getEndTime());
-        holder.coinCountsTV.setText("-" + log.getTotalGold());
+        holder.coinCountsTV.setText("-" + decimalFormat.format(log.getTotalGold()));
         holder.startDateTV.setText("起 : " + beginTime.toString("yyyy-MM-dd"));
         holder.endDateTV.setText("止 : " + endTime.toString("yyyy-MM-dd"));
-        holder.leftCoinCountsTV.setText("" + log.getOverGold());
+        holder.leftCoinCountsTV.setText(decimalFormat.format(log.getOverGold()));
     }
 
     @Override

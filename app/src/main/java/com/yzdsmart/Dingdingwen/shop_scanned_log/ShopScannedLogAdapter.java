@@ -14,6 +14,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.ScannedLog;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +29,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ShopScannedLogAdapter extends UltimateViewAdapter<ShopScannedLogAdapter.ViewHolder> {
     private Context context;
     private List<ScannedLog> scannedLogs;
+    private DecimalFormat decimalFormat;
 
     public ShopScannedLogAdapter(Context context) {
         this.context = context;
         scannedLogs = new ArrayList<ScannedLog>();
+        decimalFormat = new DecimalFormat("#0.00");
     }
 
     /**
@@ -130,7 +133,7 @@ public class ShopScannedLogAdapter extends UltimateViewAdapter<ShopScannedLogAda
         }
 
         public void setCoinCounts(Double coinCounts) {
-            coinCountsTV.setText("" + coinCounts);
+            coinCountsTV.setText(decimalFormat.format(coinCounts));
         }
 
         public void setGetTime(String getTime) {

@@ -18,6 +18,7 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.FocusedShop;
 import com.yzdsmart.Dingdingwen.shop_details.ShopDetailsActivity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +32,12 @@ import butterknife.ButterKnife;
 public class FocusedShopAdapter extends UltimateViewAdapter<FocusedShopAdapter.ViewHolder> {
     private Context context;
     private List<FocusedShop> focusedShops;
+    private DecimalFormat decimalFormat;
 
     public FocusedShopAdapter(Context context) {
         this.context = context;
         focusedShops = new ArrayList<FocusedShop>();
+        decimalFormat = new DecimalFormat("#0.00");
     }
 
     /**
@@ -93,7 +96,7 @@ public class FocusedShopAdapter extends UltimateViewAdapter<FocusedShopAdapter.V
         holder.setShopName(shop.getName());
         holder.setShopPers(shop.getPers());
         holder.setShopTel(shop.getTel());
-        holder.setDailyCoins("" + shop.getTodayGlodNum());
+        holder.setDailyCoins(decimalFormat.format(shop.getTodayGlodNum()));
         holder.setShopAddress(shop.getAddr());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

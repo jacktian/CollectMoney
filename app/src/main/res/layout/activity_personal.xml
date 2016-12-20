@@ -685,7 +685,8 @@
                     android:id="@+id/register_business_panel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/white_panel_bottom_border">
+                    android:background="@drawable/white_panel_bottom_border"
+                    android:visibility="gone">
 
                     <RelativeLayout
                         android:id="@+id/to_register_business"

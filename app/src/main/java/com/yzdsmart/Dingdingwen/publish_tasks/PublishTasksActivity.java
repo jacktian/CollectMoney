@@ -27,6 +27,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -75,6 +76,8 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
 
     private static final String TAG = "PublishTasksActivity";
 
+    private DecimalFormat decimalFormat;
+
     private PublishTasksContract.PublishTasksPresenter mPresenter;
 
     private Handler mHandler = new Handler();
@@ -96,6 +99,8 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        decimalFormat = new DecimalFormat("#0.00");
 
         coinTypeList = new ArrayList<CoinType>();
 
@@ -292,7 +297,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
 
     @Override
     public void onGetShopLeftCoins(Double counts) {
-        leftCoinsTV.setText(" " + counts);
+        leftCoinsTV.setText(decimalFormat.format(counts));
     }
 
     @Override

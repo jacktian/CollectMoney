@@ -18,6 +18,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,11 +33,13 @@ class ShopPayLogAdapter extends UltimateViewAdapter<ShopPayLogAdapter.ViewHolder
     private Context context;
     private List<ShopPayLog> logList;
     private DateTimeFormatter dtf;
+    private DecimalFormat decimalFormat;
 
     public ShopPayLogAdapter(Context context) {
         this.context = context;
         logList = new ArrayList<ShopPayLog>();
         dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        decimalFormat = new DecimalFormat("#0.00");
     }
 
     /**
@@ -92,10 +95,10 @@ class ShopPayLogAdapter extends UltimateViewAdapter<ShopPayLogAdapter.ViewHolder
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final ShopPayLog log = logList.get(position);
         DateTime dateTime = dtf.parseDateTime(log.getCreateTime());
-        holder.coinCountsTV.setText("+" + log.getGold());
+        holder.coinCountsTV.setText("+" + decimalFormat.format(log.getGold()));
         holder.payDateTV.setText(dateTime.toString("yyyy-MM-dd"));
         holder.payTimeTV.setText(dateTime.toString("HH:mm:ss"));
-        holder.payAmountTV.setText("" + log.getAmount());
+        holder.payAmountTV.setText(decimalFormat.format(log.getAmount()));
         holder.chargeStateIV.setImageDrawable(("未支付".equals(log.getPayStatus())) ? context.getResources().getDrawable(R.mipmap.charge_not_pay) : context.getResources().getDrawable(R.mipmap.charge_already_pay));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

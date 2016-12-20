@@ -19,6 +19,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,11 +33,13 @@ public class ScanCoinsLogAdapter extends UltimateViewAdapter<ScanCoinsLogAdapter
     private Context context;
     private List<GetCoinsLog> logList;
     private DateTimeFormatter dtf;
+    private DecimalFormat decimalFormat;
 
     public ScanCoinsLogAdapter(Context context) {
         this.context = context;
         logList = new ArrayList<GetCoinsLog>();
         dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        decimalFormat = new DecimalFormat("#0.00");
     }
 
     /**
@@ -92,7 +95,7 @@ public class ScanCoinsLogAdapter extends UltimateViewAdapter<ScanCoinsLogAdapter
     public void onBindViewHolder(ViewHolder holder, int position) {
         GetCoinsLog log = logList.get(position);
         DateTime dateTime = dtf.parseDateTime(log.getCreateTime());
-        holder.scanCointCountsTV.setText("+" + log.getGetGold());
+        holder.scanCointCountsTV.setText("+" + decimalFormat.format(log.getGetGold()));
         holder.scanCoinDateTV.setText(dateTime.toString("yyyy-MM-dd"));
         holder.scanCoinTimeTV.setText(dateTime.toString("HH:mm:ss"));
         Glide.with(context).load(log.getLogoImageUrl()).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.ic_holder_light)).into(holder.shopAvaterIV);

@@ -118,7 +118,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         super.onCreate(savedInstanceState);
 
         localImages = new ArrayList<Integer>();
-        localImages.add(R.mipmap.shop_banner);
+        localImages.add(R.mipmap.shop_default_banner);
         shopImageList = new ArrayList<String>();
         galleyImages = new ArrayList<String>();
 
@@ -365,7 +365,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
         @Override
         public void UpdateUI(Context context, int position, String data) {
-            Glide.with(context).load(data).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.recommend_pre_load)).error(context.getResources().getDrawable(R.mipmap.shop_banner)).into(imageView);
+            Glide.with(context).load(data).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.recommend_pre_load)).error(context.getResources().getDrawable(R.mipmap.shop_default_banner)).into(imageView);
         }
     }
 }
