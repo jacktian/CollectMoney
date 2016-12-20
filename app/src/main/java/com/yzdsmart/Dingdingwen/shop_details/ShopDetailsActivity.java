@@ -31,6 +31,7 @@ import com.yzdsmart.Dingdingwen.bean.ShopScanner;
 import com.yzdsmart.Dingdingwen.galley.GalleyActivity;
 import com.yzdsmart.Dingdingwen.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
+import com.yzdsmart.Dingdingwen.personal.ShopImageBannerHolderView;
 import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
 import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo;
@@ -118,7 +119,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         super.onCreate(savedInstanceState);
 
         localImages = new ArrayList<Integer>();
-        localImages.add(R.mipmap.shop_default_banner);
+        localImages.add(R.mipmap.shop_default_no_banner);
         shopImageList = new ArrayList<String>();
         galleyImages = new ArrayList<String>();
 
@@ -132,9 +133,17 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
         MobclickAgent.openActivityDurationTrack(false);
 
+        shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
+            @Override
+            public ShopImageBannerHolderView createHolder() {
+                return new ShopImageBannerHolderView();
+            }
+        }, localImages);
+
         shopImagesBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                if (0 == galleyImages.size()) return;
                 Bundle bundle = new Bundle();
                 bundle.putInt("identity", 1);
                 bundle.putInt("type", 1);
@@ -170,8 +179,8 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
-        mPresenter.getShopFollowers(Constants.GET_SHOP_FOLLOWERS_ACTION_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+        mPresenter.getShopInfo("000000", "000000", bazaCode, "", SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+        mPresenter.getShopFollowers(Constants.GET_SHOP_FOLLOWERS_ACTION_CODE, "000000", bazaCode, "", pageIndex, PAGE_SIZE, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override
@@ -301,14 +310,18 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         isAtteIV.setImageDrawable(isAtte ? getResources().getDrawable(R.mipmap.shop_detail_focused) : getResources().getDrawable(R.mipmap.shop_detail_not_focus));
         shopCoor = shopDetails.getCoor();
         Glide.with(this).load(shopDetails.getLogoImageUrl()).asBitmap().placeholder(getResources().getDrawable(R.mipmap.ic_holder_light)).error(getResources().getDrawable(R.mipmap.ic_holder_light)).into(shopAvaterIV);
-        if (shopDetails.getImageLists().size() <= 0) return;
         shopImageList.clear();
         shopImageList.addAll(shopDetails.getImageLists());
+        galleyImages.clear();
         if (shopImageList.size() <= 0) {
-            ButterKnife.apply(shopImagesBanner, BUTTERKNIFEGONE);
+            shopImagesBanner.setPages(new CBViewHolderCreator<ShopImageBannerHolderView>() {
+                @Override
+                public ShopImageBannerHolderView createHolder() {
+                    return new ShopImageBannerHolderView();
+                }
+            }, localImages);
+            shopImagesBanner.stopTurning();
         } else {
-            galleyImages.clear();
-            ButterKnife.apply(shopImagesBanner, BUTTERKNIFEVISIBLE);
             for (int i = 0; i < shopImageList.size(); i++) {
                 galleyImages.add(shopImageList.get(i));
                 if (i == 3) {
@@ -325,6 +338,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                     .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
                     //设置指示器的方向
                     .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+            shopImagesBanner.startTurning(3000);
         }
         shopImagesBanner.notifyDataSetChanged();
     }
@@ -365,7 +379,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
         @Override
         public void UpdateUI(Context context, int position, String data) {
-            Glide.with(context).load(data).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.recommend_pre_load)).error(context.getResources().getDrawable(R.mipmap.shop_default_banner)).into(imageView);
+            Glide.with(context).load(data).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.recommend_pre_load)).error(context.getResources().getDrawable(R.mipmap.bga_pp_ic_holder_light)).into(imageView);
         }
     }
 }

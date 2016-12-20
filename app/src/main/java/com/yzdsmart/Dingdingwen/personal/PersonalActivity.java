@@ -464,7 +464,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
 
         @Override
         public void UpdateUI(Context context, int position, String data) {
-            Glide.with(context).load(data).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.recommend_pre_load)).error(context.getResources().getDrawable(R.mipmap.shop_default_banner)).into(imageView);
+            Glide.with(context).load(data).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.recommend_pre_load)).error(context.getResources().getDrawable(R.mipmap.bga_pp_ic_holder_light)).into(imageView);
         }
     }
 

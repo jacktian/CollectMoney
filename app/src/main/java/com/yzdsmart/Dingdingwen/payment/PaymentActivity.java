@@ -1,5 +1,7 @@
 package com.yzdsmart.Dingdingwen.payment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.pingplusplus.android.Pingpp;
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
@@ -85,6 +88,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     private Gson gson = new Gson();
 
     private DecimalFormat decimalFormat;
+    private DecimalFormat discountDecimalFormat;
 
     private Double discountPrice = 0d;
 
@@ -110,6 +114,8 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        discountDecimalFormat = new DecimalFormat("#0.00");
 
         decimalFormat = new DecimalFormat("#0.00");
 
@@ -137,7 +143,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 if (payAmountET.getText().toString().trim().length() > 0) {
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                            discountPrice = Double.valueOf(discountDecimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
                             break;
                         case 45:
                             discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0f;
@@ -197,6 +203,32 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     protected void onStop() {
         super.onStop();
         mPresenter.unRegisterSubscribe();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //支付页面返回处理
+        if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getExtras().getString("pay_result");
+                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+                if ("success".equals(result)) {
+                    coinCountsET.setText("");
+                    showSnackbar("购买金币支付成功");
+                } else {
+                    if ("invalid_credential".equals(errorMsg)) {
+                        showSnackbar("订单已过期");
+                    } else if ("user_cancelled".equals(errorMsg)) {
+                        showSnackbar("支付已取消");
+                    } else if ("wx_app_not_installed".equals(errorMsg)) {
+                        showSnackbar("您未安装微信");
+                    } else {
+                        showSnackbar("购买金币支付失败");
+                    }
+                }
+            }
+        }
     }
 
     @Optional
@@ -262,7 +294,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             } else {
                 switch (shopDiscount.getDisType()) {
                     case 23:
-                        discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(s.toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                        discountPrice = Double.valueOf(discountDecimalFormat.format(Double.valueOf(s.toString().trim()) * (1 - shopDiscount.getDiscReta())));
                         break;
                     case 45:
                         discountPrice = (Double.valueOf(s.toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0d;
@@ -297,7 +329,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 } else {
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                            discountPrice = Double.valueOf(discountDecimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
                             break;
                         case 45:
                             discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0d;
@@ -316,7 +348,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 } else {
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                            discountPrice = Double.valueOf(discountDecimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
                             break;
                         case 45:
                             discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0d;
@@ -336,11 +368,19 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     @Override
     public void onGetCustInfo(Double goldNum) {
         leftCoinCountsTV.setText(decimalFormat.format(goldNum));
+        if (0 == goldNum) {
+            coinCountsET.setText(decimalFormat.format(goldNum));
+            coinCountsET.setEnabled(false);
+        }
     }
 
     @Override
     public void onGetShopInfo(Double goldNum) {
         leftCoinCountsTV.setText(decimalFormat.format(goldNum));
+        if (0 == goldNum) {
+            coinCountsET.setText(decimalFormat.format(goldNum));
+            coinCountsET.setEnabled(false);
+        }
     }
 
     @Override
@@ -364,7 +404,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             showSnackbar(msg);
             return;
         }
-        showSnackbar("" + charge);
+        Pingpp.createPayment(PaymentActivity.this, gson.toJson(charge));
     }
 
     @Override
