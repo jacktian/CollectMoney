@@ -256,30 +256,30 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
                 break;
             case R.id.find_money_bag:
-                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-                    loginConfirmDialog = new ConfirmCancelDialog(getActivity(), "您还未登录\n是否登录");
-                    loginConfirmDialog.show();
-                    loginConfirmDialog.findViewById(R.id.dialog_confirm).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (null != loginConfirmDialog) {
-                                loginConfirmDialog.dismiss();
-                                loginConfirmDialog = null;
-                            }
-                            ((MainActivity) getActivity()).openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
-                        }
-                    });
-                    loginConfirmDialog.findViewById(R.id.dialog_cancel).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (null != loginConfirmDialog) {
-                                loginConfirmDialog.dismiss();
-                                loginConfirmDialog = null;
-                            }
-                        }
-                    });
-                    return;
-                }
+//                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
+//                    loginConfirmDialog = new ConfirmCancelDialog(getActivity(), "您还未登录\n是否登录");
+//                    loginConfirmDialog.show();
+//                    loginConfirmDialog.findViewById(R.id.dialog_confirm).setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            if (null != loginConfirmDialog) {
+//                                loginConfirmDialog.dismiss();
+//                                loginConfirmDialog = null;
+//                            }
+//                            ((MainActivity) getActivity()).openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
+//                        }
+//                    });
+//                    loginConfirmDialog.findViewById(R.id.dialog_cancel).setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            if (null != loginConfirmDialog) {
+//                                loginConfirmDialog.dismiss();
+//                                loginConfirmDialog = null;
+//                            }
+//                        }
+//                    });
+//                    return;
+//                }
                 ((MainActivity) getActivity()).showBackgroundBag();
                 break;
             case R.id.find_money_recommend:

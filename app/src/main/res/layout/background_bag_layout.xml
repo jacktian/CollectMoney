@@ -29,11 +29,26 @@
             android:textColor="@color/font_grey"
             android:textSize="@dimen/font_medium" />
 
-        <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
-            android:id="@+id/background_bag_list"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            app:recyclerviewEmptyView="@layout/recycler_view_empty" />
+            android:layout_height="300dp">
+
+            <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+                android:id="@+id/background_bag_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:recyclerviewEmptyView="@layout/recycler_view_empty" />
+
+            <TextView
+                android:id="@+id/login_check"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="您还未登录,如需查看背包,请先登录"
+                android:textColor="@color/font_grey"
+                android:textSize="@dimen/font_medium"
+                android:visibility="gone" />
+        </FrameLayout>
 
         <ImageView
             android:id="@+id/quit_background_bag"

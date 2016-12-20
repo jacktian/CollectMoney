@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.Set;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
 import cn.jpush.android.api.JPushInterface;
@@ -70,6 +71,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     TextView unreadConversationBubbleTV;
 
     private UltimateRecyclerView backgroundBagRV;
+    private TextView backgroundBagLoginCheck;
 
     //连续双击返回键退出程序
     private Long lastKeyDown = 0l;
@@ -221,6 +223,12 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         super.onActivityResult(requestCode, resultCode, data);
         if (Constants.REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
             imLogin();
+        } else if (Constants.REQUEST_LOGIN_UPDATE_BAGCKGROUND_BAG_CODE == requestCode && RESULT_OK == resultCode) {
+            ButterKnife.apply(backgroundBagLoginCheck, BUTTERKNIFEGONE);
+            ButterKnife.apply(backgroundBagRV, BUTTERKNIFEVISIBLE);
+            imLogin();
+            bagAdapter.clearList();
+            getBackgroundBag();
         }
     }
 
@@ -526,15 +534,26 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 
     public void showBackgroundBag() {
         backgroundBagBottomSheetDialog.show();
-        if (isFirstLoadBag) {
-            isFirstLoadBag = false;
-            getBackgroundBag();
+        if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
+            ButterKnife.apply(backgroundBagLoginCheck, BUTTERKNIFEVISIBLE);
+            ButterKnife.apply(backgroundBagRV, BUTTERKNIFEGONE);
+            if (isFirstLoadBag) {
+                isFirstLoadBag = false;
+            }
+        } else {
+            ButterKnife.apply(backgroundBagLoginCheck, BUTTERKNIFEGONE);
+            ButterKnife.apply(backgroundBagRV, BUTTERKNIFEVISIBLE);
+            if (isFirstLoadBag) {
+                isFirstLoadBag = false;
+                getBackgroundBag();
+            }
         }
     }
 
     private void initBackgroundBagBottomSheetDialog() {
         backgroundBagBottomSheetDialog = new BottomSheetDialog(this, R.style.background_bag_dialog);
         View backgroundBagView = LayoutInflater.from(this).inflate(R.layout.background_bag_layout, null);
+        backgroundBagLoginCheck = (TextView) backgroundBagView.findViewById(R.id.login_check);
         backgroundBagRV = (UltimateRecyclerView) backgroundBagView.findViewById(R.id.background_bag_list);
         backgroundBagRV.setAdapter(bagAdapter);
         backgroundBagRV.setLayoutManager(mGridLayoutManager);
@@ -553,6 +572,12 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             @Override
             public void onClick(View view) {
                 backgroundBagBottomSheetDialog.dismiss();
+            }
+        });
+        backgroundBagLoginCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_UPDATE_BAGCKGROUND_BAG_CODE);
             }
         });
         backgroundBagBottomSheetDialog.setContentView(backgroundBagView);

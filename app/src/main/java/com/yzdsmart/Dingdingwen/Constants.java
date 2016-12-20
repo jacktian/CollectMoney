@@ -6,6 +6,7 @@ package com.yzdsmart.Dingdingwen;
 
 public class Constants {
     public static final Integer REQUEST_LOGIN_CODE = 1000;
+    public static final Integer REQUEST_LOGIN_UPDATE_BAGCKGROUND_BAG_CODE = 1001;
     public static final Integer REQUEST_BIND_BANK_CARD_CODE = 1111;
     public static final Integer REQUEST_BANK_CARD_NUM_CODE = 1222;
     public static final Integer REQUEST_COUPON_EXCHANGE_CODE = 1333;
