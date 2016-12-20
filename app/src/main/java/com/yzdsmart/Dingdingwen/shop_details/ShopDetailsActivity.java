@@ -38,6 +38,8 @@ import com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +98,8 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 
     private static final String TAG = "ShopDetailsActivity";
 
+    private DecimalFormat decimalFormat;
+
     private String bazaCode;//商铺编码
     private Boolean isAtte = false;
     private Integer pageIndex = 1;
@@ -117,6 +121,9 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
 
         localImages = new ArrayList<Integer>();
         localImages.add(R.mipmap.shop_default_no_banner);
@@ -295,7 +302,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         hotelNameTV.setText(shopDetails.getName());
         hotelAddressTV.setText(shopDetails.getAddr());
         focusPersonCountsTV.setText("" + shopDetails.getAtteNum());
-        dailyCoinCountsTV.setText("" + shopDetails.getTodayGlodNum());
+        dailyCoinCountsTV.setText(decimalFormat.format(shopDetails.getTodayGlodNum()));
         visitPersonCountsTV.setText("" + shopDetails.getVisiNum());
         shopPhoneNumber = shopDetails.getTel();
         isAtte = shopDetails.getAtte();

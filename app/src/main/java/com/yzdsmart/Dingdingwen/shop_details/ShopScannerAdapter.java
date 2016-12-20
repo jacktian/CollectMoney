@@ -18,6 +18,8 @@ import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +37,13 @@ public class ShopScannerAdapter extends RecyclerView.Adapter<ShopScannerAdapter.
     private Context context;
     private List<ShopScanner> shopScannerList;
     private static final Integer REQUEST_LOGIN_CODE = 1000;
+    private DecimalFormat decimalFormat;
 
     public ShopScannerAdapter(Context context) {
         this.context = context;
         shopScannerList = new ArrayList<ShopScanner>();
+        decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
     }
 
     /**
@@ -111,7 +116,7 @@ public class ShopScannerAdapter extends RecyclerView.Adapter<ShopScannerAdapter.
         }
 
         public void setCoinCounts(Double coinCounts) {
-            coinCountsTV.setText("" + coinCounts);
+            coinCountsTV.setText(decimalFormat.format(coinCounts));
         }
 
         public void setGetTime(String getTime) {
