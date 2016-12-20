@@ -17,6 +17,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class PublishTasksAdapter extends UltimateViewAdapter<PublishTasksAdapter
         logList = new ArrayList<PublishTaskLog>();
         dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
         decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
     }
 
     /**

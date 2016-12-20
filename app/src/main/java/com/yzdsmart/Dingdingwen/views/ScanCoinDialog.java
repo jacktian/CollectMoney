@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yzdsmart.Dingdingwen.R;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 /**
@@ -28,6 +29,7 @@ public class ScanCoinDialog extends Dialog {
         this.coinCounts = coinCounts;
         this.setContentView(R.layout.scan_coin_dialog);
         decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
     }
 
     @Override

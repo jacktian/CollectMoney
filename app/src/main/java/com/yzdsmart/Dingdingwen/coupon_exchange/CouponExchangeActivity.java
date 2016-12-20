@@ -19,6 +19,7 @@ import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.ExchangeCouponDialog;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -68,7 +69,8 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        decimalFormat = new DecimalFormat("#0.00");//格式化设置
+        decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
 
         Bundle bundle = getIntent().getExtras();
 

@@ -20,6 +20,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,7 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
         shopWithdrawLogs = new ArrayList<ShopWithdrawLog>();
         dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
         decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
     }
 
     /**

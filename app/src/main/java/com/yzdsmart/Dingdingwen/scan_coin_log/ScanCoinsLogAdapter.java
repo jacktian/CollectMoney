@@ -19,6 +19,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class ScanCoinsLogAdapter extends UltimateViewAdapter<ScanCoinsLogAdapter
         logList = new ArrayList<GetCoinsLog>();
         dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
         decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
     }
 
     /**

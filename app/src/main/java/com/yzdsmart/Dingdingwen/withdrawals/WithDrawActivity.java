@@ -30,6 +30,7 @@ import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -109,6 +110,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
         super.onCreate(savedInstanceState);
 
         decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
 
         coinTypeList = new ArrayList<CoinType>();
 

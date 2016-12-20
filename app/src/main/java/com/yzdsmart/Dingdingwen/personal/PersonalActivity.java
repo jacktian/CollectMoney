@@ -45,6 +45,7 @@ import com.yzdsmart.Dingdingwen.withdrawals.WithDrawActivity;
 import com.yzdsmart.Dingdingwen.withdrawals_log.WithDrawLogActivity;
 
 import java.io.File;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -182,6 +183,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         super.onCreate(savedInstanceState);
 
         decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));

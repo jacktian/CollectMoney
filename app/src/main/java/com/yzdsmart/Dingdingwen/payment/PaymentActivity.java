@@ -30,6 +30,7 @@ import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomNestRadioGroup;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +122,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
         super.onCreate(savedInstanceState);
 
         decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
 
         shopDiscountList = new ArrayList<ShopDiscount>();
 
@@ -168,7 +170,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                             discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
                             break;
                         case 45:
-                            discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0f;
+                            discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) >= 1.0 ? shopDiscount.getDiscPrice() : 0f;
                             break;
                     }
                     if (coinCountsET.getText().toString().trim().length() > 0) {
@@ -245,7 +247,9 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
                 if ("success".equals(result)) {
                     coinCountsET.setText("");
-                    showSnackbar("购买金币支付成功");
+                    payAmountET.setText("");
+                    showSnackbar("付款成功");
+                    initData();
                 } else {
                     if ("invalid_credential".equals(errorMsg)) {
                         showSnackbar("订单已过期");
@@ -254,7 +258,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                     } else if ("wx_app_not_installed".equals(errorMsg)) {
                         showSnackbar("您未安装微信");
                     } else {
-                        showSnackbar("购买金币支付失败");
+                        showSnackbar("付款失败");
                     }
                 }
             }
@@ -323,6 +327,11 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     @OnTextChanged(R.id.pay_amount)
     void onPayAmountChanged(CharSequence s, int i, int j, int k) {
         if (s.toString().length() > 0) {
+            if (0 >= Double.valueOf(payAmountET.getText().toString().trim())) {
+                actualAmountTV.setText("0");
+                confirmPayBtn.setEnabled(false);
+                return;
+            }
             confirmPayBtn.setEnabled(true);
             if (null == shopDiscount) {
                 if (coinCountsET.getText().toString().trim().length() > 0) {
@@ -336,7 +345,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                         discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(s.toString().trim()) * (1 - shopDiscount.getDiscReta())));
                         break;
                     case 45:
-                        discountPrice = (Double.valueOf(s.toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0d;
+                        discountPrice = (Double.valueOf(s.toString().trim()) / shopDiscount.getFullPrice()) >= 1.0 ? shopDiscount.getDiscPrice() : 0d;
                         break;
                 }
                 if (coinCountsET.getText().toString().trim().length() > 0) {
@@ -351,6 +360,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 }
             }
         } else {
+            actualAmountTV.setText("0");
             confirmPayBtn.setEnabled(false);
         }
     }
@@ -371,7 +381,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                             discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
                             break;
                         case 45:
-                            discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0d;
+                            discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) >= 1.0 ? shopDiscount.getDiscPrice() : 0d;
                             break;
                     }
                     if ((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(s.toString().trim())) < 0) {
@@ -441,6 +451,13 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     public void onSubmitPayment(boolean flag, String msg, Object charge) {
         if (!flag) {
             showSnackbar(msg);
+            return;
+        }
+        if (null == charge) {
+            payAmountET.setText("");
+            actualAmountTV.setText("0");
+            showSnackbar("付款成功");
+            initData();
             return;
         }
         Pingpp.createPayment(PaymentActivity.this, gson.toJson(charge));

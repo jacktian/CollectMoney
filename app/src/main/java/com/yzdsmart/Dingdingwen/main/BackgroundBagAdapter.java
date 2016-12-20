@@ -15,6 +15,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.CoinType;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +34,9 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
 
     public BackgroundBagAdapter(Context context) {
         this.context = context;
-        decimalFormat = new DecimalFormat("#0.00");//格式化设置
         coinTypeList = new ArrayList<CoinType>();
+        decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
     }
 
     /**

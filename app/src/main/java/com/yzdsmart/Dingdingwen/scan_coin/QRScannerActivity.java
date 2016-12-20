@@ -252,7 +252,9 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
                     getCoinDialog.dismiss();
                     getCoinDialog = null;
                 }
-                closeActivity();
+//                closeActivity();
+                mQRCodeView.startSpot();
+                showShare();
             }
         });
     }

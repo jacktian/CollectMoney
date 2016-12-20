@@ -18,6 +18,7 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.FocusedShop;
 import com.yzdsmart.Dingdingwen.shop_details.ShopDetailsActivity;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class FocusedShopAdapter extends UltimateViewAdapter<FocusedShopAdapter.V
         this.context = context;
         focusedShops = new ArrayList<FocusedShop>();
         decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
     }
 
     /**

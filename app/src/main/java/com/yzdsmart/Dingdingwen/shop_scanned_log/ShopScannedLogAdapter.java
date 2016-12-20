@@ -14,6 +14,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.ScannedLog;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class ShopScannedLogAdapter extends UltimateViewAdapter<ShopScannedLogAda
         this.context = context;
         scannedLogs = new ArrayList<ScannedLog>();
         decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
     }
 
     /**

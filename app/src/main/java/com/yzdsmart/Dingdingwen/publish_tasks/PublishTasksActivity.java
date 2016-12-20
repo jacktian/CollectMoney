@@ -27,6 +27,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -101,6 +102,7 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
         super.onCreate(savedInstanceState);
 
         decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
 
         coinTypeList = new ArrayList<CoinType>();
 
