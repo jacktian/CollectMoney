@@ -36,7 +36,7 @@ public interface CouponExchangeContract {
         /**
          * 兑换商品
          */
-        void onExchangeCoupon();
+        void onExchangeCoupon(Double goldNum);
     }
 
     interface CouponExchangePresenter extends BasePresenter {
@@ -86,7 +86,7 @@ public interface CouponExchangeContract {
          * @param custCode
          * @param authorization
          */
-        void exchangeCoupon(String submitCode, String exchangeId, String custCode, String authorization);
+        void exchangeCoupon(String submitCode, String exchangeId, Double goldNum, String custCode, String authorization);
 
         void unRegisterSubscribe();
     }

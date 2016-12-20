@@ -144,14 +144,14 @@ public class CouponExchangePresenter implements CouponExchangeContract.CouponExc
     }
 
     @Override
-    public void exchangeCoupon(String submitCode, String exchangeId, String custCode, String authorization) {
+    public void exchangeCoupon(String submitCode, String exchangeId, final Double goldNum, String custCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
         mModel.exchangeCoupon(submitCode, exchangeId, custCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 RequestResponse requestResponse = (RequestResponse) result;
                 if ("OK".equals(requestResponse.getActionStatus())) {
-                    mView.onExchangeCoupon();
+                    mView.onExchangeCoupon(goldNum);
                 } else {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
                 }

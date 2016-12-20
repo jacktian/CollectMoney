@@ -19,6 +19,7 @@ import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.ExchangeCouponDialog;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -53,6 +54,8 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
     private Integer couponType;//0 指定商铺兑换列表 1 指定金币类型可兑换列表
     private String bazaCode;
     private Integer goldType;
+
+    private DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");//格式化设置
 
     private CouponExchangeContract.CouponExchangePresenter mPresenter;
 
@@ -180,7 +183,7 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.exchangeCoupon("000000", couponBean.getExchangeId(), SharedPreferencesUtils.getString(CouponExchangeActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(CouponExchangeActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(CouponExchangeActivity.this, "ddw_access_token", ""));
+                mPresenter.exchangeCoupon("000000", couponBean.getExchangeId(), couponBean.getGoldNum(), SharedPreferencesUtils.getString(CouponExchangeActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(CouponExchangeActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(CouponExchangeActivity.this, "ddw_access_token", ""));
             }
         });
         exchangeCouponDialog.findViewById(R.id.dialog_cancel).setOnClickListener(new View.OnClickListener() {
@@ -196,12 +199,12 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
 
     @Override
     public void onGetCustInfo(Double coinCounts) {
-        coinCountsTV.setText("" + coinCounts);
+        coinCountsTV.setText(decimalFormat.format(coinCounts));
     }
 
     @Override
     public void onGetShopInfo(Double coinCounts) {
-        coinCountsTV.setText("" + coinCounts);
+        coinCountsTV.setText(decimalFormat.format(coinCounts));
     }
 
     @Override
@@ -210,8 +213,9 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
     }
 
     @Override
-    public void onExchangeCoupon() {
-        getCoinCounts();
+    public void onExchangeCoupon(Double goldNum) {
+        showSnackbar("兑换成功");
+        coinCountsTV.setText(decimalFormat.format((Double.valueOf(coinCountsTV.getText().toString().trim()) - goldNum)));
     }
 
     @Override
