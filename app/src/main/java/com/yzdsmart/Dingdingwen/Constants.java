@@ -8,6 +8,7 @@ public class Constants {
     public static final Integer REQUEST_LOGIN_CODE = 1000;
     public static final Integer REQUEST_BIND_BANK_CARD_CODE = 1111;
     public static final Integer REQUEST_BANK_CARD_NUM_CODE = 1222;
+    public static final Integer REQUEST_COUPON_EXCHANGE_CODE = 1333;
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 
     public static final String REGISTER_ACTION_CODE = "1688";

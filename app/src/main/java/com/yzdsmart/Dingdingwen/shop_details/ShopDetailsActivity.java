@@ -230,22 +230,14 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 mPresenter.setFollow(isAtte ? Constants.CANCEL_FOCUS_CODE : Constants.SET_FOCUS_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), bazaCode, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case R.id.title_right_operation_layout:
-                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
-                    openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
-                    return;
-                }
                 showMoveDialog(this);
                 break;
             case R.id.get_more_followers:
-                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
-                    openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
-                    return;
-                }
                 if (!Utils.isNetUsable(this)) {
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                mPresenter.getShopFollowers(Constants.GET_SHOP_FOLLOWERS_ACTION_CODE, "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                mPresenter.getShopFollowers(Constants.GET_SHOP_FOLLOWERS_ACTION_CODE, "000000", bazaCode, "", pageIndex, PAGE_SIZE, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case R.id.hotel_address:
                 if (null == shopCoor || shopCoor.trim().length() <= 0) return;

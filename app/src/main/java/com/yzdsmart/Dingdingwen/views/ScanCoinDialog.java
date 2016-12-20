@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.yzdsmart.Dingdingwen.R;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by YZD on 2016/9/12.
  */
@@ -17,6 +19,7 @@ public class ScanCoinDialog extends Dialog {
     private Double coinCounts;
     private ImageView coinTypeIV;
     private TextView coinCountsTV;
+    private DecimalFormat decimalFormat;
 
     public ScanCoinDialog(Context context, String coinLogo, Double coinCounts) {
         super(context, R.style.custom_dialog);
@@ -24,6 +27,7 @@ public class ScanCoinDialog extends Dialog {
         this.coinLogo = coinLogo;
         this.coinCounts = coinCounts;
         this.setContentView(R.layout.scan_coin_dialog);
+        decimalFormat = new DecimalFormat("#0.00");
     }
 
     @Override
@@ -32,6 +36,6 @@ public class ScanCoinDialog extends Dialog {
         coinTypeIV = (ImageView) findViewById(R.id.coin_type);
         coinCountsTV = (TextView) findViewById(R.id.coin_counts);
         Glide.with(context).load("".equals(coinLogo) ? R.mipmap.yzd_coin : coinLogo).asBitmap().placeholder(R.mipmap.ic_holder_light).error(R.mipmap.ic_holder_light).into(coinTypeIV);
-        coinCountsTV.setText(coinCounts + "个");
+        coinCountsTV.setText(decimalFormat.format(coinCounts) + "个");
     }
 }

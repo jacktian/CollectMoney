@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,6 +23,8 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.PaymentParameter;
 import com.yzdsmart.Dingdingwen.bean.ShopDiscount;
 import com.yzdsmart.Dingdingwen.coupon_exchange.CouponExchangeActivity;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
+import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
 import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -88,9 +92,10 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     private Gson gson = new Gson();
 
     private DecimalFormat decimalFormat;
-    private DecimalFormat discountDecimalFormat;
 
     private Double discountPrice = 0d;
+
+    private InputFilter[] amountFilters;
 
     /**
      * 银联支付渠道
@@ -115,11 +120,26 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        discountDecimalFormat = new DecimalFormat("#0.00");
-
         decimalFormat = new DecimalFormat("#0.00");
 
         shopDiscountList = new ArrayList<ShopDiscount>();
+
+        amountFilters = new InputFilter[]{new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                if (source.equals(".") && dest.toString().length() == 0) {
+                    return "0.";
+                }
+                if (dest.toString().contains(".")) {
+                    int index = dest.toString().indexOf(".");
+                    int mlength = dest.toString().substring(index).length();
+                    if (mlength == 3) {
+                        return "";
+                    }
+                }
+                return null;
+            }
+        }};
 
         bazaCode = getIntent().getExtras().getString("bazaCode");
 
@@ -128,6 +148,8 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
         centerTitleTV.setText(getResources().getString(R.string.payment_title));
         ButterKnife.apply(rightTitleTV, BUTTERKNIFEVISIBLE);
         rightTitleTV.setText("兑换");
+        payAmountET.setFilters(amountFilters);
+        coinCountsET.setFilters(amountFilters);
 
         new PaymentPresenter(this, this);
 
@@ -143,7 +165,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 if (payAmountET.getText().toString().trim().length() > 0) {
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Double.valueOf(discountDecimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                            discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
                             break;
                         case 45:
                             discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0f;
@@ -168,15 +190,23 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             }
         });
 
+        if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
+            openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
+            return;
+        }
+        initData();
+    }
+
+    private void initData() {
         if (!Utils.isNetUsable(this)) {
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
         mPresenter.getShopDiscounts("", bazaCode, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
         if (SharedPreferencesUtils.getString(PaymentActivity.this, "baza_code", "").trim().length() > 0) {
-            mPresenter.getShopInfo(Constants.GET_SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PaymentActivity.this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+            mPresenter.getShopLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(PaymentActivity.this, "baza_code", ""), -1, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
         } else {
-            mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(PaymentActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+            mPresenter.getPersonalLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, Constants.PERSONAL_WITHDRAW_ACTION_TYPE_CODE, "000000", SharedPreferencesUtils.getString(PaymentActivity.this, "cust_code", ""), -1, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
         }
     }
 
@@ -228,6 +258,15 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                     }
                 }
             }
+        } else if (Constants.REQUEST_LOGIN_CODE == requestCode) {
+            if (RESULT_OK == resultCode) {
+                MainActivity.getInstance().chatLogin();
+                initData();
+            } else {
+                closeActivity();
+            }
+        } else if (Constants.REQUEST_COUPON_EXCHANGE_CODE == requestCode) {
+            initData();
         }
     }
 
@@ -243,7 +282,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 bundle = new Bundle();
                 bundle.putInt("couponType", 0);
                 bundle.putString("bazaCode", bazaCode);
-                openActivity(CouponExchangeActivity.class, bundle, 0);
+                openActivity(CouponExchangeActivity.class, bundle, Constants.REQUEST_COUPON_EXCHANGE_CODE);
                 break;
             case R.id.confirm_payment:
                 if (!Utils.isNetUsable(this)) {
@@ -294,7 +333,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             } else {
                 switch (shopDiscount.getDisType()) {
                     case 23:
-                        discountPrice = Double.valueOf(discountDecimalFormat.format(Double.valueOf(s.toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                        discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(s.toString().trim()) * (1 - shopDiscount.getDiscReta())));
                         break;
                     case 45:
                         discountPrice = (Double.valueOf(s.toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0d;
@@ -329,7 +368,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 } else {
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Double.valueOf(discountDecimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                            discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
                             break;
                         case 45:
                             discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0d;
@@ -348,7 +387,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 } else {
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Double.valueOf(discountDecimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                            discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
                             break;
                         case 45:
                             discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0d;
@@ -366,7 +405,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     }
 
     @Override
-    public void onGetCustInfo(Double goldNum) {
+    public void onGetPersonalLeftCoins(Double goldNum) {
         leftCoinCountsTV.setText(decimalFormat.format(goldNum));
         if (0 == goldNum) {
             coinCountsET.setText(decimalFormat.format(goldNum));
@@ -375,7 +414,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     }
 
     @Override
-    public void onGetShopInfo(Double goldNum) {
+    public void onGetShopLeftCoins(Double goldNum) {
         leftCoinCountsTV.setText(decimalFormat.format(goldNum));
         if (0 == goldNum) {
             coinCountsET.setText(decimalFormat.format(goldNum));

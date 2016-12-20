@@ -5,10 +5,9 @@ import android.content.Context;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
-import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PayRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopDiscountRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 
 /**
@@ -28,21 +27,23 @@ public class PaymentPresenter implements PaymentContract.PaymentPresenter {
     }
 
     @Override
-    public void getCustInfo(String submitcode, String custCode, String authorization) {
+    public void getPersonalLeftCoins(String action, String actiontype, String submitCode, String custCode, Integer goldType, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getCustInfo(submitcode, custCode, authorization, new RequestListener() {
+        mModel.getPersonalLeftCoins(action, actiontype, submitCode, custCode, goldType, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                CustInfoRequestResponse requestResponse = (CustInfoRequestResponse) result;
-                if (null != requestResponse) {
-                    mView.onGetCustInfo(requestResponse.getGoldNum());
+                GetCoinRequestResponse requestResponse = (GetCoinRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onGetPersonalLeftCoins(requestResponse.getGoldNum());
+                } else {
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
                 }
             }
 
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_info));
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_left_coins));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -56,21 +57,23 @@ public class PaymentPresenter implements PaymentContract.PaymentPresenter {
     }
 
     @Override
-    public void getShopInfo(String actioncode, String submitCode, String bazaCode, String authorization) {
+    public void getShopLeftCoins(String action, String submitCode, String bazaCode, Integer goldType, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getShopInfo(actioncode, submitCode, bazaCode, authorization, new RequestListener() {
+        mModel.getShopLeftCoins(action, submitCode, bazaCode, goldType, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                ShopInfoByPersRequestResponse requestResponse = (ShopInfoByPersRequestResponse) result;
-                if (null != requestResponse) {
-                    mView.onGetShopInfo(requestResponse.getTotalGlodNum());
+                GetCoinRequestResponse requestResponse = (GetCoinRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onGetShopLeftCoins(requestResponse.getGoldNum());
+                } else {
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
                 }
             }
 
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_info));
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_left_coins));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

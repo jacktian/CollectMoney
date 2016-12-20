@@ -13,18 +13,18 @@ import java.util.List;
 public interface CouponExchangeContract {
     interface CouponExchangeView extends BaseView<CouponExchangePresenter> {
         /**
-         * 获取用户信息
+         * 获取个人金币总数
          *
-         * @param coinCounts
+         * @param goldNum
          */
-        void onGetCustInfo(Double coinCounts);
+        void onGetPersonalLeftCoins(Double goldNum);
 
         /**
-         * 商家获取商铺详情
+         * 获取店铺剩余金币数
          *
-         * @param coinCounts
+         * @param goldNum
          */
-        void onGetShopInfo(Double coinCounts);
+        void onGetShopLeftCoins(Double goldNum);
 
         /**
          * 指定商铺兑换列表
@@ -41,20 +41,25 @@ public interface CouponExchangeContract {
 
     interface CouponExchangePresenter extends BasePresenter {
         /**
-         * 获取用户信息
+         * 获取个人金币总数
          *
-         * @param submitcode
+         * @param action
+         * @param actiontype
+         * @param submitCode
          * @param custCode
+         * @param goldType
+         * @param authorization
          */
-        void getCustInfo(String submitcode, String custCode, String authorization);
+        void getPersonalLeftCoins(String action, String actiontype, String submitCode, String custCode, Integer goldType, String authorization);
 
         /**
-         * 商家获取商铺详情
+         * 获取店铺剩余金币数
          *
+         * @param action
          * @param submitCode
          * @param bazaCode
          */
-        void getShopInfo(String actioncode, String submitCode, String bazaCode, String authorization);
+        void getShopLeftCoins(String action, String submitCode, String bazaCode, Integer goldType, String authorization);
 
         /**
          * 指定商铺兑换列表

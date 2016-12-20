@@ -2,6 +2,7 @@ package com.yzdsmart.Dingdingwen.scan_coin;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -24,7 +25,9 @@ import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.payment.PaymentActivity;
+import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
 import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -130,6 +133,14 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         super.onDestroy();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (Constants.REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
+            MainActivity.getInstance().chatLogin();
+        }
+    }
+
     @Optional
     @OnClick({R.id.title_left_operation_layout})
     void onClick(View view) {
@@ -194,6 +205,10 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         }
         switch (scanType) {
             case 0:
+                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
+                    openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
+                    return;
+                }
                 if (!Utils.isNetUsable(this)) {
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     mQRCodeView.startSpot();

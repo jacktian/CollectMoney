@@ -119,9 +119,27 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
             return;
         }
         if (SharedPreferencesUtils.getString(CouponExchangeActivity.this, "baza_code", "").trim().length() > 0) {
-            mPresenter.getShopInfo(Constants.GET_SHOP_INFO_ACTION_CODE, "000000", SharedPreferencesUtils.getString(CouponExchangeActivity.this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+            if (null != couponType) {
+                switch (couponType) {
+                    case 0:
+                        mPresenter.getShopLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), -1, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                        break;
+                    case 1:
+                        mPresenter.getShopLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), goldType, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                        break;
+                }
+            }
         } else {
-            mPresenter.getCustInfo("000000", SharedPreferencesUtils.getString(CouponExchangeActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+            if (null != couponType) {
+                switch (couponType) {
+                    case 0:
+                        mPresenter.getPersonalLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, Constants.PERSONAL_WITHDRAW_ACTION_TYPE_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), -1, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                        break;
+                    case 1:
+                        mPresenter.getPersonalLeftCoins(Constants.GET_LEFT_COINS_ACTION_CODE, Constants.PERSONAL_WITHDRAW_ACTION_TYPE_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), goldType, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                        break;
+                }
+            }
         }
     }
 
@@ -200,13 +218,13 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
     }
 
     @Override
-    public void onGetCustInfo(Double coinCounts) {
-        coinCountsTV.setText(decimalFormat.format(coinCounts));
+    public void onGetPersonalLeftCoins(Double goldNum) {
+        coinCountsTV.setText(decimalFormat.format(goldNum));
     }
 
     @Override
-    public void onGetShopInfo(Double coinCounts) {
-        coinCountsTV.setText(decimalFormat.format(coinCounts));
+    public void onGetShopLeftCoins(Double goldNum) {
+        coinCountsTV.setText(decimalFormat.format(goldNum));
     }
 
     @Override

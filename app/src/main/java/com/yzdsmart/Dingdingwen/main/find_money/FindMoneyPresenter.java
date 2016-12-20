@@ -31,7 +31,7 @@ public class FindMoneyPresenter implements FindMoneyContract.FindMoneyPresenter 
         this.mView = mView;
         mModel = new FindMoneyModel();
         mView.setPresenter(this);
-        decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat = new DecimalFormat("#0");
     }
 
     @Override

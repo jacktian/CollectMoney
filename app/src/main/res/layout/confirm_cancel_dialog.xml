@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="210dp"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/activity_vertical_padding">
+
+    <TextView
+        android:id="@+id/content_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/font_grey"
+        android:textSize="@dimen/font_medium" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dialog_cancel"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/exchange_coupon_cancel"
+            android:text="@string/cancel"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_medium" />
+
+        <Button
+            android:id="@+id/dialog_confirm"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/exchange_coupon_confirm"
+            android:text="@string/confirm"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_medium" />
+    </LinearLayout>
+
+</LinearLayout>
+

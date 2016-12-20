@@ -1,5 +1,6 @@
 package com.yzdsmart.Dingdingwen.main.find_money;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
+import com.yzdsmart.Dingdingwen.views.ConfirmCancelDialog;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -138,6 +140,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     public AMapLocationListener mLocationListener = null;
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
+
+    private Dialog loginConfirmDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -242,26 +246,38 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
                 break;
             case R.id.find_money_scan:
-                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
-                    return;
-                }
                 bundle = new Bundle();
                 bundle.putInt("scanType", 0);
                 ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
                 break;
             case R.id.find_money_pay:
-                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
-                    return;
-                }
                 bundle = new Bundle();
                 bundle.putInt("scanType", 1);
                 ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
                 break;
             case R.id.find_money_bag:
                 if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-                    ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
+                    loginConfirmDialog = new ConfirmCancelDialog(getActivity(), "您还未登录\n是否登录");
+                    loginConfirmDialog.show();
+                    loginConfirmDialog.findViewById(R.id.dialog_confirm).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (null != loginConfirmDialog) {
+                                loginConfirmDialog.dismiss();
+                                loginConfirmDialog = null;
+                            }
+                            ((MainActivity) getActivity()).openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
+                        }
+                    });
+                    loginConfirmDialog.findViewById(R.id.dialog_cancel).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (null != loginConfirmDialog) {
+                                loginConfirmDialog.dismiss();
+                                loginConfirmDialog = null;
+                            }
+                        }
+                    });
                     return;
                 }
                 ((MainActivity) getActivity()).showBackgroundBag();
@@ -294,10 +310,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             @Override
             public boolean onMarkerClick(Marker marker) {
                 if (coinsMarkerList.contains(marker)) {
-                    if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-                        ((BaseActivity) getActivity()).openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
-                        return true;
-                    }
                     if (null != marker.getSnippet()) {
                         String bazaCode = marker.getSnippet();
                         Bundle bundle = new Bundle();

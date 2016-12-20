@@ -2,10 +2,9 @@ package com.yzdsmart.Dingdingwen.payment;
 
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
-import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PayRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopDiscountRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.ShopInfoByPersRequestResponse;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -19,13 +18,13 @@ import rx.schedulers.Schedulers;
 
 public class PaymentModel {
     //网络请求监听
-    private Subscriber<CustInfoRequestResponse> getCustInfoSubscriber;
-    private Subscriber<ShopInfoByPersRequestResponse> getShopInfoSubscriber;
+    private Subscriber<GetCoinRequestResponse> personalLeftCoinsSubscriber;
+    private Subscriber<GetCoinRequestResponse> shopLeftCoinsSubscriber;
     private Subscriber<ShopDiscountRequestResponse> getShopDiscountsSubscriber;
     private Subscriber<PayRequestResponse> submitPaymentSubscriber;
 
-    void getCustInfo(String submitcode, String custCode, String authorization, final RequestListener listener) {
-        getCustInfoSubscriber = new Subscriber<CustInfoRequestResponse>() {
+    void getPersonalLeftCoins(String action, String actiontype, String submitCode, String custCode, Integer goldType, String authorization, final RequestListener listener) {
+        personalLeftCoinsSubscriber = new Subscriber<GetCoinRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -37,18 +36,18 @@ public class PaymentModel {
             }
 
             @Override
-            public void onNext(CustInfoRequestResponse requestResponse) {
+            public void onNext(GetCoinRequestResponse requestResponse) {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getDDWRequestService().getCustInfo(submitcode, custCode, authorization)
+        RequestAdapter.getDDWRequestService().getPersonalLeftCoins(action, actiontype, submitCode, custCode, goldType, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
-                .subscribe(getCustInfoSubscriber);
+                .subscribe(personalLeftCoinsSubscriber);
     }
 
-    void getShopInfo(String actioncode, String submitCode, String bazaCode, String authorization, final RequestListener listener) {
-        getShopInfoSubscriber = new Subscriber<ShopInfoByPersRequestResponse>() {
+    void getShopLeftCoins(String action, String submitCode, String bazaCode, Integer goldType, String authorization, final RequestListener listener) {
+        shopLeftCoinsSubscriber = new Subscriber<GetCoinRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -60,14 +59,14 @@ public class PaymentModel {
             }
 
             @Override
-            public void onNext(ShopInfoByPersRequestResponse requestResponse) {
-                listener.onSuccess(requestResponse);
+            public void onNext(GetCoinRequestResponse response) {
+                listener.onSuccess(response);
             }
         };
-        RequestAdapter.getDDWRequestService().getShopInfoByPers(actioncode, submitCode, bazaCode, authorization)
+        RequestAdapter.getDDWRequestService().getShopLeftCoins(action, submitCode, bazaCode, goldType, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
-                .subscribe(getShopInfoSubscriber);
+                .subscribe(shopLeftCoinsSubscriber);
     }
 
     void getShopDiscounts(String submitCode, String bazaCode, String authorization, final RequestListener listener) {
@@ -119,11 +118,11 @@ public class PaymentModel {
 
     void unRegisterSubscribe() {
         //解除引用关系，以避免内存泄露的发生
-        if (null != getCustInfoSubscriber) {
-            getCustInfoSubscriber.unsubscribe();
+        if (null != personalLeftCoinsSubscriber) {
+            personalLeftCoinsSubscriber.unsubscribe();
         }
-        if (null != getShopInfoSubscriber) {
-            getShopInfoSubscriber.unsubscribe();
+        if (null != shopLeftCoinsSubscriber) {
+            shopLeftCoinsSubscriber.unsubscribe();
         }
         if (null != getShopDiscountsSubscriber) {
             getShopDiscountsSubscriber.unsubscribe();

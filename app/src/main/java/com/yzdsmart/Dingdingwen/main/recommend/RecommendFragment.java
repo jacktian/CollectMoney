@@ -5,21 +5,27 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Optional;
 
 /**
  * Created by YZD on 2016/8/17.
@@ -27,8 +33,11 @@ import butterknife.ButterKnife;
 public class RecommendFragment extends BaseFragment {
     //    implements RecommendContract.RecommendView
     @Nullable
-    @BindViews({R.id.title_left_operation_layout, R.id.left_title, R.id.title_logo, R.id.title_right_operation})
+    @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation})
     List<View> hideViews;
+    @Nullable
+    @BindView(R.id.title_left_operation)
+    ImageView titleLeftOpeIV;
     @Nullable
     @BindView(R.id.center_title)
     TextView centerTitleTV;
@@ -87,6 +96,7 @@ public class RecommendFragment extends BaseFragment {
 
         ButterKnife.apply(hideViews, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
 //        ButterKnife.apply(showViews, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
+        titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         centerTitleTV.setText(getActivity().getResources().getString(R.string.recommend));
 //        titleRightOpeTLIV.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.grey_mail_icon));
 
@@ -135,7 +145,7 @@ public class RecommendFragment extends BaseFragment {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (100 == newProgress) {
-
+                    ((MainActivity) getActivity()).hideProgressDialog();
                 }
             }
         });
@@ -147,10 +157,17 @@ public class RecommendFragment extends BaseFragment {
                 //如果不需要其他对点击链接事件的处理返回true，否则返回false
                 return true;
             }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                ((MainActivity) getActivity()).hideProgressDialog();
+            }
         });
         recommendWebView.clearHistory();
         recommendWebView.clearCache(true);
-        recommendWebView.loadUrl("file:///android_asset/discover/discover.html");
+        recommendWebView.loadUrl("http://139.196.177.114:7288/discover/");
+        ((MainActivity) getActivity()).showProgressDialog(R.drawable.loading, getActivity().getResources().getString(R.string.loading));
     }
 
 //    private void getExpandList() {
@@ -171,6 +188,20 @@ public class RecommendFragment extends BaseFragment {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(TAG);
+    }
+
+    @Optional
+    @OnClick({R.id.title_left_operation_layout})
+    void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.title_left_operation_layout:
+                if (recommendWebView.canGoBack()) {
+                    recommendWebView.goBack();
+                } else {
+                    ((MainActivity) getActivity()).backToFindMoney();
+                }
+                break;
+        }
     }
 
 //    @Override
