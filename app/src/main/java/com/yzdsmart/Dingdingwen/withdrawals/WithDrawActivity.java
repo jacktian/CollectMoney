@@ -93,7 +93,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
 
     private Gson gson = new Gson();
 
-    private Float GOLD_FORMAT_RMB_RATIO = 0.0f;
+    private Double GOLD_FORMAT_RMB_RATIO = 0.0d;
 
     private Integer userType;//0 个人 1 商家
 
@@ -150,7 +150,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                 break;
             case 1:
                 centerTitleTV.setText("商家提现");
-                GOLD_FORMAT_RMB_RATIO = 0.994f;
+                GOLD_FORMAT_RMB_RATIO = 0.994d;
                 break;
         }
 
@@ -343,7 +343,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
                 }
                 break;
             case R.id.with_all:
-                if (Float.valueOf(coinCountsTV.getText().toString()) > 0) {
+                if (Double.valueOf(coinCountsTV.getText().toString()) > 0) {
                     withdrawGoldNumET.setText(coinCountsTV.getText().toString());
                     withdrawMoneyBtn.setEnabled(true);
                 }
@@ -357,16 +357,16 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
         if (withdrawGoldNumET.getText().toString().length() > 0) {
             switch (userType) {
                 case 0:
-                    if (Float.valueOf(withdrawGoldNumET.getText().toString()) > 10) {
-                        GOLD_FORMAT_RMB_RATIO = 0.994f;
+                    if (Double.valueOf(withdrawGoldNumET.getText().toString()) > 10) {
+                        GOLD_FORMAT_RMB_RATIO = 0.994d;
                     } else {
-                        GOLD_FORMAT_RMB_RATIO = 0.9f;
+                        GOLD_FORMAT_RMB_RATIO = 0.9d;
                     }
                     break;
             }
             goldRMBRatioTV.setText("1金币=" + GOLD_FORMAT_RMB_RATIO + "元");
             withdrawMoneyBtn.setEnabled(true);
-            withdrawRMBTV.setText("￥" + decimalFormat.format((Float.valueOf(withdrawGoldNumET.getText().toString()) * GOLD_FORMAT_RMB_RATIO)));
+            withdrawRMBTV.setText("￥" + decimalFormat.format((Double.valueOf(withdrawGoldNumET.getText().toString()) * GOLD_FORMAT_RMB_RATIO)));
         } else {
             withdrawRMBTV.setText("￥0.0");
             withdrawMoneyBtn.setEnabled(false);

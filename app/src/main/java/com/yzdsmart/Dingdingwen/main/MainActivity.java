@@ -463,6 +463,11 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         backgroundBagBottomSheetDialog.dismiss();
     }
 
+    public void initBackgroundBag() {
+        bagAdapter.clearList();
+        isFirstLoadBag = true;
+    }
+
     @Override
     public void updateAccessToken() {
         mRefreshAccessTokenHandler.sendEmptyMessage(0);
@@ -535,6 +540,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
             ButterKnife.apply(backgroundBagLoginCheck, BUTTERKNIFEVISIBLE);
             ButterKnife.apply(backgroundBagRV, BUTTERKNIFEGONE);
+            bagAdapter.clearList();
             if (isFirstLoadBag) {
                 isFirstLoadBag = false;
             }
