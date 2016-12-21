@@ -35,7 +35,13 @@ public class ImageViewActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        currentImageName = getIntent().getStringExtra("filename");
+
+        if (null != savedInstanceState) {
+            currentImageName = savedInstanceState.getString("filename");
+        } else {
+            currentImageName = getIntent().getStringExtra("filename");
+        }
+
         viewImage = getImage(FileUtil.getCacheFilePath(currentImageName));
         if (null != viewImage) {
             viewImageView.setImageBitmap(viewImage);
@@ -61,6 +67,12 @@ public class ImageViewActivity extends BaseActivity {
         super.onPause();
         MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("filename", currentImageName);
+        super.onSaveInstanceState(outState);
     }
 
     private Bitmap getImage(String path) {

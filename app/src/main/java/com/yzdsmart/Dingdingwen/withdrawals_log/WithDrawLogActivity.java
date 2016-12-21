@@ -21,7 +21,6 @@ import com.yzdsmart.Dingdingwen.bean.ShopWithdrawLog;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,8 +71,12 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
         personalWithdrawLogList = new ArrayList<PersonalWithdrawLog>();
         shopWithdrawLogList = new ArrayList<ShopWithdrawLog>();
 
-        Bundle bundle = getIntent().getExtras();
-        userType = bundle.getInt("userType");
+        if (null != savedInstanceState) {
+            userType = savedInstanceState.getInt("userType");
+        } else {
+            Bundle bundle = getIntent().getExtras();
+            userType = bundle.getInt("userType");
+        }
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
@@ -169,6 +172,12 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
         super.onPause();
         MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("userType", userType);
+        super.onSaveInstanceState(outState);
     }
 
     @Optional

@@ -31,7 +31,12 @@ public class VideoViewActivity extends BaseActivity implements SurfaceHolder.Cal
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        videoPath = getIntent().getStringExtra("path");
+
+        if (null != savedInstanceState) {
+            videoPath = savedInstanceState.getString("path");
+        } else {
+            videoPath = getIntent().getStringExtra("path");
+        }
 
         MobclickAgent.openActivityDurationTrack(false);
 
@@ -72,6 +77,12 @@ public class VideoViewActivity extends BaseActivity implements SurfaceHolder.Cal
         if (null != videoPlayer) {
             videoPlayer.release();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("path", videoPath);
+        super.onSaveInstanceState(outState);
     }
 
     /**

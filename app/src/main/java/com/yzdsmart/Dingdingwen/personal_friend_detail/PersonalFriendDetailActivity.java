@@ -44,6 +44,8 @@ import org.joda.time.Days;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,6 +117,8 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
 
     private static final String TAG = "PersonalFriendDetailActivity";
 
+    private DecimalFormat decimalFormat;
+
     private Integer type;//0 个人 1 好友
     private String friend_c_code;
     private String friend_identify;
@@ -131,13 +135,22 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
+
         galleyInfoList = new ArrayList<GalleyInfo>();
 
         dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
 
-        type = getIntent().getExtras().getInt("type");
-        friend_c_code = getIntent().getExtras().getString("cust_code");
-        friend_identify = "yzd" + getIntent().getExtras().getString("user_code");
+        if (null != savedInstanceState) {
+            type = savedInstanceState.getInt("type");
+            friend_c_code = savedInstanceState.getString("cust_code");
+            friend_identify = savedInstanceState.getString("user_code");
+        } else {
+            type = getIntent().getExtras().getInt("type");
+            friend_c_code = getIntent().getExtras().getString("cust_code");
+            friend_identify = "yzd" + getIntent().getExtras().getString("user_code");
+        }
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
 
@@ -234,6 +247,14 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         if (Constants.REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
             MainActivity.getInstance().chatLogin();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("type", type);
+        outState.putString("cust_code", friend_c_code);
+        outState.putString("user_code", friend_identify);
+        super.onSaveInstanceState(outState);
     }
 
     private Dialog deleteRemarkDialog;
@@ -384,7 +405,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         }
         userAreaTV.setText(response.getArea());
         changeMoneyTimesTV.setText("" + response.getOperNum());
-        coinCountsTV.setText("" + response.getGoldNum());
+        coinCountsTV.setText(decimalFormat.format(response.getGoldNum()));
         getFriendCountsTV.setText("" + response.getFriendNum());
         Glide.with(this).load(response.getImageUrl()).placeholder(getResources().getDrawable(R.mipmap.ic_holder_light)).error(getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
     }

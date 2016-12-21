@@ -110,8 +110,14 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
         super.onCreate(savedInstanceState);
 
         messageList = new ArrayList<>();
-        identify = getIntent().getStringExtra("identify");
-        type = (TIMConversationType) getIntent().getSerializableExtra("type");
+
+        if (null != savedInstanceState) {
+            identify = savedInstanceState.getString("identify");
+            type = (TIMConversationType) savedInstanceState.getSerializable("type");
+        } else {
+            identify = getIntent().getStringExtra("identify");
+            type = (TIMConversationType) getIntent().getSerializableExtra("type");
+        }
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
@@ -246,6 +252,13 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
         mPresenter.unRegisterObserver();
         handler.removeCallbacks(resetTitle);
         super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("identify", identify);
+        outState.putSerializable("type", type);
+        super.onSaveInstanceState(outState);
     }
 
     /**

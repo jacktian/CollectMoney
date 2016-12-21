@@ -77,7 +77,11 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        scanType = getIntent().getExtras().getInt("scanType");
+        if (null != savedInstanceState) {
+            scanType = savedInstanceState.getInt("scanType");
+        } else {
+            scanType = getIntent().getExtras().getInt("scanType");
+        }
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
@@ -139,6 +143,12 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         if (Constants.REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
             MainActivity.getInstance().chatLogin();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("scanType", scanType);
+        super.onSaveInstanceState(outState);
     }
 
     @Optional

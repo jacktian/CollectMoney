@@ -104,6 +104,8 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
         decimalFormat = new DecimalFormat("#0.00");
         decimalFormat.setRoundingMode(RoundingMode.DOWN);
 
+        dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+
         coinTypeList = new ArrayList<CoinType>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
@@ -113,8 +115,6 @@ public class PublishTasksActivity extends BaseActivity implements PublishTasksCo
         new PublishTasksPresenter(this, this);
 
         MobclickAgent.openActivityDurationTrack(false);
-
-        dtf = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
         publishTaskRunnable = new Runnable() {
             @Override

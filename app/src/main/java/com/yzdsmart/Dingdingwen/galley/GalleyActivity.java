@@ -106,9 +106,16 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
         deleteFileIdList = new ArrayList<Integer>();
         deleteFilePathList = new ArrayList<String>();
 
-        identityType = getIntent().getExtras().getInt("identity");
-        userType = getIntent().getExtras().getInt("type");
-        custCode = getIntent().getExtras().getString("cust_code");
+        if (null != savedInstanceState) {
+            identityType = savedInstanceState.getInt("identity");
+            userType = savedInstanceState.getInt("type");
+            custCode = savedInstanceState.getString("cust_code");
+        } else {
+            identityType = getIntent().getExtras().getInt("identity");
+            userType = getIntent().getExtras().getInt("type");
+            custCode = getIntent().getExtras().getString("cust_code");
+        }
+
         mPhotosSnpl.setMaxItemCount(Integer.MAX_VALUE);
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
 
@@ -247,6 +254,14 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
                 new Thread(new FormatImageRunnable(i, imageUrls.get(i))).start();
             }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("identity", identityType);
+        outState.putInt("type", userType);
+        outState.putString("cust_code", custCode);
+        super.onSaveInstanceState(outState);
     }
 
     @Optional

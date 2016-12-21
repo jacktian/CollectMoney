@@ -24,15 +24,14 @@
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:id="@+id/money_friend_radio_layout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
                 <ImageButton
                     android:id="@+id/money_friend_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:background="@null"
                     android:src="@mipmap/main_bottom_tab_friend" />
@@ -41,8 +40,9 @@
                     android:id="@+id/unread_conversation_bubble"
                     android:layout_width="wrap_content"
                     android:layout_height="16dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="70dp"
                     android:layout_marginTop="3dp"
-                    android:layout_toRightOf="@id/money_friend_radio"
                     android:gravity="center"
                     android:minWidth="16dp"
                     android:textColor="@android:color/white"
@@ -50,15 +50,14 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/personal_radio_layout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
                 <ImageButton
                     android:id="@+id/personal_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:background="@null"
                     android:src="@drawable/main_bottom_tab_button_personal" />

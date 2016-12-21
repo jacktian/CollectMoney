@@ -63,9 +63,14 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle bundle = getIntent().getExtras();
-        opeType = bundle.getInt("opeType");
-        userName = bundle.getString("userName");
+        if (null != savedInstanceState) {
+            opeType = savedInstanceState.getInt("opeType");
+            userName = savedInstanceState.getString("userName");
+        } else {
+            Bundle bundle = getIntent().getExtras();
+            opeType = bundle.getInt("opeType");
+            userName = bundle.getString("userName");
+        }
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
 //        userNameET.setEnabled(false);
@@ -120,6 +125,13 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
         super.onPause();
         MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("opeType", opeType);
+        outState.putString("userName", userName);
+        super.onSaveInstanceState(outState);
     }
 
     @Optional

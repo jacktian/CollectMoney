@@ -96,7 +96,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
 
     private Integer pageIndex = 1;
     private static final Integer PAGE_SIZE = 10;
-    private Integer lastsequence;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
+    private Integer lastsequence = 0;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
 
     private LinearLayoutManager mLinearLayoutManager;
     private Paint dividerPaint;
@@ -124,9 +124,11 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         logList = new ArrayList<ShopPayLog>();
         coinTypeList = new ArrayList<CoinType>();
 
-        Bundle bundle = getIntent().getExtras();
-
-        userType = bundle.getInt("userType");
+        if (null != savedInstanceState) {
+            userType = savedInstanceState.getInt("userType");
+        } else {
+            userType = getIntent().getExtras().getInt("userType");
+        }
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
@@ -422,6 +424,12 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 }
             }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("userType", userType);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

@@ -72,18 +72,30 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
         decimalFormat = new DecimalFormat("#0.00");
         decimalFormat.setRoundingMode(RoundingMode.DOWN);
 
-        Bundle bundle = getIntent().getExtras();
-
-        couponType = bundle.getInt("couponType");
-
-        if (null != couponType) {
-            switch (couponType) {
-                case 0:
-                    bazaCode = bundle.getString("bazaCode");
-                    break;
-                case 1:
-                    goldType = bundle.getInt("goldType");
-                    break;
+        if (null != savedInstanceState) {
+            couponType = savedInstanceState.getInt("couponType");
+            if (null != couponType) {
+                switch (couponType) {
+                    case 0:
+                        bazaCode = savedInstanceState.getString("bazaCode");
+                        break;
+                    case 1:
+                        goldType = savedInstanceState.getInt("goldType");
+                        break;
+                }
+            }
+        } else {
+            Bundle bundle = getIntent().getExtras();
+            couponType = bundle.getInt("couponType");
+            if (null != couponType) {
+                switch (couponType) {
+                    case 0:
+                        bazaCode = bundle.getString("bazaCode");
+                        break;
+                    case 1:
+                        goldType = bundle.getInt("goldType");
+                        break;
+                }
             }
         }
 
@@ -179,6 +191,20 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
         super.onPause();
         MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("couponType", couponType);
+        switch (couponType) {
+            case 0:
+                outState.putString("bazaCode", bazaCode);
+                break;
+            case 1:
+                outState.putInt("goldType", goldType);
+                break;
+        }
+        super.onSaveInstanceState(outState);
     }
 
     @Optional

@@ -136,12 +136,12 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(R.id.layout_frame, mCurrentFragment, mCurrentTag);
             ft.commitAllowingStateLoss();
+        } else {
+            initView();
         }
 
         bagAdapter = new BackgroundBagAdapter(this);
         mGridLayoutManager = new GridLayoutManager(this, 5);
-
-        initView();
 
         initBackgroundBagBottomSheetDialog();
 
@@ -233,11 +233,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     }
 
     @Optional
-    @OnClick({R.id.money_friend_radio_layout, R.id.money_friend_radio, R.id.loc_scan_coins, R.id.personal_radio_layout, R.id.personal_radio, R.id.background_bag_layout, R.id.quit_background_bag})
+    @OnClick({R.id.money_friend_radio, R.id.loc_scan_coins, R.id.personal_radio, R.id.background_bag_layout, R.id.quit_background_bag})
     void onClick(View view) {
         Fragment fragment;
         switch (view.getId()) {
-            case R.id.money_friend_radio_layout:
             case R.id.money_friend_radio:
                 if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
                     openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
@@ -257,7 +256,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                     ((FindMoneyFragment) fragment).locScanCoins();
                 }
                 break;
-            case R.id.personal_radio_layout:
             case R.id.personal_radio:
                 if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
                     openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);

@@ -143,7 +143,11 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             }
         }};
 
-        bazaCode = getIntent().getExtras().getString("bazaCode");
+        if (null != savedInstanceState) {
+            bazaCode = savedInstanceState.getString("bazaCode");
+        } else {
+            bazaCode = getIntent().getExtras().getString("bazaCode");
+        }
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
@@ -248,6 +252,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 if ("success".equals(result)) {
                     coinCountsET.setText("");
                     payAmountET.setText("");
+                    actualAmountTV.setText("0");
                     showSnackbar("付款成功");
                     initData();
                 } else {
@@ -272,6 +277,12 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
         } else if (Constants.REQUEST_COUPON_EXCHANGE_CODE == requestCode) {
             initData();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("bazaCode", bazaCode);
+        super.onSaveInstanceState(outState);
     }
 
     @Optional
@@ -454,6 +465,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             return;
         }
         if (null == charge) {
+            coinCountsET.setText("");
             payAmountET.setText("");
             actualAmountTV.setText("0");
             showSnackbar("付款成功");

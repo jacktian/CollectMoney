@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +89,8 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
 
     private DecimalFormat decimalFormat;
 
+    private InputFilter[] amountFilters;
+
     private Gson gson = new Gson();
 
     private Float GOLD_FORMAT_RMB_RATIO = 0.0f;
@@ -114,21 +118,43 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
 
         coinTypeList = new ArrayList<CoinType>();
 
-        Bundle bundle = getIntent().getExtras();
+        amountFilters = new InputFilter[]{new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                if (source.equals(".") && dest.toString().length() == 0) {
+                    return "0.";
+                }
+                if (dest.toString().contains(".")) {
+                    int index = dest.toString().indexOf(".");
+                    int mlength = dest.toString().substring(index).length();
+                    if (mlength == 3) {
+                        return "";
+                    }
+                }
+                return null;
+            }
+        }};
 
-        userType = bundle.getInt("userType");
+        if (null != savedInstanceState) {
+            userType = savedInstanceState.getInt("userType");
+        } else {
+            userType = getIntent().getExtras().getInt("userType");
+        }
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
+
         switch (userType) {
             case 0:
                 centerTitleTV.setText("个人提现");
                 break;
             case 1:
                 centerTitleTV.setText("商家提现");
-                GOLD_FORMAT_RMB_RATIO = 0.94f;
+                GOLD_FORMAT_RMB_RATIO = 0.994f;
                 break;
         }
+
+        withdrawGoldNumET.setFilters(amountFilters);
         goldRMBRatioTV.setText("1金币=" + GOLD_FORMAT_RMB_RATIO + "元");
 
         new WithDrawPresenter(this, this);
@@ -254,6 +280,12 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("userType", userType);
+        super.onSaveInstanceState(outState);
+    }
+
     @Optional
     @OnClick({R.id.title_left_operation_layout, R.id.bank_logo_layout, R.id.withdraw_money, R.id.with_all})
     void onClick(View view) {
@@ -325,17 +357,16 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
         if (withdrawGoldNumET.getText().toString().length() > 0) {
             switch (userType) {
                 case 0:
-                    if (Float.valueOf(withdrawGoldNumET.getText().toString()) > 100) {
-                        GOLD_FORMAT_RMB_RATIO = 0.9f;
+                    if (Float.valueOf(withdrawGoldNumET.getText().toString()) > 10) {
+                        GOLD_FORMAT_RMB_RATIO = 0.994f;
                     } else {
-                        GOLD_FORMAT_RMB_RATIO = 0.8f;
+                        GOLD_FORMAT_RMB_RATIO = 0.9f;
                     }
                     break;
             }
             goldRMBRatioTV.setText("1金币=" + GOLD_FORMAT_RMB_RATIO + "元");
             withdrawMoneyBtn.setEnabled(true);
-            DecimalFormat df = new DecimalFormat("#0.00");
-            withdrawRMBTV.setText("￥" + df.format((Float.valueOf(withdrawGoldNumET.getText().toString()) * GOLD_FORMAT_RMB_RATIO)));
+            withdrawRMBTV.setText("￥" + decimalFormat.format((Float.valueOf(withdrawGoldNumET.getText().toString()) * GOLD_FORMAT_RMB_RATIO)));
         } else {
             withdrawRMBTV.setText("￥0.0");
             withdrawMoneyBtn.setEnabled(false);

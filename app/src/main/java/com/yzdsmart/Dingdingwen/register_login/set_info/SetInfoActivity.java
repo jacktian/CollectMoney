@@ -78,11 +78,16 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle bundle = getIntent().getExtras();
-        userName = bundle.getString("userName");
-        password = bundle.getString("password");
-
         dtf = DateTimeFormat.forPattern("yyyy-MM-dd");
+
+        if (null != savedInstanceState) {
+            userName = savedInstanceState.getString("userName");
+            password = savedInstanceState.getString("password");
+        } else {
+            Bundle bundle = getIntent().getExtras();
+            userName = bundle.getString("userName");
+            password = bundle.getString("password");
+        }
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         centerTitleTV.setText(getResources().getString(R.string.register));
@@ -136,6 +141,13 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
     protected void onDestroy() {
         mHandler.removeCallbacks(registerSuccessRunnable);
         super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("userName", userName);
+        outState.putString("password", password);
+        super.onSaveInstanceState(outState);
     }
 
     @Optional

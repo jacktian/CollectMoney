@@ -58,17 +58,25 @@ public class VerifyPhoneActivity extends BaseActivity implements VerifyPhoneCont
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         userNameET.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
-        Bundle bundle = getIntent().getExtras();
-        opeType = bundle.getInt("opeType");
-        switch (opeType) {
-            case 0:
-                centerTitleTV.setText(getResources().getString(R.string.register));
-                ButterKnife.apply(registerAgreementLayout, BUTTERKNIFEVISIBLE);
-                break;
-            case 1:
-                centerTitleTV.setText(getResources().getString(R.string.forget_pwd));
-                break;
+        if (null != savedInstanceState) {
+            opeType = savedInstanceState.getInt("opeType");
+        } else {
+            Bundle bundle = getIntent().getExtras();
+            opeType = bundle.getInt("opeType");
         }
+
+        if (null != opeType) {
+            switch (opeType) {
+                case 0:
+                    centerTitleTV.setText(getResources().getString(R.string.register));
+                    ButterKnife.apply(registerAgreementLayout, BUTTERKNIFEVISIBLE);
+                    break;
+                case 1:
+                    centerTitleTV.setText(getResources().getString(R.string.forget_pwd));
+                    break;
+            }
+        }
+
         nextButton.setText(getResources().getString(R.string.next_step));
 
         new VerifyPhonePresenter(this, this);
@@ -93,6 +101,12 @@ public class VerifyPhoneActivity extends BaseActivity implements VerifyPhoneCont
         super.onPause();
         MobclickAgent.onPageEnd(TAG); // （仅有Activity的应用中SDK自动调用，不需要单独写）保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息。"SplashScreen"为页面名称，可自定义
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("opeType", opeType);
+        super.onSaveInstanceState(outState);
     }
 
     @Optional
