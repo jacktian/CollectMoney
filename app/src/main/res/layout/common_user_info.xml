@@ -127,7 +127,7 @@
                     android:background="@drawable/get_verify_code_button_bg"
                     android:gravity="center"
                     android:text="@string/get_verify_code"
-                    android:textColor="@color/font_grey"
+                    android:textColor="#646464"
                     android:textSize="@dimen/font_small" />
 
                 <EditText

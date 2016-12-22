@@ -15,6 +15,7 @@ import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.Friendship;
+import com.yzdsmart.Dingdingwen.money_friendship.MoneyFriendshipActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
@@ -109,7 +110,10 @@ public class RecommendFriendsFragment extends BaseFragment implements RecommendF
 
     @Override
     public void onGetRecommendFriends(List<Friendship> friendships) {
-        if (friendships.size() <= 0) return;
+        if (friendships.size() <= 0) {
+            ((MoneyFriendshipActivity) getActivity()).showSnackbar("没有数据,下拉刷新");
+            return;
+        }
         friendshipList.clear();
         friendshipList.addAll(friendships);
         recommendFriendsAdapter.appendList(friendshipList);

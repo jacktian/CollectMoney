@@ -164,7 +164,12 @@ public class ShopScannedLogActivity extends BaseActivity implements ShopScannedL
         if (scannedLogs.size() < PAGE_SIZE) {
             scannedLogRV.disableLoadmore();
         }
-        if (scannedLogs.size() <= 0) return;
+        if (scannedLogs.size() <= 0) {
+            if (2 == pageIndex) {
+                showSnackbar("没有数据,下拉刷新");
+            }
+            return;
+        }
         scannedLogList.clear();
         scannedLogList.addAll(scannedLogs);
         shopScannedLogAdapter.appendList(scannedLogList);

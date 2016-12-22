@@ -32,9 +32,7 @@ public class FocusedShopPresenter implements FocusedShopContract.FocusedShopPres
             public void onSuccess(Object result) {
                 FocusedShopRequestResponse requestResponse = (FocusedShopRequestResponse) result;
                 if ("OK".equals(requestResponse.getActionStatus())) {
-                    if (requestResponse.getLists().size() > 0) {
-                        mView.onGetFocusedShopList(requestResponse.getLists());
-                    }
+                    mView.onGetFocusedShopList(requestResponse.getLists());
                 } else {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
                 }

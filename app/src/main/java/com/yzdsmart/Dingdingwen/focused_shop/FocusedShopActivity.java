@@ -137,7 +137,12 @@ public class FocusedShopActivity extends BaseActivity implements FocusedShopCont
         if (focusedShops.size() < PAGE_SIZE) {
             focusedShopRV.disableLoadmore();
         }
-        if (focusedShops.size() <= 0) return;
+        if (focusedShops.size() <= 0) {
+            if (2 == pageIndex) {
+                showSnackbar("没有数据,下拉刷新");
+            }
+            return;
+        }
         focusedShopList.clear();
         focusedShopList.addAll(focusedShops);
         focusedShopAdapter.appendList(focusedShopList);

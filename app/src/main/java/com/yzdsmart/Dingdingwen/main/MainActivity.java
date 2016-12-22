@@ -30,6 +30,7 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.CoinType;
 import com.yzdsmart.Dingdingwen.coupon_exchange.CouponExchangeActivity;
 import com.yzdsmart.Dingdingwen.main.find_money.FindMoneyFragment;
+import com.yzdsmart.Dingdingwen.main.recommend.RecommendFragment;
 import com.yzdsmart.Dingdingwen.money_friendship.MoneyFriendshipActivity;
 import com.yzdsmart.Dingdingwen.money_friendship.conversation.ConversationFragment;
 import com.yzdsmart.Dingdingwen.personal.PersonalActivity;
@@ -319,14 +320,25 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         openActivity(CouponExchangeActivity.class, bundle, 0);
     }
 
+    public void clearRoutePlan() {
+        Fragment fragment = fm.findFragmentByTag("find");
+        if (null != fragment) {
+            ((FindMoneyFragment) fragment).clearRoutePlan();
+        }
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                if (!(mCurrentFragment instanceof FindMoneyFragment)) {
-                    backToFindMoney();
+                if (mCurrentFragment instanceof RecommendFragment) {
+                    if (((RecommendFragment) mCurrentFragment).canRecommendWebGoBack()) {
+                        ((RecommendFragment) mCurrentFragment).recomendWebGoBack();
+                    } else {
+                        backToFindMoney();
+                    }
                     return true;
-                } else {
+                } else if (mCurrentFragment instanceof FindMoneyFragment) {
                     Long currentTime = System.currentTimeMillis();
                     if (1000 > (currentTime - lastKeyDown)) {
                         App.getAppInstance().exitApp();
@@ -451,9 +463,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     @Override
     public void onGetBackgroundBag(List<CoinType> coinTypes) {
         if (coinTypes.size() == 0) {
-            backgroundBagRV.showEmptyView();
+//            backgroundBagRV.showEmptyView();
+            showSnackbar("没有数据,下拉刷新");
         } else {
-            backgroundBagRV.hideEmptyView();
+//            backgroundBagRV.hideEmptyView();
             bagAdapter.appendList(coinTypes);
         }
     }

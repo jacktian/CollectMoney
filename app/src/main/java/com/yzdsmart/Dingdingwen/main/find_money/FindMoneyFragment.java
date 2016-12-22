@@ -1,8 +1,8 @@
 package com.yzdsmart.Dingdingwen.main.find_money;
 
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -34,17 +34,14 @@ import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
-import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.amap.WalkRouteOverlay;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.main.recommend.RecommendFragment;
-import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
 import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
-import com.yzdsmart.Dingdingwen.views.ConfirmCancelDialog;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -87,6 +84,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Nullable
     @BindView(R.id.plane_distance)
     TextView planeDistanceTV;
+    @Nullable
+    @BindView(R.id.route_ope_layout)
+    LinearLayout routeOpeLayout;
 
     private static final String TAG = "FindMoneyFragment";
 
@@ -128,6 +128,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
     private RouteSearch mRouteSearch;
     private boolean isOnRoutePlane = false;
+    private LatLng routeTargetLocation;
 
     private WalkRouteOverlay walkingRouteOverlay;
     private boolean isSearchRoute = false;
@@ -140,8 +141,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     public AMapLocationListener mLocationListener = null;
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
-
-    private Dialog loginConfirmDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -234,16 +233,26 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     @Optional
-    @OnClick({R.id.center_title, R.id.find_money_scan, R.id.find_money_pay, R.id.find_money_bag, R.id.find_money_recommend, R.id.loc_scan_coins})
+    @OnClick({R.id.center_title, R.id.reached_location, R.id.start_navigation, R.id.find_money_scan, R.id.find_money_pay, R.id.find_money_bag, R.id.find_money_recommend, R.id.loc_scan_coins})
     void onClick(View view) {
         Fragment fragment;
         Bundle bundle;
         switch (view.getId()) {
             case R.id.center_title:
-                if (!isOnRoutePlane) return;
-                isOnRoutePlane = false;
-                ButterKnife.apply(findOperationLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
-                ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
+                clearRoutePlan();
+                break;
+            case R.id.reached_location:
+                reachTargetLocation();
+                break;
+            case R.id.start_navigation:
+                if (Utils.isInstallApp(getActivity(), "com.autonavi.minimap")) {
+                    Intent intent = new Intent("android.intent.action.VIEW",
+                            android.net.Uri.parse("androidamap://navi?sourceApplication=叮叮蚊&lat=" + routeTargetLocation.latitude + "&lon=" + routeTargetLocation.longitude + "&dev=0&style=2"));
+                    intent.setPackage("com.autonavi.minimap");
+                    ((MainActivity) getActivity()).startActivity(intent);
+                } else {
+                    ((MainActivity) getActivity()).showSnackbar("您还未安装高德地图,请先安装才能导航");
+                }
                 break;
             case R.id.find_money_scan:
                 bundle = new Bundle();
@@ -256,30 +265,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 ((BaseActivity) getActivity()).openActivity(QRScannerActivity.class, bundle, 0);
                 break;
             case R.id.find_money_bag:
-//                if (null == SharedPreferencesUtils.getString(getActivity(), "cust_code", "") || SharedPreferencesUtils.getString(getActivity(), "cust_code", "").trim().length() <= 0) {
-//                    loginConfirmDialog = new ConfirmCancelDialog(getActivity(), "您还未登录\n是否登录");
-//                    loginConfirmDialog.show();
-//                    loginConfirmDialog.findViewById(R.id.dialog_confirm).setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            if (null != loginConfirmDialog) {
-//                                loginConfirmDialog.dismiss();
-//                                loginConfirmDialog = null;
-//                            }
-//                            ((MainActivity) getActivity()).openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
-//                        }
-//                    });
-//                    loginConfirmDialog.findViewById(R.id.dialog_cancel).setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            if (null != loginConfirmDialog) {
-//                                loginConfirmDialog.dismiss();
-//                                loginConfirmDialog = null;
-//                            }
-//                        }
-//                    });
-//                    return;
-//                }
                 ((MainActivity) getActivity()).showBackgroundBag();
                 break;
             case R.id.find_money_recommend:
@@ -441,6 +426,33 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 //        locScanCoinsAnim.stop();
     }
 
+    public void clearRoutePlan() {
+        if (!isOnRoutePlane) return;
+        isOnRoutePlane = false;
+        routeTargetLocation = null;
+        if (null != walkingRouteOverlay) {
+            walkingRouteOverlay.removeFromMap();
+            walkingRouteOverlay = null;
+        }
+        ButterKnife.apply(findOperationLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
+        ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
+        ButterKnife.apply(routeOpeLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
+    }
+
+    private void reachTargetLocation() {
+        if (!isOnRoutePlane) return;
+        isOnRoutePlane = false;
+        if (null != walkingRouteOverlay) {
+            walkingRouteOverlay.removeFromMap();
+            walkingRouteOverlay = null;
+        }
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(routeTargetLocation, 14));
+        routeTargetLocation = null;
+        ButterKnife.apply(findOperationLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
+        ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
+        ButterKnife.apply(routeOpeLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
+    }
+
     public void locScanCoins() {
         if (null == qLocation || qLocation.length() <= 0) {
             ((BaseActivity) getActivity()).showSnackbar("定位异常,重新定位");
@@ -465,12 +477,15 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             walkingRouteOverlay.removeFromMap();
             walkingRouteOverlay = null;
         }
+        if (null != routeTargetLocation) {
+            routeTargetLocation = null;
+        }
         for (Marker marker : coinsMarkerList) {
             marker.remove();
         }
         mAMap.moveCamera(CameraUpdateFactory.zoomTo(17));
         LatLng latLng = mAMap.getCameraPosition().target;
-        DecimalFormat decimalFormat = new DecimalFormat(".######");
+        DecimalFormat decimalFormat = new DecimalFormat("#0.000000");
         String mapStatusLocation = decimalFormat.format(latLng.longitude) + "," + decimalFormat.format(latLng.latitude);
         if (qLocation.equals(mapStatusLocation)) {
             if (!Utils.isNetUsable(getActivity())) {
@@ -520,7 +535,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         String marketLongitude = coor.split(",")[0];
         String marketLatitude = coor.split(",")[1];
         LatLng latLng = mAMap.getCameraPosition().target;
-        DecimalFormat decimalFormat = new DecimalFormat(".######");
+        DecimalFormat decimalFormat = new DecimalFormat("#0.000000");
         String mapStatusLocation = decimalFormat.format(latLng.longitude) + "," + decimalFormat.format(latLng.latitude);
         MarkerOptions marketMO = new MarkerOptions().position(new LatLng(Double.valueOf(marketLatitude), Double.valueOf(marketLongitude))).icon(BitmapDescriptorFactory.fromResource(R.mipmap.market_icon));
         marketMarker = mAMap.addMarker(marketMO);//定位图标
@@ -560,6 +575,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         //点击检索点显示信息
         LatLonPoint stPoint = new LatLonPoint(locLatitude, locLongitude);//定位坐标点
         LatLonPoint endPoint = new LatLonPoint(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]));//目的坐标点
+        routeTargetLocation = new LatLng(Double.valueOf(Double.valueOf(coor.split(",")[1])), Double.valueOf(Double.valueOf(coor.split(",")[0])));
         RouteSearch.FromAndTo fromAndTo = new RouteSearch.FromAndTo(stPoint, endPoint);
         RouteSearch.WalkRouteQuery walkRouteQuery = new RouteSearch.WalkRouteQuery(fromAndTo, RouteSearch.WalkDefault);
         mRouteSearch.calculateWalkRouteAsyn(walkRouteQuery);
@@ -580,7 +596,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         if (1000 == i) {
             if (null != walkRouteResult && null != walkRouteResult.getPaths()) {
                 if (0 < walkRouteResult.getPaths().size()) {
-                    DecimalFormat decimalFormat = new DecimalFormat("0.#");
+                    DecimalFormat decimalFormat = new DecimalFormat("#0.0");
                     isSearchRoute = true;
                     WalkPath walkPath = walkRouteResult.getPaths().get(0);
                     walkingRouteOverlay = new WalkRouteOverlay(getActivity(), mAMap, walkPath, walkRouteResult.getStartPos(), walkRouteResult.getTargetPos());
@@ -604,6 +620,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                     isOnRoutePlane = true;
                     ButterKnife.apply(findOperationLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
                     ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
+                    ButterKnife.apply(routeOpeLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
                 } else {
                     ((BaseActivity) getActivity()).showSnackbar("未找到规划路线");
                 }

@@ -197,7 +197,10 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
         if (personalWithdrawLogs.size() < PAGE_SIZE) {
             withdrawLogTV.disableLoadmore();
         }
-        if (personalWithdrawLogs.size() <= 0) return;
+        if (personalWithdrawLogs.size() <= 0) {
+            showSnackbar("没有数据,下拉刷新");
+            return;
+        }
         personalWithdrawLogList.clear();
         personalWithdrawLogList.addAll(personalWithdrawLogs);
         withDrawLogAdapter.appendPersonalLogList(personalWithdrawLogList);
@@ -210,7 +213,12 @@ public class WithDrawLogActivity extends BaseActivity implements WithDrawLogCont
         if (shopWithdrawLogs.size() < PAGE_SIZE) {
             withdrawLogTV.disableLoadmore();
         }
-        if (shopWithdrawLogs.size() <= 0) return;
+        if (shopWithdrawLogs.size() <= 0) {
+            if (2 == pageIndex) {
+                showSnackbar("没有数据,下拉刷新");
+            }
+            return;
+        }
         shopWithdrawLogList.clear();
         shopWithdrawLogList.addAll(shopWithdrawLogs);
         withDrawLogAdapter.appendShopLogList(shopWithdrawLogList);

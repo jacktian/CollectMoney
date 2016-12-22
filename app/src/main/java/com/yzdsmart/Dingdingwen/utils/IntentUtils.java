@@ -20,4 +20,15 @@ public class IntentUtils {
         }
         ((BaseActivity) context).overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
+
+    /**
+     * 获取打开App的意图
+     *
+     * @param context     上下文
+     * @param packageName 包名
+     * @return intent
+     */
+    public static Intent getLaunchAppIntent(Context context, String packageName) {
+        return context.getPackageManager().getLaunchIntentForPackage(packageName);
+    }
 }

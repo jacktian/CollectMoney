@@ -172,7 +172,12 @@ public class ScanCoinsLogActivity extends BaseActivity implements ScanCoinsLogCo
         if (logList.size() < PAGE_SIZE) {
             coinListRV.disableLoadmore();
         }
-        if (logList.size() <= 0) return;
+        if (logList.size() <= 0) {
+            if (2 == pageIndex) {
+                showSnackbar("没有数据,下拉刷新");
+            }
+            return;
+        }
         this.logList.clear();
         this.logList.addAll(logList);
         personalCoinsAdapter.appendList(this.logList);

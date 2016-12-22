@@ -151,6 +151,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.S
                         SharedPreferencesUtils.remove(SettingsActivity.this, "im_account");
                         SharedPreferencesUtils.remove(SettingsActivity.this, "im_password");
                         MainActivity.getInstance().initBackgroundBag();
+                        MainActivity.getInstance().clearRoutePlan();
                         openActivityClear(MainActivity.class, null, 0);
                     }
                 });

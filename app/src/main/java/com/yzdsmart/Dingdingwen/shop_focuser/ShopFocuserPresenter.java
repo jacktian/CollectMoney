@@ -32,9 +32,7 @@ public class ShopFocuserPresenter implements ShopFocuserContract.ShopFocuserPres
             public void onSuccess(Object result) {
                 ShopFocuserRequestResponse requestResponse = (ShopFocuserRequestResponse) result;
                 if ("OK".equals(requestResponse.getActionStatus())) {
-                    if (requestResponse.getLists().size() > 0) {
-                        mView.onGetShopFocuser(requestResponse.getLists());
-                    }
+                    mView.onGetShopFocuser(requestResponse.getLists());
                 } else {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
                 }

@@ -474,7 +474,12 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         if (logList.size() < PAGE_SIZE) {
             coinListRV.disableLoadmore();
         }
-        if (logList.size() <= 0) return;
+        if (logList.size() <= 0) {
+            if (2 == pageIndex) {
+                showSnackbar("购买明细没有数据,下拉刷新");
+            }
+            return;
+        }
         this.logList.clear();
         this.logList.addAll(logList);
         shopPayLogAdapter.appendList(this.logList);

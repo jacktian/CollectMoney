@@ -168,7 +168,12 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
         if (logList.size() < PAGE_SIZE) {
             publishListRV.disableLoadmore();
         }
-        if (logList.size() <= 0) return;
+        if (logList.size() <= 0) {
+            if (2 == pageIndex) {
+                showSnackbar("没有数据,下拉刷新");
+            }
+            return;
+        }
         this.logList.clear();
         this.logList.addAll(logList);
         publishTasksAdapter.appendList(this.logList);

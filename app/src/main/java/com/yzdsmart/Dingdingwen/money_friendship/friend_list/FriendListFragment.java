@@ -15,6 +15,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.Friendship;
+import com.yzdsmart.Dingdingwen.money_friendship.MoneyFriendshipActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
@@ -139,7 +140,12 @@ public class FriendListFragment extends BaseFragment implements FriendListContra
         if (friends.size() < PAGE_SIZE) {
             friendProfileListRV.disableLoadmore();
         }
-        if (friends.size() <= 0) return;
+        if (friends.size() <= 0) {
+            if (currentStandardSequence == 0) {
+                ((MoneyFriendshipActivity) getActivity()).showSnackbar("没有数据,下拉刷新");
+            }
+            return;
+        }
         friendshipList.clear();
 //        List<Friendship> list = new ArrayList<Friendship>();
 //        list.add(new Friendship("", "", "", "", "艾伦", "file:///android_asset/album_pic.png", null, null, 1, 2));

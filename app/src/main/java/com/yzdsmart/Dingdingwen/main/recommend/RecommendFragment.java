@@ -167,10 +167,11 @@ public class RecommendFragment extends BaseFragment {
         recommendWebView.clearHistory();
         recommendWebView.clearCache(true);
         recommendWebView.loadUrl("http://139.196.177.114:7288/discover/");
+//        recommendWebView.loadUrl("https://www.baidu.com");
         ((MainActivity) getActivity()).showProgressDialog(R.drawable.loading, getActivity().getResources().getString(R.string.loading));
     }
 
-//    private void getExpandList() {
+    //    private void getExpandList() {
 //        if (!Utils.isNetUsable(getActivity())) {
 //            ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
 //            return;
@@ -202,6 +203,14 @@ public class RecommendFragment extends BaseFragment {
                 }
                 break;
         }
+    }
+
+    public boolean canRecommendWebGoBack() {
+        return recommendWebView.canGoBack();
+    }
+
+    public void recomendWebGoBack() {
+        recommendWebView.goBack();
     }
 
 //    @Override

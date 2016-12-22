@@ -157,7 +157,12 @@ public class ShopFocuserActivity extends BaseActivity implements ShopFocuserCont
         if (shopFocusers.size() < PAGE_SIZE) {
             shopFocuserRV.disableLoadmore();
         }
-        if (shopFocusers.size() <= 0) return;
+        if (shopFocusers.size() <= 0) {
+            if (2 == pageIndex) {
+                showSnackbar("没有数据,下拉刷新");
+            }
+            return;
+        }
         shopFocuserList.clear();
         shopFocuserList.addAll(shopFocusers);
         shopFocuserAdapter.appendList(shopFocuserList);

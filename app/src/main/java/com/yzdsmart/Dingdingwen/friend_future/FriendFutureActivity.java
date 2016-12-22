@@ -170,7 +170,10 @@ public class FriendFutureActivity extends BaseActivity implements FriendFutureCo
         if (futureItems.size() < PAGE_SIZE) {
             friendFutureRV.disableLoadmore();
         }
-        if (futureItems.size() <= 0) return;
+        if (futureItems.size() <= 0) {
+            showSnackbar("没有数据,下拉刷新");
+            return;
+        }
         friendFutureList.clear();
         for (TIMFriendFutureItem item : futureItems) {
             friendFutureList.add(new FriendFuture(item));

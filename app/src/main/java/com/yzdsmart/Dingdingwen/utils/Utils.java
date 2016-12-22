@@ -68,6 +68,27 @@ public class Utils {
     }
 
     /**
+     * 判断字符串是否为null或全为空格
+     *
+     * @param s 待校验字符串
+     * @return {@code true}: null或全空格<br> {@code false}: 不为null且不全空格
+     */
+    public static boolean isSpace(String s) {
+        return (s == null || s.trim().length() == 0);
+    }
+
+    /**
+     * 判断App是否安装
+     *
+     * @param context     上下文
+     * @param packageName 包名
+     * @return {@code true}: 已安装<br>{@code false}: 未安装
+     */
+    public static boolean isInstallApp(Context context, String packageName) {
+        return !isSpace(packageName) && IntentUtils.getLaunchAppIntent(context, packageName) != null;
+    }
+
+    /**
      * 验证手机号码（支持国际格式，+86135xxxx...（中国内地），+00852137xxxx...（中国香港））
      *
      * @param mobile 移动、联通、电信运营商的号码段
