@@ -3,6 +3,7 @@ package com.yzdsmart.Dingdingwen.main.find_money;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -245,13 +246,38 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 reachTargetLocation();
                 break;
             case R.id.start_navigation:
-                if (Utils.isInstallApp(getActivity(), "com.autonavi.minimap")) {
-                    Intent intent = new Intent("android.intent.action.VIEW",
-                            android.net.Uri.parse("androidamap://navi?sourceApplication=叮叮蚊&lat=" + routeTargetLocation.latitude + "&lon=" + routeTargetLocation.longitude + "&dev=0&style=2"));
-                    intent.setPackage("com.autonavi.minimap");
+//                if (Utils.isInstallApp(getActivity(), "com.autonavi.minimap")) {
+//                    StringBuilder stringBuilder = new StringBuilder();
+//                    stringBuilder.append("androidamap://navi?");
+//                    try {
+//                        //填写应用名称
+//                        stringBuilder.append("sourceApplication=" + URLEncoder.encode("叮叮蚊", "utf-8"));
+//                        //导航目的地
+////                        stringBuilder.append("&poiname=" + URLEncoder.encode(poiItem.getTitle(), "utf-8"));
+//                        //目的地经纬度
+//                        stringBuilder.append("&lat=" + routeTargetLocation.latitude);
+//                        stringBuilder.append("&lon=" + routeTargetLocation.longitude);
+////                        stringBuilder.append("&dev=0&style=2");
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                    //调用高德地图APP
+//                    Intent intent = new Intent();
+//                    intent.setPackage("com.autonavi.minimap");
+//                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+//                    intent.setAction(Intent.ACTION_VIEW);
+//                    //传递组装的数据
+//                    intent.setData(Uri.parse(stringBuilder.toString()));
+//                    ((MainActivity) getActivity()).startActivity(intent);
+//                } else
+                if (Utils.isInstallApp(getActivity(), "com.baidu.BaiduMap")) {
+                    Intent intent = new Intent();
+                    double[] startLocation = gaoDeToBaidu(locLongitude, locLatitude);
+                    double[] endLocation = gaoDeToBaidu(routeTargetLocation.longitude, routeTargetLocation.latitude);
+                    intent.setData(Uri.parse("baidumap://map/direction?origin=" + startLocation[1] + "," + startLocation[0] + "&destination=" + endLocation[1] + "," + endLocation[0] + "&mode=walking"));
                     ((MainActivity) getActivity()).startActivity(intent);
                 } else {
-                    ((MainActivity) getActivity()).showSnackbar("您还未安装高德地图,请先安装才能导航");
+                    ((MainActivity) getActivity()).showSnackbar("您还未安装地图应用,请先安装才能导航");
                 }
                 break;
             case R.id.find_money_scan:
@@ -669,5 +695,16 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 }
             }
         }
+    }
+
+    private double[] gaoDeToBaidu(double gd_lon, double gd_lat) {
+        double[] bd_lat_lon = new double[2];
+        double PI = 3.14159265358979324 * 3000.0 / 180.0;
+        double x = gd_lon, y = gd_lat;
+        double z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * PI);
+        double theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * PI);
+        bd_lat_lon[0] = z * Math.cos(theta) + 0.0065;
+        bd_lat_lon[1] = z * Math.sin(theta) + 0.006;
+        return bd_lat_lon;
     }
 }
