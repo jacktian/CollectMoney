@@ -127,7 +127,7 @@ public class CouponLogActivity extends BaseActivity implements CouponLogContract
                 mPresenter.getPersonalCouponLogs(Constants.PERSONAL_COUPON_LOG_ACTION_CODE, "", SharedPreferencesUtils.getString(this, "cust_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case 1:
-                mPresenter.getPersonalCouponLogs(Constants.SHOP_COUPON_LOG_ACTION_CODE, "", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                mPresenter.getShopCouponLogs(Constants.SHOP_COUPON_LOG_ACTION_CODE, "", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
         }
     }

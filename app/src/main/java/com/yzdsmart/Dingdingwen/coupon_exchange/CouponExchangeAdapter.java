@@ -12,8 +12,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
+import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.CouponBean;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +96,10 @@ public class CouponExchangeAdapter extends UltimateViewAdapter<CouponExchangeAda
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (SharedPreferencesUtils.getString(context, "baza_code", "").length() > 0) {
+                    ((BaseActivity) context).showSnackbar("暂不支持商家兑换");
+                    return;
+                }
                 ((CouponExchangeActivity) context).exchangeCoupon(couponBean);
             }
         });

@@ -98,6 +98,7 @@
     <string name="buy_coin_pay_type">请选择支付方式</string>
     <string name="buy_coin_pay_wechat">微信支付</string>
     <string name="buy_coin_pay_union">银行卡支付</string>
+    <string name="buy_coin_pay_ali">支付宝支付</string>
 
     <!--发布任务-->
     <string name="publish_task_left_coins">剩余金币数</string>

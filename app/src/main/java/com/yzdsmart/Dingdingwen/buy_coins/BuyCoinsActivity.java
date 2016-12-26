@@ -417,7 +417,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                     } else if ("user_cancelled".equals(errorMsg)) {
                         showSnackbar("支付已取消");
                     } else if ("wx_app_not_installed".equals(errorMsg)) {
-                        showSnackbar("您未安装微信");
+                        showSnackbar("您未安装微信/支付宝");
                     } else {
                         showSnackbar("购买金币支付失败");
                     }
@@ -511,6 +511,9 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 break;
             case R.id.union_pay_radio:
                 payType = 0;
+                break;
+            case R.id.alipay_pay_radio:
+                payType = 2;
                 break;
         }
     }

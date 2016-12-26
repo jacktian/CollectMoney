@@ -93,6 +93,35 @@
                     android:button="@null"
                     android:drawableLeft="@drawable/pay_type_radio" />
             </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_panel_top_border"
+                android:paddingBottom="@dimen/activity_vertical_padding"
+                android:paddingLeft="@dimen/activity_horizontal_padding"
+                android:paddingRight="@dimen/activity_horizontal_padding"
+                android:paddingTop="@dimen/activity_vertical_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@mipmap/buy_coin_ali_icon"
+                    android:drawablePadding="@dimen/activity_horizontal_padding"
+                    android:text="@string/buy_coin_pay_ali"
+                    android:textColor="@color/font_black"
+                    android:textSize="@dimen/font_medium" />
+
+                <RadioButton
+                    android:id="@+id/alipay_pay_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/pay_type_radio" />
+            </RelativeLayout>
         </com.yzdsmart.Dingdingwen.views.CustomNestRadioGroup>
 
         <TextView

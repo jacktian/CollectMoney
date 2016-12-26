@@ -261,7 +261,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                     } else if ("user_cancelled".equals(errorMsg)) {
                         showSnackbar("支付已取消");
                     } else if ("wx_app_not_installed".equals(errorMsg)) {
-                        showSnackbar("您未安装微信");
+                        showSnackbar("您未安装微信/支付宝");
                     } else {
                         showSnackbar("付款失败");
                     }
@@ -483,6 +483,9 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 break;
             case R.id.union_pay_radio:
                 payType = 0;
+                break;
+            case R.id.alipay_pay_radio:
+                payType = 2;
                 break;
         }
     }

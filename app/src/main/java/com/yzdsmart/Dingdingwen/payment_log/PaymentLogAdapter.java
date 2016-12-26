@@ -6,12 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
+import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.PaymentLog;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -20,6 +24,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by YZD on 2016/12/26.
@@ -29,12 +34,14 @@ public class PaymentLogAdapter extends UltimateViewAdapter<PaymentLogAdapter.Vie
     private Context context;
     private List<PaymentLog> logList;
     private DecimalFormat decimalFormat;
+    private Integer userType;
 
     public PaymentLogAdapter(Context context) {
         this.context = context;
         logList = new ArrayList<PaymentLog>();
         decimalFormat = new DecimalFormat("#0.00");
         decimalFormat.setRoundingMode(RoundingMode.DOWN);
+        userType = SharedPreferencesUtils.getString(context, "baza_code", "").length() > 0 ? 1 : 0;
     }
 
     /**
@@ -89,7 +96,8 @@ public class PaymentLogAdapter extends UltimateViewAdapter<PaymentLogAdapter.Vie
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         PaymentLog paymentLog = logList.get(position);
-        holder.setShopName(paymentLog.getBazaName());
+        holder.setUserAvater(userType == 1 ? paymentLog.getImageUrl() : paymentLog.getLogoImageUrl());
+        holder.setNameValue(userType == 1 ? paymentLog.getCNickName() : paymentLog.getBazaName());
         holder.setCoinCounts(paymentLog.getGoldNum());
         holder.setTotalAmount(paymentLog.getAmount());
         holder.setActualAmount(paymentLog.getPayAmount());
@@ -108,8 +116,17 @@ public class PaymentLogAdapter extends UltimateViewAdapter<PaymentLogAdapter.Vie
 
     class ViewHolder extends UltimateRecyclerviewViewHolder {
         @Nullable
-        @BindView(R.id.shop_name)
-        TextView shopNameTV;
+        @BindView(R.id.user_avater)
+        CircleImageView userAvaterIV;
+        @Nullable
+        @BindView(R.id.shop_avater)
+        ImageView shopAvaterIV;
+        @Nullable
+        @BindView(R.id.name_title)
+        TextView nameTitleTV;
+        @Nullable
+        @BindView(R.id.name_value)
+        TextView nameValueTV;
         @Nullable
         @BindView(R.id.coin_counts)
         TextView coinCountsTV;
@@ -126,10 +143,33 @@ public class PaymentLogAdapter extends UltimateViewAdapter<PaymentLogAdapter.Vie
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            switch (userType) {
+                case 1:
+                    ButterKnife.apply(shopAvaterIV, ((BaseActivity) context).BUTTERKNIFEGONE);
+                    ButterKnife.apply(userAvaterIV, ((BaseActivity) context).BUTTERKNIFEVISIBLE);
+                    nameTitleTV.setText("用户姓名");
+                    break;
+                case 0:
+                    ButterKnife.apply(shopAvaterIV, ((BaseActivity) context).BUTTERKNIFEVISIBLE);
+                    ButterKnife.apply(userAvaterIV, ((BaseActivity) context).BUTTERKNIFEGONE);
+                    nameTitleTV.setText("商铺名称");
+                    break;
+            }
         }
 
-        public void setShopName(String shopName) {
-            shopNameTV.setText(shopName);
+        public void setUserAvater(String userAvater) {
+            switch (userType) {
+                case 1:
+                    Glide.with(context).load(userAvater).asBitmap().placeholder(R.mipmap.background_bag_holder_light).error(R.mipmap.background_bag_holder_light).into(userAvaterIV);
+                    break;
+                case 0:
+                    Glide.with(context).load(userAvater).asBitmap().placeholder(R.mipmap.background_bag_holder_light).error(R.mipmap.background_bag_holder_light).into(shopAvaterIV);
+                    break;
+            }
+        }
+
+        public void setNameValue(String shopName) {
+            nameValueTV.setText(shopName);
         }
 
         public void setCoinCounts(Double coinCounts) {

@@ -18,7 +18,9 @@ public class PaymentLog {
     private String CustCode;
     private String BazaCode;
     private String BazaName;
+    private String CNickName;
     private String ImageUrl;
+    private String LogoImageUrl;
     private Double GoldNum;
     private Double PayAmount;
     private Double Amount;
@@ -49,12 +51,28 @@ public class PaymentLog {
         BazaName = bazaName;
     }
 
+    public String getCNickName() {
+        return CNickName;
+    }
+
+    public void setCNickName(String CNickName) {
+        this.CNickName = CNickName;
+    }
+
     public String getImageUrl() {
         return ImageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
         ImageUrl = imageUrl;
+    }
+
+    public String getLogoImageUrl() {
+        return LogoImageUrl;
+    }
+
+    public void setLogoImageUrl(String logoImageUrl) {
+        LogoImageUrl = logoImageUrl;
     }
 
     public Double getGoldNum() {

@@ -18,7 +18,9 @@ public class CouponLog {
     private String CustCode;
     private String BazaCode;
     private String BazaName;
+    private String CNickName;
     private String ImageUrl;
+    private String LogoImageUrl;
     private Double GoldNum;
     private String GoldName;
     private String Show;
@@ -49,12 +51,28 @@ public class CouponLog {
         BazaName = bazaName;
     }
 
+    public String getCNickName() {
+        return CNickName;
+    }
+
+    public void setCNickName(String CNickName) {
+        this.CNickName = CNickName;
+    }
+
     public String getImageUrl() {
         return ImageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
         ImageUrl = imageUrl;
+    }
+
+    public String getLogoImageUrl() {
+        return LogoImageUrl;
+    }
+
+    public void setLogoImageUrl(String logoImageUrl) {
+        LogoImageUrl = logoImageUrl;
     }
 
     public Double getGoldNum() {
