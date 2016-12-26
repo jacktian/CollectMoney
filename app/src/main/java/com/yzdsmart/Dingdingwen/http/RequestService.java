@@ -5,6 +5,7 @@ import com.yzdsmart.Dingdingwen.bean.ShopScanner;
 import com.yzdsmart.Dingdingwen.http.response.BackgroundBagRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.BuyCoinsLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CoinTypeRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.CouponLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustLevelRequestResponse;
@@ -17,6 +18,7 @@ import com.yzdsmart.Dingdingwen.http.response.GetGalleyRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.LoginRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PayRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.PaymentLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PersonRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PersonalWithdrawLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PublishTaskLogRequestResponse;
@@ -602,6 +604,38 @@ public interface RequestService {
     Observable<RequestResponse> exchangeCoupon(@Field("SubmitCode") String submitCode, @Field("ExchangeId") String exchangeId, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
 
     /**
+     * 个人消费支付日志
+     *
+     * @param action
+     * @param submitCode
+     * @param custCode
+     * @param pageIndex
+     * @param pageSize
+     * @param lastsequence
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASKLOG)
+    Observable<PaymentLogRequestResponse> getPersonalPaymentLogs(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
+
+    /**
+     * 个人兑换日志
+     *
+     * @param action
+     * @param submitCode
+     * @param custCode
+     * @param pageIndex
+     * @param pageSize
+     * @param lastsequence
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASKLOG)
+    Observable<CouponLogRequestResponse> getPersonalCouponLogs(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
+
+    /**
      * 商家获取商铺详情
      *
      * @param actioncode
@@ -879,6 +913,38 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.SHOP_DISCOUNT)
     Observable<ShopDiscountRequestResponse> getShopDiscounts(@Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Header("Authorization") String authorization);
+
+    /**
+     * 商铺消费支付日志
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param pageIndex
+     * @param pageSize
+     * @param lastsequence
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASKLOG)
+    Observable<PaymentLogRequestResponse> getShopPaymentLogs(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
+
+    /**
+     * 商铺兑换商品日志
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @param pageIndex
+     * @param pageSize
+     * @param lastsequence
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.TASKLOG)
+    Observable<CouponLogRequestResponse> getShopCouponLogs(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
 
     /**
      * 获取推荐列表

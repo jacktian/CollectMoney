@@ -318,6 +318,16 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop" />
 
+        <activity
+            android:name=".payment_log.PaymentLogActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".coupon_log.CouponLogActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop" />
+
         <!--图片预览界面-->
         <activity
             android:name=".views.photo_picker.picker.activity.BGAPhotoPreviewActivity"

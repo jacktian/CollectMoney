@@ -81,6 +81,8 @@
     <string name="scanned_log">被扫日志</string>
     <string name="withdraw">个人提现</string>
     <string name="withdraw_log">提现明细</string>
+    <string name="personal_payment_log">付款明细</string>
+    <string name="personal_coupon_log">兑换明细</string>
 
     <!--金币总数-->
     <string name="personal_coin_counts">获取金币数</string>
@@ -448,4 +450,6 @@
     <string name="error_get_shop_coupon">获取商铺优惠券异常</string>
     <string name="error_get_coin_coupon">获取金币优惠券异常</string>
     <string name="error_exchange_coupon">兑换优惠券异常</string>
+    <string name="error_get_payment_log">获取付款日志异常</string>
+    <string name="error_get_coupon_log">获取兑换日志异常</string>
 </resources>

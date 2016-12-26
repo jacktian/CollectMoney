@@ -56,7 +56,9 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
-        android:padding="@dimen/activity_horizontal_padding">
+        android:paddingLeft="@dimen/activity_horizontal_padding"
+        android:paddingRight="@dimen/activity_horizontal_padding"
+        android:paddingTop="@dimen/activity_vertical_padding">
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -179,31 +181,22 @@
             android:textSize="@dimen/font_small"
             android:visibility="gone" />
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/route_ope_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="3dp"
-            android:layout_marginRight="3dp"
-            android:orientation="vertical"
+            android:background="@mipmap/start_navi_bg"
             android:visibility="gone">
-
-            <ImageButton
-                android:id="@+id/reached_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@mipmap/reach_location" />
 
             <ImageButton
                 android:id="@+id/start_navigation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
                 android:background="@null"
                 android:src="@mipmap/start_navi" />
-        </LinearLayout>
+        </RelativeLayout>
     </FrameLayout>
 
     <!--<LinearLayout-->

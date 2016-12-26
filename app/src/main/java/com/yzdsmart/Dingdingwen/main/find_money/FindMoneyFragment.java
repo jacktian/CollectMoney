@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -87,7 +88,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     TextView planeDistanceTV;
     @Nullable
     @BindView(R.id.route_ope_layout)
-    LinearLayout routeOpeLayout;
+    RelativeLayout routeOpeLayout;
 
     private static final String TAG = "FindMoneyFragment";
 
@@ -234,16 +235,13 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     @Optional
-    @OnClick({R.id.center_title, R.id.reached_location, R.id.start_navigation, R.id.find_money_scan, R.id.find_money_pay, R.id.find_money_bag, R.id.find_money_recommend, R.id.loc_scan_coins})
+    @OnClick({R.id.center_title, R.id.start_navigation, R.id.find_money_scan, R.id.find_money_pay, R.id.find_money_bag, R.id.find_money_recommend, R.id.loc_scan_coins})
     void onClick(View view) {
         Fragment fragment;
         Bundle bundle;
         switch (view.getId()) {
             case R.id.center_title:
                 clearRoutePlan();
-                break;
-            case R.id.reached_location:
-                reachTargetLocation();
                 break;
             case R.id.start_navigation:
 //                if (Utils.isInstallApp(getActivity(), "com.autonavi.minimap")) {
@@ -279,6 +277,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 } else {
                     ((MainActivity) getActivity()).showSnackbar("您还未安装地图应用,请先安装才能导航");
                 }
+                reachTargetLocation();
                 break;
             case R.id.find_money_scan:
                 bundle = new Bundle();

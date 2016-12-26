@@ -24,6 +24,8 @@ public class Constants {
     public static final String PERSONAL_WITHDRAW_LOG_ACTION_CODE = "1668";
     public static final String PERSONAL_BACKGROUND_BAG_ACTION_CODE = "1516";
     public static final String PERSONAL_PAYMENT_ACTION_CODE = "388";
+    public static final String PERSONAL_PAYMENT_LOG_ACTION_CODE = "2712";
+    public static final String PERSONAL_COUPON_LOG_ACTION_CODE = "2728";
 
     public static final String RECOMMEND_FRIEND_ACTION_CODE = "8566";
 
@@ -56,6 +58,8 @@ public class Constants {
     public static final String SHOP_GALLEY_DELETE_ACTION_CODE = "4201";//删除商铺相册
     public static final String PERSONAL_GALLEY_UPLOAD_ACTION_CODE = "2102";//上传个人相册
     public static final String SHOP_GALLEY_UPLOAD_ACTION_CODE = "5101";//上传商铺相册
+    public static final String SHOP_PAYMENT_LOG_ACTION_CODE = "2812";
+    public static final String SHOP_COUPON_LOG_ACTION_CODE = "2828";
 
     public static final String SHOP_PAY_LOG_ACTION_CODE = "816";//获取指定商铺支付日志
     public static final String SHOP_COUPON_ACTION_CODE = "211";//获取指定商铺兑换列表

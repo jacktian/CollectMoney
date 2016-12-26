@@ -25,12 +25,14 @@ import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.GalleyInfo;
 import com.yzdsmart.Dingdingwen.buy_coins.BuyCoinsActivity;
+import com.yzdsmart.Dingdingwen.coupon_log.CouponLogActivity;
 import com.yzdsmart.Dingdingwen.edit_personal_info.EditPersonalInfoActivity;
 import com.yzdsmart.Dingdingwen.edit_shop_info.EditShopInfoActivity;
 import com.yzdsmart.Dingdingwen.focused_shop.FocusedShopActivity;
 import com.yzdsmart.Dingdingwen.galley.GalleyActivity;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopInfoByPersRequestResponse;
+import com.yzdsmart.Dingdingwen.payment_log.PaymentLogActivity;
 import com.yzdsmart.Dingdingwen.publish_tasks.PublishTasksActivity;
 import com.yzdsmart.Dingdingwen.publish_tasks_log.PublishTasksLogActivity;
 import com.yzdsmart.Dingdingwen.register_business.RegisterBusinessActivity;
@@ -287,7 +289,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.user_avater, R.id.to_settings, R.id.shop_avater, R.id.to_shop_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser, R.id.to_withdraw_log, R.id.to_shop_withdraw_log, R.id.to_withdraw, R.id.to_shop_withdraw, R.id.to_shop_detail, R.id.to_shop_scanned_log, R.id.to_personal_galley})
+    @OnClick({R.id.title_left_operation_layout, R.id.user_avater, R.id.to_personal_payment_log_panel, R.id.to_personal_coupon_log_panel, R.id.to_settings, R.id.shop_avater, R.id.to_shop_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser, R.id.to_withdraw_log, R.id.to_shop_withdraw_log, R.id.to_withdraw, R.id.to_shop_withdraw, R.id.to_shop_detail, R.id.to_shop_scanned_log, R.id.to_personal_galley})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -303,6 +305,24 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
                 File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "CollectMoney");
                 startActivityForResult(BGAPhotoPickerActivity.newIntent(PersonalActivity.this, takePhotoDir, 1, null, true), Constants.REQUEST_CODE_CHOOSE_PHOTO);
+                break;
+            case R.id.to_personal_payment_log_panel:
+                bundle = new Bundle();
+                if (SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", "").trim().length() > 0) {
+                    bundle.putInt("userType", 1);
+                } else {
+                    bundle.putInt("userType", 0);
+                }
+                openActivity(PaymentLogActivity.class, bundle, 0);
+                break;
+            case R.id.to_personal_coupon_log_panel:
+                bundle = new Bundle();
+                if (SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", "").trim().length() > 0) {
+                    bundle.putInt("userType", 1);
+                } else {
+                    bundle.putInt("userType", 0);
+                }
+                openActivity(CouponLogActivity.class, bundle, 0);
                 break;
             case R.id.to_settings:
             case R.id.to_shop_settings:
