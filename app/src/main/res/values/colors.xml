@@ -27,6 +27,7 @@
     <color name="orange">#fc7d1c</color>
     <color name="orange_hover">#fb9547</color>
     <color name="orange_disable">#f3c5bf</color>
+    <color name="shadow">#cc222222</color>
 
     <!--启动页-->
     <color name="splash_button">#f20044</color>
@@ -101,4 +102,8 @@
     <color name="timepicker_toolbar_bg">#e60012</color>
     <color name="timepicker_dialog_bg">#80000000</color>
     <color name="timepicker_line">#e8e8e8</color>
+    <!--地图选择对话框-->
+    <color name="navi_picker_line">#11000000</color>
+    <color name="navi_picker_text_blank">#ff4b4b4b</color>
+    <color name="navi_picker_orage">#fff08519</color>
 </resources>

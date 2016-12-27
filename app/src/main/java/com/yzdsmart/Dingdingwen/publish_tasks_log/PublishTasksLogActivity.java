@@ -21,6 +21,8 @@ import com.yzdsmart.Dingdingwen.buy_coins.BuyCoinsActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,10 +46,15 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
     @Nullable
+    @BindView(R.id.task_left_coins)
+    TextView taskLeftCoinsTV;
+    @Nullable
     @BindView(R.id.publish_list)
     UltimateRecyclerView publishListRV;
 
     private static final String TAG = "PublishTasksLogActivity";
+
+    private DecimalFormat decimalFormat;
 
     private PublishTasksLogContract.PublishTasksLogPresenter mPresenter;
 
@@ -65,6 +72,8 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
         super.onCreate(savedInstanceState);
 
         logList = new ArrayList<PublishTaskLog>();
+        decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
@@ -105,7 +114,12 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
                 getPublishTaskLog();
             }
         });
-        getPublishTaskLog();
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
+        mPresenter.publishTaskLog(Constants.PUBLISH_TASK_LOG_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), pageIndex, PAGE_SIZE, lastsequence, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+        mPresenter.getShopTaskLeftCoins(Constants.GET_TASKS_LEFT_COINS_ACTION_CODE, "", SharedPreferencesUtils.getString(this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     private void getPublishTaskLog() {
@@ -177,5 +191,10 @@ public class PublishTasksLogActivity extends BaseActivity implements PublishTask
         this.logList.clear();
         this.logList.addAll(logList);
         publishTasksAdapter.appendList(this.logList);
+    }
+
+    @Override
+    public void onGetShopTaskLeftCoins(Double goldNum) {
+        taskLeftCoinsTV.setText("剩余任务金币 " + decimalFormat.format(goldNum));
     }
 }

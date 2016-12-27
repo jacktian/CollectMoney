@@ -6,6 +6,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.PublishTaskLogRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopTaskLeftCoinsRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 
 /**
@@ -41,6 +42,36 @@ public class PublishTasksLogPresenter implements PublishTasksLogContract.Publish
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_publish_task_log));
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void getShopTaskLeftCoins(String action, String submitCode, String bazaCode, String authorization) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.getShopTaskLeftCoins(action, submitCode, bazaCode, authorization, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                ShopTaskLeftCoinsRequestResponse response = (ShopTaskLeftCoinsRequestResponse) result;
+                if ("OK".equals(response.getActionStatus())) {
+                    mView.onGetShopTaskLeftCoins(response.getGoldNum());
+                } else {
+                    ((BaseActivity) context).showSnackbar(response.getErrorInfo());
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_task_left_coins));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

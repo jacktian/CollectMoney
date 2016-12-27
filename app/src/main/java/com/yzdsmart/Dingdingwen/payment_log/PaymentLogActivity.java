@@ -1,7 +1,5 @@
 package com.yzdsmart.Dingdingwen.payment_log;
 
-import android.graphics.DashPathEffect;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.marshalchen.ultimaterecyclerview.ui.divideritemdecoration.HorizontalDividerItemDecoration;
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
@@ -58,7 +55,6 @@ public class PaymentLogActivity extends BaseActivity implements PaymentLogContra
     private Integer lastsequence = 0;//保存的分页数列值，第一页默认为：0  第二页开始必须根据第一页返回值lastsequence进行传递
 
     private LinearLayoutManager mLinearLayoutManager;
-    private Paint dividerPaint;
     private List<PaymentLog> paymentLogList;
     private PaymentLogAdapter logAdapter;
 
@@ -83,17 +79,10 @@ public class PaymentLogActivity extends BaseActivity implements PaymentLogContra
         MobclickAgent.openActivityDurationTrack(false);
 
         mLinearLayoutManager = new LinearLayoutManager(this);
-        dividerPaint = new Paint();
-        dividerPaint.setStrokeWidth(1);
-        dividerPaint.setColor(getResources().getColor(R.color.divider_grey));
-        dividerPaint.setAntiAlias(true);
-        dividerPaint.setPathEffect(new DashPathEffect(new float[]{25.0f, 25.0f}, 0));
-        HorizontalDividerItemDecoration dividerItemDecoration = new HorizontalDividerItemDecoration.Builder(this).paint(dividerPaint).build();
 
         logAdapter = new PaymentLogAdapter(this);
         paymentLogListRV.setHasFixedSize(true);
         paymentLogListRV.setLayoutManager(mLinearLayoutManager);
-        paymentLogListRV.addItemDecoration(dividerItemDecoration);
         paymentLogListRV.setAdapter(logAdapter);
         paymentLogListRV.reenableLoadmore();
         paymentLogListRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {

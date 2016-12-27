@@ -23,16 +23,17 @@
                 android:gravity="center_horizontal"
                 android:text=""
                 android:textColor="@color/font_grey"
-                android:textSize="@dimen/font_xx_small" />
+                android:textSize="@dimen/font_x_small" />
 
             <TextView
                 android:id="@+id/end_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
                 android:gravity="center_horizontal"
                 android:text=""
                 android:textColor="@color/font_grey"
-                android:textSize="@dimen/font_xx_small" />
+                android:textSize="@dimen/font_x_small" />
         </LinearLayout>
 
     </RelativeLayout>

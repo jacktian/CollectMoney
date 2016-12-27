@@ -33,6 +33,7 @@ import com.yzdsmart.Dingdingwen.http.response.ShopInfoByPersRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopListRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopPayLogRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopTaskLeftCoinsRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopWithdrawLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.UploadFileRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ValidateBankCardRequestResponse;
@@ -945,6 +946,18 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.TASKLOG)
     Observable<CouponLogRequestResponse> getShopCouponLogs(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
+
+    /**
+     * 获取商铺发布任务剩余总金币数
+     *
+     * @param action
+     * @param submitCode
+     * @param bazaCode
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.GOLD)
+    Observable<ShopTaskLeftCoinsRequestResponse> getShopTaskLeftCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Header("Authorization") String authorization);
 
     /**
      * 获取推荐列表

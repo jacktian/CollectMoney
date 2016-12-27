@@ -110,7 +110,7 @@
                         android:maxLength="9"
                         android:textColor="@color/font_black"
                         android:textColorHint="@color/font_grey"
-                        android:textSize="@dimen/font_small" />
+                        android:textSize="@dimen/font_large" />
                 </LinearLayout>
 
                 <RelativeLayout
@@ -137,13 +137,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textColor="@color/font_grey"
-                            android:textSize="@dimen/font_medium" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="个"
                             android:textColor="@color/font_grey"
                             android:textSize="@dimen/font_medium" />
 

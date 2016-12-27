@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
+import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.CoinType;
 
@@ -96,6 +97,11 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (0 == coinType.getGoldType()) {
+                    ((MainActivity) context).onDismissBackgroundBag();
+                    ((BaseActivity) context).showSnackbar("普通金币暂不支持兑换");
+                    return;
+                }
                 ((MainActivity) context).exchangeCoupon(coinType.getGoldType());
             }
         });
@@ -129,7 +135,7 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
         }
 
         public void setCoinCounts(Double coinCounts) {
-            coinCountsTV.setText(decimalFormat.format(coinCounts) + "个");
+            coinCountsTV.setText(decimalFormat.format(coinCounts));
         }
     }
 }

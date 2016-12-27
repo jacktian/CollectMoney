@@ -1,6 +1,7 @@
 package com.yzdsmart.Dingdingwen.coupon_log;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.CouponLog;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -97,10 +99,8 @@ public class CouponLogAdapter extends UltimateViewAdapter<CouponLogAdapter.ViewH
     public void onBindViewHolder(ViewHolder holder, int position) {
         CouponLog couponLog = logList.get(position);
         holder.setUserAvater(userType == 1 ? couponLog.getImageUrl() : couponLog.getLogoImageUrl());
-        holder.setNameValue(userType == 1 ? couponLog.getCNickName() : couponLog.getBazaName());
         holder.setCoinCounts(couponLog.getGoldNum());
-        holder.setCouponDesc(couponLog.getShow());
-        holder.setGoldType(couponLog.getGoldName());
+        holder.setCouponDesc(userType == 1 ? couponLog.getCNickName() : couponLog.getBazaName(), couponLog.getShow());
         holder.setTimeDuration(couponLog.getTimeStr());
     }
 
@@ -122,20 +122,11 @@ public class CouponLogAdapter extends UltimateViewAdapter<CouponLogAdapter.ViewH
         @BindView(R.id.shop_avater)
         ImageView shopAvaterIV;
         @Nullable
-        @BindView(R.id.name_title)
-        TextView nameTitleTV;
-        @Nullable
-        @BindView(R.id.name_value)
-        TextView nameValueTV;
-        @Nullable
         @BindView(R.id.coin_counts)
         TextView coinCountsTV;
         @Nullable
         @BindView(R.id.coupon_desc)
         TextView couponDescTV;
-        @Nullable
-        @BindView(R.id.gold_type)
-        TextView goldTypeTV;
         @Nullable
         @BindView(R.id.time_duration)
         TextView timeDurationTV;
@@ -147,12 +138,10 @@ public class CouponLogAdapter extends UltimateViewAdapter<CouponLogAdapter.ViewH
                 case 1:
                     ButterKnife.apply(shopAvaterIV, ((BaseActivity) context).BUTTERKNIFEGONE);
                     ButterKnife.apply(userAvaterIV, ((BaseActivity) context).BUTTERKNIFEVISIBLE);
-                    nameTitleTV.setText("用户姓名");
                     break;
                 case 0:
                     ButterKnife.apply(shopAvaterIV, ((BaseActivity) context).BUTTERKNIFEVISIBLE);
                     ButterKnife.apply(userAvaterIV, ((BaseActivity) context).BUTTERKNIFEGONE);
-                    nameTitleTV.setText("商铺名称");
                     break;
             }
         }
@@ -168,20 +157,29 @@ public class CouponLogAdapter extends UltimateViewAdapter<CouponLogAdapter.ViewH
             }
         }
 
-        public void setNameValue(String shopName) {
-            nameValueTV.setText(shopName);
-        }
-
         public void setCoinCounts(Double coinCounts) {
-            coinCountsTV.setText(decimalFormat.format(coinCounts));
+            Drawable drawable = getResources().getDrawable(R.mipmap.yzd_coin);
+            drawable.setBounds(0, 0, (int) Utils.getScreenRatio(context) * 24, (int) Utils.getScreenRatio(context) * 24);
+            coinCountsTV.setCompoundDrawables(drawable, null, null, null);
+            switch (userType) {
+                case 0:
+                    coinCountsTV.setText(" -" + decimalFormat.format(coinCounts));
+                    break;
+                case 1:
+                    coinCountsTV.setText(" +" + decimalFormat.format(coinCounts));
+                    break;
+            }
         }
 
-        public void setCouponDesc(String couponDesc) {
-            couponDescTV.setText(couponDesc);
-        }
-
-        public void setGoldType(String goldType) {
-            goldTypeTV.setText(goldType);
+        public void setCouponDesc(String userName, String couponDesc) {
+            switch (userType) {
+                case 0:
+                    couponDescTV.setText("兑换了 " + userName + " " + couponDesc);
+                    break;
+                case 1:
+                    couponDescTV.setText(userName + " 兑换了 " + couponDesc);
+                    break;
+            }
         }
 
         public void setTimeDuration(String timeDuration) {

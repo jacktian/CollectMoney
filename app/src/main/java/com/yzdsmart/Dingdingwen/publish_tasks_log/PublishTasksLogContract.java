@@ -20,6 +20,13 @@ public interface PublishTasksLogContract {
          */
         void onPublishTaskLog(List<PublishTaskLog> logList, Integer lastsequence);
 
+        /**
+         * 获取商铺发布任务剩余总金币数
+         *
+         * @param goldNum
+         */
+        void onGetShopTaskLeftCoins(Double goldNum);
+
     }
 
     interface PublishTasksLogPresenter extends BasePresenter {
@@ -35,6 +42,16 @@ public interface PublishTasksLogContract {
          * @param lastsequence
          */
         void publishTaskLog(String action, String submitCode, String bazaCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization);
+
+        /**
+         * 获取商铺发布任务剩余总金币数
+         *
+         * @param action
+         * @param submitCode
+         * @param bazaCode
+         * @param authorization
+         */
+        void getShopTaskLeftCoins(String action, String submitCode, String bazaCode, String authorization);
 
         void unRegisterSubscribe();
     }

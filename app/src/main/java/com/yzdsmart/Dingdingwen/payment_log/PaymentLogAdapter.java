@@ -1,6 +1,7 @@
 package com.yzdsmart.Dingdingwen.payment_log;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.PaymentLog;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -97,11 +99,10 @@ public class PaymentLogAdapter extends UltimateViewAdapter<PaymentLogAdapter.Vie
     public void onBindViewHolder(ViewHolder holder, int position) {
         PaymentLog paymentLog = logList.get(position);
         holder.setUserAvater(userType == 1 ? paymentLog.getImageUrl() : paymentLog.getLogoImageUrl());
-        holder.setNameValue(userType == 1 ? paymentLog.getCNickName() : paymentLog.getBazaName());
+        holder.setUserName(userType == 1 ? paymentLog.getCNickName() : paymentLog.getBazaName());
         holder.setCoinCounts(paymentLog.getGoldNum());
-        holder.setTotalAmount(paymentLog.getAmount());
         holder.setActualAmount(paymentLog.getPayAmount());
-        holder.setTimeDuration(paymentLog.getTimeStr());
+        holder.setCreateTime(paymentLog.getCreateTime());
     }
 
     @Override
@@ -122,23 +123,17 @@ public class PaymentLogAdapter extends UltimateViewAdapter<PaymentLogAdapter.Vie
         @BindView(R.id.shop_avater)
         ImageView shopAvaterIV;
         @Nullable
-        @BindView(R.id.name_title)
-        TextView nameTitleTV;
-        @Nullable
-        @BindView(R.id.name_value)
-        TextView nameValueTV;
+        @BindView(R.id.user_name)
+        TextView userNameTV;
         @Nullable
         @BindView(R.id.coin_counts)
         TextView coinCountsTV;
         @Nullable
-        @BindView(R.id.total_amount)
-        TextView totalAmountTV;
-        @Nullable
         @BindView(R.id.actual_amount)
         TextView actualAmountTV;
         @Nullable
-        @BindView(R.id.time_duration)
-        TextView timeDurationTV;
+        @BindView(R.id.create_time)
+        TextView createTimeTV;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -147,12 +142,10 @@ public class PaymentLogAdapter extends UltimateViewAdapter<PaymentLogAdapter.Vie
                 case 1:
                     ButterKnife.apply(shopAvaterIV, ((BaseActivity) context).BUTTERKNIFEGONE);
                     ButterKnife.apply(userAvaterIV, ((BaseActivity) context).BUTTERKNIFEVISIBLE);
-                    nameTitleTV.setText("用户姓名");
                     break;
                 case 0:
                     ButterKnife.apply(shopAvaterIV, ((BaseActivity) context).BUTTERKNIFEVISIBLE);
                     ButterKnife.apply(userAvaterIV, ((BaseActivity) context).BUTTERKNIFEGONE);
-                    nameTitleTV.setText("商铺名称");
                     break;
             }
         }
@@ -168,24 +161,37 @@ public class PaymentLogAdapter extends UltimateViewAdapter<PaymentLogAdapter.Vie
             }
         }
 
-        public void setNameValue(String shopName) {
-            nameValueTV.setText(shopName);
+        public void setUserName(String userName) {
+            userNameTV.setText(userName);
         }
 
         public void setCoinCounts(Double coinCounts) {
-            coinCountsTV.setText(decimalFormat.format(coinCounts));
-        }
-
-        public void setTotalAmount(Double totalAmount) {
-            totalAmountTV.setText(decimalFormat.format(totalAmount));
+            Drawable drawable = getResources().getDrawable(R.mipmap.yzd_coin);
+            drawable.setBounds(0, 0, (int) Utils.getScreenRatio(context) * 24, (int) Utils.getScreenRatio(context) * 24);
+            coinCountsTV.setCompoundDrawables(drawable, null, null, null);
+            switch (userType) {
+                case 0:
+                    coinCountsTV.setText(" -" + decimalFormat.format(coinCounts));
+                    break;
+                case 1:
+                    coinCountsTV.setText(" +" + decimalFormat.format(coinCounts));
+                    break;
+            }
         }
 
         public void setActualAmount(Double actualAmount) {
-            actualAmountTV.setText(decimalFormat.format(actualAmount));
+            switch (userType) {
+                case 0:
+                    actualAmountTV.setText("-" + decimalFormat.format(actualAmount));
+                    break;
+                case 1:
+                    actualAmountTV.setText("+" + decimalFormat.format(actualAmount));
+                    break;
+            }
         }
 
-        public void setTimeDuration(String timeDuration) {
-            timeDurationTV.setText(timeDuration);
+        public void setCreateTime(String createTime) {
+            createTimeTV.setText(createTime);
         }
     }
 }

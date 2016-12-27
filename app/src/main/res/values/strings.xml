@@ -434,6 +434,7 @@
     <string name="error_get_left_coins">获取剩余金币异常</string>
     <string name="error_publish_task">发布任务异常</string>
     <string name="error_get_publish_task_log">获取任务日志异常</string>
+    <string name="error_get_shop_task_left_coins">获取任务剩余金币异常</string>
     <string name="error_register_business">升级商户异常</string>
     <string name="error_get_scan_coin_log">获取扫币日志异常</string>
     <string name="error_set_follow">关注店铺异常</string>

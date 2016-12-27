@@ -44,7 +44,10 @@ import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
+import com.yzdsmart.Dingdingwen.views.navi_picker.APPUtil;
+import com.yzdsmart.Dingdingwen.views.navi_picker.NaviPickerDialog;
 
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -234,6 +237,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         findMoneyMap.onSaveInstanceState(outState);
     }
 
+    private NaviPickerDialog naviPickerDialog;
+
     @Optional
     @OnClick({R.id.center_title, R.id.start_navigation, R.id.find_money_scan, R.id.find_money_pay, R.id.find_money_bag, R.id.find_money_recommend, R.id.loc_scan_coins})
     void onClick(View view) {
@@ -244,6 +249,70 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 clearRoutePlan();
                 break;
             case R.id.start_navigation:
+                naviPickerDialog = new NaviPickerDialog(getActivity(), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String pak = (String) view.getTag();
+                        Intent intent;
+                        switch (pak) {
+                            case "com.baidu.BaiduMap":
+                                intent = new Intent();
+                                double[] startLocation = gaoDeToBaidu(locLongitude, locLatitude);
+                                double[] endLocation = gaoDeToBaidu(routeTargetLocation.longitude, routeTargetLocation.latitude);
+                                intent.setData(Uri.parse("baidumap://map/direction?origin=" + startLocation[1] + "," + startLocation[0] + "&destination=" + endLocation[1] + "," + endLocation[0] + "&mode=walking"));
+                                ((MainActivity) getActivity()).startActivity(intent);
+                                break;
+                            case "com.autonavi.minimap":
+                                StringBuilder stringBuilder = new StringBuilder();
+                                stringBuilder.append("androidamap://navi?");
+                                try {
+                                    //填写应用名称
+                                    stringBuilder.append("sourceApplication=" + URLEncoder.encode("叮叮蚊", "utf-8"));
+                                    //导航目的地
+//                        stringBuilder.append("&poiname=" + URLEncoder.encode(poiItem.getTitle(), "utf-8"));
+                                    //目的地经纬度
+                                    stringBuilder.append("&lat=" + routeTargetLocation.latitude);
+                                    stringBuilder.append("&lon=" + routeTargetLocation.longitude);
+//                        stringBuilder.append("&dev=0&style=2");
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                //调用高德地图APP
+                                intent = new Intent();
+                                intent.setPackage("com.autonavi.minimap");
+                                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                                intent.setAction(Intent.ACTION_VIEW);
+                                //传递组装的数据
+                                intent.setData(Uri.parse(stringBuilder.toString()));
+                                ((MainActivity) getActivity()).startActivity(intent);
+                                break;
+                        }
+                        naviPickerDialog.dismiss();
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //###########################################
+                        //第一种方式：这种方式需要导入百度sdk，才能进行启调，如果没导入会找不到类
+                        //建议使用这种方式，对浏览器的兼容更好。
+                        //注释掉这里段代码，取消下面第二种方式的注释可以启用第二种方式
+//            NaviParaOption para = new NaviParaOption().startPoint(MyDistanceUtil.entity2Baidu(loc_now)).endPoint(MyDistanceUtil.entity2Baidu(loc_end));
+//            BaiduMapNavigation.openWebBaiduMapNavi(para, context);
+                        //###########################################
+
+                        //第二种方式：这种方式不需要导入百度sdk，可以直接使用
+                        //不推建使用这种方式，浏览器兼容问题比较严重，比如qq浏览器会封杀百度的此功能。
+                        //注释掉这里段代码，取消上面第一种方式的注释可以启用第一种方式
+                        //###########################################
+                        String url = APPUtil.getWebUrl_Baidu(loc_now, loc_end);
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(url));
+                        getActivity().startActivity(intent);
+                        //###########################################
+                        naviPickerDialog.dismiss();
+                    }
+                });
+                naviPickerDialog.show();
 //                if (Utils.isInstallApp(getActivity(), "com.autonavi.minimap")) {
 //                    StringBuilder stringBuilder = new StringBuilder();
 //                    stringBuilder.append("androidamap://navi?");
@@ -268,16 +337,16 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 //                    intent.setData(Uri.parse(stringBuilder.toString()));
 //                    ((MainActivity) getActivity()).startActivity(intent);
 //                } else
-                if (Utils.isInstallApp(getActivity(), "com.baidu.BaiduMap")) {
-                    Intent intent = new Intent();
-                    double[] startLocation = gaoDeToBaidu(locLongitude, locLatitude);
-                    double[] endLocation = gaoDeToBaidu(routeTargetLocation.longitude, routeTargetLocation.latitude);
-                    intent.setData(Uri.parse("baidumap://map/direction?origin=" + startLocation[1] + "," + startLocation[0] + "&destination=" + endLocation[1] + "," + endLocation[0] + "&mode=walking"));
-                    ((MainActivity) getActivity()).startActivity(intent);
-                } else {
-                    ((MainActivity) getActivity()).showSnackbar("您还未安装地图应用,请先安装才能导航");
-                }
-                reachTargetLocation();
+//                if (Utils.isInstallApp(getActivity(), "com.baidu.BaiduMap")) {
+//                    Intent intent = new Intent();
+//                    double[] startLocation = gaoDeToBaidu(locLongitude, locLatitude);
+//                    double[] endLocation = gaoDeToBaidu(routeTargetLocation.longitude, routeTargetLocation.latitude);
+//                    intent.setData(Uri.parse("baidumap://map/direction?origin=" + startLocation[1] + "," + startLocation[0] + "&destination=" + endLocation[1] + "," + endLocation[0] + "&mode=walking"));
+//                    ((MainActivity) getActivity()).startActivity(intent);
+//                } else {
+//                    ((MainActivity) getActivity()).showSnackbar("您还未安装地图应用,请先安装才能导航");
+//                }
+//                reachTargetLocation();
                 break;
             case R.id.find_money_scan:
                 bundle = new Bundle();
@@ -493,18 +562,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             marketMarker = null;
         }
         ButterKnife.apply(marketNameTV, BaseActivity.BUTTERKNIFEGONE);
-        if (isOnRoutePlane) {
-            isOnRoutePlane = false;
-            ButterKnife.apply(findOperationLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
-            ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
-        }
-        if (null != walkingRouteOverlay) {
-            walkingRouteOverlay.removeFromMap();
-            walkingRouteOverlay = null;
-        }
-        if (null != routeTargetLocation) {
-            routeTargetLocation = null;
-        }
+        clearRoutePlan();
         for (Marker marker : coinsMarkerList) {
             marker.remove();
         }
@@ -544,15 +602,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             marketMarker = null;
         }
         ButterKnife.apply(marketNameTV, BaseActivity.BUTTERKNIFEGONE);
-        if (isOnRoutePlane) {
-            isOnRoutePlane = false;
-            ButterKnife.apply(findOperationLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
-            ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
-        }
-        if (null != walkingRouteOverlay) {
-            walkingRouteOverlay.removeFromMap();
-            walkingRouteOverlay = null;
-        }
+        clearRoutePlan();
         for (Marker marker : coinsMarkerList) {
             marker.remove();
         }

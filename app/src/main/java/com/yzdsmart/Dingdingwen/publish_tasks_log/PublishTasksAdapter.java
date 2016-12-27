@@ -97,8 +97,10 @@ public class PublishTasksAdapter extends UltimateViewAdapter<PublishTasksAdapter
         DateTime beginTime = dtf.parseDateTime(log.getBeginTime());
         DateTime endTime = dtf.parseDateTime(log.getEndTime());
         holder.coinCountsTV.setText("-" + decimalFormat.format(log.getTotalGold()));
-        holder.startDateTV.setText("起 : " + beginTime.toString("yyyy-MM-dd"));
-        holder.endDateTV.setText("止 : " + endTime.toString("yyyy-MM-dd"));
+//        holder.startDateTV.setText("起 : " + beginTime.toString("yyyy-MM-dd"));
+//        holder.endDateTV.setText("止 : " + endTime.toString("yyyy-MM-dd"));
+        holder.startDateTV.setText(beginTime.toString("yyyy-MM-dd"));
+        holder.endDateTV.setText(endTime.toString("yyyy-MM-dd"));
         holder.leftCoinCountsTV.setText(decimalFormat.format(log.getOverGold()));
     }
 

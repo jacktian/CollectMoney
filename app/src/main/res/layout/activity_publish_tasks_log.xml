@@ -29,6 +29,18 @@
             android:textColor="@color/publish_log_buy_coin_button"
             android:textSize="@dimen/font_small" />
 
+        <TextView
+            android:id="@+id/task_left_coins"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="6dp"
+            android:paddingLeft="@dimen/activity_horizontal_padding"
+            android:paddingRight="@dimen/activity_horizontal_padding"
+            android:paddingTop="6dp"
+            android:text=""
+            android:textColor="@color/font_black"
+            android:textSize="@dimen/font_small" />
+
         <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
             android:id="@+id/publish_list"
             android:layout_width="match_parent"
