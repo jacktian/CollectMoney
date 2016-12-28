@@ -33,7 +33,7 @@ public class NaviPickerDialog extends Dialog {
 
     private List<AppInfo> apps;
     private String msg = "选择您需要打开的应用";
-    private String msg_default = "您的手机中暂没有安装支持导航工具，我们将打开浏览器进行web导航，我们任建议您下载百度或高德地图进行导航";
+    private String msg_default = "您暂没有安装支持导航工具,我们将打开浏览器进行web导航,我们建议您下载百度或高德地图进行导航";
     private String positiveStr = "继续导航";
     private String negativeStr = "取消";
 

@@ -1,6 +1,5 @@
 package com.yzdsmart.Dingdingwen.views;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
-import android.os.Build;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -204,7 +202,6 @@ public class GuideView extends RelativeLayout implements ViewTreeObserver.OnGlob
         this.center = center;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void hide() {
         Log.v(TAG, "hide");
         if (customGuideView != null) {
@@ -458,7 +455,7 @@ public class GuideView extends RelativeLayout implements ViewTreeObserver.OnGlob
     /**
      * 定义GuideView相对于targetView的方位，共八种。不设置则默认在targetView下方
      */
-    enum Direction {
+    public enum Direction {
         LEFT, TOP, RIGHT, BOTTOM,
         LEFT_TOP, LEFT_BOTTOM,
         RIGHT_TOP, RIGHT_BOTTOM
@@ -467,14 +464,14 @@ public class GuideView extends RelativeLayout implements ViewTreeObserver.OnGlob
     /**
      * 定义目标控件的形状，共3种。圆形，椭圆，带圆角的矩形（可以设置圆角大小），不设置则默认是圆形
      */
-    enum MyShape {
+    public enum MyShape {
         CIRCULAR, ELLIPSE, RECTANGULAR
     }
 
     /**
      * GuideView点击Callback
      */
-    interface OnClickCallback {
+    public interface OnClickCallback {
         void onClickedGuideView();
     }
 

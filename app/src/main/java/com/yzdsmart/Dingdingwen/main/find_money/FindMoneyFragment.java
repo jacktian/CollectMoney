@@ -7,6 +7,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,6 +51,7 @@ import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
+import com.yzdsmart.Dingdingwen.views.GuideView;
 import com.yzdsmart.Dingdingwen.views.navi_picker.NaviPickerDialog;
 
 import java.net.URLEncoder;
@@ -74,6 +78,18 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Nullable
     @BindView(R.id.market_name)
     TextView marketNameTV;
+    @Nullable
+    @BindView(R.id.find_money_scan)
+    ImageButton scanIB;
+    @Nullable
+    @BindView(R.id.find_money_pay)
+    ImageButton payIB;
+    @Nullable
+    @BindView(R.id.find_money_bag)
+    ImageButton bagIB;
+    @Nullable
+    @BindView(R.id.find_money_recommend)
+    ImageButton recommendIB;
     @Nullable
     @BindView(R.id.find_money_map)
     MapView findMoneyMap;
@@ -110,6 +126,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
     private FindMoneyContract.FindMoneyPresenter mPresenter;
 
+    private NaviPickerDialog naviPickerDialog;
+
     //检索到的位置列表信息
     List<Marker> coinsMarkerList = null;
 
@@ -134,12 +152,13 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
     private Marker marketMarker;//商场Marker
 
-    private RouteSearch mRouteSearch;
+    private RouteSearch mRouteSearch;//路径规划
     private boolean isOnRoutePlane = false;
     private LatLng routeTargetLocation;
-    private String routeTargetAddress;
+    private String routeTargetRegion;
+    private String routeTargetName;
 
-    private GeocodeSearch mgGeocodeSearch;//地址反编译
+    private GeocodeSearch mGeocodeSearch;//地址反编译
 
     private WalkRouteOverlay walkingRouteOverlay;
     private boolean isSearchRoute = false;
@@ -152,6 +171,102 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     public AMapLocationListener mLocationListener = null;
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
+
+    private GuideView scanGuideView;
+    private GuideView payGuideView;
+    private GuideView bagGuideView;
+    private GuideView recommendGuideView;
+
+    private void setGuideView() {
+        // 使用图片
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        ImageView scanIV = new ImageView(getActivity());
+        scanIV.setImageResource(R.mipmap.scan_guide_view);
+        scanIV.setLayoutParams(params);
+
+        ImageView payIV = new ImageView(getActivity());
+        payIV.setImageResource(R.mipmap.pay_guide_view);
+        payIV.setLayoutParams(params);
+
+        ImageView bagIV = new ImageView(getActivity());
+        bagIV.setImageResource(R.mipmap.bag_guide_view);
+        bagIV.setLayoutParams(params);
+
+        ImageView recommendIV = new ImageView(getActivity());
+        recommendIV.setImageResource(R.mipmap.recommend_guide_view);
+        recommendIV.setLayoutParams(params);
+
+        scanGuideView = GuideView.Builder
+                .newInstance(getActivity())
+                .setTargetView(scanIB)//设置目标
+                .setCustomGuideView(scanIV)
+                .setDirction(GuideView.Direction.RIGHT_BOTTOM)
+                .setOffset((int) (-100 * Utils.getScreenRatio(getActivity())), 0)
+                .setShape(GuideView.MyShape.CIRCULAR)   // 设置圆形显示区域，
+                .setBgColor(getActivity().getResources().getColor(R.color.shadow))
+                .setOnclickListener(new GuideView.OnClickCallback() {
+                    @Override
+                    public void onClickedGuideView() {
+                        scanGuideView.hide();
+                        payGuideView.show();
+                    }
+                })
+                .build();
+
+        payGuideView = GuideView.Builder
+                .newInstance(getActivity())
+                .setTargetView(payIB)//设置目标
+                .setCustomGuideView(payIV)
+                .setDirction(GuideView.Direction.LEFT_BOTTOM)
+                .setOffset((int) (160 * Utils.getScreenRatio(getActivity())), 0)
+                .setShape(GuideView.MyShape.CIRCULAR)   // 设置圆形显示区域，
+                .setBgColor(getActivity().getResources().getColor(R.color.shadow))
+                .setOnclickListener(new GuideView.OnClickCallback() {
+                    @Override
+                    public void onClickedGuideView() {
+                        payGuideView.hide();
+                        bagGuideView.show();
+                    }
+                })
+                .build();
+
+        bagGuideView = GuideView.Builder
+                .newInstance(getActivity())
+                .setTargetView(bagIB)//设置目标
+                .setCustomGuideView(bagIV)
+                .setDirction(GuideView.Direction.RIGHT_BOTTOM)
+                .setOffset((int) (-160 * Utils.getScreenRatio(getActivity())), 0)
+                .setShape(GuideView.MyShape.CIRCULAR)   // 设置圆形显示区域，
+                .setBgColor(getActivity().getResources().getColor(R.color.shadow))
+                .setOnclickListener(new GuideView.OnClickCallback() {
+                    @Override
+                    public void onClickedGuideView() {
+                        bagGuideView.hide();
+                        recommendGuideView.show();
+                    }
+                })
+                .build();
+
+        recommendGuideView = GuideView.Builder
+                .newInstance(getActivity())
+                .setTargetView(recommendIB)//设置目标
+                .setCustomGuideView(recommendIV)
+                .setDirction(GuideView.Direction.LEFT_BOTTOM)
+                .setOffset((int) (100 * Utils.getScreenRatio(getActivity())), 0)
+                .setShape(GuideView.MyShape.CIRCULAR)   // 设置圆形显示区域，
+                .setBgColor(getActivity().getResources().getColor(R.color.shadow))
+                .setOnclickListener(new GuideView.OnClickCallback() {
+                    @Override
+                    public void onClickedGuideView() {
+                        recommendGuideView.hide();
+                        ((MainActivity) getActivity()).showSearchGuide();
+                    }
+                })
+                .build();
+
+        scanGuideView.show();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -178,6 +293,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         centerTitleTV.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.find_money_title_logo), null, null, null);
         ButterKnife.apply(findOperationLayout, isOnRoutePlane ? ((BaseActivity) getActivity()).BUTTERKNIFEGONE : ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
         ButterKnife.apply(routePlaneLayout, isOnRoutePlane ? ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE : ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
+
+        if (null == SharedPreferencesUtils.getString(getActivity(), "hasGuide", "") || SharedPreferencesUtils.getString(getActivity(), "hasGuide", "").length() <= 0) {
+            setGuideView();
+        }
 
         findMoneyMap.onCreate(savedInstanceState);
 
@@ -243,8 +362,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         findMoneyMap.onSaveInstanceState(outState);
     }
 
-    private NaviPickerDialog naviPickerDialog;
-
     @Optional
     @OnClick({R.id.center_title, R.id.start_navigation, R.id.find_money_scan, R.id.find_money_pay, R.id.find_money_bag, R.id.find_money_recommend, R.id.loc_scan_coins})
     void onClick(View view) {
@@ -255,7 +372,10 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 clearRoutePlan();
                 break;
             case R.id.start_navigation:
-                if (null == routeTargetLocation) return;
+                if (null == routeTargetLocation) {
+                    ((MainActivity) getActivity()).showSnackbar("无法解析目的地地址");
+                    return;
+                }
                 naviPickerDialog = new NaviPickerDialog(getActivity(), new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -264,23 +384,25 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                         switch (pak) {
                             case "com.baidu.BaiduMap":
                                 intent = new Intent();
-                                double[] startLocation = gaoDeToBaidu(locLongitude, locLatitude);
                                 double[] endLocation = gaoDeToBaidu(routeTargetLocation.longitude, routeTargetLocation.latitude);
-                                intent.setData(Uri.parse("baidumap://map/walknavi?origin=" + startLocation[1] + "," + startLocation[0] + "&destination=" + endLocation[1] + "," + endLocation[0]));
+//                                intent.setData(Uri.parse("baidumap://map/walknavi?origin=" + startLocation[1] + "," + startLocation[0] + "&destination=" + endLocation[1] + "," + endLocation[0]));//导航
+                                intent.setData(Uri.parse("baidumap://map/marker?location=" + endLocation[1] + "," + endLocation[0] + "&title=" + routeTargetName + "&traffic=on"));//地图标注
                                 ((MainActivity) getActivity()).startActivity(intent);
                                 break;
                             case "com.autonavi.minimap":
                                 StringBuilder stringBuilder = new StringBuilder();
-                                stringBuilder.append("androidamap://navi?");
+//                                stringBuilder.append("androidamap://navi?");//导航
+                                stringBuilder.append("androidamap://viewMap?");//地图标注
                                 try {
                                     //填写应用名称
                                     stringBuilder.append("sourceApplication=" + URLEncoder.encode("叮叮蚊", "utf-8"));
                                     //导航目的地
-//                        stringBuilder.append("&poiname=" + URLEncoder.encode(poiItem.getTitle(), "utf-8"));
+                                    stringBuilder.append("&poiname=" + URLEncoder.encode(routeTargetName, "utf-8"));
                                     //目的地经纬度
                                     stringBuilder.append("&lat=" + routeTargetLocation.latitude);
                                     stringBuilder.append("&lon=" + routeTargetLocation.longitude);
-                                    stringBuilder.append("&dev=1&style=2");
+//                                    stringBuilder.append("&dev=1&style=2");
+                                    stringBuilder.append("&dev=1");
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -300,14 +422,14 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 }, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if (null == routeTargetRegion || routeTargetRegion.length() <= 0) {
+                            ((MainActivity) getActivity()).showSnackbar("无法解析目的地地址");
+                            return;
+                        }
                         //手机没有安装百度、高德地图，调用浏览器百度导航
                         double[] startLocation = gaoDeToBaidu(locLongitude, locLatitude);
                         double[] endLocation = gaoDeToBaidu(routeTargetLocation.longitude, routeTargetLocation.latitude);
-                        if (null == routeTargetAddress || routeTargetAddress.length() <= 0) {
-                            ((MainActivity) getActivity()).showSnackbar("无法解析终点地址");
-                            return;
-                        }
-                        String url = "http://api.map.baidu.com/direction?origin=latlng:" + startLocation[1] + "," + startLocation[0] + "|name:起点&destination=latlng:" + endLocation[1] + "," + endLocation[0] + "|name:终点&region=" + routeTargetAddress + "&mode=walking&output=html&src=叮叮蚊";
+                        String url = "http://api.map.baidu.com/direction?origin=latlng:" + startLocation[1] + "," + startLocation[0] + "|name:起点&destination=latlng:" + endLocation[1] + "," + endLocation[0] + "|name:终点&region=" + routeTargetRegion + "&mode=walking&output=html&src=叮叮蚊";
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse(url));
                         getActivity().startActivity(intent);
@@ -354,8 +476,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         mUiSettings.setZoomControlsEnabled(false);
         mRouteSearch = new RouteSearch(getActivity());
         mRouteSearch.setRouteSearchListener(this);
-        mgGeocodeSearch = new GeocodeSearch(getActivity());
-        mgGeocodeSearch.setOnGeocodeSearchListener(this);
+        mGeocodeSearch = new GeocodeSearch(getActivity());
+        mGeocodeSearch.setOnGeocodeSearchListener(this);
         mAMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -608,7 +730,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         }
     }
 
-    public void planRoute(String coor) {
+    public void planRoute(String coor, String shopName) {
         if (null == qLocation || qLocation.length() <= 0) {
             ((BaseActivity) getActivity()).showSnackbar("定位异常,重新定位");
             mLocationClient.startLocation();
@@ -618,12 +740,13 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             walkingRouteOverlay.removeFromMap();
             walkingRouteOverlay = null;
         }
+        routeTargetName = shopName;
         //点击检索点显示信息
         LatLonPoint stPoint = new LatLonPoint(locLatitude, locLongitude);//定位坐标点
         LatLonPoint endPoint = new LatLonPoint(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]));//目的坐标点
         RegeocodeQuery query = new RegeocodeQuery(endPoint, 200,
                 GeocodeSearch.AMAP);// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
-        mgGeocodeSearch.getFromLocationAsyn(query);// 设置同步逆地理编码请求
+        mGeocodeSearch.getFromLocationAsyn(query);// 设置同步逆地理编码请求
         routeTargetLocation = new LatLng(Double.valueOf(Double.valueOf(coor.split(",")[1])), Double.valueOf(Double.valueOf(coor.split(",")[0])));
         RouteSearch.FromAndTo fromAndTo = new RouteSearch.FromAndTo(stPoint, endPoint);
         RouteSearch.WalkRouteQuery walkRouteQuery = new RouteSearch.WalkRouteQuery(fromAndTo, RouteSearch.WalkDefault);
@@ -689,8 +812,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         if (rCode == 1000) {
             if (result != null && result.getRegeocodeAddress() != null
                     && result.getRegeocodeAddress().getFormatAddress() != null) {
-                routeTargetAddress = result.getRegeocodeAddress().getFormatAddress();
+                routeTargetRegion = result.getRegeocodeAddress().getFormatAddress();
+            } else {
+                ((MainActivity) getActivity()).showSnackbar("无法解析目的地地址");
             }
+        } else {
+            ((MainActivity) getActivity()).showSnackbar("无法解析目的地地址");
         }
     }
 

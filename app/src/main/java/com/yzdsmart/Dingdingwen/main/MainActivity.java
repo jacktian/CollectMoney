@@ -15,6 +15,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
@@ -47,6 +51,7 @@ import com.yzdsmart.Dingdingwen.tecent_im.service.TLSService;
 import com.yzdsmart.Dingdingwen.tecent_im.utils.PushUtil;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
+import com.yzdsmart.Dingdingwen.views.GuideView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,6 +75,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     @Nullable
     @BindView(R.id.unread_conversation_bubble)
     TextView unreadConversationBubbleTV;
+    @Nullable
+    @BindView(R.id.loc_scan_coins)
+    ImageButton searchIB;
 
     private UltimateRecyclerView backgroundBagRV;
     private TextView backgroundBagLoginCheck;
@@ -119,6 +127,33 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     private BackgroundBagAdapter bagAdapter;
     private boolean isFirstLoadBag = true;
     private BottomSheetDialog backgroundBagBottomSheetDialog;
+
+    private GuideView searchGuideView;
+
+    public void showSearchGuide() {
+        ImageView searchIV = new ImageView(this);
+        searchIV.setImageResource(R.mipmap.search_guide_view);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        searchIV.setLayoutParams(params);
+
+        searchGuideView = GuideView.Builder
+                .newInstance(this)
+                .setTargetView(searchIB)//设置目标
+                .setCustomGuideView(searchIV)
+                .setDirction(GuideView.Direction.TOP)
+                .setShape(GuideView.MyShape.CIRCULAR)   // 设置圆形显示区域，
+                .setBgColor(getResources().getColor(R.color.shadow))
+                .setOnclickListener(new GuideView.OnClickCallback() {
+                    @Override
+                    public void onClickedGuideView() {
+                        SharedPreferencesUtils.setString(MainActivity.this, "hasGuide", "true");
+                        searchGuideView.hide();
+                    }
+                })
+                .build();
+
+        searchGuideView.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -306,10 +341,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         }
     }
 
-    public void planRoute(String coor) {
+    public void planRoute(String coor, String shopName) {
         Fragment fragment = fm.findFragmentByTag("find");
         if (null != fragment) {
-            ((FindMoneyFragment) fragment).planRoute(coor);
+            ((FindMoneyFragment) fragment).planRoute(coor, shopName);
         }
     }
 

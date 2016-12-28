@@ -78,15 +78,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     };
 
-    //隐藏控件
-    public static final ButterKnife.Action<View> BUTTERKNIFEINVISIBLE = new ButterKnife.Action<View>() {
-
-        @Override
-        public void apply(View view, int index) {
-            view.setVisibility(View.INVISIBLE);
-        }
-    };
-
     //显示控件
     public static final ButterKnife.Action<View> BUTTERKNIFEVISIBLE = new ButterKnife.Action<View>() {
 
@@ -219,7 +210,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             dynamicDialog = null;
         }
     }
-
 
     /**
      * 显示分享九宫格

@@ -264,6 +264,7 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
     public void onExchangeCoupon(Double goldNum) {
         showSnackbar("兑换成功");
         coinCountsTV.setText(decimalFormat.format((Double.valueOf(coinCountsTV.getText().toString().trim()) - goldNum)));
+        showShare();
     }
 
     @Override

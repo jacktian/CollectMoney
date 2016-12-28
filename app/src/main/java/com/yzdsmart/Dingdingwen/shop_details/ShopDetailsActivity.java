@@ -263,7 +263,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
             case R.id.hotel_address:
                 if (null == shopCoor || shopCoor.trim().length() <= 0) return;
                 openActivityClear(MainActivity.class, null, 0);
-                MainActivity.getInstance().planRoute(shopCoor);
+                MainActivity.getInstance().planRoute(shopCoor, hotelNameTV.getText().toString());
                 break;
             case R.id.call_shop:
                 if (null != shopPhoneNumber && !"".equals(shopPhoneNumber)) {
