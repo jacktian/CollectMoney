@@ -172,6 +172,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
 
+    private Boolean isForeground = false;
+
+    public Boolean getIsForeground() {
+        return isForeground;
+    }
+
     private GuideView scanGuideView;
     private GuideView payGuideView;
     private GuideView bagGuideView;
@@ -310,6 +316,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart(TAG); //统计页面，"MainScreen"为页面名称，可自定义
+        isForeground = true;
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         findMoneyMap.onResume();
         mLocationClient.startLocation();
@@ -319,10 +326,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden) {
+            isForeground = false;
+            findMoneyMap.onPause();
             mPresenter.unRegisterSubscribe();
             mLocationClient.stopLocation();
-            findMoneyMap.onPause();
         } else {
+            isForeground = true;
             findMoneyMap.onResume();
             mLocationClient.startLocation();
         }
@@ -332,6 +341,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(TAG);
+        isForeground = false;
         //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
         findMoneyMap.onPause();
     }

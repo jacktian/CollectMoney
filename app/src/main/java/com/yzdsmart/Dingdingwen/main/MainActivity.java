@@ -3,7 +3,10 @@ package com.yzdsmart.Dingdingwen.main;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -187,6 +190,8 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 
         new MainPresenter(this, this, tlsService);
 
+        registerCustomMessageReceiver();
+
         imLogin();
 
         initJPush();
@@ -346,6 +351,19 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         if (null != fragment) {
             ((FindMoneyFragment) fragment).planRoute(coor, shopName);
         }
+    }
+
+    /**
+     * 找钱界面是否显示
+     *
+     * @return
+     */
+    public Boolean isFindForeground() {
+        Fragment fragment = fm.findFragmentByTag("find");
+        if (null != fragment) {
+            return ((FindMoneyFragment) fragment).getIsForeground();
+        }
+        return false;
     }
 
     public void exchangeCoupon(Integer goldType) {
@@ -709,6 +727,38 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             }
         }
     };
+
+    //for receive customer msg from jpush server
+    private MessageReceiver mMessageReceiver;
+
+    public void registerCustomMessageReceiver() {
+        mMessageReceiver = new MessageReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        filter.addAction("com.yzdsmart.Dingdingwen.CUSTOM_MESSAGE_RECEIVED_ACTION");
+        registerReceiver(mMessageReceiver, filter);
+    }
+
+    public class MessageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("com.yzdsmart.Dingdingwen.CUSTOM_MESSAGE_RECEIVED_ACTION".equals(intent.getAction())) {
+                String custom_title = intent.getStringExtra("custom_title");
+                String custom_message = intent.getStringExtra("custom_message");
+                String custom_content_type = intent.getStringExtra("custom_content_type");
+                StringBuilder showMsg = new StringBuilder();
+                showMsg.append("Title:" + custom_title + "\n");
+                showMsg.append("Message:" + custom_message + "\n");
+                showMsg.append("Content Type:" + custom_content_type);
+                showCustomMsg(showMsg.toString());
+            }
+        }
+    }
+
+    private void showCustomMsg(String msg) {
+        showSnackbar(msg);
+    }
 
 //    @Override
 //    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
