@@ -168,6 +168,11 @@
             android:layout_marginBottom="31dp"
             android:src="@mipmap/map_center_icon" />
 
+        <master.flame.danmaku.ui.widget.DanmakuView
+            android:id="@+id/danmu"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/find_money_danmu_height" />
+
         <TextView
             android:id="@+id/market_name"
             android:layout_width="match_parent"

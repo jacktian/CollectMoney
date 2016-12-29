@@ -757,7 +757,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     }
 
     private void showCustomMsg(String msg) {
-        showSnackbar(msg);
+        Fragment fragment = fm.findFragmentByTag("find");
+        if (null != fragment) {
+            ((FindMoneyFragment) fragment).showCustomMessage(msg);
+        }
     }
 
 //    @Override
