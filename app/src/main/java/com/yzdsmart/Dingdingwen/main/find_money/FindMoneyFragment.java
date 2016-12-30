@@ -357,7 +357,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         super.onResume();
         MobclickAgent.onPageStart(TAG); //统计页面，"MainScreen"为页面名称，可自定义
         isForeground = true;
-        if (danmuDV != null && danmuDV.isPrepared() && danmuDV.isPaused()) {
+        if (danmuDV != null && danmuDV.isPrepared()) {
             danmuDV.resume();
         }
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
@@ -391,7 +391,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         super.onPause();
         MobclickAgent.onPageEnd(TAG);
         isForeground = false;
-        if (danmuDV != null && danmuDV.isPrepared()) {
+        if (danmuDV != null && danmuDV.isPrepared() && danmuDV.isPaused()) {
             danmuDV.pause();
         }
         //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
@@ -941,7 +941,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     public void showCustomMessage(String msg) {
-        addDanmaKuShowTextAndImage(false, msg);
+        if (null == msg) return;
+        if (null != danmuDV && danmuDV.isPrepared()) {
+            danmuDV.pause();
+            danmuDV.resume();
+            addDanmaKuShowTextAndImage(false, msg);
+        }
     }
 
     private void initDanmu() {
@@ -954,13 +959,17 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_TOP, true);
 
         mDanmakuContext = DanmakuContext.create();
-        mDanmakuContext.setDanmakuStyle(IDisplayer.DANMAKU_STYLE_STROKEN, 3).setDuplicateMergingEnabled(false).setScrollSpeedFactor(1.2f).setScaleTextSize(1.2f)
-                .setCacheStuffer(new SpannedCacheStuffer(), mCacheStufferAdapter) // 图文混排使用SpannedCacheStuffer
+        mDanmakuContext.setDanmakuStyle(IDisplayer.DANMAKU_STYLE_STROKEN, 3)
+                .setDuplicateMergingEnabled(false)
+                .setScrollSpeedFactor(1.2f)
+                .setScaleTextSize(1.2f)
+//                .setCacheStuffer(new SpannedCacheStuffer(), mCacheStufferAdapter) // 图文混排使用SpannedCacheStuffer
+                .setCacheStuffer(new SpannedCacheStuffer(), null) // 图文混排使用SpannedCacheStuffer
 //        .setCacheStuffer(new BackgroundCacheStuffer())  // 绘制背景使用BackgroundCacheStuffer
                 .setMaximumLines(maxLinesPair)
                 .preventOverlapping(overlappingEnablePair);
         if (null != danmuDV) {
-            mDanmakuParser = createParser(getActivity().getResources().openRawResource(R.raw.comments));
+            mDanmakuParser = createParser(null);
             danmuDV.setCallback(new DrawHandler.Callback() {
                 @Override
                 public void prepared() {
@@ -998,13 +1007,12 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 }
             });
             danmuDV.prepare(mDanmakuParser, mDanmakuContext);
-            danmuDV.showFPS(true);
+            danmuDV.showFPS(false);
             danmuDV.enableDanmakuDrawingCache(true);
         }
     }
 
     private BaseCacheStuffer.Proxy mCacheStufferAdapter = new BaseCacheStuffer.Proxy() {
-
         private Drawable mDrawable;
 
         @Override
@@ -1015,7 +1023,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
                     @Override
                     public void run() {
-                        String url = "http://www.bilibili.com/favicon.ico";
+                        String url = "http://139.196.177.114:7288/Images/share.png";
                         InputStream inputStream = null;
                         Drawable drawable = mDrawable;
                         if (drawable == null) {
@@ -1032,8 +1040,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                                 IOUtils.closeQuietly(inputStream);
                             }
                         }
-                        if (drawable != null) {
-                            drawable.setBounds(0, 0, 100, 100);
+                        if (null != drawable) {
+                            drawable.setBounds(0, 0, 88, 88);
                             SpannableStringBuilder spannable = createSpannable(drawable, "");
                             danmaku.text = spannable;
                             if (danmuDV != null) {
@@ -1053,10 +1061,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     };
 
     private BaseDanmakuParser createParser(InputStream stream) {
-
         if (stream == null) {
             return new BaseDanmakuParser() {
-
                 @Override
                 protected Danmakus parse() {
                     return new Danmakus();
@@ -1083,7 +1089,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         ImageSpan span = new ImageSpan(drawable);//ImageSpan.ALIGN_BOTTOM);
         spannableStringBuilder.setSpan(span, 0, text.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         spannableStringBuilder.append(msg);
-        spannableStringBuilder.setSpan(new BackgroundColorSpan(Color.parseColor("#8A2233B1")), 0, spannableStringBuilder.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableStringBuilder.setSpan(new BackgroundColorSpan(Color.parseColor("#00000000")), 0, spannableStringBuilder.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         return spannableStringBuilder;
     }
 
@@ -1091,17 +1097,17 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private void addDanmaKuShowTextAndImage(boolean islive, String msg) {
         BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
         Drawable drawable = getResources().getDrawable(R.mipmap.yzd_coin);
-        drawable.setBounds(0, 0, 100, 100);
+        drawable.setBounds(0, 0, 88, 88);
         SpannableStringBuilder spannable = createSpannable(drawable, msg);
         danmaku.text = spannable;
         danmaku.padding = 5;
         danmaku.priority = 1;  // 一定会显示, 一般用于本机发送的弹幕
         danmaku.isLive = islive;
         danmaku.setTime(danmuDV.getCurrentTime() + 1200);
-        danmaku.textSize = 25f * (mDanmakuParser.getDisplayer().getDensity() - 0.6f);
+        danmaku.textSize = 20f * (mDanmakuParser.getDisplayer().getDensity() - 0.6f);
         danmaku.textColor = Color.RED;
         danmaku.textShadowColor = 0; // 重要：如果有图文混排，最好不要设置描边(设textShadowColor=0)，否则会进行两次复杂的绘制导致运行效率降低
-        danmaku.underlineColor = Color.GREEN;
+//        danmaku.underlineColor = Color.GREEN;
         danmuDV.addDanmaku(danmaku);
     }
 }

@@ -748,10 +748,13 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                 String custom_message = intent.getStringExtra("custom_message");
                 String custom_content_type = intent.getStringExtra("custom_content_type");
                 StringBuilder showMsg = new StringBuilder();
-                showMsg.append("Title:" + custom_title + "\n");
-                showMsg.append("Message:" + custom_message + "\n");
-                showMsg.append("Content Type:" + custom_content_type);
-                showCustomMsg(showMsg.toString());
+//                showMsg.append("Title:" + custom_title + "\n");
+//                showMsg.append("Message:" + custom_message + "\n");
+                showMsg.append(custom_message);
+//                showMsg.append("Content Type:" + custom_content_type);
+                if (null != custom_content_type && "ddwsys".equals(custom_content_type)) {
+                    showCustomMsg(showMsg.toString());
+                }
             }
         }
     }
