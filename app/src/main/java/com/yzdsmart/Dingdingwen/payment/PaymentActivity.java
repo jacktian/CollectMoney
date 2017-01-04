@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -25,6 +24,7 @@ import com.yzdsmart.Dingdingwen.bean.ShopDiscount;
 import com.yzdsmart.Dingdingwen.coupon_exchange.CouponExchangeActivity;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
+import com.yzdsmart.Dingdingwen.utils.AmountInputFilter;
 import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -126,22 +126,26 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
 
         shopDiscountList = new ArrayList<ShopDiscount>();
 
-        amountFilters = new InputFilter[]{new InputFilter() {
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                if (source.equals(".") && dest.toString().length() == 0) {
-                    return "0.";
-                }
-                if (dest.toString().contains(".")) {
-                    int index = dest.toString().indexOf(".");
-                    int mlength = dest.toString().substring(index).length();
-                    if (mlength == 3) {
-                        return "";
-                    }
-                }
-                return null;
-            }
-        }};
+//        amountFilters = new InputFilter[]{new InputFilter() {
+//            @Override
+//            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+//                if (source.equals(".") && dest.toString().length() == 0) {
+//                    return "0.";
+//                }
+//                if (dest.toString().contains(".")) {
+//                    int index = dest.toString().indexOf(".");
+//                    int mlength = dest.toString().substring(index).length();
+//                    if (mlength == 3) {
+//                        return "";
+//                    }
+//                }
+//                if (dest.toString().length() > 9) {
+//                    return "";
+//                }
+//                return null;
+//            }
+//        }};
+        amountFilters = new InputFilter[]{new AmountInputFilter()};
 
         if (null != savedInstanceState) {
             bazaCode = savedInstanceState.getString("bazaCode");
@@ -338,15 +342,31 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     @OnTextChanged(R.id.pay_amount)
     void onPayAmountChanged(CharSequence s, int i, int j, int k) {
         if (s.toString().length() > 0) {
+            if (".".equals(s.toString())) {
+                payAmountET.setText("");
+                return;
+            }
             if (0 >= Double.valueOf(payAmountET.getText().toString().trim())) {
                 actualAmountTV.setText("0");
                 confirmPayBtn.setEnabled(false);
                 return;
             }
             confirmPayBtn.setEnabled(true);
+            if (leftCoinCountsTV.getText().toString().trim().length() > 0) {
+                if ((Double.valueOf(payAmountET.getText().toString().trim()) - Double.valueOf(leftCoinCountsTV.getText().toString().trim())) < 0) {
+                    coinCountsET.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim())));
+                } else {
+                    coinCountsET.setText(decimalFormat.format(Double.valueOf(leftCoinCountsTV.getText().toString().trim())));
+                }
+            }
             if (null == shopDiscount) {
                 if (coinCountsET.getText().toString().trim().length() > 0) {
-                    actualAmountTV.setText(decimalFormat.format(Double.valueOf(s.toString().trim()) - Double.valueOf(coinCountsET.getText().toString().trim())));
+                    if ((Double.valueOf(payAmountET.getText().toString().trim()) - Double.valueOf(coinCountsET.getText().toString().trim())) < 0) {
+                        coinCountsET.setText(decimalFormat.format(Double.valueOf(s.toString().trim())));
+                        actualAmountTV.setText("0");
+                    } else {
+                        actualAmountTV.setText(decimalFormat.format(Double.valueOf(s.toString().trim()) - Double.valueOf(coinCountsET.getText().toString().trim())));
+                    }
                 } else {
                     actualAmountTV.setText(s.toString());
                 }
@@ -381,11 +401,20 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     void onCoinCountChanged(CharSequence s, int i, int j, int k) {
         if (payAmountET.getText().toString().trim().length() > 0) {
             if (s.toString().trim().length() > 0) {
+                if (".".equals(s.toString())) {
+                    coinCountsET.setText("");
+                    return;
+                }
                 if (Double.valueOf(s.toString().trim()) > Double.valueOf(leftCoinCountsTV.getText().toString().trim())) {
                     coinCountsET.setText(leftCoinCountsTV.getText().toString().trim());
                 }
                 if (null == shopDiscount) {
-                    actualAmountTV.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) - Double.valueOf(s.toString().trim())));
+                    if ((Double.valueOf(payAmountET.getText().toString().trim()) - Double.valueOf(s.toString().trim())) < 0) {
+                        coinCountsET.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim())));
+                        actualAmountTV.setText("0");
+                    } else {
+                        actualAmountTV.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) - Double.valueOf(s.toString().trim())));
+                    }
                 } else {
                     switch (shopDiscount.getDisType()) {
                         case 23:
@@ -415,6 +444,16 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                             break;
                     }
                     actualAmountTV.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString()) - discountPrice));
+                }
+            }
+        } else {
+            if (s.toString().trim().length() > 0) {
+                if (".".equals(s.toString())) {
+                    coinCountsET.setText("");
+                    return;
+                }
+                if (Double.valueOf(s.toString().trim()) > Double.valueOf(leftCoinCountsTV.getText().toString().trim())) {
+                    coinCountsET.setText(leftCoinCountsTV.getText().toString().trim());
                 }
             }
         }

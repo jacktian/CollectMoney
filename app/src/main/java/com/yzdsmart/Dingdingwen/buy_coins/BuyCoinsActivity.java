@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -30,6 +31,7 @@ import com.yzdsmart.Dingdingwen.bean.BuyCoinsLog;
 import com.yzdsmart.Dingdingwen.bean.CoinType;
 import com.yzdsmart.Dingdingwen.bean.ShopPayLog;
 import com.yzdsmart.Dingdingwen.publish_tasks.PublishTasksActivity;
+import com.yzdsmart.Dingdingwen.utils.AmountInputFilter;
 import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -117,6 +119,8 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     private CoinType selectedType;
     private List<CoinType> coinTypeList;
 
+    private InputFilter[] amountFilters;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,6 +134,28 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
             userType = getIntent().getExtras().getInt("userType");
         }
 
+//        amountFilters = new InputFilter[]{new InputFilter() {
+//            @Override
+//            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+//                if (source.equals(".") && dest.toString().length() == 0) {
+//                    return "0.";
+//                }
+//                if (dest.toString().contains(".")) {
+//                    int index = dest.toString().indexOf(".");
+//                    int mlength = dest.toString().substring(index).length();
+//                    if (mlength == 3) {
+//                        return "";
+//                    }
+//                }
+//                if (dest.toString().length() > 9) {
+//                    return "";
+//                }
+//                return null;
+//            }
+//        }};
+
+        amountFilters = new InputFilter[]{new AmountInputFilter()};
+
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
         switch (userType) {
@@ -141,6 +167,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 break;
         }
         payTypeGroup.setOnCheckedChangeListener(this);
+        coinCountsET.setFilters(amountFilters);
 
         new BuyCoinsPresenter(this, this);
 

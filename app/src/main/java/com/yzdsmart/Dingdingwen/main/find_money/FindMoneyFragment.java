@@ -943,8 +943,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     public void showCustomMessage(String msg) {
         if (null == msg) return;
         if (null != danmuDV && danmuDV.isPrepared()) {
-            danmuDV.pause();
-            danmuDV.resume();
+//            danmuDV.pause();
+//            danmuDV.resume();
             addDanmaKuShowTextAndImage(false, msg);
         }
     }
@@ -952,7 +952,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private void initDanmu() {
         // 设置最大显示行数
         HashMap<Integer, Integer> maxLinesPair = new HashMap<Integer, Integer>();
-        maxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 3); // 滚动弹幕最大显示5行
+        maxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 2); // 滚动弹幕最大显示2行
         // 设置是否禁止重叠
         HashMap<Integer, Boolean> overlappingEnablePair = new HashMap<Integer, Boolean>();
         overlappingEnablePair.put(BaseDanmaku.TYPE_SCROLL_RL, true);
@@ -1095,14 +1095,14 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
 
     private void addDanmaKuShowTextAndImage(boolean islive, String msg) {
-        BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
+        BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_FIX_TOP);
         Drawable drawable = getResources().getDrawable(R.mipmap.yzd_coin);
-        drawable.setBounds(0, 0, 88, 88);
+        drawable.setBounds(0, 0, 44, 44);
         SpannableStringBuilder spannable = createSpannable(drawable, msg);
         danmaku.text = spannable;
         danmaku.padding = 5;
-        danmaku.priority = 1;  // 一定会显示, 一般用于本机发送的弹幕
-        danmaku.isLive = islive;
+        danmaku.priority = 1;  //0 表示可能会被各种过滤器过滤并隐藏显示 //1 表示一定会显示, 一般用于本机发送的弹幕
+        danmaku.isLive = islive;//是否是直播弹幕
         danmaku.setTime(danmuDV.getCurrentTime() + 1200);
         danmaku.textSize = 20f * (mDanmakuParser.getDisplayer().getDensity() - 0.6f);
         danmaku.textColor = Color.RED;

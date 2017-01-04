@@ -347,3 +347,9 @@
 
 -dontwarn cn.bingoogolapple.**
 -keep class cn.bingoogolapple.** { *; }
+
+## ----------------------------------
+##      弹幕相关
+## ----------------------------------
+-dontwarn master.flame.danmaku.**
+-keep master.flame.danmaku.** { *; }

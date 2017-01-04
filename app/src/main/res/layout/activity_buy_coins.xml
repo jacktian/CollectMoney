@@ -179,7 +179,7 @@
                     android:background="@drawable/white_panel_bottom_border"
                     android:hint="@string/buy_coin_hint"
                     android:imeOptions="actionDone"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:maxLength="9"
                     android:maxLines="1"
                     android:paddingBottom="@dimen/common_text_view_padding"
