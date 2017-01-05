@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +28,7 @@ import com.yzdsmart.Dingdingwen.bean.PersonalWithdrawParameter;
 import com.yzdsmart.Dingdingwen.bean.ShopWithdrawParameter;
 import com.yzdsmart.Dingdingwen.card_bag.CardBagActivity;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
+import com.yzdsmart.Dingdingwen.utils.AmountInputFilter;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
@@ -118,22 +118,7 @@ public class WithDrawActivity extends BaseActivity implements WithDrawContract.W
 
         coinTypeList = new ArrayList<CoinType>();
 
-        amountFilters = new InputFilter[]{new InputFilter() {
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                if (source.equals(".") && dest.toString().length() == 0) {
-                    return "0.";
-                }
-                if (dest.toString().contains(".")) {
-                    int index = dest.toString().indexOf(".");
-                    int mlength = dest.toString().substring(index).length();
-                    if (mlength == 3) {
-                        return "";
-                    }
-                }
-                return null;
-            }
-        }};
+        amountFilters = new InputFilter[]{new AmountInputFilter()};
 
         if (null != savedInstanceState) {
             userType = savedInstanceState.getInt("userType");

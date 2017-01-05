@@ -134,26 +134,6 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
             userType = getIntent().getExtras().getInt("userType");
         }
 
-//        amountFilters = new InputFilter[]{new InputFilter() {
-//            @Override
-//            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-//                if (source.equals(".") && dest.toString().length() == 0) {
-//                    return "0.";
-//                }
-//                if (dest.toString().contains(".")) {
-//                    int index = dest.toString().indexOf(".");
-//                    int mlength = dest.toString().substring(index).length();
-//                    if (mlength == 3) {
-//                        return "";
-//                    }
-//                }
-//                if (dest.toString().length() > 9) {
-//                    return "";
-//                }
-//                return null;
-//            }
-//        }};
-
         amountFilters = new InputFilter[]{new AmountInputFilter()};
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
@@ -167,6 +147,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 break;
         }
         payTypeGroup.setOnCheckedChangeListener(this);
+
         coinCountsET.setFilters(amountFilters);
 
         new BuyCoinsPresenter(this, this);

@@ -12,13 +12,14 @@ import java.util.regex.Pattern;
 
 public class AmountInputFilter implements InputFilter {
     /**
-     * 最大数字，我们取int型最大值
+     * 最大数字
      */
-    public static final int MAX_VALUE = 100000000;
+    public static final double MAX_LENGTH = 7;
     /**
      * 小数点后的数字的位数
      */
     public static final int PONTINT_LENGTH = 2;
+
     Pattern p;
 
     public AmountInputFilter() {
@@ -34,10 +35,8 @@ public class AmountInputFilter implements InputFilter {
      * dend    原内容终点坐标，一般为dest长度-1
      */
     @Override
-    public CharSequence filter(CharSequence src, int start, int end,
-                               Spanned dest, int dstart, int dend) {
+    public CharSequence filter(CharSequence src, int start, int end, Spanned dest, int dstart, int dend) {
         String oldtext = dest.toString();
-        System.out.println(oldtext);
         //验证删除等按键
         if ("".equals(src.toString())) {
             return null;
@@ -55,17 +54,20 @@ public class AmountInputFilter implements InputFilter {
                 return null;
             }
         }
-        //验证输入金额的大小
-        if (!src.toString().equals("")) {
-            double dold = Double.parseDouble(oldtext + src.toString());
-            if (dold > MAX_VALUE) {
-                return dest.subSequence(dstart, dend);
-            } else if (dold == MAX_VALUE) {
-                if (src.toString().equals(".")) {
-                    return dest.subSequence(dstart, dend);
-                }
-            }
+        if (oldtext.length() > MAX_LENGTH) {
+            return dest.subSequence(dstart, dend);
         }
+//        //验证输入金额的大小
+//        if (!src.toString().equals("")) {
+//            double dold = Double.valueOf(oldtext + src.toString());
+//            if (dold > MAX_VALUE) {
+//                return dest.subSequence(dstart, dend);
+//            } else if (dold == MAX_VALUE) {
+//                if (src.toString().equals(".")) {
+//                    return dest.subSequence(dstart, dend);
+//                }
+//            }
+//        }
         //验证小数位精度是否正确
         if (oldtext.contains(".")) {
             int index = oldtext.indexOf(".");
@@ -78,4 +80,5 @@ public class AmountInputFilter implements InputFilter {
         }
         return dest.subSequence(dstart, dend) + src.toString();
     }
+
 }

@@ -188,7 +188,7 @@
                     android:paddingTop="@dimen/common_text_view_padding"
                     android:textColor="@color/font_black"
                     android:textColorHint="@color/font_grey"
-                    android:textSize="@dimen/font_medium" />
+                    android:textSize="@dimen/font_large" />
             </LinearLayout>
 
             <Button
