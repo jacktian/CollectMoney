@@ -29,6 +29,7 @@ import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomNestRadioGroup;
+import com.yzdsmart.Dingdingwen.views.PayTypeCheckDialog;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -67,8 +68,8 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     @BindView(R.id.shop_discount_title)
     TextView shopDiscountTitleTV;
     @Nullable
-    @BindView(R.id.pay_type_group)
-    CustomNestRadioGroup payTypeGroup;
+    @BindView(R.id.discount_types_arrow)
+    ImageView discountTypesArrowIV;
     @Nullable
     @BindView(R.id.discount_types)
     Spinner discountTypesBS;
@@ -118,6 +119,8 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     private List<ShopDiscount> shopDiscountList;
     private ShopDiscount shopDiscount;
 
+    private PayTypeCheckDialog payTypeCheckDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,7 +150,6 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
 
         MobclickAgent.openActivityDurationTrack(false);
 
-        payTypeGroup.setOnCheckedChangeListener(this);
         shopDiscountAdapter = new ShopDiscountAdapter(this);
         discountTypesBS.setAdapter(shopDiscountAdapter);
         discountTypesBS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -254,7 +256,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                     } else if ("user_cancelled".equals(errorMsg)) {
                         showSnackbar("支付已取消");
                     } else if ("wx_app_not_installed".equals(errorMsg)) {
-                        showSnackbar("您未安装微信/支付宝");
+                        showSnackbar("您未安装微信");
                     } else {
                         showSnackbar("付款失败");
                     }
@@ -293,38 +295,46 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 openActivity(CouponExchangeActivity.class, bundle, Constants.REQUEST_COUPON_EXCHANGE_CODE);
                 break;
             case R.id.confirm_payment:
-                if (!Utils.isNetUsable(this)) {
-                    showSnackbar(getResources().getString(R.string.net_unusable));
-                    return;
+                if (0 == Double.valueOf(actualAmountTV.getText().toString().trim())) {
+                    submitPayment();
+                } else {
+                    showPayTypeCheckDialog();
                 }
-                PaymentParameter.PayParaBean payInfoBean = new PaymentParameter.PayParaBean();
-                payInfoBean.setAmount(Double.valueOf(actualAmountTV.getText().toString().trim()));
-                payInfoBean.setCurrency("cny");
-                payInfoBean.setSubject("叮叮蚊消费支付");
-                payInfoBean.setBody("消费支付");
-                payInfoBean.setClient_IP(NetworkUtils.getIPAddress(true));
-                switch (payType) {
-                    case 0:
-                        payInfoBean.setChannel(CHANNEL_UPACP);
-                        break;
-                    case 1:
-                        payInfoBean.setChannel(CHANNEL_WECHAT);
-                        break;
-                    case 2:
-                        payInfoBean.setChannel(CHANNEL_ALIPAY);
-                        break;
-                }
-                PaymentParameter paymentParameter = new PaymentParameter();
-                paymentParameter.setSubmitCode("0000000");
-                paymentParameter.setBazaCode(bazaCode);
-                paymentParameter.setCustCode(SharedPreferencesUtils.getString(PaymentActivity.this, "cust_code", ""));
-                paymentParameter.setUseGold(coinCountsET.getText().toString().trim().length() > 0 ? Double.valueOf(coinCountsET.getText().toString().trim()) : 0d);
-                paymentParameter.setDiscount(discountPrice);
-                paymentParameter.setTotal(Double.valueOf(payAmountET.getText().toString().trim()));
-                paymentParameter.setPayPara(payInfoBean);
-                mPresenter.submitPayment(Constants.PERSONAL_PAYMENT_ACTION_CODE, gson.toJson(paymentParameter), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
         }
+    }
+
+    private void submitPayment() {
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
+        PaymentParameter.PayParaBean payInfoBean = new PaymentParameter.PayParaBean();
+        payInfoBean.setAmount(Double.valueOf(actualAmountTV.getText().toString().trim()));
+        payInfoBean.setCurrency("cny");
+        payInfoBean.setSubject("叮叮蚊消费支付");
+        payInfoBean.setBody("消费支付");
+        payInfoBean.setClient_IP(NetworkUtils.getIPAddress(true));
+        switch (payType) {
+            case 0:
+                payInfoBean.setChannel(CHANNEL_UPACP);
+                break;
+            case 1:
+                payInfoBean.setChannel(CHANNEL_WECHAT);
+                break;
+            case 2:
+                payInfoBean.setChannel(CHANNEL_ALIPAY);
+                break;
+        }
+        PaymentParameter paymentParameter = new PaymentParameter();
+        paymentParameter.setSubmitCode("0000000");
+        paymentParameter.setBazaCode(bazaCode);
+        paymentParameter.setCustCode(SharedPreferencesUtils.getString(PaymentActivity.this, "cust_code", ""));
+        paymentParameter.setUseGold(coinCountsET.getText().toString().trim().length() > 0 ? Double.valueOf(coinCountsET.getText().toString().trim()) : 0d);
+        paymentParameter.setDiscount(discountPrice);
+        paymentParameter.setTotal(Double.valueOf(payAmountET.getText().toString().trim()));
+        paymentParameter.setPayPara(payInfoBean);
+        mPresenter.submitPayment(Constants.PERSONAL_PAYMENT_ACTION_CODE, gson.toJson(paymentParameter), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Optional
@@ -497,9 +507,11 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
         shopDiscountAdapter.appendList(shopDiscounts);
         if (shopDiscounts.size() == 0) {
             ButterKnife.apply(shopDiscountTitleTV, BUTTERKNIFEGONE);
+            ButterKnife.apply(discountTypesArrowIV, BUTTERKNIFEGONE);
             ButterKnife.apply(discountTypesBS, BUTTERKNIFEGONE);
         } else {
             ButterKnife.apply(shopDiscountTitleTV, BUTTERKNIFEVISIBLE);
+            ButterKnife.apply(discountTypesArrowIV, BUTTERKNIFEVISIBLE);
             ButterKnife.apply(discountTypesBS, BUTTERKNIFEVISIBLE);
         }
     }
@@ -519,6 +531,35 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             return;
         }
         Pingpp.createPayment(PaymentActivity.this, gson.toJson(charge));
+    }
+
+    private void showPayTypeCheckDialog() {
+        payType = 1;
+        payTypeCheckDialog = new PayTypeCheckDialog(this);
+        payTypeCheckDialog.show();
+        CustomNestRadioGroup payTypeGroup = (CustomNestRadioGroup) payTypeCheckDialog.findViewById(R.id.pay_type_group);
+        payTypeGroup.setOnCheckedChangeListener(this);
+        Button dialogCancel = (Button) payTypeCheckDialog.findViewById(R.id.dialog_cancel);
+        Button dialogConfirm = (Button) payTypeCheckDialog.findViewById(R.id.dialog_confirm);
+        dialogCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null != payTypeCheckDialog) {
+                    payTypeCheckDialog.dismiss();
+                    payTypeCheckDialog = null;
+                }
+            }
+        });
+        dialogConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null != payTypeCheckDialog) {
+                    payTypeCheckDialog.dismiss();
+                    payTypeCheckDialog = null;
+                }
+                submitPayment();
+            }
+        });
     }
 
     @Override

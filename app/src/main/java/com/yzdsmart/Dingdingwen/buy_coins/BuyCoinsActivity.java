@@ -1,6 +1,7 @@
 package com.yzdsmart.Dingdingwen.buy_coins;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
@@ -12,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.InputFilter;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -36,6 +38,7 @@ import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomNestRadioGroup;
+import com.yzdsmart.Dingdingwen.views.PayTypeCheckDialog;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,9 +72,8 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
     @Nullable
     @BindView(R.id.coin_list)
     UltimateRecyclerView coinListRV;
-    @Nullable
-    @BindView(R.id.pay_type_group)
-    CustomNestRadioGroup payTypeGroup;
+
+    private Dialog payTypeCheckDialog;
 
     private static final String TAG = "BuyCoinsActivity";
 
@@ -146,7 +148,6 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 centerTitleTV.setText("商铺购买金币");
                 break;
         }
-        payTypeGroup.setOnCheckedChangeListener(this);
 
         coinCountsET.setFilters(amountFilters);
 
@@ -306,39 +307,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                     showSnackbar("请选择金币类型");
                     return;
                 }
-                if (!Utils.isNetUsable(this)) {
-                    showSnackbar(getResources().getString(R.string.net_unusable));
-                    return;
-                }
-                Double amount = Double.valueOf(coinCountsET.getText().toString());
-                // 支付宝 微信支付 银联
-                BuyCoinParameter.PayParaBean payPara = new BuyCoinParameter.PayParaBean();
-                payPara.setCurrency("cny");
-                payPara.setAmount(amount);
-                payPara.setSubject("叮叮蚊支付");
-                payPara.setBody("充值金币");
-                payPara.setClient_IP(NetworkUtils.getIPAddress(true));
-                switch (payType) {
-                    case 0:
-                        payPara.setChannel(CHANNEL_UPACP);
-                        break;
-                    case 1:
-                        payPara.setChannel(CHANNEL_WECHAT);
-                        break;
-                    case 2:
-                        payPara.setChannel(CHANNEL_ALIPAY);
-                        break;
-                }
-                BuyCoinParameter buyCoinParameter = new BuyCoinParameter();
-                buyCoinParameter.setSubmitCode("000000");
-                buyCoinParameter.setBazaCode(SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""));
-                buyCoinParameter.setGoldNum(Double.valueOf(coinCountsET.getText().toString()));
-                buyCoinParameter.setGoldType(selectedType.getGoldType());
-                buyCoinParameter.setPayPara(payPara);
-//                showMoveDialog(this, Integer.valueOf(coinCountsET.getText().toString()));
-//                mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
-                mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, gson.toJson(buyCoinParameter), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
-//                orderPayPPP();
+                showPayTypeCheckDialog();
                 break;
         }
     }
@@ -425,7 +394,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                     } else if ("user_cancelled".equals(errorMsg)) {
                         showSnackbar("支付已取消");
                     } else if ("wx_app_not_installed".equals(errorMsg)) {
-                        showSnackbar("您未安装微信/支付宝");
+                        showSnackbar("您未安装微信");
                     } else {
                         showSnackbar("购买金币支付失败");
                     }
@@ -509,6 +478,68 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
             coinTypeList.addAll(coinTypes);
             coinTypesAdapter.appendList(coinTypes);
         }
+    }
+
+    private void showPayTypeCheckDialog() {
+        payType = 1;
+        payTypeCheckDialog = new PayTypeCheckDialog(this);
+        payTypeCheckDialog.show();
+        CustomNestRadioGroup payTypeGroup = (CustomNestRadioGroup) payTypeCheckDialog.findViewById(R.id.pay_type_group);
+        payTypeGroup.setOnCheckedChangeListener(this);
+        Button dialogCancel = (Button) payTypeCheckDialog.findViewById(R.id.dialog_cancel);
+        Button dialogConfirm = (Button) payTypeCheckDialog.findViewById(R.id.dialog_confirm);
+        dialogCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null != payTypeCheckDialog) {
+                    payTypeCheckDialog.dismiss();
+                    payTypeCheckDialog = null;
+                }
+            }
+        });
+        dialogConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null != payTypeCheckDialog) {
+                    payTypeCheckDialog.dismiss();
+                    payTypeCheckDialog = null;
+                }
+                if (!Utils.isNetUsable(BuyCoinsActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
+                Double amount = Double.valueOf(coinCountsET.getText().toString());
+                // 支付宝 微信支付 银联
+                BuyCoinParameter.PayParaBean payPara = new BuyCoinParameter.PayParaBean();
+                payPara.setCurrency("cny");
+                payPara.setAmount(amount);
+                payPara.setSubject("叮叮蚊支付");
+                payPara.setBody("充值金币");
+                payPara.setClient_IP(NetworkUtils.getIPAddress(true));
+                switch (payType) {
+                    case 0:
+                        payPara.setChannel(CHANNEL_UPACP);
+                        break;
+                    case 1:
+                        payPara.setChannel(CHANNEL_WECHAT);
+                        break;
+                    case 2:
+                        payPara.setChannel(CHANNEL_ALIPAY);
+                        break;
+                }
+                BuyCoinParameter buyCoinParameter = new BuyCoinParameter();
+                buyCoinParameter.setSubmitCode("000000");
+                buyCoinParameter.setBazaCode(SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""));
+                buyCoinParameter.setGoldNum(Double.valueOf(coinCountsET.getText().toString()));
+                buyCoinParameter.setGoldType(selectedType.getGoldType());
+                buyCoinParameter.setPayPara(payPara);
+//                showMoveDialog(this, Integer.valueOf(coinCountsET.getText().toString()));
+//                mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, "000000", SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""), Integer.valueOf(coinCountsET.getText().toString()), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                mPresenter.buyCoins(Constants.BUY_COIN_ACTION_CODE, gson.toJson(buyCoinParameter), SharedPreferencesUtils.getString(BuyCoinsActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(BuyCoinsActivity.this, "ddw_access_token", ""));
+//                orderPayPPP();
+                coinCountsET.setText("");
+            }
+        });
     }
 
     @Override
