@@ -111,7 +111,7 @@
                     android:layout_height="@dimen/edit_height"
                     android:layout_weight="2"
                     android:gravity="right|center_vertical"
-                    android:text="0"
+                    android:text="0.00"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/font_medium" />
             </LinearLayout>
@@ -172,7 +172,7 @@
                     android:layout_height="@dimen/edit_height"
                     android:layout_weight="2"
                     android:gravity="right|center_vertical"
-                    android:text="0"
+                    android:text="0.00"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/font_medium" />
             </LinearLayout>

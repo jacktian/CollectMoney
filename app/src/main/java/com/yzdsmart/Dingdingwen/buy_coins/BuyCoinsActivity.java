@@ -40,6 +40,7 @@ import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomNestRadioGroup;
 import com.yzdsmart.Dingdingwen.views.PayTypeCheckDialog;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -320,19 +321,19 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
         switch (payType) {
             case 0:
                 payPara = new BuyCoinParameter.PayParaBean();
-                payPara.setAmount(amount);
+                payPara.setAmount(new BigDecimal(coinCountsET.getText().toString().trim()).setScale(2, BigDecimal.ROUND_DOWN));
                 payPara.setChannel(CHANNEL_UPACP);
                 payPara.setBody("购买金币");
                 break;
             case 1:
                 payPara = new BuyCoinParameter.PayParaBean();
-                payPara.setAmount(amount);
+                payPara.setAmount(new BigDecimal(coinCountsET.getText().toString().trim()).setScale(2, BigDecimal.ROUND_DOWN));
                 payPara.setChannel(CHANNEL_WECHAT);
                 payPara.setBody("购买金币");
                 break;
             case 2:
                 payPara = new BuyCoinParameter.PayParaBean();
-                payPara.setAmount(amount);
+                payPara.setAmount(new BigDecimal(coinCountsET.getText().toString().trim()).setScale(2, BigDecimal.ROUND_DOWN));
                 payPara.setChannel(CHANNEL_ALIPAY);
                 payPara.setBody("购买金币");
                 break;
@@ -508,11 +509,10 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
                 }
-                Double amount = Double.valueOf(coinCountsET.getText().toString());
                 // 支付宝 微信支付 银联
                 BuyCoinParameter.PayParaBean payPara = new BuyCoinParameter.PayParaBean();
                 payPara.setCurrency("cny");
-                payPara.setAmount(amount);
+                payPara.setAmount(new BigDecimal(coinCountsET.getText().toString().trim()).setScale(2, BigDecimal.ROUND_DOWN));
                 payPara.setSubject("叮叮蚊支付");
                 payPara.setBody("充值金币");
                 payPara.setClient_IP(NetworkUtils.getIPAddress(true));
@@ -530,7 +530,7 @@ public class BuyCoinsActivity extends BaseActivity implements BuyCoinsContract.B
                 BuyCoinParameter buyCoinParameter = new BuyCoinParameter();
                 buyCoinParameter.setSubmitCode("000000");
                 buyCoinParameter.setBazaCode(SharedPreferencesUtils.getString(BuyCoinsActivity.this, "baza_code", ""));
-                buyCoinParameter.setGoldNum(Double.valueOf(coinCountsET.getText().toString()));
+                buyCoinParameter.setGoldNum(new BigDecimal(coinCountsET.getText().toString().trim()).setScale(2, BigDecimal.ROUND_DOWN));
                 buyCoinParameter.setGoldType(selectedType.getGoldType());
                 buyCoinParameter.setPayPara(payPara);
 //                showMoveDialog(this, Integer.valueOf(coinCountsET.getText().toString()));

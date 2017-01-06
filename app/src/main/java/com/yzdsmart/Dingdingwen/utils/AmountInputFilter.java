@@ -12,9 +12,9 @@ import java.util.regex.Pattern;
 
 public class AmountInputFilter implements InputFilter {
     /**
-     * 最大数字
+     * 最大位数
      */
-    public static final double MAX_LENGTH = 7;
+    public static final double MAX_LENGTH = 6;
     /**
      * 小数点后的数字的位数
      */

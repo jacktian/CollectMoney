@@ -1,5 +1,7 @@
 package com.yzdsmart.Dingdingwen.bean;
 
+import java.math.BigDecimal;
+
 /**
  * Created by YZD on 2016/12/18.
  */
@@ -19,9 +21,9 @@ public class PaymentParameter {
     private String SubmitCode;
     private String BazaCode;
     private String CustCode;
-    private Double UseGold;
-    private Double Discount;
-    private Double Total;
+    private BigDecimal UseGold;
+    private BigDecimal Discount;
+    private BigDecimal Total;
     private PayParaBean PayPara;
 
     public String getSubmitCode() {
@@ -48,27 +50,27 @@ public class PaymentParameter {
         CustCode = custCode;
     }
 
-    public Double getUseGold() {
+    public BigDecimal getUseGold() {
         return UseGold;
     }
 
-    public void setUseGold(Double useGold) {
+    public void setUseGold(BigDecimal useGold) {
         UseGold = useGold;
     }
 
-    public Double getDiscount() {
+    public BigDecimal getDiscount() {
         return Discount;
     }
 
-    public void setDiscount(Double discount) {
+    public void setDiscount(BigDecimal discount) {
         Discount = discount;
     }
 
-    public Double getTotal() {
+    public BigDecimal getTotal() {
         return Total;
     }
 
-    public void setTotal(Double total) {
+    public void setTotal(BigDecimal total) {
         Total = total;
     }
 
@@ -90,18 +92,18 @@ public class PaymentParameter {
          * Client_IP : 127.0.0.1
          */
 
-        private Double Amount;
+        private BigDecimal Amount;
         private String Channel;
         private String Currency;
         private String Subject;
         private String Body;
         private String Client_IP;
 
-        public Double getAmount() {
+        public BigDecimal getAmount() {
             return Amount;
         }
 
-        public void setAmount(Double amount) {
+        public void setAmount(BigDecimal amount) {
             Amount = amount;
         }
 

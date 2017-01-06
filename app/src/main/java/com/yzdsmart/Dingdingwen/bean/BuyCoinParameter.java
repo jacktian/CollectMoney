@@ -1,5 +1,7 @@
 package com.yzdsmart.Dingdingwen.bean;
 
+import java.math.BigDecimal;
+
 /**
  * Created by YZD on 2016/10/27.
  */
@@ -16,7 +18,7 @@ public class BuyCoinParameter {
 
     private String SubmitCode;
     private String BazaCode;
-    private Double GoldNum;
+    private BigDecimal GoldNum;
     private Integer GoldType;
     private PayParaBean PayPara;
 
@@ -36,11 +38,11 @@ public class BuyCoinParameter {
         BazaCode = bazaCode;
     }
 
-    public Double getGoldNum() {
+    public BigDecimal getGoldNum() {
         return GoldNum;
     }
 
-    public void setGoldNum(Double goldNum) {
+    public void setGoldNum(BigDecimal goldNum) {
         GoldNum = goldNum;
     }
 
@@ -70,18 +72,18 @@ public class BuyCoinParameter {
          * Client_IP : 127.0.0.1
          */
 
-        private Double Amount;
+        private BigDecimal Amount;
         private String Channel;
         private String Currency;
         private String Subject;
         private String Body;
         private String Client_IP;
 
-        public Double getAmount() {
+        public BigDecimal getAmount() {
             return Amount;
         }
 
-        public void setAmount(Double amount) {
+        public void setAmount(BigDecimal amount) {
             Amount = amount;
         }
 

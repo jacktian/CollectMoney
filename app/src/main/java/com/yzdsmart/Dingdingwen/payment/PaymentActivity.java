@@ -170,7 +170,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                             BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
                             BigDecimal discountPriceBig = new BigDecimal(discountPrice.toString());
                             coinCountsET.setText(decimalFormat.format(Double.valueOf(payAmountBig.subtract(discountPriceBig).toString())));
-                            actualAmountTV.setText("0");
+                            actualAmountTV.setText("0.00");
                         } else {
                             BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
                             BigDecimal discountPriceBig = new BigDecimal(discountPrice.toString());
@@ -310,7 +310,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             return;
         }
         PaymentParameter.PayParaBean payInfoBean = new PaymentParameter.PayParaBean();
-        payInfoBean.setAmount(Double.valueOf(actualAmountTV.getText().toString().trim()));
+        payInfoBean.setAmount(new BigDecimal(actualAmountTV.getText().toString().trim()).setScale(2, BigDecimal.ROUND_DOWN));
         payInfoBean.setCurrency("cny");
         payInfoBean.setSubject("叮叮蚊消费支付");
         payInfoBean.setBody("消费支付");
@@ -330,9 +330,9 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
         paymentParameter.setSubmitCode("0000000");
         paymentParameter.setBazaCode(bazaCode);
         paymentParameter.setCustCode(SharedPreferencesUtils.getString(PaymentActivity.this, "cust_code", ""));
-        paymentParameter.setUseGold(coinCountsET.getText().toString().trim().length() > 0 ? Double.valueOf(coinCountsET.getText().toString().trim()) : 0d);
-        paymentParameter.setDiscount(discountPrice);
-        paymentParameter.setTotal(Double.valueOf(payAmountET.getText().toString().trim()));
+        paymentParameter.setUseGold(coinCountsET.getText().toString().trim().length() > 0 ? new BigDecimal(coinCountsET.getText().toString().trim()).setScale(2, BigDecimal.ROUND_DOWN) : new BigDecimal(0d).setScale(2, BigDecimal.ROUND_DOWN));
+        paymentParameter.setDiscount(new BigDecimal(discountPrice).setScale(2, BigDecimal.ROUND_DOWN));
+        paymentParameter.setTotal(new BigDecimal(payAmountET.getText().toString().trim()).setScale(2, BigDecimal.ROUND_DOWN));
         paymentParameter.setPayPara(payInfoBean);
         mPresenter.submitPayment(Constants.PERSONAL_PAYMENT_ACTION_CODE, gson.toJson(paymentParameter), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
@@ -346,7 +346,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 return;
             }
             if (0 >= Double.valueOf(payAmountET.getText().toString().trim())) {
-                actualAmountTV.setText("0");
+                actualAmountTV.setText("0.00");
                 confirmPayBtn.setEnabled(false);
                 return;
             }
@@ -362,7 +362,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 if (coinCountsET.getText().toString().trim().length() > 0) {
                     if ((Double.valueOf(payAmountET.getText().toString().trim()) - Double.valueOf(coinCountsET.getText().toString().trim())) < 0) {
                         coinCountsET.setText(decimalFormat.format(Double.valueOf(s.toString().trim())));
-                        actualAmountTV.setText("0");
+                        actualAmountTV.setText("0.00");
                     } else {
                         BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
                         BigDecimal coinCountsBig = new BigDecimal(coinCountsET.getText().toString().trim());
@@ -385,7 +385,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                         BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
                         BigDecimal discountPriceBig = new BigDecimal(discountPrice.toString());
                         coinCountsET.setText(decimalFormat.format(Double.valueOf(payAmountBig.subtract(discountPriceBig).toString())));
-                        actualAmountTV.setText("0");
+                        actualAmountTV.setText("0.00");
                     } else {
                         BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
                         BigDecimal discountPriceBig = new BigDecimal(discountPrice.toString());
@@ -399,7 +399,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 }
             }
         } else {
-            actualAmountTV.setText("0");
+            actualAmountTV.setText("0.00");
             confirmPayBtn.setEnabled(false);
         }
     }
@@ -419,7 +419,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 if (null == shopDiscount) {
                     if ((Double.valueOf(payAmountET.getText().toString().trim()) - Double.valueOf(s.toString().trim())) < 0) {
                         coinCountsET.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim())));
-                        actualAmountTV.setText("0");
+                        actualAmountTV.setText("0.00");
                     } else {
                         BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
                         BigDecimal coinCountsBig = new BigDecimal(coinCountsET.getText().toString().trim());
@@ -438,7 +438,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                         BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
                         BigDecimal discountPriceBig = new BigDecimal(discountPrice.toString());
                         coinCountsET.setText(decimalFormat.format(Double.valueOf(payAmountBig.subtract(discountPriceBig).toString())));
-                        actualAmountTV.setText("0");
+                        actualAmountTV.setText("0.00");
                     } else {
                         BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
                         BigDecimal discountPriceBig = new BigDecimal(discountPrice.toString());
@@ -525,7 +525,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
         if (null == charge) {
             coinCountsET.setText("");
             payAmountET.setText("");
-            actualAmountTV.setText("0");
+            actualAmountTV.setText("0.00");
             showSnackbar("付款成功");
             initData();
             return;
