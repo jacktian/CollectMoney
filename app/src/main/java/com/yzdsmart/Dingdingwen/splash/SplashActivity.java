@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
@@ -78,7 +77,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.Splas
 
         if (null == SharedPreferencesUtils.getString(this, "isFirstOpen", "") || SharedPreferencesUtils.getString(this, "isFirstOpen", "").trim().length() <= 0) {
             if (!Utils.isNetUsable(SplashActivity.this)) {
-                Toast.makeText(this, getResources().getString(R.string.net_unusable), Toast.LENGTH_SHORT).show();
+                showSnackbar(getResources().getString(R.string.net_unusable));
                 return;
             }
             mPresenter.appRegister(Utils.getDeviceId(this), "182c79dbf8871689878b0de620006ea3", "7ed99e89c4831f169627b5d20a0020f7c1a9b026244e6364ac1c12a9fa2314fe");

@@ -131,6 +131,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     private boolean isFirstLoadBag = true;
     private BottomSheetDialog backgroundBagBottomSheetDialog;
 
+    private List<String> customMsgList;
+    private Handler showCustomMsgHandler = new Handler();
+    private Runnable showCustomMsgRunnable;
+
     private GuideView searchGuideView;
 
     public void showSearchGuide() {
@@ -166,6 +170,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 
         conversationList = new LinkedList<Conversation>();
         pgConversationList = new ArrayList<Conversation>();
+        customMsgList = new ArrayList<String>();
 
         fm = getFragmentManager();
 
@@ -195,6 +200,18 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         imLogin();
 
         initJPush();
+
+        showCustomMsgRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (null == customMsgList || customMsgList.size() <= 0) {
+//                    showCustomMsgHandler.removeCallbacks(this);
+                    return;
+                }
+                showCustomMsg(customMsgList.get(0));
+            }
+        };
+        showCustomMsgHandler.postDelayed(showCustomMsgRunnable, 3000);
 
 //        mConnection = new ServiceConnection() {
 //            @Override
@@ -253,6 +270,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         mPresenter.unRegisterObserver();
         JPushInterface.stopPush(App.getAppInstance());
         stopRefreshAccessToken = true;
+        if (null != showCustomMsgHandler && null != showCustomMsgRunnable) {
+            showCustomMsgHandler.removeCallbacks(showCustomMsgRunnable);
+        }
         if (null != mService) {
             unbindService(mConnection);
         }
@@ -401,6 +421,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                     }
                     return true;
                 }
+                break;
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -485,6 +506,25 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         groupManageConversation.setUnreadCount(unreadCount);
         Collections.sort(conversationList);
         updateUnreadConversationBubble();
+    }
+
+    @Override
+    public void reRegisterApp() {
+        if (null == SharedPreferencesUtils.getString(this, "isFirstOpen", "") || SharedPreferencesUtils.getString(this, "isFirstOpen", "").trim().length() <= 0) {
+            if (!Utils.isNetUsable(MainActivity.this)) {
+                showSnackbar(getResources().getString(R.string.net_unusable));
+                return;
+            }
+            mPresenter.appRegister(Utils.getDeviceId(this), "182c79dbf8871689878b0de620006ea3", "7ed99e89c4831f169627b5d20a0020f7c1a9b026244e6364ac1c12a9fa2314fe");
+        }
+    }
+
+    @Override
+    public void onAppRegister(boolean flag) {
+        if (flag) {
+            mRefreshAccessTokenHandler.sendEmptyMessage(0);
+            SharedPreferencesUtils.setString(this, "isFirstOpen", "true");
+        }
     }
 
     @Override
@@ -753,9 +793,15 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                 showMsg.append(custom_message);
 //                showMsg.append("Content Type:" + custom_content_type);
                 if (null != custom_content_type && "ddwsys".equals(custom_content_type)) {
-                    showCustomMsg(showMsg.toString());
+                    saveMessage(showMsg.toString());
                 }
             }
+        }
+    }
+
+    private void saveMessage(String message) {
+        if (null != customMsgList) {
+            customMsgList.add(message);
         }
     }
 

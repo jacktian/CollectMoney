@@ -45,6 +45,11 @@ public interface GalleyContract {
          * 上传图片
          */
         void onUploadGalley();
+
+        /**
+         * 上传图片失败
+         */
+        void onUploadGalleyFail();
     }
 
     interface GalleyPreviewPresenter extends BasePresenter {

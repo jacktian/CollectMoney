@@ -19,6 +19,7 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.BackgroundBagRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendshipInfo;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.GroupInfo;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo;
@@ -188,7 +189,35 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
     }
 
     @Override
+    public void appRegister(String appCode, String appId, String appSecret) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.init_app));
+        mModel.appRegister(appCode, appId, appSecret, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                RequestResponse requestResponse = (RequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onAppRegister(true);
+                } else {
+                    mView.onAppRegister(false);
+                }
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                mView.onAppRegister(false);
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
     public void getRefreshToken(String grantType, String userName, String password) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.init_app));
         mModel.getRefreshToken(grantType, userName, password, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -202,18 +231,23 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
 //                ((BaseActivity) context).showSnackbar(err);
+                if (err.contains("400 Bad Request")) {
+                    mView.reRegisterApp();
+                }
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }
 
     @Override
     public void refreshAccessToken(String grantType, String refreshToken) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.init_app));
         mModel.refreshAccessToken(grantType, refreshToken, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -227,6 +261,7 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 if (err.contains("400 Bad Request")) {
                     mView.getRefreshToken();
                 }
@@ -234,7 +269,7 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

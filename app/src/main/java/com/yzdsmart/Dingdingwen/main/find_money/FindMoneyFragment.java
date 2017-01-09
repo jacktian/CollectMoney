@@ -945,7 +945,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         if (null != danmuDV && danmuDV.isPrepared()) {
 //            danmuDV.pause();
 //            danmuDV.resume();
-            addDanmaKuShowTextAndImage(false, msg);
+            addDanmaku(false, msg);
         }
     }
 
@@ -1108,6 +1108,23 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         danmaku.textColor = Color.RED;
         danmaku.textShadowColor = 0; // 重要：如果有图文混排，最好不要设置描边(设textShadowColor=0)，否则会进行两次复杂的绘制导致运行效率降低
 //        danmaku.underlineColor = Color.GREEN;
+        danmuDV.addDanmaku(danmaku);
+    }
+
+    private void addDanmaku(boolean islive, String msg) {
+        BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
+        if (danmaku == null || danmuDV == null) {
+            return;
+        }
+        danmaku.text = msg;
+        danmaku.padding = 5;
+        danmaku.priority = 0;  // 可能会被各种过滤器过滤并隐藏显示
+        danmaku.isLive = islive;
+        danmaku.textSize = 25f * (mDanmakuParser.getDisplayer().getDensity() - 0.6f);
+        danmaku.textColor = Color.RED;
+        danmaku.textShadowColor = Color.WHITE;
+        // danmaku.underlineColor = Color.GREEN;
+//        danmaku.borderColor = Color.GREEN;
         danmuDV.addDanmaku(danmaku);
     }
 }

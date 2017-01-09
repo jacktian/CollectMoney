@@ -7,6 +7,7 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.GetGalleyRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.UploadFileRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 
 import java.util.List;
@@ -162,12 +163,19 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
         mModel.uploadGalley(action, fileName, fileData, custCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
+                UploadFileRequestResponse requestResponse = (UploadFileRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onUploadGalley();
+                } else {
+                    mView.onUploadGalleyFail();
+                }
             }
 
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_upload_galley));
+                mView.onUploadGalleyFail();
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -176,7 +184,6 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
             @Override
             public void onComplete() {
                 ((BaseActivity) context).hideProgressDialog();
-                mView.onUploadGalley();
             }
         });
     }
@@ -187,12 +194,19 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
         mModel.uploadShopImage(action, fileName, fileData, bazaCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
+                UploadFileRequestResponse requestResponse = (UploadFileRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onUploadGalley();
+                } else {
+                    mView.onUploadGalleyFail();
+                }
             }
 
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_upload_galley));
+                mView.onUploadGalleyFail();
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -201,7 +215,6 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
             @Override
             public void onComplete() {
                 ((BaseActivity) context).hideProgressDialog();
-                mView.onUploadGalley();
             }
         });
     }

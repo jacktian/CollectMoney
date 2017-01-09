@@ -2,6 +2,8 @@ package com.yzdsmart.Dingdingwen.splash;
 
 import android.content.Context;
 
+import com.yzdsmart.Dingdingwen.BaseActivity;
+import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 
@@ -23,6 +25,7 @@ public class SplashPresenter implements SplashContract.SplashPresenter {
 
     @Override
     public void appRegister(String appCode, String appId, String appSecret) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.init_app));
         mModel.appRegister(appCode, appId, appSecret, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
@@ -36,12 +39,13 @@ public class SplashPresenter implements SplashContract.SplashPresenter {
 
             @Override
             public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
                 mView.onAppRegister(false);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

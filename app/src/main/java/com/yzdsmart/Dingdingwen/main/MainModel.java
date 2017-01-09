@@ -4,6 +4,7 @@ import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.BackgroundBagRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 import com.yzdsmart.Dingdingwen.tecent_im.service.TLSService;
 
 import rx.Subscriber;
@@ -16,6 +17,7 @@ import tencent.tls.platform.TLSPwdLoginListener;
  */
 public class MainModel {
     //获取周边标注信息观察者，与被观察者绑定进行监听
+    private Subscriber<RequestResponse> appRegisterSubscriber;
     private Subscriber<GetTokenRequestResponse> getRefreshTokenSubscriber;
     private Subscriber<GetTokenRequestResponse> refreshAccessTokenSubscriber;
     private Subscriber<BackgroundBagRequestResponse> personalBackgroundBagSubscriber;
@@ -35,6 +37,29 @@ public class MainModel {
      */
     void chatLogin(String userName, String password, TLSPwdLoginListener listener) {
         tlsService.TLSPwdLogin(userName, password, listener);
+    }
+
+    void appRegister(String appCode, String appId, String appSecret, final RequestListener listener) {
+        appRegisterSubscriber = new Subscriber<RequestResponse>() {
+            @Override
+            public void onCompleted() {
+                listener.onComplete();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                listener.onError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(RequestResponse requestResponse) {
+                listener.onSuccess(requestResponse);
+            }
+        };
+        RequestAdapter.getDDWRequestService().appRegister(appCode, appId, appSecret)
+                .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
+                .observeOn(AndroidSchedulers.mainThread())//回调到主线程
+                .subscribe(appRegisterSubscriber);
     }
 
     void getRefreshToken(String grantType, String userName, String password, final RequestListener listener) {
@@ -131,6 +156,9 @@ public class MainModel {
 
     public void unRegisterSubscribe() {
         //解除引用关系，以避免内存泄露的发生
+        if (null != appRegisterSubscriber) {
+            appRegisterSubscriber.unsubscribe();
+        }
         if (null != getRefreshTokenSubscriber) {
             getRefreshTokenSubscriber.unsubscribe();
         }

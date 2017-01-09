@@ -50,6 +50,13 @@ public interface MainContract {
         void onGetGroupManageLastMessage(TIMGroupPendencyItem message, long unreadCount);
 
         /**
+         * 重新注册app
+         */
+        void reRegisterApp();
+
+        void onAppRegister(boolean flag);
+
+        /**
          * 获取 refresh token 和 access token
          */
         void getRefreshToken();
@@ -97,6 +104,15 @@ public interface MainContract {
         void getGroupManageLastMessage();
 
         void unRegisterObserver();
+
+        /**
+         * 注册应用
+         *
+         * @param appCode
+         * @param appId
+         * @param appSecret
+         */
+        void appRegister(String appCode, String appId, String appSecret);
 
         /**
          * 获取refresh token 和 access token
