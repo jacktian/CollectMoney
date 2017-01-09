@@ -79,7 +79,7 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
     private Runnable deleteShopGalleySuccessRunnable;
 
     private ArrayList<String> uploadedImageUrls;
-//    private Integer uploadedImageCounts;
+    private Integer uploadedImageCounts;
 
     private Handler mUploadHandler = new Handler() {
         @Override
@@ -87,7 +87,7 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
             super.handleMessage(msg);
             if (!Utils.isNetUsable(GalleyActivity.this)) {
                 showSnackbar(getResources().getString(R.string.net_unusable));
-//                uploadedImageCounts++;
+                uploadedImageCounts++;
                 return;
             }
             Bundle bundle = msg.getData();
@@ -254,7 +254,7 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
             }
             mPresenter.getShopGalley(Constants.GET_SHOP_GALLEY_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "baza_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
         } else if (Constants.REQUEST_CODE_CHOOSE_PHOTO == requestCode && RESULT_OK == resultCode) {
-//            uploadedImageCounts = 0;
+            uploadedImageCounts = 0;
             uploadedImageUrls = null;
             uploadedImageUrls = BGAPhotoPickerActivity.getSelectedImages(data);
             for (int i = 0; i < uploadedImageUrls.size(); i++) {
@@ -273,11 +273,13 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        switch (keyCode) {
-//            case KeyEvent.KEYCODE_BACK:
-//                if (uploadedImageCounts != uploadedImageUrls.size()) return true;
-//                break;
-//        }
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                if (null != uploadedImageUrls && null != uploadedImageCounts) {
+                    if (uploadedImageCounts != uploadedImageUrls.size()) return true;
+                }
+                break;
+        }
         return super.onKeyDown(keyCode, event);
     }
 
@@ -286,7 +288,9 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
-//                if (uploadedImageCounts != uploadedImageUrls.size()) return;
+                if (null != uploadedImageUrls && null != uploadedImageCounts) {
+                    if (uploadedImageCounts != uploadedImageUrls.size()) return;
+                }
                 closeActivity();
                 break;
             case R.id.right_title:
@@ -444,7 +448,7 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
 
     @Override
     public void onUploadGalley() {
-//        uploadedImageCounts++;
+        uploadedImageCounts++;
         if (!Utils.isNetUsable(GalleyActivity.this)) {
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
@@ -461,7 +465,7 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
 
     @Override
     public void onUploadGalleyFail() {
-//        uploadedImageCounts++;
+        uploadedImageCounts++;
     }
 
     @Override
