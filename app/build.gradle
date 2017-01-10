@@ -53,7 +53,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.soundcloud.android:android-crop:1.0.1@aar'
     compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
-//    compile 'com.github.paolorotolo:appintro:4.1.0'
+    //    compile 'com.github.paolorotolo:appintro:4.1.0'
     compile 'com.bigkoo:convenientbanner:2.0.5'
     compile 'com.google.zxing:core:3.3.0'
     compile 'cn.bingoogolapple:bga-adapter:1.1.1@aar'
@@ -75,7 +75,9 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.alibaba:fastjson:1.1.55.android'
     //compile 'pub.devrel:easypermissions:0.2.1'
-//    compile 'com.jaredrummler:android-processes:1.0.9'
+    //    compile 'com.jaredrummler:android-processes:1.0.9'
+    compile files('libs/jcore-android_v1.1.0.jar')
+    compile files('libs/jpush-android_v3.0.1.jar')
     compile files('libs/AMap3DMap_4.1.2_AMapNavi_1.9.3_AMapSearch_3.6.0_AMapLocation_3.1.0_20161114.jar')
     compile files('libs/imsdk.jar')
     compile files('libs/mobilepb.jar')
@@ -87,7 +89,6 @@ dependencies {
     compile files('libs/mta-sdk-1.6.2.jar')
     compile files('libs/open_sdk_r5756.jar')
     compile project(':lib:pingpp')
-    compile files('libs/jpush-android-2.2.0.jar')
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile files('libs/MobCommons-2016.1107.1809.jar')
     compile files('libs/MobTools-2016.1107.1809.jar')

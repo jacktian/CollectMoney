@@ -328,8 +328,14 @@
 ## ----------------------------------
 ##      jpush相关
 ## ----------------------------------
+-dontoptimize
+-dontpreverify
+
 -dontwarn cn.jpush.**
 -keep class cn.jpush.** { *; }
+
+-dontwarn cn.jiguang.**
+-keep class cn.jiguang.** { *; }
 
 ## ----------------------------------
 ##      友盟相关
@@ -352,4 +358,4 @@
 ##      弹幕相关
 ## ----------------------------------
 -dontwarn master.flame.danmaku.**
--keep master.flame.danmaku.** { *; }
+-keep class master.flame.danmaku.** { *; }

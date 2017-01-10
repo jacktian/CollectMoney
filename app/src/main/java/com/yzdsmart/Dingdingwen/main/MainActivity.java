@@ -62,6 +62,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -134,6 +136,8 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     private List<String> customMsgList;
     private Handler showCustomMsgHandler = new Handler();
     private Runnable showCustomMsgRunnable;
+    private Timer customMsgTimer;
+    private TimerTask customMsgTask;
 
     private GuideView searchGuideView;
 
@@ -209,9 +213,17 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                     return;
                 }
                 showCustomMsg(customMsgList.get(0));
+                customMsgList.remove(0);
             }
         };
-        showCustomMsgHandler.postDelayed(showCustomMsgRunnable, 3000);
+        customMsgTimer = new Timer();
+        customMsgTask = new TimerTask() {
+            @Override
+            public void run() {
+                showCustomMsgHandler.post(showCustomMsgRunnable);
+            }
+        };
+        customMsgTimer.schedule(customMsgTask, 1000, 3000);
 
 //        mConnection = new ServiceConnection() {
 //            @Override
@@ -272,6 +284,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         stopRefreshAccessToken = true;
         if (null != showCustomMsgHandler && null != showCustomMsgRunnable) {
             showCustomMsgHandler.removeCallbacks(showCustomMsgRunnable);
+        }
+        if (null != customMsgTimer) {
+            customMsgTimer.cancel();
+            customMsgTimer = null;
         }
         if (null != mService) {
             unbindService(mConnection);

@@ -391,7 +391,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         super.onPause();
         MobclickAgent.onPageEnd(TAG);
         isForeground = false;
-        if (danmuDV != null && danmuDV.isPrepared() && danmuDV.isPaused()) {
+        if (danmuDV != null && danmuDV.isPrepared()) {
             danmuDV.pause();
         }
         //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
@@ -945,7 +945,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         if (null != danmuDV && danmuDV.isPrepared()) {
 //            danmuDV.pause();
 //            danmuDV.resume();
-            addDanmaku(false, msg);
+//            addDanmaku(false, msg);
+            addDanmaKuShowTextAndImage(false, msg);
         }
     }
 
@@ -969,7 +970,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 .setMaximumLines(maxLinesPair)
                 .preventOverlapping(overlappingEnablePair);
         if (null != danmuDV) {
-            mDanmakuParser = createParser(null);
+            mDanmakuParser = createParser(getActivity().getResources().openRawResource(R.raw.comments));
             danmuDV.setCallback(new DrawHandler.Callback() {
                 @Override
                 public void prepared() {
@@ -1095,7 +1096,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
 
     private void addDanmaKuShowTextAndImage(boolean islive, String msg) {
-        BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_FIX_TOP);
+        BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
         Drawable drawable = getResources().getDrawable(R.mipmap.yzd_coin);
         drawable.setBounds(0, 0, 44, 44);
         SpannableStringBuilder spannable = createSpannable(drawable, msg);
