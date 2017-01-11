@@ -3,17 +3,9 @@ package com.yzdsmart.Dingdingwen.main.find_money;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.BackgroundColorSpan;
-import android.text.style.ImageSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -53,7 +45,6 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.amap.WalkRouteOverlay;
-import com.yzdsmart.Dingdingwen.danmu.BiliDanmukuParser;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.main.recommend.RecommendFragment;
 import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
@@ -63,15 +54,9 @@ import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.GuideView;
 import com.yzdsmart.Dingdingwen.views.navi_picker.NaviPickerDialog;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -79,23 +64,6 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
-import master.flame.danmaku.controller.DrawHandler;
-import master.flame.danmaku.controller.IDanmakuView;
-import master.flame.danmaku.danmaku.loader.ILoader;
-import master.flame.danmaku.danmaku.loader.IllegalDataException;
-import master.flame.danmaku.danmaku.loader.android.DanmakuLoaderFactory;
-import master.flame.danmaku.danmaku.model.BaseDanmaku;
-import master.flame.danmaku.danmaku.model.DanmakuTimer;
-import master.flame.danmaku.danmaku.model.IDanmakus;
-import master.flame.danmaku.danmaku.model.IDisplayer;
-import master.flame.danmaku.danmaku.model.android.BaseCacheStuffer;
-import master.flame.danmaku.danmaku.model.android.DanmakuContext;
-import master.flame.danmaku.danmaku.model.android.Danmakus;
-import master.flame.danmaku.danmaku.model.android.SpannedCacheStuffer;
-import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
-import master.flame.danmaku.danmaku.parser.IDataSource;
-import master.flame.danmaku.danmaku.util.IOUtils;
-import master.flame.danmaku.ui.widget.DanmakuView;
 
 /**
  * Created by YZD on 2016/8/17.
@@ -129,9 +97,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @BindView(R.id.find_operation_layout)
     LinearLayout findOperationLayout;
     @Nullable
-    @BindView(R.id.danmu)
-    DanmakuView danmuDV;
-    @Nullable
     @BindView(R.id.route_plane_layout)
     LinearLayout routePlaneLayout;
     @Nullable
@@ -146,6 +111,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Nullable
     @BindView(R.id.route_ope_layout)
     RelativeLayout routeOpeLayout;
+    @Nullable
+    @BindView(R.id.custom_message)
+    TextView customMsgTV;
 
     private static final String TAG = "FindMoneyFragment";
 
@@ -206,9 +174,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     public AMapLocationListener mLocationListener = null;
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
-
-    private DanmakuContext mDanmakuContext;//弹幕
-    private BaseDanmakuParser mDanmakuParser;
 
     private Boolean isForeground = false;
 
@@ -342,8 +307,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             setGuideView();
         }
 
-        initDanmu();
-
         findMoneyMap.onCreate(savedInstanceState);
 
         //初始化地图
@@ -357,9 +320,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         super.onResume();
         MobclickAgent.onPageStart(TAG); //统计页面，"MainScreen"为页面名称，可自定义
         isForeground = true;
-        if (danmuDV != null && danmuDV.isPrepared()) {
-            danmuDV.resume();
-        }
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         findMoneyMap.onResume();
         mLocationClient.startLocation();
@@ -370,17 +330,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         super.onHiddenChanged(hidden);
         if (hidden) {
             isForeground = false;
-            if (danmuDV != null && danmuDV.isPrepared()) {
-                danmuDV.pause();
-            }
             findMoneyMap.onPause();
             mPresenter.unRegisterSubscribe();
             mLocationClient.stopLocation();
         } else {
             isForeground = true;
-            if (danmuDV != null && danmuDV.isPrepared() && danmuDV.isPaused()) {
-                danmuDV.resume();
-            }
             findMoneyMap.onResume();
             mLocationClient.startLocation();
         }
@@ -391,9 +345,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         super.onPause();
         MobclickAgent.onPageEnd(TAG);
         isForeground = false;
-        if (danmuDV != null && danmuDV.isPrepared()) {
-            danmuDV.pause();
-        }
         //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
         findMoneyMap.onPause();
     }
@@ -407,11 +358,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
     @Override
     public void onDestroyView() {
-        if (danmuDV != null) {
-            // dont forget release!
-            danmuDV.release();
-            danmuDV = null;
-        }
         if (null != mLocationClient) {
             mLocationClient.onDestroy();
             mLocationClient = null;
@@ -942,190 +888,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
     public void showCustomMessage(String msg) {
         if (null == msg) return;
-        if (null != danmuDV && danmuDV.isPrepared()) {
-//            danmuDV.pause();
-//            danmuDV.resume();
-//            addDanmaku(false, msg);
-            addDanmaKuShowTextAndImage(false, msg);
-        }
+        customMsgTV.setText(msg);
+        setCustomMsgTV(true);
     }
 
-    private void initDanmu() {
-        // 设置最大显示行数
-        HashMap<Integer, Integer> maxLinesPair = new HashMap<Integer, Integer>();
-        maxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 2); // 滚动弹幕最大显示2行
-        // 设置是否禁止重叠
-        HashMap<Integer, Boolean> overlappingEnablePair = new HashMap<Integer, Boolean>();
-        overlappingEnablePair.put(BaseDanmaku.TYPE_SCROLL_RL, true);
-        overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_TOP, true);
-
-        mDanmakuContext = DanmakuContext.create();
-        mDanmakuContext.setDanmakuStyle(IDisplayer.DANMAKU_STYLE_STROKEN, 3)
-                .setDuplicateMergingEnabled(false)
-                .setScrollSpeedFactor(1.2f)
-                .setScaleTextSize(1.2f)
-//                .setCacheStuffer(new SpannedCacheStuffer(), mCacheStufferAdapter) // 图文混排使用SpannedCacheStuffer
-                .setCacheStuffer(new SpannedCacheStuffer(), null) // 图文混排使用SpannedCacheStuffer
-//        .setCacheStuffer(new BackgroundCacheStuffer())  // 绘制背景使用BackgroundCacheStuffer
-                .setMaximumLines(maxLinesPair)
-                .preventOverlapping(overlappingEnablePair);
-        if (null != danmuDV) {
-            mDanmakuParser = createParser(getActivity().getResources().openRawResource(R.raw.comments));
-            danmuDV.setCallback(new DrawHandler.Callback() {
-                @Override
-                public void prepared() {
-
-                }
-
-                @Override
-                public void updateTimer(DanmakuTimer timer) {
-
-                }
-
-                @Override
-                public void danmakuShown(BaseDanmaku danmaku) {
-
-                }
-
-                @Override
-                public void drawingFinished() {
-                    danmuDV.start();
-                }
-            });
-            danmuDV.setOnDanmakuClickListener(new IDanmakuView.OnDanmakuClickListener() {
-                @Override
-                public boolean onDanmakuClick(IDanmakus danmakus) {
-                    BaseDanmaku latest = danmakus.last();
-                    if (null != latest) {
-                        return true;
-                    }
-                    return false;
-                }
-
-                @Override
-                public boolean onViewClick(IDanmakuView view) {
-                    return false;
-                }
-            });
-            danmuDV.prepare(mDanmakuParser, mDanmakuContext);
-            danmuDV.showFPS(false);
-            danmuDV.enableDanmakuDrawingCache(true);
-        }
-    }
-
-    private BaseCacheStuffer.Proxy mCacheStufferAdapter = new BaseCacheStuffer.Proxy() {
-        private Drawable mDrawable;
-
-        @Override
-        public void prepareDrawing(final BaseDanmaku danmaku, boolean fromWorkerThread) {
-            if (danmaku.text instanceof Spanned) { // 根据你的条件检查是否需要需要更新弹幕
-                // FIXME 这里只是简单启个线程来加载远程url图片，请使用你自己的异步线程池，最好加上你的缓存池
-                new Thread() {
-
-                    @Override
-                    public void run() {
-                        String url = "http://139.196.177.114:7288/Images/share.png";
-                        InputStream inputStream = null;
-                        Drawable drawable = mDrawable;
-                        if (drawable == null) {
-                            try {
-                                URLConnection urlConnection = new URL(url).openConnection();
-                                inputStream = urlConnection.getInputStream();
-                                drawable = BitmapDrawable.createFromStream(inputStream, "bitmap");
-                                mDrawable = drawable;
-                            } catch (MalformedURLException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } finally {
-                                IOUtils.closeQuietly(inputStream);
-                            }
-                        }
-                        if (null != drawable) {
-                            drawable.setBounds(0, 0, 88, 88);
-                            SpannableStringBuilder spannable = createSpannable(drawable, "");
-                            danmaku.text = spannable;
-                            if (danmuDV != null) {
-                                danmuDV.invalidateDanmaku(danmaku, false);
-                            }
-                            return;
-                        }
-                    }
-                }.start();
-            }
-        }
-
-        @Override
-        public void releaseResource(BaseDanmaku danmaku) {
-            // TODO 重要:清理含有ImageSpan的text中的一些占用内存的资源 例如drawable
-        }
-    };
-
-    private BaseDanmakuParser createParser(InputStream stream) {
-        if (stream == null) {
-            return new BaseDanmakuParser() {
-                @Override
-                protected Danmakus parse() {
-                    return new Danmakus();
-                }
-            };
-        }
-
-        ILoader loader = DanmakuLoaderFactory.create(DanmakuLoaderFactory.TAG_BILI);
-
-        try {
-            loader.load(stream);
-        } catch (IllegalDataException e) {
-            e.printStackTrace();
-        }
-        BaseDanmakuParser parser = new BiliDanmukuParser();
-        IDataSource<?> dataSource = loader.getDataSource();
-        parser.load(dataSource);
-        return parser;
-    }
-
-    private SpannableStringBuilder createSpannable(Drawable drawable, String msg) {
-        String text = "bitmap";
-        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(text);
-        ImageSpan span = new ImageSpan(drawable);//ImageSpan.ALIGN_BOTTOM);
-        spannableStringBuilder.setSpan(span, 0, text.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        spannableStringBuilder.append(msg);
-        spannableStringBuilder.setSpan(new BackgroundColorSpan(Color.parseColor("#00000000")), 0, spannableStringBuilder.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        return spannableStringBuilder;
-    }
-
-
-    private void addDanmaKuShowTextAndImage(boolean islive, String msg) {
-        BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
-        Drawable drawable = getResources().getDrawable(R.mipmap.yzd_coin);
-        drawable.setBounds(0, 0, 44, 44);
-        SpannableStringBuilder spannable = createSpannable(drawable, msg);
-        danmaku.text = spannable;
-        danmaku.padding = 5;
-        danmaku.priority = 1;  //0 表示可能会被各种过滤器过滤并隐藏显示 //1 表示一定会显示, 一般用于本机发送的弹幕
-        danmaku.isLive = islive;//是否是直播弹幕
-        danmaku.setTime(danmuDV.getCurrentTime() + 1200);
-        danmaku.textSize = 20f * (mDanmakuParser.getDisplayer().getDensity() - 0.6f);
-        danmaku.textColor = Color.RED;
-        danmaku.textShadowColor = 0; // 重要：如果有图文混排，最好不要设置描边(设textShadowColor=0)，否则会进行两次复杂的绘制导致运行效率降低
-//        danmaku.underlineColor = Color.GREEN;
-        danmuDV.addDanmaku(danmaku);
-    }
-
-    private void addDanmaku(boolean islive, String msg) {
-        BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
-        if (danmaku == null || danmuDV == null) {
-            return;
-        }
-        danmaku.text = msg;
-        danmaku.padding = 5;
-        danmaku.priority = 0;  // 可能会被各种过滤器过滤并隐藏显示
-        danmaku.isLive = islive;
-        danmaku.textSize = 25f * (mDanmakuParser.getDisplayer().getDensity() - 0.6f);
-        danmaku.textColor = Color.RED;
-        danmaku.textShadowColor = Color.WHITE;
-        // danmaku.underlineColor = Color.GREEN;
-//        danmaku.borderColor = Color.GREEN;
-        danmuDV.addDanmaku(danmaku);
+    public void setCustomMsgTV(boolean flag) {
+        ButterKnife.apply(customMsgTV, flag ? ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE : ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
     }
 }

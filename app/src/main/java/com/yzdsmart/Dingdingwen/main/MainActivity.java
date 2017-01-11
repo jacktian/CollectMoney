@@ -208,8 +208,11 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         showCustomMsgRunnable = new Runnable() {
             @Override
             public void run() {
+                Fragment fragment = fm.findFragmentByTag("find");
                 if (null == customMsgList || customMsgList.size() <= 0) {
-//                    showCustomMsgHandler.removeCallbacks(this);
+                    if (null != fragment) {
+                        ((FindMoneyFragment) fragment).setCustomMsgTV(false);
+                    }
                     return;
                 }
                 showCustomMsg(customMsgList.get(0));
