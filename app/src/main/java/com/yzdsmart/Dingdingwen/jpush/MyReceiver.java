@@ -91,6 +91,7 @@ public class MyReceiver extends BroadcastReceiver {
 
     //send msg to MainActivity
     private void processCustomMessage(Context context, Bundle bundle) {
+        if (null == MainActivity.getInstance()) return;
         if (MainActivity.getInstance().isFindForeground()) {
             String title = bundle.getString(JPushInterface.EXTRA_TITLE);
             String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
