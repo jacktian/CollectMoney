@@ -397,7 +397,11 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     @Override
     public void onGetCustInfo(CustInfoRequestResponse response) {
         if (null != response.getNickName() && !"".equals(response.getNickName())) {
-            userNickNameTV.setText(response.getNickName());
+            if (response.getNickName().equals(response.getImageUrl())) {
+                userNickNameTV.setText("");
+            } else {
+                userNickNameTV.setText(response.getNickName());
+            }
         } else if (null != response.getCName() && !"".equals(response.getCName())) {
             userNickNameTV.setText(response.getCName());
         } else {

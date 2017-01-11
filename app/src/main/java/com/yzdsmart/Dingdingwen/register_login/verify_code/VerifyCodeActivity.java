@@ -165,7 +165,6 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
                     return;
                 }
                 getVerifyTV.setEnabled(false);
-                mHandler.post(getVerifyCodeRunnable);
                 mPresenter.getVerifyCode(userNameET.getText().toString(), DateTime.now().toString(), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
                 break;
             case R.id.login_register_confirm_button:
@@ -216,13 +215,15 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
     public void onGetVerifyCode(boolean flag, String msg) {
         if (!flag) {
             showSnackbar(msg);
-            getVerifyTV.setText(getResources().getString(R.string.get_verify_code));
-            getVerifyTV.setEnabled(true);
-            mHandler.removeCallbacks(getVerifyCodeRunnable);
-            countDownTime = 60;
+//            getVerifyTV.setText(getResources().getString(R.string.get_verify_code));
+//            getVerifyTV.setEnabled(true);
+//            mHandler.removeCallbacks(getVerifyCodeRunnable);
+            countDownTime = 20;
+            mHandler.post(getVerifyCodeRunnable);
             return;
         }
         showSnackbar("获取验证码成功");
+        mHandler.post(getVerifyCodeRunnable);
     }
 
     @Override
@@ -243,6 +244,9 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
 
     @Override
     public void onThirdPlatformRegister() {
+        if (null != MainActivity.getInstance()) {
+            MainActivity.getInstance().imLogin();
+        }
         openActivityClear(MainActivity.class, null, 0);
     }
 

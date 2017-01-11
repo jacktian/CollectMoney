@@ -212,6 +212,9 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
             showSnackbar(msg);
             return;
         }
+        if (null != MainActivity.getInstance()) {
+            MainActivity.getInstance().imLogin();
+        }
         openActivityClear(MainActivity.class, null, 0);
     }
 

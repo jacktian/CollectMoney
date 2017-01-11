@@ -226,7 +226,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                 showCustomMsgHandler.post(showCustomMsgRunnable);
             }
         };
-        customMsgTimer.schedule(customMsgTask, 1000, 3000);
+        customMsgTimer.schedule(customMsgTask, 1000, 5000);
 
 //        mConnection = new ServiceConnection() {
 //            @Override
@@ -603,7 +603,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         mPresenter = presenter;
     }
 
-    private void imLogin() {
+    public void imLogin() {
         if (SharedPreferencesUtils.getString(this, "im_account", "").length() > 0 && SharedPreferencesUtils.getString(this, "im_password", "").length() > 0) {
             String im_name = SharedPreferencesUtils.getString(this, "im_account", "");
             String im_pwd = SharedPreferencesUtils.getString(this, "im_password", "");

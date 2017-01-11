@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -485,6 +486,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                 0  ////偏航角 0~360° (正北方为0)
         )));
         mUiSettings = mAMap.getUiSettings();
+        mUiSettings.setCompassEnabled(true);
         mUiSettings.setScaleControlsEnabled(false);
         mUiSettings.setZoomControlsEnabled(false);
         mRouteSearch = new RouteSearch(getActivity());
@@ -637,6 +639,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         ButterKnife.apply(findOperationLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
         ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
         ButterKnife.apply(routeOpeLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
+        FrameLayout.LayoutParams customMsgTVParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        customMsgTVParams.setMargins(0, 0, 0, 0);
+        customMsgTV.setLayoutParams(customMsgTVParams);
     }
 
     private void reachTargetLocation() {
@@ -651,6 +656,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         ButterKnife.apply(findOperationLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
         ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
         ButterKnife.apply(routeOpeLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
+        FrameLayout.LayoutParams customMsgTVParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        customMsgTVParams.setMargins(0, 0, 0, 0);
+        customMsgTV.setLayoutParams(customMsgTVParams);
     }
 
     public void locScanCoins() {
@@ -806,6 +814,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
                     ButterKnife.apply(findOperationLayout, ((BaseActivity) getActivity()).BUTTERKNIFEGONE);
                     ButterKnife.apply(routePlaneLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
                     ButterKnife.apply(routeOpeLayout, ((BaseActivity) getActivity()).BUTTERKNIFEVISIBLE);
+                    FrameLayout.LayoutParams customMsgTVParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    customMsgTVParams.setMargins(0, Utils.dp2px(getActivity(), 19), 0, 0);
+                    customMsgTV.setLayoutParams(customMsgTVParams);
                 } else {
                     ((BaseActivity) getActivity()).showSnackbar("未找到规划路线");
                 }
