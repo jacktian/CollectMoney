@@ -159,20 +159,20 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
                     userPwdET.setError(getResources().getString(R.string.min_pwd_length));
                     return;
                 }
-                boolean allNumber = true;
-                for (int acc_query = 0; acc_query < userPwdET.getText().toString().trim().length(); ++acc_query) {
-                    char req_con = userPwdET.getText().toString().trim().charAt(acc_query);
-                    if (req_con != 46 && req_con != 95 && !Character.isLetterOrDigit(req_con)) {
-                        return;
-                    }
-                    if (!Character.isDigit(req_con)) {
-                        allNumber = false;
-                    }
-                }
-                if (allNumber) {
-                    userPwdET.setError(getResources().getString(R.string.number_pwd));
-                    return;
-                }
+//                boolean allNumber = true;
+//                for (int acc_query = 0; acc_query < userPwdET.getText().toString().trim().length(); ++acc_query) {
+//                    char req_con = userPwdET.getText().toString().trim().charAt(acc_query);
+//                    if (req_con != 46 && req_con != 95 && !Character.isLetterOrDigit(req_con)) {
+//                        return;
+//                    }
+//                    if (!Character.isDigit(req_con)) {
+//                        allNumber = false;
+//                    }
+//                }
+//                if (allNumber) {
+//                    userPwdET.setError(getResources().getString(R.string.number_pwd));
+//                    return;
+//                }
                 if (!Utils.isNetUsable(this)) {
                     showSnackbar(getResources().getString(R.string.net_unusable));
                     return;
