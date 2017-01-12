@@ -25,5 +25,4 @@ public class DefaultConfig {
     public static String HOUR = "时";
     public static String MINUTE = "分";
 
-
 }

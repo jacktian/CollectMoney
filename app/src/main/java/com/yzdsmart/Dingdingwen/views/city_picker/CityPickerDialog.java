@@ -15,26 +15,21 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.yzdsmart.Dingdingwen.R;
-import com.yzdsmart.Dingdingwen.views.time_picker.TimeWheel;
-import com.yzdsmart.Dingdingwen.views.time_picker.config.PickerConfig;
+import com.yzdsmart.Dingdingwen.views.time_picker.config.CityPickerConfig;
 import com.yzdsmart.Dingdingwen.views.time_picker.data.Type;
-import com.yzdsmart.Dingdingwen.views.time_picker.data.WheelCalendar;
-import com.yzdsmart.Dingdingwen.views.time_picker.listener.OnDateSetListener;
-
-import java.util.Calendar;
+import com.yzdsmart.Dingdingwen.views.time_picker.listener.OnCitySetListener;
 
 /**
  * Created by jzxiang on 16/4/19.
  */
 public class CityPickerDialog extends DialogFragment implements View.OnClickListener {
-    PickerConfig mPickerConfig;
-    private TimeWheel mCityWheel;
-    private long mCurrentMillSeconds;
+    CityPickerConfig mPickerConfig;
+    private CityWheel mCityWheel;
 
-    private static CityPickerDialog newIntance(PickerConfig pickerConfig) {
-        CityPickerDialog timePickerDialog = new CityPickerDialog();
-        timePickerDialog.initialize(pickerConfig);
-        return timePickerDialog;
+    private static CityPickerDialog newIntance(CityPickerConfig pickerConfig) {
+        CityPickerDialog cityPickerDialog = new CityPickerDialog();
+        cityPickerDialog.initialize(pickerConfig);
+        return cityPickerDialog;
     }
 
     @Override
@@ -55,7 +50,7 @@ public class CityPickerDialog extends DialogFragment implements View.OnClickList
         window.setGravity(Gravity.BOTTOM);
     }
 
-    private void initialize(PickerConfig pickerConfig) {
+    private void initialize(CityPickerConfig pickerConfig) {
         mPickerConfig = pickerConfig;
     }
 
@@ -72,7 +67,7 @@ public class CityPickerDialog extends DialogFragment implements View.OnClickList
 
     View initView() {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View view = inflater.inflate(R.layout.citypicker_layout, null);
+        View view = inflater.inflate(R.layout.city_picker_layout, null);
         TextView cancel = (TextView) view.findViewById(R.id.tv_cancel);
         cancel.setOnClickListener(this);
         TextView sure = (TextView) view.findViewById(R.id.tv_sure);
@@ -85,8 +80,10 @@ public class CityPickerDialog extends DialogFragment implements View.OnClickList
         sure.setText(mPickerConfig.mSureString);
         sure.setTextColor(mPickerConfig.mSureTVColor);
         toolbar.setBackgroundColor(mPickerConfig.mThemeColor);
+        title.setText(mPickerConfig.mTitleString);
+        title.setTextColor(mPickerConfig.mTitleTVColor);
 
-        mCityWheel = new TimeWheel(view, mPickerConfig);
+        mCityWheel = new CityWheel(view, mPickerConfig);
         return view;
     }
 
@@ -101,46 +98,23 @@ public class CityPickerDialog extends DialogFragment implements View.OnClickList
     }
 
     /*
-    * @desc This method returns the current milliseconds. If current milliseconds is not set,
-    *       this will return the system milliseconds.
-    * @param none
-    * @return long - the current milliseconds.
-    */
-    public long getCurrentMillSeconds() {
-        if (mCurrentMillSeconds == 0)
-            return System.currentTimeMillis();
-
-        return mCurrentMillSeconds;
-    }
-
-    /*
     * @desc This method is called when onClick method is invoked by sure button. A Calendar instance is created and 
     *       initialized. 
     * @param none
     * @return none
     */
     void sureClicked() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear();
-
-        calendar.set(Calendar.YEAR, mCityWheel.getCurrentYear());
-        calendar.set(Calendar.MONTH, mCityWheel.getCurrentMonth() - 1);
-        calendar.set(Calendar.DAY_OF_MONTH, mCityWheel.getCurrentDay());
-        calendar.set(Calendar.HOUR_OF_DAY, mCityWheel.getCurrentHour());
-        calendar.set(Calendar.MINUTE, mCityWheel.getCurrentMinute());
-
-        mCurrentMillSeconds = calendar.getTimeInMillis();
         if (mPickerConfig.mCallBack != null) {
-            mPickerConfig.mCallBack.onDateSet(this, mCurrentMillSeconds);
+            mPickerConfig.mCallBack.onCitySet(this, mCityWheel.getCurrentProvince(), mCityWheel.getCurrentCity(), mCityWheel.getCurrentDistrict());
         }
         dismiss();
     }
 
     public static class Builder {
-        PickerConfig mPickerConfig;
+        CityPickerConfig mPickerConfig;
 
         public Builder() {
-            mPickerConfig = new PickerConfig();
+            mPickerConfig = new CityPickerConfig();
         }
 
         public Builder setType(Type type) {
@@ -208,47 +182,7 @@ public class CityPickerDialog extends DialogFragment implements View.OnClickList
             return this;
         }
 
-        public Builder setMinMillseconds(long millseconds) {
-            mPickerConfig.mMinCalendar = new WheelCalendar(millseconds);
-            return this;
-        }
-
-        public Builder setMaxMillseconds(long millseconds) {
-            mPickerConfig.mMaxCalendar = new WheelCalendar(millseconds);
-            return this;
-        }
-
-        public Builder setCurrentMillseconds(long millseconds) {
-            mPickerConfig.mCurrentCalendar = new WheelCalendar(millseconds);
-            return this;
-        }
-
-        public Builder setYearText(String year) {
-            mPickerConfig.mYear = year;
-            return this;
-        }
-
-        public Builder setMonthText(String month) {
-            mPickerConfig.mMonth = month;
-            return this;
-        }
-
-        public Builder setDayText(String day) {
-            mPickerConfig.mDay = day;
-            return this;
-        }
-
-        public Builder setHourText(String hour) {
-            mPickerConfig.mHour = hour;
-            return this;
-        }
-
-        public Builder setMinuteText(String minute) {
-            mPickerConfig.mMinute = minute;
-            return this;
-        }
-
-        public Builder setCallBack(OnDateSetListener listener) {
+        public Builder setCallBack(OnCitySetListener listener) {
             mPickerConfig.mCallBack = listener;
             return this;
         }
@@ -258,6 +192,5 @@ public class CityPickerDialog extends DialogFragment implements View.OnClickList
         }
 
     }
-
 
 }

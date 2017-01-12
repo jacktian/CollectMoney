@@ -199,11 +199,11 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 
         new MainPresenter(this, this, tlsService);
 
-        registerCustomMessageReceiver();
-
         imLogin();
 
         initJPush();
+
+        registerCustomMessageReceiver();
 
         showCustomMsgRunnable = new Runnable() {
             @Override

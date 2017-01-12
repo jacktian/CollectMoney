@@ -2,6 +2,7 @@ package com.yzdsmart.Dingdingwen.views.city_picker;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.yzdsmart.Dingdingwen.R;
@@ -10,14 +11,11 @@ import com.yzdsmart.Dingdingwen.views.city_picker.model.DistrictModel;
 import com.yzdsmart.Dingdingwen.views.city_picker.model.ProvinceModel;
 import com.yzdsmart.Dingdingwen.views.city_picker.utils.XmlParserHandler;
 import com.yzdsmart.Dingdingwen.views.time_picker.adapters.ArrayWheelAdapter;
-import com.yzdsmart.Dingdingwen.views.time_picker.adapters.NumericWheelAdapter;
-import com.yzdsmart.Dingdingwen.views.time_picker.config.PickerConfig;
-import com.yzdsmart.Dingdingwen.views.time_picker.utils.PickerContants;
+import com.yzdsmart.Dingdingwen.views.time_picker.config.CityPickerConfig;
 import com.yzdsmart.Dingdingwen.views.time_picker.wheel.OnWheelChangedListener;
 import com.yzdsmart.Dingdingwen.views.time_picker.wheel.WheelView;
 
 import java.io.InputStream;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +26,7 @@ import javax.xml.parsers.SAXParserFactory;
 /**
  * Created by jzxiang on 16/4/20.
  */
-public class CityWheel {
+public class CityWheel implements OnWheelChangedListener {
     Context mContext;
 
     /**
@@ -61,171 +59,146 @@ public class CityWheel {
      */
     protected String mCurrentDistrictName = "";
 
-    WheelView province, city, district;
-    ArrayWheelAdapter mProvinceAdapter, mCityAdapter, mDistrictAdapter;
+    /**
+     * 第一次默认的显示省份，一般配合定位，使用
+     */
+    private String defaultProvinceName = "江苏";
 
-    PickerConfig mPickerConfig;
+    /**
+     * 第一次默认得显示城市，一般配合定位，使用
+     */
+    private String defaultCityName = "常州";
 
-    OnWheelChangedListener provinceListener = new OnWheelChangedListener() {
-        @Override
-        public void onChanged(WheelView wheel, int oldValue, int newValue) {
-            updateProvince();
-        }
-    };
-    OnWheelChangedListener cityListener = new OnWheelChangedListener() {
-        @Override
-        public void onChanged(WheelView wheel, int oldValue, int newValue) {
-            updateCity();
-        }
-    };
-    OnWheelChangedListener districtListener = new OnWheelChangedListener() {
-        @Override
-        public void onChanged(WheelView wheel, int oldValue, int newValue) {
-            updateDistrict();
-        }
-    };
+    /**
+     * 第一次默认得显示，一般配合定位，使用
+     */
+    private String defaultDistrict = "新北区";
 
-    public CityWheel(View view, PickerConfig pickerConfig) {
+    private WheelView province, city, district;
+    private ArrayWheelAdapter mProvinceAdapter, mCityAdapter, mDistrictAdapter;
+
+    private CityPickerConfig mPickerConfig;
+
+    public CityWheel(View view, CityPickerConfig pickerConfig) {
         mPickerConfig = pickerConfig;
-
         mContext = view.getContext();
+        initProvinceDatas(mContext);
         initialize(view);
     }
 
     public void initialize(View view) {
-        initProvinceDatas(mContext);
         initView(view);
         initProvince();
-        initCity();
-        initDistrict();
     }
-
 
     void initView(View view) {
         province = (WheelView) view.findViewById(R.id.province);
         city = (WheelView) view.findViewById(R.id.city);
-        district = (WheelView) view.findViewById(R.id.day);
+        district = (WheelView) view.findViewById(R.id.district);
 
-        province.addChangingListener(provinceListener);
-        province.addChangingListener(cityListener);
-        province.addChangingListener(districtListener);
-        city.addChangingListener(cityListener);
-        city.addChangingListener(districtListener);
-        district.addChangingListener(districtListener);
+        province.addChangingListener(this);
+        city.addChangingListener(this);
+        district.addChangingListener(this);
     }
 
     void initProvince() {
-
+        int provinceDefault = -1;
+        if (!TextUtils.isEmpty(defaultProvinceName) && mProvinceDatas.length > 0) {
+            for (int i = 0; i < mProvinceDatas.length; i++) {
+                if (mProvinceDatas[i].contains(defaultProvinceName)) {
+                    provinceDefault = i;
+                    break;
+                }
+            }
+        }
         mProvinceAdapter = new ArrayWheelAdapter<String>(mContext, mProvinceDatas);
         mProvinceAdapter.setConfig(mPickerConfig);
         province.setViewAdapter(mProvinceAdapter);
         //获取所设置的省的位置，直接定位到该位置
         if (-1 != provinceDefault) {
-            mViewProvince.setCurrentItem(provinceDefault);
+            province.setCurrentItem(provinceDefault);
         }
-        province.setCurrentItem(mRepository.getDefaultCalendar().year - minYear);
-    }
-
-    void initCity() {
-        updateMonths();
-        int curYear = getCurrentYear();
-        int minMonth = mRepository.getMinMonth(curYear);
-        month.setCurrentItem(mRepository.getDefaultCalendar().month - minMonth);
-        month.setCyclic(mPickerConfig.cyclic);
-    }
-
-    void initDistrict() {
-        updateDays();
-        int curYear = getCurrentYear();
-        int curMonth = getCurrentMonth();
-
-        int minDay = mRepository.getMinDay(curYear, curMonth);
-        day.setCurrentItem(mRepository.getDefaultCalendar().day - minDay);
-        day.setCyclic(mPickerConfig.cyclic);
-    }
-
-    void updateProvince() {
-        if (month.getVisibility() == View.GONE)
-            return;
-
-        int curYear = getCurrentYear();
-        int minMonth = mRepository.getMinMonth(curYear);
-        int maxMonth = mRepository.getMaxMonth(curYear);
-        mMonthAdapter = new NumericWheelAdapter(mContext, minMonth, maxMonth, PickerContants.FORMAT, mPickerConfig.mMonth);
-        mMonthAdapter.setConfig(mPickerConfig);
-        month.setViewAdapter(mMonthAdapter);
-
-        if (mRepository.isMinYear(curYear)) {
-            month.setCurrentItem(0, false);
-        }
+        updateCity();
+        updateDistrict();
     }
 
     void updateCity() {
-        if (day.getVisibility() == View.GONE)
-            return;
-
-        int curYear = getCurrentYear();
-        int curMonth = getCurrentMonth();
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + year.getCurrentItem());
-        calendar.set(Calendar.MONTH, curMonth);
-
-        int maxDay = mRepository.getMaxDay(curYear, curMonth);
-        int minDay = mRepository.getMinDay(curYear, curMonth);
-        mDayAdapter = new NumericWheelAdapter(mContext, minDay, maxDay, PickerContants.FORMAT, mPickerConfig.mDay);
-        mDayAdapter.setConfig(mPickerConfig);
-        day.setViewAdapter(mDayAdapter);
-
-        if (mRepository.isMinMonth(curYear, curMonth)) {
-            day.setCurrentItem(0, true);
+        int pCurrent = province.getCurrentItem();
+        mCurrentProvinceName = mProvinceDatas[pCurrent];
+        String[] cities = mCitisDatasMap.get(mCurrentProvinceName);
+        if (cities == null) {
+            cities = new String[]{""};
         }
-
-        int dayCount = mDayAdapter.getItemsCount();
-        if (day.getCurrentItem() >= dayCount) {
-            day.setCurrentItem(dayCount - 1, true);
+        int cityDefault = -1;
+        if (!TextUtils.isEmpty(defaultCityName) && cities.length > 0) {
+            for (int i = 0; i < cities.length; i++) {
+                if (cities[i].contains(defaultCityName)) {
+                    cityDefault = i;
+                    break;
+                }
+            }
         }
+        mCityAdapter = new ArrayWheelAdapter<String>(mContext, cities);
+        mCityAdapter.setConfig(mPickerConfig);
+        city.setViewAdapter(mCityAdapter);
+        if (-1 != cityDefault) {
+            city.setCurrentItem(cityDefault);
+            mCurrentCityName = defaultCityName;
+        } else {
+            city.setCurrentItem(0);
+            mCurrentCityName = mCitisDatasMap.get(mCurrentProvinceName)[0];
+        }
+        updateDistrict();
     }
 
     void updateDistrict() {
-        if (hour.getVisibility() == View.GONE)
-            return;
-
-        int curYear = getCurrentYear();
-        int curMonth = getCurrentMonth();
-        int curDay = getCurrentDay();
-
-        int minHour = mRepository.getMinHour(curYear, curMonth, curDay);
-        int maxHour = mRepository.getMaxHour(curYear, curMonth, curDay);
-
-        mHourAdapter = new NumericWheelAdapter(mContext, minHour, maxHour, PickerContants.FORMAT, mPickerConfig.mHour);
-        mHourAdapter.setConfig(mPickerConfig);
-        hour.setViewAdapter(mHourAdapter);
-
-        if (mRepository.isMinDay(curYear, curMonth, curDay))
-            hour.setCurrentItem(0, false);
+        int pCurrent = city.getCurrentItem();
+        mCurrentCityName = mCitisDatasMap.get(mCurrentProvinceName)[pCurrent];
+        String[] areas = mDistrictDatasMap.get(mCurrentCityName);
+        if (areas == null) {
+            areas = new String[]{""};
+        }
+        int districtDefault = -1;
+        if (!TextUtils.isEmpty(defaultDistrict) && areas.length > 0) {
+            for (int i = 0; i < areas.length; i++) {
+                if (areas[i].contains(defaultDistrict)) {
+                    districtDefault = i;
+                    break;
+                }
+            }
+        }
+        mDistrictAdapter = new ArrayWheelAdapter<String>(mContext, areas);
+        mDistrictAdapter.setConfig(mPickerConfig);
+        district.setViewAdapter(mDistrictAdapter);
+        if (-1 != districtDefault) {
+            district.setCurrentItem(districtDefault);
+            //获取默认设置的区
+            mCurrentDistrictName = defaultDistrict;
+        } else {
+            district.setCurrentItem(0);
+            //获取第一个区名称
+            mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[0];
+        }
     }
 
     public String getCurrentProvince() {
-        return year.getCurrentItem() + mRepository.getMinYear();
+        return mCurrentProvinceName;
     }
 
     public String getCurrentCity() {
-        int curYear = getCurrentYear();
-        return month.getCurrentItem() + +mRepository.getMinMonth(curYear);
+        return mCurrentCityName;
     }
 
     public String getCurrentDistrict() {
-        return district.getCurrentItem();
+        return mCurrentDistrictName;
     }
-
 
     /**
      * 解析省市区的XML数据
      */
 
     protected void initProvinceDatas(Context context) {
-        List<ProvinceModel> provinceList = null;
+        List<ProvinceModel> provinceList;
         AssetManager asset = context.getAssets();
         try {
             InputStream input = asset.open("province_data.xml");
@@ -276,8 +249,17 @@ public class CityWheel {
         } catch (Throwable e) {
             e.printStackTrace();
         } finally {
-
         }
     }
 
+    @Override
+    public void onChanged(WheelView wheel, int oldValue, int newValue) {
+        if (province == wheel) {
+            updateCity();
+        } else if (city == wheel) {
+            updateDistrict();
+        } else if (district == wheel) {
+            mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
+        }
+    }
 }

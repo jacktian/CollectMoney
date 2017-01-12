@@ -22,9 +22,10 @@ import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.BetterSpinner;
-import com.yzdsmart.Dingdingwen.views.city_picker.widget.CityPicker;
+import com.yzdsmart.Dingdingwen.views.city_picker.CityPickerDialog;
 import com.yzdsmart.Dingdingwen.views.time_picker.TimePickerDialog;
 import com.yzdsmart.Dingdingwen.views.time_picker.data.Type;
+import com.yzdsmart.Dingdingwen.views.time_picker.listener.OnCitySetListener;
 import com.yzdsmart.Dingdingwen.views.time_picker.listener.OnDateSetListener;
 
 import org.joda.time.DateTime;
@@ -180,44 +181,25 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
                 mDialogAll.show(getSupportFragmentManager(), "year_month_day");
                 break;
             case R.id.person_area:
-//                showEditInfo("省市区", 5);
-                CityPicker cityPicker = new CityPicker.Builder(EditPersonalInfoActivity.this)
-                        .textSize(14)
-                        .title("")
-                        .backgroundPop(Color.WHITE)
-                        .titleBackgroundColor("#ffffff")
-                        .titleTextColor("#999999")
-                        .backgroundPop(getResources().getColor(R.color.half_transparent))
-                        .confirTextColor("#999999")
-                        .cancelTextColor("#999999")
-                        .province("江苏省")
-                        .city("常州市")
-                        .district("天宁区")
-                        .textColor(getResources().getColor(R.color.font_grey))
-                        .provinceCyclic(true)
-                        .cityCyclic(false)
-                        .districtCyclic(false)
-                        .visibleItemsCount(7)
-                        .itemPadding(10)
-                        .onlyShowProvinceAndCity(false)
+                CityPickerDialog mCityDialogAll = new CityPickerDialog.Builder()
+                        .setCallBack(new OnCitySetListener() {
+                            @Override
+                            public void onCitySet(CityPickerDialog cityPickerView, String province, String city, String district) {
+                                cityChecked = province + city + district;
+                                mPresenter.setCustDetailInfo(5, "000000", SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "cust_code", ""), null, null, null, null, null, null, null, null, null, null, null, province, city, district, null, null, SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_access_token", ""));
+                            }
+                        })
+                        .setCancelTextColor(getResources().getColor(R.color.font_grey))
+                        .setSureTextColor(getResources().getColor(R.color.font_grey))
+                        .setCyclic(false)
+                        .setThemeColor(Color.WHITE)
+                        .setType(Type.ALL)
+                        .setWheelItemTextNormalColor(getResources().getColor(R.color.light_grey))
+                        .setWheelItemTextSelectorColor(getResources().getColor(R.color.font_grey))
+                        .setWheelItemTextSize(14)
                         .build();
-                cityPicker.show();
-                //监听方法，获取选择结果
-                cityPicker.setOnCityItemClickListener(new CityPicker.OnCityItemClickListener() {
-                    @Override
-                    public void onSelected(String... citySelected) {
-                        //省份
-                        String province = citySelected[0];
-                        //城市
-                        String city = citySelected[1];
-                        //区县（如果设定了两级联动，那么该项返回空）
-                        String district = citySelected[2];
-                        //邮编
-//                        String code = citySelected[3];
-                        cityChecked = province + city + district;
-                        mPresenter.setCustDetailInfo(5, "000000", SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "cust_code", ""), null, null, null, null, null, null, null, null, null, null, null, province, city, district, null, null, SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_access_token", ""));
-                    }
-                });
+                mCityDialogAll.show(getSupportFragmentManager(), "all");
+//                showEditInfo("省市区", 5);
                 break;
             case R.id.person_address:
                 showEditInfo("地址", 6);

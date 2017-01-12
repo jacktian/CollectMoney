@@ -106,6 +106,4 @@
     <color name="navi_picker_line">#11000000</color>
     <color name="navi_picker_text_blank">#ff4b4b4b</color>
     <color name="navi_picker_orage">#fff08519</color>
-    <!--省市区选择-->
-    <color name="city_picker_province_line_border">#C7C7C7</color>
 </resources>
