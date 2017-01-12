@@ -50,7 +50,7 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_info));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_info));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -82,7 +82,7 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_personal_galley));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_personal_galley));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -110,7 +110,7 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_detail_info));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_detail_info));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -136,7 +136,7 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_add_friend));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_add_friend));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -163,7 +163,7 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_delete_friend));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_delete_friend));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -190,7 +190,7 @@ public class PersonalFriendDetailPresenter implements PersonalFriendDetailContra
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_remark_friend));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_remark_friend));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -141,6 +142,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (Constants.REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
+            if (null == MainActivity.getInstance()) return;
             MainActivity.getInstance().chatLogin();
         }
     }
@@ -151,11 +153,28 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                if (null != SharedPreferencesUtils.getString(QRScannerActivity.this, "cust_code", "") && SharedPreferencesUtils.getString(QRScannerActivity.this, "cust_code", "").length() > 0) {
+                    setResult(RESULT_OK);
+                    closeActivity();
+                    return true;
+                }
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     @Optional
     @OnClick({R.id.title_left_operation_layout})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
+                if (null != SharedPreferencesUtils.getString(QRScannerActivity.this, "cust_code", "") && SharedPreferencesUtils.getString(QRScannerActivity.this, "cust_code", "").length() > 0) {
+                    setResult(RESULT_OK);
+                }
                 closeActivity();
                 break;
         }

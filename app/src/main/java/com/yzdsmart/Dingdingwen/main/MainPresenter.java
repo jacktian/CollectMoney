@@ -114,6 +114,7 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
 
     @Override
     public void imSDKLogin() {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loginning));
         //登录之前要初始化群和好友关系链缓存
         FriendshipEvent.getInstance().init();
         GroupEvent.getInstance().init();
@@ -293,7 +294,7 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 mView.onDismissBackgroundBag();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_background_bag));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_background_bag));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -325,7 +326,7 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
                 mView.onDismissBackgroundBag();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_background_bag));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_background_bag));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -387,6 +388,7 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
 
     @Override
     public void onSuccess() {
+        ((BaseActivity) context).hideProgressDialog();
         //注册消息监听
         MessageEvent.getInstance().addObserver(this);
         //注册刷新监听
@@ -415,6 +417,7 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
     }
 
     private void logoutError() {
+        ((BaseActivity) context).hideProgressDialog();
         unRegisterObserver();
         String platformName = SharedPreferencesUtils.getString(context, "platform", "");
         if (null != platformName && platformName.length() > 0) {

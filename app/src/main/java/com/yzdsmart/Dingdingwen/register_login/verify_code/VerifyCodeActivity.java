@@ -245,7 +245,7 @@ public class VerifyCodeActivity extends BaseActivity implements VerifyCodeContra
     @Override
     public void onThirdPlatformRegister() {
         if (null != MainActivity.getInstance()) {
-            MainActivity.getInstance().imLogin();
+            MainActivity.getInstance().chatLogin();
         }
         openActivityClear(MainActivity.class, null, 0);
     }

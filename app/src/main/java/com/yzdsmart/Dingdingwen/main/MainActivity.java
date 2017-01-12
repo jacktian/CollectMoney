@@ -603,7 +603,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         mPresenter = presenter;
     }
 
-    public void imLogin() {
+    private void imLogin() {
         if (SharedPreferencesUtils.getString(this, "im_account", "").length() > 0 && SharedPreferencesUtils.getString(this, "im_password", "").length() > 0) {
             String im_name = SharedPreferencesUtils.getString(this, "im_account", "");
             String im_pwd = SharedPreferencesUtils.getString(this, "im_password", "");

@@ -231,7 +231,7 @@ public class SetPasswordActivity extends BaseActivity implements SetPasswordCont
     @Override
     public void onUserLogin(boolean flag, String msg) {
         if (null != MainActivity.getInstance()) {
-            MainActivity.getInstance().imLogin();
+            MainActivity.getInstance().chatLogin();
         }
         openActivityClear(MainActivity.class, null, 0);
     }

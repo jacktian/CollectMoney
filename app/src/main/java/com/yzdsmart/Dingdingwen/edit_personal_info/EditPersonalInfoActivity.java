@@ -22,6 +22,7 @@ import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.BetterSpinner;
+import com.yzdsmart.Dingdingwen.views.city_picker.widget.CityPicker;
 import com.yzdsmart.Dingdingwen.views.time_picker.TimePickerDialog;
 import com.yzdsmart.Dingdingwen.views.time_picker.data.Type;
 import com.yzdsmart.Dingdingwen.views.time_picker.listener.OnDateSetListener;
@@ -89,6 +90,8 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
     private AlertDialog editDialog;
 
     private DateTimeFormatter dtf;
+    private String birthdayChecked = "";
+    private String cityChecked = "";
 
     private long birthBefore = 150L * 365 * 1000 * 60 * 60 * 24L;
 
@@ -152,10 +155,69 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
 //                showEditInfo("电话", 3);
                 break;
             case R.id.person_birth:
-                showEditInfo("生日", 4);
+//                showEditInfo("生日", 4);
+                TimePickerDialog mDialogAll = new TimePickerDialog.Builder()
+                        .setCallBack(new OnDateSetListener() {
+                            @Override
+                            public void onDateSet(TimePickerDialog timePickerView, long millseconds) {
+                                DateTime dateTime = new DateTime(millseconds);
+                                birthdayChecked = dateTime.toString(dtf);
+                                mPresenter.setCustDetailInfo(4, "000000", SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "cust_code", ""), null, null, null, birthdayChecked, null, null, null, null, null, null, null, null, null, null, null, null, SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_access_token", ""));
+                            }
+                        })
+                        .setCancelTextColor(getResources().getColor(R.color.font_grey))
+                        .setSureTextColor(getResources().getColor(R.color.font_grey))
+                        .setCyclic(false)
+                        .setMinMillseconds(System.currentTimeMillis() - birthBefore)
+                        .setMaxMillseconds(System.currentTimeMillis())
+                        .setCurrentMillseconds(System.currentTimeMillis())
+                        .setThemeColor(Color.WHITE)
+                        .setType(Type.YEAR_MONTH_DAY)
+                        .setWheelItemTextNormalColor(getResources().getColor(R.color.light_grey))
+                        .setWheelItemTextSelectorColor(getResources().getColor(R.color.font_grey))
+                        .setWheelItemTextSize(14)
+                        .build();
+                mDialogAll.show(getSupportFragmentManager(), "year_month_day");
                 break;
             case R.id.person_area:
 //                showEditInfo("省市区", 5);
+                CityPicker cityPicker = new CityPicker.Builder(EditPersonalInfoActivity.this)
+                        .textSize(14)
+                        .title("")
+                        .backgroundPop(Color.WHITE)
+                        .titleBackgroundColor("#ffffff")
+                        .titleTextColor("#999999")
+                        .backgroundPop(getResources().getColor(R.color.half_transparent))
+                        .confirTextColor("#999999")
+                        .cancelTextColor("#999999")
+                        .province("江苏省")
+                        .city("常州市")
+                        .district("天宁区")
+                        .textColor(getResources().getColor(R.color.font_grey))
+                        .provinceCyclic(true)
+                        .cityCyclic(false)
+                        .districtCyclic(false)
+                        .visibleItemsCount(7)
+                        .itemPadding(10)
+                        .onlyShowProvinceAndCity(false)
+                        .build();
+                cityPicker.show();
+                //监听方法，获取选择结果
+                cityPicker.setOnCityItemClickListener(new CityPicker.OnCityItemClickListener() {
+                    @Override
+                    public void onSelected(String... citySelected) {
+                        //省份
+                        String province = citySelected[0];
+                        //城市
+                        String city = citySelected[1];
+                        //区县（如果设定了两级联动，那么该项返回空）
+                        String district = citySelected[2];
+                        //邮编
+//                        String code = citySelected[3];
+                        cityChecked = province + city + district;
+                        mPresenter.setCustDetailInfo(5, "000000", SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "cust_code", ""), null, null, null, null, null, null, null, null, null, null, null, province, city, district, null, null, SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_access_token", ""));
+                    }
+                });
                 break;
             case R.id.person_address:
                 showEditInfo("地址", 6);
@@ -182,38 +244,6 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
             case 2://性别
                 editInfoContent.setVisibility(View.GONE);
                 genderSpinner.setVisibility(View.VISIBLE);
-                break;
-            case 4://生日
-                editInfoContent.setFocusable(false);
-                editInfoContent.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(final View v) {
-                        TimePickerDialog mDialogAll = new TimePickerDialog.Builder()
-                                .setCallBack(new OnDateSetListener() {
-                                    @Override
-                                    public void onDateSet(TimePickerDialog timePickerView, long millseconds) {
-                                        DateTime dateTime = new DateTime(millseconds);
-                                        ((EditText) v).setText(dateTime.toString(dtf));
-                                    }
-                                })
-                                .setCancelTextColor(getResources().getColor(R.color.grey))
-                                .setSureTextColor(getResources().getColor(R.color.grey))
-                                .setCyclic(false)
-                                .setMinMillseconds(System.currentTimeMillis() - birthBefore)
-                                .setMaxMillseconds(System.currentTimeMillis())
-                                .setCurrentMillseconds(System.currentTimeMillis())
-                                .setThemeColor(Color.WHITE)
-                                .setType(Type.YEAR_MONTH_DAY)
-                                .setWheelItemTextNormalColor(getResources().getColor(R.color.light_grey))
-                                .setWheelItemTextSelectorColor(getResources().getColor(R.color.grey))
-                                .setWheelItemTextSize(14)
-                                .build();
-                        mDialogAll.show(getSupportFragmentManager(), "year_month_day");
-                    }
-                });
-                break;
-            case 5://省市区
-                editInfoContent.setFocusable(false);
                 break;
         }
         Button editCancel = (Button) view.findViewById(R.id.edit_cancel);
@@ -301,33 +331,43 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
 
     @Override
     public void onSetCustDetailInfo(Integer editItem) {
-        EditText editInfoContentET = (EditText) editDialog.findViewById(R.id.edit_info_dialog_content);
-        BetterSpinner genderSpinner = (BetterSpinner) editDialog.findViewById(R.id.edit_info_gender);
+        EditText editInfoContentET;
+        BetterSpinner genderSpinner;
         switch (editItem) {
             case 0://姓名
+                editInfoContentET = (EditText) editDialog.findViewById(R.id.edit_info_dialog_content);
                 personNameTV.setText(editInfoContentET.getText().toString());
+                editDialog.dismiss();
                 break;
             case 1://昵称
+                editInfoContentET = (EditText) editDialog.findViewById(R.id.edit_info_dialog_content);
                 personNicknameTV.setText(editInfoContentET.getText().toString());
+                editDialog.dismiss();
                 break;
             case 2://性别
+                genderSpinner = (BetterSpinner) editDialog.findViewById(R.id.edit_info_gender);
                 personGenderTV.setText(genderSpinner.getText().toString());
+                editDialog.dismiss();
                 break;
             case 3://电话
+                editInfoContentET = (EditText) editDialog.findViewById(R.id.edit_info_dialog_content);
                 personPhoneTV.setText(editInfoContentET.getText().toString());
+                editDialog.dismiss();
                 break;
             case 4://生日
-                personBirthTV.setText(editInfoContentET.getText().toString());
-                DateTime birthDay = dtf.parseDateTime(editInfoContentET.getText().toString());
+                personBirthTV.setText(birthdayChecked);
+                DateTime birthDay = dtf.parseDateTime(birthdayChecked);
                 personAgeTV.setText((Days.daysBetween(birthDay, new DateTime()).getDays() / 365 + 1) + "");
                 break;
             case 5://省市区
+                personAreaTV.setText(cityChecked);
                 break;
             case 6://地址
+                editInfoContentET = (EditText) editDialog.findViewById(R.id.edit_info_dialog_content);
                 personAddressTV.setText(editInfoContentET.getText().toString());
+                editDialog.dismiss();
                 break;
         }
-        editDialog.dismiss();
     }
 
     @Override

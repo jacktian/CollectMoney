@@ -43,7 +43,7 @@ public class SetPasswordPresenter implements SetPasswordContract.SetPasswordPres
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_set_password));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_set_password));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -76,7 +76,7 @@ public class SetPasswordPresenter implements SetPasswordContract.SetPasswordPres
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_user_login));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_user_login));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

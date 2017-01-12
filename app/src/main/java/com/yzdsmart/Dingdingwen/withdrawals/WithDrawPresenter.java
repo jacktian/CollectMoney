@@ -45,7 +45,7 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_info));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_info));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -75,7 +75,7 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_left_coins));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_left_coins));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -105,7 +105,7 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_left_coins));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_left_coins));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -136,7 +136,7 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_withdraw));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_withdraw));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -167,7 +167,7 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_withdraw));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_withdraw));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -193,7 +193,7 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_bank_card_list));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_bank_card_list));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -223,7 +223,7 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_coin_types));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_coin_types));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -253,7 +253,7 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_coin_types));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_coin_types));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

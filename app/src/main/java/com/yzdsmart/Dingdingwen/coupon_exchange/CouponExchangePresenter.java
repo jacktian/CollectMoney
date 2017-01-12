@@ -44,7 +44,7 @@ public class CouponExchangePresenter implements CouponExchangeContract.CouponExc
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_left_coins));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_left_coins));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -74,7 +74,7 @@ public class CouponExchangePresenter implements CouponExchangeContract.CouponExc
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_left_coins));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_left_coins));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -104,7 +104,7 @@ public class CouponExchangePresenter implements CouponExchangeContract.CouponExc
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_coupon));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_coupon));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -134,7 +134,7 @@ public class CouponExchangePresenter implements CouponExchangeContract.CouponExc
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_coin_coupon));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_coin_coupon));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -164,7 +164,7 @@ public class CouponExchangePresenter implements CouponExchangeContract.CouponExc
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_exchange_coupon));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_exchange_coupon));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

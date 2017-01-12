@@ -47,7 +47,7 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_personal_galley));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_personal_galley));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -79,7 +79,7 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_delete_personal_galley));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_delete_personal_galley));
                 mView.onDeleteGalleyFail();
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
@@ -111,7 +111,7 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_galley));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_galley));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -143,7 +143,7 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_delete_shop_galley));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_delete_shop_galley));
                 mView.onDeleteGalleyFail();
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
@@ -174,7 +174,7 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_upload_galley));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_upload_galley));
                 mView.onUploadGalleyFail();
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
@@ -205,7 +205,7 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_upload_galley));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_upload_galley));
                 mView.onUploadGalleyFail();
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();

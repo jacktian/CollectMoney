@@ -172,6 +172,10 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
                 break;
         }
 
+        if (null != friend_c_code && friend_c_code.equals(SharedPreferencesUtils.getString(this, "cust_code", ""))) {
+            ButterKnife.apply(addFriendBtn, BUTTERKNIFEGONE);
+        }
+
         MobclickAgent.openActivityDurationTrack(false);
 
         appbarLayout.addOnOffsetChangedListener(new AppBarOffsetChangeListener() {
@@ -245,6 +249,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (Constants.REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
+            if (null == MainActivity.getInstance()) return;
             MainActivity.getInstance().chatLogin();
         }
     }

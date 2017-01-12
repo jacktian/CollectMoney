@@ -152,7 +152,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 return new ShopImageBannerHolderView();
             }
         }, localImages);
-
+        shopImagesBanner.setCanLoop(false);
         shopImagesBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -222,6 +222,8 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         super.onActivityResult(requestCode, resultCode, data);
         if (Constants.REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
             mPresenter.getShopInfo("000000", "000000", bazaCode, SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+            if (null == MainActivity.getInstance() || null != UserInfo.getInstance().getId())
+                return;
             MainActivity.getInstance().chatLogin();
         }
     }
@@ -292,7 +294,11 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
             @Override
             public void onClick(View view) {
                 bundle.putInt("scanType", 0);
-                openActivity(QRScannerActivity.class, bundle, 0);
+                if (null == SharedPreferencesUtils.getString(ShopDetailsActivity.this, "cust_code", "") || SharedPreferencesUtils.getString(ShopDetailsActivity.this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
+                    openActivity(QRScannerActivity.class, bundle, Constants.REQUEST_LOGIN_CODE);
+                } else {
+                    openActivity(QRScannerActivity.class, bundle, 0);
+                }
                 scannerChooseDialog.dismiss();
             }
         });
@@ -300,7 +306,11 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
             @Override
             public void onClick(View view) {
                 bundle.putInt("scanType", 1);
-                openActivity(QRScannerActivity.class, bundle, 0);
+                if (null == SharedPreferencesUtils.getString(ShopDetailsActivity.this, "cust_code", "") || SharedPreferencesUtils.getString(ShopDetailsActivity.this, "cust_code", "").trim().length() <= 0 || null == UserInfo.getInstance().getId()) {
+                    openActivity(QRScannerActivity.class, bundle, Constants.REQUEST_LOGIN_CODE);
+                } else {
+                    openActivity(QRScannerActivity.class, bundle, 0);
+                }
                 scannerChooseDialog.dismiss();
             }
         });
@@ -334,6 +344,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                 }
             }, localImages);
             shopImagesBanner.stopTurning();
+            shopImagesBanner.setCanLoop(false);
         } else {
             for (int i = 0; i < shopImageList.size(); i++) {
                 galleyImages.add(shopImageList.get(i));
@@ -351,6 +362,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
                     .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
                     //设置指示器的方向
                     .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+            shopImagesBanner.setCanLoop(true);
             shopImagesBanner.startTurning(3000);
         }
         shopImagesBanner.notifyDataSetChanged();

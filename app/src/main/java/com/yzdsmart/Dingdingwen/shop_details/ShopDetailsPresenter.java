@@ -42,7 +42,7 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_info));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_info));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -72,7 +72,7 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_set_follow));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_set_follow));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -100,7 +100,7 @@ public class ShopDetailsPresenter implements ShopDetailsContract.ShopDetailsPres
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_follower));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_follower));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

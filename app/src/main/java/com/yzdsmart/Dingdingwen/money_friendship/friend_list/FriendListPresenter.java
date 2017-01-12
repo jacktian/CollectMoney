@@ -38,7 +38,7 @@ public class FriendListPresenter implements FriendListContract.FriendListPresent
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_friend));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_friend));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

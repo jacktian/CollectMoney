@@ -3,6 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_grey"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -30,15 +31,15 @@
         <TextView
             android:id="@+id/btnSend"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_height="@dimen/common_user_info_item_height"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="20dp"
-            android:background="@drawable/tecent_bg_positive_btn"
+            android:background="@drawable/register_login_button"
             android:clickable="true"
             android:gravity="center"
             android:text="发送"
-            android:textColor="@color/tecent_text_btn"
-            android:textSize="18sp" />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_large" />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

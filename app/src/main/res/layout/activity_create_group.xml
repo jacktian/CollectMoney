@@ -3,6 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_grey"
     android:fitsSystemWindows="true">
 
     <include
@@ -21,7 +22,6 @@
             android:layout_height="50dp"
             android:background="@color/white">
 
-
             <TextView
                 android:id="@+id/textview"
                 android:layout_width="wrap_content"
@@ -33,26 +33,30 @@
 
             <EditText
                 android:id="@+id/input_group_name"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:background="@null"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
                 android:textColor="@color/grey" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/btn_add_group_member"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/common_user_info_item_height"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="20dp"
-            android:background="@drawable/tecent_bg_positive_btn"
+            android:background="@drawable/register_login_button"
             android:gravity="center"
             android:text="@string/btn_add_member"
-            android:textColor="@color/tecent_text_btn" />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_large" />
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

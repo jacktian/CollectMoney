@@ -41,7 +41,7 @@ public class PaymentLogPresenter implements PaymentLogContract.PaymentLogPresent
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_payment_log));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_payment_log));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -71,7 +71,7 @@ public class PaymentLogPresenter implements PaymentLogContract.PaymentLogPresent
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_payment_log));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_payment_log));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

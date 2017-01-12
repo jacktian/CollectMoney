@@ -153,7 +153,7 @@
 
     <!--付款-->
     <string name="payment_title">付款</string>
-    <string name="payment_all_amount_title">消费总额</string>
+    <string name="payment_all_amount_title">消费总额(人名币)</string>
     <string name="payment_left_coin_counts_title">金币数量</string>
     <string name="payment_use_coin_pay_title">使用金币支付</string>
     <string name="payment_actual_pay_title">实付金额</string>

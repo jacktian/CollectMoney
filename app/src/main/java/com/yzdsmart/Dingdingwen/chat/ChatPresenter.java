@@ -177,7 +177,7 @@ public class ChatPresenter implements ChatContract.ChatPresenter, Observer {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_code));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_code));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

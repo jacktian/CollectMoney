@@ -41,7 +41,7 @@ public class CouponLogPresenter implements CouponLogContract.CouponLogPresenter 
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_coupon_log));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_coupon_log));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -71,7 +71,7 @@ public class CouponLogPresenter implements CouponLogContract.CouponLogPresenter 
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_coupon_log));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_coupon_log));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

@@ -213,7 +213,7 @@ public class SetInfoActivity extends BaseActivity implements SetInfoContract.Set
             return;
         }
         if (null != MainActivity.getInstance()) {
-            MainActivity.getInstance().imLogin();
+            MainActivity.getInstance().chatLogin();
         }
         openActivityClear(MainActivity.class, null, 0);
     }

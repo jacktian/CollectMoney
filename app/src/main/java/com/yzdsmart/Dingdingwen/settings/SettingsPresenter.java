@@ -38,7 +38,7 @@ public class SettingsPresenter implements SettingsContract.SettingsPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_detail_info));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_detail_info));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

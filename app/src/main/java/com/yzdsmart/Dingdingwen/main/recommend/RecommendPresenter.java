@@ -40,7 +40,7 @@ public class RecommendPresenter implements RecommendContract.RecommendPresenter 
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_expand_shop_list));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_expand_shop_list));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

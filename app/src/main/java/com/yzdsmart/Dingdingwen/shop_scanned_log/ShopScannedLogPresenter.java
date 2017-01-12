@@ -41,7 +41,7 @@ public class ShopScannedLogPresenter implements ShopScannedLogContract.ShopScann
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_scanned_log));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_scanned_log));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

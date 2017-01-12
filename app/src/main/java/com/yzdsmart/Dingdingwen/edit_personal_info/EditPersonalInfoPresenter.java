@@ -41,7 +41,7 @@ public class EditPersonalInfoPresenter implements EditPersonalInfoContract.EditP
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_info));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_info));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -69,7 +69,7 @@ public class EditPersonalInfoPresenter implements EditPersonalInfoContract.EditP
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_detail_info));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_detail_info));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -99,7 +99,7 @@ public class EditPersonalInfoPresenter implements EditPersonalInfoContract.EditP
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_detail_info));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_cust_detail_info));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

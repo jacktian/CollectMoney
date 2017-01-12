@@ -42,7 +42,7 @@ public class BindBankCardPresenter implements BindBankCardContract.BindBankCardP
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_bind_bank_card));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_bind_bank_card));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -73,7 +73,7 @@ public class BindBankCardPresenter implements BindBankCardContract.BindBankCardP
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_validate_bank_card));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_validate_bank_card));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

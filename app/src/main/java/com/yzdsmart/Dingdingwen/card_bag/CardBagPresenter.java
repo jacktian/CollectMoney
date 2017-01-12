@@ -39,7 +39,7 @@ public class CardBagPresenter implements CardBagContract.CardBagPresenter {
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_bank_card_list));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_bank_card_list));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

@@ -40,7 +40,7 @@ public class RegisterBusinessPresenter implements RegisterBusinessContract.Regis
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_register_business));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_register_business));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

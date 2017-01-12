@@ -226,7 +226,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 return new ShopImageBannerHolderView();
             }
         }, localImages);
-
+        shopImagesBanner.setCanLoop(false);
         shopImagesBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -447,6 +447,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 }
             }, localImages);
             shopImagesBanner.stopTurning();
+            shopImagesBanner.setCanLoop(false);
         } else {
             for (int i = 0; i < galleyInfos.size(); i++) {
                 galleyImages.add(galleyInfos.get(i).getImageFileUrl());
@@ -464,6 +465,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                     .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
                     //设置指示器的方向
                     .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+            shopImagesBanner.setCanLoop(true);
             shopImagesBanner.startTurning(3000);
         }
         shopImagesBanner.notifyDataSetChanged();

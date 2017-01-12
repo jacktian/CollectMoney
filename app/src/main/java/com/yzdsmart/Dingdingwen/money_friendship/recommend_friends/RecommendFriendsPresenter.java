@@ -43,7 +43,7 @@ public class RecommendFriendsPresenter implements RecommendFriendsContract.Recom
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_recommend_friend));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_recommend_friend));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

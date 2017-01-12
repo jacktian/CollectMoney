@@ -98,7 +98,7 @@
     <color name="tecent_btn_text">#FFFFFF</color>
     <color name="tecent_btn_text_hover">#CCFFFFFF</color>
     <!--日期选择-->
-    <color name="timetimepicker_default_text_color">#999999</color>
+    <color name="timepicker_default_text_color">#999999</color>
     <color name="timepicker_toolbar_bg">#e60012</color>
     <color name="timepicker_dialog_bg">#80000000</color>
     <color name="timepicker_line">#e8e8e8</color>
@@ -106,4 +106,6 @@
     <color name="navi_picker_line">#11000000</color>
     <color name="navi_picker_text_blank">#ff4b4b4b</color>
     <color name="navi_picker_orage">#fff08519</color>
+    <!--省市区选择-->
+    <color name="city_picker_province_line_border">#C7C7C7</color>
 </resources>

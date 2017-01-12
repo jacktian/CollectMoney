@@ -25,7 +25,6 @@ public class ImageCropPresenter implements ImageCropContract.ImageCropPresenter 
         mView.setPresenter(this);
     }
 
-
     @Override
     public void uploadPortrait(String action, String fileName, String fileData, String tcAccount, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.uploading));
@@ -43,7 +42,7 @@ public class ImageCropPresenter implements ImageCropContract.ImageCropPresenter 
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
-                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_upload_portrait));
+//                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_upload_portrait));
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

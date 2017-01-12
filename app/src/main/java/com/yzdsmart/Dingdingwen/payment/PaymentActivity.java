@@ -65,14 +65,14 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
     @BindView(R.id.pay_amount)
     EditText payAmountET;
     @Nullable
-    @BindView(R.id.shop_discount_title)
-    TextView shopDiscountTitleTV;
-    @Nullable
     @BindView(R.id.discount_types_arrow)
     ImageView discountTypesArrowIV;
     @Nullable
     @BindView(R.id.discount_types)
     Spinner discountTypesBS;
+    @Nullable
+    @BindView(R.id.no_discount_notice)
+    TextView noDiscountNoticeTV;
     @Nullable
     @BindView(R.id.left_coin_counts)
     TextView leftCoinCountsTV;
@@ -264,7 +264,9 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             }
         } else if (Constants.REQUEST_LOGIN_CODE == requestCode) {
             if (RESULT_OK == resultCode) {
-                MainActivity.getInstance().chatLogin();
+                if (null != MainActivity.getInstance()) {
+                    MainActivity.getInstance().chatLogin();
+                }
                 initData();
             } else {
                 closeActivity();
@@ -399,6 +401,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 }
             }
         } else {
+            coinCountsET.setText("");
             actualAmountTV.setText("0.00");
             confirmPayBtn.setEnabled(false);
         }
@@ -506,11 +509,11 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
         shopDiscountAdapter.clearList();
         shopDiscountAdapter.appendList(shopDiscounts);
         if (shopDiscounts.size() == 0) {
-            ButterKnife.apply(shopDiscountTitleTV, BUTTERKNIFEGONE);
+            ButterKnife.apply(noDiscountNoticeTV, BUTTERKNIFEVISIBLE);
             ButterKnife.apply(discountTypesArrowIV, BUTTERKNIFEGONE);
             ButterKnife.apply(discountTypesBS, BUTTERKNIFEGONE);
         } else {
-            ButterKnife.apply(shopDiscountTitleTV, BUTTERKNIFEVISIBLE);
+            ButterKnife.apply(noDiscountNoticeTV, BUTTERKNIFEGONE);
             ButterKnife.apply(discountTypesArrowIV, BUTTERKNIFEVISIBLE);
             ButterKnife.apply(discountTypesBS, BUTTERKNIFEVISIBLE);
         }
