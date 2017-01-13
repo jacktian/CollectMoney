@@ -5,7 +5,7 @@ import android.content.Context;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
-import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ScanCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopExchangeRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
@@ -33,7 +33,7 @@ public class CouponExchangePresenter implements CouponExchangeContract.CouponExc
         mModel.getPersonalLeftCoins(action, actiontype, submitCode, custCode, goldType, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                GetCoinRequestResponse requestResponse = (GetCoinRequestResponse) result;
+                ScanCoinRequestResponse requestResponse = (ScanCoinRequestResponse) result;
                 if ("OK".equals(requestResponse.getActionStatus())) {
                     mView.onGetPersonalLeftCoins(requestResponse.getGoldNum());
                 } else {
@@ -63,7 +63,7 @@ public class CouponExchangePresenter implements CouponExchangeContract.CouponExc
         mModel.getShopLeftCoins(action, submitCode, bazaCode, goldType, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                GetCoinRequestResponse requestResponse = (GetCoinRequestResponse) result;
+                ScanCoinRequestResponse requestResponse = (ScanCoinRequestResponse) result;
                 if ("OK".equals(requestResponse.getActionStatus())) {
                     mView.onGetShopLeftCoins(requestResponse.getGoldNum());
                 } else {

@@ -2,9 +2,10 @@ package com.yzdsmart.Dingdingwen.scan_coin;
 
 import android.content.Context;
 
+import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
-import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ScanCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 
@@ -24,29 +25,46 @@ public class QRScannerPresenter implements QRScannerContract.QRScannerPresenter 
     }
 
     @Override
-    public void getCoins(String actionCode, String retaCode, String custCode, String coor, String ip, String authorization) {
-        mModel.getCoins(actionCode, Utils.md5(retaCode + "yzd" + custCode), custCode, retaCode, coor, ip, authorization, new RequestListener() {
+    public void scanQRCode(String actionCode, String retaCode, String custCode, String coor, String ip, final Integer type, String authorization) {
+        switch (type) {
+            case 0:
+                ((BaseActivity) context).showProgressDialog(R.drawable.loading, "正在扫币......");
+                break;
+            case 1:
+                ((BaseActivity) context).showProgressDialog(R.drawable.loading, "正在签到......");
+                break;
+        }
+        mModel.scanQRCode(actionCode, Utils.md5(retaCode + "yzd" + custCode), custCode, retaCode, coor, ip, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                GetCoinRequestResponse response = (GetCoinRequestResponse) result;
+                ScanCoinRequestResponse response = (ScanCoinRequestResponse) result;
                 if ("OK".equals(response.getActionStatus())) {
-                    mView.onGetCoins(true, null, response.getGoldNum(), response.getGoldLogoUrl());
+                    switch (type) {
+                        case 0:
+                            mView.onScanQRCode(true, null, response.getGoldNum(), response.getGoldLogoUrl(), type);
+                            break;
+                        case 1:
+                            mView.onScanQRCode(true, null, null, response.getInfo(), type);
+                            break;
+                    }
                 } else {
-                    mView.onGetCoins(false, response.getErrorInfo(), null, null);
+                    mView.onScanQRCode(false, response.getErrorInfo(), null, null, type);
                 }
             }
 
             @Override
             public void onError(String err) {
-                mView.onGetCoins(false, context.getResources().getString(R.string.get_coins_error), null, null);
+                ((BaseActivity) context).hideProgressDialog();
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
+                    return;
                 }
+                mView.onScanQRCode(false, context.getResources().getString(R.string.get_coins_error), null, null, type);
             }
 
             @Override
             public void onComplete() {
-
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

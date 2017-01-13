@@ -131,7 +131,7 @@ public class BackgroundBagAdapter extends UltimateViewAdapter<BackgroundBagAdapt
         }
 
         public void setCoinLogo(String logoUrl) {
-            Glide.with(context).load((null == logoUrl || "".equals(logoUrl)) ? R.mipmap.yzd_coin : logoUrl).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.ic_holder_light)).into(coinLogoIV);
+            Glide.with(context).load((null == logoUrl || "".equals(logoUrl)) ? R.mipmap.yzd_coin : logoUrl).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.coin_logo_fail_default)).into(coinLogoIV);
         }
 
         public void setCoinCounts(Double coinCounts) {

@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.views.time_picker;
+package com.yzdsmart.Dingdingwen.views.gender_picker;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -15,25 +15,21 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.yzdsmart.Dingdingwen.R;
-import com.yzdsmart.Dingdingwen.views.time_picker.config.PickerConfig;
+import com.yzdsmart.Dingdingwen.views.gender_picker.config.GenderPickerConfig;
+import com.yzdsmart.Dingdingwen.views.gender_picker.listener.OnGenderSetListener;
 import com.yzdsmart.Dingdingwen.views.time_picker.data.Type;
-import com.yzdsmart.Dingdingwen.views.time_picker.data.WheelCalendar;
-import com.yzdsmart.Dingdingwen.views.time_picker.listener.OnDateSetListener;
-
-import java.util.Calendar;
 
 /**
  * Created by jzxiang on 16/4/19.
  */
-public class TimePickerDialog extends DialogFragment implements View.OnClickListener {
-    PickerConfig mPickerConfig;
-    private TimeWheel mTimeWheel;
-    private long mCurrentMillSeconds;
+public class GenderPickerDialog extends DialogFragment implements View.OnClickListener {
+    GenderPickerConfig mPickerConfig;
+    private GenderWheel mGenderWheel;
 
-    private static TimePickerDialog newInstance(PickerConfig pickerConfig) {
-        TimePickerDialog timePickerDialog = new TimePickerDialog();
-        timePickerDialog.initialize(pickerConfig);
-        return timePickerDialog;
+    private static GenderPickerDialog newInstance(GenderPickerConfig pickerConfig) {
+        GenderPickerDialog genderPickerDialog = new GenderPickerDialog();
+        genderPickerDialog.initialize(pickerConfig);
+        return genderPickerDialog;
     }
 
     @Override
@@ -54,7 +50,7 @@ public class TimePickerDialog extends DialogFragment implements View.OnClickList
         window.setGravity(Gravity.BOTTOM);
     }
 
-    private void initialize(PickerConfig pickerConfig) {
+    private void initialize(GenderPickerConfig pickerConfig) {
         mPickerConfig = pickerConfig;
     }
 
@@ -71,7 +67,7 @@ public class TimePickerDialog extends DialogFragment implements View.OnClickList
 
     View initView() {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View view = inflater.inflate(R.layout.timepicker_layout, null);
+        View view = inflater.inflate(R.layout.gender_picker_layout, null);
         TextView cancel = (TextView) view.findViewById(R.id.tv_cancel);
         cancel.setOnClickListener(this);
         TextView sure = (TextView) view.findViewById(R.id.tv_sure);
@@ -84,8 +80,10 @@ public class TimePickerDialog extends DialogFragment implements View.OnClickList
         sure.setText(mPickerConfig.mSureString);
         sure.setTextColor(mPickerConfig.mSureTVColor);
         toolbar.setBackgroundColor(mPickerConfig.mThemeColor);
+        title.setText(mPickerConfig.mTitleString);
+        title.setTextColor(mPickerConfig.mTitleTVColor);
 
-        mTimeWheel = new TimeWheel(view, mPickerConfig);
+        mGenderWheel = new GenderWheel(view, mPickerConfig);
         return view;
     }
 
@@ -100,46 +98,23 @@ public class TimePickerDialog extends DialogFragment implements View.OnClickList
     }
 
     /*
-    * @desc This method returns the current milliseconds. If current milliseconds is not set,
-    *       this will return the system milliseconds.
-    * @param none
-    * @return long - the current milliseconds.
-    */
-    public long getCurrentMillSeconds() {
-        if (mCurrentMillSeconds == 0)
-            return System.currentTimeMillis();
-
-        return mCurrentMillSeconds;
-    }
-
-    /*
     * @desc This method is called when onClick method is invoked by sure button. A Calendar instance is created and 
     *       initialized. 
     * @param none
     * @return none
     */
     void sureClicked() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear();
-
-        calendar.set(Calendar.YEAR, mTimeWheel.getCurrentYear());
-        calendar.set(Calendar.MONTH, mTimeWheel.getCurrentMonth() - 1);
-        calendar.set(Calendar.DAY_OF_MONTH, mTimeWheel.getCurrentDay());
-        calendar.set(Calendar.HOUR_OF_DAY, mTimeWheel.getCurrentHour());
-        calendar.set(Calendar.MINUTE, mTimeWheel.getCurrentMinute());
-
-        mCurrentMillSeconds = calendar.getTimeInMillis();
         if (mPickerConfig.mCallBack != null) {
-            mPickerConfig.mCallBack.onDateSet(this, mCurrentMillSeconds);
+            mPickerConfig.mCallBack.onGenderSet(this, mGenderWheel.getCurrentGender());
         }
         dismiss();
     }
 
     public static class Builder {
-        PickerConfig mPickerConfig;
+        GenderPickerConfig mPickerConfig;
 
         public Builder() {
-            mPickerConfig = new PickerConfig();
+            mPickerConfig = new GenderPickerConfig();
         }
 
         public Builder setType(Type type) {
@@ -207,52 +182,12 @@ public class TimePickerDialog extends DialogFragment implements View.OnClickList
             return this;
         }
 
-        public Builder setMinMillseconds(long millseconds) {
-            mPickerConfig.mMinCalendar = new WheelCalendar(millseconds);
-            return this;
-        }
-
-        public Builder setMaxMillseconds(long millseconds) {
-            mPickerConfig.mMaxCalendar = new WheelCalendar(millseconds);
-            return this;
-        }
-
-        public Builder setCurrentMillseconds(long millseconds) {
-            mPickerConfig.mCurrentCalendar = new WheelCalendar(millseconds);
-            return this;
-        }
-
-        public Builder setYearText(String year) {
-            mPickerConfig.mYear = year;
-            return this;
-        }
-
-        public Builder setMonthText(String month) {
-            mPickerConfig.mMonth = month;
-            return this;
-        }
-
-        public Builder setDayText(String day) {
-            mPickerConfig.mDay = day;
-            return this;
-        }
-
-        public Builder setHourText(String hour) {
-            mPickerConfig.mHour = hour;
-            return this;
-        }
-
-        public Builder setMinuteText(String minute) {
-            mPickerConfig.mMinute = minute;
-            return this;
-        }
-
-        public Builder setCallBack(OnDateSetListener listener) {
+        public Builder setCallBack(OnGenderSetListener listener) {
             mPickerConfig.mCallBack = listener;
             return this;
         }
 
-        public TimePickerDialog build() {
+        public GenderPickerDialog build() {
             return newInstance(mPickerConfig);
         }
 

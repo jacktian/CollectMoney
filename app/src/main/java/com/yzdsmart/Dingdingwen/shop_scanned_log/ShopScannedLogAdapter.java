@@ -127,7 +127,7 @@ public class ShopScannedLogAdapter extends UltimateViewAdapter<ShopScannedLogAda
         }
 
         public void setScannerAvater(String followerAvater) {
-            Glide.with(context).load(followerAvater).error(context.getResources().getDrawable(R.mipmap.user_avater)).into(scannerAvaterIV);
+            Glide.with(context).load(followerAvater).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.user_avater)).into(scannerAvaterIV);
         }
 
         public void setScannerName(String followerName) {

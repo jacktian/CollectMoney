@@ -12,7 +12,7 @@ import com.yzdsmart.Dingdingwen.http.response.CustLevelRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ExpandListRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.FocusedShopRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.FriendsRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ScanCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetCoinsLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetGalleyRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
@@ -337,7 +337,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.TASK)
-    Observable<GetCoinRequestResponse> getGoldCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode, @Field("Coor") String coor, @Field("Ip") String ip, @Header("Authorization") String authorization);
+    Observable<ScanCoinRequestResponse> scanQRCode(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode, @Field("Coor") String coor, @Field("Ip") String ip, @Header("Authorization") String authorization);
 
     /**
      * 上传用户头像
@@ -468,7 +468,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.GOLD)
-    Observable<GetCoinRequestResponse> getPersonalLeftCoins(@Query("action") String action, @Query("actiontype") String actiontype, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("GoldType") Integer goldType, @Header("Authorization") String authorization);
+    Observable<ScanCoinRequestResponse> getPersonalLeftCoins(@Query("action") String action, @Query("actiontype") String actiontype, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("GoldType") Integer goldType, @Header("Authorization") String authorization);
 
     /**
      * 个人提现
@@ -727,7 +727,7 @@ public interface RequestService {
      */
     @FormUrlEncoded
     @POST(Url.GOLD)
-    Observable<GetCoinRequestResponse> getShopLeftCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldType") Integer goldType, @Header("Authorization") String authorization);
+    Observable<ScanCoinRequestResponse> getShopLeftCoins(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("BazaCode") String bazaCode, @Field("GoldType") Integer goldType, @Header("Authorization") String authorization);
 
     /**
      * 获取商铺金币类型

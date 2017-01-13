@@ -100,7 +100,7 @@ public class ScanCoinsLogAdapter extends UltimateViewAdapter<ScanCoinsLogAdapter
         holder.scanCointCountsTV.setText("+" + decimalFormat.format(log.getGetGold()));
         holder.scanCoinDateTV.setText(dateTime.toString("yyyy-MM-dd"));
         holder.scanCoinTimeTV.setText(dateTime.toString("HH:mm:ss"));
-        Glide.with(context).load(log.getLogoImageUrl()).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.ic_holder_light)).into(holder.shopAvaterIV);
+        Glide.with(context).load(log.getLogoImageUrl()).asBitmap().placeholder(context.getResources().getDrawable(R.mipmap.ic_holder_light)).error(context.getResources().getDrawable(R.mipmap.coin_logo_fail_default)).into(holder.shopAvaterIV);
         holder.shopNameTV.setText(log.getBazaName());
     }
 

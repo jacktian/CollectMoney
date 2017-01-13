@@ -3,14 +3,15 @@ package com.yzdsmart.Dingdingwen.http.response;
 /**
  * Created by YZD on 2016/9/3.
  */
-public class GetCoinRequestResponse {
+public class ScanCoinRequestResponse {
     private Double GoldNum;//本次获得金币
     private String GoldLogoUrl;//金币图片
+    private String Info;//本点签到成功
     private String ActionStatus;
     private Integer ErrorCode;
     private String ErrorInfo;
 
-    public GetCoinRequestResponse() {
+    public ScanCoinRequestResponse() {
     }
 
     public Double getGoldNum() {
@@ -27,6 +28,14 @@ public class GetCoinRequestResponse {
 
     public void setGoldLogoUrl(String goldLogoUrl) {
         GoldLogoUrl = goldLogoUrl;
+    }
+
+    public String getInfo() {
+        return Info;
+    }
+
+    public void setInfo(String info) {
+        Info = info;
     }
 
     public String getActionStatus() {

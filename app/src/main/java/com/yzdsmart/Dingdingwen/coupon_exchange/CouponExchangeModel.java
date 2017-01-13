@@ -2,7 +2,7 @@ package com.yzdsmart.Dingdingwen.coupon_exchange;
 
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
-import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ScanCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopExchangeRequestResponse;
 
@@ -16,15 +16,15 @@ import rx.schedulers.Schedulers;
 
 public class CouponExchangeModel {
     //网络请求监听
-    private Subscriber<GetCoinRequestResponse> personalLeftCoinsSubscriber;
-    private Subscriber<GetCoinRequestResponse> shopLeftCoinsSubscriber;
+    private Subscriber<ScanCoinRequestResponse> personalLeftCoinsSubscriber;
+    private Subscriber<ScanCoinRequestResponse> shopLeftCoinsSubscriber;
     private Subscriber<ShopExchangeRequestResponse> getShopExchangeSubscriber;
     private Subscriber<ShopExchangeRequestResponse> getCoinExchangeSubscriber;
     private Subscriber<RequestResponse> exchangeCouponSubscriber;
 
 
     void getPersonalLeftCoins(String action, String actiontype, String submitCode, String custCode, Integer goldType, String authorization, final RequestListener listener) {
-        personalLeftCoinsSubscriber = new Subscriber<GetCoinRequestResponse>() {
+        personalLeftCoinsSubscriber = new Subscriber<ScanCoinRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -36,7 +36,7 @@ public class CouponExchangeModel {
             }
 
             @Override
-            public void onNext(GetCoinRequestResponse requestResponse) {
+            public void onNext(ScanCoinRequestResponse requestResponse) {
                 listener.onSuccess(requestResponse);
             }
         };
@@ -47,7 +47,7 @@ public class CouponExchangeModel {
     }
 
     void getShopLeftCoins(String action, String submitCode, String bazaCode, Integer goldType, String authorization, final RequestListener listener) {
-        shopLeftCoinsSubscriber = new Subscriber<GetCoinRequestResponse>() {
+        shopLeftCoinsSubscriber = new Subscriber<ScanCoinRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -59,7 +59,7 @@ public class CouponExchangeModel {
             }
 
             @Override
-            public void onNext(GetCoinRequestResponse response) {
+            public void onNext(ScanCoinRequestResponse response) {
                 listener.onSuccess(response);
             }
         };

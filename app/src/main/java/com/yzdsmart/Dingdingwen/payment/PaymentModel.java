@@ -2,7 +2,7 @@ package com.yzdsmart.Dingdingwen.payment;
 
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
-import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ScanCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PayRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopDiscountRequestResponse;
 
@@ -18,13 +18,13 @@ import rx.schedulers.Schedulers;
 
 public class PaymentModel {
     //网络请求监听
-    private Subscriber<GetCoinRequestResponse> personalLeftCoinsSubscriber;
-    private Subscriber<GetCoinRequestResponse> shopLeftCoinsSubscriber;
+    private Subscriber<ScanCoinRequestResponse> personalLeftCoinsSubscriber;
+    private Subscriber<ScanCoinRequestResponse> shopLeftCoinsSubscriber;
     private Subscriber<ShopDiscountRequestResponse> getShopDiscountsSubscriber;
     private Subscriber<PayRequestResponse> submitPaymentSubscriber;
 
     void getPersonalLeftCoins(String action, String actiontype, String submitCode, String custCode, Integer goldType, String authorization, final RequestListener listener) {
-        personalLeftCoinsSubscriber = new Subscriber<GetCoinRequestResponse>() {
+        personalLeftCoinsSubscriber = new Subscriber<ScanCoinRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -36,7 +36,7 @@ public class PaymentModel {
             }
 
             @Override
-            public void onNext(GetCoinRequestResponse requestResponse) {
+            public void onNext(ScanCoinRequestResponse requestResponse) {
                 listener.onSuccess(requestResponse);
             }
         };
@@ -47,7 +47,7 @@ public class PaymentModel {
     }
 
     void getShopLeftCoins(String action, String submitCode, String bazaCode, Integer goldType, String authorization, final RequestListener listener) {
-        shopLeftCoinsSubscriber = new Subscriber<GetCoinRequestResponse>() {
+        shopLeftCoinsSubscriber = new Subscriber<ScanCoinRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -59,7 +59,7 @@ public class PaymentModel {
             }
 
             @Override
-            public void onNext(GetCoinRequestResponse response) {
+            public void onNext(ScanCoinRequestResponse response) {
                 listener.onSuccess(response);
             }
         };

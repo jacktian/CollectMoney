@@ -13,7 +13,7 @@
         android:layout_height="@dimen/button_height"
         android:background="@drawable/button_orange"
         android:text="@string/take_photo"
-        android:textColor="@color/grey"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/font_medium" />
 
     <Button
@@ -23,6 +23,6 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:background="@drawable/button_orange"
         android:text="@string/galley_select"
-        android:textColor="@color/grey"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/font_medium" />
 </LinearLayout>

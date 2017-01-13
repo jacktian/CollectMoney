@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,11 +20,12 @@ import com.yzdsmart.Dingdingwen.http.response.CustDetailInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
-import com.yzdsmart.Dingdingwen.views.BetterSpinner;
 import com.yzdsmart.Dingdingwen.views.city_picker.CityPickerDialog;
+import com.yzdsmart.Dingdingwen.views.city_picker.listener.OnCitySetListener;
+import com.yzdsmart.Dingdingwen.views.gender_picker.GenderPickerDialog;
+import com.yzdsmart.Dingdingwen.views.gender_picker.listener.OnGenderSetListener;
 import com.yzdsmart.Dingdingwen.views.time_picker.TimePickerDialog;
 import com.yzdsmart.Dingdingwen.views.time_picker.data.Type;
-import com.yzdsmart.Dingdingwen.views.time_picker.listener.OnCitySetListener;
 import com.yzdsmart.Dingdingwen.views.time_picker.listener.OnDateSetListener;
 
 import org.joda.time.DateTime;
@@ -93,6 +93,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
     private DateTimeFormatter dtf;
     private String birthdayChecked = "";
     private String cityChecked = "";
+    private String genderChecked = "";
 
     private long birthBefore = 150L * 365 * 1000 * 60 * 60 * 24L;
 
@@ -144,20 +145,36 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
                 closeActivity();
                 break;
             case R.id.person_name:
-                showEditInfo("姓名", 0);
+                showEditInfo("姓名", 0, personNameTV.getText().toString());
                 break;
             case R.id.person_nickname:
-                showEditInfo("昵称", 1);
+                showEditInfo("昵称", 1, personNicknameTV.getText().toString());
                 break;
             case R.id.person_gender:
-                showEditInfo("性别", 2);
+                GenderPickerDialog mGenderPickerDialog = new GenderPickerDialog.Builder()
+                        .setCallBack(new OnGenderSetListener() {
+                            @Override
+                            public void onGenderSet(GenderPickerDialog genderPickerView, String gender) {
+                                genderChecked = gender;
+                                mPresenter.setCustDetailInfo(2, "000000", SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "cust_code", ""), null, null, gender, null, null, null, null, null, null, null, null, null, null, null, null, null, SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_access_token", ""));
+                            }
+                        })
+                        .setCancelTextColor(getResources().getColor(R.color.font_grey))
+                        .setSureTextColor(getResources().getColor(R.color.font_grey))
+                        .setCyclic(false)
+                        .setThemeColor(Color.WHITE)
+                        .setType(Type.ALL)
+                        .setWheelItemTextNormalColor(getResources().getColor(R.color.light_grey))
+                        .setWheelItemTextSelectorColor(getResources().getColor(R.color.font_grey))
+                        .setWheelItemTextSize(14)
+                        .build();
+                mGenderPickerDialog.show(getSupportFragmentManager(), "all");
                 break;
             case R.id.person_phone:
 //                showEditInfo("电话", 3);
                 break;
             case R.id.person_birth:
-//                showEditInfo("生日", 4);
-                TimePickerDialog mDialogAll = new TimePickerDialog.Builder()
+                TimePickerDialog mTimePickerDialog = new TimePickerDialog.Builder()
                         .setCallBack(new OnDateSetListener() {
                             @Override
                             public void onDateSet(TimePickerDialog timePickerView, long millseconds) {
@@ -178,10 +195,10 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
                         .setWheelItemTextSelectorColor(getResources().getColor(R.color.font_grey))
                         .setWheelItemTextSize(14)
                         .build();
-                mDialogAll.show(getSupportFragmentManager(), "year_month_day");
+                mTimePickerDialog.show(getSupportFragmentManager(), "year_month_day");
                 break;
             case R.id.person_area:
-                CityPickerDialog mCityDialogAll = new CityPickerDialog.Builder()
+                CityPickerDialog mCityPickerDialog = new CityPickerDialog.Builder()
                         .setCallBack(new OnCitySetListener() {
                             @Override
                             public void onCitySet(CityPickerDialog cityPickerView, String province, String city, String district) {
@@ -198,11 +215,10 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
                         .setWheelItemTextSelectorColor(getResources().getColor(R.color.font_grey))
                         .setWheelItemTextSize(14)
                         .build();
-                mCityDialogAll.show(getSupportFragmentManager(), "all");
-//                showEditInfo("省市区", 5);
+                mCityPickerDialog.show(getSupportFragmentManager(), "all");
                 break;
             case R.id.person_address:
-                showEditInfo("地址", 6);
+                showEditInfo("地址", 6, personAddressTV.getText().toString());
                 break;
             case R.id.personal_avater:
                 openActivity(ImageCropActivity.class);
@@ -210,24 +226,14 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
         }
     }
 
-    void showEditInfo(final String dialogTitle, final Integer editItem) {
-        final String[] genderArray = getResources().getStringArray(R.array.gender_array);
-        ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(this,
-                R.layout.gender_array_item, genderArray);
+    void showEditInfo(final String dialogTitle, final Integer editItem, String oldValue) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final View view = LayoutInflater.from(this).inflate(R.layout.edit_info_dialog, null);
         TextView editInfoTitle = (TextView) view.findViewById(R.id.edit_info_dialog_title);
         editInfoTitle.setText("请输入" + dialogTitle);
         final EditText editInfoContent = (EditText) view.findViewById(R.id.edit_info_dialog_content);
-        final BetterSpinner genderSpinner = (BetterSpinner) view.findViewById(R.id.edit_info_gender);
-        genderSpinner.setAdapter(genderAdapter);
-        genderSpinner.setText(genderArray[0]);
-        switch (editItem) {
-            case 2://性别
-                editInfoContent.setVisibility(View.GONE);
-                genderSpinner.setVisibility(View.VISIBLE);
-                break;
-        }
+        editInfoContent.setText(oldValue);
+        editInfoContent.setSelection(oldValue.length());
         Button editCancel = (Button) view.findViewById(R.id.edit_cancel);
         Button editConfirm = (Button) view.findViewById(R.id.edit_confirm);
         editCancel.setOnClickListener(new View.OnClickListener() {
@@ -239,15 +245,9 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
         editConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (editItem) {
-                    case 2:
-                        break;
-                    default:
-                        if (editInfoContent.getText().toString().length() <= 0) {
-                            editInfoContent.setError("请输入" + dialogTitle);
-                            return;
-                        }
-                        break;
+                if (editInfoContent.getText().toString().length() <= 0) {
+                    editInfoContent.setError("请输入" + dialogTitle);
+                    return;
                 }
                 if (!Utils.isNetUsable(EditPersonalInfoActivity.this)) {
                     showSnackbar(getResources().getString(R.string.net_unusable));
@@ -260,21 +260,12 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
                     case 1://昵称
                         mPresenter.setCustDetailInfo(editItem, "000000", SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "cust_code", ""), null, editInfoContent.getText().toString(), null, null, null, null, null, null, null, null, null, null, null, null, null, null, SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_access_token", ""));
                         break;
-                    case 2://性别
-                        mPresenter.setCustDetailInfo(editItem, "000000", SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "cust_code", ""), null, null, genderSpinner.getText().toString(), null, null, null, null, null, null, null, null, null, null, null, null, null, SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_access_token", ""));
-                        break;
                     case 3://电话
                         if (!Utils.checkMobile(editInfoContent.getText().toString())) {
                             editInfoContent.setError("请输入正确的电话号码");
                             return;
                         }
                         mPresenter.setCustDetailInfo(editItem, "000000", SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "cust_code", ""), null, null, null, null, editInfoContent.getText().toString(), null, null, null, null, null, null, null, null, null, null, null, SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_access_token", ""));
-                        break;
-                    case 4://生日
-                        mPresenter.setCustDetailInfo(editItem, "000000", SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "cust_code", ""), null, null, null, editInfoContent.getText().toString(), null, null, null, null, null, null, null, null, null, null, null, null, SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_access_token", ""));
-                        break;
-                    case 5://省市区
-//                        mPresenter.setCustDetailInfo(editItem, "000000", SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "cust_code", ""), editInfoContent.getText().toString(), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_access_token", ""));
                         break;
                     case 6://地址
                         mPresenter.setCustDetailInfo(editItem, "000000", SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "cust_code", ""), null, null, null, null, null, null, null, null, null, null, editInfoContent.getText().toString(), null, null, null, null, null, SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(EditPersonalInfoActivity.this, "ddw_access_token", ""));
@@ -314,7 +305,6 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
     @Override
     public void onSetCustDetailInfo(Integer editItem) {
         EditText editInfoContentET;
-        BetterSpinner genderSpinner;
         switch (editItem) {
             case 0://姓名
                 editInfoContentET = (EditText) editDialog.findViewById(R.id.edit_info_dialog_content);
@@ -327,9 +317,7 @@ public class EditPersonalInfoActivity extends BaseActivity implements EditPerson
                 editDialog.dismiss();
                 break;
             case 2://性别
-                genderSpinner = (BetterSpinner) editDialog.findViewById(R.id.edit_info_gender);
-                personGenderTV.setText(genderSpinner.getText().toString());
-                editDialog.dismiss();
+                personGenderTV.setText(genderChecked);
                 break;
             case 3://电话
                 editInfoContentET = (EditText) editDialog.findViewById(R.id.edit_info_dialog_content);

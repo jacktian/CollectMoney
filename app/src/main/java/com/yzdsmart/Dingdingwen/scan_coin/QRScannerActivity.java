@@ -33,6 +33,7 @@ import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.ScanCoinDialog;
+import com.yzdsmart.Dingdingwen.views.SignDialog;
 
 import java.util.List;
 
@@ -73,6 +74,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     private QRScannerContract.QRScannerPresenter mPresenter;
 
     private Dialog getCoinDialog;
+    private Dialog signDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +88,14 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
-        centerTitleTV.setText(getResources().getString(R.string.qr_scan_title));
+        switch (scanType) {
+            case 0:
+                centerTitleTV.setText(getResources().getString(R.string.qr_scan_get_coin));
+                break;
+            case 1:
+                centerTitleTV.setText(getResources().getString(R.string.qr_scan_pay));
+                break;
+        }
 
         new QRScannerPresenter(this, this);
 
@@ -226,30 +235,57 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     @Override
     public void onScanQRCodeSuccess(String result) {
         playBeepSoundAndVibrate();
+        String action = Uri.parse(result).getQueryParameter("action");
         String retaCode = Uri.parse(result).getQueryParameter("RetaCode");
-        if (null == retaCode || "".equals(retaCode)) {
-            showSnackbar("商铺不存在");
-            mQRCodeView.startSpot();
-            return;
-        }
-        switch (scanType) {
-            case 0:
-                if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
-                    openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
-                    return;
-                }
-                if (!Utils.isNetUsable(this)) {
-                    showSnackbar(getResources().getString(R.string.net_unusable));
+        if (null != action && (!"".equals(action))) {
+            if (null == retaCode || "".equals(retaCode)) {
+                showSnackbar("扫码点不存在");
+                mQRCodeView.startSpot();
+                return;
+            }
+            switch (scanType) {
+                case 0:
+                    if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
+                        openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
+                        return;
+                    }
+                    if (!Utils.isNetUsable(this)) {
+                        showSnackbar(getResources().getString(R.string.net_unusable));
+                        mQRCodeView.startSpot();
+                        return;
+                    }
+                    mPresenter.scanQRCode(Constants.SIGN_ACTION_CODE, retaCode, SharedPreferencesUtils.getString(QRScannerActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(QRScannerActivity.this, "qLocation", ""), NetworkUtils.getIPAddress(true), 1, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                    break;
+                case 1:
+                    showSnackbar("付款不支持签到");
                     mQRCodeView.startSpot();
-                    return;
-                }
-                mPresenter.getCoins(Constants.GET_COIN_ACTION_CODE, retaCode, SharedPreferencesUtils.getString(QRScannerActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(QRScannerActivity.this, "qLocation", ""), NetworkUtils.getIPAddress(true), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
-                break;
-            case 1:
-                Bundle bundle = new Bundle();
-                bundle.putString("bazaCode", retaCode);
-                openActivity(PaymentActivity.class, bundle, 0);
-                break;
+                    break;
+            }
+        } else {
+            if (null == retaCode || "".equals(retaCode)) {
+                showSnackbar("商铺不存在");
+                mQRCodeView.startSpot();
+                return;
+            }
+            switch (scanType) {
+                case 0:
+                    if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
+                        openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
+                        return;
+                    }
+                    if (!Utils.isNetUsable(this)) {
+                        showSnackbar(getResources().getString(R.string.net_unusable));
+                        mQRCodeView.startSpot();
+                        return;
+                    }
+                    mPresenter.scanQRCode(Constants.GET_COIN_ACTION_CODE, retaCode, SharedPreferencesUtils.getString(QRScannerActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(QRScannerActivity.this, "qLocation", ""), NetworkUtils.getIPAddress(true), 0, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                    break;
+                case 1:
+                    Bundle bundle = new Bundle();
+                    bundle.putString("bazaCode", retaCode);
+                    openActivity(PaymentActivity.class, bundle, 0);
+                    break;
+            }
         }
     }
 
@@ -264,28 +300,47 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     }
 
     @Override
-    public void onGetCoins(boolean flag, String msg, Double counts, String coinLogo) {
+    public void onScanQRCode(boolean flag, String msg, Double counts, String coinLogo, Integer type) {
         if (!flag) {
             showSnackbar(msg);
             mQRCodeView.startSpot();
             return;
         }
-        getCoinDialog = new ScanCoinDialog(this, null == coinLogo ? "" : coinLogo, counts);
-        getCoinDialog.show();
-        Button dialogConfirm = (Button) getCoinDialog.findViewById(R.id.dialog_confirm);
-        dialogConfirm.setVisibility(View.VISIBLE);
-        dialogConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != getCoinDialog) {
-                    getCoinDialog.dismiss();
-                    getCoinDialog = null;
-                }
-//                closeActivity();
-                mQRCodeView.startSpot();
-                showShare();
-            }
-        });
+        Button dialogConfirm;
+        switch (type) {
+            case 0:
+                getCoinDialog = new ScanCoinDialog(this, null == coinLogo ? "" : coinLogo, counts);
+                getCoinDialog.show();
+                dialogConfirm = (Button) getCoinDialog.findViewById(R.id.dialog_confirm);
+                dialogConfirm.setVisibility(View.VISIBLE);
+                dialogConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (null != getCoinDialog) {
+                            getCoinDialog.dismiss();
+                            getCoinDialog = null;
+                        }
+                        mQRCodeView.startSpot();
+                        showShare();
+                    }
+                });
+                break;
+            case 1:
+                signDialog = new SignDialog(this, coinLogo, "本点签到成功".equals(coinLogo) ? true : false);
+                signDialog.show();
+                dialogConfirm = (Button) signDialog.findViewById(R.id.dialog_confirm);
+                dialogConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (null != signDialog) {
+                            signDialog.dismiss();
+                            signDialog = null;
+                        }
+                        mQRCodeView.startSpot();
+                    }
+                });
+                break;
+        }
     }
 
     /**

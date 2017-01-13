@@ -8,7 +8,7 @@ import com.yzdsmart.Dingdingwen.bean.BankCard;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.CoinTypeRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ScanCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.WithdrawRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 
@@ -64,7 +64,7 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
         mModel.getPersonalLeftCoins(action, actiontype, submitCode, custCode, goldType, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                GetCoinRequestResponse requestResponse = (GetCoinRequestResponse) result;
+                ScanCoinRequestResponse requestResponse = (ScanCoinRequestResponse) result;
                 if ("OK".equals(requestResponse.getActionStatus())) {
                     mView.onGetPersonalLeftCoins(requestResponse.getGoldNum());
                 } else {
@@ -94,7 +94,7 @@ public class WithDrawPresenter implements WithDrawContract.WithDrawPresenter {
         mModel.getShopLeftCoins(action, submitCode, bazaCode, goldType, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                GetCoinRequestResponse requestResponse = (GetCoinRequestResponse) result;
+                ScanCoinRequestResponse requestResponse = (ScanCoinRequestResponse) result;
                 if ("OK".equals(requestResponse.getActionStatus())) {
                     mView.onGetShopLeftCoins(requestResponse.getGoldNum());
                 } else {

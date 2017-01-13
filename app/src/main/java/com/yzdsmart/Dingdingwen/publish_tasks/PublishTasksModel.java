@@ -3,7 +3,7 @@ package com.yzdsmart.Dingdingwen.publish_tasks;
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.CoinTypeRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ScanCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 
 import rx.Subscriber;
@@ -16,7 +16,7 @@ import rx.schedulers.Schedulers;
 public class PublishTasksModel {
     //网络请求监听
     private Subscriber<RequestResponse> publishTaskSubscriber;
-    private Subscriber<GetCoinRequestResponse> shopLeftCoinsSubscriber;
+    private Subscriber<ScanCoinRequestResponse> shopLeftCoinsSubscriber;
     private Subscriber<CoinTypeRequestResponse> getShopCoinTypesSubscriber;
 
     void publishTask(String submitCode, String bazaCode, Integer totalGold, Integer totalNum, Integer goldType, String beginTime, String endTime, String authorization, final RequestListener listener) {
@@ -43,7 +43,7 @@ public class PublishTasksModel {
     }
 
     void getShopLeftCoins(String action, String submitCode, String bazaCode, Integer goldType, String authorization, final RequestListener listener) {
-        shopLeftCoinsSubscriber = new Subscriber<GetCoinRequestResponse>() {
+        shopLeftCoinsSubscriber = new Subscriber<ScanCoinRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -55,7 +55,7 @@ public class PublishTasksModel {
             }
 
             @Override
-            public void onNext(GetCoinRequestResponse response) {
+            public void onNext(ScanCoinRequestResponse response) {
                 listener.onSuccess(response);
             }
         };

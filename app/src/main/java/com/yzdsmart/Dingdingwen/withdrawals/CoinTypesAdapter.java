@@ -81,7 +81,7 @@ public class CoinTypesAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         coinType = coinTypes.get(i);
-        Glide.with(context).load((null == coinType.getLogoLink() || "".equals(coinType.getLogoLink())) ? R.mipmap.yzd_coin : coinType.getLogoLink()).asBitmap().placeholder(R.mipmap.ic_holder_light).error(R.mipmap.ic_holder_light).into(holder.coinLogoIV);
+        Glide.with(context).load((null == coinType.getLogoLink() || "".equals(coinType.getLogoLink())) ? R.mipmap.yzd_coin : coinType.getLogoLink()).asBitmap().placeholder(R.mipmap.ic_holder_light).error(R.mipmap.coin_logo_fail_default).into(holder.coinLogoIV);
         holder.coinNameTV.setText(coinType.getGoldName());
         return view;
     }

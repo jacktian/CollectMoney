@@ -209,7 +209,7 @@ public class WithDrawLogAdapter extends UltimateViewAdapter<WithDrawLogAdapter.V
         }
 
         public void setLogState(int resId) {
-            Glide.with(context).load(resId).asBitmap().error(R.mipmap.ic_holder_light).into(logStateIV);
+            Glide.with(context).load(resId).asBitmap().placeholder(R.mipmap.ic_holder_light).error(R.mipmap.ic_holder_light).into(logStateIV);
         }
     }
 }

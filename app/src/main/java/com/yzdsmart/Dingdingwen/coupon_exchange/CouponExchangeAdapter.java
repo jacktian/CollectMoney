@@ -135,7 +135,7 @@ public class CouponExchangeAdapter extends UltimateViewAdapter<CouponExchangeAda
         }
 
         public void setCoinLogo(String coinLogo) {
-            Glide.with(context).load((null == coinLogo || "".equals(coinLogo)) ? R.mipmap.yzd_coin : coinLogo).asBitmap().placeholder(R.mipmap.ic_holder_light).error(R.mipmap.ic_holder_light).into(coinLogoIV);
+            Glide.with(context).load((null == coinLogo || "".equals(coinLogo)) ? R.mipmap.yzd_coin : coinLogo).asBitmap().placeholder(R.mipmap.ic_holder_light).error(R.mipmap.coin_logo_fail_default).into(coinLogoIV);
         }
 
         public void setCoinCounts(Double coinCounts) {

@@ -5,7 +5,7 @@ import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.CoinTypeRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.CustInfoRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.GetCoinRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ScanCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.WithdrawRequestResponse;
 
 import java.util.List;
@@ -23,8 +23,8 @@ import rx.schedulers.Schedulers;
 public class WithDrawModel {
     //网络请求监听
     private Subscriber<CustInfoRequestResponse> getCustInfoSubscriber;
-    private Subscriber<GetCoinRequestResponse> shopLeftCoinsSubscriber;
-    private Subscriber<GetCoinRequestResponse> personalLeftCoinsSubscriber;
+    private Subscriber<ScanCoinRequestResponse> shopLeftCoinsSubscriber;
+    private Subscriber<ScanCoinRequestResponse> personalLeftCoinsSubscriber;
     private Subscriber<WithdrawRequestResponse> shopWithdrawSubscriber;
     private Subscriber<WithdrawRequestResponse> personalWithdrawSubscriber;
     private Subscriber<List<BankCard>> getBankCardListSubscriber;
@@ -55,7 +55,7 @@ public class WithDrawModel {
     }
 
     void getShopLeftCoins(String action, String submitCode, String bazaCode, Integer goldType, String authorization, final RequestListener listener) {
-        shopLeftCoinsSubscriber = new Subscriber<GetCoinRequestResponse>() {
+        shopLeftCoinsSubscriber = new Subscriber<ScanCoinRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -67,7 +67,7 @@ public class WithDrawModel {
             }
 
             @Override
-            public void onNext(GetCoinRequestResponse response) {
+            public void onNext(ScanCoinRequestResponse response) {
                 listener.onSuccess(response);
             }
         };
@@ -78,7 +78,7 @@ public class WithDrawModel {
     }
 
     void getPersonalLeftCoins(String action, String actiontype, String submitCode, String custCode, Integer goldType, String authorization, final RequestListener listener) {
-        personalLeftCoinsSubscriber = new Subscriber<GetCoinRequestResponse>() {
+        personalLeftCoinsSubscriber = new Subscriber<ScanCoinRequestResponse>() {
             @Override
             public void onCompleted() {
                 listener.onComplete();
@@ -90,7 +90,7 @@ public class WithDrawModel {
             }
 
             @Override
-            public void onNext(GetCoinRequestResponse requestResponse) {
+            public void onNext(ScanCoinRequestResponse requestResponse) {
                 listener.onSuccess(requestResponse);
             }
         };

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_padding"
+    android:paddingTop="@dimen/activity_vertical_padding">
+
+    <ImageView
+        android:id="@+id/sign_result_img"
+        android:layout_width="150dp"
+        android:layout_height="34dp"
+        android:src="@mipmap/sign_success" />
+
+    <TextView
+        android:id="@+id/sign_result_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:gravity="center_horizontal"
+        android:text=""
+        android:textColor="@color/font_black"
+        android:textSize="@dimen/font_medium" />
+
+    <Button
+        android:id="@+id/dialog_confirm"
+        style="@style/orange_button"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="@string/confirm" />
+</LinearLayout>
+

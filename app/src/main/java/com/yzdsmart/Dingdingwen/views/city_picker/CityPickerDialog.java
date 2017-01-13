@@ -15,9 +15,9 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.yzdsmart.Dingdingwen.R;
-import com.yzdsmart.Dingdingwen.views.time_picker.config.CityPickerConfig;
+import com.yzdsmart.Dingdingwen.views.city_picker.config.CityPickerConfig;
+import com.yzdsmart.Dingdingwen.views.city_picker.listener.OnCitySetListener;
 import com.yzdsmart.Dingdingwen.views.time_picker.data.Type;
-import com.yzdsmart.Dingdingwen.views.time_picker.listener.OnCitySetListener;
 
 /**
  * Created by jzxiang on 16/4/19.
@@ -26,7 +26,7 @@ public class CityPickerDialog extends DialogFragment implements View.OnClickList
     CityPickerConfig mPickerConfig;
     private CityWheel mCityWheel;
 
-    private static CityPickerDialog newIntance(CityPickerConfig pickerConfig) {
+    private static CityPickerDialog newInstance(CityPickerConfig pickerConfig) {
         CityPickerDialog cityPickerDialog = new CityPickerDialog();
         cityPickerDialog.initialize(pickerConfig);
         return cityPickerDialog;
@@ -188,7 +188,7 @@ public class CityPickerDialog extends DialogFragment implements View.OnClickList
         }
 
         public CityPickerDialog build() {
-            return newIntance(mPickerConfig);
+            return newInstance(mPickerConfig);
         }
 
     }

@@ -6,12 +6,12 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.views.city_picker.config.CityPickerConfig;
 import com.yzdsmart.Dingdingwen.views.city_picker.model.CityModel;
 import com.yzdsmart.Dingdingwen.views.city_picker.model.DistrictModel;
 import com.yzdsmart.Dingdingwen.views.city_picker.model.ProvinceModel;
 import com.yzdsmart.Dingdingwen.views.city_picker.utils.XmlParserHandler;
 import com.yzdsmart.Dingdingwen.views.time_picker.adapters.ArrayWheelAdapter;
-import com.yzdsmart.Dingdingwen.views.time_picker.config.CityPickerConfig;
 import com.yzdsmart.Dingdingwen.views.time_picker.wheel.OnWheelChangedListener;
 import com.yzdsmart.Dingdingwen.views.time_picker.wheel.WheelView;
 

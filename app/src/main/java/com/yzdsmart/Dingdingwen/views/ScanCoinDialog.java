@@ -37,7 +37,7 @@ public class ScanCoinDialog extends Dialog {
         super.show();
         coinTypeIV = (ImageView) findViewById(R.id.coin_type);
         coinCountsTV = (TextView) findViewById(R.id.coin_counts);
-        Glide.with(context).load("".equals(coinLogo) ? R.mipmap.yzd_coin : coinLogo).asBitmap().placeholder(R.mipmap.ic_holder_light).error(R.mipmap.ic_holder_light).into(coinTypeIV);
+        Glide.with(context).load("".equals(coinLogo) ? R.mipmap.yzd_coin : coinLogo).asBitmap().placeholder(R.mipmap.ic_holder_light).error(R.mipmap.coin_logo_fail_default).into(coinTypeIV);
         coinCountsTV.setText(decimalFormat.format(coinCounts) + "个");
     }
 }

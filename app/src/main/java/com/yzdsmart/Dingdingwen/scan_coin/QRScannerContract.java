@@ -12,19 +12,25 @@ public interface QRScannerContract {
          * @param flag
          * @param msg    获取金币返回信息
          * @param counts 获得金币数
+         * @param type   0 获取金币  1 签到
          */
-        void onGetCoins(boolean flag, String msg, Double counts, String coinLogo);
+        void onScanQRCode(boolean flag, String msg, Double counts, String coinLogo, Integer type);
     }
 
     interface QRScannerPresenter extends BasePresenter {
+
         /**
          * 获取金币
          *
          * @param actionCode
-         * @param scannerResult 扫描可以获取商铺内码
+         * @param retaCode      扫描可以获取商铺内码
+         * @param custCode
+         * @param coor
          * @param ip
+         * @param type          0 获取金币  1 签到
+         * @param authorization
          */
-        void getCoins(String actionCode, String retaCode, String custCode, String coor, String ip, String authorization);
+        void scanQRCode(String actionCode, String retaCode, String custCode, String coor, String ip, Integer type, String authorization);
 
         void unRegisterSubscribe();
     }

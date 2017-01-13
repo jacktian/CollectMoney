@@ -59,8 +59,6 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
 
     private static final String TAG = "ImageCropActivity";
 
-//    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-
     Uri photoUri;
     private AlertDialog.Builder builder;
     private Dialog dialog;
@@ -103,6 +101,8 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
             if (null != uri) {
                 beginCrop(uri);
             }
+        } else {
+            resultImageIV.setImageDrawable(getResources().getDrawable(R.mipmap.camera));
         }
     }
 
@@ -176,7 +176,6 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
                 dialog = builder.show();
                 break;
             case R.id.take_photo:
-                resultImageIV.setImageDrawable(null);
                 dialog.dismiss();
                 builder = null;
                 // 利用系统自带的相机应用:拍照
@@ -189,12 +188,13 @@ public class ImageCropActivity extends BaseActivity implements View.OnClickListe
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 startActivityForResult(intent, Constants.CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+                resultImageIV.setImageDrawable(null);
                 break;
             case R.id.select_from_galley:
-                resultImageIV.setImageDrawable(null);
                 dialog.dismiss();
                 builder = null;
                 Crop.pickImage(this);
+                resultImageIV.setImageDrawable(null);
                 break;
         }
     }

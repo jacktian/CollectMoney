@@ -149,6 +149,8 @@
 
     <!--扫码-->
     <string name="qr_scan_title">扫码</string>
+    <string name="qr_scan_get_coin">扫币</string>
+    <string name="qr_scan_pay">付款</string>
     <string name="get_coins_error">获取金币失败,请重新扫码获取!</string>
 
     <!--付款-->
