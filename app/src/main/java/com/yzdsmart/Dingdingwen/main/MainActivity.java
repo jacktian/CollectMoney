@@ -208,6 +208,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         showCustomMsgRunnable = new Runnable() {
             @Override
             public void run() {
+                if (!isFindForeground()) return;
                 Fragment fragment = fm.findFragmentByTag("find");
                 if (null == customMsgList || customMsgList.size() <= 0) {
                     if (null != fragment) {
@@ -219,14 +220,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
                 customMsgList.remove(0);
             }
         };
-        customMsgTimer = new Timer();
-        customMsgTask = new TimerTask() {
-            @Override
-            public void run() {
-                showCustomMsgHandler.post(showCustomMsgRunnable);
-            }
-        };
-        customMsgTimer.schedule(customMsgTask, 1000, 5000);
 
 //        mConnection = new ServiceConnection() {
 //            @Override
@@ -261,11 +254,12 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);       //统计时长
         if (null != UserInfo.getInstance().getId()) {
             PushUtil.getInstance(this).reset();
             updateUnreadConversationBubble();
         }
-        MobclickAgent.onResume(this);       //统计时长
+        startCustomMsgTimer();
     }
 
     @Override
@@ -278,6 +272,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     protected void onStop() {
         super.onStop();
         mPresenter.unRegisterSubscribe();
+        stopCustomMsgTimer();
     }
 
     @Override
@@ -828,6 +823,44 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         Fragment fragment = fm.findFragmentByTag("find");
         if (null != fragment) {
             ((FindMoneyFragment) fragment).showCustomMessage(msg);
+        }
+    }
+
+    /**
+     * 启动自定义消息定时器
+     */
+    private void startCustomMsgTimer() {
+        if (null == customMsgTimer) {
+            customMsgTimer = new Timer();
+        }
+        if (null == customMsgTask) {
+            customMsgTask = new TimerTask() {
+                @Override
+                public void run() {
+                    showCustomMsgHandler.post(showCustomMsgRunnable);
+                }
+            };
+        }
+        if (null != customMsgTimer && null != customMsgTask) {
+            customMsgTimer.schedule(customMsgTask, 1000, 5000);
+        }
+    }
+
+    /**
+     * 停止自定义消息定时器
+     */
+    private void stopCustomMsgTimer() {
+        if (null != customMsgTimer) {
+            customMsgTimer.cancel();
+            customMsgTimer = null;
+        }
+        if (null != customMsgTask) {
+            customMsgTask.cancel();
+            customMsgTask = null;
+        }
+        Fragment fragment = fm.findFragmentByTag("find");
+        if (null != fragment) {
+            ((FindMoneyFragment) fragment).setCustomMsgTV(false);
         }
     }
 

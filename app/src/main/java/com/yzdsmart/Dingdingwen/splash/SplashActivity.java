@@ -74,14 +74,6 @@ public class SplashActivity extends BaseActivity implements SplashContract.Splas
         });
 
         new SplashPresenter(this, this);
-
-        if (null == SharedPreferencesUtils.getString(this, "isFirstOpen", "") || SharedPreferencesUtils.getString(this, "isFirstOpen", "").trim().length() <= 0) {
-            if (!Utils.isNetUsable(SplashActivity.this)) {
-                showSnackbar(getResources().getString(R.string.net_unusable));
-                return;
-            }
-            mPresenter.appRegister(Utils.getDeviceId(this), "182c79dbf8871689878b0de620006ea3", "7ed99e89c4831f169627b5d20a0020f7c1a9b026244e6364ac1c12a9fa2314fe");
-        }
     }
 
     @Override
@@ -93,8 +85,17 @@ public class SplashActivity extends BaseActivity implements SplashContract.Splas
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);       //统计时长
+        if (null != SharedPreferencesUtils.getString(this, "isFirstOpen", "") && SharedPreferencesUtils.getString(this, "isFirstOpen", "").trim().length() > 0) {
+            startMain();
+            return;
+        }
         // 如果开发者的引导页主题是透明的，需要在界面可见时给背景 Banner 设置一个白色背景，避免滑动过程中两个 Banner 都设置透明度后能看到 Launcher
         mBackgroundBanner.setBackgroundResource(android.R.color.white);
+        if (!Utils.isNetUsable(SplashActivity.this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
+        mPresenter.appRegister(Utils.getDeviceId(this), "182c79dbf8871689878b0de620006ea3", "7ed99e89c4831f169627b5d20a0020f7c1a9b026244e6364ac1c12a9fa2314fe");
     }
 
     @Override

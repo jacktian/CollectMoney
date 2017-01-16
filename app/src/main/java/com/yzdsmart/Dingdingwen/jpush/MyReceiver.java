@@ -92,15 +92,15 @@ public class MyReceiver extends BroadcastReceiver {
     //send msg to MainActivity
     private void processCustomMessage(Context context, Bundle bundle) {
         if (null == MainActivity.getInstance()) return;
-        if (MainActivity.getInstance().isFindForeground()) {
-            String title = bundle.getString(JPushInterface.EXTRA_TITLE);
-            String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-            String content_type = bundle.getString(JPushInterface.EXTRA_CONTENT_TYPE);
-            Intent msgIntent = new Intent("com.yzdsmart.Dingdingwen.CUSTOM_MESSAGE_RECEIVED_ACTION");
-            msgIntent.putExtra("custom_title", title);
-            msgIntent.putExtra("custom_message", message);
-            msgIntent.putExtra("custom_content_type", content_type);
-            context.sendBroadcast(msgIntent);
-        }
+//        if (MainActivity.getInstance().isFindForeground()) {
+        String title = bundle.getString(JPushInterface.EXTRA_TITLE);
+        String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+        String content_type = bundle.getString(JPushInterface.EXTRA_CONTENT_TYPE);
+        Intent msgIntent = new Intent("com.yzdsmart.Dingdingwen.CUSTOM_MESSAGE_RECEIVED_ACTION");
+        msgIntent.putExtra("custom_title", title);
+        msgIntent.putExtra("custom_message", message);
+        msgIntent.putExtra("custom_content_type", content_type);
+        context.sendBroadcast(msgIntent);
+//        }
     }
 }

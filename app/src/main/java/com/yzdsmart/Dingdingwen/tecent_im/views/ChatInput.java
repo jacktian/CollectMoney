@@ -261,7 +261,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher, View.OnCli
                     Matrix matrix = new Matrix();
                     int width = bitmap.getWidth();
                     int height = bitmap.getHeight();
-                    matrix.postScale(1.5f, 1.5f);
+                    matrix.postScale(2.0f, 2.0f);
                     final Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
                             width, height, matrix, true);
                     ImageView image = new ImageView(getContext());
