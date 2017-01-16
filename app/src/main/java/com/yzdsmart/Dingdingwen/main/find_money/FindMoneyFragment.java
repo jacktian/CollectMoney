@@ -663,7 +663,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
     public void locScanCoins() {
         if (null == qLocation || qLocation.length() <= 0) {
-            ((BaseActivity) getActivity()).showSnackbar("定位异常,重新定位");
+//            ((BaseActivity) getActivity()).showSnackbar("定位异常,重新定位");
             mLocationClient.startLocation();
             return;
         }
@@ -753,7 +753,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
     public void planRoute(String coor, String shopName) {
         if (null == qLocation || qLocation.length() <= 0) {
-            ((BaseActivity) getActivity()).showSnackbar("定位异常,重新定位");
+//            ((BaseActivity) getActivity()).showSnackbar("定位异常,重新定位");
             mLocationClient.startLocation();
             return;
         }
