@@ -164,4 +164,8 @@
 
     <!--相册-->
     <dimen name="galley_delete_button_height">44dp</dimen>
+
+    <!--计时-->
+    <dimen name="time_keeper_sign_map_height">282dp</dimen>
+    <dimen name="time_keeper_text_size">38sp</dimen>
 </resources>

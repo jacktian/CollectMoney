@@ -1,5 +1,7 @@
 package com.yzdsmart.Dingdingwen;
 
+import com.amap.api.maps.model.LatLng;
+
 /**
  * Created by YZD on 2016/10/26.
  */
@@ -67,5 +69,11 @@ public class Constants {
     public static final String COIN_COUPON_ACTION_CODE = "232";//获取指定商铺兑换列表
 
     public static final String THIRD_PLATFORM_ACTION_CODE = "1692";//获取指定商铺支付日志
+
+    //默认城市经纬度31.816058, 119.980524
+    public static final LatLng GEO_DEFAULT_CITY = new LatLng(31.816058, 119.980524);
+    //定位频率
+    public static final Long LOC_TIME = 5000l;//毫秒
+    public static final Long LOC_TIME_OUT = 5000l;//毫秒
 
 }

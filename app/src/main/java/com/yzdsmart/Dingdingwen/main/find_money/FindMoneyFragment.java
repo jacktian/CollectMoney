@@ -44,6 +44,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
+import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.amap.WalkRouteOverlay;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
@@ -135,11 +136,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     //检索到的位置列表信息
     List<Marker> coinsMarkerList = null;
 
-    //默认城市经纬度31.816058, 119.980524
-    private static final LatLng GEO_DEFAULT_CITY = new LatLng(31.816058, 119.980524);
-    //定位频率
-    private static final Long LOC_TIME = 5000l;//毫秒
-    private static final Long LOC_TIME_OUT = 5000l;//毫秒
     private Integer zoomDistance = 500;
     //定位坐标点
     private Double locLatitude = null;
@@ -360,6 +356,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Override
     public void onDestroyView() {
         if (null != mLocationClient) {
+            mLocationListener = null;
             mLocationClient.onDestroy();
             mLocationClient = null;
             mLocationOption = null;
@@ -480,7 +477,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         if (null != mAMap) return;
         mAMap = findMoneyMap.getMap();
         mAMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(
-                GEO_DEFAULT_CITY,//新的中心点坐标
+                Constants.GEO_DEFAULT_CITY,//新的中心点坐标
                 14, //新的缩放级别
                 0, //俯仰角0°~45°（垂直与地图时为0）
                 0  ////偏航角 0~360° (正北方为0)
@@ -594,11 +591,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         mLocationOption = new AMapLocationClientOption();
         //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        mLocationOption.setInterval(LOC_TIME);
+        mLocationOption.setInterval(Constants.LOC_TIME);
         //设置是否返回地址信息（默认返回地址信息）
         mLocationOption.setNeedAddress(true);
         //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
-        mLocationOption.setHttpTimeOut(LOC_TIME_OUT);
+        mLocationOption.setHttpTimeOut(Constants.LOC_TIME_OUT);
         mLocationClient.setLocationOption(mLocationOption);
     }
 

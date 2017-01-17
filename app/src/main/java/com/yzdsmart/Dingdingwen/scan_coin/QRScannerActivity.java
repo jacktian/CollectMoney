@@ -13,6 +13,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
@@ -29,6 +30,7 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.payment.PaymentActivity;
 import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
+import com.yzdsmart.Dingdingwen.time_keeper.TimeKeeperActivity;
 import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -76,6 +78,9 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     private Dialog getCoinDialog;
     private Dialog signDialog;
 
+    private Handler timeKeeperHandler = new Handler();
+    private Runnable timeKeeperRunnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +114,18 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         initBeepSound();
         vibrate = true;
         mQRCodeView.setDelegate(this);
+
+        timeKeeperRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (null != signDialog) {
+                    signDialog.dismiss();
+                    signDialog = null;
+                }
+                openActivity(TimeKeeperActivity.class);
+                closeActivity();
+            }
+        };
     }
 
     @Override
@@ -144,6 +161,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
             mediaPlayer.release();
         }
         mQRCodeView.onDestroy();
+        timeKeeperHandler.removeCallbacks(timeKeeperRunnable);
         super.onDestroy();
     }
 
@@ -327,18 +345,9 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
                 break;
             case 1:
                 signDialog = new SignDialog(this, coinLogo, "本点签到成功".equals(coinLogo) ? true : false);
+                signDialog.setCancelable(false);
                 signDialog.show();
-                dialogConfirm = (Button) signDialog.findViewById(R.id.dialog_confirm);
-                dialogConfirm.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (null != signDialog) {
-                            signDialog.dismiss();
-                            signDialog = null;
-                        }
-                        mQRCodeView.startSpot();
-                    }
-                });
+                timeKeeperHandler.postDelayed(timeKeeperRunnable, 1000);
                 break;
         }
     }

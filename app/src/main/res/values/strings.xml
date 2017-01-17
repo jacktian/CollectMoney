@@ -401,6 +401,8 @@
     <!--微博登录-->
     <string name="weibosdk_demo_token_to_string_format_1">Token：%1$s \n有效期：%2$s</string>
     <string name="weibosdk_demo_toast_auth_canceled">取消授权</string>
+    <!--计时-->
+    <string name="time_keeper_text">全程耗时</string>
 
     <!--异常-->
     <string name="error_get_shop_list">获取商铺列表异常</string>
