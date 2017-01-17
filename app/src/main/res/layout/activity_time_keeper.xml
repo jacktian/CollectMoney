@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:android_crp="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,99 +23,109 @@
         <com.amap.api.maps.MapView
             android:id="@+id/sign_map"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/time_keeper_sign_map_height"
+            android:layout_height="0dp"
+            android:layout_weight="4.5"
             android:clickable="true" />
 
-        <android.support.v4.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="5.5"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/count_timer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="47dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="00:00:00"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/time_keeper_text_size"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/count_timer"
-                    android:layout_width="match_parent"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:gravity="center"
+                android:text="@string/time_keeper_text"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_medium" />
+
+            <View
+                android:layout_width="276dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:background="#707074" />
+
+            <RelativeLayout
+                android:id="@+id/count_layout"
+                android:layout_width="276dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="47dp"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="00:00:05"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/time_keeper_text_size"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:gravity="center"
-                    android:text="@string/time_keeper_text"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/font_medium" />
-
-                <View
-                    android:layout_width="276dp"
-                    android:layout_height="1dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="24dp"
-                    android:layout_marginTop="24dp"
-                    android:background="#707074" />
-
-                <RelativeLayout
-                    android:layout_width="276dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="24dp">
-
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true">
-
-                        <ImageButton
-                            android:id="@+id/lock_btn"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:background="@null"
-                            android:src="@mipmap/time_keeper_lock" />
-
-                        <com.yzdsmart.Dingdingwen.views.CustomRoundProgress
-                            android:id="@+id/lock_progress"
-                            android:layout_width="51dp"
-                            android:layout_height="51dp"
-                            android:layout_gravity="center"
-                            android:visibility="gone"
-                            android_crp:max="3"
-                            android_crp:roundColor="#707074"
-                            android_crp:roundProgressColor="@color/colorPrimary"
-                            android_crp:roundWidth="2dp"
-                            android_crp:textIsDisplayable="false" />
-
-                    </FrameLayout>
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true">
 
                     <ImageButton
-                        android:id="@+id/scan_btn"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_centerInParent="true"
-                        android:background="@null"
-                        android:src="@mipmap/time_keeper_scan" />
-
-                    <ImageButton
-                        android:id="@+id/close_btn"
+                        android:id="@+id/lock_btn"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
                         android:background="@null"
-                        android:src="@mipmap/time_keeper_close" />
-                </RelativeLayout>
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+                        android:src="@mipmap/time_keeper_lock" />
+
+                    <com.yzdsmart.Dingdingwen.views.CustomRoundProgress
+                        android:id="@+id/lock_progress"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android_crp:max="3"
+                        android_crp:roundColor="#707074"
+                        android_crp:roundProgressColor="@color/colorPrimary"
+                        android_crp:roundWidth="2dp"
+                        android_crp:textIsDisplayable="false" />
+
+                </FrameLayout>
+
+                <ImageButton
+                    android:id="@+id/scan_btn"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_centerInParent="true"
+                    android:background="@null"
+                    android:src="@mipmap/time_keeper_scan" />
+
+                <ImageButton
+                    android:id="@+id/close_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:src="@mipmap/time_keeper_close" />
+            </RelativeLayout>
+
+            <com.yzdsmart.Dingdingwen.views.SlideLockView
+                android:id="@+id/unlock_btn"
+                android:layout_width="276dp"
+                android:layout_height="54dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/slide_lock_view_bg"
+                android:visibility="gone"
+                app:lock_drawable="@mipmap/time_keeper_unlock"
+                app:lock_radius="27dp"
+                app:lock_tips_tx="滑动解锁"
+                app:lock_tips_tx_color="@android:color/white"
+                app:locl_tips_tx_size="@dimen/font_large" />
+        </LinearLayout>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -32,11 +33,11 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomRoundProgress;
+import com.yzdsmart.Dingdingwen.views.SlideLockView;
 
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -69,6 +70,12 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
     @Nullable
     @BindView(R.id.count_timer)
     TextView countTimerTV;
+    @Nullable
+    @BindView(R.id.count_layout)
+    RelativeLayout countLayoutRL;
+    @Nullable
+    @BindView(R.id.unlock_btn)
+    SlideLockView unlockBtnSLV;
 
     private static final String TAG = "TimeKeeperActivity";
 
@@ -98,7 +105,7 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
     private Boolean isLockPressed = true;
 
     private CountTimer countTimer;
-    private DateTimeFormatter countTimerFormat = DateTimeFormat.forPattern("HH:mm:ss");
+    private SimpleDateFormat countTimerFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,20 +124,25 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
         lockRunnable = new Runnable() {
             @Override
             public void run() {
+                lockProgress++;
+                lockProgressCRP.setProgress(lockProgress);
                 if (DEFAULT_MAX_PROCESS == lockProgress) {
+                    ButterKnife.apply(countLayoutRL, BUTTERKNIFEGONE);
+                    ButterKnife.apply(unlockBtnSLV, BUTTERKNIFEVISIBLE);
                     lockProgressCRP.setVisibility(View.GONE);
                     mHandler.removeCallbacks(this);
                     lockProgress = 0;
                     lockProgressCRP.setProgress(lockProgress);
-                    return;
+                } else {
+                    mHandler.postDelayed(this, 1000);
                 }
-                lockProgress++;
-                lockProgressCRP.setProgress(lockProgress);
-                mHandler.postDelayed(this, 1000);
             }
         };
 
-        countTimer = new CountTimer(10) {
+        countTimerFormat = new SimpleDateFormat("HH:mm:ss");
+        countTimerFormat.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+
+        countTimer = new CountTimer(1000) {
             @Override
             protected void onStart(long millisFly) {
                 super.onStart(millisFly);
@@ -154,9 +166,17 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
             @Override
             protected void onTick(long millisFly) {
                 super.onTick(millisFly);
-                countTimerTV.setText(countTimerFormat.print(millisFly));
+                countTimerTV.setText(countTimerFormat.format(millisFly));
             }
         };
+
+        unlockBtnSLV.setmLockListener(new SlideLockView.OnLockListener() {
+            @Override
+            public void onOpenLockSuccess() {
+                ButterKnife.apply(countLayoutRL, BUTTERKNIFEVISIBLE);
+                ButterKnife.apply(unlockBtnSLV, BUTTERKNIFEGONE);
+            }
+        });
     }
 
     @Override
@@ -364,5 +384,27 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
         myLocationStyle.radiusFillColor(FILL_COLOR);
         // 将自定义的 myLocationStyle 对象添加到地图上
         mAMap.setMyLocationStyle(myLocationStyle);
+    }
+
+    /**
+     * 毫秒转化时分秒毫秒
+     *
+     * @param ms
+     * @return
+     */
+    public static String formatTime(Long ms) {
+        Integer ss = 1000;
+        Integer mi = ss * 60;
+        Integer hh = mi * 60;
+
+        Long hour = ms / hh;
+        Long minute = (ms - hour * hh) / mi;
+        Long second = (ms - hour * hh - minute * mi) / ss;
+
+        StringBuffer sb = new StringBuffer();
+        sb.append(hour >= 10 ? (hour + ":") : ("0" + hour + ":"));
+        sb.append(minute >= 10 ? (minute + ":") : ("0" + minute + ":"));
+        sb.append(second >= 10 ? second : "0" + second);
+        return sb.toString();
     }
 }
