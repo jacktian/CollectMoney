@@ -124,7 +124,7 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
         lockRunnable = new Runnable() {
             @Override
             public void run() {
-                lockProgress++;
+                lockProgress += 2;
                 lockProgressCRP.setProgress(lockProgress);
                 if (DEFAULT_MAX_PROCESS == lockProgress) {
                     isScreenLocked = true;
@@ -136,7 +136,7 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
                     lockProgressCRP.setProgress(lockProgress);
                     ButterKnife.apply(unlockBtnSLV, BUTTERKNIFEVISIBLE);
                 } else {
-                    mHandler.postDelayed(this, 5);
+                    mHandler.postDelayed(this, 1);
                 }
             }
         };
@@ -273,7 +273,7 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
     private void startLock() {
         isLockPressed = true;
         lockProgressCRP.setVisibility(View.VISIBLE);
-        mHandler.postDelayed(lockRunnable, 5);
+        mHandler.postDelayed(lockRunnable, 1);
     }
 
     /**
