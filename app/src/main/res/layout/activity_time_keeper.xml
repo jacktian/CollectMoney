@@ -92,7 +92,7 @@
                             android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:visibility="gone"
-                            android_crp:max="3"
+                            android_crp:max="100"
                             android_crp:roundColor="#707074"
                             android_crp:roundProgressColor="@color/colorPrimary"
                             android_crp:roundWidth="2dp"

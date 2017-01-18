@@ -97,7 +97,7 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
 
     private Handler mHandler = new Handler();
     private Runnable lockRunnable = null;
-    private static final Integer DEFAULT_MAX_PROCESS = 3;
+    private static final Integer DEFAULT_MAX_PROCESS = 100;
     //锁屏进度
     private Integer lockProgress = 0;
     //判断是否离开锁屏按钮
@@ -136,32 +136,12 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
                     lockProgressCRP.setProgress(lockProgress);
                     ButterKnife.apply(unlockBtnSLV, BUTTERKNIFEVISIBLE);
                 } else {
-                    mHandler.postDelayed(this, 1000);
+                    mHandler.postDelayed(this, 5);
                 }
             }
         };
 
         countTimer = new CountTimer(1000) {
-            @Override
-            protected void onStart(long millisFly) {
-                super.onStart(millisFly);
-            }
-
-            @Override
-            protected void onCancel(long millisFly) {
-                super.onCancel(millisFly);
-            }
-
-            @Override
-            protected void onPause(long millisFly) {
-                super.onPause(millisFly);
-            }
-
-            @Override
-            protected void onResume(long millisFly) {
-                super.onResume(millisFly);
-            }
-
             @Override
             protected void onTick(long millisFly) {
                 super.onTick(millisFly);
@@ -293,7 +273,7 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
     private void startLock() {
         isLockPressed = true;
         lockProgressCRP.setVisibility(View.VISIBLE);
-        mHandler.postDelayed(lockRunnable, 1000);
+        mHandler.postDelayed(lockRunnable, 5);
     }
 
     /**
