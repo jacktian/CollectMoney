@@ -63,69 +63,75 @@
                 android:background="#707074" />
 
             <RelativeLayout
-                android:id="@+id/count_layout"
-                android:layout_width="276dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="70dp">
 
-                <FrameLayout
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/count_layout"
+                    android:layout_width="276dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true">
+                    android:layout_centerInParent="true">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true">
+
+                        <ImageButton
+                            android:id="@+id/lock_btn"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:src="@mipmap/time_keeper_lock" />
+
+                        <com.yzdsmart.Dingdingwen.views.CustomRoundProgress
+                            android:id="@+id/lock_progress"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:visibility="gone"
+                            android_crp:max="3"
+                            android_crp:roundColor="#707074"
+                            android_crp:roundProgressColor="@color/colorPrimary"
+                            android_crp:roundWidth="2dp"
+                            android_crp:textIsDisplayable="false" />
+
+                    </FrameLayout>
 
                     <ImageButton
-                        android:id="@+id/lock_btn"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
+                        android:id="@+id/scan_btn"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_centerInParent="true"
                         android:background="@null"
-                        android:src="@mipmap/time_keeper_lock" />
+                        android:src="@mipmap/time_keeper_scan" />
 
-                    <com.yzdsmart.Dingdingwen.views.CustomRoundProgress
-                        android:id="@+id/lock_progress"
+                    <ImageButton
+                        android:id="@+id/close_btn"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
-                        android_crp:max="3"
-                        android_crp:roundColor="#707074"
-                        android_crp:roundProgressColor="@color/colorPrimary"
-                        android_crp:roundWidth="2dp"
-                        android_crp:textIsDisplayable="false" />
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:src="@mipmap/time_keeper_close" />
+                </RelativeLayout>
 
-                </FrameLayout>
-
-                <ImageButton
-                    android:id="@+id/scan_btn"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_centerInParent="true"
-                    android:background="@null"
-                    android:src="@mipmap/time_keeper_scan" />
-
-                <ImageButton
-                    android:id="@+id/close_btn"
-                    android:layout_width="50dp"
+                <com.yzdsmart.Dingdingwen.views.SlideLockView
+                    android:id="@+id/unlock_btn"
+                    android:layout_width="276dp"
                     android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@null"
-                    android:src="@mipmap/time_keeper_close" />
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/slide_lock_view_bg"
+                    android:visibility="gone"
+                    app:lock_drawable="@mipmap/time_keeper_unlock"
+                    app:lock_radius="25dp"
+                    app:lock_tips_tx="滑动解锁"
+                    app:lock_tips_tx_color="@android:color/white"
+                    app:locl_tips_tx_size="@dimen/font_large" />
             </RelativeLayout>
 
-            <com.yzdsmart.Dingdingwen.views.SlideLockView
-                android:id="@+id/unlock_btn"
-                android:layout_width="276dp"
-                android:layout_height="54dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/slide_lock_view_bg"
-                android:visibility="gone"
-                app:lock_drawable="@mipmap/time_keeper_unlock"
-                app:lock_radius="27dp"
-                app:lock_tips_tx="滑动解锁"
-                app:lock_tips_tx_color="@android:color/white"
-                app:locl_tips_tx_size="@dimen/font_large" />
         </LinearLayout>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

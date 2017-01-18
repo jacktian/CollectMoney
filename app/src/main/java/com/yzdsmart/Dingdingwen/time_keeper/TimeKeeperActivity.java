@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -35,9 +36,7 @@ import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomRoundProgress;
 import com.yzdsmart.Dingdingwen.views.SlideLockView;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -99,13 +98,14 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
     private Handler mHandler = new Handler();
     private Runnable lockRunnable = null;
     private static final Integer DEFAULT_MAX_PROCESS = 3;
-    //点名进度
+    //锁屏进度
     private Integer lockProgress = 0;
-    //判断是否离开点名按钮
+    //判断是否离开锁屏按钮
     private Boolean isLockPressed = true;
 
+    private Boolean isScreenLocked = false;
+
     private CountTimer countTimer;
-    private SimpleDateFormat countTimerFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,20 +127,19 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
                 lockProgress++;
                 lockProgressCRP.setProgress(lockProgress);
                 if (DEFAULT_MAX_PROCESS == lockProgress) {
+                    isScreenLocked = true;
+                    ButterKnife.apply(titleLeftOpeIV, BUTTERKNIFEGONE);
                     ButterKnife.apply(countLayoutRL, BUTTERKNIFEGONE);
-                    ButterKnife.apply(unlockBtnSLV, BUTTERKNIFEVISIBLE);
                     lockProgressCRP.setVisibility(View.GONE);
                     mHandler.removeCallbacks(this);
                     lockProgress = 0;
                     lockProgressCRP.setProgress(lockProgress);
+                    ButterKnife.apply(unlockBtnSLV, BUTTERKNIFEVISIBLE);
                 } else {
                     mHandler.postDelayed(this, 1000);
                 }
             }
         };
-
-        countTimerFormat = new SimpleDateFormat("HH:mm:ss");
-        countTimerFormat.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
 
         countTimer = new CountTimer(1000) {
             @Override
@@ -166,14 +165,16 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
             @Override
             protected void onTick(long millisFly) {
                 super.onTick(millisFly);
-                countTimerTV.setText(countTimerFormat.format(millisFly));
+                countTimerTV.setText(formatTime(millisFly));
             }
         };
 
         unlockBtnSLV.setmLockListener(new SlideLockView.OnLockListener() {
             @Override
             public void onOpenLockSuccess() {
+                isScreenLocked = false;
                 ButterKnife.apply(countLayoutRL, BUTTERKNIFEVISIBLE);
+                ButterKnife.apply(titleLeftOpeIV, BUTTERKNIFEVISIBLE);
                 ButterKnife.apply(unlockBtnSLV, BUTTERKNIFEGONE);
             }
         });
@@ -230,6 +231,19 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
         super.onSaveInstanceState(outState);
         //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
         signMapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                if (isScreenLocked) {
+                    showSnackbar("请先解锁");
+                    return true;
+                }
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Optional
@@ -387,7 +401,7 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
     }
 
     /**
-     * 毫秒转化时分秒毫秒
+     * 毫秒转化时分秒
      *
      * @param ms
      * @return
