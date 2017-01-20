@@ -34,6 +34,7 @@ public class Constants {
     public static final String GET_COIN_ACTION_CODE = "88";
     public static final String GET_COIN_LOG_ACTION_CODE = "1666";
     public static final String SIGN_ACTION_CODE = "176";
+    public static final String SIGN_ACTIVITY_LIST_ACTION_CODE = "53";
 
     public static final String SET_FOCUS_CODE = "66";//取消关注店铺：56    关注：66
     public static final String CANCEL_FOCUS_CODE = "56";

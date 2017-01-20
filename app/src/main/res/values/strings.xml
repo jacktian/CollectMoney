@@ -151,7 +151,7 @@
     <string name="qr_scan_title">扫码</string>
     <string name="qr_scan_get_coin">扫币</string>
     <string name="qr_scan_pay">付款</string>
-    <string name="get_coins_error">获取金币失败,请重新扫码获取!</string>
+    <string name="get_coins_error">获取金币失败,请重新扫码获取</string>
 
     <!--付款-->
     <string name="payment_title">付款</string>
@@ -401,6 +401,8 @@
     <!--微博登录-->
     <string name="weibosdk_demo_token_to_string_format_1">Token：%1$s \n有效期：%2$s</string>
     <string name="weibosdk_demo_toast_auth_canceled">取消授权</string>
+    <!--签到-->
+    <string name="sign_error">签到失败,请重新扫码</string>
     <!--计时-->
     <string name="time_keeper_text">全程耗时</string>
 

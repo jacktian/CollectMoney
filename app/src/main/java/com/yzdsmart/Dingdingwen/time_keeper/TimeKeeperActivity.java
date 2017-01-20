@@ -50,7 +50,7 @@ import dev.xesam.android.toolbox.timer.CountTimer;
  * Created by YZD on 2017/1/17.
  */
 
-public class TimeKeeperActivity extends BaseActivity implements LocationSource, AMapLocationListener {
+public class TimeKeeperActivity extends BaseActivity implements LocationSource, AMapLocationListener, TimeKeeperContract.TimeKeeperView {
     @Nullable
     @BindViews({R.id.left_title, R.id.title_logo, R.id.center_title, R.id.title_right_operation_layout})
     List<View> hideViews;
@@ -77,6 +77,8 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
     SlideLockView unlockBtnSLV;
 
     private static final String TAG = "TimeKeeperActivity";
+
+    private TimeKeeperContract.TimeKeeperPresenter mPresenter;
 
     private AMap mAMap;
     private UiSettings mUiSettings;
@@ -115,6 +117,8 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
 
         MobclickAgent.openActivityDurationTrack(false);
+
+        new TimeKeeperPresenter(this, this);
 
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         signMapView.onCreate(savedInstanceState);
@@ -400,5 +404,10 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
         sb.append(minute >= 10 ? (minute + ":") : ("0" + minute + ":"));
         sb.append(second >= 10 ? second : "0" + second);
         return sb.toString();
+    }
+
+    @Override
+    public void setPresenter(TimeKeeperContract.TimeKeeperPresenter presenter) {
+        mPresenter = presenter;
     }
 }

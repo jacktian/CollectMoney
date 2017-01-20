@@ -59,7 +59,14 @@ public class QRScannerPresenter implements QRScannerContract.QRScannerPresenter 
                     MainActivity.getInstance().updateAccessToken();
                     return;
                 }
-                mView.onScanQRCode(false, context.getResources().getString(R.string.get_coins_error), null, null, type);
+                switch (type) {
+                    case 0:
+                        mView.onScanQRCode(false, context.getResources().getString(R.string.get_coins_error), null, null, type);
+                        break;
+                    case 1:
+                        mView.onScanQRCode(false, context.getResources().getString(R.string.sign_error), null, null, type);
+                        break;
+                }
             }
 
             @Override

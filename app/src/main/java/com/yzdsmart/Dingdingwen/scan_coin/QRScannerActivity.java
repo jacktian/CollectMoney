@@ -11,7 +11,6 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -33,6 +32,7 @@ import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
 import com.yzdsmart.Dingdingwen.time_keeper.TimeKeeperActivity;
 import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.UrlParameterUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.ScanCoinDialog;
 import com.yzdsmart.Dingdingwen.views.SignDialog;
@@ -114,18 +114,6 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         initBeepSound();
         vibrate = true;
         mQRCodeView.setDelegate(this);
-
-        timeKeeperRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (null != signDialog) {
-                    signDialog.dismiss();
-                    signDialog = null;
-                }
-                openActivity(TimeKeeperActivity.class);
-                closeActivity();
-            }
-        };
     }
 
     @Override
@@ -253,8 +241,13 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     @Override
     public void onScanQRCodeSuccess(String result) {
         playBeepSoundAndVibrate();
-        String action = Uri.parse(result).getQueryParameter("action");
-        String retaCode = Uri.parse(result).getQueryParameter("RetaCode");
+
+//        String query = result.split("\\?")[1];
+//        final Map<String, String> map = Splitter.on('&').trimResults().withKeyValueSeparator("=").split(query);
+//        System.out.println("----------->" + map.get("RetaCode"));
+
+        String action = UrlParameterUtils.URLRequest(result).get("action");
+        String retaCode = UrlParameterUtils.URLRequest(result).get("RetaCode");
         if (null != action && (!"".equals(action))) {
             if (null == retaCode || "".equals(retaCode)) {
                 showSnackbar("扫码点不存在");
@@ -320,8 +313,19 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     @Override
     public void onScanQRCode(boolean flag, String msg, Double counts, String coinLogo, Integer type) {
         if (!flag) {
-            showSnackbar(msg);
-            mQRCodeView.startSpot();
+            switch (type) {
+                case 0:
+                    showSnackbar(msg);
+                    mQRCodeView.startSpot();
+                    break;
+                case 1:
+                    timeKeeperRunnable = new TimeKeeperRunnable(false);
+                    signDialog = new SignDialog(this, coinLogo, false);
+                    signDialog.setCancelable(false);
+                    signDialog.show();
+                    timeKeeperHandler.postDelayed(timeKeeperRunnable, 1000);
+                    break;
+            }
             return;
         }
         Button dialogConfirm;
@@ -344,11 +348,32 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
                 });
                 break;
             case 1:
+                timeKeeperRunnable = new TimeKeeperRunnable("本点签到成功".equals(coinLogo) ? true : false);
                 signDialog = new SignDialog(this, coinLogo, "本点签到成功".equals(coinLogo) ? true : false);
                 signDialog.setCancelable(false);
                 signDialog.show();
                 timeKeeperHandler.postDelayed(timeKeeperRunnable, 1000);
                 break;
+        }
+    }
+
+    private class TimeKeeperRunnable implements Runnable {
+        private Boolean flag;
+
+        public TimeKeeperRunnable(Boolean flag) {
+            this.flag = flag;
+        }
+
+        @Override
+        public void run() {
+            if (null != signDialog) {
+                signDialog.dismiss();
+                signDialog = null;
+            }
+            if (flag) {
+                openActivity(TimeKeeperActivity.class);
+            }
+            closeActivity();
         }
     }
 

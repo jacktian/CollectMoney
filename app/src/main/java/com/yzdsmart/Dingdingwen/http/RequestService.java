@@ -12,7 +12,6 @@ import com.yzdsmart.Dingdingwen.http.response.CustLevelRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ExpandListRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.FocusedShopRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.FriendsRequestResponse;
-import com.yzdsmart.Dingdingwen.http.response.ScanCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetCoinsLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetGalleyRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
@@ -25,6 +24,7 @@ import com.yzdsmart.Dingdingwen.http.response.PublishTaskLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RecommendFriendsRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RegisterBusinessRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ScanCoinRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ScannedLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopDiscountRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopExchangeRequestResponse;
@@ -35,6 +35,7 @@ import com.yzdsmart.Dingdingwen.http.response.ShopListRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopPayLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopTaskLeftCoinsRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopWithdrawLogRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.SignDataRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.UploadFileRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ValidateBankCardRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.WithdrawRequestResponse;
@@ -389,6 +390,19 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.IMAGE)
     Observable<RequestResponse> deletePersonalGalley(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("FileIdList") List<Integer> fileIdList, @Header("Authorization") String authorization);
+
+    /**
+     * 定向活动签到数据列表
+     *
+     * @param action
+     * @param submitCode
+     * @param custCode
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.ACTIVITY)
+    Observable<SignDataRequestResponse> getSignActivityList(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
 
     /**
      * 获取周边商铺
