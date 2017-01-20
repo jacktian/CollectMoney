@@ -5,9 +5,9 @@ package com.yzdsmart.Dingdingwen.http;
  */
 public class Url {
     //    public static final String BASE_URL = "http://www.ezhandi.com/WdAPI/";
-//    public static final String BASE_URL = "https://api.dindinwen.com/";
+    public static final String BASE_URL = "https://api.dindinwen.com/";
 //    public static final String BASE_URL = "http://www.ezhandi.com/WdAPITest/";
-    public static final String BASE_URL = "http://192.168.0.165/JZ.Web.API/";
+//    public static final String BASE_URL = "http://192.168.0.165/JZ.Web.API/";
 
     public static final String USER = "Api/User";
     public static final String CUST = "Api/Cust";

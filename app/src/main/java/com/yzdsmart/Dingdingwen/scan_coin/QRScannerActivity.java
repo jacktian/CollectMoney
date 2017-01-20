@@ -32,7 +32,6 @@ import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
 import com.yzdsmart.Dingdingwen.time_keeper.TimeKeeperActivity;
 import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
-import com.yzdsmart.Dingdingwen.utils.UrlParameterUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.ScanCoinDialog;
 import com.yzdsmart.Dingdingwen.views.SignDialog;
@@ -245,9 +244,11 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 //        String query = result.split("\\?")[1];
 //        final Map<String, String> map = Splitter.on('&').trimResults().withKeyValueSeparator("=").split(query);
 //        System.out.println("----------->" + map.get("RetaCode"));
-
-        String action = UrlParameterUtils.URLRequest(result).get("action");
-        String retaCode = UrlParameterUtils.URLRequest(result).get("RetaCode");
+        String action = "";
+        if (result.indexOf("&action=") > -1) {
+            action = result.split("&action=")[1];
+        }
+        String retaCode = result.split("RetaCode=")[1].split("&retaType=")[0];
         if (null != action && (!"".equals(action))) {
             if (null == retaCode || "".equals(retaCode)) {
                 showSnackbar("扫码点不存在");
