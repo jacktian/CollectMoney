@@ -1,5 +1,6 @@
 package com.yzdsmart.Dingdingwen.time_keeper;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,10 +32,19 @@ import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.response.SignDataRequestResponse;
+import com.yzdsmart.Dingdingwen.main.MainActivity;
+import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
 import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomRoundProgress;
 import com.yzdsmart.Dingdingwen.views.SlideLockView;
+
+import org.joda.time.DateTime;
+import org.joda.time.Seconds;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 
@@ -107,11 +117,15 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
 
     private Boolean isScreenLocked = false;
 
+    private DateTimeFormatter mDateTimeFormatter;
+    private Integer startDuration = 0;
     private CountTimer countTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mDateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
@@ -124,6 +138,16 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
         signMapView.onCreate(savedInstanceState);
 
         initMap();
+
+        unlockBtnSLV.setmLockListener(new SlideLockView.OnLockListener() {
+            @Override
+            public void onOpenLockSuccess() {
+                isScreenLocked = false;
+                ButterKnife.apply(countLayoutRL, BUTTERKNIFEVISIBLE);
+                ButterKnife.apply(titleLeftOpeIV, BUTTERKNIFEVISIBLE);
+                ButterKnife.apply(unlockBtnSLV, BUTTERKNIFEGONE);
+            }
+        });
 
         lockRunnable = new Runnable() {
             @Override
@@ -145,23 +169,15 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
             }
         };
 
-        countTimer = new CountTimer(1000) {
-            @Override
-            protected void onTick(long millisFly) {
-                super.onTick(millisFly);
-                countTimerTV.setText(formatTime(millisFly));
-            }
-        };
-
-        unlockBtnSLV.setmLockListener(new SlideLockView.OnLockListener() {
-            @Override
-            public void onOpenLockSuccess() {
-                isScreenLocked = false;
-                ButterKnife.apply(countLayoutRL, BUTTERKNIFEVISIBLE);
-                ButterKnife.apply(titleLeftOpeIV, BUTTERKNIFEVISIBLE);
-                ButterKnife.apply(unlockBtnSLV, BUTTERKNIFEGONE);
-            }
-        });
+        if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
+            openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
+            return;
+        }
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
+        mPresenter.getSignActivityList(Constants.SIGN_ACTIVITY_LIST_ACTION_CODE, "", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override
@@ -177,7 +193,6 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
         //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
         signMapView.onResume();
         mLocationClient.startLocation();
-        countTimer.start();
     }
 
     @Override
@@ -206,8 +221,19 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
         signMapView.onDestroy();
         mHandler.removeCallbacks(lockRunnable);
-        countTimer.cancel();
+        if (null != countTimer) {
+            countTimer.cancel();
+        }
         super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (Constants.REQUEST_LOGIN_CODE == requestCode && RESULT_OK == resultCode) {
+            if (null == MainActivity.getInstance()) return;
+            MainActivity.getInstance().chatLogin();
+        }
     }
 
     @Override
@@ -409,5 +435,29 @@ public class TimeKeeperActivity extends BaseActivity implements LocationSource, 
     @Override
     public void setPresenter(TimeKeeperContract.TimeKeeperPresenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void onGetSignActivityList(Boolean flag, String errorInfo, SignDataRequestResponse.DataBean data) {
+        if (!flag) {
+            showSnackbar(errorInfo);
+            return;
+        }
+        if (null == data.getFirstDateTime() || "".equals(data.getFirstDateTime())) {
+            showSnackbar("活动未开始");
+            return;
+        }
+        mDateTimeFormatter.parseDateTime(data.getFirstDateTime());
+        startDuration = Seconds.secondsBetween(mDateTimeFormatter.parseDateTime(data.getFirstDateTime()), new DateTime()).getSeconds();
+        countTimer = new CountTimer(1000) {
+            @Override
+            protected void onTick(long millisFly) {
+                super.onTick(millisFly);
+                if (null != startDuration) {
+                    countTimerTV.setText(formatTime(millisFly + startDuration * 1000));
+                }
+            }
+        };
+        countTimer.start();
     }
 }

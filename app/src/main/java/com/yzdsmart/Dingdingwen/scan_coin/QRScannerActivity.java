@@ -371,9 +371,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
                 signDialog.dismiss();
                 signDialog = null;
             }
-            if (flag) {
-                openActivity(TimeKeeperActivity.class);
-            }
+            openActivity(TimeKeeperActivity.class);
             closeActivity();
         }
     }

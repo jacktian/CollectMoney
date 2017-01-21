@@ -48,7 +48,14 @@ public class QRScannerPresenter implements QRScannerContract.QRScannerPresenter 
                             break;
                     }
                 } else {
-                    mView.onScanQRCode(false, response.getErrorInfo(), null, null, type);
+                    switch (type) {
+                        case 0:
+                            mView.onScanQRCode(false, response.getErrorInfo(), null, null, type);
+                            break;
+                        case 1:
+                            mView.onScanQRCode(false, response.getErrorInfo(), null, response.getInfo(), type);
+                            break;
+                    }
                 }
             }
 

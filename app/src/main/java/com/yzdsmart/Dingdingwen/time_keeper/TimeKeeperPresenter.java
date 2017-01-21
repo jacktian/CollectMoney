@@ -30,11 +30,11 @@ public class TimeKeeperPresenter implements TimeKeeperContract.TimeKeeperPresent
         mModel.getSignActivityList(action, submitCode, custCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                SignDataRequestResponse requestResponse= (SignDataRequestResponse) result;
-                if("OK".equals(requestResponse.getActionStatus())){
-
-                }else {
-
+                SignDataRequestResponse requestResponse = (SignDataRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onGetSignActivityList(true, null, requestResponse.getData());
+                } else {
+                    mView.onGetSignActivityList(false, requestResponse.getErrorInfo(), requestResponse.getData());
                 }
             }
 
