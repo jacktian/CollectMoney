@@ -113,6 +113,18 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         initBeepSound();
         vibrate = true;
         mQRCodeView.setDelegate(this);
+
+        timeKeeperRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (null != signDialog) {
+                    signDialog.dismiss();
+                    signDialog = null;
+                }
+                openActivity(TimeKeeperActivity.class);
+                closeActivity();
+            }
+        };
     }
 
     @Override
@@ -320,7 +332,6 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
                     mQRCodeView.startSpot();
                     break;
                 case 1:
-                    timeKeeperRunnable = new TimeKeeperRunnable(false);
                     signDialog = new SignDialog(this, coinLogo, false);
                     signDialog.setCancelable(false);
                     signDialog.show();
@@ -349,30 +360,11 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
                 });
                 break;
             case 1:
-                timeKeeperRunnable = new TimeKeeperRunnable("本点签到成功".equals(coinLogo) ? true : false);
                 signDialog = new SignDialog(this, coinLogo, "本点签到成功".equals(coinLogo) ? true : false);
                 signDialog.setCancelable(false);
                 signDialog.show();
                 timeKeeperHandler.postDelayed(timeKeeperRunnable, 1000);
                 break;
-        }
-    }
-
-    private class TimeKeeperRunnable implements Runnable {
-        private Boolean flag;
-
-        public TimeKeeperRunnable(Boolean flag) {
-            this.flag = flag;
-        }
-
-        @Override
-        public void run() {
-            if (null != signDialog) {
-                signDialog.dismiss();
-                signDialog = null;
-            }
-            openActivity(TimeKeeperActivity.class);
-            closeActivity();
         }
     }
 
