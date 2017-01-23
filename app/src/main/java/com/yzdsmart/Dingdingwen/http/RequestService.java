@@ -397,12 +397,13 @@ public interface RequestService {
      * @param action
      * @param submitCode
      * @param custCode
+     * @param activityCode
      * @param authorization
      * @return
      */
     @FormUrlEncoded
     @POST(Url.ACTIVITY)
-    Observable<SignDataRequestResponse> getSignActivityList(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
+    Observable<SignDataRequestResponse> getSignActivityList(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("ActivityCode") String activityCode, @Header("Authorization") String authorization);
 
     /**
      * 获取周边商铺

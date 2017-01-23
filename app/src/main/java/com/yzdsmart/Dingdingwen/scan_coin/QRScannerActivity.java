@@ -74,6 +74,8 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     private QRScannerContract.QRScannerPresenter mPresenter;
 
+    private String retaCode = "";
+
     private Dialog getCoinDialog;
     private Dialog signDialog;
 
@@ -121,7 +123,9 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
                     signDialog.dismiss();
                     signDialog = null;
                 }
-                openActivity(TimeKeeperActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("activityCode", retaCode);
+                openActivity(TimeKeeperActivity.class, bundle, 0);
                 closeActivity();
             }
         };
@@ -255,12 +259,19 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
 //        String query = result.split("\\?")[1];
 //        final Map<String, String> map = Splitter.on('&').trimResults().withKeyValueSeparator("=").split(query);
-//        System.out.println("----------->" + map.get("RetaCode"));
+//        System.out.println("----------->" + result);
+
+        if (result.indexOf("RetaCode=") < 0 && result.indexOf("retaType=") < 0) {
+            showSnackbar("二维码有误,请重新扫描");
+            mQRCodeView.startSpot();
+            return;
+        }
+
         String action = "";
         if (result.indexOf("&action=") > -1) {
             action = result.split("&action=")[1];
         }
-        String retaCode = result.split("RetaCode=")[1].split("&retaType=")[0];
+        retaCode = result.split("RetaCode=")[1].split("&retaType=")[0];
         if (null != action && (!"".equals(action))) {
             if (null == retaCode || "".equals(retaCode)) {
                 showSnackbar("扫码点不存在");

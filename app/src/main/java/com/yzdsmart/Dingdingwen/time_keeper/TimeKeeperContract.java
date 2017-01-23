@@ -29,7 +29,7 @@ public interface TimeKeeperContract {
          * @param custCode
          * @param authorization
          */
-        void getSignActivityList(String action, String submitCode, String custCode, String authorization);
+        void getSignActivityList(String action, String submitCode, String custCode,String activityCode, String authorization);
 
         void unRegisterSubscribe();
     }

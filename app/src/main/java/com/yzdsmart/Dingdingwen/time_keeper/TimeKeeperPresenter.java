@@ -25,9 +25,9 @@ public class TimeKeeperPresenter implements TimeKeeperContract.TimeKeeperPresent
     }
 
     @Override
-    public void getSignActivityList(String action, String submitCode, String custCode, String authorization) {
+    public void getSignActivityList(String action, String submitCode, String custCode, String activityCode, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getSignActivityList(action, submitCode, custCode, authorization, new RequestListener() {
+        mModel.getSignActivityList(action, submitCode, custCode, activityCode, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
                 SignDataRequestResponse requestResponse = (SignDataRequestResponse) result;

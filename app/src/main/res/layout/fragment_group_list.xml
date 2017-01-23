@@ -29,5 +29,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/search_filter"
         android:divider="@color/light_grey"
-        android:dividerHeight="0.6dp" />
+        android:dividerHeight="0.6dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
 </RelativeLayout>

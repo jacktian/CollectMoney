@@ -40,6 +40,8 @@
             android:id="@+id/profile_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/search_filter" />
+            android:layout_below="@id/search_filter"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

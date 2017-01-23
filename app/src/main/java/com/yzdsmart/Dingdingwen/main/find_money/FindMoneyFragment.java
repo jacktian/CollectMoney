@@ -66,6 +66,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by YZD on 2016/8/17.
@@ -308,8 +309,17 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
 
         //初始化地图
         initMap();
+
         //定位初始化
         initLoc();
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     @Override

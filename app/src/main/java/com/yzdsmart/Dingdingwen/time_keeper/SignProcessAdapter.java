@@ -14,6 +14,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.SignProcessStep;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,15 +117,15 @@ public class SignProcessAdapter extends UltimateViewAdapter<SignProcessAdapter.V
         public void setSignProcessStepImg(Boolean isSigned, Boolean isLastStep) {
             if (isLastStep) {
                 if (isSigned) {
-                    Glide.with(context).load(R.mipmap.sign_process_without_arrow_yellow).asBitmap().into(signProcessStepIV);
+                    Glide.with(context).load(R.mipmap.sign_process_without_arrow_yellow).asBitmap().placeholder(R.mipmap.ic_holder_light).override((int) Math.ceil(Utils.getScreenRatio(context) * 47), (int) Math.ceil(Utils.getScreenRatio(context) * 47)).into(signProcessStepIV);
                 } else {
-                    Glide.with(context).load(R.mipmap.sign_process_without_arrow_grey).asBitmap().into(signProcessStepIV);
+                    Glide.with(context).load(R.mipmap.sign_process_without_arrow_grey).asBitmap().placeholder(R.mipmap.ic_holder_light).override((int) Math.ceil(Utils.getScreenRatio(context) * 47), (int) Math.ceil(Utils.getScreenRatio(context) * 47)).into(signProcessStepIV);
                 }
             } else {
                 if (isSigned) {
-                    Glide.with(context).load(R.mipmap.sign_process_with_arrow_yellow).asBitmap().into(signProcessStepIV);
+                    Glide.with(context).load(R.mipmap.sign_process_with_arrow_yellow).asBitmap().placeholder(R.mipmap.ic_holder_light).override((int) Math.ceil(Utils.getScreenRatio(context) * 74), (int) Math.ceil(Utils.getScreenRatio(context) * 47)).into(signProcessStepIV);
                 } else {
-                    Glide.with(context).load(R.mipmap.sign_process_with_arrow_grey).asBitmap().into(signProcessStepIV);
+                    Glide.with(context).load(R.mipmap.sign_process_with_arrow_grey).asBitmap().placeholder(R.mipmap.ic_holder_light).override((int) Math.ceil(Utils.getScreenRatio(context) * 74), (int) Math.ceil(Utils.getScreenRatio(context) * 47)).into(signProcessStepIV);
                 }
             }
         }

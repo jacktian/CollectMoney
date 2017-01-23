@@ -231,7 +231,9 @@
                     android:id="@+id/hotel_user_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/shop_item_panel_margin_top" />
+                    android:layout_marginTop="@dimen/shop_item_panel_margin_top"
+                    android:overScrollMode="never"
+                    android:scrollbars="none" />
 
                 <TextView
                     android:id="@+id/get_more_followers"

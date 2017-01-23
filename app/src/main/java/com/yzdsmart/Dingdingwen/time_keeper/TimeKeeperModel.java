@@ -16,7 +16,7 @@ public class TimeKeeperModel {
     //网络请求监听
     private Subscriber<SignDataRequestResponse> getSignActivityListSubscriber;
 
-    void getSignActivityList(String action, String submitCode, String custCode, String authorization, final RequestListener listener) {
+    void getSignActivityList(String action, String submitCode, String custCode, String activityCode, String authorization, final RequestListener listener) {
         getSignActivityListSubscriber = new Subscriber<SignDataRequestResponse>() {
             @Override
             public void onCompleted() {
@@ -33,7 +33,7 @@ public class TimeKeeperModel {
                 listener.onSuccess(requestResponse);
             }
         };
-        RequestAdapter.getDDWRequestService().getSignActivityList(action, submitCode, custCode, authorization)
+        RequestAdapter.getDDWRequestService().getSignActivityList(action, submitCode, custCode, activityCode, authorization)
                 .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
                 .observeOn(AndroidSchedulers.mainThread())//回调到主线程
                 .subscribe(getSignActivityListSubscriber);

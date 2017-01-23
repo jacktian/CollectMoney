@@ -15,5 +15,7 @@
         android:id="@+id/focused_shop_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/common_toolbar_height" />
+        android:layout_marginTop="@dimen/common_toolbar_height"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
 </android.support.design.widget.CoordinatorLayout>

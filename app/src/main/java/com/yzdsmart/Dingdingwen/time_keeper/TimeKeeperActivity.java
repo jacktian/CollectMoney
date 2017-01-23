@@ -33,6 +33,7 @@ import org.joda.time.Seconds;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -80,6 +81,8 @@ public class TimeKeeperActivity extends BaseActivity implements TimeKeeperContra
 
     private TimeKeeperContract.TimeKeeperPresenter mPresenter;
 
+    private String activityCode = "";
+
 //    private AMap mAMap;
 //    private UiSettings mUiSettings;
 //    //声明AMapLocationClient类对象
@@ -113,12 +116,20 @@ public class TimeKeeperActivity extends BaseActivity implements TimeKeeperContra
 
     private SignProcessAdapter signProcessAdapter;
     private GridLayoutManager mGridLayoutManager;
+    private List<SignProcessStep> signProcessStepList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (null != savedInstanceState) {
+            activityCode = savedInstanceState.getString("activityCode");
+        } else {
+            activityCode = getIntent().getExtras().getString("activityCode");
+        }
+
         mDateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+        signProcessStepList = new ArrayList<SignProcessStep>();
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
@@ -134,6 +145,11 @@ public class TimeKeeperActivity extends BaseActivity implements TimeKeeperContra
 
         signProcessAdapter = new SignProcessAdapter(this);
         mGridLayoutManager = new GridLayoutManager(this, 4);
+        signProcessRV.setAdapter(signProcessAdapter);
+        signProcessRV.setLayoutManager(mGridLayoutManager);
+        signProcessRV.setHasFixedSize(true);
+        signProcessRV.setSaveEnabled(true);
+        signProcessRV.setClipToPadding(false);
 
         unlockBtnSLV.setmLockListener(new SlideLockView.OnLockListener() {
             @Override
@@ -173,7 +189,7 @@ public class TimeKeeperActivity extends BaseActivity implements TimeKeeperContra
             showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getSignActivityList(Constants.SIGN_ACTIVITY_LIST_ACTION_CODE, "", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+        mPresenter.getSignActivityList(Constants.SIGN_ACTIVITY_LIST_ACTION_CODE, "", SharedPreferencesUtils.getString(this, "cust_code", ""), activityCode, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     @Override
@@ -429,13 +445,38 @@ public class TimeKeeperActivity extends BaseActivity implements TimeKeeperContra
         }
         if (null != actiRoutes) {
             SignProcessStep signProcessStep = null;
+            signProcessStepList.clear();
             if (null != goRoutes) {
                 if (actiRoutes.length == goRoutes.length) {
+                    for (int i = 0; i < actiRoutes.length; i++) {
+                        if (i == (actiRoutes.length - 1)) {
+                            signProcessStep = new SignProcessStep(actiRoutes[i], true, true);
+                        } else {
+                            signProcessStep = new SignProcessStep(actiRoutes[i], true, false);
+                        }
+                        signProcessStepList.add(signProcessStep);
+                    }
+                    signProcessAdapter.clearList();
+                    signProcessAdapter.appendList(signProcessStepList);
                     if (null == data.getFirstDateTime() || "".equals(data.getFirstDateTime()) || null == data.getLastDateTime() || "".equals(data.getLastDateTime()))
                         return;
                     startDuration = Seconds.secondsBetween(mDateTimeFormatter.parseDateTime(data.getFirstDateTime()), mDateTimeFormatter.parseDateTime(data.getLastDateTime())).getSeconds();
                     countTimerTV.setText(formatTime((long) startDuration * 1000));
                 } else {
+                    for (int i = 0; i < goRoutes.length; i++) {
+                        signProcessStep = new SignProcessStep(actiRoutes[i], true, false);
+                        signProcessStepList.add(signProcessStep);
+                    }
+                    for (int i = goRoutes.length; i < actiRoutes.length; i++) {
+                        if (i == (actiRoutes.length - 1)) {
+                            signProcessStep = new SignProcessStep(actiRoutes[i], false, true);
+                        } else {
+                            signProcessStep = new SignProcessStep(actiRoutes[i], false, false);
+                        }
+                        signProcessStepList.add(signProcessStep);
+                    }
+                    signProcessAdapter.clearList();
+                    signProcessAdapter.appendList(signProcessStepList);
                     if (null == data.getFirstDateTime() || "".equals(data.getFirstDateTime()))
                         return;
                     startDuration = Seconds.secondsBetween(mDateTimeFormatter.parseDateTime(data.getFirstDateTime()), new DateTime()).getSeconds();
@@ -455,7 +496,10 @@ public class TimeKeeperActivity extends BaseActivity implements TimeKeeperContra
                     } else {
                         signProcessStep = new SignProcessStep(actiRoutes[i], false, false);
                     }
+                    signProcessStepList.add(signProcessStep);
                 }
+                signProcessAdapter.clearList();
+                signProcessAdapter.appendList(signProcessStepList);
             }
         }
     }
