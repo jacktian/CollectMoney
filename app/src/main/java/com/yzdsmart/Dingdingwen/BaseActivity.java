@@ -2,23 +2,20 @@ package com.yzdsmart.Dingdingwen;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.share_sdk.OnekeyShare;
 import com.yzdsmart.Dingdingwen.utils.IntentUtils;
+import com.yzdsmart.Dingdingwen.utils.SnackbarUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.DynamicDialog;
 
@@ -145,18 +142,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public void showSnackbar(String msg) {
         if (null != container) {
-            Snackbar mSnackbar = Snackbar.make(container, msg, Snackbar.LENGTH_SHORT);
-            View snackView = mSnackbar.getView();
-            snackView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            TextView snackTV = (TextView) snackView.findViewById(android.support.design.R.id.snackbar_text);
-            if (null != snackTV) {
-                snackTV.setTextColor(Color.WHITE);
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-                    snackTV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                }
-                snackTV.setGravity(Gravity.CENTER_HORIZONTAL);
-            }
-            mSnackbar.show();
+            SnackbarUtils.showShortSnackbar(container, msg, Color.WHITE, getResources().getColor(R.color.colorPrimary), 1);
         }
     }
 
