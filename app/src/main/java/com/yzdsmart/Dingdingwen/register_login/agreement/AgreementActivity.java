@@ -3,6 +3,7 @@ package com.yzdsmart.Dingdingwen.register_login.agreement;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,9 @@ public class AgreementActivity extends BaseActivity {
     @Nullable
     @BindView(R.id.title_left_operation)
     ImageView titleLeftOpeIV;
+    @Nullable
+    @BindView(R.id.agreement)
+    WebView agreementWebView;
 
     private static final String TAG = "AgreementActivity";
 
@@ -44,6 +48,8 @@ public class AgreementActivity extends BaseActivity {
         centerTitleTV.setText("叮叮蚊协议");
 
         MobclickAgent.openActivityDurationTrack(false);
+
+        agreementWebView.loadUrl("file:///android_asset/ddw_agreement.html");
     }
 
     @Override
