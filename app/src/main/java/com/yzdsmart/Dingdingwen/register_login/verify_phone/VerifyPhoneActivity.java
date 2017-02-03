@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.register_login.agreement.AgreementActivity;
 import com.yzdsmart.Dingdingwen.register_login.verify_code.VerifyCodeActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -110,7 +111,7 @@ public class VerifyPhoneActivity extends BaseActivity implements VerifyPhoneCont
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.login_register_confirm_button})
+    @OnClick({R.id.title_left_operation_layout, R.id.login_register_confirm_button, R.id.register_agreement})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
@@ -130,6 +131,9 @@ public class VerifyPhoneActivity extends BaseActivity implements VerifyPhoneCont
                     return;
                 }
                 mPresenter.isUserExist(userNameET.getText().toString(), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                break;
+            case R.id.register_agreement:
+                openActivity(AgreementActivity.class);
                 break;
         }
     }

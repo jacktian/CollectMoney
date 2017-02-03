@@ -107,6 +107,11 @@
             android:launchMode="singleTop" />
 
         <activity
+            android:name=".register_login.agreement.AgreementActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop" />
+
+        <activity
             android:name=".register_login.verify_code.VerifyCodeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop" />
