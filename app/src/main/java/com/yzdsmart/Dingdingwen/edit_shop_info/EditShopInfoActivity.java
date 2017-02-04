@@ -107,7 +107,7 @@ public class EditShopInfoActivity extends BaseActivity implements EditShopInfoCo
                 closeActivity();
                 break;
             case R.id.baza_name:
-                showEditInfo("商铺名称", 0);
+                showEditInfo("商铺名称", 0, bazaNameTV.getText().toString());
                 break;
             case R.id.baza_pers:
 //                showEditInfo("联系人", 1);
@@ -119,17 +119,19 @@ public class EditShopInfoActivity extends BaseActivity implements EditShopInfoCo
 //                showEditInfo("商铺地址", 3);
                 break;
             case R.id.baza_remark:
-                showEditInfo("备注", 4);
+                showEditInfo("备注", 4, bazaRemarkTV.getText().toString());
                 break;
         }
     }
 
-    void showEditInfo(final String dialogTitle, final Integer editItem) {
+    void showEditInfo(final String dialogTitle, final Integer editItem, String oldValue) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(R.layout.edit_info_dialog, null);
         TextView editInfoTitle = (TextView) view.findViewById(R.id.edit_info_dialog_title);
         editInfoTitle.setText("请输入" + dialogTitle);
         final EditText editInfoContent = (EditText) view.findViewById(R.id.edit_info_dialog_content);
+        editInfoContent.setText(oldValue);
+        editInfoContent.setSelection(oldValue.length());
         Button editCancel = (Button) view.findViewById(R.id.edit_cancel);
         Button editConfirm = (Button) view.findViewById(R.id.edit_confirm);
         editCancel.setOnClickListener(new View.OnClickListener() {
