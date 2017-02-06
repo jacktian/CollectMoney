@@ -457,6 +457,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                         BigDecimal discountPriceBig = new BigDecimal(discountPrice);
 //                        coinCountsET.setText(decimalFormat.format(Double.valueOf(payAmountBig.subtract(discountPriceBig).toString())));
                         coinCountsET.setText(decimalFormat.format(DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), discountPrice, 2, BigDecimal.ROUND_DOWN)));这里有问题，死循环
+                        付款金币+实付金额，微信支付取消支付，后台好像还是扣了金币
                         actualAmountTV.setText("0.00");
                     } else {
                         BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
