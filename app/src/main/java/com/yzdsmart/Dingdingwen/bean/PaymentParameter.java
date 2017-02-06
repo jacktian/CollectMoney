@@ -21,9 +21,9 @@ public class PaymentParameter {
     private String SubmitCode;
     private String BazaCode;
     private String CustCode;
-    private BigDecimal UseGold;
-    private BigDecimal Discount;
-    private BigDecimal Total;
+    private String UseGold;
+    private String Discount;
+    private String Total;
     private PayParaBean PayPara;
 
     public String getSubmitCode() {
@@ -50,27 +50,27 @@ public class PaymentParameter {
         CustCode = custCode;
     }
 
-    public BigDecimal getUseGold() {
+    public String getUseGold() {
         return UseGold;
     }
 
-    public void setUseGold(BigDecimal useGold) {
+    public void setUseGold(String useGold) {
         UseGold = useGold;
     }
 
-    public BigDecimal getDiscount() {
+    public String getDiscount() {
         return Discount;
     }
 
-    public void setDiscount(BigDecimal discount) {
+    public void setDiscount(String discount) {
         Discount = discount;
     }
 
-    public BigDecimal getTotal() {
+    public String getTotal() {
         return Total;
     }
 
-    public void setTotal(BigDecimal total) {
+    public void setTotal(String total) {
         Total = total;
     }
 
