@@ -96,7 +96,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
 
     private DecimalFormat decimalFormat;
 
-    private Double discountPrice = 0d;
+    private String discountPrice = "";
 
     private InputFilter[] amountFilters;
 
@@ -159,27 +159,27 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 if (payAmountET.getText().toString().trim().length() > 0) {
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                            discountPrice = decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta()));
                             break;
                         case 45:
-                            discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) >= 1.0 ? shopDiscount.getDiscPrice() : 0f;
+                            discountPrice = decimalFormat.format((Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) >= 1.0 ? shopDiscount.getDiscPrice() : 0f);
                             break;
                     }
                     if (coinCountsET.getText().toString().trim().length() > 0) {
-                        if ((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(coinCountsET.getText().toString().trim())) < 0) {
+                        if ((Double.valueOf(payAmountET.getText().toString().trim()) - Double.valueOf(discountPrice) - Double.valueOf(coinCountsET.getText().toString().trim())) < 0) {
                             BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
-                            BigDecimal discountPriceBig = new BigDecimal(discountPrice.toString());
+                            BigDecimal discountPriceBig = new BigDecimal(discountPrice);
                             coinCountsET.setText(decimalFormat.format(Double.valueOf(payAmountBig.subtract(discountPriceBig).toString())));
                             actualAmountTV.setText("0.00");
                         } else {
                             BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
-                            BigDecimal discountPriceBig = new BigDecimal(discountPrice.toString());
+                            BigDecimal discountPriceBig = new BigDecimal(discountPrice);
                             BigDecimal coinCountsBig = new BigDecimal(coinCountsET.getText().toString().trim());
                             actualAmountTV.setText(decimalFormat.format(Double.valueOf(payAmountBig.subtract(discountPriceBig).subtract(coinCountsBig).toString())));
                         }
                     } else {
                         BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
-                        BigDecimal discountPriceBig = new BigDecimal(discountPrice.toString());
+                        BigDecimal discountPriceBig = new BigDecimal(discountPrice);
                         actualAmountTV.setText(decimalFormat.format(Double.valueOf(payAmountBig.subtract(discountPriceBig).toString())));
                     }
                 }
@@ -376,27 +376,27 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             } else {
                 switch (shopDiscount.getDisType()) {
                     case 23:
-                        discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(s.toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                        discountPrice = decimalFormat.format(Double.valueOf(s.toString().trim()) * (1 - shopDiscount.getDiscReta()));
                         break;
                     case 45:
-                        discountPrice = (Double.valueOf(s.toString().trim()) / shopDiscount.getFullPrice()) >= 1.0 ? shopDiscount.getDiscPrice() : 0d;
+                        discountPrice = decimalFormat.format((Double.valueOf(s.toString().trim()) / shopDiscount.getFullPrice()) >= 1.0 ? shopDiscount.getDiscPrice() : 0d);
                         break;
                 }
                 if (coinCountsET.getText().toString().trim().length() > 0) {
-                    if ((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(coinCountsET.getText().toString().trim())) < 0) {
+                    if ((Double.valueOf(payAmountET.getText().toString().trim()) - Double.valueOf(discountPrice) - Double.valueOf(coinCountsET.getText().toString().trim())) < 0) {
                         BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
-                        BigDecimal discountPriceBig = new BigDecimal(discountPrice.toString());
+                        BigDecimal discountPriceBig = new BigDecimal(discountPrice);
                         coinCountsET.setText(decimalFormat.format(Double.valueOf(payAmountBig.subtract(discountPriceBig).toString())));
                         actualAmountTV.setText("0.00");
                     } else {
                         BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
-                        BigDecimal discountPriceBig = new BigDecimal(discountPrice.toString());
+                        BigDecimal discountPriceBig = new BigDecimal(discountPrice);
                         BigDecimal coinCountsBig = new BigDecimal(coinCountsET.getText().toString().trim());
                         actualAmountTV.setText(decimalFormat.format(Double.valueOf(payAmountBig.subtract(discountPriceBig).subtract(coinCountsBig).toString())));
                     }
                 } else {
                     BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
-                    BigDecimal discountPriceBig = new BigDecimal(discountPrice.toString());
+                    BigDecimal discountPriceBig = new BigDecimal(discountPrice);
                     actualAmountTV.setText(decimalFormat.format(Double.valueOf(payAmountBig.subtract(discountPriceBig).toString())));
                 }
             }
@@ -431,20 +431,20 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 } else {
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                            discountPrice = decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta()));
                             break;
                         case 45:
-                            discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) >= 1.0 ? shopDiscount.getDiscPrice() : 0d;
+                            discountPrice = decimalFormat.format((Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) >= 1.0 ? shopDiscount.getDiscPrice() : 0d);
                             break;
                     }
-                    if ((Double.valueOf(payAmountET.getText().toString().trim()) - discountPrice - Double.valueOf(s.toString().trim())) < 0) {
+                    if ((Double.valueOf(payAmountET.getText().toString().trim()) - Double.valueOf(discountPrice) - Double.valueOf(s.toString().trim())) < 0) {
                         BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
-                        BigDecimal discountPriceBig = new BigDecimal(discountPrice.toString());
+                        BigDecimal discountPriceBig = new BigDecimal(discountPrice);
                         coinCountsET.setText(decimalFormat.format(Double.valueOf(payAmountBig.subtract(discountPriceBig).toString())));
                         actualAmountTV.setText("0.00");
                     } else {
                         BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());
-                        BigDecimal discountPriceBig = new BigDecimal(discountPrice.toString());
+                        BigDecimal discountPriceBig = new BigDecimal(discountPrice);
                         BigDecimal coinCountsBig = new BigDecimal(coinCountsET.getText().toString().trim());
                         actualAmountTV.setText(decimalFormat.format(Double.valueOf(payAmountBig.subtract(discountPriceBig).subtract(coinCountsBig).toString())));
                     }
@@ -455,10 +455,10 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                 } else {
                     switch (shopDiscount.getDisType()) {
                         case 23:
-                            discountPrice = Double.valueOf(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta())));
+                            discountPrice = decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim()) * (1 - shopDiscount.getDiscReta()));
                             break;
                         case 45:
-                            discountPrice = (Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0d;
+                            discountPrice = decimalFormat.format((Double.valueOf(payAmountET.getText().toString().trim()) / shopDiscount.getFullPrice()) > 1.0 ? shopDiscount.getDiscPrice() : 0d);
                             break;
                     }
                     BigDecimal payAmountBig = new BigDecimal(payAmountET.getText().toString().trim());

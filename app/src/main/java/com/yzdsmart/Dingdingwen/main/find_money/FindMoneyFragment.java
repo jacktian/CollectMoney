@@ -59,6 +59,7 @@ import com.yzdsmart.Dingdingwen.views.navi_picker.NaviPickerDialog;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -867,6 +868,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             locLatitude = aMapLocation.getLatitude();
             locLongitude = aMapLocation.getLongitude();
             qLocation = locLongitude + "," + locLatitude;
+
+            ((BaseActivity) getActivity()).showSnackbar(new Date() + "--------->" + qLocation);
 
             SharedPreferencesUtils.setString(getActivity(), "qLocation", qLocation);
 
