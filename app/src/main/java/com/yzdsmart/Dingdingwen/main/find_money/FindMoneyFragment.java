@@ -59,7 +59,6 @@ import com.yzdsmart.Dingdingwen.views.navi_picker.NaviPickerDialog;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -605,6 +604,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         mLocationOption.setInterval(Constants.LOC_TIME);
         //设置是否返回地址信息（默认返回地址信息）
         mLocationOption.setNeedAddress(true);
+//        mLocationOption.setGpsFirst(true);
         //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
         mLocationOption.setHttpTimeOut(Constants.LOC_TIME_OUT);
         mLocationClient.setLocationOption(mLocationOption);
@@ -868,8 +868,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             locLatitude = aMapLocation.getLatitude();
             locLongitude = aMapLocation.getLongitude();
             qLocation = locLongitude + "," + locLatitude;
-
-            ((BaseActivity) getActivity()).showSnackbar(new Date() + "--------->" + qLocation);
 
             SharedPreferencesUtils.setString(getActivity(), "qLocation", qLocation);
 

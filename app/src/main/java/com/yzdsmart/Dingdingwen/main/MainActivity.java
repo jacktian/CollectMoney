@@ -599,6 +599,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     }
 
     private void imLogin() {
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         if (SharedPreferencesUtils.getString(this, "im_account", "").length() > 0 && SharedPreferencesUtils.getString(this, "im_password", "").length() > 0) {
             String im_name = SharedPreferencesUtils.getString(this, "im_account", "");
             String im_pwd = SharedPreferencesUtils.getString(this, "im_password", "");

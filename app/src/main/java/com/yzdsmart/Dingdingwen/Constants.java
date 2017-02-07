@@ -75,7 +75,7 @@ public class Constants {
     public static final LatLng GEO_DEFAULT_CITY = new LatLng(31.816058, 119.980524);
     //定位频率
     public static final Long LOC_TIME = 5000l;//毫秒
-    public static final Long LOC_TIME_OUT = 5000l;//毫秒
+    public static final Long LOC_TIME_OUT = 10000l;//毫秒
 
     //权限申请
     public static final int DDW_LOCATION_PERM = 1;
