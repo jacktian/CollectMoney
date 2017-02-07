@@ -402,9 +402,6 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                     coinCountsET.setText("");
                     return;
                 }
-                if (DoubleUtil.sub(Double.valueOf(s.toString().trim()), Double.valueOf(leftCoinCountsTV.getText().toString().trim()), 2, BigDecimal.ROUND_DOWN) > 0) {
-                    coinCountsET.setText(leftCoinCountsTV.getText().toString().trim());
-                }
                 if (null == shopDiscount) {
                     if (DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), Double.valueOf(s.toString().trim()), 2, BigDecimal.ROUND_DOWN) < 0) {
                         coinCountsET.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim())));
@@ -421,10 +418,26 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                             discountPrice = DoubleUtil.divide(Double.valueOf(payAmountET.getText().toString().trim()), shopDiscount.getFullPrice(), 2, BigDecimal.ROUND_DOWN) >= 1.0 ? shopDiscount.getDiscPrice() : 0.00d;
                             break;
                     }
+                    if (DoubleUtil.sub(Double.valueOf(s.toString().trim()), Double.valueOf(leftCoinCountsTV.getText().toString().trim()), 2, BigDecimal.ROUND_DOWN) >= 0) {
+//                        coinCountsET.setText(leftCoinCountsTV.getText().toString().trim());
+                        if (DoubleUtil.sub(DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), discountPrice, 2, BigDecimal.ROUND_DOWN), Double.valueOf(leftCoinCountsTV.getText().toString().trim()), 2, BigDecimal.ROUND_DOWN) < 0) {
+                            coinCountsET.setText(decimalFormat.format(DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), discountPrice, 2, BigDecimal.ROUND_DOWN)));
+                            actualAmountTV.setText("0.00");
+                        } else {
+                            coinCountsET.setText(decimalFormat.format(Double.valueOf(leftCoinCountsTV.getText().toString().trim())));
+                            actualAmountTV.setText(decimalFormat.format(DoubleUtil.sub(DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), discountPrice, 2, BigDecimal.ROUND_DOWN), Double.valueOf(leftCoinCountsTV.getText().toString().trim()), 2, BigDecimal.ROUND_DOWN)));
+                        }
+                    } else {
+                        jdklsal
+                    }
                     if (DoubleUtil.sub(DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), discountPrice, 2, BigDecimal.ROUND_DOWN), Double.valueOf(s.toString().trim()), 2, BigDecimal.ROUND_DOWN) < 0) {
                         coinCountsET.clearFocus();
-                        coinCountsET.setText(decimalFormat.format(DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), discountPrice, 2, BigDecimal.ROUND_DOWN)));
-                        actualAmountTV.setText("0.00");
+                        if (DoubleUtil.sub(Double.valueOf(leftCoinCountsTV.getText().toString().trim()), DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), discountPrice, 2, BigDecimal.ROUND_DOWN), 2, BigDecimal.ROUND_DOWN) > 0) {
+                            coinCountsET.setText(decimalFormat.format(DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), discountPrice, 2, BigDecimal.ROUND_DOWN)));
+                            actualAmountTV.setText("0.00");
+                        } else {
+
+                        }
                     } else {
                         actualAmountTV.setText(decimalFormat.format(DoubleUtil.sub(DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), discountPrice, 2, BigDecimal.ROUND_DOWN), Double.valueOf(coinCountsET.getText().toString().trim()), 2, BigDecimal.ROUND_DOWN)));
                     }
