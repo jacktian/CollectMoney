@@ -374,7 +374,6 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                         break;
                 }
                 if (coinCountsET.getText().toString().trim().length() > 0) {
-
                     if (DoubleUtil.sub(DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), discountPrice, 2, BigDecimal.ROUND_DOWN), Double.valueOf(coinCountsET.getText().toString().trim()), 2, BigDecimal.ROUND_DOWN) < 0) {
                         coinCountsET.setText(decimalFormat.format(DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), discountPrice, 2, BigDecimal.ROUND_DOWN)));
                         actualAmountTV.setText("0.00");
