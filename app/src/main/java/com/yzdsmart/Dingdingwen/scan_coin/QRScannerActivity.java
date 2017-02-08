@@ -66,9 +66,9 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     private Integer scanType;//0 扫币 1 付款
 
-    private MediaPlayer mediaPlayer;
-    private boolean playBeep;
-    private static final float BEEP_VOLUME = 0.10f;
+    private MediaPlayer beepMediaPlayer, failMediaPlayer, shineMediaPlayer;
+    private boolean playBeep, playFail, playShine;
+    private static final float BEEP_VOLUME = 0.66f;
     private boolean vibrate;
     private static final long VIBRATE_DURATION = 200L;
 
@@ -80,7 +80,8 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     private Dialog signDialog;
 
     private Handler timeKeeperHandler = new Handler();
-    private Runnable timeKeeperRunnable;
+    private Handler startQRHandler = new Handler();
+    private Runnable timeKeeperRunnable, startQRRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,11 +109,17 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         MobclickAgent.openActivityDurationTrack(false);
 
         playBeep = true;
+        playFail = true;
+        playShine = true;
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         if (AudioManager.RINGER_MODE_NORMAL != audioManager.getRingerMode()) {
             playBeep = false;
+            playFail = false;
+            playShine = false;
         }
         initBeepSound();
+        initFailSound();
+        initShineSound();
         vibrate = true;
         mQRCodeView.setDelegate(this);
 
@@ -127,6 +134,13 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
                 bundle.putString("activityCode", retaCode);
                 openActivity(TimeKeeperActivity.class, bundle, 0);
                 closeActivity();
+            }
+        };
+
+        startQRRunnable = new Runnable() {
+            @Override
+            public void run() {
+                mQRCodeView.startSpot();
             }
         };
     }
@@ -160,11 +174,27 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     @Override
     protected void onDestroy() {
-        if (null != mediaPlayer) {
-            mediaPlayer.release();
+        if (null != beepMediaPlayer) {
+            if (beepMediaPlayer.isPlaying()) {
+                beepMediaPlayer.stop();
+            }
+            beepMediaPlayer.release();
+        }
+        if (null != failMediaPlayer) {
+            if (failMediaPlayer.isPlaying()) {
+                failMediaPlayer.stop();
+            }
+            failMediaPlayer.release();
+        }
+        if (null != shineMediaPlayer) {
+            if (shineMediaPlayer.isPlaying()) {
+                shineMediaPlayer.stop();
+            }
+            shineMediaPlayer.release();
         }
         mQRCodeView.onDestroy();
         timeKeeperHandler.removeCallbacks(timeKeeperRunnable);
+        startQRHandler.removeCallbacks(startQRRunnable);
         super.onDestroy();
     }
 
@@ -212,20 +242,58 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     //初始化声音
     private void initBeepSound() {
-        if (playBeep && null == mediaPlayer) {
+        if (playBeep && null == beepMediaPlayer) {
             setVolumeControlStream(AudioManager.STREAM_MUSIC);
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mediaPlayer.setOnCompletionListener(beepListener);
+            beepMediaPlayer = new MediaPlayer();
+            beepMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            beepMediaPlayer.setOnCompletionListener(beepListener);
 
             AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.beep);
             try {
-                mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+                beepMediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
                 file.close();
-                mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
-                mediaPlayer.prepare();
+                beepMediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
+                beepMediaPlayer.prepare();
             } catch (Exception e) {
-                mediaPlayer = null;
+                beepMediaPlayer = null;
+            }
+        }
+    }
+
+    private void initFailSound() {
+        if (playFail && null == failMediaPlayer) {
+            setVolumeControlStream(AudioManager.STREAM_MUSIC);
+            failMediaPlayer = new MediaPlayer();
+            failMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            failMediaPlayer.setOnCompletionListener(failListener);
+
+            AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.fail);
+            try {
+                failMediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+                file.close();
+                failMediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
+                failMediaPlayer.prepare();
+            } catch (Exception e) {
+                failMediaPlayer = null;
+            }
+        }
+    }
+
+    private void initShineSound() {
+        if (playShine && null == shineMediaPlayer) {
+            setVolumeControlStream(AudioManager.STREAM_MUSIC);
+            shineMediaPlayer = new MediaPlayer();
+            shineMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            shineMediaPlayer.setOnCompletionListener(shineListener);
+
+            AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.shine);
+            try {
+                shineMediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+                file.close();
+                shineMediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
+                shineMediaPlayer.prepare();
+            } catch (Exception e) {
+                shineMediaPlayer = null;
             }
         }
     }
@@ -234,12 +302,24 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
      * 扫描后声音和震动提醒
      */
     private void playBeepSoundAndVibrate() {
-        if (playBeep && null != mediaPlayer) {
-            mediaPlayer.start();
+        if (playBeep && null != beepMediaPlayer) {
+            beepMediaPlayer.start();
         }
         if (vibrate) {
             Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(VIBRATE_DURATION);
+        }
+    }
+
+    private void playFailSound() {
+        if (playFail && null != failMediaPlayer) {
+            failMediaPlayer.start();
+        }
+    }
+
+    private void playShineSound() {
+        if (playShine && null != shineMediaPlayer) {
+            shineMediaPlayer.start();
         }
     }
 
@@ -253,13 +333,23 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         }
     };
 
+    private final MediaPlayer.OnCompletionListener failListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            mediaPlayer.seekTo(0);
+        }
+    };
+
+    private final MediaPlayer.OnCompletionListener shineListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            mediaPlayer.seekTo(0);
+        }
+    };
+
     @Override
     public void onScanQRCodeSuccess(String result) {
         playBeepSoundAndVibrate();
-
-//        String query = result.split("\\?")[1];
-//        final Map<String, String> map = Splitter.on('&').trimResults().withKeyValueSeparator("=").split(query);
-//        System.out.println("----------->" + result);
 
         if (result.indexOf("RetaCode=") < 0 && result.indexOf("retaType=") < 0) {
             showSnackbar("二维码有误,请重新扫描");
@@ -337,10 +427,11 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     @Override
     public void onScanQRCode(boolean flag, String msg, Double counts, String coinLogo, Integer type) {
         if (!flag) {
+            playFailSound();
             switch (type) {
                 case 0:
                     showSnackbar(msg);
-                    mQRCodeView.startSpot();
+                    startQRHandler.postDelayed(startQRRunnable, 1666);
                     break;
                 case 1:
                     signDialog = new SignDialog(this, coinLogo, false);
@@ -351,6 +442,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
             }
             return;
         }
+        playShineSound();
         Button dialogConfirm;
         switch (type) {
             case 0:

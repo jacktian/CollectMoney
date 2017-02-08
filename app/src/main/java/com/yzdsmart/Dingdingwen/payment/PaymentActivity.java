@@ -183,12 +183,6 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
 
             }
         });
-
-        if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
-            openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
-            return;
-        }
-        initData();
     }
 
     private void initData() {
@@ -214,6 +208,11 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
         super.onResume();
         MobclickAgent.onPageStart(TAG); //统计页面(仅有Activity的应用中SDK自动调用，不需要单独写。"SplashScreen"为页面名称，可自定义)
         MobclickAgent.onResume(this);          //统计时长
+        if (null == SharedPreferencesUtils.getString(this, "cust_code", "") || SharedPreferencesUtils.getString(this, "cust_code", "").trim().length() <= 0) {
+            openActivityForResult(LoginActivity.class, Constants.REQUEST_LOGIN_CODE);
+            return;
+        }
+        initData();
     }
 
     @Override
