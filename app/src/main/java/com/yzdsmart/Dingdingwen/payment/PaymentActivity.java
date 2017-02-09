@@ -401,7 +401,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                     return;
                 }
                 if (null == shopDiscount) {
-                    if (DoubleUtil.sub(Double.valueOf(s.toString().trim()), Double.valueOf(leftCoinCountsTV.getText().toString().trim()), 2, BigDecimal.ROUND_DOWN) >= 0) {
+                    if (DoubleUtil.sub(Double.valueOf(s.toString().trim()), Double.valueOf(leftCoinCountsTV.getText().toString().trim()), 2, BigDecimal.ROUND_DOWN) > 0) {
                         if (DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), Double.valueOf(leftCoinCountsTV.getText().toString().trim()), 2, BigDecimal.ROUND_DOWN) < 0) {
                             coinCountsET.clearFocus();
                             coinCountsET.setText(decimalFormat.format(Double.valueOf(payAmountET.getText().toString().trim())));
@@ -429,7 +429,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
                             discountPrice = DoubleUtil.divide(Double.valueOf(payAmountET.getText().toString().trim()), shopDiscount.getFullPrice(), 2, BigDecimal.ROUND_DOWN) >= 1.0 ? shopDiscount.getDiscPrice() : 0.00d;
                             break;
                     }
-                    if (DoubleUtil.sub(Double.valueOf(s.toString().trim()), Double.valueOf(leftCoinCountsTV.getText().toString().trim()), 2, BigDecimal.ROUND_DOWN) >= 0) {
+                    if (DoubleUtil.sub(Double.valueOf(s.toString().trim()), Double.valueOf(leftCoinCountsTV.getText().toString().trim()), 2, BigDecimal.ROUND_DOWN) > 0) {
                         if (DoubleUtil.sub(DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), discountPrice, 2, BigDecimal.ROUND_DOWN), Double.valueOf(leftCoinCountsTV.getText().toString().trim()), 2, BigDecimal.ROUND_DOWN) < 0) {
                             coinCountsET.clearFocus();
                             coinCountsET.setText(decimalFormat.format(DoubleUtil.sub(Double.valueOf(payAmountET.getText().toString().trim()), discountPrice, 2, BigDecimal.ROUND_DOWN)));
