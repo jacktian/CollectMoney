@@ -304,7 +304,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Pay
             return;
         }
         PaymentParameter.PayParaBean payInfoBean = new PaymentParameter.PayParaBean();
-        payInfoBean.setAmount(new BigDecimal(actualAmountTV.getText().toString().trim()).setScale(2, BigDecimal.ROUND_DOWN));
+        payInfoBean.setAmount(actualAmountTV.getText().toString().trim());
         payInfoBean.setCurrency("cny");
         payInfoBean.setSubject("叮叮蚊消费支付");
         payInfoBean.setBody("消费支付");
