@@ -17,7 +17,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
@@ -430,7 +429,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
         voiceSendingView.setVisibility(View.GONE);
         recorder.stopRecording();
         if (recorder.getTimeInterval() < 1) {
-            Toast.makeText(this, getResources().getString(R.string.chat_audio_too_short), Toast.LENGTH_SHORT).show();
+            showSnackbar(getResources().getString(R.string.chat_audio_too_short));
         } else {
             Message message = new VoiceMessage(recorder.getTimeInterval(), recorder.getFilePath());
             mPresenter.sendMessage(message.getMessage());
@@ -486,7 +485,6 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
         }
     }
 
-
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -510,7 +508,6 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
         return super.onContextItemSelected(item);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -533,19 +530,18 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
                 File file = new File(path);
                 if (file.exists() && file.length() > 0) {
                     if (file.length() > 1024 * 1024 * 10) {
-                        Toast.makeText(this, getString(R.string.chat_file_too_large), Toast.LENGTH_SHORT).show();
+                        showSnackbar(getString(R.string.chat_file_too_large));
                     } else {
                         Message message = new ImageMessage(path, isOri);
                         mPresenter.sendMessage(message.getMessage());
                     }
                 } else {
-                    Toast.makeText(this, getString(R.string.chat_file_not_exist), Toast.LENGTH_SHORT).show();
+                    showSnackbar(getString(R.string.chat_file_not_exist));
                 }
             }
         }
 
     }
-
 
     private void showImagePreview(String path) {
         if (path == null) return;
@@ -559,13 +555,13 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
         File file = new File(path);
         if (file.exists()) {
             if (file.length() > 1024 * 1024 * 10) {
-                Toast.makeText(this, getString(R.string.chat_file_too_large), Toast.LENGTH_SHORT).show();
+                showSnackbar(getString(R.string.chat_file_too_large));
             } else {
                 Message message = new FileMessage(path);
                 mPresenter.sendMessage(message.getMessage());
             }
         } else {
-            Toast.makeText(this, getString(R.string.chat_file_not_exist), Toast.LENGTH_SHORT).show();
+            showSnackbar(getString(R.string.chat_file_not_exist));
         }
 
     }
