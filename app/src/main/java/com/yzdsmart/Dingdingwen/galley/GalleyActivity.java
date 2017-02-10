@@ -353,13 +353,13 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
     public void onClickAddNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, ArrayList<String> models) {
         if (isGalleyOperated) return;
         // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
-        File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "CollectMoney");
+        File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "DingDingWen");
         switch (identityType) {
             case 0:
                 startActivityForResult(BGAPhotoPickerActivity.newIntent(this, takePhotoDir, 9, null, true), Constants.REQUEST_CODE_CHOOSE_PHOTO);
                 break;
             case 1:
-                startActivityForResult(BGAPhotoPickerActivity.newIntent(this, takePhotoDir, 5, null, true), Constants.REQUEST_CODE_CHOOSE_PHOTO);
+                startActivityForResult(BGAPhotoPickerActivity.newIntent(this, takePhotoDir, 9, null, true), Constants.REQUEST_CODE_CHOOSE_PHOTO);
                 break;
         }
     }

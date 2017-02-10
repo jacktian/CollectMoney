@@ -447,6 +447,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         switch (type) {
             case 0:
                 getCoinDialog = new ScanCoinDialog(this, null == coinLogo ? "" : coinLogo, counts);
+                getCoinDialog.setCancelable(false);
                 getCoinDialog.show();
                 dialogConfirm = (Button) getCoinDialog.findViewById(R.id.dialog_confirm);
                 dialogConfirm.setVisibility(View.VISIBLE);
