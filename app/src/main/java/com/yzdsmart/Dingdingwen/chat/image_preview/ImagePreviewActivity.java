@@ -108,8 +108,10 @@ public class ImagePreviewActivity extends BaseActivity {
     private void showImage() {
         if (path.equals("")) return;
         File file = new File(path);
-        if (file.exists() && file.length() > 0) {
-            isOriCB.setText(getString(R.string.chat_image_preview_ori) + "(" + getFileSize(file.length()) + ")");
+//        if (file.exists() && file.length() > 0) {
+        if (file.exists()) {
+//            isOriCB.setText(getString(R.string.chat_image_preview_ori) + "(" + getFileSize(file.length()) + ")");
+            isOriCB.setText(getString(R.string.chat_image_preview_ori));
             final BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             BitmapFactory.decodeFile(path, options);

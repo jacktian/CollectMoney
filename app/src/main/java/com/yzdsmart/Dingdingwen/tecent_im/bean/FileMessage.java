@@ -60,11 +60,17 @@ public class FileMessage extends Message {
             @Override
             public void onSuccess(byte[] bytes) {
                 String[] str = e.getFileName().split("/");
-                String filename = str[str.length - 1];
-                if (FileUtil.createFile(bytes, filename, Environment.DIRECTORY_DOWNLOADS)) {
-                    Toast.makeText(App.getAppInstance(), App.getAppInstance().getString(R.string.save_success), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(App.getAppInstance(), App.getAppInstance().getString(R.string.save_fail), Toast.LENGTH_SHORT).show();
+                String filename = str[str.length-1];
+                if (FileUtil.isFileExist(filename, Environment.DIRECTORY_DOWNLOADS)) {
+                    Toast.makeText(App.getAppInstance(), App.getAppInstance().getString(R.string.save_exist),Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                java.io.File mFile = FileUtil.createFile(bytes, filename, Environment.DIRECTORY_DOWNLOADS);
+                if (mFile != null){
+                    Toast.makeText(App.getAppInstance(), App.getAppInstance().getString(R.string.save_success) +
+                            "path : " + mFile.getAbsolutePath(),Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(App.getAppInstance(), App.getAppInstance().getString(R.string.save_fail),Toast.LENGTH_SHORT).show();
                 }
             }
         });

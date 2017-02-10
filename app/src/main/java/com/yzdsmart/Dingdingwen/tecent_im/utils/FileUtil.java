@@ -1,6 +1,5 @@
 package com.yzdsmart.Dingdingwen.tecent_im.utils;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
@@ -11,6 +10,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.yzdsmart.Dingdingwen.App;
@@ -34,7 +34,6 @@ public class FileUtil {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-
     /**
      * 创建临时文件
      *
@@ -50,14 +49,12 @@ public class FileUtil {
         }
     }
 
-
     /**
      * 获取缓存文件地址
      */
     public static String getCacheFilePath(String fileName) {
         return cacheDir.getAbsolutePath() + pathDiv + fileName;
     }
-
 
     /**
      * 判断缓存文件是否存在
@@ -66,7 +63,6 @@ public class FileUtil {
         File file = new File(getCacheFilePath(fileName));
         return file.exists();
     }
-
 
     /**
      * 将图片存储为文件
@@ -113,6 +109,19 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 判断缓存文件是否存在
+     */
+    public static boolean isFileExist(String fileName, String type) {
+        if (isExternalStorageWritable()) {
+            File dir = App.getAppInstance().getExternalFilesDir(type);
+            if (dir != null) {
+                File f = new File(dir, fileName);
+                return f.exists();
+            }
+        }
+        return false;
+    }
 
     /**
      * 将数据存储为文件
@@ -121,7 +130,7 @@ public class FileUtil {
      * @param fileName 文件名
      * @param type     文件类型
      */
-    public static boolean createFile(byte[] data, String fileName, String type) {
+    public static File createFile(byte[] data, String fileName, String type) {
         if (isExternalStorageWritable()) {
             File dir = App.getAppInstance().getExternalFilesDir(type);
             if (dir != null) {
@@ -132,17 +141,16 @@ public class FileUtil {
                         fos.write(data);
                         fos.flush();
                         fos.close();
-                        return true;
+                        return f;
                     }
                 } catch (IOException e) {
                     Log.e(TAG, "create file error" + e);
-                    return false;
+                    return null;
                 }
             }
         }
-        return false;
+        return null;
     }
-
 
     /**
      * 从URI获取图片文件地址
@@ -150,7 +158,7 @@ public class FileUtil {
      * @param context 上下文
      * @param uri     文件uri
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String getImageFilePath(Context context, Uri uri) {
         if (uri == null) {
             return null;
@@ -158,7 +166,7 @@ public class FileUtil {
         String path = null;
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         if (isKitKat) {
-            if (isMediaDocument(uri)) {
+            if (!isMediaDocument(uri)) {
                 try {
                     final String docId = DocumentsContract.getDocumentId(uri);
                     final String[] split = docId.split(":");
@@ -188,14 +196,13 @@ public class FileUtil {
         return path;
     }
 
-
     /**
      * 从URI获取文件地址
      *
      * @param context 上下文
      * @param uri     文件uri
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String getFilePath(Context context, Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         // DocumentProvider
@@ -256,7 +263,6 @@ public class FileUtil {
         return null;
     }
 
-
     /**
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.
@@ -284,7 +290,6 @@ public class FileUtil {
         }
         return null;
     }
-
 
     /**
      * 判断外部存储是否可用
@@ -314,13 +319,11 @@ public class FileUtil {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
 
-
     public enum FileType {
         IMG,
         AUDIO,
         VIDEO,
         FILE,
     }
-
 
 }

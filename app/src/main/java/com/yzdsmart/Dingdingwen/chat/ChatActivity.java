@@ -2,10 +2,12 @@ package com.yzdsmart.Dingdingwen.chat;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -317,6 +319,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
                 mMessage.setHasTime(messages.get(i + 1));
                 messageList.add(0, mMessage);
             } else {
+                mMessage.setHasTime(null);
                 messageList.add(0, mMessage);
             }
         }
@@ -508,6 +511,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
         return super.onContextItemSelected(item);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -516,7 +520,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
             }
         } else if (requestCode == IMAGE_STORE) {
             if (resultCode == RESULT_OK && data != null) {
-                showImagePreview(FileUtil.getImageFilePath(this, data.getData()));
+                showImagePreview(FileUtil.getFilePath(this, data.getData()));
             }
 
         } else if (requestCode == FILE_CODE) {
@@ -528,7 +532,8 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
                 boolean isOri = data.getBooleanExtra("isOri", false);
                 String path = data.getStringExtra("path");
                 File file = new File(path);
-                if (file.exists() && file.length() > 0) {
+//                if (file.exists() && file.length() > 0) {
+                if (file.exists()) {
                     if (file.length() > 1024 * 1024 * 10) {
                         showSnackbar(getString(R.string.chat_file_too_large));
                     } else {

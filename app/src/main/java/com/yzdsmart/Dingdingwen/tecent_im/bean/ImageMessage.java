@@ -25,6 +25,7 @@ import com.yzdsmart.Dingdingwen.chat.image_view.ImageViewActivity;
 import com.yzdsmart.Dingdingwen.tecent_im.adapters.ChatAdapter;
 import com.yzdsmart.Dingdingwen.tecent_im.utils.FileUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -137,8 +138,14 @@ public class ImageMessage extends Message {
 
                     @Override
                     public void onSuccess(byte[] bytes) {
-                        if (FileUtil.createFile(bytes, uuid + ".jpg", Environment.DIRECTORY_DOWNLOADS)) {
-                            Toast.makeText(App.getAppInstance(), App.getAppInstance().getString(R.string.save_success), Toast.LENGTH_SHORT).show();
+                        if (FileUtil.isFileExist(uuid + ".jpg", Environment.DIRECTORY_DOWNLOADS)) {
+                            Toast.makeText(App.getAppInstance(), App.getAppInstance().getString(R.string.save_exist), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        File mFile = FileUtil.createFile(bytes, uuid + ".jpg", Environment.DIRECTORY_DOWNLOADS);
+                        if (mFile != null) {
+                            Toast.makeText(App.getAppInstance(), App.getAppInstance().getString(R.string.save_success) +
+                                    "path : " + mFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(App.getAppInstance(), App.getAppInstance().getString(R.string.save_fail), Toast.LENGTH_SHORT).show();
                         }
