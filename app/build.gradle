@@ -45,7 +45,7 @@ android {
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        // 输出apk名称为ddw_v1.0_2015-01-15_wandoujia.apk
+                        // 输出apk名称为ddw_v1.0_2016-06-06_wandoujia.apk
                         def fileName = "ddw_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
                         output.outputFile = new File(outputFile.parent, fileName)
                     }
