@@ -585,16 +585,16 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
             String path = BGAPhotoPickerPreviewActivity.getSelectedImages(data).get(0);
             File file = new File(path);
             if (file.exists()) {
-//                if (file.length() > 0) {
+                if (file.length() > 0) {
                     if (file.length() > 1024 * 1024 * 10) {
                         showSnackbar(getString(R.string.chat_file_too_large));
                     } else {
                         Message message = new ImageMessage(path, false);
                         mPresenter.sendMessage(message.getMessage());
                     }
-//                } else {
-//                    showSnackbar("图片正在保存,可以选择发送图片");
-//                }
+                } else {
+                    showSnackbar("图片正在保存,可以选择发送图片");
+                }
             } else {
                 showSnackbar(getString(R.string.chat_file_not_exist));
             }
