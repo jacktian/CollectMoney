@@ -1,7 +1,5 @@
 package com.yzdsmart.Dingdingwen.bean;
 
-import java.math.BigDecimal;
-
 /**
  * Created by YZD on 2016/12/18.
  */
@@ -92,18 +90,18 @@ public class PaymentParameter {
          * Client_IP : 127.0.0.1
          */
 
-        private BigDecimal Amount;
+        private String Amount;
         private String Channel;
         private String Currency;
         private String Subject;
         private String Body;
         private String Client_IP;
 
-        public BigDecimal getAmount() {
+        public String getAmount() {
             return Amount;
         }
 
-        public void setAmount(BigDecimal amount) {
+        public void setAmount(String amount) {
             Amount = amount;
         }
 

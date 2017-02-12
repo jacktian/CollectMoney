@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 public class Utils {
     private static long lastClickTime;
     private final static int SPACE_TIME = 100;
+    private static Context context;
 
     /**
      * 判断用户是否重复点击

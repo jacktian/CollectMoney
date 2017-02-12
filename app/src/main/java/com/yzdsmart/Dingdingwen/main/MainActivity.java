@@ -62,8 +62,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,7 +74,6 @@ import cn.jpush.android.api.TagAliasCallback;
  * Created by YZD on 2016/8/17.
  */
 public class MainActivity extends BaseActivity implements MainContract.MainView {
-    //    , EasyPermissions.PermissionCallbacks
     @Nullable
     @BindView(R.id.unread_conversation_bubble)
     TextView unreadConversationBubbleTV;
@@ -89,6 +86,8 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 
     //连续双击返回键退出程序
     private Long lastKeyDown = 0l;
+
+    private boolean isForeground = true;
 
     private FragmentManager fm;
     private Fragment mCurrentFragment;
@@ -136,8 +135,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     private List<String> customMsgList;
     private Handler showCustomMsgHandler = new Handler();
     private Runnable showCustomMsgRunnable;
-    private Timer customMsgTimer;
-    private TimerTask customMsgTask;
 
     private GuideView searchGuideView;
 
@@ -184,6 +181,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             FragmentTransaction ft = fm.beginTransaction();
             ft.add(R.id.layout_frame, mCurrentFragment, mCurrentTag);
             ft.commitAllowingStateLoss();
+            startCustomMsgTimer();
         } else {
             initView();
         }
@@ -192,8 +190,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         mGridLayoutManager = new GridLayoutManager(this, 5);
 
         initBackgroundBagBottomSheetDialog();
-
-//        getLocationPermission();//获取手机定位权限
 
         tlsService = TLSService.getInstance();
 
@@ -208,16 +204,21 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         showCustomMsgRunnable = new Runnable() {
             @Override
             public void run() {
-                if (!isFindForeground()) return;
+                if (!isFindForeground() || !isForeground) {
+                    showCustomMsgHandler.removeCallbacks(this);
+                    return;
+                }
                 Fragment fragment = fm.findFragmentByTag("find");
                 if (null == customMsgList || customMsgList.size() <= 0) {
                     if (null != fragment) {
                         ((FindMoneyFragment) fragment).setCustomMsgTV(false);
                     }
+                    showCustomMsgHandler.postDelayed(this, 5000);
                     return;
                 }
                 showCustomMsg(customMsgList.get(0));
                 customMsgList.remove(0);
+                showCustomMsgHandler.postDelayed(this, 5000);
             }
         };
 
@@ -249,11 +250,13 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         mCurrentTag = "find";
         ft.add(R.id.layout_frame, mCurrentFragment, mCurrentTag);
         ft.commit();
+        startCustomMsgTimer();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        isForeground = true;
         MobclickAgent.onResume(this);       //统计时长
         if (null != UserInfo.getInstance().getId()) {
             PushUtil.getInstance(this).reset();
@@ -271,6 +274,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     @Override
     protected void onStop() {
         super.onStop();
+        isForeground = false;
         mPresenter.unRegisterSubscribe();
         stopCustomMsgTimer();
     }
@@ -282,10 +286,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         stopRefreshAccessToken = true;
         if (null != showCustomMsgHandler && null != showCustomMsgRunnable) {
             showCustomMsgHandler.removeCallbacks(showCustomMsgRunnable);
-        }
-        if (null != customMsgTimer) {
-            customMsgTimer.cancel();
-            customMsgTimer = null;
         }
         if (null != mService) {
             unbindService(mConnection);
@@ -371,6 +371,11 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         ft.commitAllowingStateLoss();
         mCurrentFragment = fragment;
         mCurrentTag = tag;
+        if ("find".equals(mCurrentTag)) {
+            startCustomMsgTimer();
+        } else {
+            stopCustomMsgTimer();
+        }
     }
 
     public void getShopListNearByMarket(String name, String location) {
@@ -834,19 +839,8 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
      * 启动自定义消息定时器
      */
     private void startCustomMsgTimer() {
-        if (null == customMsgTimer) {
-            customMsgTimer = new Timer();
-        }
-        if (null == customMsgTask) {
-            customMsgTask = new TimerTask() {
-                @Override
-                public void run() {
-                    showCustomMsgHandler.post(showCustomMsgRunnable);
-                }
-            };
-        }
-        if (null != customMsgTimer && null != customMsgTask) {
-            customMsgTimer.schedule(customMsgTask, 1000, 5000);
+        if ("find".equals(mCurrentTag)) {
+            showCustomMsgHandler.postDelayed(showCustomMsgRunnable, 5000);
         }
     }
 
@@ -854,42 +848,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
      * 停止自定义消息定时器
      */
     private void stopCustomMsgTimer() {
-        if (null != customMsgTimer) {
-            customMsgTimer.cancel();
-            customMsgTimer = null;
-        }
-        if (null != customMsgTask) {
-            customMsgTask.cancel();
-            customMsgTask = null;
-        }
+        showCustomMsgHandler.removeCallbacks(showCustomMsgRunnable);
         Fragment fragment = fm.findFragmentByTag("find");
         if (null != fragment) {
             ((FindMoneyFragment) fragment).setCustomMsgTV(false);
         }
     }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        // EasyPermissions handles the request result.
-//        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-//    }
-//
-//    @Override
-//    public void onPermissionsGranted(int i, List<String> list) {
-//
-//    }
-//
-//    @Override
-//    public void onPermissionsDenied(int i, List<String> list) {
-//
-//    }
-//
-//    @AfterPermissionGranted(REQUEST_LOCATION_PERM_CODE)
-//    private void getLocationPermission() {
-////        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.GET_ACCOUNTS, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_PHONE_STATE, Manifest.permission.SEND_SMS, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-//        if (!EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-//            EasyPermissions.requestPermissions(this, "应用需要手机定位权限", REQUEST_LOCATION_PERM_CODE, Manifest.permission.ACCESS_FINE_LOCATION);
-//        }
-//    }
 }

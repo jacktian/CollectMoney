@@ -9,9 +9,7 @@ import android.widget.TextView;
 
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.ShopDiscount;
-import com.yzdsmart.Dingdingwen.utils.DoubleUtil;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +27,7 @@ public class ShopDiscountAdapter extends BaseAdapter {
     public ShopDiscountAdapter(Context context) {
         this.context = context;
         shopDiscounts = new ArrayList<ShopDiscount>();
-        decimalFormat = new DecimalFormat("#0");
+        decimalFormat = new DecimalFormat("#0.0");
     }
 
     /**
@@ -85,7 +83,7 @@ public class ShopDiscountAdapter extends BaseAdapter {
         shopDiscount = shopDiscounts.get(i);
         switch (shopDiscount.getDisType()) {
             case 23:
-                holder.discountContentTV.setText(decimalFormat.format(100d * shopDiscount.getDiscReta()) + " 折");
+                holder.discountContentTV.setText(decimalFormat.format(10d * shopDiscount.getDiscReta()) + " 折");
                 break;
             case 45:
                 holder.discountContentTV.setText("满 " + shopDiscount.getFullPrice() + " 减 " + shopDiscount.getDiscPrice());

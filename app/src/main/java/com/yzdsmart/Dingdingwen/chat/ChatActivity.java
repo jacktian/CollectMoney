@@ -2,10 +2,12 @@ package com.yzdsmart.Dingdingwen.chat;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +19,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
@@ -48,6 +49,8 @@ import com.yzdsmart.Dingdingwen.tecent_im.utils.RecorderUtil;
 import com.yzdsmart.Dingdingwen.tecent_im.views.ChatInput;
 import com.yzdsmart.Dingdingwen.tecent_im.views.VoiceSendingView;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.activity.BGAPhotoPickerPreviewActivity;
+import com.yzdsmart.Dingdingwen.views.photo_picker.picker.util.BGAImageCaptureManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -105,11 +108,27 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
     private RecorderUtil recorder = new RecorderUtil();
     private Handler handler = new Handler();
 
+    /**
+     * 拍照的请求码
+     */
+    private static final int REQUEST_CODE_TAKE_PHOTO = 1;
+    /**
+     * 预览照片的请求码
+     */
+    private static final int REQUEST_CODE_PREVIEW = 2;
+    private BGAImageCaptureManager mImageCaptureManager;
+    private File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "DingDingWen");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         messageList = new ArrayList<>();
+
+        // 获取拍照图片保存目录
+        if (takePhotoDir != null) {
+            mImageCaptureManager = new BGAImageCaptureManager(this, takePhotoDir);
+        }
 
         if (null != savedInstanceState) {
             identify = savedInstanceState.getString("identify");
@@ -294,7 +313,6 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
                     adapter.notifyDataSetChanged();
                     listView.setSelection(adapter.getCount() - 1);
                 }
-
             }
         }
     }
@@ -318,6 +336,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
                 mMessage.setHasTime(messages.get(i + 1));
                 messageList.add(0, mMessage);
             } else {
+                mMessage.setHasTime(null);
                 messageList.add(0, mMessage);
             }
         }
@@ -380,14 +399,20 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
      */
     @Override
     public void sendPhoto() {
-        Intent intent_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (intent_photo.resolveActivity(getPackageManager()) != null) {
-            File tempFile = FileUtil.getTempFile(FileUtil.FileType.IMG);
-            if (tempFile != null) {
-                fileUri = Uri.fromFile(tempFile);
-            }
-            intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-            startActivityForResult(intent_photo, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+//        Intent intent_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (intent_photo.resolveActivity(getPackageManager()) != null) {
+//            File tempFile = FileUtil.getTempFile(FileUtil.FileType.IMG);
+//            if (tempFile != null) {
+//                fileUri = Uri.fromFile(tempFile);
+//            }
+//            intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+//            startActivityForResult(intent_photo, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+//        }
+
+        try {
+            startActivityForResult(mImageCaptureManager.getTakePictureIntent(), REQUEST_CODE_TAKE_PHOTO);
+        } catch (Exception e) {
+
         }
     }
 
@@ -430,7 +455,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
         voiceSendingView.setVisibility(View.GONE);
         recorder.stopRecording();
         if (recorder.getTimeInterval() < 1) {
-            Toast.makeText(this, getResources().getString(R.string.chat_audio_too_short), Toast.LENGTH_SHORT).show();
+            showSnackbar(getResources().getString(R.string.chat_audio_too_short));
         } else {
             Message message = new VoiceMessage(recorder.getTimeInterval(), recorder.getFilePath());
             mPresenter.sendMessage(message.getMessage());
@@ -486,7 +511,6 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
         }
     }
 
-
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -510,7 +534,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
         return super.onContextItemSelected(item);
     }
 
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -519,9 +543,11 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
             }
         } else if (requestCode == IMAGE_STORE) {
             if (resultCode == RESULT_OK && data != null) {
-                showImagePreview(FileUtil.getImageFilePath(this, data.getData()));
+//                showImagePreview(FileUtil.getFilePath(this, data.getData()));
+                ArrayList<String> photos = new ArrayList<>();
+                photos.add(FileUtil.getFilePath(this, data.getData()));
+                startActivityForResult(BGAPhotoPickerPreviewActivity.newIntent(this, 1, photos, photos, 0, true), REQUEST_CODE_PREVIEW);
             }
-
         } else if (requestCode == FILE_CODE) {
             if (resultCode == RESULT_OK) {
                 sendFile(FileUtil.getFilePath(this, data.getData()));
@@ -533,19 +559,43 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
                 File file = new File(path);
                 if (file.exists() && file.length() > 0) {
                     if (file.length() > 1024 * 1024 * 10) {
-                        Toast.makeText(this, getString(R.string.chat_file_too_large), Toast.LENGTH_SHORT).show();
+                        showSnackbar(getString(R.string.chat_file_too_large));
                     } else {
                         Message message = new ImageMessage(path, isOri);
                         mPresenter.sendMessage(message.getMessage());
                     }
                 } else {
-                    Toast.makeText(this, getString(R.string.chat_file_not_exist), Toast.LENGTH_SHORT).show();
+                    showSnackbar(getString(R.string.chat_file_not_exist));
                 }
             }
+        } else if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_TAKE_PHOTO) {
+            ArrayList<String> photos = new ArrayList<>();
+            photos.add(mImageCaptureManager.getCurrentPhotoPath());
+            startActivityForResult(BGAPhotoPickerPreviewActivity.newIntent(this, 1, photos, photos, 0, true), REQUEST_CODE_PREVIEW);
+        } else if (resultCode == RESULT_CANCELED && requestCode == REQUEST_CODE_TAKE_PHOTO) {
+            // 从拍照预览界面返回，删除之前拍的照片
+            mImageCaptureManager.deletePhotoFile();
+        } else if (resultCode == RESULT_CANCELED && requestCode == REQUEST_CODE_PREVIEW) {
+            if (BGAPhotoPickerPreviewActivity.getIsFromTakePhoto(data)) {
+                // 从拍照预览界面返回，删除之前拍的照片
+                mImageCaptureManager.deletePhotoFile();
+            }
+        } else if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_PREVIEW) {
+            if (BGAPhotoPickerPreviewActivity.getSelectedImages(data).size() <= 0) return;
+            String path = BGAPhotoPickerPreviewActivity.getSelectedImages(data).get(0);
+            File file = new File(path);
+            if (file.exists()) {
+                if (file.length() > 1024 * 1024 * 10) {
+                    showSnackbar(getString(R.string.chat_file_too_large));
+                } else {
+                    Message message = new ImageMessage(path, false);
+                    mPresenter.sendMessage(message.getMessage());
+                }
+            } else {
+                showSnackbar(getString(R.string.chat_file_not_exist));
+            }
         }
-
     }
-
 
     private void showImagePreview(String path) {
         if (path == null) return;
@@ -559,13 +609,13 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
         File file = new File(path);
         if (file.exists()) {
             if (file.length() > 1024 * 1024 * 10) {
-                Toast.makeText(this, getString(R.string.chat_file_too_large), Toast.LENGTH_SHORT).show();
+                showSnackbar(getString(R.string.chat_file_too_large));
             } else {
                 Message message = new FileMessage(path);
                 mPresenter.sendMessage(message.getMessage());
             }
         } else {
-            Toast.makeText(this, getString(R.string.chat_file_not_exist), Toast.LENGTH_SHORT).show();
+            showSnackbar(getString(R.string.chat_file_not_exist));
         }
 
     }

@@ -1,5 +1,6 @@
 package com.yzdsmart.Dingdingwen.main.find_money;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -66,12 +67,13 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
+import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by YZD on 2016/8/17.
  */
-public class FindMoneyFragment extends BaseFragment implements FindMoneyContract.FindMoneyView, RouteSearch.OnRouteSearchListener, GeocodeSearch.OnGeocodeSearchListener {
+public class FindMoneyFragment extends BaseFragment implements FindMoneyContract.FindMoneyView, RouteSearch.OnRouteSearchListener, GeocodeSearch.OnGeocodeSearchListener, EasyPermissions.PermissionCallbacks {
     @Nullable
     @BindViews({R.id.title_left_operation_layout, R.id.left_title, R.id.title_logo, R.id.title_right_operation_layout})
     List<View> hideViews;
@@ -119,6 +121,8 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     TextView customMsgTV;
 
     private static final String TAG = "FindMoneyFragment";
+
+    private static final int RC_LOC_PERM = 122;
 
     private FragmentManager fm;
 
@@ -310,9 +314,19 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         //初始化地图
         initMap();
 
+//        locationTask();
         //定位初始化
         initLoc();
+    }
 
+    @AfterPermissionGranted(RC_LOC_PERM)
+    private void locationTask() {
+        if (EasyPermissions.hasPermissions(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
+            //定位初始化
+            initLoc();
+        } else {
+            EasyPermissions.requestPermissions(this, "应用需要获取您的手机定位权限", RC_LOC_PERM, Manifest.permission.ACCESS_FINE_LOCATION);
+        }
     }
 
     @Override
@@ -323,13 +337,37 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     }
 
     @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        switch (requestCode) {
+            case RC_LOC_PERM:
+                //定位初始化
+                initLoc();
+                break;
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if (perms.contains(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            ((BaseActivity) getActivity()).showSnackbar("授予应用定位权限才能定位");
+        }
+        switch (requestCode) {
+            case RC_LOC_PERM:
+                ((BaseActivity) getActivity()).showSnackbar("授予应用定位权限才能定位");
+                break;
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart(TAG); //统计页面，"MainScreen"为页面名称，可自定义
         isForeground = true;
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         findMoneyMap.onResume();
-        mLocationClient.startLocation();
+        if (null != mLocationClient) {
+            mLocationClient.startLocation();
+        }
     }
 
     @Override
@@ -339,11 +377,15 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             isForeground = false;
             findMoneyMap.onPause();
             mPresenter.unRegisterSubscribe();
-            mLocationClient.stopLocation();
+            if (null != mLocationClient) {
+                mLocationClient.stopLocation();
+            }
         } else {
             isForeground = true;
             findMoneyMap.onResume();
-            mLocationClient.startLocation();
+            if (null != mLocationClient) {
+                mLocationClient.startLocation();
+            }
         }
     }
 
@@ -351,7 +393,6 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(TAG);
-        isForeground = false;
         //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
         findMoneyMap.onPause();
     }
@@ -359,8 +400,11 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     @Override
     public void onStop() {
         super.onStop();
+        isForeground = false;
         mPresenter.unRegisterSubscribe();
-        mLocationClient.stopLocation();
+        if (null != mLocationClient) {
+            mLocationClient.stopLocation();
+        }
     }
 
     @Override
@@ -672,7 +716,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     public void locScanCoins() {
         if (null == qLocation || qLocation.length() <= 0) {
 //            ((BaseActivity) getActivity()).showSnackbar("定位异常,重新定位");
-            mLocationClient.startLocation();
+            if (null != mLocationClient) {
+                mLocationClient.startLocation();
+            }
             return;
         }
         if (isFirstLoc) return;
@@ -762,7 +808,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     public void planRoute(String coor, String shopName) {
         if (null == qLocation || qLocation.length() <= 0) {
 //            ((BaseActivity) getActivity()).showSnackbar("定位异常,重新定位");
-            mLocationClient.startLocation();
+            if (null != mLocationClient) {
+                mLocationClient.startLocation();
+            }
             return;
         }
         if (null != walkingRouteOverlay) {

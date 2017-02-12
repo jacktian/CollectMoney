@@ -260,6 +260,7 @@
     <string name="summary_group_apply">申请加群</string>
     <string name="summary_group_invite">邀请</string>
     <string name="summary_group_add">加入群</string>
+    <string name="save_exist">文件已存在</string>
     <string name="save_success">保存成功</string>
     <string name="download_fail">下载失败</string>
     <string name="downloading">正在下载，请稍候</string>

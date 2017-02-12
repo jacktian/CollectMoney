@@ -45,7 +45,7 @@ android {
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        // 输出apk名称为ddw_v1.0_2015-01-15_wandoujia.apk
+                        // 输出apk名称为ddw_v1.0_2016-06-06_wandoujia.apk
                         def fileName = "ddw_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
                         output.outputFile = new File(outputFile.parent, fileName)
                     }
@@ -108,7 +108,7 @@ dependencies {
     compile 'com.alibaba:fastjson:1.1.56.android'
 //    compile 'com.github.hotchemi:permissionsdispatcher:2.3.1'
 //    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.1'
-    compile 'pub.devrel:easypermissions:0.2.1'
+    compile 'pub.devrel:easypermissions:0.3.0'
     //    compile 'com.jaredrummler:android-processes:1.0.9'
     compile files('libs/jcore-android_v1.1.0.jar')
     compile files('libs/jpush-android_v3.0.1.jar')
