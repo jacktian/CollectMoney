@@ -71,11 +71,15 @@ public class AmountInputFilter implements InputFilter {
         //验证小数位精度是否正确
         if (oldtext.contains(".")) {
             int index = oldtext.indexOf(".");
-            int len = dend - index;
+            int len = oldtext.length() - index;
             //小数位只能2位
             if (len > PONTINT_LENGTH) {
-                CharSequence newText = dest.subSequence(dstart, dend);
-                return newText;
+                if (dstart <= index) {
+                    return dest.subSequence(dstart, dend) + src.toString();
+                } else {
+                    CharSequence newText = dest.subSequence(dstart, dend);
+                    return newText;
+                }
             }
         }
         return dest.subSequence(dstart, dend) + src.toString();

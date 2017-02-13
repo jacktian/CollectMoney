@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 /**
  * Created by YZD on 2017/2/10.
@@ -21,6 +22,7 @@ public class ClearEditText extends EditText implements View.OnFocusChangeListene
     //EditText右侧的删除按钮
     private Drawable mClearDrawable;
     private boolean hasFoucs;
+    private Context context;
 
     public ClearEditText(Context context) {
         this(context, null);
@@ -32,6 +34,7 @@ public class ClearEditText extends EditText implements View.OnFocusChangeListene
 
     public ClearEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        this.context = context;
         init();
     }
 
@@ -43,8 +46,7 @@ public class ClearEditText extends EditText implements View.OnFocusChangeListene
                     R.mipmap.edit_delete);
         }
 
-        mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(),
-                mClearDrawable.getIntrinsicHeight());
+        mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
         // 默认设置隐藏图标
         setClearIconVisible(false);
         // 设置焦点改变的监听
@@ -76,7 +78,7 @@ public class ClearEditText extends EditText implements View.OnFocusChangeListene
                 Rect rect = getCompoundDrawables()[2].getBounds();
                 int height = rect.height();
                 int distance = (getHeight() - height) / 2;
-                boolean isInnerWidth = x > (getWidth() - getTotalPaddingRight()) && x < (getWidth() - getPaddingRight());
+                boolean isInnerWidth = x > (getWidth() - getTotalPaddingRight() + Utils.px2dp(context, 20)) && x < (getWidth() - getPaddingRight());
                 boolean isInnerHeight = y > distance && y < (distance + height);
                 if (isInnerWidth && isInnerHeight) {
                     this.setText("");

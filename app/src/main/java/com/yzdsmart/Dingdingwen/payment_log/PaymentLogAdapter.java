@@ -171,10 +171,10 @@ public class PaymentLogAdapter extends UltimateViewAdapter<PaymentLogAdapter.Vie
             coinCountsTV.setCompoundDrawables(drawable, null, null, null);
             switch (userType) {
                 case 0:
-                    coinCountsTV.setText(" -" + decimalFormat.format(coinCounts));
+                    coinCountsTV.setText("0.00".equals(decimalFormat.format(coinCounts)) ? decimalFormat.format(coinCounts) : (" -" + decimalFormat.format(coinCounts)));
                     break;
                 case 1:
-                    coinCountsTV.setText(" +" + decimalFormat.format(coinCounts));
+                    coinCountsTV.setText("0.00".equals(decimalFormat.format(coinCounts)) ? decimalFormat.format(coinCounts) : (" +" + decimalFormat.format(coinCounts)));
                     break;
             }
         }
@@ -182,10 +182,10 @@ public class PaymentLogAdapter extends UltimateViewAdapter<PaymentLogAdapter.Vie
         public void setActualAmount(Double actualAmount) {
             switch (userType) {
                 case 0:
-                    actualAmountTV.setText("-" + decimalFormat.format(actualAmount));
+                    actualAmountTV.setText("0.00".equals(decimalFormat.format(actualAmount)) ? decimalFormat.format(actualAmount) : ("-" + decimalFormat.format(actualAmount)));
                     break;
                 case 1:
-                    actualAmountTV.setText("+" + decimalFormat.format(actualAmount));
+                    actualAmountTV.setText("0.00".equals(decimalFormat.format(actualAmount)) ? decimalFormat.format(actualAmount) : ("+" + decimalFormat.format(actualAmount)));
                     break;
             }
         }
