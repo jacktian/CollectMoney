@@ -46,7 +46,7 @@
                     android:src="@mipmap/ic_holder_light" />
 
                 <ImageView
-                    android:id="@+id/to_personal_detail_arrow"
+                    android:id="@+id/to_personal_qr_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -59,7 +59,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/personal_info_margin_left"
                     android:layout_marginRight="@dimen/personal_info_margin_left"
-                    android:layout_toLeftOf="@id/to_personal_detail_arrow"
+                    android:layout_toLeftOf="@id/to_personal_qr_code"
                     android:layout_toRightOf="@id/user_avater"
                     android:orientation="vertical">
 

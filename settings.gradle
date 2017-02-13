@@ -1,1 +1,1 @@
-include ':app', ':lib:pingpp', ':android-timer'
+include ':app', ':lib:pingpp', ':android-timer', ':DroidPlugin'

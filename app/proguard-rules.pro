@@ -353,3 +353,9 @@
 
 -dontwarn cn.bingoogolapple.**
 -keep class cn.bingoogolapple.** { *; }
+
+-dontwarn com.morgoo.**
+-keep class com.morgoo.** { *; }
+
+-dontwarn com.meelive.**
+-keep class com.meelive.** { *; }

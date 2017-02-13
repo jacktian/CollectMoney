@@ -19,6 +19,9 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.bumptech.glide.Glide;
+import com.meelive.ingkee.sdk.plugin.IInkeCallback;
+import com.meelive.ingkee.sdk.plugin.InKeSdkPluginAPI;
+import com.meelive.ingkee.sdk.plugin.entity.ShareInfo;
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
@@ -180,6 +183,34 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         }
     };
 
+    private final static String INKE_APP_ID = "1000290001";
+    private IInkeCallback inkeCallback = new IInkeCallback() {
+        @Override
+        public void loginTrigger() {
+
+        }
+
+        @Override
+        public void payTrigger(String s, String s1) {
+
+        }
+
+        @Override
+        public void shareTrigger(ShareInfo shareInfo) {
+
+        }
+
+        @Override
+        public void createLiveReturnTrigger(String s) {
+
+        }
+
+        @Override
+        public void stopLiveTrigger(String s) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -201,6 +232,8 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         galleyInfoList = new ArrayList<GalleyInfo>();
 
         toggleViews = new ArrayList<View>();
+
+        InKeSdkPluginAPI.register(inkeCallback, INKE_APP_ID);
 
         toggleViews.clear();
         if (SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", "").trim().length() > 0) {
@@ -289,7 +322,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.user_avater, R.id.to_personal_payment_log_panel, R.id.to_personal_coupon_log_panel, R.id.to_settings, R.id.shop_avater, R.id.to_shop_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser, R.id.to_withdraw_log, R.id.to_shop_withdraw_log, R.id.to_withdraw, R.id.to_shop_withdraw, R.id.to_shop_detail, R.id.to_shop_scanned_log, R.id.to_personal_galley})
+    @OnClick({R.id.title_left_operation_layout, R.id.user_avater, R.id.to_personal_payment_log_panel, R.id.to_personal_coupon_log_panel, R.id.to_settings, R.id.shop_avater, R.id.to_shop_settings, R.id.to_register_business, R.id.to_buy_coins, R.id.to_publish_tasks, R.id.to_personal_coins, R.id.to_publish_tasks_log, R.id.to_focused_shop, R.id.to_shop_focuser, R.id.to_withdraw_log, R.id.to_shop_withdraw_log, R.id.to_withdraw, R.id.to_shop_withdraw, R.id.to_shop_detail, R.id.to_shop_scanned_log, R.id.to_personal_galley, R.id.to_personal_qr_code})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -387,6 +420,9 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 bundle.putInt("type", 0);
                 bundle.putString("cust_code", SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""));
                 openActivity(GalleyActivity.class, bundle, 0);
+                break;
+            case R.id.to_personal_qr_code:
+                InKeSdkPluginAPI.start(PersonalActivity.this, null, "");
                 break;
         }
     }

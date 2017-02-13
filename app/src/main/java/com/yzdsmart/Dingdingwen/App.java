@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.morgoo.droidplugin.PluginHelper;
 import com.tencent.TIMGroupReceiveMessageOpt;
 import com.tencent.TIMManager;
 import com.tencent.TIMOfflinePushListener;
@@ -44,10 +45,12 @@ public class App extends MultiDexApplication {
         }
         JPushInterface.setDebugMode(false);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
+        PluginHelper.getInstance().applicationOnCreate(this);//360插件机制
     }
 
     @Override
     protected void attachBaseContext(Context base) {
+        PluginHelper.getInstance().applicationAttachBaseContext(base);//360插件机制
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
