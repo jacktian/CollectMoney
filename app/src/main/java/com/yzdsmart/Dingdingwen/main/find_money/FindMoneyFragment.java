@@ -365,9 +365,9 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         isForeground = true;
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         findMoneyMap.onResume();
-        if (null != mLocationClient) {
-            mLocationClient.startLocation();
-        }
+//        if (null != mLocationClient) {
+//            mLocationClient.startLocation();
+//        }
     }
 
     @Override
@@ -377,15 +377,15 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
             isForeground = false;
             findMoneyMap.onPause();
             mPresenter.unRegisterSubscribe();
-            if (null != mLocationClient) {
-                mLocationClient.stopLocation();
-            }
+//            if (null != mLocationClient) {
+//                mLocationClient.stopLocation();
+//            }
         } else {
             isForeground = true;
             findMoneyMap.onResume();
-            if (null != mLocationClient) {
-                mLocationClient.startLocation();
-            }
+//            if (null != mLocationClient) {
+//                mLocationClient.startLocation();
+//            }
         }
     }
 
@@ -402,14 +402,15 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         super.onStop();
         isForeground = false;
         mPresenter.unRegisterSubscribe();
-        if (null != mLocationClient) {
-            mLocationClient.stopLocation();
-        }
+//        if (null != mLocationClient) {
+//            mLocationClient.stopLocation();
+//        }
     }
 
     @Override
     public void onDestroyView() {
         if (null != mLocationClient) {
+            mLocationClient.stopLocation();
             mLocationListener = null;
             mLocationClient.onDestroy();
             mLocationClient = null;
@@ -652,6 +653,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
         //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
         mLocationOption.setHttpTimeOut(Constants.LOC_TIME_OUT);
         mLocationClient.setLocationOption(mLocationOption);
+        mLocationClient.startLocation();
     }
 
     @Override
