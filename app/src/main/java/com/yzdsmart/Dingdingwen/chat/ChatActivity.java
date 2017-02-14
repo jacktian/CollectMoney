@@ -117,7 +117,7 @@ public class ChatActivity extends BaseActivity implements ChatContract.ChatView 
      */
     private static final int REQUEST_CODE_PREVIEW = 2;
     private BGAImageCaptureManager mImageCaptureManager;
-    private File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "DingDingWen");
+    private File takePhotoDir = new File(Environment.getExternalStorageDirectory(), Constants.DIR_NAME);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

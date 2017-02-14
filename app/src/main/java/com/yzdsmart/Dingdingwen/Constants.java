@@ -77,6 +77,8 @@ public class Constants {
     public static final Long LOC_TIME = 5000l;//毫秒
     public static final Long LOC_TIME_OUT = 10000l;//毫秒
 
+    public static final String DIR_NAME = "DingDingWen";
+
     //权限申请
     public static final int DDW_LOCATION_PERM = 1;
 }
