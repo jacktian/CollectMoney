@@ -1,29 +1,23 @@
 package com.yzdsmart.Dingdingwen.utils;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.telephony.TelephonyManager;
-import android.util.DisplayMetrics;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -33,7 +27,6 @@ import java.util.regex.Pattern;
 public class Utils {
     private static long lastClickTime;
     private final static int SPACE_TIME = 100;
-    private static Context context;
 
     /**
      * 判断用户是否重复点击
@@ -102,14 +95,13 @@ public class Utils {
     }
 
     /**
-     * 判断App是否安装
+     * 判断字符串是否为null或全为空格
      *
-     * @param context     上下文
-     * @param packageName 包名
-     * @return {@code true}: 已安装<br>{@code false}: 未安装
+     * @param s 待校验字符串
+     * @return {@code true}: null或全空格<br> {@code false}: 不为null且不全空格
      */
-    public static boolean isInstallApp(Context context, String packageName) {
-        return !isEmpty(packageName) && IntentUtils.getLaunchAppIntent(context, packageName) != null;
+    public static boolean isSpace(String s) {
+        return (s == null || s.trim().length() == 0);
     }
 
     /**
@@ -125,17 +117,6 @@ public class Utils {
     public static boolean checkMobile(String mobile) {
         String regex = "(\\+\\d+)?1[34578]\\d{9}$";
         return Pattern.matches(regex, mobile);
-    }
-
-    /**
-     * 关闭键盘
-     *
-     * @param activity Activity
-     */
-    public static void hideSoftInput(Activity activity) {
-        ((InputMethodManager) activity
-                .getSystemService(Context.INPUT_METHOD_SERVICE))
-                .toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     /**
@@ -201,54 +182,6 @@ public class Utils {
 
         float ratio = Math.min(ratioWidth, ratioHeight);
         return ratio;
-    }
-
-    public static String getLocalIpAddress() {
-        try {
-            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
-                NetworkInterface intf = en.nextElement();
-                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
-                    InetAddress inetAddress = enumIpAddr.nextElement();
-                    if (!inetAddress.isLoopbackAddress()) {
-                        return inetAddress.getHostAddress().toString();
-                    }
-                }
-            }
-        } catch (SocketException ex) {
-
-        }
-        return null;
-    }
-
-    /**
-     * FilePath To Bitmap
-     *
-     * @param context  上下文
-     * @param filePath 文件路径
-     */
-    public static Bitmap getBitmapFromFilePath(Context context, String filePath) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-
-        int bmpWidth = options.outWidth;
-        int bmpHeight = options.outHeight;
-
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics metrics = new DisplayMetrics();
-        windowManager.getDefaultDisplay().getMetrics(metrics);
-        int screenWidth = metrics.widthPixels;
-        int screenHeight = metrics.heightPixels;
-
-        options.inSampleSize = 1;
-        if (bmpWidth > bmpHeight) {
-            if (bmpWidth > screenWidth)
-                options.inSampleSize = bmpWidth / screenWidth;
-        } else {
-            if (bmpHeight > screenHeight)
-                options.inSampleSize = bmpHeight / screenHeight;
-        }
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeFile(filePath, options);
     }
 
     public static byte[] decodeBitmap(String path) {
@@ -387,40 +320,33 @@ public class Utils {
         }
     }
 
-    public static boolean isForeground(Context context) {
-//        List<ActivityManager.RunningAppProcessInfo> appProcesses = AndroidProcesses.getRunningAppProcessInfo(context);
-//        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
-//            if (appProcess.processName.equals(context.getPackageName())) {
-//                /*
-//                BACKGROUND=400 EMPTY=500 FOREGROUND=100
-//                GONE=1000 PERCEPTIBLE=130 SERVICE=300 ISIBLE=200
-//                 */
-//                Log.i(context.getPackageName(), "此appimportace ="
-//                        + appProcess.importance
-//                        + ",context.getClass().getName()="
-//                        + context.getClass().getName());
-//                if (appProcess.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-//                    Log.i(context.getPackageName(), "处于后台"
-//                            + appProcess.processName);
-//                    return true;
-//                } else {
-//                    Log.i(context.getPackageName(), "处于前台"
-//                            + appProcess.processName);
-//                    return false;
-//                }
-//            }
-//        }
+    /**
+     * 获取App版本号
+     *
+     * @param context 上下文
+     * @return App版本号
+     */
+    public static String getAppVersionName(Context context) {
+        return getAppVersionName(context, context.getPackageName());
+    }
 
-
-//        List<AndroidAppProcess> processes = AndroidProcesses.getRunningAppProcesses();
-//        for (AndroidAppProcess process : processes) {
-//            String processName = process.name;
-//            System.out.println(processName + "---->" + process.foreground);
-//            if (processName.equals(context.getPackageName())) {
-//                return process.foreground;
-//            }
-//        }
-        return false;
+    /**
+     * 获取App版本号
+     *
+     * @param context     上下文
+     * @param packageName 包名
+     * @return App版本号
+     */
+    public static String getAppVersionName(Context context, String packageName) {
+        if (isSpace(packageName)) return null;
+        try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(packageName, 0);
+            return pi == null ? null : pi.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -454,27 +380,4 @@ public class Utils {
         return isInBackground;
     }
 
-    /**
-     * 程序是否在前台运行
-     */
-    public static boolean isAppOnForeground(Context context) {
-        ActivityManager activityManager = (ActivityManager) context.getApplicationContext()
-                .getSystemService(Context.ACTIVITY_SERVICE);
-        String packageName = context.getApplicationContext().getPackageName();
-        /**
-         * 获取Android设备中所有正在运行的App
-         */
-        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager
-                .getRunningAppProcesses();
-        if (appProcesses == null)
-            return false;
-        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
-            // The name of the process that this object is associated with.
-            if (appProcess.processName.equals(packageName)
-                    && appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

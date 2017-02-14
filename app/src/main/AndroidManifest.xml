@@ -530,7 +530,6 @@
 
                 <data android:scheme="package" />
             </intent-filter>
-
         </receiver>
 
         <!-- Required SDK核心功能-->
@@ -634,6 +633,14 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />
+
+        <!--阿里百川配置-->
+        <meta-data
+            android:name="com.taobao.android.hotfix.APPSECRET"
+            android:value="bb1144503c650e1d2c7d4106708d7fbc" />
+        <meta-data
+            android:name="com.taobao.android.hotfix.RSASECRET"
+            android:value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCOGwdi32a6PWuT6TsrIIyl0AIB/KHwYESuTRYT1+B5VTKStxZCXH9LPUGDo1BFsYmTbuqWNICaJknHm0O+A6Sw2K1LMrNouqg2BbohEfQLuVBA037RQTcoFuvZLYJC8rTngeQT+lqAkoHSgTI5OUOPV5PB+2Iqcqy3CcOwEQmCjADwtZBRfT9cDLoWkOnkVMRcfmIJvUqG86IYibO/VCsCBPt1TOjuyzoHFHRL3R67IcJEb7wgUzeppNsI0imgVWCjo0A6+jZh/c7FHLw4EvtVUfEvTvaK7MQ6BGCo5SuKMUEV0ST3DBXgXp8OaNoHAynEhisp/+3V7Hl+79BgCiV5AgMBAAECggEAaHy/RZf2NOKMg0lu1Bsuz4zOrR9RAyoF1hOgNB77UruuX+p3V3wjrPLxhRVEJLqR6fIYUzFvjeixPy+O89xB8Dah1TUGbe8xV+eGIGLPCv/LXp8kFEDbiYKxEBNCQG+tTLxZM8dVXExdYKbWgvT0FCXU40EvwP5ouH1ZgdBFKdMbH7bmOa8l0eHuTKdJNyPbCdBicn5E6vqiA7Gx2Vw8RlsPrPYvpbj61OUSltTmicEM/s5PhepsvzharKwPdj3eJ9hsz4B0gTTt6f8GkS72f8VK2MH82vToyBMghLKji96M/f/eQcv+6gZ0IDyBJ0U+XqzMpJFf4gjPFaHNjFGKcQKBgQD/fEU+VzwGLaROfTcsryJmeFaU7jmLdIGWbX1CUeUzoZ2zwrx7XNFByoAlUxZnFrWlDaATOgznEC2ciAl7sDL1gH2wFbBkUoKMKCrnJlN98K2lLDekjZ3Oj8L28msr12ErvcSLIQVLxbDPo3JgdcIoZpU7J3fr+6Kr00GtNJaw0wKBgQCOZEyWp6CIX/xXYF7fJw9K4oBDlTBdNWzwte4h2dG09Mvjde2ADux5EOkvI78lIUTUTkZkmbiwpCYUdwP83rPJ0ZM7Owqvu5QVwoKFca8hASDvpfKMjLy9MsRElv0Gkfhj5xQ/5ZHTOyRPhTl9hWemi2DYHhT6YDPo6+ohes3BAwKBgQCK3tqoizRWS2LfQxLFmCDDwC+X3nGrCtYRlUwby3YhfXzCJFzdVVNtRownPaWUvXRY1jInoUs4IcQZLJyy/dCFP6WSHAf4UB0j4AWKBXwmnbdVa9aG/G9Fw0D/iD+W4giwhQMbeQRu7nMwOjDGm9vAqBn/wHFf9TSz3y343vf1/wKBgDXjG2EAey5hNPxUSlMlUxJB+cyZzz3XFC1cjIxfBI/4/JhObt1ByJhgn/7pBlOk7YlzPgygaFbhKFAiYm32UhAUsiV+SKMM2BQMEp0x0tcouDA5mzs5n8vyRHi4s3UjFN+p+e3ckX1hKnK1tnYcYIeUw8fGSqYedka10VtuQCPFAoGBAPCntNxu7Y6N6E2H036XrHUJ/gDz6qCpYal1KdtdC+3NrCoMKRfjtWGKhO36/thUOSW10ixPhU/XAc9+wFtedCbkHHqS8AE9KQJhjb86h5R+PfaswkMQWChCHNMrTrgh945BcvU0tfKJewNNnCeIaWbd1E6kgQWYCiEsua6Nq/s6" />
     </application>
 
 </manifest>

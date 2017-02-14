@@ -354,8 +354,22 @@
 -dontwarn cn.bingoogolapple.**
 -keep class cn.bingoogolapple.** { *; }
 
+## ----------------------------------
+##      映客相关
+## ----------------------------------
 -dontwarn com.morgoo.**
 -keep class com.morgoo.** { *; }
 
 -dontwarn com.meelive.**
 -keep class com.meelive.** { *; }
+
+## ----------------------------------
+##      阿里百川相关
+## ----------------------------------
+-keep class * extends java.lang.annotation.Annotation
+-keep class com.alipay.euler.andfix.**{ *; }
+-keep class com.taobao.hotfix.aidl.**{ *;}
+-keep class com.ta.utdid2.device.**{ *;}
+-keep class com.taobao.hotfix.HotFixManager{
+    public *;
+}
