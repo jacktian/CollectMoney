@@ -52,6 +52,10 @@ public class AmountInputFilter implements InputFilter {
             //未输入小数点的情况下，可以输入小数点和数字
             if (!m.matches() && !src.equals(".")) {
                 return null;
+            } else {
+                if (src.equals(".") && (oldtext.length() - dstart > PONTINT_LENGTH)) {
+                    return dest.subSequence(dstart, dend);
+                }
             }
         }
         if (oldtext.length() > MAX_LENGTH) {
