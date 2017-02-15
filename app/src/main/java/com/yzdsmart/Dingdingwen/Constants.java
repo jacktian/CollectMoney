@@ -77,7 +77,9 @@ public class Constants {
     public static final Long LOC_TIME = 5000l;//毫秒
     public static final Long LOC_TIME_OUT = 10000l;//毫秒
 
-    public static final String DIR_NAME = "DingDingWen";
+    public static final String DIR_NAME = "DingDingWen";//文件目录
+
+    public final static String INKE_APP_ID = "1000290001";//映客app id
 
     //权限申请
     public static final int DDW_LOCATION_PERM = 1;

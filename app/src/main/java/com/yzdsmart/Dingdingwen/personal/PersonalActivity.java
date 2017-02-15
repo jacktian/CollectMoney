@@ -22,6 +22,10 @@ import com.bumptech.glide.Glide;
 import com.meelive.ingkee.sdk.plugin.IInkeCallback;
 import com.meelive.ingkee.sdk.plugin.InKeSdkPluginAPI;
 import com.meelive.ingkee.sdk.plugin.entity.ShareInfo;
+import com.meelive.ingkee.sdk.plugin.entity.UserInfo;
+import com.tencent.TIMFriendshipManager;
+import com.tencent.TIMUserProfile;
+import com.tencent.TIMValueCallBack;
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
@@ -53,6 +57,7 @@ import java.io.File;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -183,7 +188,8 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         }
     };
 
-    private final static String INKE_APP_ID = "1000290001";
+    private TIMUserProfile timUserProfile;
+
     private IInkeCallback inkeCallback = new IInkeCallback() {
         @Override
         public void loginTrigger() {
@@ -233,7 +239,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
 
         toggleViews = new ArrayList<View>();
 
-        InKeSdkPluginAPI.register(inkeCallback, INKE_APP_ID);
+        InKeSdkPluginAPI.register(inkeCallback, Constants.INKE_APP_ID);
 
         toggleViews.clear();
         if (SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", "").trim().length() > 0) {
@@ -270,6 +276,21 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 openActivity(GalleyActivity.class, bundle, 0);
             }
         });
+
+        if (null != com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo.getInstance().getId() && !"".equals(com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo.getInstance().getId())) {
+            //获取用户资料
+            TIMFriendshipManager.getInstance().getUsersProfile(Collections.singletonList(com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo.getInstance().getId()), new TIMValueCallBack<List<TIMUserProfile>>() {
+                @Override
+                public void onError(int code, String desc) {
+                    timUserProfile = null;
+                }
+
+                @Override
+                public void onSuccess(List<TIMUserProfile> result) {
+                    timUserProfile = result.get(0);
+                }
+            });
+        }
     }
 
     @Override
@@ -422,7 +443,12 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 openActivity(GalleyActivity.class, bundle, 0);
                 break;
             case R.id.to_personal_qr_code:
-                InKeSdkPluginAPI.start(PersonalActivity.this, null, "");
+                System.out.println("------->" + timUserProfile.getNickName() + "---" + timUserProfile.getGender().getValue() + "----" + timUserProfile.getFaceUrl());
+                if (null == timUserProfile) {
+                    InKeSdkPluginAPI.start(PersonalActivity.this, new UserInfo(SharedPreferencesUtils.getString(this, "cust_code", ""), "", 0, ""), "");
+                } else {
+                    InKeSdkPluginAPI.start(PersonalActivity.this, new UserInfo(SharedPreferencesUtils.getString(this, "cust_code", ""), timUserProfile.getNickName(), (int) timUserProfile.getGender().getValue(), timUserProfile.getFaceUrl()), "");
+                }
                 break;
         }
     }
