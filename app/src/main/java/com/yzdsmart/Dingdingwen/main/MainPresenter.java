@@ -99,6 +99,7 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
                 ((BaseActivity) context).showSnackbar(String.format("%s: %s",
                         tlsErrInfo.ErrCode == TLSErrInfo.TIMEOUT ?
                                 "网络超时" : "错误", tlsErrInfo.Msg));
+                logoutError();
             }
 
             @Override
@@ -108,6 +109,7 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
                 ((BaseActivity) context).showSnackbar(String.format("%s: %s",
                         tlsErrInfo.ErrCode == TLSErrInfo.TIMEOUT ?
                                 "网络超时" : "错误", tlsErrInfo.Msg));
+                logoutError();
             }
         });
     }
