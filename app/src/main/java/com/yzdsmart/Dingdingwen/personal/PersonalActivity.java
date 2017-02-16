@@ -190,30 +190,31 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
 
     private TIMUserProfile timUserProfile;
 
+    private UserInfo inKeUserInfo;
     private IInkeCallback inkeCallback = new IInkeCallback() {
         @Override
         public void loginTrigger() {
-
+            showSnackbar("---------------loginTrigger-------------");
         }
 
         @Override
         public void payTrigger(String s, String s1) {
-
+            showSnackbar("--------------payTrigger--------------");
         }
 
         @Override
         public void shareTrigger(ShareInfo shareInfo) {
-
+            showSnackbar("------------shareTrigger----------------");
         }
 
         @Override
         public void createLiveReturnTrigger(String s) {
-
+            showSnackbar("--------------createLiveReturnTrigger--------------");
         }
 
         @Override
         public void stopLiveTrigger(String s) {
-
+            showSnackbar("-------------stopLiveTrigger---------------");
         }
     };
 
@@ -277,17 +278,21 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
             }
         });
 
+        inKeUserInfo = new UserInfo(SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""), "", 0, "");
         if (null != com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo.getInstance().getId() && !"".equals(com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo.getInstance().getId())) {
             //获取用户资料
             TIMFriendshipManager.getInstance().getUsersProfile(Collections.singletonList(com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo.getInstance().getId()), new TIMValueCallBack<List<TIMUserProfile>>() {
                 @Override
                 public void onError(int code, String desc) {
-                    timUserProfile = null;
+                    inKeUserInfo = new UserInfo(SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""), "", 0, "");
+                    InKeSdkPluginAPI.login(inKeUserInfo);
                 }
 
                 @Override
                 public void onSuccess(List<TIMUserProfile> result) {
                     timUserProfile = result.get(0);
+                    inKeUserInfo = new UserInfo(SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""), timUserProfile.getNickName(), (int) timUserProfile.getGender().getValue(), timUserProfile.getFaceUrl());
+                    InKeSdkPluginAPI.login(inKeUserInfo);
                 }
             });
         }
@@ -443,12 +448,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 openActivity(GalleyActivity.class, bundle, 0);
                 break;
             case R.id.to_personal_qr_code:
-                System.out.println("------->" + timUserProfile.getNickName() + "---" + timUserProfile.getGender().getValue() + "----" + timUserProfile.getFaceUrl());
-                if (null == timUserProfile) {
-                    InKeSdkPluginAPI.start(PersonalActivity.this, new UserInfo(SharedPreferencesUtils.getString(this, "cust_code", ""), "", 0, ""), "");
-                } else {
-                    InKeSdkPluginAPI.start(PersonalActivity.this, new UserInfo(SharedPreferencesUtils.getString(this, "cust_code", ""), timUserProfile.getNickName(), (int) timUserProfile.getGender().getValue(), timUserProfile.getFaceUrl()), "");
-                }
+                InKeSdkPluginAPI.start(PersonalActivity.this, inKeUserInfo, "");
                 break;
         }
     }
