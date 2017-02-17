@@ -240,6 +240,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
 
         toggleViews = new ArrayList<View>();
 
+//        InKeSdkPluginAPI.register(inkeCallback, Constants.INKE_APP_ID, 1, 0);
         InKeSdkPluginAPI.register(inkeCallback, Constants.INKE_APP_ID);
 
         toggleViews.clear();
@@ -448,7 +449,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 openActivity(GalleyActivity.class, bundle, 0);
                 break;
             case R.id.to_personal_qr_code:
-                InKeSdkPluginAPI.start(PersonalActivity.this, inKeUserInfo, "");
+                InKeSdkPluginAPI.createLive(PersonalActivity.this, inKeUserInfo);
                 break;
         }
     }
