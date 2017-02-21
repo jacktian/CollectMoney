@@ -240,8 +240,8 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
 
         toggleViews = new ArrayList<View>();
 
-//        InKeSdkPluginAPI.register(inkeCallback, Constants.INKE_APP_ID, 1, 0);
-        InKeSdkPluginAPI.register(inkeCallback, Constants.INKE_APP_ID);
+        InKeSdkPluginAPI.register(inkeCallback, Constants.INKE_APP_ID, 1, 0);
+//        InKeSdkPluginAPI.register(inkeCallback, Constants.INKE_APP_ID);
 
         toggleViews.clear();
         if (SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", "").trim().length() > 0) {

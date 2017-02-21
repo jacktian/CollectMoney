@@ -416,7 +416,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
         changeMoneyTimesTV.setText("" + response.getOperNum());
         coinCountsTV.setText(decimalFormat.format(response.getGoldNum()));
         getFriendCountsTV.setText("" + response.getFriendNum());
-        Glide.with(this).load(response.getImageUrl()).placeholder(getResources().getDrawable(R.mipmap.ic_holder_light)).error(getResources().getDrawable(R.mipmap.user_avater)).into(userAvaterIV);
+        Glide.with(this).load(response.getImageUrl()).placeholder(getResources().getDrawable(R.mipmap.ic_holder_light)).error(getResources().getDrawable(R.mipmap.ic_holder_light)).into(userAvaterIV);
     }
 
     @Override
@@ -474,7 +474,7 @@ public class PersonalFriendDetailActivity extends BaseActivity implements Person
             imageView = new ImageView(this);
             imageView.setLayoutParams(params);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            Glide.with(this).load(galleyInfos.get(i).getImageFileUrl()).asBitmap().placeholder(getResources().getDrawable(R.mipmap.ic_holder_light)).error(getResources().getDrawable(R.mipmap.album_pic)).into(imageView);
+            Glide.with(this).load(galleyInfos.get(i).getImageFileUrl()).asBitmap().placeholder(getResources().getDrawable(R.mipmap.ic_holder_light)).error(getResources().getDrawable(R.mipmap.ic_holder_light)).into(imageView);
             galleyPreviewLayout.addView(imageView);
             if (i == 4) {
                 return;
