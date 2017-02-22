@@ -39,6 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResource());
+        getWindow().setBackgroundDrawable(null);
 
         /** 设置是否对日志信息进行加密, 默认false(不加密). */
         MobclickAgent.enableEncrypt(true);//6.0.0版本及以后

@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -195,26 +196,31 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         @Override
         public void loginTrigger() {
             showSnackbar("---------------loginTrigger-------------");
+            Log.i("Personal", "---------------loginTrigger-------------");
         }
 
         @Override
         public void payTrigger(String s, String s1) {
             showSnackbar("--------------payTrigger--------------");
+            Log.i("Personal", "--------------payTrigger--------------");
         }
 
         @Override
         public void shareTrigger(ShareInfo shareInfo) {
             showSnackbar("------------shareTrigger----------------");
+            Log.i("Personal", "------------shareTrigger----------------");
         }
 
         @Override
         public void createLiveReturnTrigger(String s) {
             showSnackbar("--------------createLiveReturnTrigger--------------");
+            Log.i("Personal", "--------------createLiveReturnTrigger--------------");
         }
 
         @Override
         public void stopLiveTrigger(String s) {
             showSnackbar("-------------stopLiveTrigger---------------");
+            Log.i("Personal", "-------------stopLiveTrigger---------------");
         }
     };
 
@@ -280,20 +286,19 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         });
 
         inKeUserInfo = new UserInfo(SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""), "", 0, "");
+        InKeSdkPluginAPI.login(inKeUserInfo);
         if (null != com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo.getInstance().getId() && !"".equals(com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo.getInstance().getId())) {
             //获取用户资料
             TIMFriendshipManager.getInstance().getUsersProfile(Collections.singletonList(com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo.getInstance().getId()), new TIMValueCallBack<List<TIMUserProfile>>() {
                 @Override
                 public void onError(int code, String desc) {
-                    inKeUserInfo = new UserInfo(SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""), "", 0, "");
-                    InKeSdkPluginAPI.login(inKeUserInfo);
                 }
 
                 @Override
                 public void onSuccess(List<TIMUserProfile> result) {
                     timUserProfile = result.get(0);
                     inKeUserInfo = new UserInfo(SharedPreferencesUtils.getString(PersonalActivity.this, "cust_code", ""), timUserProfile.getNickName(), (int) timUserProfile.getGender().getValue(), timUserProfile.getFaceUrl());
-                    InKeSdkPluginAPI.login(inKeUserInfo);
+                    InKeSdkPluginAPI.updateUserInfo(inKeUserInfo);
                 }
             });
         }
@@ -337,6 +342,12 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         if (SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", "").trim().length() > 0) {
             shopImagesBanner.stopTurning();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        InKeSdkPluginAPI.logout();
+        super.onDestroy();
     }
 
     @Override
