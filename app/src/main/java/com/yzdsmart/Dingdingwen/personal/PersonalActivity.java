@@ -7,7 +7,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -195,32 +194,22 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
     private IInkeCallback inkeCallback = new IInkeCallback() {
         @Override
         public void loginTrigger() {
-            showSnackbar("---------------loginTrigger-------------");
-            Log.i("Personal", "---------------loginTrigger-------------");
         }
 
         @Override
         public void payTrigger(String s, String s1) {
-            showSnackbar("--------------payTrigger--------------");
-            Log.i("Personal", "--------------payTrigger--------------");
         }
 
         @Override
         public void shareTrigger(ShareInfo shareInfo) {
-            showSnackbar("------------shareTrigger----------------");
-            Log.i("Personal", "------------shareTrigger----------------");
         }
 
         @Override
         public void createLiveReturnTrigger(String s) {
-            showSnackbar("--------------createLiveReturnTrigger--------------");
-            Log.i("Personal", "--------------createLiveReturnTrigger--------------");
         }
 
         @Override
         public void stopLiveTrigger(String s) {
-            showSnackbar("-------------stopLiveTrigger---------------");
-            Log.i("Personal", "-------------stopLiveTrigger---------------");
         }
     };
 
