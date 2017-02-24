@@ -13,7 +13,7 @@
         android:singleLine="true"
         android:text="00:00:00"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/time_keeper_text_size"
+        android:textSize="@dimen/font_x_large"
         android:textStyle="bold" />
 
     <TextView

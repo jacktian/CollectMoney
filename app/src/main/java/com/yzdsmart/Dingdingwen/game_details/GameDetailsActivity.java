@@ -215,7 +215,7 @@ public class GameDetailsActivity extends BaseActivity implements GameDetailsCont
     }
 
     @Optional
-    @OnClick({R.id.title_left_operation_layout, R.id.close_btn})
+    @OnClick({R.id.title_left_operation_layout, R.id.scan_btn, R.id.close_btn})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -285,6 +285,10 @@ public class GameDetailsActivity extends BaseActivity implements GameDetailsCont
             totalTimeStub.inflate();
             countTimerTV = (TextView) findViewById(R.id.count_timer);
             countTimerTV.setText(gameData.getGameSumTime());
+            tasksList.clear();
+            tasksList.addAll(gameData.getTaskLists());
+            gameTasksAdapter.clearList();
+            gameTasksAdapter.appendList(tasksList);
         } else {
             if (gameData.getTaskingCode().length() > 0) {
                 currentTaskNameTV.setText(gameData.getTaskingName());
