@@ -31,6 +31,7 @@ public class QRScannerPresenter implements QRScannerContract.QRScannerPresenter 
                 ((BaseActivity) context).showProgressDialog(R.drawable.loading, "正在扫币......");
                 break;
             case 1:
+            case 2:
                 ((BaseActivity) context).showProgressDialog(R.drawable.loading, "正在签到......");
                 break;
         }
@@ -44,6 +45,7 @@ public class QRScannerPresenter implements QRScannerContract.QRScannerPresenter 
                             mView.onScanQRCode(true, null, response.getGoldNum(), response.getGoldLogoUrl(), type);
                             break;
                         case 1:
+                        case 2:
                             mView.onScanQRCode(true, null, null, response.getInfo(), type);
                             break;
                     }
@@ -53,6 +55,7 @@ public class QRScannerPresenter implements QRScannerContract.QRScannerPresenter 
                             mView.onScanQRCode(false, response.getErrorInfo(), null, null, type);
                             break;
                         case 1:
+                        case 2:
                             mView.onScanQRCode(false, response.getErrorInfo(), null, response.getInfo(), type);
                             break;
                     }
@@ -71,6 +74,7 @@ public class QRScannerPresenter implements QRScannerContract.QRScannerPresenter 
                         mView.onScanQRCode(false, context.getResources().getString(R.string.get_coins_error), null, null, type);
                         break;
                     case 1:
+                    case 2:
                         mView.onScanQRCode(false, context.getResources().getString(R.string.sign_error), null, null, type);
                         break;
                 }

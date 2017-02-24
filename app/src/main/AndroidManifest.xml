@@ -338,6 +338,11 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop" />
 
+        <activity
+            android:name=".game_details.GameDetailsActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop" />
+
         <!--图片预览界面-->
         <activity
             android:name=".views.photo_picker.picker.activity.BGAPhotoPreviewActivity"

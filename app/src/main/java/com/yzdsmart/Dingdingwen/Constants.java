@@ -35,6 +35,8 @@ public class Constants {
     public static final String GET_COIN_LOG_ACTION_CODE = "1666";
     public static final String SIGN_ACTION_CODE = "176";
     public static final String SIGN_ACTIVITY_LIST_ACTION_CODE = "53";
+    public static final String GAME_ACTION_CODE = "188";
+    public static final String GAME_TASK_LIST_ACTION_CODE = "53";
 
     public static final String SET_FOCUS_CODE = "66";//取消关注店铺：56    关注：66
     public static final String CANCEL_FOCUS_CODE = "56";
@@ -80,6 +82,8 @@ public class Constants {
     public static final String DIR_NAME = "DingDingWen";//文件目录
 
     public final static String INKE_APP_ID = "1000290001";//映客app id
+    public final static String INKE_SECRET_KEY = "8D2E##1[5$^(38#%#d3z96;]35q#MD28";//映客secret key
+    public final static String INKE_ORIGIN = "1000290001";//映客origin
 
     //权限申请
     public static final int DDW_LOCATION_PERM = 1;

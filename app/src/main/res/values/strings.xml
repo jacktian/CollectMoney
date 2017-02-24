@@ -406,6 +406,9 @@
     <string name="sign_error">签到失败,请重新扫码</string>
     <!--计时-->
     <string name="time_keeper_text">全程耗时</string>
+    <string name="game_time_keeper_text">任务总耗时</string>
+    <string name="game_current_task_text">&#160;当前执行任务&#160;:&#160;</string>
+    <string name="game_current_task_time_text">&#160;任务耗时&#160;:&#160;</string>
 
     <!--异常-->
     <string name="error_get_shop_list">获取商铺列表异常</string>

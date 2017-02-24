@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CollectMoney.iml" filepath="$PROJECT_DIR$/CollectMoney.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Collectmoney.iml" filepath="$PROJECT_DIR$/Collectmoney.iml" />
       <module fileurl="file://$PROJECT_DIR$/DroidPlugin/DroidPlugin.iml" filepath="$PROJECT_DIR$/DroidPlugin/DroidPlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DroidPlugin/DroidPlugin.iml" filepath="$PROJECT_DIR$/DroidPlugin/DroidPlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-timer/android-timer.iml" filepath="$PROJECT_DIR$/android-timer/android-timer.iml" />
       <module fileurl="file://$PROJECT_DIR$/android-timer/android-timer.iml" filepath="$PROJECT_DIR$/android-timer/android-timer.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib/pingpp/pingpp.iml" filepath="$PROJECT_DIR$/lib/pingpp/pingpp.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/pingpp/pingpp.iml" filepath="$PROJECT_DIR$/lib/pingpp/pingpp.iml" />
     </modules>
   </component>

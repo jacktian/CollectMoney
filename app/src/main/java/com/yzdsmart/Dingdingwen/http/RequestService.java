@@ -12,6 +12,7 @@ import com.yzdsmart.Dingdingwen.http.response.CustLevelRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ExpandListRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.FocusedShopRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.FriendsRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.GameTaskRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetCoinsLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetGalleyRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
@@ -339,6 +340,20 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.TASK)
     Observable<ScanCoinRequestResponse> scanQRCode(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("BazaCode") String bazaCode, @Field("Coor") String coor, @Field("Ip") String ip, @Header("Authorization") String authorization);
+
+    /**
+     * 游戏活动任务
+     *
+     * @param action
+     * @param submitCode
+     * @param custCode
+     * @param gameCode
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.GAME)
+    Observable<GameTaskRequestResponse> getGameTasks(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Field("GameCode") String gameCode, @Header("Authorization") String authorization);
 
     /**
      * 上传用户头像

@@ -26,6 +26,7 @@ import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.game_details.GameDetailsActivity;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.payment.PaymentActivity;
 import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
@@ -68,7 +69,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     private MediaPlayer beepMediaPlayer, failMediaPlayer, shineMediaPlayer;
     private boolean playBeep, playFail, playShine;
-    private static final float BEEP_VOLUME = 0.66f;
+    private static final float BEEP_VOLUME = 0.88f;
     private boolean vibrate;
     private static final long VIBRATE_DURATION = 200L;
 
@@ -80,8 +81,9 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     private Dialog signDialog;
 
     private Handler timeKeeperHandler = new Handler();
+    private Handler gameTaskHandler = new Handler();
     private Handler startQRHandler = new Handler();
-    private Runnable timeKeeperRunnable, startQRRunnable;
+    private Runnable timeKeeperRunnable, gameTaskRunnable, startQRRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +135,20 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
                 Bundle bundle = new Bundle();
                 bundle.putString("activityCode", retaCode);
                 openActivity(TimeKeeperActivity.class, bundle, 0);
+                closeActivity();
+            }
+        };
+
+        gameTaskRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (null != signDialog) {
+                    signDialog.dismiss();
+                    signDialog = null;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putString("gameCode", retaCode);
+                openActivity(GameDetailsActivity.class, bundle, 0);
                 closeActivity();
             }
         };
@@ -194,6 +210,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         }
         mQRCodeView.onDestroy();
         timeKeeperHandler.removeCallbacks(timeKeeperRunnable);
+        gameTaskHandler.removeCallbacks(gameTaskRunnable);
         startQRHandler.removeCallbacks(startQRRunnable);
         super.onDestroy();
     }
@@ -379,7 +396,11 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
                         mQRCodeView.startSpot();
                         return;
                     }
-                    mPresenter.scanQRCode(Constants.SIGN_ACTION_CODE, retaCode, SharedPreferencesUtils.getString(QRScannerActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(QRScannerActivity.this, "qLocation", ""), NetworkUtils.getIPAddress(true), 1, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                    if ("MTc2".equals(action)) {
+                        mPresenter.scanQRCode(Constants.SIGN_ACTION_CODE, retaCode, SharedPreferencesUtils.getString(QRScannerActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(QRScannerActivity.this, "qLocation", ""), NetworkUtils.getIPAddress(true), 1, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                    } else if ("MTg4".equals(action)) {
+                        mPresenter.scanQRCode(Constants.GAME_ACTION_CODE, retaCode, SharedPreferencesUtils.getString(QRScannerActivity.this, "cust_code", ""), SharedPreferencesUtils.getString(QRScannerActivity.this, "qLocation", ""), NetworkUtils.getIPAddress(true), 2, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+                    }
                     break;
                 case 1:
                     showSnackbar("付款不支持签到");
@@ -439,6 +460,12 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
                     signDialog.show();
                     timeKeeperHandler.postDelayed(timeKeeperRunnable, 1000);
                     break;
+                case 2:
+                    signDialog = new SignDialog(this, coinLogo, false);
+                    signDialog.setCancelable(false);
+                    signDialog.show();
+                    gameTaskHandler.postDelayed(gameTaskRunnable, 1000);
+                    break;
             }
             return;
         }
@@ -468,6 +495,12 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
                 signDialog.setCancelable(false);
                 signDialog.show();
                 timeKeeperHandler.postDelayed(timeKeeperRunnable, 1000);
+                break;
+            case 2:
+                signDialog = new SignDialog(this, coinLogo, "本点签到成功".equals(coinLogo) ? true : false);
+                signDialog.setCancelable(false);
+                signDialog.show();
+                gameTaskHandler.postDelayed(gameTaskRunnable, 1000);
                 break;
         }
     }
