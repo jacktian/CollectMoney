@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.time_keeper;
+package com.yzdsmart.Dingdingwen.activity_details;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -26,11 +26,11 @@ import butterknife.ButterKnife;
  * Created by YZD on 2017/1/22.
  */
 
-public class SignProcessAdapter extends UltimateViewAdapter<SignProcessAdapter.ViewHolder> {
+public class ActivityDetailsProcessAdapter extends UltimateViewAdapter<com.yzdsmart.Dingdingwen.activity_details.ActivityDetailsProcessAdapter.ViewHolder> {
     private Context context;
     private List<SignProcessStep> processSteps;
 
-    public SignProcessAdapter(Context context) {
+    public ActivityDetailsProcessAdapter(Context context) {
         this.context = context;
         processSteps = new ArrayList<SignProcessStep>();
     }

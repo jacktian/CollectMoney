@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.scan_coin;
+package com.yzdsmart.Dingdingwen.qr_scan;
 
 import android.content.Context;
 

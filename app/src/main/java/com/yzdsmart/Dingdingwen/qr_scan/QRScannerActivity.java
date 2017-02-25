@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.scan_coin;
+package com.yzdsmart.Dingdingwen.qr_scan;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -26,11 +26,11 @@ import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.activity_details.ActivityDetailsActivity;
 import com.yzdsmart.Dingdingwen.game_details.GameDetailsActivity;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.payment.PaymentActivity;
 import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
-import com.yzdsmart.Dingdingwen.time_keeper.TimeKeeperActivity;
 import com.yzdsmart.Dingdingwen.utils.NetworkUtils;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -134,7 +134,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
                 }
                 Bundle bundle = new Bundle();
                 bundle.putString("activityCode", retaCode);
-                openActivity(TimeKeeperActivity.class, bundle, 0);
+                openActivity(ActivityDetailsActivity.class, bundle, 0);
                 closeActivity();
             }
         };

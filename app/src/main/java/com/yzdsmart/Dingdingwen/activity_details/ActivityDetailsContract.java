@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.time_keeper;
+package com.yzdsmart.Dingdingwen.activity_details;
 
 import com.yzdsmart.Dingdingwen.BasePresenter;
 import com.yzdsmart.Dingdingwen.BaseView;
@@ -8,8 +8,8 @@ import com.yzdsmart.Dingdingwen.http.response.SignDataRequestResponse;
  * Created by YZD on 2017/1/20.
  */
 
-public interface TimeKeeperContract {
-    interface TimeKeeperView extends BaseView<TimeKeeperPresenter> {
+public interface ActivityDetailsContract {
+    interface ActivityDetailsView extends BaseView<ActivityDetailsPresenter> {
         /**
          * 定向活动签到数据列表
          *
@@ -20,7 +20,7 @@ public interface TimeKeeperContract {
         void onGetSignActivityList(Boolean flag, String errorInfo, SignDataRequestResponse.DataBean data);
     }
 
-    interface TimeKeeperPresenter extends BasePresenter {
+    interface ActivityDetailsPresenter extends BasePresenter {
         /**
          * 定向活动签到数据列表
          *
@@ -29,7 +29,7 @@ public interface TimeKeeperContract {
          * @param custCode
          * @param authorization
          */
-        void getSignActivityList(String action, String submitCode, String custCode,String activityCode, String authorization);
+        void getSignActivityList(String action, String submitCode, String custCode, String activityCode, String authorization);
 
         void unRegisterSubscribe();
     }

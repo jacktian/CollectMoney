@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.time_keeper;
+package com.yzdsmart.Dingdingwen.activity_details;
 
 import android.content.Context;
 
@@ -12,15 +12,15 @@ import com.yzdsmart.Dingdingwen.main.MainActivity;
  * Created by YZD on 2017/1/20.
  */
 
-public class TimeKeeperPresenter implements TimeKeeperContract.TimeKeeperPresenter {
+public class ActivityDetailsPresenter implements ActivityDetailsContract.ActivityDetailsPresenter {
     private Context context;
-    private TimeKeeperContract.TimeKeeperView mView;
-    private TimeKeeperModel mModel;
+    private ActivityDetailsContract.ActivityDetailsView mView;
+    private ActivityDetailsModel mModel;
 
-    public TimeKeeperPresenter(Context context, TimeKeeperContract.TimeKeeperView mView) {
+    public ActivityDetailsPresenter(Context context, ActivityDetailsContract.ActivityDetailsView mView) {
         this.context = context;
         this.mView = mView;
-        mModel = new TimeKeeperModel();
+        mModel = new ActivityDetailsModel();
         mView.setPresenter(this);
     }
 

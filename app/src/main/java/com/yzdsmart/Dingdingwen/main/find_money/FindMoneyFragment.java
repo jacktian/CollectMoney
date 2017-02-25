@@ -50,7 +50,7 @@ import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.amap.WalkRouteOverlay;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.main.recommend.RecommendFragment;
-import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
+import com.yzdsmart.Dingdingwen.qr_scan.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.shop_details.ShopDetailsActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;

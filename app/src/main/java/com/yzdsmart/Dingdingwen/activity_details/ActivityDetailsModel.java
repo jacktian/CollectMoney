@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.time_keeper;
+package com.yzdsmart.Dingdingwen.activity_details;
 
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
@@ -12,7 +12,7 @@ import rx.schedulers.Schedulers;
  * Created by YZD on 2017/1/20.
  */
 
-public class TimeKeeperModel {
+public class ActivityDetailsModel {
     //网络请求监听
     private Subscriber<SignDataRequestResponse> getSignActivityListSubscriber;
 

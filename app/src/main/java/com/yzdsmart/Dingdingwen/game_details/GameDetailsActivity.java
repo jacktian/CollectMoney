@@ -21,7 +21,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.response.GameTaskRequestResponse;
-import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
+import com.yzdsmart.Dingdingwen.qr_scan.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomRoundProgress;
@@ -76,8 +76,6 @@ public class GameDetailsActivity extends BaseActivity implements GameDetailsCont
     private String gameCode;
 
     private GameDetailsContract.GameDetailsPresenter mPresenter;
-
-//    private GameTaskRequestResponse.DataBean gameData;
 
     private LinearLayoutManager mLinearLayoutManager;
     private Paint dividerPaint;

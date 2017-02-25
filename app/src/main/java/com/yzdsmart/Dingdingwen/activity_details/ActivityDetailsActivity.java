@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.time_keeper;
+package com.yzdsmart.Dingdingwen.activity_details;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ import com.yzdsmart.Dingdingwen.bean.SignProcessStep;
 import com.yzdsmart.Dingdingwen.http.response.SignDataRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.register_login.login.LoginActivity;
-import com.yzdsmart.Dingdingwen.scan_coin.QRScannerActivity;
+import com.yzdsmart.Dingdingwen.qr_scan.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomRoundProgress;
@@ -48,7 +48,7 @@ import dev.xesam.android.toolbox.timer.CountTimer;
  * Created by YZD on 2017/1/17.
  */
 //LocationSource, AMapLocationListener,
-public class TimeKeeperActivity extends BaseActivity implements TimeKeeperContract.TimeKeeperView {
+public class ActivityDetailsActivity extends BaseActivity implements ActivityDetailsContract.ActivityDetailsView {
     @Nullable
     @BindViews({R.id.left_title, R.id.title_logo, R.id.center_title, R.id.title_right_operation_layout})
     List<View> hideViews;
@@ -77,9 +77,9 @@ public class TimeKeeperActivity extends BaseActivity implements TimeKeeperContra
     @BindView(R.id.unlock_btn)
     SlideLockView unlockBtnSLV;
 
-    private static final String TAG = "TimeKeeperActivity";
+    private static final String TAG = "ActivityDetailsActivity";
 
-    private TimeKeeperContract.TimeKeeperPresenter mPresenter;
+    private ActivityDetailsContract.ActivityDetailsPresenter mPresenter;
 
     private String activityCode = "";
 
@@ -114,7 +114,7 @@ public class TimeKeeperActivity extends BaseActivity implements TimeKeeperContra
     private Integer startDuration = 0;
     private CountTimer countTimer;
 
-    private SignProcessAdapter signProcessAdapter;
+    private ActivityDetailsProcessAdapter signProcessAdapter;
     private GridLayoutManager mGridLayoutManager;
     private List<SignProcessStep> signProcessStepList;
 
@@ -136,14 +136,14 @@ public class TimeKeeperActivity extends BaseActivity implements TimeKeeperContra
 
         MobclickAgent.openActivityDurationTrack(false);
 
-        new TimeKeeperPresenter(this, this);
+        new ActivityDetailsPresenter(this, this);
 
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
 //        signMapView.onCreate(savedInstanceState);
 
 //        initMap();
 
-        signProcessAdapter = new SignProcessAdapter(this);
+        signProcessAdapter = new ActivityDetailsProcessAdapter(this);
         mGridLayoutManager = new GridLayoutManager(this, 4);
         signProcessRV.setAdapter(signProcessAdapter);
         signProcessRV.setLayoutManager(mGridLayoutManager);
@@ -422,7 +422,7 @@ public class TimeKeeperActivity extends BaseActivity implements TimeKeeperContra
 //        mAMap.setMyLocationStyle(myLocationStyle);
 //    }
     @Override
-    public void setPresenter(TimeKeeperContract.TimeKeeperPresenter presenter) {
+    public void setPresenter(ActivityDetailsContract.ActivityDetailsPresenter presenter) {
         mPresenter = presenter;
     }
 

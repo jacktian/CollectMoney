@@ -172,7 +172,7 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".scan_coin.QRScannerActivity"
+            android:name=".qr_scan.QRScannerActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop" />
 
@@ -334,7 +334,7 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".time_keeper.TimeKeeperActivity"
+            android:name=".activity_details.ActivityDetailsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop" />
 
