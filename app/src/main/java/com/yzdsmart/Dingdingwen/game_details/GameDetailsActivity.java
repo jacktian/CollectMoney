@@ -3,12 +3,10 @@ package com.yzdsmart.Dingdingwen.game_details;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.ImageView;
@@ -27,6 +25,11 @@ import com.yzdsmart.Dingdingwen.utils.Utils;
 import com.yzdsmart.Dingdingwen.views.CustomRoundProgress;
 import com.yzdsmart.Dingdingwen.views.SlideLockView;
 
+import org.joda.time.DateTime;
+import org.joda.time.Seconds;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +37,8 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTouch;
 import butterknife.Optional;
+import dev.xesam.android.toolbox.timer.CountTimer;
 
 /**
  * Created by YZD on 2017/2/24.
@@ -82,21 +85,26 @@ public class GameDetailsActivity extends BaseActivity implements GameDetailsCont
     private List<GameTaskRequestResponse.DataBean.TaskListsBean> tasksList;
     private GameTasksAdapter gameTasksAdapter;
 
-    private Handler mHandler = new Handler();
-    private Runnable lockRunnable = null;
-    private static final Integer DEFAULT_MAX_PROCESS = 100;
-    //锁屏进度
-    private Integer lockProgress = 0;
-    //判断是否离开锁屏按钮
-    private Boolean isLockPressed = true;
+    //    private Handler mHandler = new Handler();
+//    private Runnable lockRunnable = null;
+//    private static final Integer DEFAULT_MAX_PROCESS = 100;
+//    //锁屏进度
+//    private Integer lockProgress = 0;
+//    //判断是否离开锁屏按钮
+//    private Boolean isLockPressed = true;
+    private Boolean isScreenLocked = true;
 
-    private Boolean isScreenLocked = false;
+    private DateTimeFormatter mDateTimeFormatter;
+    private Integer startDuration = 0;
+    private CountTimer countTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         tasksList = new ArrayList<GameTaskRequestResponse.DataBean.TaskListsBean>();
+
+        mDateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
         if (null != savedInstanceState) {
             gameCode = savedInstanceState.getString("gameCode");
@@ -105,6 +113,7 @@ public class GameDetailsActivity extends BaseActivity implements GameDetailsCont
         }
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
+        ButterKnife.apply(titleLeftOpeIV, BUTTERKNIFEGONE);
         titleLeftOpeIV.setImageDrawable(getResources().getDrawable(R.mipmap.left_arrow_white));
 
         new GameDetailsPresenter(this, this);
@@ -121,25 +130,25 @@ public class GameDetailsActivity extends BaseActivity implements GameDetailsCont
             }
         });
 
-        lockRunnable = new Runnable() {
-            @Override
-            public void run() {
-                lockProgress += 2;
-                lockProgressCRP.setProgress(lockProgress);
-                if (DEFAULT_MAX_PROCESS == lockProgress) {
-                    isScreenLocked = true;
-                    ButterKnife.apply(titleLeftOpeIV, BUTTERKNIFEGONE);
-                    ButterKnife.apply(countLayoutRL, BUTTERKNIFEGONE);
-                    lockProgressCRP.setVisibility(View.GONE);
-                    mHandler.removeCallbacks(this);
-                    lockProgress = 0;
-                    lockProgressCRP.setProgress(lockProgress);
-                    ButterKnife.apply(unlockBtnSLV, BUTTERKNIFEVISIBLE);
-                } else {
-                    mHandler.postDelayed(this, 1);
-                }
-            }
-        };
+//        lockRunnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                lockProgress += 2;
+//                lockProgressCRP.setProgress(lockProgress);
+//                if (DEFAULT_MAX_PROCESS == lockProgress) {
+//                    isScreenLocked = true;
+//                    ButterKnife.apply(titleLeftOpeIV, BUTTERKNIFEGONE);
+//                    ButterKnife.apply(countLayoutRL, BUTTERKNIFEGONE);
+//                    lockProgressCRP.setVisibility(View.GONE);
+//                    mHandler.removeCallbacks(this);
+//                    lockProgress = 0;
+//                    lockProgressCRP.setProgress(lockProgress);
+//                    ButterKnife.apply(unlockBtnSLV, BUTTERKNIFEVISIBLE);
+//                } else {
+//                    mHandler.postDelayed(this, 1);
+//                }
+//            }
+//        };
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         dividerPaint = new Paint();
@@ -189,7 +198,10 @@ public class GameDetailsActivity extends BaseActivity implements GameDetailsCont
 
     @Override
     protected void onDestroy() {
-        mHandler.removeCallbacks(lockRunnable);
+//        mHandler.removeCallbacks(lockRunnable);
+        if (null != countTimer) {
+            countTimer.cancel();
+        }
         super.onDestroy();
     }
 
@@ -230,47 +242,47 @@ public class GameDetailsActivity extends BaseActivity implements GameDetailsCont
         }
     }
 
-    @Optional
-    @OnTouch(R.id.lock_btn)
-    boolean startLock(View view, MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                startLock();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                //手指移动离开点名按钮
-                if (event.getX() < 0 || Utils.px2dp(this, event.getX()) > 50 || event.getY() < 0 || Utils.px2dp(this, event.getY()) > 50) {
-                    isLockPressed = false;
-                    submitLock();
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                if (isLockPressed) {
-                    submitLock();
-                }
-                break;
-        }
-        return false;
-    }
-
-    /**
-     * 开始锁定
-     */
-    private void startLock() {
-        isLockPressed = true;
-        lockProgressCRP.setVisibility(View.VISIBLE);
-        mHandler.postDelayed(lockRunnable, 1);
-    }
-
-    /**
-     * 手指离开锁定按钮
-     */
-    private void submitLock() {
-        lockProgressCRP.setVisibility(View.GONE);
-        mHandler.removeCallbacks(lockRunnable);
-        lockProgress = 0;
-        lockProgressCRP.setProgress(lockProgress);
-    }
+//    @Optional
+//    @OnTouch(R.id.lock_btn)
+//    boolean startLock(View view, MotionEvent event) {
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                startLock();
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                //手指移动离开点名按钮
+//                if (event.getX() < 0 || Utils.px2dp(this, event.getX()) > 50 || event.getY() < 0 || Utils.px2dp(this, event.getY()) > 50) {
+//                    isLockPressed = false;
+//                    submitLock();
+//                }
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                if (isLockPressed) {
+//                    submitLock();
+//                }
+//                break;
+//        }
+//        return false;
+//    }
+//
+//    /**
+//     * 开始锁定
+//     */
+//    private void startLock() {
+//        isLockPressed = true;
+//        lockProgressCRP.setVisibility(View.VISIBLE);
+//        mHandler.postDelayed(lockRunnable, 1);
+//    }
+//
+//    /**
+//     * 手指离开锁定按钮
+//     */
+//    private void submitLock() {
+//        lockProgressCRP.setVisibility(View.GONE);
+//        mHandler.removeCallbacks(lockRunnable);
+//        lockProgress = 0;
+//        lockProgressCRP.setProgress(lockProgress);
+//    }
 
     @Override
     public void setPresenter(GameDetailsContract.GameDetailsPresenter presenter) {
@@ -283,6 +295,20 @@ public class GameDetailsActivity extends BaseActivity implements GameDetailsCont
             totalTimeStub.inflate();
             countTimerTV = (TextView) findViewById(R.id.count_timer);
             countTimerTV.setText(gameData.getGameSumTime());
+
+            if (gameData.getTaskingCode().length() > 0) {
+                currentTaskNameTV.setText(gameData.getTaskingName());
+                startDuration = Seconds.secondsBetween(mDateTimeFormatter.parseDateTime(gameData.getTaskingBeginDateTime()), new DateTime()).getSeconds();
+                currentTaskTimeTV.setText(formatTime(startDuration * 1000l));
+                countTimer = new CountTimer(1000) {
+                    @Override
+                    protected void onTick(long millisFly) {
+                        super.onTick(millisFly);
+                        currentTaskTimeTV.setText(formatTime(millisFly + startDuration * 1000));
+                    }
+                };
+                countTimer.start();
+            }
             tasksList.clear();
             tasksList.addAll(gameData.getTaskLists());
             gameTasksAdapter.clearList();
@@ -290,11 +316,45 @@ public class GameDetailsActivity extends BaseActivity implements GameDetailsCont
         } else {
             if (gameData.getTaskingCode().length() > 0) {
                 currentTaskNameTV.setText(gameData.getTaskingName());
+                startDuration = Seconds.secondsBetween(mDateTimeFormatter.parseDateTime(gameData.getTaskingBeginDateTime()), new DateTime()).getSeconds();
+                currentTaskTimeTV.setText(formatTime(startDuration * 1000l));
+                countTimer = new CountTimer(1000) {
+                    @Override
+                    protected void onTick(long millisFly) {
+                        super.onTick(millisFly);
+                        currentTaskTimeTV.setText(formatTime(millisFly + startDuration * 1000));
+                    }
+                };
+                countTimer.start();
+
                 tasksList.clear();
                 tasksList.addAll(gameData.getTaskLists());
                 gameTasksAdapter.clearList();
                 gameTasksAdapter.appendList(tasksList);
             }
         }
+    }
+
+
+    /**
+     * 毫秒转化时分秒
+     *
+     * @param ms
+     * @return
+     */
+    public static String formatTime(Long ms) {
+        Integer ss = 1000;
+        Integer mi = ss * 60;
+        Integer hh = mi * 60;
+
+        Long hour = ms / hh;
+        Long minute = (ms - hour * hh) / mi;
+        Long second = (ms - hour * hh - minute * mi) / ss;
+
+        StringBuffer sb = new StringBuffer();
+        sb.append(hour >= 10 ? (hour + ":") : ("0" + hour + ":"));
+        sb.append(minute >= 10 ? (minute + ":") : ("0" + minute + ":"));
+        sb.append(second >= 10 ? second : "0" + second);
+        return sb.toString();
     }
 }

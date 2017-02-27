@@ -108,4 +108,9 @@
     <color name="navi_picker_orage">#fff08519</color>
     <!--计时-->
     <color name="time_keeper_background_color">#29292f</color>
+    <!--游戏状态-->
+    <color name="game_status_wait">#00bb9a</color>
+    <color name="game_status_finish">#29292f</color>
+    <color name="game_status_ongoing">#f20044</color>
+    <color name="game_status_giveup">#c0c0c0</color>
 </resources>

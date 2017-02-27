@@ -1,6 +1,7 @@
 package com.yzdsmart.Dingdingwen.game_details;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -62,8 +63,14 @@ public class GameTasksAdapter extends RecyclerView.Adapter<GameTasksAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         GameTaskRequestResponse.DataBean.TaskListsBean gameTask = tasksList.get(position);
-        holder.setTaskName(gameTask.getTaskName());
-        holder.setTaskTime(gameTask.getGameTime().length() > 0 ? gameTask.getGameTime() : "正在进行中");
+        holder.setTaskName(" " + gameTask.getTaskName(), gameTask.getGameStatus());
+        if ("未完成".equals(gameTask.getGameStatus())) {
+            holder.setTaskTime("正在进行中", gameTask.getGameStatus());
+        } else if ("完成".equals(gameTask.getGameStatus()) || "放弃".equals(gameTask.getGameStatus())) {
+            holder.setTaskTime(gameTask.getGameTime(), gameTask.getGameStatus());
+        } else {
+            holder.setTaskTime("待进行", gameTask.getGameStatus());
+        }
     }
 
     @Override
@@ -84,11 +91,36 @@ public class GameTasksAdapter extends RecyclerView.Adapter<GameTasksAdapter.View
             ButterKnife.bind(this, itemView);
         }
 
-        public void setTaskName(String taskName) {
+        public void setTaskName(String taskName, String gameStatus) {
+            Drawable drawable;
+            if ("完成".equals(gameStatus)) {
+                taskNameTV.setTextColor(context.getResources().getColor(R.color.game_status_finish));
+                drawable = context.getResources().getDrawable(R.mipmap.status_finish_icon);
+            } else if ("放弃".equals(gameStatus)) {
+                taskNameTV.setTextColor(context.getResources().getColor(R.color.game_status_giveup));
+                drawable = context.getResources().getDrawable(R.mipmap.status_giveup_icon);
+            } else if ("未完成".equals(gameStatus)) {
+                taskNameTV.setTextColor(context.getResources().getColor(R.color.game_status_ongoing));
+                drawable = context.getResources().getDrawable(R.mipmap.status_ongoing_icon);
+            } else {
+                taskNameTV.setTextColor(context.getResources().getColor(R.color.game_status_wait));
+                drawable = context.getResources().getDrawable(R.mipmap.status_wait_icon);
+            }
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            taskNameTV.setCompoundDrawables(drawable, null, null, null);
             taskNameTV.setText(taskName);
         }
 
-        public void setTaskTime(String taskTime) {
+        public void setTaskTime(String taskTime, String gameStatus) {
+            if ("完成".equals(gameStatus)) {
+                taskTimeTV.setTextColor(context.getResources().getColor(R.color.game_status_finish));
+            } else if ("放弃".equals(gameStatus)) {
+                taskTimeTV.setTextColor(context.getResources().getColor(R.color.game_status_giveup));
+            } else if ("未完成".equals(gameStatus)) {
+                taskTimeTV.setTextColor(context.getResources().getColor(R.color.game_status_ongoing));
+            } else {
+                taskTimeTV.setTextColor(context.getResources().getColor(R.color.game_status_wait));
+            }
             taskTimeTV.setText(taskTime);
         }
     }

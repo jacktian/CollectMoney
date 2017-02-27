@@ -49,7 +49,7 @@ public class QRScannerPresenter implements QRScannerContract.QRScannerPresenter 
                             mView.onScanQRCode(true, null, null, response.getInfo(), type);
                             break;
                     }
-                } else {
+                } else if ("FAIL".equals(response.getActionStatus())) {
                     switch (type) {
                         case 0:
                             mView.onScanQRCode(false, response.getErrorInfo(), null, null, type);
@@ -71,11 +71,11 @@ public class QRScannerPresenter implements QRScannerContract.QRScannerPresenter 
                 }
                 switch (type) {
                     case 0:
-                        mView.onScanQRCode(false, context.getResources().getString(R.string.get_coins_error), null, null, type);
+                        mView.onScanQRCode(false, context.getResources().getString(R.string.get_coins_error), null, "扫币异常", type);
                         break;
                     case 1:
                     case 2:
-                        mView.onScanQRCode(false, context.getResources().getString(R.string.sign_error), null, null, type);
+                        mView.onScanQRCode(false, context.getResources().getString(R.string.sign_error), null, "签到异常", type);
                         break;
                 }
             }
