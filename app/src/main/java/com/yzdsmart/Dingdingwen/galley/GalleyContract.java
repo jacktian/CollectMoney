@@ -27,6 +27,11 @@ public interface GalleyContract {
         void onGetShopGalley(List<GalleyInfo> galleyInfos);
 
         /**
+         * 获取相册失败
+         */
+        void onGetGalleyFail();
+
+        /**
          * 删除用户个人相册图片
          */
         void onDeletePersonalGalley();

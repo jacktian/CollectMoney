@@ -491,13 +491,13 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
                 });
                 break;
             case 1:
-                signDialog = new SignDialog(this, coinLogo, "本点签到成功".equals(coinLogo) ? true : false);
+                signDialog = new SignDialog(this, coinLogo, true);
                 signDialog.setCancelable(false);
                 signDialog.show();
                 timeKeeperHandler.postDelayed(timeKeeperRunnable, 1000);
                 break;
             case 2:
-                signDialog = new SignDialog(this, coinLogo, "本点签到成功".equals(coinLogo) ? true : false);
+                signDialog = new SignDialog(this, coinLogo, true);
                 signDialog.setCancelable(false);
                 signDialog.show();
                 gameTaskHandler.postDelayed(gameTaskRunnable, 1000);

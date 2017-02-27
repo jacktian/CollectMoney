@@ -427,6 +427,17 @@ public class GalleyActivity extends BaseActivity implements BGASortableNinePhoto
     }
 
     @Override
+    public void onGetGalleyFail() {
+        if (isGalleyOperated) {
+            rightTitleTV.setText("选择");
+            isGalleyOperated = false;
+            mPhotosSnpl.setGalleyOperated(false);
+            deleteGalley.setEnabled(false);
+            mPhotosSnpl.setDeleteDrawableResId(0);
+        }
+    }
+
+    @Override
     public void onDeleteShopGalley() {
         rightTitleTV.setText("选择");
         isGalleyOperated = false;

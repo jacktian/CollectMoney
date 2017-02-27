@@ -41,6 +41,7 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
                     }
                 } else {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                    mView.onUploadGalleyFail();
                 }
             }
 
@@ -48,6 +49,7 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
 //                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_personal_galley));
+                mView.onUploadGalleyFail();
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }
@@ -105,6 +107,7 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
                     }
                 } else {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
+                    mView.onUploadGalleyFail();
                 }
             }
 
@@ -112,6 +115,7 @@ public class GalleyPresenter implements GalleyContract.GalleyPreviewPresenter {
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
 //                ((BaseActivity) context).showSnackbar(context.getResources().getString(R.string.error_get_shop_galley));
+                mView.onUploadGalleyFail();
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

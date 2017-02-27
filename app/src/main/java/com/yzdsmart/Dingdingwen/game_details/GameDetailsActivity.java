@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.yzdsmart.Dingdingwen.http.response.GameTaskRequestResponse;
 import com.yzdsmart.Dingdingwen.qr_scan.QRScannerActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
+import com.yzdsmart.Dingdingwen.views.CloseGameDetailsDialog;
 import com.yzdsmart.Dingdingwen.views.CustomRoundProgress;
 import com.yzdsmart.Dingdingwen.views.SlideLockView;
 
@@ -79,6 +81,8 @@ public class GameDetailsActivity extends BaseActivity implements GameDetailsCont
     private String gameCode;
 
     private GameDetailsContract.GameDetailsPresenter mPresenter;
+
+    private CloseGameDetailsDialog gameDetailsDialog;
 
     private LinearLayoutManager mLinearLayoutManager;
     private Paint dividerPaint;
@@ -218,8 +222,10 @@ public class GameDetailsActivity extends BaseActivity implements GameDetailsCont
                 if (isScreenLocked) {
                     showSnackbar("请先解锁");
                     return true;
+                } else {
+                    leavePage();
+                    return true;
                 }
-                break;
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -231,7 +237,7 @@ public class GameDetailsActivity extends BaseActivity implements GameDetailsCont
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
             case R.id.close_btn:
-                closeActivity();
+                leavePage();
                 break;
             case R.id.scan_btn:
                 bundle = new Bundle();
@@ -356,5 +362,31 @@ public class GameDetailsActivity extends BaseActivity implements GameDetailsCont
         sb.append(minute >= 10 ? (minute + ":") : ("0" + minute + ":"));
         sb.append(second >= 10 ? second : "0" + second);
         return sb.toString();
+    }
+
+    private void leavePage() {
+        gameDetailsDialog = new CloseGameDetailsDialog(this);
+        gameDetailsDialog.show();
+        Button dialogCancel = (Button) gameDetailsDialog.findViewById(R.id.dialog_cancel);
+        Button dialogConfirm = (Button) gameDetailsDialog.findViewById(R.id.dialog_confirm);
+        dialogCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null != gameDetailsDialog) {
+                    gameDetailsDialog.dismiss();
+                    gameDetailsDialog = null;
+                }
+            }
+        });
+        dialogConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (null != gameDetailsDialog) {
+                    gameDetailsDialog.dismiss();
+                    gameDetailsDialog = null;
+                }
+                closeActivity();
+            }
+        });
     }
 }
