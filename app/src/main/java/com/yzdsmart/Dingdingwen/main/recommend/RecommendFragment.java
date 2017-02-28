@@ -138,8 +138,12 @@ public class RecommendFragment extends BaseFragment {
         recommendSettings.setJavaScriptEnabled(true);
         recommendSettings.setAllowFileAccess(true);
         recommendSettings.setAllowFileAccess(true);
+        recommendSettings.setSupportZoom(true);
         recommendSettings.setAllowContentAccess(true);
-        recommendSettings.setDomStorageEnabled(true);
+//        recommendSettings.setDomStorageEnabled(true);
+        recommendSettings.setUseWideViewPort(true);
+        recommendSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        recommendSettings.setLoadWithOverviewMode(true);
         recommendWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条风格，为0指滚动条不占用空间，直接覆盖在网页上
         recommendWebView.setWebChromeClient(new WebChromeClient() {
             @Override

@@ -60,11 +60,12 @@ android {
     }
 
     productFlavors {
-        kuan {}
+        huawei {}
         xiaomi {}
         qh360 {}
         baidu {}
         wandoujia {}
+        samsung {}
     }
 
     productFlavors.all {
