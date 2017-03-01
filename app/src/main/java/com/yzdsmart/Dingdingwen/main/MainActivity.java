@@ -424,11 +424,11 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 if (mCurrentFragment instanceof RecommendFragment) {
-                    if (((RecommendFragment) mCurrentFragment).canRecommendWebGoBack()) {
-                        ((RecommendFragment) mCurrentFragment).recomendWebGoBack();
-                    } else {
+//                    if (((RecommendFragment) mCurrentFragment).canRecommendWebGoBack()) {
+//                        ((RecommendFragment) mCurrentFragment).recomendWebGoBack();
+//                    } else {
                         backToFindMoney();
-                    }
+//                    }
                     return true;
                 } else if (mCurrentFragment instanceof FindMoneyFragment) {
                     Long currentTime = System.currentTimeMillis();

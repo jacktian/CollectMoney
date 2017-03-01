@@ -17,8 +17,12 @@
     <!--android:layout_marginLeft="@dimen/activity_horizontal_padding"-->
     <!--android:layout_marginRight="@dimen/activity_horizontal_padding" />-->
 
-    <WebView
-        android:id="@+id/recommend_webview"
+    <!--<WebView-->
+    <!--android:id="@+id/recommend_webview"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"></WebView>-->
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+        android:id="@+id/recommend_news"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></WebView>
+        android:layout_height="match_parent" />
 </LinearLayout>

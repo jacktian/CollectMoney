@@ -1,22 +1,18 @@
 package com.yzdsmart.Dingdingwen.main.recommend;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.http.response.ExpandListRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 
 import java.util.List;
@@ -30,8 +26,8 @@ import butterknife.Optional;
 /**
  * Created by YZD on 2016/8/17.
  */
-public class RecommendFragment extends BaseFragment {
-    //    implements RecommendContract.RecommendView
+public class RecommendFragment extends BaseFragment implements RecommendContract.RecommendView {
+
     @Nullable
     @BindViews({R.id.left_title, R.id.title_logo, R.id.title_right_operation})
     List<View> hideViews;
@@ -47,21 +43,21 @@ public class RecommendFragment extends BaseFragment {
 //    @Nullable
 //    @BindView(R.id.city_recommend_spinner)
 //    BetterSpinner cityRecommendSpinner;
-//    @Nullable
-//    @BindView(R.id.recommend_list)
-//    UltimateRecyclerView recommendListRV;
     @Nullable
-    @BindView(R.id.recommend_webview)
-    WebView recommendWebView;
+    @BindView(R.id.recommend_news)
+    UltimateRecyclerView recommendNewsRV;
+//    @Nullable
+//    @BindView(R.id.recommend_webview)
+//    WebView recommendWebView;
 
     private WebSettings recommendSettings;
 
     private static final String TAG = "RecommendFragment";
 
-//    private Integer pageIndex = 1;
-//    private static final Integer PAGE_SIZE = 10;
-//
-//    private RecommendContract.RecommendPresenter mPresenter;
+    private Integer pageIndex = 1;
+    private static final Integer PAGE_SIZE = 10;
+
+    private RecommendContract.RecommendPresenter mPresenter;
 //
 //    private String[] cities;
 //    private ArrayAdapter<String> citiesAdapter;
@@ -74,7 +70,7 @@ public class RecommendFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        new RecommendPresenter(getActivity(), this);
+        new RecommendPresenter(getActivity(), this);
 //
 //        cities = getResources().getStringArray(R.array.city_list);
 //        citiesAdapter = new ArrayAdapter<String>(getActivity(),
@@ -126,54 +122,54 @@ public class RecommendFragment extends BaseFragment {
 //
 //        getExpandList();
 
-        loadPage();
+//        loadPage();
     }
 
-    @SuppressLint("JavascriptInterface")
-    private void loadPage() {
-        recommendSettings = recommendWebView.getSettings();
-        //设置编码
-        recommendSettings.setDefaultTextEncodingName("UTF-8");
-        //启用支持javascript
-        recommendSettings.setJavaScriptEnabled(true);
-        recommendSettings.setAllowFileAccess(true);
-        recommendSettings.setAllowFileAccess(true);
-        recommendSettings.setSupportZoom(true);
-        recommendSettings.setAllowContentAccess(true);
-//        recommendSettings.setDomStorageEnabled(true);
-        recommendSettings.setUseWideViewPort(true);
-        recommendSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        recommendSettings.setLoadWithOverviewMode(true);
-        recommendWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条风格，为0指滚动条不占用空间，直接覆盖在网页上
-        recommendWebView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                if (100 == newProgress) {
-                    ((MainActivity) getActivity()).hideProgressDialog();
-                }
-            }
-        });
-        recommendWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // 重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边
-                view.loadUrl(url);
-                //如果不需要其他对点击链接事件的处理返回true，否则返回false
-                return true;
-            }
-
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                super.onReceivedError(view, request, error);
-                ((MainActivity) getActivity()).hideProgressDialog();
-            }
-        });
-        recommendWebView.clearHistory();
-        recommendWebView.clearCache(true);
-        recommendWebView.loadUrl("http://139.196.177.114:7288/discover/");
-//        recommendWebView.loadUrl("https://www.baidu.com");
-        ((MainActivity) getActivity()).showProgressDialog(R.drawable.loading, getActivity().getResources().getString(R.string.loading));
-    }
+//    @SuppressLint("JavascriptInterface")
+//    private void loadPage() {
+//        recommendSettings = recommendWebView.getSettings();
+//        //设置编码
+//        recommendSettings.setDefaultTextEncodingName("UTF-8");
+//        //启用支持javascript
+//        recommendSettings.setJavaScriptEnabled(true);
+//        recommendSettings.setAllowFileAccess(true);
+//        recommendSettings.setAllowFileAccess(true);
+//        recommendSettings.setSupportZoom(true);
+//        recommendSettings.setAllowContentAccess(true);
+////        recommendSettings.setDomStorageEnabled(true);
+//        recommendSettings.setUseWideViewPort(true);
+//        recommendSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        recommendSettings.setLoadWithOverviewMode(true);
+//        recommendWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条风格，为0指滚动条不占用空间，直接覆盖在网页上
+//        recommendWebView.setWebChromeClient(new WebChromeClient() {
+//            @Override
+//            public void onProgressChanged(WebView view, int newProgress) {
+//                if (100 == newProgress) {
+//                    ((MainActivity) getActivity()).hideProgressDialog();
+//                }
+//            }
+//        });
+//        recommendWebView.setWebViewClient(new WebViewClient() {
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                // 重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边
+//                view.loadUrl(url);
+//                //如果不需要其他对点击链接事件的处理返回true，否则返回false
+//                return true;
+//            }
+//
+//            @Override
+//            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+//                super.onReceivedError(view, request, error);
+//                ((MainActivity) getActivity()).hideProgressDialog();
+//            }
+//        });
+//        recommendWebView.clearHistory();
+//        recommendWebView.clearCache(true);
+//        recommendWebView.loadUrl("http://139.196.177.114:7288/discover/");
+////        recommendWebView.loadUrl("https://www.baidu.com");
+//        ((MainActivity) getActivity()).showProgressDialog(R.drawable.loading, getActivity().getResources().getString(R.string.loading));
+//    }
 
     //    private void getExpandList() {
 //        if (!Utils.isNetUsable(getActivity())) {
@@ -200,37 +196,30 @@ public class RecommendFragment extends BaseFragment {
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_left_operation_layout:
-                if (recommendWebView.canGoBack()) {
-                    recommendWebView.goBack();
-                } else {
-                    ((MainActivity) getActivity()).backToFindMoney();
-                }
+//                if (recommendWebView.canGoBack()) {
+//                    recommendWebView.goBack();
+//                } else {
+                ((MainActivity) getActivity()).backToFindMoney();
+//                }
                 break;
         }
     }
 
-    public boolean canRecommendWebGoBack() {
-        return recommendWebView.canGoBack();
-    }
-
-    public void recomendWebGoBack() {
-        recommendWebView.goBack();
-    }
-
-//    @Override
-//    public void setPresenter(RecommendContract.RecommendPresenter presenter) {
-//        mPresenter = presenter;
+//    public boolean canRecommendWebGoBack() {
+//        return recommendWebView.canGoBack();
 //    }
 //
-//    @Override
-//    public void onGetExpandList(List<ExpandListRequestResponse> expands) {
-//        pageIndex++;
-//        if (expands.size() < PAGE_SIZE) {
-//            recommendListRV.disableLoadmore();
-//        }
-//        if (expands.size() <= 0) return;
-//        expandList.clear();
-//        expandList.addAll(expands);
-//        recommendAdapter.appendList(expandList);
+//    public void recomendWebGoBack() {
+//        recommendWebView.goBack();
 //    }
+
+    @Override
+    public void onGetExpandList(List<ExpandListRequestResponse> expands) {
+
+    }
+
+    @Override
+    public void setPresenter(RecommendContract.RecommendPresenter presenter) {
+        mPresenter = presenter;
+    }
 }

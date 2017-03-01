@@ -2,7 +2,7 @@ package com.yzdsmart.Dingdingwen.main.recommend;
 
 import com.yzdsmart.Dingdingwen.BasePresenter;
 import com.yzdsmart.Dingdingwen.BaseView;
-import com.yzdsmart.Dingdingwen.http.response.ExpandListRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.RecommendBannerRequestResponse;
 
 import java.util.List;
 
@@ -12,11 +12,11 @@ import java.util.List;
 public interface RecommendContract {
     interface RecommendView extends BaseView<RecommendPresenter> {
         /**
-         * 获取推荐列表
+         * 获取推荐banner列表
          *
-         * @param expands
+         * @param recommendBanners
          */
-        void onGetExpandList(List<ExpandListRequestResponse> expands);
+        void onGetRecommendBanner(List<RecommendBannerRequestResponse> recommendBanners);
     }
 
     interface RecommendPresenter extends BasePresenter {
@@ -27,7 +27,7 @@ public interface RecommendContract {
          * @param pageIndex
          * @param pageSize
          */
-        void getExpandList(String submitCode, Integer pageIndex, Integer pageSize, String authorization);
+        void getRecommendBanner(String submitCode, Integer pageIndex, Integer pageSize, String authorization);
 
         void unRegisterSubscribe();
     }
