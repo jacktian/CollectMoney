@@ -66,6 +66,8 @@ android {
         baidu {}
         wandoujia {}
         samsung {}
+        oppo {}
+        vivo {}
     }
 
     productFlavors.all {

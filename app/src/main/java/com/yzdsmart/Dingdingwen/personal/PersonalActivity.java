@@ -194,22 +194,27 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
     private IInkeCallback inkeCallback = new IInkeCallback() {
         @Override
         public void loginTrigger() {
+
         }
 
         @Override
         public void payTrigger(String s, String s1) {
+
         }
 
         @Override
         public void shareTrigger(ShareInfo shareInfo) {
+
         }
 
         @Override
         public void createLiveReturnTrigger(String s) {
+
         }
 
         @Override
         public void stopLiveTrigger(String s) {
+
         }
     };
 
