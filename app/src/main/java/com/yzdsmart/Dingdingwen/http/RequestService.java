@@ -24,6 +24,7 @@ import com.yzdsmart.Dingdingwen.http.response.PersonalWithdrawLogRequestResponse
 import com.yzdsmart.Dingdingwen.http.response.PublishTaskLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RecommendBannerRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RecommendFriendsRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.RecommendNewsRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RegisterBusinessRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ScanCoinRequestResponse;
@@ -1017,6 +1018,20 @@ public interface RequestService {
     @POST(Url.DISCOVER)
     Observable<RecommendBannerRequestResponse> getRecommendBanner(@Field("SubmitCode") String submitCode, @Field("ActionCode") String actionCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
 
+    /**
+     * 获取推荐新闻列表
+     *
+     * @param submitCode
+     * @param actionCode
+     * @param pageIndex
+     * @param pageSize
+     * @param lastsequence
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.DISCOVER)
+    Observable<RecommendNewsRequestResponse> getRecommendNews(@Field("SubmitCode") String submitCode, @Field("ActionCode") String actionCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
 
     /**
      * 校验银行卡

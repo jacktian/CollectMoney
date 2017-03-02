@@ -2,6 +2,7 @@ package com.yzdsmart.Dingdingwen.main.recommend;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -256,10 +257,17 @@ public class RecommendAdapter extends UltimateViewAdapter<UltimateRecyclerviewVi
     }
 
     class NewsViewHolder extends UltimateRecyclerviewViewHolder {
+        @Nullable
+        @BindView(R.id.news_list)
+        RecyclerView newsListRV;
+
+        LinearLayoutManager mLinearLayoutManager;
 
         public NewsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            mLinearLayoutManager = new LinearLayoutManager(context);
         }
     }
 

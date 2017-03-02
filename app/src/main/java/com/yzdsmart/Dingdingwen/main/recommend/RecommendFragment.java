@@ -14,6 +14,7 @@ import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.response.RecommendBannerRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.RecommendNewsRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
@@ -83,11 +84,6 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
         mGridLayoutManager = new GridLayoutManager(getActivity(), 1);
 //        expandList = new ArrayList<ExpandListRequestResponse>();
         recommendAdapter = new RecommendAdapter(getActivity());
-        recommendItemsRV.setAdapter(recommendAdapter);
-        recommendItemsRV.setLayoutManager(mGridLayoutManager);
-        recommendItemsRV.setHasFixedSize(true);
-        recommendItemsRV.setSaveEnabled(true);
-        recommendItemsRV.setClipToPadding(false);
     }
 
     @Override
@@ -132,6 +128,13 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 //        getExpandList();
 
 //        loadPage();
+
+        recommendItemsRV.setAdapter(recommendAdapter);
+        recommendItemsRV.setLayoutManager(mGridLayoutManager);
+        recommendItemsRV.setHasFixedSize(true);
+        recommendItemsRV.setSaveEnabled(true);
+        recommendItemsRV.setClipToPadding(false);
+
         if (!Utils.isNetUsable(getActivity())) {
             ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
             return;
@@ -232,6 +235,11 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     public void onGetRecommendBanner(List<RecommendBannerRequestResponse.ListsBean> banners) {
         recommendAdapter.clearBannerList();
         recommendAdapter.appendBannerList(banners);
+    }
+
+    @Override
+    public void onGetRecommendNews(List<RecommendNewsRequestResponse.ListsBean> news) {
+        recommendAdapter.appendNewsList(news);
     }
 
     @Override
