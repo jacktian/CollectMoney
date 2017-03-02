@@ -5,10 +5,8 @@ import android.content.Context;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
-import com.yzdsmart.Dingdingwen.http.response.ExpandListRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.RecommendBannerRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
-
-import java.util.List;
 
 /**
  * Created by YZD on 2016/8/28.
@@ -26,14 +24,16 @@ public class RecommendPresenter implements RecommendContract.RecommendPresenter 
     }
 
     @Override
-    public void getExpandList(String submitCode, Integer pageIndex, Integer pageSize, String authorization) {
+    public void getRecommendBanner(String submitCode, String actionCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization) {
         ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
-        mModel.getExpandList(submitCode, pageIndex, pageSize, authorization, new RequestListener() {
+        mModel.getRecommendBanner(submitCode, actionCode, pageIndex, pageSize, lastsequence, authorization, new RequestListener() {
             @Override
             public void onSuccess(Object result) {
-                List<ExpandListRequestResponse> expands = (List<ExpandListRequestResponse>) result;
-                if (null != expands) {
-                    mView.onGetExpandList(expands);
+                RecommendBannerRequestResponse requestResponse = (RecommendBannerRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onGetRecommendBanner(requestResponse.getLists());
+                } else if ("FAIL".equals(requestResponse.getActionStatus())) {
+                    ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
                 }
             }
 

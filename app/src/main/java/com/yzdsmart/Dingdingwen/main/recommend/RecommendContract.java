@@ -16,18 +16,21 @@ public interface RecommendContract {
          *
          * @param recommendBanners
          */
-        void onGetRecommendBanner(List<RecommendBannerRequestResponse> recommendBanners);
+        void onGetRecommendBanner(List<RecommendBannerRequestResponse.ListsBean> recommendBanners);
     }
 
     interface RecommendPresenter extends BasePresenter {
         /**
-         * 获取推荐列表
+         * 获取推荐轮播
          *
          * @param submitCode
+         * @param actionCode
          * @param pageIndex
          * @param pageSize
+         * @param lastsequence
+         * @param authorization
          */
-        void getRecommendBanner(String submitCode, Integer pageIndex, Integer pageSize, String authorization);
+        void getRecommendBanner(String submitCode, String actionCode, Integer pageIndex, Integer pageSize, Integer lastsequence, String authorization);
 
         void unRegisterSubscribe();
     }

@@ -22,7 +22,7 @@
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"></WebView>-->
     <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
-        android:id="@+id/recommend_news"
+        android:id="@+id/recommend_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

@@ -30,6 +30,7 @@ public class Url {
     public static final String PAY = "Api/Pay";
     public static final String ACTIVITY = "Api/Activity";
     public static final String GAME = "Api/Game";
+    public static final String DISCOVER = "Api/Discover";
 
     public static final String TOKEN = "token";
     public static final String APP_REG = "AppReg";

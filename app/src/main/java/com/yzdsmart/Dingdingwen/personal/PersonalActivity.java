@@ -19,9 +19,7 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.bumptech.glide.Glide;
-import com.meelive.ingkee.sdk.plugin.IInkeCallback;
 import com.meelive.ingkee.sdk.plugin.InKeSdkPluginAPI;
-import com.meelive.ingkee.sdk.plugin.entity.ShareInfo;
 import com.meelive.ingkee.sdk.plugin.entity.UserInfo;
 import com.tencent.TIMFriendshipManager;
 import com.tencent.TIMUserProfile;
@@ -191,32 +189,6 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
     private TIMUserProfile timUserProfile;
 
     private UserInfo inKeUserInfo;
-    private IInkeCallback inkeCallback = new IInkeCallback() {
-        @Override
-        public void loginTrigger() {
-
-        }
-
-        @Override
-        public void payTrigger(String s, String s1) {
-
-        }
-
-        @Override
-        public void shareTrigger(ShareInfo shareInfo) {
-
-        }
-
-        @Override
-        public void createLiveReturnTrigger(String s) {
-
-        }
-
-        @Override
-        public void stopLiveTrigger(String s) {
-
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -239,9 +211,6 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
         galleyInfoList = new ArrayList<GalleyInfo>();
 
         toggleViews = new ArrayList<View>();
-
-        InKeSdkPluginAPI.register(inkeCallback, Constants.INKE_APP_ID, 1, 0);
-//        InKeSdkPluginAPI.register(inkeCallback, Constants.INKE_APP_ID);
 
         toggleViews.clear();
         if (SharedPreferencesUtils.getString(PersonalActivity.this, "baza_code", "").trim().length() > 0) {
@@ -454,7 +423,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 openActivity(GalleyActivity.class, bundle, 0);
                 break;
             case R.id.to_personal_qr_code:
-//                InKeSdkPluginAPI.createLive(PersonalActivity.this, inKeUserInfo);
+                InKeSdkPluginAPI.createLive(PersonalActivity.this, inKeUserInfo);
                 break;
         }
     }

@@ -2,6 +2,7 @@ package com.yzdsmart.Dingdingwen.main.recommend;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.widget.ImageView;
@@ -12,8 +13,10 @@ import com.umeng.analytics.MobclickAgent;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.BaseFragment;
 import com.yzdsmart.Dingdingwen.R;
-import com.yzdsmart.Dingdingwen.http.response.ExpandListRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.RecommendBannerRequestResponse;
 import com.yzdsmart.Dingdingwen.main.MainActivity;
+import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
+import com.yzdsmart.Dingdingwen.utils.Utils;
 
 import java.util.List;
 
@@ -44,8 +47,8 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 //    @BindView(R.id.city_recommend_spinner)
 //    BetterSpinner cityRecommendSpinner;
     @Nullable
-    @BindView(R.id.recommend_news)
-    UltimateRecyclerView recommendNewsRV;
+    @BindView(R.id.recommend_items)
+    UltimateRecyclerView recommendItemsRV;
 //    @Nullable
 //    @BindView(R.id.recommend_webview)
 //    WebView recommendWebView;
@@ -54,17 +57,18 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 
     private static final String TAG = "RecommendFragment";
 
-    private Integer pageIndex = 1;
-    private static final Integer PAGE_SIZE = 10;
+    private Integer bannerPageIndex = 1;
+    private Integer bannerLastsequence = 0;
+    private static final Integer BANNER_PAGE_SIZE = 10;
 
     private RecommendContract.RecommendPresenter mPresenter;
-//
+    //
 //    private String[] cities;
 //    private ArrayAdapter<String> citiesAdapter;
 //
-//    private LinearLayoutManager mLinearLayoutManager;
-//    private List<ExpandListRequestResponse> expandList;
-//    private RecommendAdapter recommendAdapter;
+    private GridLayoutManager mGridLayoutManager;
+    //    private List<ExpandListRequestResponse> expandList;
+    private RecommendAdapter recommendAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,9 +80,14 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 //        citiesAdapter = new ArrayAdapter<String>(getActivity(),
 //                R.layout.cities_list_item, cities);
 //
-//        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mGridLayoutManager = new GridLayoutManager(getActivity(), 1);
 //        expandList = new ArrayList<ExpandListRequestResponse>();
-//        recommendAdapter = new RecommendAdapter(getActivity());
+        recommendAdapter = new RecommendAdapter(getActivity());
+        recommendItemsRV.setAdapter(recommendAdapter);
+        recommendItemsRV.setLayoutManager(mGridLayoutManager);
+        recommendItemsRV.setHasFixedSize(true);
+        recommendItemsRV.setSaveEnabled(true);
+        recommendItemsRV.setClipToPadding(false);
     }
 
     @Override
@@ -123,6 +132,12 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 //        getExpandList();
 
 //        loadPage();
+        if (!Utils.isNetUsable(getActivity())) {
+            ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
+        mPresenter.getRecommendBanner("00000000", "303be61cba8d9e0b5c02aa3b859a7c77", bannerPageIndex, BANNER_PAGE_SIZE, bannerLastsequence, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
+
     }
 
 //    @SuppressLint("JavascriptInterface")
@@ -214,8 +229,9 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 //    }
 
     @Override
-    public void onGetExpandList(List<ExpandListRequestResponse> expands) {
-
+    public void onGetRecommendBanner(List<RecommendBannerRequestResponse.ListsBean> banners) {
+        recommendAdapter.clearBannerList();
+        recommendAdapter.appendBannerList(banners);
     }
 
     @Override

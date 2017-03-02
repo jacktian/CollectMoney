@@ -22,6 +22,7 @@ import com.yzdsmart.Dingdingwen.http.response.PaymentLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PersonRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PersonalWithdrawLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PublishTaskLogRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.RecommendBannerRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RecommendFriendsRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RegisterBusinessRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
@@ -1000,6 +1001,22 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.EXPAND)
     Observable<List<ExpandListRequestResponse>> getExpandList(@Field("SubmitCode") String submitCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Header("Authorization") String authorization);
+
+    /**
+     * 获取推荐轮播
+     *
+     * @param submitCode
+     * @param actionCode
+     * @param pageIndex
+     * @param pageSize
+     * @param lastsequence
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.DISCOVER)
+    Observable<RecommendBannerRequestResponse> getRecommendBanner(@Field("SubmitCode") String submitCode, @Field("ActionCode") String actionCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
+
 
     /**
      * 校验银行卡

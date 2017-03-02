@@ -127,7 +127,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     private FragmentManager fm;
 
     //周边商铺检索参数
-    private static final Integer PAGE_SIZE = 10;//分页数量
+    private static final Integer PAGE_SIZE = 30;//分页数量
     private Integer page_index = 1;//分页索引 当前页标
 
     //获取当前用户周边用户
@@ -141,7 +141,7 @@ public class FindMoneyFragment extends BaseFragment implements FindMoneyContract
     //检索到的位置列表信息
     List<Marker> coinsMarkerList = null;
 
-    private Integer zoomDistance = 500;
+    private Integer zoomDistance = 2000;
     //定位坐标点
     private Double locLatitude = null;
     private Double locLongitude = null;

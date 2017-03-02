@@ -23,8 +23,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.meelive.ingkee.sdk.plugin.IInkeCallback;
+import com.meelive.ingkee.sdk.plugin.InKeSdkPluginAPI;
+import com.meelive.ingkee.sdk.plugin.entity.ShareInfo;
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMGroupPendencyItem;
@@ -163,6 +167,8 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
         searchGuideView.show();
     }
 
+    private IInkeCallback inkeCallback;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -188,6 +194,35 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 
         bagAdapter = new BackgroundBagAdapter(this);
         mGridLayoutManager = new GridLayoutManager(this, 5);
+
+        inkeCallback = new IInkeCallback() {
+            @Override
+            public void loginTrigger() {
+
+            }
+
+            @Override
+            public void payTrigger(String s, String s1) {
+
+            }
+
+            @Override
+            public void shareTrigger(ShareInfo shareInfo) {
+
+            }
+
+            @Override
+            public void createLiveReturnTrigger(String s) {
+                Toast.makeText(MainActivity.this, "-->" + s, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void stopLiveTrigger(String s) {
+
+            }
+        };
+
+        InKeSdkPluginAPI.register(inkeCallback, Constants.INKE_APP_ID, 1, 0);
 
         initBackgroundBagBottomSheetDialog();
 
@@ -427,7 +462,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
 //                    if (((RecommendFragment) mCurrentFragment).canRecommendWebGoBack()) {
 //                        ((RecommendFragment) mCurrentFragment).recomendWebGoBack();
 //                    } else {
-                        backToFindMoney();
+                    backToFindMoney();
 //                    }
                     return true;
                 } else if (mCurrentFragment instanceof FindMoneyFragment) {
