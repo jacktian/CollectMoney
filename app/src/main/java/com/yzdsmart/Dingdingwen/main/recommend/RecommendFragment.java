@@ -54,13 +54,17 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 //    @BindView(R.id.recommend_webview)
 //    WebView recommendWebView;
 
-    private WebSettings recommendSettings;
+//    private WebSettings recommendSettings;
 
     private static final String TAG = "RecommendFragment";
 
     private Integer bannerPageIndex = 1;
     private Integer bannerLastsequence = 0;
-    private static final Integer BANNER_PAGE_SIZE = 10;
+    private static final Integer BANNER_PAGE_SIZE = 5;
+
+    private Integer newsPageIndex = 1;
+    private Integer newsLastsequence = 0;
+    private static final Integer NEWS_PAGE_SIZE = 10;
 
     private RecommendContract.RecommendPresenter mPresenter;
     //
@@ -139,8 +143,8 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
             ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
-        mPresenter.getRecommendBanner("00000000", "303be61cba8d9e0b5c02aa3b859a7c77", bannerPageIndex, BANNER_PAGE_SIZE, bannerLastsequence, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
-
+        mPresenter.getRecommendBanner("00000000", "88e1ed66aeaa4ec66dc203e0698800bd", bannerPageIndex, BANNER_PAGE_SIZE, bannerLastsequence, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
+        mPresenter.getRecommendNews("00000000", "303be61cba8d9e0b5c02aa3b859a7c77", newsPageIndex, NEWS_PAGE_SIZE, newsLastsequence, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
     }
 
 //    @SuppressLint("JavascriptInterface")
@@ -207,6 +211,12 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(TAG);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mPresenter.unRegisterSubscribe();
     }
 
     @Optional

@@ -9,10 +9,12 @@
         android:id="@+id/recommend_banner"
         android:layout_width="match_parent"
         android:layout_height="190dp"
+        app:banner_indicatorGravity="bottom|right"
         app:banner_pageChangeDuration="1000"
-        app:banner_pointAutoPlayAble="false"
-        app:banner_pointContainerBackground="@android:color/transparent"
+        app:banner_pointAutoPlayAble="true"
+        app:banner_pointAutoPlayInterval="5000"
+        app:banner_pointContainerBackground="@color/shadow"
         app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
-        app:banner_pointTopBottomMargin="15dp"
+        app:banner_tipTextSize="@dimen/font_small"
         app:banner_transitionEffect="alpha" />
 </LinearLayout>

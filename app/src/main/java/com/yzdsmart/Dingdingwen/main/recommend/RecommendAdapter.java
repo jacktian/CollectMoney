@@ -1,6 +1,7 @@
 package com.yzdsmart.Dingdingwen.main.recommend;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +13,11 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
+import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.response.RecommendBannerRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RecommendNewsRequestResponse;
+import com.yzdsmart.Dingdingwen.main.recommend_news_details.RecommendNewsDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,11 +157,11 @@ public class RecommendAdapter extends UltimateViewAdapter<UltimateRecyclerviewVi
                 break;
             case RECOMMEND_LIVE:
                 itemView = layoutInflater.inflate(R.layout.recommend_live_layout, parent, false);
-                holder = new BannerViewHolder(itemView);
+                holder = new LiveViewHolder(itemView);
                 break;
             case RECOMMEND_NEWS:
                 itemView = layoutInflater.inflate(R.layout.recommend_news_layout, parent, false);
-                holder = new BannerViewHolder(itemView);
+                holder = new NewsViewHolder(itemView);
                 break;
         }
         return holder;
@@ -197,6 +200,9 @@ public class RecommendAdapter extends UltimateViewAdapter<UltimateRecyclerviewVi
                 if (0 < bannerList.size()) {
                     ((BannerViewHolder) holder).setRecommendBanner(bannerList);
                 }
+//                else {
+//                    ((BannerViewHolder) holder).hideBanner();
+//                }
                 break;
             case RECOMMEND_LIVE:
                 if (0 < liveList.size()) {
@@ -205,7 +211,7 @@ public class RecommendAdapter extends UltimateViewAdapter<UltimateRecyclerviewVi
                 break;
             case RECOMMEND_NEWS:
                 if (0 < newsList.size()) {
-
+                    ((NewsViewHolder) holder).setNewsList(newsList);
                 }
                 break;
         }
@@ -221,7 +227,7 @@ public class RecommendAdapter extends UltimateViewAdapter<UltimateRecyclerviewVi
 
     }
 
-    class BannerViewHolder extends UltimateRecyclerviewViewHolder {
+    class BannerViewHolder extends UltimateRecyclerviewViewHolder implements BGABanner.Delegate<ImageView, String> {
         @Nullable
         @BindView(R.id.recommend_banner)
         BGABanner recommendBanner;
@@ -229,13 +235,20 @@ public class RecommendAdapter extends UltimateViewAdapter<UltimateRecyclerviewVi
         public BannerViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            recommendBanner.setDelegate(this);
+        }
+
+        public void hideBanner() {
+            ButterKnife.apply(recommendBanner, ((BaseActivity) context).BUTTERKNIFEGONE);
         }
 
         public void setRecommendBanner(List<RecommendBannerRequestResponse.ListsBean> dataBeans) {
             //得到图片地址的集合
             List<String> bannerImgs = new ArrayList<String>();
+            List<String> bannerTitles = new ArrayList<String>();
             for (int i = 0; i < dataBeans.size(); i++) {
                 bannerImgs.add(dataBeans.get(i).getImageUrl());
+                bannerTitles.add(dataBeans.get(i).getDiscoverTitle());
             }
             recommendBanner.setAdapter(new BGABanner.Adapter<ImageView, String>() {
                 @Override
@@ -243,7 +256,15 @@ public class RecommendAdapter extends UltimateViewAdapter<UltimateRecyclerviewVi
                     Glide.with(context).load(model).placeholder(R.mipmap.ic_holder_light).error(R.mipmap.ic_holder_light).centerCrop().dontAnimate().into(itemView);
                 }
             });
-            recommendBanner.setData(bannerImgs, null);
+            recommendBanner.setData(bannerImgs, bannerTitles);
+        }
+
+        @Override
+        public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
+            RecommendBannerRequestResponse.ListsBean bannerBean = bannerList.get(position);
+            Bundle bundle = new Bundle();
+            bundle.putString("pageUrl", bannerBean.getFileUrl());
+            ((BaseActivity) context).openActivity(RecommendNewsDetailsActivity.class, bundle, 0);
         }
     }
 
@@ -262,12 +283,23 @@ public class RecommendAdapter extends UltimateViewAdapter<UltimateRecyclerviewVi
         RecyclerView newsListRV;
 
         LinearLayoutManager mLinearLayoutManager;
+        RecommendNewsAdapter newsAdapter;
 
         public NewsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
             mLinearLayoutManager = new LinearLayoutManager(context);
+            newsAdapter = new RecommendNewsAdapter(context);
+            newsListRV.setAdapter(newsAdapter);
+            newsListRV.setLayoutManager(mLinearLayoutManager);
+            newsListRV.setHasFixedSize(true);
+            newsListRV.setSaveEnabled(true);
+            newsListRV.setClipToPadding(false);
+        }
+
+        public void setNewsList(List<RecommendNewsRequestResponse.ListsBean> list) {
+            newsAdapter.appendList(list);
         }
     }
 
