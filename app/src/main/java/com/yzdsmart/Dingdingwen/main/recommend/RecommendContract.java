@@ -23,8 +23,9 @@ public interface RecommendContract {
          * 获取推荐新闻列表
          *
          * @param recommendNews
+         * @param lastsequence
          */
-        void onGetRecommendNews(List<RecommendNewsRequestResponse.ListsBean> recommendNews);
+        void onGetRecommendNews(List<RecommendNewsRequestResponse.ListsBean> recommendNews,Integer lastsequence);
     }
 
     interface RecommendPresenter extends BasePresenter {

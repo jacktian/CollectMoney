@@ -2,9 +2,9 @@ package com.yzdsmart.Dingdingwen.main.recommend;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
-import android.webkit.WebSettings;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,7 +64,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 
     private Integer newsPageIndex = 1;
     private Integer newsLastsequence = 0;
-    private static final Integer NEWS_PAGE_SIZE = 10;
+    private static final Integer NEWS_PAGE_SIZE = 3;
 
     private RecommendContract.RecommendPresenter mPresenter;
     //
@@ -138,12 +138,45 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
         recommendItemsRV.setHasFixedSize(true);
         recommendItemsRV.setSaveEnabled(true);
         recommendItemsRV.setClipToPadding(false);
+        recommendItemsRV.reenableLoadmore();
+        recommendItemsRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+                getRecommendNews();
+            }
+        });
+        recommendItemsRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                recommendItemsRV.setRefreshing(false);
+                recommendItemsRV.reenableLoadmore();
+                newsPageIndex = 1;
+                newsLastsequence = 0;
 
+                recommendAdapter.clearBannerList();
+                recommendAdapter.clearNewsList();
+                getRecommendBanner();
+                getRecommendNews();
+            }
+        });
+
+        getRecommendBanner();
+        getRecommendNews();
+    }
+
+    private void getRecommendBanner() {
         if (!Utils.isNetUsable(getActivity())) {
             ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
             return;
         }
         mPresenter.getRecommendBanner("00000000", "88e1ed66aeaa4ec66dc203e0698800bd", bannerPageIndex, BANNER_PAGE_SIZE, bannerLastsequence, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
+    }
+
+    private void getRecommendNews() {
+        if (!Utils.isNetUsable(getActivity())) {
+            ((BaseActivity) getActivity()).showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
         mPresenter.getRecommendNews("00000000", "303be61cba8d9e0b5c02aa3b859a7c77", newsPageIndex, NEWS_PAGE_SIZE, newsLastsequence, SharedPreferencesUtils.getString(getActivity(), "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(getActivity(), "ddw_access_token", ""));
     }
 
@@ -248,7 +281,13 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
     }
 
     @Override
-    public void onGetRecommendNews(List<RecommendNewsRequestResponse.ListsBean> news) {
+    public void onGetRecommendNews(List<RecommendNewsRequestResponse.ListsBean> news, Integer lastsequence) {
+        newsLastsequence = lastsequence;
+        newsPageIndex++;
+        if (news.size() < NEWS_PAGE_SIZE) {
+            recommendItemsRV.disableLoadmore();
+        }
+        if (0 >= news.size()) return;
         recommendAdapter.appendNewsList(news);
     }
 

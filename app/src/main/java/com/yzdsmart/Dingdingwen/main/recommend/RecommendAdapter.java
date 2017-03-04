@@ -116,6 +116,7 @@ public class RecommendAdapter extends UltimateViewAdapter<UltimateRecyclerviewVi
      */
     public void appendNewsList(List<RecommendNewsRequestResponse.ListsBean> list) {
         if (null != newsList) {
+            newsList.clear();
             newsList.addAll(list);
         }
         notifyDataSetChanged();
@@ -198,11 +199,11 @@ public class RecommendAdapter extends UltimateViewAdapter<UltimateRecyclerviewVi
         switch (getItemViewType(position)) {
             case RECOMMEND_BANNER:
                 if (0 < bannerList.size()) {
+                    ((BannerViewHolder) holder).toogleBanner(true);
                     ((BannerViewHolder) holder).setRecommendBanner(bannerList);
+                } else {
+                    ((BannerViewHolder) holder).toogleBanner(false);
                 }
-//                else {
-//                    ((BannerViewHolder) holder).hideBanner();
-//                }
                 break;
             case RECOMMEND_LIVE:
                 if (0 < liveList.size()) {
@@ -212,6 +213,8 @@ public class RecommendAdapter extends UltimateViewAdapter<UltimateRecyclerviewVi
             case RECOMMEND_NEWS:
                 if (0 < newsList.size()) {
                     ((NewsViewHolder) holder).setNewsList(newsList);
+                } else {
+                    ((NewsViewHolder) holder).clearNewsList();
                 }
                 break;
         }
@@ -238,8 +241,8 @@ public class RecommendAdapter extends UltimateViewAdapter<UltimateRecyclerviewVi
             recommendBanner.setDelegate(this);
         }
 
-        public void hideBanner() {
-            ButterKnife.apply(recommendBanner, ((BaseActivity) context).BUTTERKNIFEGONE);
+        public void toogleBanner(boolean flag) {
+            ButterKnife.apply(recommendBanner, flag ? ((BaseActivity) context).BUTTERKNIFEVISIBLE : ((BaseActivity) context).BUTTERKNIFEGONE);
         }
 
         public void setRecommendBanner(List<RecommendBannerRequestResponse.ListsBean> dataBeans) {
@@ -300,6 +303,10 @@ public class RecommendAdapter extends UltimateViewAdapter<UltimateRecyclerviewVi
 
         public void setNewsList(List<RecommendNewsRequestResponse.ListsBean> list) {
             newsAdapter.appendList(list);
+        }
+
+        public void clearNewsList() {
+            newsAdapter.clearList();
         }
     }
 

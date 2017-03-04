@@ -62,7 +62,7 @@ public class RecommendPresenter implements RecommendContract.RecommendPresenter 
             public void onSuccess(Object result) {
                 RecommendNewsRequestResponse requestResponse = (RecommendNewsRequestResponse) result;
                 if ("OK".equals(requestResponse.getActionStatus())) {
-                    mView.onGetRecommendNews(requestResponse.getLists());
+                    mView.onGetRecommendNews(requestResponse.getLists(), requestResponse.getLastsequence());
                 } else if ("FAIL".equals(requestResponse.getActionStatus())) {
                     ((BaseActivity) context).showSnackbar(requestResponse.getErrorInfo());
                 }

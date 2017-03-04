@@ -129,10 +129,9 @@ public class RecommendNewsDetailsActivity extends BaseActivity {
         newsDetailsSettings.setAllowFileAccess(true);
         newsDetailsSettings.setSupportZoom(true);
         newsDetailsSettings.setAllowContentAccess(true);
-//        newsDetailsSettings.setDomStorageEnabled(true);
         newsDetailsSettings.setUseWideViewPort(true);
 //        newsDetailsSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        newsDetailsSettings.setLoadWithOverviewMode(true);
+//        newsDetailsSettings.setLoadWithOverviewMode(true);
         newsDetailsWV.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条风格，为0指滚动条不占用空间，直接覆盖在网页上
         newsDetailsWV.setWebChromeClient(new WebChromeClient() {
             @Override
