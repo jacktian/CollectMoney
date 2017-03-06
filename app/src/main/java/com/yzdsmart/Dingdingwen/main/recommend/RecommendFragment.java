@@ -64,7 +64,7 @@ public class RecommendFragment extends BaseFragment implements RecommendContract
 
     private Integer newsPageIndex = 1;
     private Integer newsLastsequence = 0;
-    private static final Integer NEWS_PAGE_SIZE = 3;
+    private static final Integer NEWS_PAGE_SIZE = 5;
 
     private RecommendContract.RecommendPresenter mPresenter;
     //
