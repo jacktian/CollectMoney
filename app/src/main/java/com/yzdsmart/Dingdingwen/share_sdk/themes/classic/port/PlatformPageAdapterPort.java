@@ -8,16 +8,13 @@
 
 package com.yzdsmart.Dingdingwen.share_sdk.themes.classic.port;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 
 import com.mob.tools.utils.R;
 import com.yzdsmart.Dingdingwen.share_sdk.themes.classic.PlatformPage;
 import com.yzdsmart.Dingdingwen.share_sdk.themes.classic.PlatformPageAdapter;
 
-import static android.R.attr.paddingTop;
-import static com.yzdsmart.Dingdingwen.share_sdk.themes.classic.PlatformPageAdapter.DESIGN_BOTTOM_HEIGHT;
+import java.util.ArrayList;
 
 /** 竖屏的九宫格页面适配器 */
 public class PlatformPageAdapterPort extends PlatformPageAdapter {

@@ -8,8 +8,6 @@
 
 package com.yzdsmart.Dingdingwen.share_sdk.themes.classic.land;
 
-import java.io.File;
-
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -30,6 +28,8 @@ import com.mob.tools.utils.R;
 import com.yzdsmart.Dingdingwen.share_sdk.OnekeyShareThemeImpl;
 import com.yzdsmart.Dingdingwen.share_sdk.themes.classic.EditPage;
 import com.yzdsmart.Dingdingwen.share_sdk.themes.classic.XView;
+
+import java.io.File;
 
 /** 横屏的编辑页 */
 public class EditPageLand extends EditPage implements OnClickListener, TextWatcher, Runnable {

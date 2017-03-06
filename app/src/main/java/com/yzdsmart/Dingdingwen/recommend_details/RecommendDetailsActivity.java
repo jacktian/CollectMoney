@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.main.recommend_news_details;
+package com.yzdsmart.Dingdingwen.recommend_details;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -29,7 +29,7 @@ import butterknife.Optional;
  * Created by YZD on 2017/3/3.
  */
 
-public class RecommendNewsDetailsActivity extends BaseActivity {
+public class RecommendDetailsActivity extends BaseActivity {
     @Nullable
     @BindViews({R.id.left_title, R.id.title_logo, R.id.center_title, R.id.title_right_operation_layout})
     List<View> hideViews;
@@ -40,7 +40,7 @@ public class RecommendNewsDetailsActivity extends BaseActivity {
     @BindView(R.id.news_details)
     WebView newsDetailsWV;
 
-    private static final String TAG = "RecommendNewsDetailsActivity";
+    private static final String TAG = "RecommendDetailsActivity";
 
     private WebSettings newsDetailsSettings;
 
@@ -68,7 +68,7 @@ public class RecommendNewsDetailsActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_recomend_news_details;
+        return R.layout.activity_recomend_details;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.main.recommend;
+package com.yzdsmart.Dingdingwen.recommend;
 
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;

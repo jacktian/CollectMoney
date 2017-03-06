@@ -1,7 +1,5 @@
 package com.yzdsmart.Dingdingwen.personal_friend_detail;
 
-import android.util.Log;
-
 import com.tencent.TIMAddFriendRequest;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMDelFriendType;

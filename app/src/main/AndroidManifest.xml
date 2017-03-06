@@ -344,7 +344,12 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".main.recommend_news_details.RecommendNewsDetailsActivity"
+            android:name=".recommend.RecommendActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".recommend_details.RecommendDetailsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTop" />
 

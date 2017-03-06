@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.main.recommend;
+package com.yzdsmart.Dingdingwen.recommend;
 
 import com.yzdsmart.Dingdingwen.BasePresenter;
 import com.yzdsmart.Dingdingwen.BaseView;
@@ -25,7 +25,7 @@ public interface RecommendContract {
          * @param recommendNews
          * @param lastsequence
          */
-        void onGetRecommendNews(List<RecommendNewsRequestResponse.ListsBean> recommendNews,Integer lastsequence);
+        void onGetRecommendNews(List<RecommendNewsRequestResponse.ListsBean> recommendNews, Integer lastsequence);
     }
 
     interface RecommendPresenter extends BasePresenter {

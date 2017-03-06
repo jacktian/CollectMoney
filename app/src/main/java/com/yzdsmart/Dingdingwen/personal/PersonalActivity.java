@@ -423,7 +423,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.P
                 openActivity(GalleyActivity.class, bundle, 0);
                 break;
             case R.id.to_personal_qr_code:
-                InKeSdkPluginAPI.createLive(PersonalActivity.this, inKeUserInfo);
+//                InKeSdkPluginAPI.createLive(PersonalActivity.this, inKeUserInfo);
                 break;
         }
     }

@@ -1,7 +1,5 @@
 package com.yzdsmart.Dingdingwen.amap;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.model.BitmapDescriptor;
@@ -10,6 +8,9 @@ import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.services.core.PoiItem;
+
+import java.util.ArrayList;
+import java.util.List;
 /**
  * Poi图层类。在高德地图API里，如果要显示Poi，可以用此类来创建Poi图层。如不满足需求，也可以自己创建自定义的Poi图层。
  * @since V2.1.0

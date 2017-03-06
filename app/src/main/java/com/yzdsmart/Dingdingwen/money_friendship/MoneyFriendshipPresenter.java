@@ -1,7 +1,6 @@
 package com.yzdsmart.Dingdingwen.money_friendship;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;

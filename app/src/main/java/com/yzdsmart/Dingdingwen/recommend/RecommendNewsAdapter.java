@@ -1,4 +1,4 @@
-package com.yzdsmart.Dingdingwen.main.recommend;
+package com.yzdsmart.Dingdingwen.recommend;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.http.response.RecommendNewsRequestResponse;
-import com.yzdsmart.Dingdingwen.main.recommend_news_details.RecommendNewsDetailsActivity;
+import com.yzdsmart.Dingdingwen.recommend_details.RecommendDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +103,7 @@ public class RecommendNewsAdapter extends RecyclerView.Adapter<RecommendNewsAdap
                     RecommendNewsRequestResponse.ListsBean newsBean = newsList.get(getAdapterPosition());
                     Bundle bundle = new Bundle();
                     bundle.putString("pageUrl", newsBean.getFileUrl());
-                    ((BaseActivity) context).openActivity(RecommendNewsDetailsActivity.class, bundle, 0);
+                    ((BaseActivity) context).openActivity(RecommendDetailsActivity.class, bundle, 0);
                     break;
             }
         }

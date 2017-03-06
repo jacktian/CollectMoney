@@ -8,24 +8,25 @@
 
 package com.yzdsmart.Dingdingwen.share_sdk.themes.classic;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ImageView.ScaleType;
-import cn.sharesdk.framework.Platform;
 
 import com.mob.tools.gui.ViewPagerAdapter;
 import com.mob.tools.utils.R;
 import com.yzdsmart.Dingdingwen.share_sdk.CustomerLogo;
+
+import java.util.ArrayList;
+
+import cn.sharesdk.framework.Platform;
 
 /** 九宫格的适配器抽象类 */
 public abstract class PlatformPageAdapter extends ViewPagerAdapter implements OnClickListener {

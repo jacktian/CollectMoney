@@ -1,5 +1,6 @@
 package com.yzdsmart.Dingdingwen.main;
 
+import com.amap.api.maps.model.MarkerOptions;
 import com.tencent.TIMConversation;
 import com.tencent.TIMGroupPendencyItem;
 import com.tencent.TIMMessage;
@@ -76,6 +77,13 @@ public interface MainContract {
         void onDismissBackgroundBag();
 
         void updateAccessToken();
+
+        /**
+         * 获取周边商铺列表
+         *
+         * @param optionsList
+         */
+        void onGetShopList(List<MarkerOptions> optionsList);
     }
 
     interface MainPresenter extends BasePresenter {
@@ -151,6 +159,26 @@ public interface MainContract {
          * @param authorization
          */
         void shopBackgroundBag(String action, String submitCode, String bazaCode, String authorization);
+
+        /**
+         * 获取周边店铺
+         *
+         * @param submitCode
+         * @param coor
+         * @param range
+         * @param pageIndex
+         * @param pageSize
+         */
+        void getShopList(String submitCode, String coor, Integer range, Integer pageIndex, Integer pageSize, String authorization);
+
+        /**
+         * 上传坐标
+         *
+         * @param submitCode
+         * @param custCode
+         * @param coor
+         */
+        void uploadCoor(String submitCode, String custCode, String coor, String authorization);
 
         /**
          * 取消网络请求

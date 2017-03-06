@@ -1,7 +1,6 @@
 package com.yzdsmart.Dingdingwen.money_friendship.friend_list.add;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.tencent.TIMAddFriendRequest;
 import com.tencent.TIMFriendResult;

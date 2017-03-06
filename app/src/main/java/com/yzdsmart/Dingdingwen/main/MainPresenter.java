@@ -1,7 +1,12 @@
 package com.yzdsmart.Dingdingwen.main;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.TextView;
 
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
@@ -20,6 +25,7 @@ import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.BackgroundBagRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.ShopListRequestResponse;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendshipInfo;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.GroupInfo;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.UserInfo;
@@ -34,6 +40,7 @@ import com.yzdsmart.Dingdingwen.tecent_im.service.TlsBusiness;
 import com.yzdsmart.Dingdingwen.tecent_im.utils.PushUtil;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -55,12 +62,14 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
     private Context context;
     private MainContract.MainView mView;
     private MainModel mModel;
+    private DecimalFormat decimalFormat;
 
     public MainPresenter(Context context, MainContract.MainView mView, TLSService tlsService) {
         this.context = context;
         this.mView = mView;
         mModel = new MainModel(tlsService);
         mView.setPresenter(this);
+        decimalFormat = new DecimalFormat("#0");
 
         //初始化IMSDK
         InitBusiness.start(App.getAppInstance(), TIMLogLevel.DEBUG.ordinal());
@@ -337,6 +346,69 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
             @Override
             public void onComplete() {
                 ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void getShopList(String submitCode, String coor, Integer range, Integer pageIndex, Integer pageSize, String authorization) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.getShopList(submitCode, coor, range, pageIndex, pageSize, authorization, new RequestListener() {
+                    @Override
+                    public void onSuccess(Object result) {
+                        List<ShopListRequestResponse> shopList = (List<ShopListRequestResponse>) result;
+                        if (null != shopList) {
+                            // 构建MarkerOption，用于在地图上添加Marker
+                            MarkerOptions options;
+                            List<MarkerOptions> optionsList = new ArrayList<MarkerOptions>();
+                            for (ShopListRequestResponse shop : shopList) {
+                                String coor = shop.getCoor();
+                                // 定义Maker坐标点
+                                LatLng point = new LatLng(Double.valueOf(coor.split(",")[1]), Double.valueOf(coor.split(",")[0]));
+                                View packageView = ((BaseActivity) context).getLayoutInflater().inflate(R.layout.red_package_icon, null);
+                                TextView amountTV = (TextView) packageView.findViewById(R.id.package_amount);
+                                amountTV.setText(decimalFormat.format(shop.getReleGold()));
+                                options = new MarkerOptions().position(point).snippet(shop.getCode()).icon(BitmapDescriptorFactory.fromView(packageView));
+                                optionsList.add(options);
+                            }
+                            mView.onGetShopList(optionsList);
+                        }
+                    }
+
+                    @Override
+                    public void onError(String err) {
+                        ((BaseActivity) context).hideProgressDialog();
+                        if (err.contains("401 Unauthorized")) {
+                            MainActivity.getInstance().updateAccessToken();
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        ((BaseActivity) context).hideProgressDialog();
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void uploadCoor(String submitCode, String custCode, String coor, String authorization) {
+        mModel.uploadCoor(submitCode, custCode, coor, authorization, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+
+            }
+
+            @Override
+            public void onError(String err) {
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
+                }
+            }
+
+            @Override
+            public void onComplete() {
+
             }
         });
     }

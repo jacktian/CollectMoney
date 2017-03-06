@@ -1,7 +1,5 @@
 package com.yzdsmart.Dingdingwen.chat;
 
-import android.support.annotation.Nullable;
-
 import com.tencent.TIMMessage;
 import com.tencent.TIMMessageDraft;
 import com.yzdsmart.Dingdingwen.BasePresenter;

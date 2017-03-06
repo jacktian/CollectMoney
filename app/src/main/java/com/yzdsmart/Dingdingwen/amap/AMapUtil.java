@@ -3,12 +3,6 @@
  */
 package com.yzdsmart.Dingdingwen.amap;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import android.text.Html;
 import android.text.Spanned;
 import android.widget.EditText;
@@ -20,6 +14,12 @@ import com.amap.api.services.route.BusStep;
 import com.amap.api.services.route.RouteBusLineItem;
 import com.amap.api.services.route.RouteRailwayItem;
 import com.yzdsmart.Dingdingwen.R;
+
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class AMapUtil {
 	/**

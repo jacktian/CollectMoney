@@ -8,9 +8,6 @@
 
 package com.yzdsmart.Dingdingwen.share_sdk.themes.classic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,16 +16,20 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import cn.sharesdk.framework.CustomPlatform;
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.Platform.ShareParams;
-import cn.sharesdk.framework.ShareSDK;
 
 import com.mob.tools.gui.MobViewPager;
 import com.mob.tools.utils.R;
 import com.yzdsmart.Dingdingwen.share_sdk.CustomerLogo;
 import com.yzdsmart.Dingdingwen.share_sdk.OnekeySharePage;
 import com.yzdsmart.Dingdingwen.share_sdk.OnekeyShareThemeImpl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import cn.sharesdk.framework.CustomPlatform;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.Platform.ShareParams;
+import cn.sharesdk.framework.ShareSDK;
 
 /** 九宫格的抽象类 */
 public abstract class PlatformPage extends OnekeySharePage {
