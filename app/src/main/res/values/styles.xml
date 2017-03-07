@@ -20,6 +20,11 @@
         <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
     </style>
 
+    <style name="market_shops_dialog">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
+    </style>
+
     <style name="orange_button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

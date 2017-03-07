@@ -244,6 +244,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     private BackgroundBagAdapter bagAdapter;
     private boolean isFirstLoadBag = true;
     private BottomSheetDialog backgroundBagBottomSheetDialog;
+    private BottomSheetDialog marketShopsBottomSheetDialog;
 
     private List<String> customMsgList;
     private Handler showCustomMsgHandler = new Handler();
@@ -424,6 +425,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         InKeSdkPluginAPI.register(inkeCallback, Constants.INKE_APP_ID, 1, 0);
 
         initBackgroundBagBottomSheetDialog();
+        initMarketShopsBottomSheetDialog();
 
         tlsService = TLSService.getInstance();
 
@@ -537,7 +539,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     }
 
     @Optional
-    @OnClick({R.id.money_friend_radio, R.id.loc_scan_coins, R.id.personal_radio, R.id.background_bag_layout, R.id.quit_background_bag, R.id.center_title, R.id.start_navigation, R.id.find_money_scan, R.id.find_money_pay, R.id.find_money_bag, R.id.find_money_recommend})
+    @OnClick({R.id.money_friend_radio, R.id.loc_scan_coins, R.id.personal_radio, R.id.background_bag_layout, R.id.quit_background_bag, R.id.center_title, R.id.start_navigation, R.id.find_money_scan, R.id.find_money_pay, R.id.find_money_bag, R.id.find_money_recommend, R.id.show_market_shops})
     void onClick(View view) {
         Bundle bundle;
         switch (view.getId()) {
@@ -641,6 +643,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
                 break;
             case R.id.find_money_recommend:
                 openActivity(RecommendActivity.class);
+                break;
+            case R.id.show_market_shops:
+                showMarketShops();
                 break;
         }
     }
@@ -974,6 +979,11 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         }
     }
 
+    public void showMarketShops() {
+        marketShopsBottomSheetDialog.show();
+
+    }
+
     private void initBackgroundBagBottomSheetDialog() {
         backgroundBagBottomSheetDialog = new BottomSheetDialog(this, R.style.background_bag_dialog);
         View backgroundBagView = LayoutInflater.from(this).inflate(R.layout.background_bag_layout, null);
@@ -1006,6 +1016,19 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         });
         backgroundBagBottomSheetDialog.setContentView(backgroundBagView);
         backgroundBagBottomSheetDialog.setCancelable(false);
+    }
+
+    private void initMarketShopsBottomSheetDialog() {
+        marketShopsBottomSheetDialog = new BottomSheetDialog(this, R.style.market_shops_dialog);
+        View marketShopsView = LayoutInflater.from(this).inflate(R.layout.market_shops_layout, null);
+        marketShopsView.findViewById(R.id.quit_background_bag).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                marketShopsBottomSheetDialog.dismiss();
+            }
+        });
+        marketShopsBottomSheetDialog.setContentView(marketShopsView);
+        marketShopsBottomSheetDialog.setCancelable(false);
     }
 
     private void getBackgroundBag() {

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/background_bag_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:paddingBottom="10dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_panel_radius_border"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/market_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:src="@mipmap/down_arrow" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/market_levels"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="5F"
+                    android:textColor="@color/market_level_check_text"
+                    android:textSize="@dimen/font_medium" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="4F"
+                    android:textColor="@color/market_level_check_text"
+                    android:textSize="@dimen/font_medium" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="3F"
+                    android:textColor="@color/market_level_check_text"
+                    android:textSize="@dimen/font_medium" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="2F"
+                    android:textColor="@color/market_level_check_text"
+                    android:textSize="@dimen/font_medium" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="1F"
+                    android:textColor="@color/market_level_check_text"
+                    android:textSize="@dimen/font_medium" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="B1"
+                    android:textColor="@color/market_level_check_text"
+                    android:textSize="@dimen/font_medium" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="商综体"
+                android:textColor="@color/font_grey"
+                android:textSize="@dimen/font_medium" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/quit_background_bag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="6dp"
+            android:paddingTop="6dp"
+            android:src="@mipmap/background_bag_close" />
+    </LinearLayout>
+
+</RelativeLayout>
