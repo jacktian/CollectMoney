@@ -13,17 +13,18 @@
         android:layout_height="wrap_content"
         android:background="@drawable/white_panel_radius_border"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp">
 
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:minHeight="30dp">
 
             <Spinner
                 android:id="@+id/market_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white" />
 
@@ -31,21 +32,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:src="@mipmap/down_arrow" />
         </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="333dp"
             android:orientation="horizontal">
 
             <RadioGroup
                 android:id="@+id/market_levels"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/market_levels_bg"
                 android:orientation="vertical">
 
                 <RadioButton
@@ -56,7 +58,8 @@
                     android:gravity="center"
                     android:text="5F"
                     android:textColor="@color/market_level_check_text"
-                    android:textSize="@dimen/font_medium" />
+                    android:textSize="@dimen/font_large"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:layout_width="match_parent"
@@ -66,7 +69,8 @@
                     android:gravity="center"
                     android:text="4F"
                     android:textColor="@color/market_level_check_text"
-                    android:textSize="@dimen/font_medium" />
+                    android:textSize="@dimen/font_large"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:layout_width="match_parent"
@@ -76,7 +80,8 @@
                     android:gravity="center"
                     android:text="3F"
                     android:textColor="@color/market_level_check_text"
-                    android:textSize="@dimen/font_medium" />
+                    android:textSize="@dimen/font_large"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:layout_width="match_parent"
@@ -86,7 +91,8 @@
                     android:gravity="center"
                     android:text="2F"
                     android:textColor="@color/market_level_check_text"
-                    android:textSize="@dimen/font_medium" />
+                    android:textSize="@dimen/font_large"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:layout_width="match_parent"
@@ -96,7 +102,8 @@
                     android:gravity="center"
                     android:text="1F"
                     android:textColor="@color/market_level_check_text"
-                    android:textSize="@dimen/font_medium" />
+                    android:textSize="@dimen/font_large"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:layout_width="match_parent"
@@ -104,15 +111,16 @@
                     android:layout_weight="1"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="B1"
+                    android:text="-1F"
                     android:textColor="@color/market_level_check_text"
-                    android:textSize="@dimen/font_medium" />
+                    android:textSize="@dimen/font_large"
+                    android:textStyle="bold" />
             </RadioGroup>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:gravity="center"
                 android:text="商综体"
                 android:textColor="@color/font_grey"
