@@ -41,6 +41,8 @@ public class Constants {
     public static final String SET_FOCUS_CODE = "66";//取消关注店铺：56    关注：66
     public static final String CANCEL_FOCUS_CODE = "56";
 
+    public static final String GET_MARKET_SHOPS_ACTION_CODE = "65";
+
     public static final String GET_SHOP_INFO_ACTION_CODE = "3666";
     public static final String SHOP_UPLOAD_AVATER_ACTION_CODE = "5001";//上传商铺相册
     public static final String BUY_COIN_ACTION_CODE = "66";

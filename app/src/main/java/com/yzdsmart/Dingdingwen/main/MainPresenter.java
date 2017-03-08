@@ -21,9 +21,11 @@ import com.tencent.TIMValueCallBack;
 import com.yzdsmart.Dingdingwen.App;
 import com.yzdsmart.Dingdingwen.BaseActivity;
 import com.yzdsmart.Dingdingwen.R;
+import com.yzdsmart.Dingdingwen.bean.MarketShop;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.BackgroundBagRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.MarketsInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopListRequestResponse;
 import com.yzdsmart.Dingdingwen.tecent_im.bean.FriendshipInfo;
@@ -409,6 +411,54 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
             @Override
             public void onComplete() {
 
+            }
+        });
+    }
+
+    @Override
+    public void getMarketsInfo(String action, String submitCode, String custCode, String authorization) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.getMarketsInfo(action, submitCode, custCode, authorization, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                MarketsInfoRequestResponse requestResponse = (MarketsInfoRequestResponse) result;
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void getMarketShops(String submitCode, String complexKeyword, String storeyKeyword, Integer pageIndex, Integer pageSize, String authorization) {
+        ((BaseActivity) context).showProgressDialog(R.drawable.loading, context.getResources().getString(R.string.loading));
+        mModel.getMarketShops(submitCode, complexKeyword, storeyKeyword, pageIndex, pageSize, authorization, new RequestListener() {
+            @Override
+            public void onSuccess(Object result) {
+                List<MarketShop> marketShops = (List<MarketShop>) result;
+            }
+
+            @Override
+            public void onError(String err) {
+                ((BaseActivity) context).hideProgressDialog();
+                if (err.contains("401 Unauthorized")) {
+                    MainActivity.getInstance().updateAccessToken();
+                }
+            }
+
+            @Override
+            public void onComplete() {
+                ((BaseActivity) context).hideProgressDialog();
             }
         });
     }

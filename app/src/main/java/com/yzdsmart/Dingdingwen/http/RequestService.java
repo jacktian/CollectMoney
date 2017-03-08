@@ -1,6 +1,7 @@
 package com.yzdsmart.Dingdingwen.http;
 
 import com.yzdsmart.Dingdingwen.bean.BankCard;
+import com.yzdsmart.Dingdingwen.bean.MarketShop;
 import com.yzdsmart.Dingdingwen.bean.ShopScanner;
 import com.yzdsmart.Dingdingwen.http.response.BackgroundBagRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.BuyCoinsLogRequestResponse;
@@ -17,6 +18,7 @@ import com.yzdsmart.Dingdingwen.http.response.GetCoinsLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetGalleyRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.LoginRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.MarketsInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PayRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PaymentLogRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PersonRequestResponse;
@@ -1032,6 +1034,34 @@ public interface RequestService {
     @FormUrlEncoded
     @POST(Url.DISCOVER)
     Observable<RecommendNewsRequestResponse> getRecommendNews(@Field("SubmitCode") String submitCode, @Field("ActionCode") String actionCode, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Field("lastsequence") Integer lastsequence, @Header("Authorization") String authorization);
+
+    /**
+     * 获取综合体列表
+     *
+     * @param action
+     * @param submitCode
+     * @param custCode
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.ACTIVITY)
+    Observable<MarketsInfoRequestResponse> getMarketsInfo(@Query("action") String action, @Field("SubmitCode") String submitCode, @Field("CustCode") String custCode, @Header("Authorization") String authorization);
+
+    /**
+     * 综合体商铺列表
+     *
+     * @param submitCode
+     * @param complexKeyword
+     * @param storeyKeyword
+     * @param pageIndex
+     * @param pageSize
+     * @param authorization
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Url.ACTIVITY)
+    Observable<List<MarketShop>> getMarketShops(@Field("SubmitCode") String submitCode, @Field("ComplexKeyword") String complexKeyword, @Field("StoreyKeyword") String storeyKeyword, @Field("PageIndex") Integer pageIndex, @Field("PageSize") Integer pageSize, @Header("Authorization") String authorization);
 
     /**
      * 校验银行卡

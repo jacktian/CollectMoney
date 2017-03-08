@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,10 +19,14 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +70,7 @@ import com.yzdsmart.Dingdingwen.Constants;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.amap.WalkRouteOverlay;
 import com.yzdsmart.Dingdingwen.bean.CoinType;
+import com.yzdsmart.Dingdingwen.bean.MarketShop;
 import com.yzdsmart.Dingdingwen.coupon_exchange.CouponExchangeActivity;
 import com.yzdsmart.Dingdingwen.money_friendship.MoneyFriendshipActivity;
 import com.yzdsmart.Dingdingwen.money_friendship.conversation.ConversationFragment;
@@ -84,6 +90,7 @@ import com.yzdsmart.Dingdingwen.tecent_im.service.TLSService;
 import com.yzdsmart.Dingdingwen.tecent_im.utils.PushUtil;
 import com.yzdsmart.Dingdingwen.utils.SharedPreferencesUtils;
 import com.yzdsmart.Dingdingwen.utils.Utils;
+import com.yzdsmart.Dingdingwen.views.BetterSpinner;
 import com.yzdsmart.Dingdingwen.views.GuideView;
 import com.yzdsmart.Dingdingwen.views.navi_picker.NaviPickerDialog;
 
@@ -244,6 +251,12 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     private BackgroundBagAdapter bagAdapter;
     private boolean isFirstLoadBag = true;
     private BottomSheetDialog backgroundBagBottomSheetDialog;
+
+    private Integer marketShopsPageIndex = 1;
+    private static final Integer MARKET_SHOPS_PAGE_SIZE = 10;
+    private String marketName = "";
+    private String marketLevel = "";
+    private boolean isFirstLoadMarketShops = true;
     private BottomSheetDialog marketShopsBottomSheetDialog;
 
     private List<String> customMsgList;
@@ -895,6 +908,11 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     }
 
     @Override
+    public void onGetMarketShops(List<MarketShop> marketShops) {
+
+    }
+
+    @Override
     public void setPresenter(MainContract.MainPresenter presenter) {
         mPresenter = presenter;
     }
@@ -981,7 +999,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
 
     public void showMarketShops() {
         marketShopsBottomSheetDialog.show();
-
+        if (isFirstLoadMarketShops) {
+            isFirstLoadMarketShops = false;
+            getMarketShops();
+        }
     }
 
     private void initBackgroundBagBottomSheetDialog() {
@@ -1019,8 +1040,51 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     }
 
     private void initMarketShopsBottomSheetDialog() {
+        marketLevel = "1F";
+
+        final String[] marketNameArray = getResources().getStringArray(R.array.market_name_array);
+        ArrayAdapter<String> marketNameAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.market_name_item, marketNameArray);
+
         marketShopsBottomSheetDialog = new BottomSheetDialog(this, R.style.market_shops_dialog);
         View marketShopsView = LayoutInflater.from(this).inflate(R.layout.market_shops_layout, null);
+
+        BetterSpinner marketNameSpinner = (BetterSpinner) marketShopsView.findViewById(R.id.market_name);
+        marketNameSpinner.setAdapter(marketNameAdapter);
+        if (0 < marketNameArray.length) {
+            marketName = marketNameArray[0];
+            marketNameSpinner.setText(marketName);
+        }
+//        marketNameSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                System.out.println("----marketNameSpinner--->" + i);
+//                marketName = marketNameArray[i];
+//            }
+//        });
+        marketNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                System.out.println("----marketNameSpinner--->" + i);
+                marketName = marketNameArray[i];
+                System.out.println("----marketNameSpinner--->" + marketName);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        RadioGroup marketLevelsRG = (RadioGroup) marketShopsView.findViewById(R.id.market_levels);
+        marketLevelsRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+                RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i - 1);
+                marketLevel = radioButton.getText().toString();
+                System.out.println("----marketLevelsRG--->" + marketLevel);
+            }
+        });
+
         marketShopsView.findViewById(R.id.quit_background_bag).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1041,6 +1105,22 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         } else {
             mPresenter.personalBackgroundBag(Constants.PERSONAL_BACKGROUND_BAG_ACTION_CODE, Constants.PERSONAL_WITHDRAW_ACTION_TYPE_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
         }
+    }
+
+    private void getMarketsInfo() {
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
+        mPresenter.getMarketsInfo(Constants.GET_MARKET_SHOPS_ACTION_CODE, "000000", SharedPreferencesUtils.getString(this, "cust_code", ""), SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
+    }
+
+    private void getMarketShops() {
+        if (!Utils.isNetUsable(this)) {
+            showSnackbar(getResources().getString(R.string.net_unusable));
+            return;
+        }
+        mPresenter.getMarketShops("000000", marketName, marketLevel, marketShopsPageIndex, MARKET_SHOPS_PAGE_SIZE, SharedPreferencesUtils.getString(this, "ddw_token_type", "") + " " + SharedPreferencesUtils.getString(this, "ddw_access_token", ""));
     }
 
     // 初始化 JPush。如果已经初始化，但没有登录成功，则执行重新登录。

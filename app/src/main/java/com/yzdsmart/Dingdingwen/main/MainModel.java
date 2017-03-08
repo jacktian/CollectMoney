@@ -1,9 +1,11 @@
 package com.yzdsmart.Dingdingwen.main;
 
+import com.yzdsmart.Dingdingwen.bean.MarketShop;
 import com.yzdsmart.Dingdingwen.http.RequestAdapter;
 import com.yzdsmart.Dingdingwen.http.RequestListener;
 import com.yzdsmart.Dingdingwen.http.response.BackgroundBagRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.GetTokenRequestResponse;
+import com.yzdsmart.Dingdingwen.http.response.MarketsInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.PersonRequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.RequestResponse;
 import com.yzdsmart.Dingdingwen.http.response.ShopListRequestResponse;
@@ -29,6 +31,8 @@ public class MainModel {
     private Subscriber<List<ShopListRequestResponse>> getShopListSubscriber;
     private Subscriber<RequestResponse> uploadCoorSubscriber;
     private Subscriber<PersonRequestResponse> getPersonBearbySubscriber;
+    private Subscriber<MarketsInfoRequestResponse> getMarketsInfoSubscriber;
+    private Subscriber<List<MarketShop>> getMarketShopsSubscriber;
     private TLSService tlsService;
 
     public MainModel(TLSService tlsService) {
@@ -230,6 +234,52 @@ public class MainModel {
                 .subscribe(getPersonBearbySubscriber);
     }
 
+    void getMarketsInfo(String action, String submitCode, String custCode, String authorization, final RequestListener listener) {
+        getMarketsInfoSubscriber = new Subscriber<MarketsInfoRequestResponse>() {
+            @Override
+            public void onCompleted() {
+                listener.onComplete();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                listener.onError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(MarketsInfoRequestResponse requestResponse) {
+                listener.onSuccess(requestResponse);
+            }
+        };
+        RequestAdapter.getDDWRequestService().getMarketsInfo(action, submitCode, custCode, authorization)
+                .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
+                .observeOn(AndroidSchedulers.mainThread())//回调到主线程
+                .subscribe(getMarketsInfoSubscriber);
+    }
+
+    void getMarketShops(String submitCode, String complexKeyword, String storeyKeyword, Integer pageIndex, Integer pageSize, String authorization, final RequestListener listener) {
+        getMarketShopsSubscriber = new Subscriber<List<MarketShop>>() {
+            @Override
+            public void onCompleted() {
+                listener.onComplete();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                listener.onError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(List<MarketShop> marketShops) {
+                listener.onSuccess(marketShops);
+            }
+        };
+        RequestAdapter.getDDWRequestService().getMarketShops(submitCode, complexKeyword, storeyKeyword, pageIndex, pageSize, authorization)
+                .subscribeOn(Schedulers.io())// 指定subscribe()发生在IO线程请求网络/io () 的内部实现是是用一个无数量上限的线程池，可以重用空闲的线程，因此多数情况下 io() 比 newThread() 更有效率
+                .observeOn(AndroidSchedulers.mainThread())//回调到主线程
+                .subscribe(getMarketShopsSubscriber);
+    }
+
     public void unRegisterSubscribe() {
         //解除引用关系，以避免内存泄露的发生
         if (null != appRegisterSubscriber) {
@@ -255,6 +305,12 @@ public class MainModel {
         }
         if (null != getPersonBearbySubscriber) {
             getPersonBearbySubscriber.unsubscribe();
+        }
+        if (null != getMarketsInfoSubscriber) {
+            getMarketsInfoSubscriber.unsubscribe();
+        }
+        if (null != getMarketShopsSubscriber) {
+            getMarketShopsSubscriber.unsubscribe();
         }
     }
 }

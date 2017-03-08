@@ -17,4 +17,12 @@
         <item>近6个月</item>
         <item>近9个月</item>
     </array>
+
+    <array name="market_name_array">
+        <item>环球港</item>
+        <item>万达广场(新北)</item>
+        <item>万达广场(武进)</item>
+        <item>吾悦国际</item>
+        <item>吾悦广场</item>
+    </array>
 </resources>

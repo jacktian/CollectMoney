@@ -85,7 +85,9 @@ public class ScanCoinsLogActivity extends BaseActivity implements ScanCoinsLogCo
         logFilterAdapter = new ArrayAdapter<String>(this,
                 R.layout.cities_list_item, logFilters);
         logFilterSpinner.setAdapter(logFilterAdapter);
-        logFilterSpinner.setText(logFilters[0]);
+        if (0 < logFilters.length) {
+            logFilterSpinner.setText(logFilters[0]);
+        }
 
         mLinearLayoutManager = new LinearLayoutManager(this);
         dividerPaint = new Paint();

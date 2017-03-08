@@ -16,28 +16,32 @@
         android:paddingRight="10dp"
         android:paddingTop="10dp">
 
-        <FrameLayout
+        <!--<RelativeLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:minHeight="30dp">-->
+
+        <com.yzdsmart.Dingdingwen.views.BetterSpinner
+            android:id="@+id/market_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:minHeight="30dp">
+            android:background="@android:color/white"
+            android:textColor="@color/font_grey"
+            android:textSize="@dimen/font_medium" />
 
-            <Spinner
-                android:id="@+id/market_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|right"
-                android:src="@mipmap/down_arrow" />
-        </FrameLayout>
+        <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_toRightOf="@id/market_name"-->
+        <!--android:src="@mipmap/down_arrow" />-->
+        <!--</RelativeLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="333dp"
+            android:layout_height="300dp"
             android:orientation="horizontal">
 
             <RadioGroup
@@ -111,20 +115,17 @@
                     android:layout_weight="1"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="-1F"
+                    android:text="B1"
                     android:textColor="@color/market_level_check_text"
                     android:textSize="@dimen/font_large"
                     android:textStyle="bold" />
             </RadioGroup>
 
-            <TextView
+            <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+                android:id="@+id/market_level_shops"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:text="商综体"
-                android:textColor="@color/font_grey"
-                android:textSize="@dimen/font_medium" />
+                android:layout_weight="3" />
         </LinearLayout>
 
         <ImageView

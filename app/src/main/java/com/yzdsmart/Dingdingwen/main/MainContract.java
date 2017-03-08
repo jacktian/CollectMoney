@@ -7,6 +7,7 @@ import com.tencent.TIMMessage;
 import com.yzdsmart.Dingdingwen.BasePresenter;
 import com.yzdsmart.Dingdingwen.BaseView;
 import com.yzdsmart.Dingdingwen.bean.CoinType;
+import com.yzdsmart.Dingdingwen.bean.MarketShop;
 
 import java.util.List;
 
@@ -84,6 +85,13 @@ public interface MainContract {
          * @param optionsList
          */
         void onGetShopList(List<MarkerOptions> optionsList);
+
+        /**
+         * 综合体商铺列表
+         *
+         * @param marketShops
+         */
+        void onGetMarketShops(List<MarketShop> marketShops);
     }
 
     interface MainPresenter extends BasePresenter {
@@ -179,6 +187,28 @@ public interface MainContract {
          * @param coor
          */
         void uploadCoor(String submitCode, String custCode, String coor, String authorization);
+
+        /**
+         * 获取综合体列表
+         *
+         * @param action
+         * @param submitCode
+         * @param custCode
+         * @param authorization
+         */
+        void getMarketsInfo(String action, String submitCode, String custCode, String authorization);
+
+        /**
+         * 综合体商铺列表
+         *
+         * @param submitCode
+         * @param complexKeyword
+         * @param storeyKeyword
+         * @param pageIndex
+         * @param pageSize
+         * @param authorization
+         */
+        void getMarketShops(String submitCode, String complexKeyword, String storeyKeyword, Integer pageIndex, Integer pageSize, String authorization);
 
         /**
          * 取消网络请求

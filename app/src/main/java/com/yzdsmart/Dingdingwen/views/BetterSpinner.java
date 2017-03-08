@@ -16,7 +16,7 @@ import com.yzdsmart.Dingdingwen.R;
 
 import java.util.Calendar;
 
-public class BetterSpinner extends AutoCompleteTextView implements AdapterView.OnItemClickListener {
+public class BetterSpinner extends AutoCompleteTextView implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
     private static final int MAX_CLICK_DURATION = 200;
     private long startClickTime;
@@ -26,16 +26,19 @@ public class BetterSpinner extends AutoCompleteTextView implements AdapterView.O
     public BetterSpinner(Context context) {
         super(context);
         setOnItemClickListener(this);
+        setOnItemSelectedListener(this);
     }
 
     public BetterSpinner(Context arg0, AttributeSet arg1) {
         super(arg0, arg1);
         setOnItemClickListener(this);
+        setOnItemSelectedListener(this);
     }
 
     public BetterSpinner(Context arg0, AttributeSet arg1, int arg2) {
         super(arg0, arg1, arg2);
         setOnItemClickListener(this);
+        setOnItemSelectedListener(this);
     }
 
     @Override
@@ -94,15 +97,26 @@ public class BetterSpinner extends AutoCompleteTextView implements AdapterView.O
 
     @Override
     public void setCompoundDrawablesWithIntrinsicBounds(Drawable left, Drawable top, Drawable right, Drawable bottom) {
-        Drawable dropdownIcon = ContextCompat.getDrawable(getContext(), R.mipmap.down_arrow_white);
+        Drawable dropdownIcon = ContextCompat.getDrawable(getContext(), R.mipmap.down_arrow);
         if (dropdownIcon != null) {
             right = dropdownIcon;
-            right.mutate().setAlpha(128);
+//            right.mutate().setAlpha(0);
         }
         super.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
     }
 
     public int getPosition() {
         return mPosition;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        mPosition = i;
+        isPopup = false;
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
