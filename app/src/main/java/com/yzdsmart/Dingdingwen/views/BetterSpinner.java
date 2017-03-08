@@ -16,29 +16,32 @@ import com.yzdsmart.Dingdingwen.R;
 
 import java.util.Calendar;
 
-public class BetterSpinner extends AutoCompleteTextView implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
+public class BetterSpinner extends AutoCompleteTextView implements AdapterView.OnItemClickListener {
 
     private static final int MAX_CLICK_DURATION = 200;
     private long startClickTime;
     private boolean isPopup;
     private int mPosition = ListView.INVALID_POSITION;
 
+    private OnSpinnerItemSelected onSpinnerItemSelected;
+
     public BetterSpinner(Context context) {
         super(context);
         setOnItemClickListener(this);
-        setOnItemSelectedListener(this);
     }
 
     public BetterSpinner(Context arg0, AttributeSet arg1) {
         super(arg0, arg1);
         setOnItemClickListener(this);
-        setOnItemSelectedListener(this);
     }
 
     public BetterSpinner(Context arg0, AttributeSet arg1, int arg2) {
         super(arg0, arg1, arg2);
         setOnItemClickListener(this);
-        setOnItemSelectedListener(this);
+    }
+
+    public void setOnSpinnerItemSelected(OnSpinnerItemSelected onSpinnerItemSelected) {
+        this.onSpinnerItemSelected = onSpinnerItemSelected;
     }
 
     @Override
@@ -93,6 +96,9 @@ public class BetterSpinner extends AutoCompleteTextView implements AdapterView.O
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         mPosition = position;
         isPopup = false;
+        if (null != onSpinnerItemSelected) {
+            onSpinnerItemSelected.onSuccess(position);
+        }
     }
 
     @Override
@@ -109,14 +115,7 @@ public class BetterSpinner extends AutoCompleteTextView implements AdapterView.O
         return mPosition;
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        mPosition = i;
-        isPopup = false;
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
+    public interface OnSpinnerItemSelected {
+        void onSuccess(Integer i);
     }
 }

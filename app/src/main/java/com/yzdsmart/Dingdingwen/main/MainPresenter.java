@@ -446,6 +446,7 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
             @Override
             public void onSuccess(Object result) {
                 List<MarketShop> marketShops = (List<MarketShop>) result;
+                mView.onGetMarketShops(marketShops);
             }
 
             @Override

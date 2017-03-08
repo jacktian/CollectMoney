@@ -15,11 +15,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -163,7 +163,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
 
     private static final String TAG = "MainActivity";
 
-    private UltimateRecyclerView backgroundBagRV;
+    private UltimateRecyclerView backgroundBagRV, marketLevelShopsRV;
     private TextView backgroundBagLoginCheck;
 
     //连续双击返回键退出程序
@@ -252,8 +252,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     private boolean isFirstLoadBag = true;
     private BottomSheetDialog backgroundBagBottomSheetDialog;
 
+    private LinearLayoutManager mLinearLayoutManager;
+    private MarketShopsAdapter marketShopsAdapter;
     private Integer marketShopsPageIndex = 1;
-    private static final Integer MARKET_SHOPS_PAGE_SIZE = 10;
+    private static final Integer MARKET_SHOPS_PAGE_SIZE = 3;
     private String marketName = "";
     private String marketLevel = "";
     private boolean isFirstLoadMarketShops = true;
@@ -397,6 +399,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
 
         bagAdapter = new BackgroundBagAdapter(this);
         mGridLayoutManager = new GridLayoutManager(this, 5);
+
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        marketShopsAdapter = new MarketShopsAdapter(this);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         centerTitleTV.setText(getResources().getString(R.string.app_name));
@@ -909,7 +914,13 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
 
     @Override
     public void onGetMarketShops(List<MarketShop> marketShops) {
-
+//        marketShopsAdapter.appendList(marketShops);
+        if (MARKET_SHOPS_PAGE_SIZE > marketShops.size()) {
+            marketLevelShopsRV.disableLoadmore();
+            return;
+        }
+        marketShopsPageIndex++;
+        marketLevelShopsRV.reenableLoadmore();
     }
 
     @Override
@@ -1040,8 +1051,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     }
 
     private void initMarketShopsBottomSheetDialog() {
-        marketLevel = "1F";
-
         final String[] marketNameArray = getResources().getStringArray(R.array.market_name_array);
         ArrayAdapter<String> marketNameAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.market_name_item, marketNameArray);
 
@@ -1054,34 +1063,59 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
             marketName = marketNameArray[0];
             marketNameSpinner.setText(marketName);
         }
-//        marketNameSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                System.out.println("----marketNameSpinner--->" + i);
-//                marketName = marketNameArray[i];
-//            }
-//        });
-        marketNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        marketNameSpinner.setOnSpinnerItemSelected(new BetterSpinner.OnSpinnerItemSelected() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println("----marketNameSpinner--->" + i);
+            public void onSuccess(Integer i) {
+                if (marketName.equals(marketNameArray[i])) return;
                 marketName = marketNameArray[i];
-                System.out.println("----marketNameSpinner--->" + marketName);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+                marketShopsPageIndex = 1;
+                marketShopsAdapter.clearList();
+                if (null == marketLevel || "".equals(marketLevel)) return;
+                getMarketShops();
             }
         });
 
         RadioGroup marketLevelsRG = (RadioGroup) marketShopsView.findViewById(R.id.market_levels);
+        RadioButton defaultCheckedLevelRB = (RadioButton) marketLevelsRG.getChildAt(4);
+        defaultCheckedLevelRB.setChecked(true);
+        marketLevel = defaultCheckedLevelRB.getText().toString();
         marketLevelsRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
                 RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i - 1);
                 marketLevel = radioButton.getText().toString();
-                System.out.println("----marketLevelsRG--->" + marketLevel);
+                marketShopsPageIndex = 1;
+                marketShopsAdapter.clearList();
+                if (null == marketName || "".equals(marketName)) return;
+                getMarketShops();
+            }
+        });
+
+        marketLevelShopsRV = (UltimateRecyclerView) marketShopsView.findViewById(R.id.market_level_shops);
+        marketLevelShopsRV.setAdapter(marketShopsAdapter);
+        marketLevelShopsRV.setLayoutManager(mLinearLayoutManager);
+        marketLevelShopsRV.setHasFixedSize(true);
+        marketLevelShopsRV.setSaveEnabled(true);
+        marketLevelShopsRV.setClipToPadding(false);
+        marketLevelShopsRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                marketLevelShopsRV.setRefreshing(false);
+                marketShopsAdapter.clearList();
+                marketShopsPageIndex = 1;
+                if (null == marketLevel || "".equals(marketLevel) || null == marketName || "".equals(marketName))
+                    return;
+                getMarketShops();
+            }
+        });
+        marketLevelShopsRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMore(int itemsCount, int maxLastVisiblePosition) {
+                if (!Utils.isNetUsable(MainActivity.this)) {
+                    showSnackbar(getResources().getString(R.string.net_unusable));
+                    return;
+                }
+                getMarketShops();
             }
         });
 
