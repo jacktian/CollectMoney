@@ -222,16 +222,14 @@
                         android:src="@mipmap/start_navi" />
                 </RelativeLayout>
 
-                <TextView
+                <ImageView
                     android:id="@+id/show_market_shops"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:background="@color/colorPrimary"
-                    android:text="叮铺"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/font_medium" />
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="@dimen/common_toolbar_height"
+                    android:src="@drawable/market_shops_icon" />
             </FrameLayout>
         </LinearLayout>
 

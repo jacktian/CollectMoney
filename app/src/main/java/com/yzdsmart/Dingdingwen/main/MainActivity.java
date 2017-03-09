@@ -255,7 +255,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     private LinearLayoutManager mLinearLayoutManager;
     private MarketShopsAdapter marketShopsAdapter;
     private Integer marketShopsPageIndex = 1;
-    private static final Integer MARKET_SHOPS_PAGE_SIZE = 3;
+    private static final Integer MARKET_SHOPS_PAGE_SIZE = 10;
     private String marketName = "";
     private String marketLevel = "";
     private boolean isFirstLoadMarketShops = true;
@@ -914,13 +914,15 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
 
     @Override
     public void onGetMarketShops(List<MarketShop> marketShops) {
-//        marketShopsAdapter.appendList(marketShops);
+        marketShopsAdapter.appendList(marketShops);
         if (MARKET_SHOPS_PAGE_SIZE > marketShops.size()) {
             marketLevelShopsRV.disableLoadmore();
             return;
         }
         marketShopsPageIndex++;
-        marketLevelShopsRV.reenableLoadmore();
+        if (!marketLevelShopsRV.isLoadMoreEnabled()) {
+            marketLevelShopsRV.reenableLoadmore();
+        }
     }
 
     @Override
@@ -1092,11 +1094,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         });
 
         marketLevelShopsRV = (UltimateRecyclerView) marketShopsView.findViewById(R.id.market_level_shops);
-        marketLevelShopsRV.setAdapter(marketShopsAdapter);
         marketLevelShopsRV.setLayoutManager(mLinearLayoutManager);
         marketLevelShopsRV.setHasFixedSize(true);
-        marketLevelShopsRV.setSaveEnabled(true);
-        marketLevelShopsRV.setClipToPadding(false);
+        marketLevelShopsRV.setAdapter(marketShopsAdapter);
         marketLevelShopsRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
