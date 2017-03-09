@@ -668,6 +668,12 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         }
     }
 
+    /**
+     * 路径规划
+     *
+     * @param coor
+     * @param shopName
+     */
     public void planRoute(String coor, String shopName) {
         if (null == qLocation || qLocation.length() <= 0) {
             if (null != mLocationClient) {
@@ -692,6 +698,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         mRouteSearch.calculateWalkRouteAsyn(walkRouteQuery);
     }
 
+    /**
+     * 清除路径规划
+     */
     public void clearRoutePlan() {
         if (!isOnRoutePlane) return;
         isOnRoutePlane = false;
@@ -708,6 +717,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         customMsgTV.setLayoutParams(customMsgTVParams);
     }
 
+    /**
+     * 到达规划目的地
+     */
     private void reachTargetLocation() {
         if (!isOnRoutePlane) return;
         isOnRoutePlane = false;
@@ -725,6 +737,11 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         customMsgTV.setLayoutParams(customMsgTVParams);
     }
 
+    /**
+     * 跳转到兑换页
+     *
+     * @param goldType
+     */
     public void exchangeCoupon(Integer goldType) {
         Bundle bundle = new Bundle();
         bundle.putInt("couponType", 1);
@@ -755,6 +772,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         findMoneyMap.onSaveInstanceState(outState);
     }
 
+    /**
+     * 云通信登录
+     */
     @Override
     public void chatLoginSuccess() {
         mPresenter.imSDKLogin();
@@ -830,6 +850,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         updateUnreadConversationBubble();
     }
 
+    /**
+     * 注册手机到后台
+     */
     @Override
     public void reRegisterApp() {
         if (null == SharedPreferencesUtils.getString(this, "isFirstOpen", "") || SharedPreferencesUtils.getString(this, "isFirstOpen", "").trim().length() <= 0) {
@@ -849,6 +872,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         }
     }
 
+    /**
+     * 获取刷新码
+     */
     @Override
     public void getRefreshToken() {
         if (!Utils.isNetUsable(MainActivity.this)) {
