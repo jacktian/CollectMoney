@@ -52,80 +52,21 @@
             android:layout_height="310dp"
             android:orientation="horizontal">
 
-            <RadioGroup
-                android:id="@+id/market_levels"
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/market_levels_bg"
-                android:orientation="vertical">
+                android:scrollbars="none">
 
-                <RadioButton
+                <RadioGroup
+                    android:id="@+id/market_levels"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="5F"
-                    android:textColor="@color/market_level_check_text"
-                    android:textSize="@dimen/font_large"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="4F"
-                    android:textColor="@color/market_level_check_text"
-                    android:textSize="@dimen/font_large"
-                    android:textStyle="bold" />
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="3F"
-                    android:textColor="@color/market_level_check_text"
-                    android:textSize="@dimen/font_large"
-                    android:textStyle="bold" />
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="2F"
-                    android:textColor="@color/market_level_check_text"
-                    android:textSize="@dimen/font_large"
-                    android:textStyle="bold" />
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="1F"
-                    android:textColor="@color/market_level_check_text"
-                    android:textSize="@dimen/font_large"
-                    android:textStyle="bold" />
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="B1"
-                    android:textColor="@color/market_level_check_text"
-                    android:textSize="@dimen/font_large"
-                    android:textStyle="bold" />
-            </RadioGroup>
+                </RadioGroup>
+            </android.support.v4.widget.NestedScrollView>
 
             <LinearLayout
                 android:layout_width="0dp"

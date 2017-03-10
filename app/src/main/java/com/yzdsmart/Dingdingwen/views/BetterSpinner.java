@@ -4,19 +4,19 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
 import com.yzdsmart.Dingdingwen.R;
 
 import java.util.Calendar;
 
-public class BetterSpinner extends AutoCompleteTextView implements AdapterView.OnItemClickListener {
+public class BetterSpinner extends AppCompatAutoCompleteTextView implements AdapterView.OnItemClickListener {
 
     private static final int MAX_CLICK_DURATION = 200;
     private long startClickTime;
@@ -98,6 +98,13 @@ public class BetterSpinner extends AutoCompleteTextView implements AdapterView.O
         isPopup = false;
         if (null != onSpinnerItemSelected) {
             onSpinnerItemSelected.onSuccess(position);
+        }
+    }
+
+    public void hideDropDown() {
+        if (isPopup) {
+            dismissDropDown();
+            isPopup = false;
         }
     }
 

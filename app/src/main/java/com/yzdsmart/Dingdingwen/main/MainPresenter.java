@@ -422,11 +422,17 @@ public class MainPresenter implements MainContract.MainPresenter, Observer, TIMC
             @Override
             public void onSuccess(Object result) {
                 MarketsInfoRequestResponse requestResponse = (MarketsInfoRequestResponse) result;
+                if ("OK".equals(requestResponse.getActionStatus())) {
+                    mView.onGetMarketsInfo(true, requestResponse.getData());
+                } else {
+                    mView.onGetMarketsInfo(false, null);
+                }
             }
 
             @Override
             public void onError(String err) {
                 ((BaseActivity) context).hideProgressDialog();
+                mView.onGetMarketsInfo(false, null);
                 if (err.contains("401 Unauthorized")) {
                     MainActivity.getInstance().updateAccessToken();
                 }

@@ -8,6 +8,7 @@ import com.yzdsmart.Dingdingwen.BasePresenter;
 import com.yzdsmart.Dingdingwen.BaseView;
 import com.yzdsmart.Dingdingwen.bean.CoinType;
 import com.yzdsmart.Dingdingwen.bean.MarketShop;
+import com.yzdsmart.Dingdingwen.http.response.MarketsInfoRequestResponse;
 
 import java.util.List;
 
@@ -85,6 +86,14 @@ public interface MainContract {
          * @param optionsList
          */
         void onGetShopList(List<MarkerOptions> optionsList);
+
+        /**
+         * 获取综合体列表
+         *
+         * @param flag
+         * @param marketsInfo
+         */
+        void onGetMarketsInfo(boolean flag, List<MarketsInfoRequestResponse.DataBean> marketsInfo);
 
         /**
          * 综合体商铺列表

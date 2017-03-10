@@ -66,6 +66,7 @@
     <dimen name="map_radar_margin_bottom">8dp</dimen>
     <dimen name="find_money_operation_layout_height">82dp</dimen>
     <dimen name="find_money_danmu_height">44dp</dimen>
+    <dimen name="market_level_font_size">6sp</dimen>
 
     <!--钱圈-->
     <dimen name="search_filter_height">29dp</dimen>

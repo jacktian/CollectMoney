@@ -6,21 +6,22 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -72,6 +73,7 @@ import com.yzdsmart.Dingdingwen.amap.WalkRouteOverlay;
 import com.yzdsmart.Dingdingwen.bean.CoinType;
 import com.yzdsmart.Dingdingwen.bean.MarketShop;
 import com.yzdsmart.Dingdingwen.coupon_exchange.CouponExchangeActivity;
+import com.yzdsmart.Dingdingwen.http.response.MarketsInfoRequestResponse;
 import com.yzdsmart.Dingdingwen.money_friendship.MoneyFriendshipActivity;
 import com.yzdsmart.Dingdingwen.money_friendship.conversation.ConversationFragment;
 import com.yzdsmart.Dingdingwen.personal.PersonalActivity;
@@ -98,9 +100,11 @@ import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -939,6 +943,60 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     }
 
     @Override
+    public void onGetMarketsInfo(boolean flag, List<MarketsInfoRequestResponse.DataBean> marketsInfo) {
+        if (!flag) {
+            isFirstLoadMarketsInfo = true;
+            return;
+        }
+        if (0 < marketsInfo.size()) {
+            for (int i = 0; i < marketsInfo.size(); i++) {
+                marketsInfoMap.put(marketsInfo.get(i).getComplexName(), marketsInfo.get(i).getStoreyList());
+                marketNameList.add(marketsInfo.get(i).getComplexName());
+                if (0 == i) {
+                    marketName = marketsInfo.get(i).getComplexName();
+                    marketLevels.addAll(marketsInfo.get(i).getStoreyList());
+                }
+            }
+        }
+        marketNameAdapter.appendList(marketNameList);
+        marketNameSpinner.setText(marketName);
+        marketNameSpinner.dismissDropDown();
+        resetMarketLevels(marketLevels);
+    }
+
+    private void resetMarketLevels(List<String> marketLevels) {
+        marketLevelsRG.removeAllViews();
+        marketLevel = "";
+        if (0 < marketLevels.size()) {
+            for (int i = 0; i < marketLevels.size(); i++) {
+                RadioButton rb = new RadioButton(MainActivity.this);
+                rb.setTextColor(getResources().getColorStateList(R.color.market_level_check_text));
+                rb.setTextSize(getResources().getDimension(R.dimen.market_level_font_size));
+                rb.setButtonDrawable(new ColorDrawable(Color.TRANSPARENT));
+                rb.setText(marketLevels.get(i));
+                rb.setGravity(Gravity.CENTER);
+                rb.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String clickLevel = ((RadioButton) view).getText().toString();
+                        if (clickLevel.equals(marketLevel)) return;
+                        marketLevel = clickLevel;
+                        marketShopsPageIndex = 1;
+                        marketShopsAdapter.clearList();
+                        if (null == marketName || "".equals(marketName)) return;
+                        getMarketShops();
+                    }
+                });
+                marketLevelsRG.addView(rb, LinearLayout.LayoutParams.MATCH_PARENT, Utils.dp2px(MainActivity.this, 43));
+            }
+            RadioButton levelRB = (RadioButton) marketLevelsRG.getChildAt(0);
+            levelRB.setChecked(true);
+            marketLevel = levelRB.getText().toString();
+            getMarketShops();
+        }
+    }
+
+    @Override
     public void onGetMarketShops(List<MarketShop> marketShops) {
         marketShopsAdapter.appendList(marketShops);
         if (MARKET_SHOPS_PAGE_SIZE > marketShops.size()) {
@@ -1038,9 +1096,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
 
     public void showMarketShops() {
         marketShopsBottomSheetDialog.show();
-        if (isFirstLoadMarketShops) {
-            isFirstLoadMarketShops = false;
-            getMarketShops();
+        if (isFirstLoadMarketsInfo) {
+            isFirstLoadMarketsInfo = false;
+            getMarketsInfo();
         }
     }
 
@@ -1078,44 +1136,35 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         backgroundBagBottomSheetDialog.setCancelable(false);
     }
 
+    private boolean isFirstLoadMarketsInfo = true;
+    private List<String> marketNameList;
+    private MarketNameAdapter marketNameAdapter;
+    private Map<String, List<String>> marketsInfoMap;
+    private List<String> marketLevels;
+    private BetterSpinner marketNameSpinner;
+    private RadioGroup marketLevelsRG;
+
     private void initMarketShopsBottomSheetDialog() {
-        final String[] marketNameArray = getResources().getStringArray(R.array.market_name_array);
-        ArrayAdapter<String> marketNameAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.market_name_item, marketNameArray);
+        marketsInfoMap = new HashMap<String, List<String>>();
+        marketLevels = new ArrayList<String>();
+        marketNameList = new ArrayList<String>();
+        marketNameAdapter = new MarketNameAdapter(MainActivity.this);
 
         marketShopsBottomSheetDialog = new BottomSheetDialog(this, R.style.market_shops_dialog);
         View marketShopsView = LayoutInflater.from(this).inflate(R.layout.market_shops_layout, null);
 
-        BetterSpinner marketNameSpinner = (BetterSpinner) marketShopsView.findViewById(R.id.market_name);
+        marketNameSpinner = (BetterSpinner) marketShopsView.findViewById(R.id.market_name);
         marketNameSpinner.setAdapter(marketNameAdapter);
-        if (0 < marketNameArray.length) {
-            marketName = marketNameArray[0];
-            marketNameSpinner.setText(marketName);
-        }
         marketNameSpinner.setOnSpinnerItemSelected(new BetterSpinner.OnSpinnerItemSelected() {
             @Override
             public void onSuccess(Integer i) {
-                if (marketName.equals(marketNameArray[i])) return;
-                marketName = marketNameArray[i];
+                if (marketName.equals(marketNameList.get(i))) return;
+                marketName = marketNameList.get(i);
                 marketShopsPageIndex = 1;
                 marketShopsAdapter.clearList();
-                if (null == marketLevel || "".equals(marketLevel)) return;
-                getMarketShops();
-            }
-        });
-
-        RadioGroup marketLevelsRG = (RadioGroup) marketShopsView.findViewById(R.id.market_levels);
-        RadioButton defaultCheckedLevelRB = (RadioButton) marketLevelsRG.getChildAt(4);
-        defaultCheckedLevelRB.setChecked(true);
-        marketLevel = defaultCheckedLevelRB.getText().toString();
-        marketLevelsRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-                RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i - 1);
-                marketLevel = radioButton.getText().toString();
-                marketShopsPageIndex = 1;
-                marketShopsAdapter.clearList();
-                if (null == marketName || "".equals(marketName)) return;
-                getMarketShops();
+                marketLevels.clear();
+                marketLevels.addAll(marketsInfoMap.get(marketName));
+                resetMarketLevels(marketLevels);
             }
         });
 
@@ -1137,10 +1186,8 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         marketLevelShopsRV.setOnLoadMoreListener(new UltimateRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-                if (!Utils.isNetUsable(MainActivity.this)) {
-                    showSnackbar(getResources().getString(R.string.net_unusable));
+                if (null == marketLevel || "".equals(marketLevel) || null == marketName || "".equals(marketName))
                     return;
-                }
                 getMarketShops();
             }
         });
@@ -1151,6 +1198,9 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
                 marketShopsBottomSheetDialog.dismiss();
             }
         });
+
+        marketLevelsRG = (RadioGroup) marketShopsView.findViewById(R.id.market_levels);
+
         marketShopsBottomSheetDialog.setContentView(marketShopsView);
         marketShopsBottomSheetDialog.setCancelable(false);
     }
@@ -1539,6 +1589,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
                 }
             }
         }
+
     }
 
     private double[] gaoDeToBaidu(double gd_lon, double gd_lat) {
