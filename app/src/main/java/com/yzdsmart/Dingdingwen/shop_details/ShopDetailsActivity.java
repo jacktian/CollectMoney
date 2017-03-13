@@ -171,6 +171,8 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
 //        shopScannerList.add(new ShopScanner("f47faba3-5bb8-4bd4-b844-206c80503704", "丫头", "http://d.ifengimg.com/mw978_mh598/p2.ifengimg.com/a/2016_39/d476f58859c90a0_size491_w439_h661.png", "女", 546d, "三天前", "2136658"));
 
         mLinearLayoutManager = new LinearLayoutManager(this);
+        mLinearLayoutManager.setSmoothScrollbarEnabled(true);
+        mLinearLayoutManager.setAutoMeasureEnabled(true);
         dividerPaint = new Paint();
         dividerPaint.setStrokeWidth(1);
         dividerPaint.setColor(getResources().getColor(R.color.divider_grey));
@@ -182,6 +184,7 @@ public class ShopDetailsActivity extends BaseActivity implements ShopDetailsCont
         hotelUsersRV.setHasFixedSize(true);
         hotelUsersRV.setLayoutManager(mLinearLayoutManager);
         hotelUsersRV.addItemDecoration(dividerItemDecoration);
+        hotelUsersRV.setNestedScrollingEnabled(false);
         hotelUsersRV.setAdapter(shopScannerAdapter);
 
         shopScannerAdapter.appenList(shopScannerList);

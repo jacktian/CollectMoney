@@ -40,15 +40,15 @@ public class RecommendAdapter extends UltimateViewAdapter<UltimateRecyclerviewVi
      * 3种类型
      */
     /**
-     * 类型1：黑色星期五--使用banner实现
+     * 类型1：使用banner实现
      */
     private static final int RECOMMEND_BANNER = 0;
     /**
-     * 类型2：今日新品--使用GridView实现
+     * 类型2：使用GridView实现
      */
     private static final int RECOMMEND_LIVE = 1;
     /**
-     * 类型3：品牌福利--使用ImageView实现
+     * 类型3：使用RecyclerViewView实现
      */
     private static final int RECOMMEND_NEWS = 2;
 

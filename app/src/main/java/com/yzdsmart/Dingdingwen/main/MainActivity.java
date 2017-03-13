@@ -167,9 +167,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
 
     private static final String TAG = "MainActivity";
 
-    private UltimateRecyclerView backgroundBagRV, marketLevelShopsRV;
-    private TextView backgroundBagLoginCheck;
-
     //连续双击返回键退出程序
     private Long lastKeyDown = 0l;
 
@@ -251,7 +248,10 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     };
     private boolean stopRefreshAccessToken = false;//停止刷新
 
-    private GridLayoutManager mGridLayoutManager;
+    private UltimateRecyclerView backgroundBagRV, marketLevelShopsRV;
+    private TextView backgroundBagLoginCheck;
+
+    private GridLayoutManager backgroundBagGridLayoutManager;
     private BackgroundBagAdapter bagAdapter;
     private boolean isFirstLoadBag = true;
     private BottomSheetDialog backgroundBagBottomSheetDialog;
@@ -262,8 +262,15 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     private static final Integer MARKET_SHOPS_PAGE_SIZE = 10;
     private String marketName = "";
     private String marketLevel = "";
-    private boolean isFirstLoadMarketShops = true;
     private BottomSheetDialog marketShopsBottomSheetDialog;
+
+    private boolean isFirstLoadMarketsInfo = true;
+    private List<String> marketNameList;
+    private MarketNameAdapter marketNameAdapter;
+    private Map<String, List<String>> marketsInfoMap;
+    private List<String> marketLevels;
+    private BetterSpinner marketNameSpinner;
+    private RadioGroup marketLevelsRG;
 
     private List<String> customMsgList;
     private Handler showCustomMsgHandler = new Handler();
@@ -398,14 +405,18 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         conversationList = new LinkedList<Conversation>();
         pgConversationList = new ArrayList<Conversation>();
         customMsgList = new ArrayList<String>();
+        marketsInfoMap = new HashMap<String, List<String>>();
+        marketLevels = new ArrayList<String>();
+        marketNameList = new ArrayList<String>();
 
         fm = getFragmentManager();
 
         bagAdapter = new BackgroundBagAdapter(this);
-        mGridLayoutManager = new GridLayoutManager(this, 5);
+        backgroundBagGridLayoutManager = new GridLayoutManager(this, 5);
 
-        mLinearLayoutManager = new LinearLayoutManager(this);
         marketShopsAdapter = new MarketShopsAdapter(this);
+        marketNameAdapter = new MarketNameAdapter(MainActivity.this);
+        mLinearLayoutManager = new LinearLayoutManager(this);
 
         ButterKnife.apply(hideViews, BUTTERKNIFEGONE);
         centerTitleTV.setText(getResources().getString(R.string.app_name));
@@ -971,7 +982,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
             for (int i = 0; i < marketLevels.size(); i++) {
                 RadioButton rb = new RadioButton(MainActivity.this);
                 rb.setTextColor(getResources().getColorStateList(R.color.market_level_check_text));
-                rb.setTextSize(getResources().getDimension(R.dimen.market_level_font_size));
+                rb.setTextSize(18);
                 rb.setButtonDrawable(new ColorDrawable(Color.TRANSPARENT));
                 rb.setText(marketLevels.get(i));
                 rb.setGravity(Gravity.CENTER);
@@ -998,6 +1009,12 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
 
     @Override
     public void onGetMarketShops(List<MarketShop> marketShops) {
+        for (int i = 0; i < 10; i++) {
+            MarketShop marketShop = new MarketShop();
+            marketShop.setName("Name" + i);
+            marketShop.setReleGold(9.99);
+            marketShops.add(marketShop);
+        }
         marketShopsAdapter.appendList(marketShops);
         if (MARKET_SHOPS_PAGE_SIZE > marketShops.size()) {
             marketLevelShopsRV.disableLoadmore();
@@ -1108,7 +1125,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         backgroundBagLoginCheck = (TextView) backgroundBagView.findViewById(R.id.login_check);
         backgroundBagRV = (UltimateRecyclerView) backgroundBagView.findViewById(R.id.background_bag_list);
         backgroundBagRV.setAdapter(bagAdapter);
-        backgroundBagRV.setLayoutManager(mGridLayoutManager);
+        backgroundBagRV.setLayoutManager(backgroundBagGridLayoutManager);
         backgroundBagRV.setHasFixedSize(true);
         backgroundBagRV.setSaveEnabled(true);
         backgroundBagRV.setClipToPadding(false);
@@ -1136,20 +1153,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         backgroundBagBottomSheetDialog.setCancelable(false);
     }
 
-    private boolean isFirstLoadMarketsInfo = true;
-    private List<String> marketNameList;
-    private MarketNameAdapter marketNameAdapter;
-    private Map<String, List<String>> marketsInfoMap;
-    private List<String> marketLevels;
-    private BetterSpinner marketNameSpinner;
-    private RadioGroup marketLevelsRG;
-
     private void initMarketShopsBottomSheetDialog() {
-        marketsInfoMap = new HashMap<String, List<String>>();
-        marketLevels = new ArrayList<String>();
-        marketNameList = new ArrayList<String>();
-        marketNameAdapter = new MarketNameAdapter(MainActivity.this);
-
         marketShopsBottomSheetDialog = new BottomSheetDialog(this, R.style.market_shops_dialog);
         View marketShopsView = LayoutInflater.from(this).inflate(R.layout.market_shops_layout, null);
 
@@ -1168,10 +1172,14 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
             }
         });
 
+        marketLevelsRG = (RadioGroup) marketShopsView.findViewById(R.id.market_levels);
+
         marketLevelShopsRV = (UltimateRecyclerView) marketShopsView.findViewById(R.id.market_level_shops);
         marketLevelShopsRV.setLayoutManager(mLinearLayoutManager);
-        marketLevelShopsRV.setHasFixedSize(true);
         marketLevelShopsRV.setAdapter(marketShopsAdapter);
+        marketLevelShopsRV.setHasFixedSize(true);
+        marketLevelShopsRV.setSaveEnabled(true);
+        marketLevelShopsRV.setClipToPadding(false);
         marketLevelShopsRV.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -1198,8 +1206,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
                 marketShopsBottomSheetDialog.dismiss();
             }
         });
-
-        marketLevelsRG = (RadioGroup) marketShopsView.findViewById(R.id.market_levels);
 
         marketShopsBottomSheetDialog.setContentView(marketShopsView);
         marketShopsBottomSheetDialog.setCancelable(false);

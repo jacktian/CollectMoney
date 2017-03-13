@@ -13,6 +13,8 @@ import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.yzdsmart.Dingdingwen.R;
 import com.yzdsmart.Dingdingwen.bean.MarketShop;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +28,13 @@ import butterknife.ButterKnife;
 public class MarketShopsAdapter extends UltimateViewAdapter<MarketShopsAdapter.ViewHolder> {
     private Context context;
     private List<MarketShop> marketShops;
+    private DecimalFormat decimalFormat;
 
     public MarketShopsAdapter(Context context) {
         this.context = context;
         marketShops = new ArrayList<MarketShop>();
+        decimalFormat = new DecimalFormat("#0.00");
+        decimalFormat.setRoundingMode(RoundingMode.DOWN);
     }
 
     /**
@@ -85,7 +90,7 @@ public class MarketShopsAdapter extends UltimateViewAdapter<MarketShopsAdapter.V
     public void onBindViewHolder(ViewHolder holder, int position) {
         MarketShop marketShop = marketShops.get(position);
         holder.setShopNameTV(marketShop.getName());
-        holder.setCoinCountsTV(marketShop.getReleGold() + "");
+        holder.setCoinCountsTV(decimalFormat.format(marketShop.getReleGold()));
     }
 
     @Override
