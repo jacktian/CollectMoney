@@ -976,8 +976,8 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     }
 
     private void resetMarketLevels(List<String> marketLevels) {
-        marketLevelsRG.removeAllViews();
         marketLevel = "";
+        marketLevelsRG.removeAllViews();
         if (0 < marketLevels.size()) {
             for (int i = 0; i < marketLevels.size(); i++) {
                 RadioButton rb = new RadioButton(MainActivity.this);
@@ -1009,12 +1009,12 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
 
     @Override
     public void onGetMarketShops(List<MarketShop> marketShops) {
-        for (int i = 0; i < 10; i++) {
-            MarketShop marketShop = new MarketShop();
-            marketShop.setName("Name" + i);
-            marketShop.setReleGold(9.99);
-            marketShops.add(marketShop);
-        }
+//        for (int i = 0; i < 20; i++) {
+//            MarketShop marketShop = new MarketShop();
+//            marketShop.setName("Name" + i);
+//            marketShop.setReleGold(9.99);
+//            marketShops.add(marketShop);
+//        }
         marketShopsAdapter.appendList(marketShops);
         if (MARKET_SHOPS_PAGE_SIZE > marketShops.size()) {
             marketLevelShopsRV.disableLoadmore();
