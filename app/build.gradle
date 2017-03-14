@@ -67,7 +67,7 @@ android {
         wandoujia {}
         samsung {}
         oppo {}
-        vivo {}
+        meizu {}
     }
 
     productFlavors.all {
