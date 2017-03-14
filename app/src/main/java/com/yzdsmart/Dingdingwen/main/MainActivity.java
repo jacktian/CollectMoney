@@ -1,5 +1,6 @@
 package com.yzdsmart.Dingdingwen.main;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.BroadcastReceiver;
@@ -22,6 +23,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -30,7 +33,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -57,9 +59,6 @@ import com.amap.api.services.route.RouteSearch;
 import com.amap.api.services.route.WalkPath;
 import com.amap.api.services.route.WalkRouteResult;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-import com.meelive.ingkee.sdk.plugin.IInkeCallback;
-import com.meelive.ingkee.sdk.plugin.InKeSdkPluginAPI;
-import com.meelive.ingkee.sdk.plugin.entity.ShareInfo;
 import com.tencent.TIMConversation;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMGroupPendencyItem;
@@ -251,7 +250,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     private UltimateRecyclerView backgroundBagRV, marketLevelShopsRV;
     private TextView backgroundBagLoginCheck;
 
-    private GridLayoutManager backgroundBagGridLayoutManager;
+    private GridLayoutManager mGridLayoutManager;
     private BackgroundBagAdapter bagAdapter;
     private boolean isFirstLoadBag = true;
     private BottomSheetDialog backgroundBagBottomSheetDialog;
@@ -262,7 +261,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     private static final Integer MARKET_SHOPS_PAGE_SIZE = 10;
     private String marketName = "";
     private String marketLevel = "";
-    private BottomSheetDialog marketShopsBottomSheetDialog;
+    private Dialog marketShopsDialog;
 
     private boolean isFirstLoadMarketsInfo = true;
     private List<String> marketNameList;
@@ -393,7 +392,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         scanGuideView.show();
     }
 
-    private IInkeCallback inkeCallback;
+//    private IInkeCallback inkeCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -412,7 +411,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         fm = getFragmentManager();
 
         bagAdapter = new BackgroundBagAdapter(this);
-        backgroundBagGridLayoutManager = new GridLayoutManager(this, 5);
+        mGridLayoutManager = new GridLayoutManager(this, 5);
 
         marketShopsAdapter = new MarketShopsAdapter(this);
         marketNameAdapter = new MarketNameAdapter(MainActivity.this);
@@ -428,37 +427,37 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
             setGuideView();
         }
 
-        inkeCallback = new IInkeCallback() {
-            @Override
-            public void loginTrigger() {
-
-            }
-
-            @Override
-            public void payTrigger(String s, String s1) {
-
-            }
-
-            @Override
-            public void shareTrigger(ShareInfo shareInfo) {
-
-            }
-
-            @Override
-            public void createLiveReturnTrigger(String s) {
-                Toast.makeText(MainActivity.this, "-->" + s, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void stopLiveTrigger(String s) {
-
-            }
-        };
-
-        InKeSdkPluginAPI.register(inkeCallback, Constants.INKE_APP_ID, 1, 0);
+//        inkeCallback = new IInkeCallback() {
+//            @Override
+//            public void loginTrigger() {
+//
+//            }
+//
+//            @Override
+//            public void payTrigger(String s, String s1) {
+//
+//            }
+//
+//            @Override
+//            public void shareTrigger(ShareInfo shareInfo) {
+//
+//            }
+//
+//            @Override
+//            public void createLiveReturnTrigger(String s) {
+//                Toast.makeText(MainActivity.this, "-->" + s, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void stopLiveTrigger(String s) {
+//
+//            }
+//        };
+//
+//        InKeSdkPluginAPI.register(inkeCallback, Constants.INKE_APP_ID, 1, 0);
 
         initBackgroundBagBottomSheetDialog();
-        initMarketShopsBottomSheetDialog();
+        initMarketShopsDialog();
 
         tlsService = TLSService.getInstance();
 
@@ -1009,12 +1008,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
 
     @Override
     public void onGetMarketShops(List<MarketShop> marketShops) {
-//        for (int i = 0; i < 20; i++) {
-//            MarketShop marketShop = new MarketShop();
-//            marketShop.setName("Name" + i);
-//            marketShop.setReleGold(9.99);
-//            marketShops.add(marketShop);
-//        }
         marketShopsAdapter.appendList(marketShops);
         if (MARKET_SHOPS_PAGE_SIZE > marketShops.size()) {
             marketLevelShopsRV.disableLoadmore();
@@ -1112,7 +1105,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
     }
 
     public void showMarketShops() {
-        marketShopsBottomSheetDialog.show();
+        marketShopsDialog.show();
         if (isFirstLoadMarketsInfo) {
             isFirstLoadMarketsInfo = false;
             getMarketsInfo();
@@ -1125,7 +1118,7 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         backgroundBagLoginCheck = (TextView) backgroundBagView.findViewById(R.id.login_check);
         backgroundBagRV = (UltimateRecyclerView) backgroundBagView.findViewById(R.id.background_bag_list);
         backgroundBagRV.setAdapter(bagAdapter);
-        backgroundBagRV.setLayoutManager(backgroundBagGridLayoutManager);
+        backgroundBagRV.setLayoutManager(mGridLayoutManager);
         backgroundBagRV.setHasFixedSize(true);
         backgroundBagRV.setSaveEnabled(true);
         backgroundBagRV.setClipToPadding(false);
@@ -1153,8 +1146,8 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         backgroundBagBottomSheetDialog.setCancelable(false);
     }
 
-    private void initMarketShopsBottomSheetDialog() {
-        marketShopsBottomSheetDialog = new BottomSheetDialog(this, R.style.market_shops_dialog);
+    private void initMarketShopsDialog() {
+        marketShopsDialog = new Dialog(this, R.style.market_shops_dialog);
         View marketShopsView = LayoutInflater.from(this).inflate(R.layout.market_shops_layout, null);
 
         marketNameSpinner = (BetterSpinner) marketShopsView.findViewById(R.id.market_name);
@@ -1203,12 +1196,17 @@ public class MainActivity extends BaseActivity implements MainContract.MainView,
         marketShopsView.findViewById(R.id.quit_background_bag).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                marketShopsBottomSheetDialog.dismiss();
+                marketShopsDialog.dismiss();
             }
         });
 
-        marketShopsBottomSheetDialog.setContentView(marketShopsView);
-        marketShopsBottomSheetDialog.setCancelable(false);
+        marketShopsDialog.setContentView(marketShopsView);
+        marketShopsDialog.setCancelable(false);
+        Window dialogWindow = marketShopsDialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        lp.height = Utils.dp2px(MainActivity.this, 404); // 高度
+        dialogWindow.setAttributes(lp);
     }
 
     private void getBackgroundBag() {
